@@ -1,6 +1,7 @@
-import { FileUp, Save, Download, Settings, Menu } from 'lucide-react';
+import { FileUp, Save, Download, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@components/ui/Button';
+import { ThemeToggle } from '@components/ui/ThemeToggle';
 import { useDocumentStore } from '@stores/documentStore';
 
 export function Header() {
@@ -31,14 +32,15 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="sm" title="Save">
           <Save className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="sm" title="Download">
           <Download className="h-4 w-4" />
         </Button>
+        <ThemeToggle />
         <Link to="/settings">
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" title="Settings">
             <Settings className="h-4 w-4" />
           </Button>
         </Link>

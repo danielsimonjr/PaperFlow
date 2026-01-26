@@ -1,27 +1,58 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileUp, FolderOpen, Clock } from 'lucide-react';
+import { fileOpen } from 'browser-fs-access';
 import { Button } from '@components/ui/Button';
+import { useDocumentStore } from '@stores/documentStore';
 
 export default function Home() {
   const navigate = useNavigate();
+  const loadDocument = useDocumentStore((state) => state.loadDocument);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleFileOpen = useCallback(async () => {
-    // TODO: Implement file picker with browser-fs-access
-    navigate('/editor');
-  }, [navigate]);
+    try {
+      const file = await fileOpen({
+        mimeTypes: ['application/pdf'],
+        extensions: ['.pdf'],
+        description: 'PDF Documents',
+      });
+
+      await loadDocument(file);
+      navigate('/editor');
+    } catch (error) {
+      // User cancelled file picker
+      if (error instanceof Error && error.name === 'AbortError') {
+        return;
+      }
+      console.error('Failed to open file:', error);
+    }
+  }, [loadDocument, navigate]);
 
   const handleDrop = useCallback(
-    (e: React.DragEvent) => {
+    async (e: React.DragEvent) => {
       e.preventDefault();
-      // TODO: Handle dropped files
-      navigate('/editor');
+      setIsDragging(false);
+
+      const files = Array.from(e.dataTransfer.files);
+      const pdfFile = files.find((f) => f.type === 'application/pdf' || f.name.endsWith('.pdf'));
+
+      if (pdfFile) {
+        await loadDocument(pdfFile);
+        navigate('/editor');
+      }
     },
-    [navigate]
+    [loadDocument, navigate]
   );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
   }, []);
 
   return (
@@ -41,7 +72,12 @@ export default function Home() {
         <div
           onDrop={handleDrop}
           onDragOver={handleDragOver}
-          className="flex w-full max-w-2xl flex-col items-center rounded-2xl border-2 border-dashed border-gray-300 bg-white p-12 text-center transition-colors hover:border-primary-500 dark:border-gray-700 dark:bg-gray-800"
+          onDragLeave={handleDragLeave}
+          className={`flex w-full max-w-2xl flex-col items-center rounded-2xl border-2 border-dashed p-12 text-center transition-colors ${
+            isDragging
+              ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+              : 'border-gray-300 bg-white hover:border-primary-500 dark:border-gray-700 dark:bg-gray-800'
+          }`}
         >
           <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900/20">
             <FileUp className="h-8 w-8 text-primary-600 dark:text-primary-400" />

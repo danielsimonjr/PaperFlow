@@ -47,6 +47,8 @@ export const useHistoryStore = create<HistoryState>((set, get) => ({
     if (past.length === 0) return;
 
     const entry = past[past.length - 1];
+    if (!entry) return;
+
     entry.undo();
 
     set({
@@ -60,6 +62,8 @@ export const useHistoryStore = create<HistoryState>((set, get) => ({
     if (future.length === 0) return;
 
     const entry = future[0];
+    if (!entry) return;
+
     entry.redo();
 
     set({

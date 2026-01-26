@@ -4,13 +4,30 @@ import type { PDFDocumentInfo, PDFPageInfo, PDFOutlineItem } from '@/types/pdf';
 // Configure worker - must be set before loading any documents
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
+export interface RenderResult {
+  width: number;
+  height: number;
+}
+
 export class PDFRenderer {
   private document: pdfjsLib.PDFDocumentProxy | null = null;
+  private renderTasks: Map<number, pdfjsLib.RenderTask> = new Map();
 
   async loadDocument(
-    source: ArrayBuffer | string
+    source: ArrayBuffer | string,
+    password?: string
   ): Promise<PDFDocumentInfo> {
-    const loadingTask = pdfjsLib.getDocument(source);
+    // Destroy existing document if any
+    if (this.document) {
+      this.destroy();
+    }
+
+    const loadingTask = pdfjsLib.getDocument({
+      data: source instanceof ArrayBuffer ? source : undefined,
+      url: typeof source === 'string' ? source : undefined,
+      password,
+    });
+
     this.document = await loadingTask.promise;
 
     const metadata = await this.document.getMetadata();
@@ -31,26 +48,62 @@ export class PDFRenderer {
     pageNumber: number,
     canvas: HTMLCanvasElement,
     scale: number = 1.0
-  ): Promise<void> {
+  ): Promise<RenderResult> {
     if (!this.document) {
       throw new Error('No document loaded');
     }
 
-    const page = await this.document.getPage(pageNumber);
-    const viewport = page.getViewport({ scale });
+    // Cancel any existing render task for this page
+    const existingTask = this.renderTasks.get(pageNumber);
+    if (existingTask) {
+      existingTask.cancel();
+      this.renderTasks.delete(pageNumber);
+    }
 
+    const page = await this.document.getPage(pageNumber);
+
+    // Support high-DPI displays
+    const devicePixelRatio = window.devicePixelRatio || 1;
+    const viewport = page.getViewport({ scale: scale * devicePixelRatio });
+
+    // Set canvas dimensions for high-DPI
     canvas.width = viewport.width;
     canvas.height = viewport.height;
+
+    // Scale down with CSS for crisp rendering
+    canvas.style.width = `${viewport.width / devicePixelRatio}px`;
+    canvas.style.height = `${viewport.height / devicePixelRatio}px`;
 
     const context = canvas.getContext('2d');
     if (!context) {
       throw new Error('Failed to get canvas context');
     }
 
-    await page.render({
+    const renderTask = page.render({
       canvasContext: context,
       viewport: viewport,
-    }).promise;
+    });
+
+    this.renderTasks.set(pageNumber, renderTask);
+
+    try {
+      await renderTask.promise;
+    } finally {
+      this.renderTasks.delete(pageNumber);
+    }
+
+    return {
+      width: viewport.width / devicePixelRatio,
+      height: viewport.height / devicePixelRatio,
+    };
+  }
+
+  cancelRender(pageNumber: number): void {
+    const task = this.renderTasks.get(pageNumber);
+    if (task) {
+      task.cancel();
+      this.renderTasks.delete(pageNumber);
+    }
   }
 
   async getPageInfo(pageNumber: number): Promise<PDFPageInfo> {
@@ -92,8 +145,14 @@ export class PDFRenderer {
       return [];
     }
 
+    interface OutlineItem {
+      title: string;
+      dest: string | unknown[] | null;
+      items?: OutlineItem[];
+    }
+
     const processOutlineItems = async (
-      items: pdfjsLib.PDFDocumentOutline[]
+      items: OutlineItem[]
     ): Promise<PDFOutlineItem[]> => {
       const result: PDFOutlineItem[] = [];
 

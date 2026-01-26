@@ -1,10 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { PDFRenderer } from '@lib/pdf/renderer';
+import type { PDFDocumentInfo } from '@/types/pdf';
 
 interface DocumentState {
   // State
   fileName: string | null;
   fileData: ArrayBuffer | null;
+  documentInfo: PDFDocumentInfo | null;
   pageCount: number;
   currentPage: number;
   zoom: number;
@@ -12,15 +15,20 @@ interface DocumentState {
   isModified: boolean;
   isLoading: boolean;
   error: string | null;
+  renderer: PDFRenderer | null;
 
   // Actions
   loadDocument: (file: File) => Promise<void>;
+  loadDocumentFromArrayBuffer: (data: ArrayBuffer, fileName: string) => Promise<void>;
   setCurrentPage: (page: number) => void;
   nextPage: () => void;
   prevPage: () => void;
   setZoom: (zoom: number) => void;
   zoomIn: () => void;
   zoomOut: () => void;
+  resetZoom: () => void;
+  fitToWidth: () => void;
+  fitToPage: () => void;
   setViewMode: (mode: 'single' | 'continuous' | 'spread') => void;
   setModified: (modified: boolean) => void;
   closeDocument: () => void;
@@ -31,6 +39,7 @@ export const useDocumentStore = create<DocumentState>()(
     (set, get) => ({
       fileName: null,
       fileData: null,
+      documentInfo: null,
       pageCount: 0,
       currentPage: 1,
       zoom: 100,
@@ -38,21 +47,47 @@ export const useDocumentStore = create<DocumentState>()(
       isModified: false,
       isLoading: false,
       error: null,
+      renderer: null,
 
       loadDocument: async (file: File) => {
         set({ isLoading: true, error: null });
 
         try {
           const arrayBuffer = await file.arrayBuffer();
-          // TODO: Initialize PDF.js renderer and get page count
+          await get().loadDocumentFromArrayBuffer(arrayBuffer, file.name);
+        } catch (error) {
+          set({
+            error:
+              error instanceof Error ? error.message : 'Failed to load document',
+            isLoading: false,
+          });
+        }
+      },
+
+      loadDocumentFromArrayBuffer: async (data: ArrayBuffer, fileName: string) => {
+        set({ isLoading: true, error: null });
+
+        try {
+          // Clean up existing renderer
+          const existingRenderer = get().renderer;
+          if (existingRenderer) {
+            existingRenderer.destroy();
+          }
+
+          // Create new renderer and load document
+          const renderer = new PDFRenderer();
+          const documentInfo = await renderer.loadDocument(data);
 
           set({
-            fileName: file.name,
-            fileData: arrayBuffer,
-            pageCount: 0, // Will be set by PDF.js
+            fileName,
+            fileData: data,
+            documentInfo,
+            pageCount: documentInfo.numPages,
             currentPage: 1,
             isModified: false,
             isLoading: false,
+            error: null,
+            renderer,
           });
         } catch (error) {
           set({
@@ -98,6 +133,22 @@ export const useDocumentStore = create<DocumentState>()(
         set({ zoom: Math.max(10, zoom - 25) });
       },
 
+      resetZoom: () => {
+        set({ zoom: 100 });
+      },
+
+      fitToWidth: () => {
+        // This will be implemented when we have container dimensions
+        // For now, set to a reasonable default
+        set({ zoom: 100 });
+      },
+
+      fitToPage: () => {
+        // This will be implemented when we have container dimensions
+        // For now, set to a reasonable default
+        set({ zoom: 75 });
+      },
+
       setViewMode: (mode) => {
         set({ viewMode: mode });
       },
@@ -107,13 +158,20 @@ export const useDocumentStore = create<DocumentState>()(
       },
 
       closeDocument: () => {
+        const { renderer } = get();
+        if (renderer) {
+          renderer.destroy();
+        }
+
         set({
           fileName: null,
           fileData: null,
+          documentInfo: null,
           pageCount: 0,
           currentPage: 1,
           isModified: false,
           error: null,
+          renderer: null,
         });
       },
     }),

@@ -1,4 +1,4 @@
-import type { AnnotationType, AnnotationRect, AnnotationReply } from './index';
+import type { AnnotationRect, AnnotationReply } from './index';
 
 export interface HighlightAnnotation {
   id: string;
