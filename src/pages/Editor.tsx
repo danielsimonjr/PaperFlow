@@ -9,6 +9,7 @@ import { LoadingOverlay } from '@components/ui/LoadingIndicator';
 import { useFileSystem } from '@hooks/useFileSystem';
 import { useBeforeUnload } from '@hooks/useBeforeUnload';
 import { useAutoSave } from '@hooks/useAutoSave';
+import { useFormFields } from '@hooks/useFormFields';
 import { useDocumentStore } from '@stores/documentStore';
 
 export default function Editor() {
@@ -21,6 +22,9 @@ export default function Editor() {
 
   // Warn before leaving with unsaved changes
   useBeforeUnload(isModified);
+
+  // Initialize form fields extraction
+  useFormFields();
 
   // Enable auto-save
   useAutoSave({
