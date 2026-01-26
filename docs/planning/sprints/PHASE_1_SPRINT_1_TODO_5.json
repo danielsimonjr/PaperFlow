@@ -1,0 +1,137 @@
+{
+  "phase": 1,
+  "sprint": 1,
+  "todoFile": 5,
+  "title": "UI, Routing & State Management",
+  "priority": "HIGH",
+  "effort": "15 hours",
+  "status": "pending",
+  "milestone": "Internal Alpha (end of Sprint 2)",
+  "targetMetrics": {
+    "lighthousePWA": {
+      "current": "N/A",
+      "target": "≥ 90"
+    },
+    "pdfLoadTime": {
+      "current": "N/A",
+      "target": "< 2 seconds for 10-page doc"
+    }
+  },
+  "tasks": [
+    {
+      "id": "1.5.5",
+      "category": "ui",
+      "title": "Implement Dark Mode Toggle",
+      "description": "Add dark mode support with system preference detection and persistence.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/stores/uiStore.ts", "src/components/ui/ThemeToggle.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "Dark mode toggles correctly",
+        "Respects system preference on first visit",
+        "Preference persists to localStorage"
+      ]
+    },
+    {
+      "id": "1.5.6",
+      "category": "routing",
+      "title": "Set up React Router",
+      "description": "Configure React Router with routes for home, editor, settings, and 404.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/App.tsx", "src/pages/Home.tsx", "src/pages/Editor.tsx", "src/pages/Settings.tsx", "src/pages/NotFound.tsx"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": [
+        "/ route shows Home page",
+        "/editor route shows Editor",
+        "/settings route shows Settings",
+        "404 page shows for unknown routes"
+      ]
+    },
+    {
+      "id": "1.6.1",
+      "category": "state",
+      "title": "Create documentStore",
+      "description": "Implement Zustand store for document state including file, pages, zoom, and view mode.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/stores/documentStore.ts"],
+      "testCategories": ["unit"],
+      "implementation": {
+        "purpose": "Central state management for the loaded PDF document",
+        "keyDecisions": [
+          "Persist zoom and viewMode to localStorage",
+          "Store file handle for File System Access API",
+          "Track modified state for save warning"
+        ]
+      },
+      "acceptanceCriteria": [
+        "State: fileName, fileData, pageCount, currentPage, zoom, viewMode, isModified, isLoading, error",
+        "Actions: loadDocument, setCurrentPage, nextPage, prevPage, setZoom, zoomIn, zoomOut, setViewMode, closeDocument",
+        "Zoom and viewMode persist across sessions"
+      ]
+    },
+    {
+      "id": "1.6.2",
+      "category": "state",
+      "title": "Create uiStore",
+      "description": "Implement Zustand store for UI state including sidebar, dialogs, and dark mode.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/stores/uiStore.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": [
+        "State: sidebarOpen, sidebarWidth, activeDialog, darkMode",
+        "Actions: toggleSidebar, setSidebarWidth, openDialog, closeDialog, toggleDarkMode",
+        "Dark mode persists to localStorage"
+      ]
+    },
+    {
+      "id": "1.6.3",
+      "category": "state",
+      "title": "Create settingsStore",
+      "description": "Implement Zustand store for user settings with localStorage persistence.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/stores/settingsStore.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": [
+        "State: defaultZoom, defaultViewMode, smoothScrolling, autoSave, defaultHighlightColor",
+        "All settings persist to localStorage",
+        "Settings can be reset to defaults"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Dark mode toggles correctly and persists",
+    "All routes work correctly",
+    "Zustand stores manage state properly",
+    "Settings persist across sessions"
+  ],
+  "filesCreated": [
+    "src/components/ui/ThemeToggle.tsx",
+    "src/stores/documentStore.ts",
+    "src/stores/uiStore.ts",
+    "src/stores/settingsStore.ts",
+    "src/pages/Home.tsx",
+    "src/pages/Editor.tsx",
+    "src/pages/Settings.tsx",
+    "src/pages/NotFound.tsx"
+  ],
+  "filesModified": [
+    "src/App.tsx"
+  ],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 12,
+  "dependencies": ["PHASE_1_SPRINT_1_TODO_4"],
+  "notes": [
+    "Dark mode uses 'class' strategy for Tailwind",
+    "Zustand stores should be tested in isolation"
+  ]
+}

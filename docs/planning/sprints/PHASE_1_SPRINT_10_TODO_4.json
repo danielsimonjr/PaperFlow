@@ -1,0 +1,54 @@
+{
+  "phase": 1,
+  "sprint": 10,
+  "todoFile": 4,
+  "title": "Accessibility Compliance",
+  "priority": "HIGH",
+  "effort": "11 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "10.3.3",
+      "category": "accessibility",
+      "title": "Implement High Contrast Mode",
+      "description": "High contrast theme for visual accessibility.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/styles/high-contrast.css"],
+      "testCategories": ["visual"],
+      "acceptanceCriteria": ["Detect system preference", "Manual toggle option", "Readable in high contrast"]
+    },
+    {
+      "id": "10.3.4",
+      "category": "accessibility",
+      "title": "Add Focus Indicators",
+      "description": "Visible focus rings and skip navigation.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/styles/focus.css"],
+      "testCategories": ["visual"],
+      "acceptanceCriteria": ["Focus rings visible", "Skip navigation link", "Focus trapping in modals"]
+    },
+    {
+      "id": "10.3.5",
+      "category": "accessibility",
+      "title": "Ensure Color Contrast Compliance",
+      "description": "WCAG AA color contrast for all UI elements.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["tailwind.config.js"],
+      "testCategories": ["visual"],
+      "acceptanceCriteria": ["4.5:1 contrast for text", "3:1 for large text/UI", "Lighthouse Accessibility ≥ 90"]
+    }
+  ],
+  "successCriteria": ["Focus is always visible", "Lighthouse Accessibility score ≥ 90"],
+  "filesCreated": ["src/styles/high-contrast.css", "src/styles/focus.css"],
+  "filesModified": ["tailwind.config.js"],
+  "totalNewTests": 3,
+  "totalEstimatedHours": 11,
+  "dependencies": ["PHASE_1_SPRINT_10_TODO_3"],
+  "notes": ["Lighthouse audit for accessibility verification"]
+}

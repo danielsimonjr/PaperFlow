@@ -1,0 +1,73 @@
+{
+  "phase": 1,
+  "sprint": 12,
+  "todoFile": 2,
+  "title": "Monitoring & Staging",
+  "priority": "HIGH",
+  "effort": "14 hours",
+  "status": "pending",
+  "milestone": "Public Launch v1.0",
+  "tasks": [
+    {
+      "id": "12.1.5",
+      "category": "monitoring",
+      "title": "Set Up Error Tracking",
+      "description": "Configure Sentry for error monitoring.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/lib/monitoring/sentry.ts"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Create Sentry project", "details": "Set up Sentry account and project" },
+        { "step": 2, "action": "Install Sentry SDK", "details": "npm install @sentry/react" },
+        { "step": 3, "action": "Configure error capturing", "details": "Initialize in main.tsx" },
+        { "step": 4, "action": "Set up alerts", "details": "Configure error notifications" }
+      ],
+      "acceptanceCriteria": ["Errors captured", "Source maps uploaded", "Alerts configured"]
+    },
+    {
+      "id": "12.1.6",
+      "category": "monitoring",
+      "title": "Set Up Analytics",
+      "description": "Configure privacy-respecting analytics.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/lib/monitoring/analytics.ts"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Analytics SDK integrated", "Page views tracked", "Privacy-respecting (no PII)"]
+    },
+    {
+      "id": "12.1.7",
+      "category": "security",
+      "title": "Configure Content Security Policy",
+      "description": "Set strict CSP headers for security.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["public/_headers"],
+      "testCategories": ["security"],
+      "acceptanceCriteria": ["CSP headers set", "No inline script errors", "Third-party restrictions"]
+    },
+    {
+      "id": "12.1.8",
+      "category": "deployment",
+      "title": "Set Up Staging Environment",
+      "description": "Create staging environment for pre-production testing.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": [".github/workflows/staging.yml"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Staging URL configured", "Auto-deploy on develop branch", "Isolated from production"]
+    }
+  ],
+  "successCriteria": ["Analytics and monitoring active", "CSP configured", "Staging environment ready"],
+  "filesCreated": ["src/lib/monitoring/sentry.ts", "src/lib/monitoring/analytics.ts", ".github/workflows/staging.yml"],
+  "filesModified": ["public/_headers", "src/main.tsx"],
+  "totalNewTests": 2,
+  "totalEstimatedHours": 14,
+  "dependencies": ["PHASE_1_SPRINT_12_TODO_1"],
+  "notes": ["Sentry free tier sufficient for initial launch", "Consider Plausible or Fathom for privacy-respecting analytics"]
+}

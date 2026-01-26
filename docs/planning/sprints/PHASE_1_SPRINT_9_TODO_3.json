@@ -1,0 +1,90 @@
+{
+  "phase": 1,
+  "sprint": 9,
+  "todoFile": 3,
+  "title": "Print Execution & Sharing",
+  "priority": "MEDIUM",
+  "effort": "18 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "9.2.5",
+      "category": "print",
+      "title": "Add Copies Count",
+      "description": "Set number of copies to print.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/print/PrintDialog.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Copies input (1-99)", "Passed to browser print"]
+    },
+    {
+      "id": "9.2.6",
+      "category": "print",
+      "title": "Add Print Annotations Option",
+      "description": "Toggle whether to include annotations in print.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/lib/print/printRenderer.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Toggle for annotations", "Default: include", "Preview shows/hides"]
+    },
+    {
+      "id": "9.2.7",
+      "category": "print",
+      "title": "Add Print Form Fields Option",
+      "description": "Toggle whether to include form field values in print.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/lib/print/printRenderer.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Toggle for form fields", "Default: include", "Preview shows values"]
+    },
+    {
+      "id": "9.2.8",
+      "category": "print",
+      "title": "Execute Print with Options",
+      "description": "Apply selected options and trigger browser print.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/lib/print/executePrint.ts"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Options applied to output", "Browser print dialog opens", "Output matches preview"]
+    },
+    {
+      "id": "9.3.1",
+      "category": "share",
+      "title": "Email Document Option",
+      "description": "Open email client with document attached.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/lib/share/emailShare.ts"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Opens default email client", "Document as attachment", "Works on desktop browsers"]
+    },
+    {
+      "id": "9.3.2",
+      "category": "share",
+      "title": "Copy Link to Clipboard",
+      "description": "Copy shareable URL if document is from URL.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/lib/share/copyLink.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Copy URL if loaded from URL", "Toast confirms copy", "Disabled for local files"]
+    }
+  ],
+  "successCriteria": ["Print options apply correctly", "Printed output matches preview", "Sharing options work"],
+  "filesCreated": ["src/lib/print/printRenderer.ts", "src/lib/print/executePrint.ts", "src/lib/share/emailShare.ts", "src/lib/share/copyLink.ts"],
+  "filesModified": ["src/components/print/PrintDialog.tsx", "src/components/layout/Toolbar.tsx"],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 18,
+  "dependencies": ["PHASE_1_SPRINT_9_TODO_2"],
+  "notes": ["Email attachment size limits apply"]
+}

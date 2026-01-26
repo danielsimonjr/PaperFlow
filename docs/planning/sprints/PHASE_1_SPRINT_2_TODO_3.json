@@ -1,0 +1,105 @@
+{
+  "phase": 1,
+  "sprint": 2,
+  "todoFile": 3,
+  "title": "View Modes",
+  "priority": "HIGH",
+  "effort": "19 hours",
+  "status": "pending",
+  "milestone": "Internal Alpha Complete",
+  "tasks": [
+    {
+      "id": "2.3.1",
+      "category": "viewer",
+      "title": "Implement Single Page View",
+      "description": "Single page view with centered page and vertical scrolling.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/viewer/SinglePageView.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "Single page centered horizontally",
+        "Vertical scrolling between pages",
+        "Smooth scroll animation"
+      ]
+    },
+    {
+      "id": "2.3.2",
+      "category": "viewer",
+      "title": "Implement Continuous Scroll View",
+      "description": "Continuous scroll view with virtualized rendering for performance.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/components/viewer/ContinuousView.tsx", "src/hooks/useVirtualization.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Implement virtualized page list", "details": "Only render visible pages + 2 ahead/behind" },
+        { "step": 2, "action": "Track scroll position", "details": "Update current page based on scroll" },
+        { "step": 3, "action": "Dispose off-screen canvases", "details": "Release memory for non-visible pages" }
+      ],
+      "acceptanceCriteria": [
+        "All pages visible in scroll",
+        "Only visible pages rendered",
+        "Smooth scrolling performance",
+        "Memory usage stays reasonable"
+      ]
+    },
+    {
+      "id": "2.3.3",
+      "category": "viewer",
+      "title": "Implement Two-Page Spread View",
+      "description": "Two-page spread view with cover mode option.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/viewer/SpreadView.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "Two pages displayed side by side",
+        "First page on right (cover mode)",
+        "Option for first page on left",
+        "Navigation jumps by 2 pages"
+      ]
+    },
+    {
+      "id": "2.3.4",
+      "category": "viewer",
+      "title": "Create View Mode Toggle",
+      "description": "Add view mode toggle in toolbar and persist preference.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/toolbar/ViewModeToggle.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": [
+        "Toggle buttons for single/continuous/spread",
+        "Active mode highlighted",
+        "Preference persists"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "All three view modes work correctly",
+    "Virtualized rendering prevents memory issues",
+    "View mode preference persists"
+  ],
+  "filesCreated": [
+    "src/components/viewer/SinglePageView.tsx",
+    "src/components/viewer/ContinuousView.tsx",
+    "src/components/viewer/SpreadView.tsx",
+    "src/components/toolbar/ViewModeToggle.tsx",
+    "src/hooks/useVirtualization.ts"
+  ],
+  "filesModified": [
+    "src/components/layout/Toolbar.tsx",
+    "src/stores/documentStore.ts"
+  ],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 19,
+  "dependencies": ["PHASE_1_SPRINT_2_TODO_1"],
+  "notes": [
+    "Virtualized rendering critical for large documents"
+  ]
+}

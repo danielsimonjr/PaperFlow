@@ -1,0 +1,87 @@
+{
+  "phase": 1,
+  "sprint": 5,
+  "todoFile": 2,
+  "title": "Advanced Form Fields & Navigation",
+  "priority": "HIGH",
+  "effort": "20 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "tabNavigation": { "current": "N/A", "target": "Correct tab order per PDF specification" }
+  },
+  "tasks": [
+    {
+      "id": "5.2.3",
+      "category": "components",
+      "title": "Create RadioButton Component",
+      "description": "Form field component for radio button groups.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/forms/RadioButton.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Radio buttons grouped correctly", "Mutual exclusivity enforced", "Visual selection indicator"]
+    },
+    {
+      "id": "5.2.4",
+      "category": "components",
+      "title": "Create Dropdown Component",
+      "description": "Form field component for dropdown/listbox fields.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/forms/Dropdown.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Dropdown opens on click", "Options display correctly", "Search/filter for long lists", "Custom value if allowed"]
+    },
+    {
+      "id": "5.2.5",
+      "category": "components",
+      "title": "Create FormFieldRenderer",
+      "description": "Component to render correct field type based on field data.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/forms/FormFieldRenderer.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Renders correct component per field type", "Handles unknown field types gracefully", "Passes field properties correctly"]
+    },
+    {
+      "id": "5.3.1",
+      "category": "interaction",
+      "title": "Implement Tab Navigation",
+      "description": "Tab key navigation between form fields in correct order.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/hooks/useFormNavigation.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Parse tab order from PDF", "details": "Use field tabIndex or calculate from position" },
+        { "step": 2, "action": "Handle Tab key press", "details": "Move focus to next field" },
+        { "step": 3, "action": "Handle Shift+Tab", "details": "Move focus to previous field" },
+        { "step": 4, "action": "Visual focus indicator", "details": "Highlight focused field" }
+      ],
+      "acceptanceCriteria": ["Tab moves to next field", "Shift+Tab moves to previous", "Follows PDF tab order", "Focus indicator visible"]
+    },
+    {
+      "id": "5.3.2",
+      "category": "interaction",
+      "title": "Add Auto-Advance Option",
+      "description": "Optional auto-advance to next field on completion.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/stores/settingsStore.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Setting to enable/disable", "Auto-advance on text field completion", "Auto-advance after checkbox/radio selection"]
+    }
+  ],
+  "successCriteria": ["All field types can be filled", "Tab navigation works in correct order", "Auto-advance option works"],
+  "filesCreated": ["src/components/forms/RadioButton.tsx", "src/components/forms/Dropdown.tsx", "src/components/forms/FormFieldRenderer.tsx", "src/hooks/useFormNavigation.ts"],
+  "filesModified": ["src/stores/settingsStore.ts"],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 20,
+  "dependencies": ["PHASE_1_SPRINT_5_TODO_1"],
+  "notes": ["Tab order may need calculation from position if not specified"]
+}

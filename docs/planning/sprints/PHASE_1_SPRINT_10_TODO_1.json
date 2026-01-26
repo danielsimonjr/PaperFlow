@@ -1,0 +1,86 @@
+{
+  "phase": 1,
+  "sprint": 10,
+  "todoFile": 1,
+  "title": "Performance Optimization",
+  "priority": "HIGH",
+  "effort": "24 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "largeDocumentPerformance": { "current": "N/A", "target": "100+ pages renders smoothly" },
+    "bundleSize": { "current": "N/A", "target": "< 200 KB gzipped initial" }
+  },
+  "tasks": [
+    {
+      "id": "10.1.1",
+      "category": "performance",
+      "title": "Implement Virtualized Page Rendering",
+      "description": "Only render visible pages plus buffer for performance.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/components/viewer/VirtualizedViewer.tsx", "src/hooks/useVisiblePages.ts"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Optimize memory and performance for large documents",
+        "keyDecisions": ["Render visible pages + 2 buffer", "Dispose off-screen pages", "Track scroll position for visibility"]
+      },
+      "stepByStep": [
+        { "step": 1, "action": "Track viewport bounds", "details": "IntersectionObserver or scroll position" },
+        { "step": 2, "action": "Calculate visible pages", "details": "Based on page heights and scroll" },
+        { "step": 3, "action": "Buffer ahead and behind", "details": "Render 2 pages before/after visible" },
+        { "step": 4, "action": "Dispose off-screen canvases", "details": "Release memory for non-visible" }
+      ],
+      "acceptanceCriteria": ["Only visible pages rendered", "Smooth scrolling", "Memory stays reasonable", "100+ page documents work"]
+    },
+    {
+      "id": "10.1.2",
+      "category": "performance",
+      "title": "Optimize Thumbnail Generation",
+      "description": "Generate thumbnails in Web Worker with caching.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/workers/thumbnailWorker.ts", "src/lib/thumbnails/cache.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Thumbnails generate in worker", "Main thread stays responsive", "Thumbnails cached", "Progressive loading"]
+    },
+    {
+      "id": "10.1.3",
+      "category": "ui",
+      "title": "Add Loading Skeletons",
+      "description": "Show skeleton placeholders while content loads.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/ui/Skeleton.tsx", "src/components/viewer/PageSkeleton.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Page skeleton while loading", "Thumbnail skeleton", "Smooth transition to content"]
+    },
+    {
+      "id": "10.1.4",
+      "category": "performance",
+      "title": "Reduce Bundle Size",
+      "description": "Code splitting and tree shaking for smaller initial bundle.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["vite.config.ts"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Code split by route", "details": "Lazy load route components" },
+        { "step": 2, "action": "Dynamic imports for heavy features", "details": "Signature, drawing, etc." },
+        { "step": 3, "action": "Verify tree shaking", "details": "Check for unused code" },
+        { "step": 4, "action": "Analyze bundle", "details": "Use rollup-plugin-visualizer" }
+      ],
+      "acceptanceCriteria": ["Initial bundle < 200 KB gzipped", "Routes lazy loaded", "Heavy features split"]
+    }
+  ],
+  "successCriteria": ["Large documents (100+ pages) perform well", "Memory usage stays reasonable", "Initial bundle size small"],
+  "filesCreated": ["src/components/viewer/VirtualizedViewer.tsx", "src/hooks/useVisiblePages.ts", "src/workers/thumbnailWorker.ts", "src/lib/thumbnails/cache.ts", "src/components/ui/Skeleton.tsx", "src/components/viewer/PageSkeleton.tsx"],
+  "filesModified": ["vite.config.ts", "src/components/viewer/PDFViewer.tsx"],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 24,
+  "dependencies": ["Sprint 1-9"],
+  "notes": ["Virtual rendering critical for 100+ page documents", "Web Workers for CPU-intensive operations"]
+}

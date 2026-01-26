@@ -1,0 +1,72 @@
+{
+  "phase": 1,
+  "sprint": 4,
+  "todoFile": 3,
+  "title": "Shape Tools Part 2",
+  "priority": "HIGH",
+  "effort": "17 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "4.2.5",
+      "category": "shapes",
+      "title": "Implement Line Tool",
+      "description": "Click and drag to create straight lines with angle constraints.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/annotations/LineTool.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Click and drag creates line", "Shift constrains to 45° angles", "Preview shows during drag"]
+    },
+    {
+      "id": "4.2.6",
+      "category": "shapes",
+      "title": "Add Shape Stroke and Fill Options",
+      "description": "Color pickers for stroke and fill with transparency.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/annotations/ShapeOptions.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Stroke color picker", "Fill color picker with transparency", "Stroke width options", "No fill option"]
+    },
+    {
+      "id": "4.2.7",
+      "category": "shapes",
+      "title": "Implement Shape Resize Handles",
+      "description": "Corner and edge handles for resizing shapes after creation.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/ResizeHandles.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Render corner handles", "details": "Small squares at corners" },
+        { "step": 2, "action": "Render edge handles", "details": "Small squares at edge midpoints" },
+        { "step": 3, "action": "Handle drag on handles", "details": "Resize shape based on handle dragged" },
+        { "step": 4, "action": "Maintain aspect ratio with Shift", "details": "Lock proportions when Shift held" }
+      ],
+      "acceptanceCriteria": ["Corner handles resize diagonally", "Edge handles resize one dimension", "Shift maintains aspect ratio"]
+    },
+    {
+      "id": "4.2.8",
+      "category": "shapes",
+      "title": "Implement Shape Rotation",
+      "description": "Rotation handle for rotating shapes with angle snapping.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/RotationHandle.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Rotation handle above shape", "Drag to rotate", "Shift snaps to 15° increments", "Rotation center at shape center"]
+    }
+  ],
+  "successCriteria": ["Line tool works correctly", "Shapes can be resized and rotated", "Shape options configurable"],
+  "filesCreated": ["src/components/annotations/LineTool.tsx", "src/components/annotations/ShapeOptions.tsx", "src/components/annotations/ResizeHandles.tsx", "src/components/annotations/RotationHandle.tsx"],
+  "filesModified": ["src/lib/annotations/serializer.ts"],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 17,
+  "dependencies": ["PHASE_1_SPRINT_4_TODO_2"],
+  "notes": ["SVG transform for rotation and scaling", "Consider canvas vs SVG trade-offs for drawing layer"]
+}

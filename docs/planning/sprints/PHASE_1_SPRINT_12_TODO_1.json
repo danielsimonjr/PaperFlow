@@ -1,0 +1,67 @@
+{
+  "phase": 1,
+  "sprint": 12,
+  "todoFile": 1,
+  "title": "Deployment Infrastructure",
+  "priority": "HIGH",
+  "effort": "10 hours",
+  "status": "pending",
+  "milestone": "Public Launch v1.0",
+  "tasks": [
+    {
+      "id": "12.1.1",
+      "category": "deployment",
+      "title": "Set Up Production Hosting",
+      "description": "Configure Cloudflare Pages for production deployment.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["wrangler.toml"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Cloudflare Pages project created", "Build configuration set", "Automatic deployments work"]
+    },
+    {
+      "id": "12.1.2",
+      "category": "deployment",
+      "title": "Configure CDN for Static Assets",
+      "description": "Optimize asset delivery with CDN caching.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["public/_headers"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Cache headers configured", "Static assets cached", "Cache invalidation works"]
+    },
+    {
+      "id": "12.1.3",
+      "category": "deployment",
+      "title": "Set Up Custom Domain",
+      "description": "Configure custom domain with DNS.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": [],
+      "testCategories": [],
+      "acceptanceCriteria": ["Custom domain configured", "DNS propagated", "Domain accessible"]
+    },
+    {
+      "id": "12.1.4",
+      "category": "deployment",
+      "title": "Configure SSL Certificate",
+      "description": "Enable HTTPS with SSL certificate.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": [],
+      "testCategories": [],
+      "acceptanceCriteria": ["SSL certificate active", "HTTP redirects to HTTPS", "Certificate auto-renews"]
+    }
+  ],
+  "successCriteria": ["Production deployment working", "Custom domain with SSL configured"],
+  "filesCreated": ["wrangler.toml", "public/_headers"],
+  "filesModified": [],
+  "totalNewTests": 2,
+  "totalEstimatedHours": 10,
+  "dependencies": ["Sprint 11"],
+  "notes": ["Cloudflare Pages provides free hosting with good performance"]
+}

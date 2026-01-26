@@ -1,0 +1,59 @@
+{
+  "phase": 1,
+  "sprint": 12,
+  "todoFile": 5,
+  "title": "Launch",
+  "priority": "HIGH",
+  "effort": "16 hours",
+  "status": "pending",
+  "milestone": "Public Launch v1.0",
+  "targetMetrics": {
+    "lighthousePWA": { "current": "N/A", "target": "100" },
+    "uptimeTarget": { "current": "N/A", "target": "99.9%" }
+  },
+  "tasks": [
+    {
+      "id": "12.5.1",
+      "category": "launch",
+      "title": "Soft Launch",
+      "description": "Limited release to early adopters.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": [],
+      "testCategories": [],
+      "acceptanceCriteria": ["Production deployed", "Limited audience access", "Monitoring active"]
+    },
+    {
+      "id": "12.5.2",
+      "category": "launch",
+      "title": "Monitor for Issues",
+      "description": "Watch for errors and performance issues.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": [],
+      "testCategories": [],
+      "acceptanceCriteria": ["Error rate < 0.1%", "No critical bugs", "Performance stable"]
+    },
+    {
+      "id": "12.5.3",
+      "category": "launch",
+      "title": "Public Launch",
+      "description": "Full public release and announcement.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": [],
+      "testCategories": [],
+      "acceptanceCriteria": ["Public access enabled", "Announcement posted", "v1.0 tagged in git"]
+    }
+  ],
+  "successCriteria": ["v1.0 released publicly", "No critical issues in production"],
+  "filesCreated": [],
+  "filesModified": ["README.md", "package.json"],
+  "totalNewTests": 0,
+  "totalEstimatedHours": 16,
+  "dependencies": ["PHASE_1_SPRINT_12_TODO_4"],
+  "notes": ["Tag git with v1.0.0 on release"]
+}

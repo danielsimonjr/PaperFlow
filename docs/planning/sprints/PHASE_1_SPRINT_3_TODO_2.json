@@ -1,0 +1,76 @@
+{
+  "phase": 1,
+  "sprint": 3,
+  "todoFile": 2,
+  "title": "Text Layer & Selection",
+  "priority": "HIGH",
+  "effort": "17 hours",
+  "status": "pending",
+  "milestone": "Closed Beta",
+  "targetMetrics": {
+    "selectionAccuracy": { "current": "N/A", "target": "Pixel-perfect text selection" }
+  },
+  "tasks": [
+    {
+      "id": "3.2.1",
+      "category": "text",
+      "title": "Enable PDF.js Text Layer",
+      "description": "Enable and configure PDF.js text layer for text selection.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/viewer/TextLayer.tsx"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Text layer renders over PDF page", "Text is selectable", "Selection spans match visual text"]
+    },
+    {
+      "id": "3.2.2",
+      "category": "text",
+      "title": "Capture Text Selection Events",
+      "description": "Handle text selection and extract selection rectangles.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/hooks/useTextSelection.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Listen for mouseup and selectionchange events", "details": "Capture when user completes selection" },
+        { "step": 2, "action": "Get selection rectangles", "details": "Use getClientRects() on Range" },
+        { "step": 3, "action": "Convert to PDF coordinates", "details": "Transform rects using coordinate utilities" },
+        { "step": 4, "action": "Handle multi-line selections", "details": "Multiple rects for wrapped text" }
+      ],
+      "acceptanceCriteria": ["Selection events captured", "Rectangles extracted correctly", "Multi-line selections handled", "Multi-column selections handled"]
+    },
+    {
+      "id": "3.2.3",
+      "category": "ui",
+      "title": "Show Selection Popup Menu",
+      "description": "Display popup menu after text selection with annotation options.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/SelectionPopup.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Popup appears on text selection", "Highlight button with color options", "Underline button", "Strikethrough button", "Copy text button", "Popup dismisses on click outside"]
+    },
+    {
+      "id": "3.3.1",
+      "category": "annotations",
+      "title": "Create Highlight Component",
+      "description": "SVG rectangle component for rendering text highlights with blend mode.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/Highlight.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Highlight renders over text", "Uses multiply blend mode", "Color and opacity configurable", "Shows border on hover"]
+    }
+  ],
+  "successCriteria": ["Text selection works on PDF pages", "Selection popup shows annotation options", "Highlight component renders correctly"],
+  "filesCreated": ["src/components/viewer/TextLayer.tsx", "src/hooks/useTextSelection.ts", "src/components/annotations/SelectionPopup.tsx", "src/components/annotations/Highlight.tsx"],
+  "filesModified": ["src/components/viewer/PageCanvas.tsx"],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 17,
+  "dependencies": ["PHASE_1_SPRINT_3_TODO_1"],
+  "notes": ["Text layer must be positioned exactly over rendered PDF"]
+}

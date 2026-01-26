@@ -1,0 +1,152 @@
+{
+  "phase": 1,
+  "sprint": 1,
+  "todoFile": 1,
+  "title": "Project Setup",
+  "priority": "HIGH",
+  "effort": "5 hours",
+  "status": "pending",
+  "milestone": "Internal Alpha (end of Sprint 2)",
+  "tasks": [
+    {
+      "id": "1.1.1",
+      "category": "setup",
+      "title": "Initialize Vite + React + TypeScript Project",
+      "description": "Create the base project using Vite template with React and TypeScript support.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": ["package.json", "tsconfig.json", "vite.config.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Run Vite create command",
+          "details": "npm create vite@latest paperflow -- --template react-ts"
+        },
+        {
+          "step": 2,
+          "action": "Install dependencies",
+          "details": "npm install"
+        },
+        {
+          "step": 3,
+          "action": "Verify project runs",
+          "details": "npm run dev"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Project runs with npm run dev",
+        "TypeScript compilation succeeds",
+        "React app renders in browser"
+      ]
+    },
+    {
+      "id": "1.1.2",
+      "category": "setup",
+      "title": "Configure Tailwind CSS with Custom Theme",
+      "description": "Set up Tailwind CSS with custom color scheme and dark mode support.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["tailwind.config.js", "postcss.config.js", "src/index.css"],
+      "testCategories": ["visual"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Install Tailwind and dependencies",
+          "details": "npm install tailwindcss postcss autoprefixer"
+        },
+        {
+          "step": 2,
+          "action": "Initialize Tailwind config",
+          "details": "npx tailwindcss init -p"
+        },
+        {
+          "step": 3,
+          "action": "Configure custom colors",
+          "details": "Add primary colors #1E3A5F (brand), #3B82F6 (accent)"
+        },
+        {
+          "step": 4,
+          "action": "Enable dark mode",
+          "details": "Set darkMode: 'class' in config"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Tailwind CSS classes work in components",
+        "Custom colors available (primary, accent)",
+        "Dark mode toggles correctly"
+      ]
+    },
+    {
+      "id": "1.1.3",
+      "category": "setup",
+      "title": "Set up ESLint + Prettier",
+      "description": "Configure code linting and formatting with strict rules.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": [".eslintrc.cjs", ".prettierrc", ".eslintignore"],
+      "testCategories": ["lint"],
+      "acceptanceCriteria": [
+        "ESLint runs without errors on clean code",
+        "Prettier formats code consistently",
+        "npm run lint command works"
+      ]
+    },
+    {
+      "id": "1.1.4",
+      "category": "setup",
+      "title": "Configure Path Aliases",
+      "description": "Set up TypeScript path aliases for cleaner imports (@components, @hooks, etc.).",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": ["tsconfig.json", "vite.config.ts"],
+      "testCategories": ["typecheck"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Update tsconfig.json paths",
+          "details": "Add @/ → src/, @components/, @hooks/, @stores/, @lib/, @utils/, @types/"
+        },
+        {
+          "step": 2,
+          "action": "Update vite.config.ts resolve.alias",
+          "details": "Mirror the same aliases for Vite bundling"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Imports like @components/Button work",
+        "TypeScript recognizes aliased paths",
+        "Vite builds successfully with aliases"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Vite project runs with npm run dev",
+    "Tailwind CSS styling works",
+    "ESLint and Prettier configured",
+    "Path aliases work for imports"
+  ],
+  "filesCreated": [
+    "package.json",
+    "tsconfig.json",
+    "vite.config.ts",
+    "tailwind.config.js",
+    "postcss.config.js",
+    ".eslintrc.cjs",
+    ".prettierrc",
+    ".eslintignore",
+    "src/index.css"
+  ],
+  "filesModified": [],
+  "totalNewTests": 0,
+  "totalEstimatedHours": 5,
+  "dependencies": [],
+  "notes": [
+    "Path aliases must be configured in both tsconfig.json and vite.config.ts",
+    "Dark mode uses 'class' strategy for Tailwind"
+  ]
+}

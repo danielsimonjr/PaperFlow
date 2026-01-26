@@ -1,0 +1,70 @@
+{
+  "phase": 1,
+  "sprint": 12,
+  "todoFile": 4,
+  "title": "Reviews & Checklists",
+  "priority": "HIGH",
+  "effort": "22 hours",
+  "status": "pending",
+  "milestone": "Public Launch v1.0",
+  "targetMetrics": {
+    "errorRate": { "current": "N/A", "target": "< 0.1%" }
+  },
+  "tasks": [
+    {
+      "id": "12.4.1",
+      "category": "checklist",
+      "title": "Beta Testing Feedback Review",
+      "description": "Review and incorporate beta tester feedback.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": [],
+      "testCategories": [],
+      "acceptanceCriteria": ["Feedback collected", "Issues prioritized", "Critical feedback addressed"]
+    },
+    {
+      "id": "12.4.2",
+      "category": "checklist",
+      "title": "Security Review",
+      "description": "Security audit of application.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["docs/SECURITY.md"],
+      "testCategories": ["security"],
+      "acceptanceCriteria": ["No XSS vulnerabilities", "CSP properly configured", "Dependencies audited", "Security doc created"]
+    },
+    {
+      "id": "12.4.3",
+      "category": "checklist",
+      "title": "Accessibility Audit",
+      "description": "Final accessibility review.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": [],
+      "testCategories": ["accessibility"],
+      "acceptanceCriteria": ["Lighthouse Accessibility ≥ 90", "Screen reader tested", "Keyboard navigation verified"]
+    },
+    {
+      "id": "12.4.4",
+      "category": "checklist",
+      "title": "Load Testing",
+      "description": "Verify performance under load.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": [],
+      "testCategories": ["performance"],
+      "acceptanceCriteria": ["Large documents tested", "Multiple tabs tested", "Memory limits verified"]
+    }
+  ],
+  "successCriteria": ["All reviews passed", "Ready for launch"],
+  "filesCreated": ["docs/SECURITY.md"],
+  "filesModified": [],
+  "totalNewTests": 2,
+  "totalEstimatedHours": 22,
+  "dependencies": ["PHASE_1_SPRINT_12_TODO_3"],
+  "notes": ["Prepare rollback plan if critical issues found"]
+}

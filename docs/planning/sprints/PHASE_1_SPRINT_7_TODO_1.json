@@ -1,0 +1,71 @@
+{
+  "phase": 1,
+  "sprint": 7,
+  "todoFile": 1,
+  "title": "Text Selection & Copy",
+  "priority": "MEDIUM",
+  "effort": "13 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "7.1.1",
+      "category": "selection",
+      "title": "Select Existing Text on Page",
+      "description": "Allow selecting text for copying and editing.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/editor/TextSelector.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Click and drag text selection", "details": "Standard text selection behavior" },
+        { "step": 2, "action": "Double-click for word selection", "details": "Select entire word" },
+        { "step": 3, "action": "Triple-click for paragraph", "details": "Select entire text block" }
+      ],
+      "acceptanceCriteria": ["Click-drag selection works", "Double-click selects word", "Triple-click selects paragraph", "Selection highlights text"]
+    },
+    {
+      "id": "7.1.2",
+      "category": "properties",
+      "title": "Show Text Properties Panel",
+      "description": "Display detected font properties for selected text.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/editor/TextProperties.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Font family shown", "Font size shown", "Color shown", "Bold/Italic/Underline status"]
+    },
+    {
+      "id": "7.1.3",
+      "category": "clipboard",
+      "title": "Copy Text to Clipboard",
+      "description": "Copy selected text to system clipboard.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/hooks/useClipboard.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Ctrl/Cmd+C copies text", "Right-click Copy option", "Toast confirms copy"]
+    },
+    {
+      "id": "7.1.4",
+      "category": "selection",
+      "title": "Select All Text on Page",
+      "description": "Ctrl+A to select all text on current page.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/editor/TextSelector.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Ctrl/Cmd+A selects all", "Only when text layer focused", "All page text selected"]
+    }
+  ],
+  "successCriteria": ["Text can be selected and copied", "Text properties shown for selection"],
+  "filesCreated": ["src/components/editor/TextSelector.tsx", "src/components/editor/TextProperties.tsx", "src/hooks/useClipboard.ts"],
+  "filesModified": ["src/components/viewer/TextLayer.tsx"],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 13,
+  "dependencies": ["Sprint 3"],
+  "notes": ["PDF text selection uses PDF.js text layer"]
+}

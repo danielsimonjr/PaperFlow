@@ -1,0 +1,99 @@
+{
+  "phase": 1,
+  "sprint": 9,
+  "todoFile": 1,
+  "title": "PDF Export & Compression",
+  "priority": "MEDIUM",
+  "effort": "28 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "exportQuality": { "current": "N/A", "target": "300 DPI for print-quality images" },
+    "compressionRatio": { "current": "N/A", "target": "50%+ file size reduction" }
+  },
+  "tasks": [
+    {
+      "id": "9.1.1",
+      "category": "export",
+      "title": "Export to PDF with All Changes",
+      "description": "Save PDF with all edits, annotations, and form data.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/lib/export/pdfExport.ts"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Complete PDF export with all modifications",
+        "keyDecisions": ["Embed annotations into PDF", "Include form data", "Option to flatten"]
+      },
+      "acceptanceCriteria": ["All annotations included", "Form data included", "Text edits included", "Signatures embedded"]
+    },
+    {
+      "id": "9.1.2",
+      "category": "export",
+      "title": "Add Flatten Annotations Option",
+      "description": "Option to permanently embed annotations into PDF content.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/lib/export/flattenPdf.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Flatten option in export dialog", "Annotations become part of content", "Non-editable after flatten"]
+    },
+    {
+      "id": "9.1.3",
+      "category": "export",
+      "title": "Export to PNG",
+      "description": "Export pages as PNG images.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/lib/export/imageExport.ts", "src/components/export/ImageExportDialog.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Render page to high-res canvas", "details": "Scale based on DPI setting" },
+        { "step": 2, "action": "Include annotations layer", "details": "Composite annotations onto canvas" },
+        { "step": 3, "action": "Export as PNG", "details": "canvas.toBlob('image/png')" },
+        { "step": 4, "action": "Download or ZIP multiple", "details": "Single download or ZIP for all pages" }
+      ],
+      "acceptanceCriteria": ["Single page export works", "All pages to ZIP works", "Resolution options: 72, 150, 300 DPI", "Annotations included"]
+    },
+    {
+      "id": "9.1.4",
+      "category": "export",
+      "title": "Export to JPEG",
+      "description": "Export pages as JPEG images with quality control.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/lib/export/imageExport.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["JPEG export works", "Quality slider (60-100%)", "Same options as PNG"]
+    },
+    {
+      "id": "9.1.5",
+      "category": "compression",
+      "title": "Implement PDF Compression",
+      "description": "Reduce PDF file size by compressing images and removing metadata.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/lib/export/compressPdf.ts", "src/components/export/CompressDialog.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Analyze current file size", "details": "Show breakdown by content type" },
+        { "step": 2, "action": "Image quality reduction", "details": "Re-encode images at lower quality" },
+        { "step": 3, "action": "Remove metadata option", "details": "Strip document info" },
+        { "step": 4, "action": "Subsample images option", "details": "Reduce image resolution" },
+        { "step": 5, "action": "Show size comparison", "details": "Before/after file sizes" }
+      ],
+      "acceptanceCriteria": ["File size reduced", "Quality/size trade-off configurable", "Before/after comparison shown", "Document remains valid PDF"]
+    }
+  ],
+  "successCriteria": ["PDF export includes all changes", "Image export works for PNG and JPEG", "Compression reduces file size"],
+  "filesCreated": ["src/lib/export/pdfExport.ts", "src/lib/export/flattenPdf.ts", "src/lib/export/imageExport.ts", "src/lib/export/compressPdf.ts", "src/components/export/ImageExportDialog.tsx", "src/components/export/CompressDialog.tsx"],
+  "filesModified": ["src/lib/pdf/saver.ts"],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 28,
+  "dependencies": ["Sprint 3", "Sprint 5", "Sprint 6"],
+  "notes": ["High-DPI export needs careful canvas sizing", "PDF compression may lose some quality"]
+}

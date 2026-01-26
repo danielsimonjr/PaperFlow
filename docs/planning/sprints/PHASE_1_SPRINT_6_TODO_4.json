@@ -1,0 +1,79 @@
+{
+  "phase": 1,
+  "sprint": 6,
+  "todoFile": 4,
+  "title": "Advanced Signature Features",
+  "priority": "HIGH",
+  "effort": "18 hours",
+  "status": "pending",
+  "milestone": "Open Beta",
+  "tasks": [
+    {
+      "id": "6.3.3",
+      "category": "placement",
+      "title": "Implement Signature Rotation",
+      "description": "Optional rotation for placed signatures.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/signatures/SignatureRotation.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Rotation handle", "Snap to common angles", "Rotation persists"]
+    },
+    {
+      "id": "6.3.4",
+      "category": "placement",
+      "title": "Support Multiple Signatures Per Document",
+      "description": "Allow placing multiple signatures on different pages.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/stores/signatureStore.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Multiple signatures can be placed", "Different pages supported", "Each independently selectable"]
+    },
+    {
+      "id": "6.3.5",
+      "category": "placement",
+      "title": "Align Signature to Form Field",
+      "description": "Auto-align signature to detected signature fields.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/lib/signatures/fieldAlignment.ts"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Detect signature form fields", "Snap to field bounds", "Resize to fit field"]
+    },
+    {
+      "id": "6.3.6",
+      "category": "placement",
+      "title": "Add Date Stamp Option",
+      "description": "Auto-insert current date near signature.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/signatures/DateStamp.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Option to add date", "Configurable date format", "Position relative to signature"]
+    },
+    {
+      "id": "6.4.1",
+      "category": "persistence",
+      "title": "Embed Signatures When Saving PDF",
+      "description": "Include signature images in saved PDF file.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/lib/pdf/signatureEmbed.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Signatures embedded in PDF", "Correct position and size", "Visible in other PDF readers"]
+    }
+  ],
+  "successCriteria": ["Signatures can be rotated", "Multiple signatures per document", "Signature fields in forms are fillable", "Signatures are embedded when saving PDF"],
+  "filesCreated": ["src/components/signatures/SignatureRotation.tsx", "src/lib/signatures/fieldAlignment.ts", "src/components/signatures/DateStamp.tsx", "src/lib/pdf/signatureEmbed.ts"],
+  "filesModified": ["src/stores/signatureStore.ts", "src/stores/annotationStore.ts", "src/lib/pdf/saver.ts"],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 18,
+  "dependencies": ["PHASE_1_SPRINT_6_TODO_3"],
+  "notes": ["This is visual signature only, not cryptographic signing"]
+}

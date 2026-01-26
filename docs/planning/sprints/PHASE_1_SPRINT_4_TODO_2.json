@@ -1,0 +1,72 @@
+{
+  "phase": 1,
+  "sprint": 4,
+  "todoFile": 2,
+  "title": "Shape Tools Part 1",
+  "priority": "HIGH",
+  "effort": "17 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "4.2.1",
+      "category": "shapes",
+      "title": "Create ShapeOverlay Component",
+      "description": "SVG overlay for rendering shape annotations.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/ShapeOverlay.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["SVG overlay positions over page", "Renders rectangle, circle, arrow, line shapes", "Shapes scale with zoom"]
+    },
+    {
+      "id": "4.2.2",
+      "category": "shapes",
+      "title": "Implement Rectangle Tool",
+      "description": "Click and drag to create rectangles with Shift for squares.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/RectangleTool.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Handle drag start/move/end", "details": "Track start point and current point" },
+        { "step": 2, "action": "Calculate rectangle bounds", "details": "From start to current point" },
+        { "step": 3, "action": "Add Shift constraint", "details": "Constrain to square when Shift held" },
+        { "step": 4, "action": "Preview during drag", "details": "Show rectangle outline while dragging" }
+      ],
+      "acceptanceCriteria": ["Click and drag creates rectangle", "Shift constrains to square", "Preview shows during drag"]
+    },
+    {
+      "id": "4.2.3",
+      "category": "shapes",
+      "title": "Implement Circle/Ellipse Tool",
+      "description": "Click and drag to create ellipses with Shift for circles.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/EllipseTool.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Click and drag creates ellipse", "Drag from center point", "Shift constrains to circle", "Preview shows during drag"]
+    },
+    {
+      "id": "4.2.4",
+      "category": "shapes",
+      "title": "Implement Arrow Tool",
+      "description": "Click and drag to create arrows with configurable head.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/ArrowTool.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Click and drag creates arrow", "Arrowhead at end point", "Configurable head size", "Shift for 45° increments"]
+    }
+  ],
+  "successCriteria": ["Rectangle tool creates correct shapes", "Ellipse tool creates correct shapes", "Arrow tool creates arrows with heads"],
+  "filesCreated": ["src/components/annotations/ShapeOverlay.tsx", "src/components/annotations/RectangleTool.tsx", "src/components/annotations/EllipseTool.tsx", "src/components/annotations/ArrowTool.tsx"],
+  "filesModified": ["src/types/annotations.ts"],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 17,
+  "dependencies": ["PHASE_1_SPRINT_4_TODO_1"],
+  "notes": ["SVG transform for rotation and scaling"]
+}

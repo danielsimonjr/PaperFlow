@@ -1,0 +1,73 @@
+{
+  "phase": 1,
+  "sprint": 3,
+  "todoFile": 4,
+  "title": "Sticky Notes",
+  "priority": "HIGH",
+  "effort": "15 hours",
+  "status": "pending",
+  "milestone": "Closed Beta",
+  "tasks": [
+    {
+      "id": "3.5.1",
+      "category": "annotations",
+      "title": "Create StickyNote Component",
+      "description": "Component for sticky note annotations with icon and expandable panel.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/StickyNote.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Create note icon indicator", "details": "Small icon on page at note position" },
+        { "step": 2, "action": "Create expandable note panel", "details": "Click icon to expand/collapse" },
+        { "step": 3, "action": "Add text editor", "details": "Auto-resize textarea for content" },
+        { "step": 4, "action": "Support drag to reposition", "details": "Drag icon to move note" }
+      ],
+      "acceptanceCriteria": ["Note icon displays on page", "Click expands to show content", "Content editable", "Drag to reposition works", "Collapse/expand toggle"]
+    },
+    {
+      "id": "3.5.2",
+      "category": "annotations",
+      "title": "Implement Note Placement",
+      "description": "Click-to-place functionality for creating sticky notes.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/annotations/NoteTool.tsx"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Note tool shows placement cursor", "Click places note at position", "Note opens for editing immediately", "Cancel with Escape"]
+    },
+    {
+      "id": "3.5.3",
+      "category": "annotations",
+      "title": "Add Note Color Options",
+      "description": "Support multiple note background colors.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/annotations/StickyNote.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Note colors: yellow, green, blue, pink, purple", "Color picker in note panel", "Default: yellow #FEF3C7"]
+    },
+    {
+      "id": "3.5.4",
+      "category": "annotations",
+      "title": "Create Reply Threading UI",
+      "description": "Allow replies to sticky notes with nested display.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/NoteReplies.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Reply button on notes", "Replies display nested", "Author and timestamp shown", "Delete individual replies"]
+    }
+  ],
+  "successCriteria": ["Sticky notes can be placed and edited", "Note replies work", "Notes can be moved and colored"],
+  "filesCreated": ["src/components/annotations/StickyNote.tsx", "src/components/annotations/NoteTool.tsx", "src/components/annotations/NoteReplies.tsx"],
+  "filesModified": ["src/stores/annotationStore.ts"],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 15,
+  "dependencies": ["PHASE_1_SPRINT_3_TODO_1"],
+  "notes": ["Sticky notes are a key collaboration feature"]
+}

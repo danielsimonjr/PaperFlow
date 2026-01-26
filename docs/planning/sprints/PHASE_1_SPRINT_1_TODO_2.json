@@ -1,0 +1,198 @@
+{
+  "phase": 1,
+  "sprint": 1,
+  "todoFile": 2,
+  "title": "Dependencies, PWA & PDF.js Setup",
+  "priority": "HIGH",
+  "effort": "16 hours",
+  "status": "pending",
+  "milestone": "Internal Alpha (end of Sprint 2)",
+  "tasks": [
+    {
+      "id": "1.1.5",
+      "category": "dependencies",
+      "title": "Install Core Dependencies",
+      "description": "Install all required npm packages for PDF, UI, and PWA functionality.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": ["package.json"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Install core packages",
+          "details": "npm install pdfjs-dist react-router-dom zustand"
+        },
+        {
+          "step": 2,
+          "action": "Install UI packages",
+          "details": "npm install @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-tooltip @radix-ui/react-tabs lucide-react clsx tailwind-merge"
+        },
+        {
+          "step": 3,
+          "action": "Install PWA packages",
+          "details": "npm install vite-plugin-pwa workbox-window"
+        },
+        {
+          "step": 4,
+          "action": "Install PDF manipulation",
+          "details": "npm install pdf-lib @pdf-lib/fontkit"
+        },
+        {
+          "step": 5,
+          "action": "Install file handling",
+          "details": "npm install browser-fs-access file-saver jszip uuid"
+        },
+        {
+          "step": 6,
+          "action": "Install dev dependencies",
+          "details": "npm install -D @types/node vitest @testing-library/react playwright @playwright/test"
+        }
+      ],
+      "acceptanceCriteria": [
+        "All packages installed without errors",
+        "No peer dependency warnings",
+        "package-lock.json updated"
+      ]
+    },
+    {
+      "id": "1.2.1",
+      "category": "pwa",
+      "title": "Configure vite-plugin-pwa",
+      "description": "Set up PWA plugin with manifest and service worker configuration.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["vite.config.ts", "public/manifest.json"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Configure VitePWA plugin in vite.config.ts",
+          "details": "Add registerType: 'autoUpdate', manifest config"
+        },
+        {
+          "step": 2,
+          "action": "Create manifest.json",
+          "details": "Name: PaperFlow, Theme: #1E3A5F, Display: standalone"
+        },
+        {
+          "step": 3,
+          "action": "Generate PWA icons",
+          "details": "192px, 512px, maskable variants"
+        }
+      ],
+      "acceptanceCriteria": [
+        "App is installable in Chrome",
+        "manifest.json validates correctly",
+        "Icons display properly"
+      ]
+    },
+    {
+      "id": "1.2.2",
+      "category": "pwa",
+      "title": "Set up Service Worker with Workbox",
+      "description": "Configure service worker for offline support and asset caching.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["vite.config.ts", "src/sw.ts"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Configure Workbox in vite-plugin-pwa",
+          "details": "Set up precache and runtime caching strategies"
+        },
+        {
+          "step": 2,
+          "action": "Add offline fallback page",
+          "details": "Create offline.html for no-connection state"
+        },
+        {
+          "step": 3,
+          "action": "Configure PDF.js worker caching",
+          "details": "Runtime cache for pdf.worker.min.js"
+        }
+      ],
+      "acceptanceCriteria": [
+        "App works offline after first load",
+        "Static assets are cached",
+        "Offline fallback shows when disconnected"
+      ]
+    },
+    {
+      "id": "1.3.1",
+      "category": "core",
+      "title": "Create PDFRenderer Class",
+      "description": "Implement the core PDF rendering class using PDF.js with methods for loading and rendering.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/lib/pdf/renderer.ts", "public/pdf.worker.min.js"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Core class for PDF rendering that wraps PDF.js functionality",
+        "keyDecisions": [
+          "Use ArrayBuffer or string URL as source",
+          "Support high-DPI displays via devicePixelRatio",
+          "Handle password-protected PDFs"
+        ]
+      },
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Copy pdf.worker.min.js to public folder",
+          "details": "From node_modules/pdfjs-dist/build/"
+        },
+        {
+          "step": 2,
+          "action": "Create renderer.ts",
+          "details": "Implement PDFRenderer class with loadDocument, renderPage, getPageInfo, getTextContent, getOutline, destroy methods"
+        },
+        {
+          "step": 3,
+          "action": "Configure PDF.js worker path",
+          "details": "Set GlobalWorkerOptions.workerSrc"
+        },
+        {
+          "step": 4,
+          "action": "Add high-DPI canvas support",
+          "details": "Scale canvas by devicePixelRatio"
+        }
+      ],
+      "acceptanceCriteria": [
+        "PDFRenderer loads PDF from ArrayBuffer",
+        "PDFRenderer loads PDF from URL",
+        "renderPage displays page on canvas correctly",
+        "High-DPI displays render sharply",
+        "Password prompt shows for protected PDFs"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "All dependencies installed successfully",
+    "PWA is installable in Chrome",
+    "App works offline after first load",
+    "PDF files load and render correctly"
+  ],
+  "filesCreated": [
+    "public/manifest.json",
+    "public/pdf.worker.min.js",
+    "src/sw.ts",
+    "src/lib/pdf/renderer.ts"
+  ],
+  "filesModified": [
+    "package.json",
+    "vite.config.ts"
+  ],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 16,
+  "dependencies": ["PHASE_1_SPRINT_1_TODO_1"],
+  "notes": [
+    "PDF.js worker must be copied to public folder, not bundled",
+    "Use devicePixelRatio for sharp rendering on high-DPI displays",
+    "Service worker should cache PDF.js assets at runtime"
+  ]
+}

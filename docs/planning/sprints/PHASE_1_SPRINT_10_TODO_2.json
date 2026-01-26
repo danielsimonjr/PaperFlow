@@ -1,0 +1,66 @@
+{
+  "phase": 1,
+  "sprint": 10,
+  "todoFile": 2,
+  "title": "Memory & Mobile Part 1",
+  "priority": "HIGH",
+  "effort": "20 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "10.1.5",
+      "category": "performance",
+      "title": "Lazy Load Heavy Features",
+      "description": "Dynamic import for OCR, signature canvas, rich text editor.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/lazy/index.ts"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Features load on demand", "Loading indicator shown", "No impact on core viewing"]
+    },
+    {
+      "id": "10.1.6",
+      "category": "performance",
+      "title": "Implement Memory Management",
+      "description": "Monitor and manage memory for large documents.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/lib/performance/memoryManager.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Monitor memory usage", "Dispose unused canvases", "Warn for very large documents"]
+    },
+    {
+      "id": "10.2.1",
+      "category": "mobile",
+      "title": "Optimize Touch Interactions",
+      "description": "Larger touch targets and touch-friendly spacing.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/styles/mobile.css"],
+      "testCategories": ["visual", "integration"],
+      "acceptanceCriteria": ["Touch targets ≥ 44px", "Touch-friendly spacing", "No accidental taps"]
+    },
+    {
+      "id": "10.2.2",
+      "category": "mobile",
+      "title": "Improve Mobile Toolbar Layout",
+      "description": "Bottom toolbar for primary actions on mobile.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/layout/MobileToolbar.tsx"],
+      "testCategories": ["visual", "integration"],
+      "acceptanceCriteria": ["Bottom toolbar on mobile", "Primary actions visible", "Secondary tools collapsible"]
+    }
+  ],
+  "successCriteria": ["Memory usage managed properly", "Mobile touch targets accessible", "Mobile toolbar usable"],
+  "filesCreated": ["src/components/lazy/index.ts", "src/lib/performance/memoryManager.ts", "src/styles/mobile.css", "src/components/layout/MobileToolbar.tsx"],
+  "filesModified": ["src/App.tsx"],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 20,
+  "dependencies": ["PHASE_1_SPRINT_10_TODO_1"],
+  "notes": ["Mobile-first approach for gestures"]
+}

@@ -1,0 +1,72 @@
+{
+  "phase": 1,
+  "sprint": 6,
+  "todoFile": 3,
+  "title": "Signature Management & Placement",
+  "priority": "HIGH",
+  "effort": "13 hours",
+  "status": "pending",
+  "milestone": "Open Beta",
+  "tasks": [
+    {
+      "id": "6.2.4",
+      "category": "management",
+      "title": "Delete Saved Signatures",
+      "description": "Remove signatures from storage.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/signatures/SignatureList.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Delete button on signature", "Confirmation dialog", "Signature removed from storage"]
+    },
+    {
+      "id": "6.2.5",
+      "category": "management",
+      "title": "Set Default Signature",
+      "description": "Mark one signature as default for quick apply.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/stores/signatureStore.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Star/default button on signature", "Visual indicator for default", "Quick-apply uses default"]
+    },
+    {
+      "id": "6.3.1",
+      "category": "placement",
+      "title": "Implement Click-to-Place Signature",
+      "description": "Click on page to place signature at that location.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/signatures/SignaturePlacer.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Show signature preview following cursor", "details": "Semi-transparent preview" },
+        { "step": 2, "action": "Click to confirm placement", "details": "Place at click position" },
+        { "step": 3, "action": "Add to document as annotation", "details": "Store position and signature reference" }
+      ],
+      "acceptanceCriteria": ["Preview follows cursor", "Click places signature", "Signature appears at correct position"]
+    },
+    {
+      "id": "6.3.2",
+      "category": "placement",
+      "title": "Implement Signature Resize",
+      "description": "Resize placed signatures while maintaining aspect ratio.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/signatures/SignatureResize.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Corner drag handles", "Aspect ratio maintained", "Minimum size enforced"]
+    }
+  ],
+  "successCriteria": ["Signatures can be deleted and set as default", "Signatures can be placed on any page", "Signatures can be resized"],
+  "filesCreated": ["src/stores/signatureStore.ts", "src/components/signatures/SignaturePlacer.tsx", "src/components/signatures/SignatureResize.tsx"],
+  "filesModified": ["src/components/signatures/SignatureList.tsx"],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 13,
+  "dependencies": ["PHASE_1_SPRINT_6_TODO_2"],
+  "notes": ["pdf-lib supports embedding images at specific positions"]
+}

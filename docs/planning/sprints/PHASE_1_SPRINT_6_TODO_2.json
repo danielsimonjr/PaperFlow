@@ -1,0 +1,75 @@
+{
+  "phase": 1,
+  "sprint": 6,
+  "todoFile": 2,
+  "title": "Initials & Signature Storage",
+  "priority": "HIGH",
+  "effort": "14 hours",
+  "status": "pending",
+  "milestone": "Open Beta",
+  "targetMetrics": {
+    "signatureStorage": { "current": "N/A", "target": "Secure encrypted storage" }
+  },
+  "tasks": [
+    {
+      "id": "6.1.6",
+      "category": "initials",
+      "title": "Add Initials Support",
+      "description": "Separate interface for creating initials.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/signatures/InitialsModal.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Same creation options as signature", "Smaller canvas for initials", "Separate storage from signatures"]
+    },
+    {
+      "id": "6.2.1",
+      "category": "storage",
+      "title": "Save Signatures to IndexedDB",
+      "description": "Securely store signatures with encryption.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/lib/storage/signatureStorage.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Create signatures IndexedDB store", "details": "Schema: id, name, type, data, createdAt" },
+        { "step": 2, "action": "Implement encryption", "details": "Use Web Crypto API for encryption" },
+        { "step": 3, "action": "Maximum 10 signatures", "details": "Enforce storage limit" }
+      ],
+      "acceptanceCriteria": ["Signatures persist across sessions", "Data encrypted at rest", "Maximum 10 signatures enforced"]
+    },
+    {
+      "id": "6.2.2",
+      "category": "ui",
+      "title": "Create SignatureList Component",
+      "description": "Grid display of saved signatures for selection.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/signatures/SignatureList.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Grid of saved signatures", "Thumbnail previews", "Click to select", "Default indicator"]
+    },
+    {
+      "id": "6.2.3",
+      "category": "management",
+      "title": "Allow Renaming Saved Signatures",
+      "description": "Edit name of saved signatures.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/signatures/SignatureList.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Edit button on signature", "Inline rename", "Name persists"]
+    }
+  ],
+  "successCriteria": ["Initials work separately from signatures", "Signatures save and persist", "Signature list shows saved signatures"],
+  "filesCreated": ["src/components/signatures/InitialsModal.tsx", "src/lib/storage/signatureStorage.ts", "src/components/signatures/SignatureList.tsx"],
+  "filesModified": ["src/types/signatures.ts"],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 14,
+  "dependencies": ["PHASE_1_SPRINT_6_TODO_1"],
+  "notes": ["Web Crypto API for signature encryption at rest"]
+}

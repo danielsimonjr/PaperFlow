@@ -1,0 +1,142 @@
+{
+  "phase": 1,
+  "sprint": 2,
+  "todoFile": 4,
+  "title": "Sidebar Panels & Search",
+  "priority": "HIGH",
+  "effort": "23 hours",
+  "status": "pending",
+  "milestone": "Internal Alpha Complete",
+  "targetMetrics": {
+    "thumbnailGeneration": {
+      "current": "N/A",
+      "target": "< 100ms per thumbnail"
+    }
+  },
+  "tasks": [
+    {
+      "id": "2.4.1",
+      "category": "sidebar",
+      "title": "Create ThumbnailSidebar Component",
+      "description": "Generate and display page thumbnails with lazy loading.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/components/sidebar/ThumbnailSidebar.tsx", "src/hooks/useThumbnails.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Generate thumbnails at 0.2 scale", "details": "Render pages to small canvases" },
+        { "step": 2, "action": "Implement lazy loading", "details": "Use IntersectionObserver for visibility" },
+        { "step": 3, "action": "Cache generated thumbnails", "details": "Store in memory for quick access" },
+        { "step": 4, "action": "Add click-to-navigate", "details": "Click thumbnail to jump to page" }
+      ],
+      "acceptanceCriteria": [
+        "Thumbnails render for all pages",
+        "Lazy loading works",
+        "Click navigates to page",
+        "Current page highlighted",
+        "Page numbers shown"
+      ]
+    },
+    {
+      "id": "2.4.2",
+      "category": "sidebar",
+      "title": "Add Thumbnail Size Slider",
+      "description": "Allow adjusting thumbnail size (small/medium/large).",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/sidebar/ThumbnailSidebar.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": [
+        "Slider adjusts thumbnail size",
+        "Three presets: small, medium, large",
+        "Preference persists"
+      ]
+    },
+    {
+      "id": "2.5.1",
+      "category": "search",
+      "title": "Create SearchBar Component",
+      "description": "Implement search bar with keyboard shortcuts and result navigation.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/toolbar/SearchBar.tsx", "src/hooks/useSearch.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Create SearchBar UI", "details": "Input field, prev/next buttons, match count" },
+        { "step": 2, "action": "Implement PDF.js text search", "details": "Search all pages using findController" },
+        { "step": 3, "action": "Add keyboard shortcuts", "details": "Ctrl+F to open, Escape to close" }
+      ],
+      "acceptanceCriteria": [
+        "Ctrl/Cmd + F opens search",
+        "Search finds text across pages",
+        "Results highlighted on page",
+        "Next/previous navigation works",
+        "Match count displayed"
+      ]
+    },
+    {
+      "id": "2.5.2",
+      "category": "search",
+      "title": "Add Search Options",
+      "description": "Add case-sensitive and whole word search options.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/toolbar/SearchBar.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": [
+        "Case-sensitive toggle works",
+        "Whole word toggle works",
+        "Options persist during session"
+      ]
+    },
+    {
+      "id": "2.6.1",
+      "category": "outline",
+      "title": "Create OutlinePanel Component",
+      "description": "Parse and display PDF outline/bookmarks with navigation.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/sidebar/OutlinePanel.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Parse PDF outline", "details": "Use PDF.js getOutline() method" },
+        { "step": 2, "action": "Display nested structure", "details": "Indented list with expand/collapse" },
+        { "step": 3, "action": "Implement click navigation", "details": "Jump to page on item click" }
+      ],
+      "acceptanceCriteria": [
+        "Outline displays nested structure",
+        "Expand/collapse works",
+        "Click navigates to page",
+        "'No bookmarks' message when empty"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Thumbnails display and navigate correctly",
+    "Search finds and highlights text",
+    "Bookmarks panel shows outline and navigates"
+  ],
+  "filesCreated": [
+    "src/components/sidebar/ThumbnailSidebar.tsx",
+    "src/components/sidebar/OutlinePanel.tsx",
+    "src/components/toolbar/SearchBar.tsx",
+    "src/hooks/useThumbnails.ts",
+    "src/hooks/useSearch.ts"
+  ],
+  "filesModified": [
+    "src/components/layout/Sidebar.tsx",
+    "src/components/layout/Toolbar.tsx"
+  ],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 23,
+  "dependencies": ["PHASE_1_SPRINT_2_TODO_1"],
+  "notes": [
+    "Thumbnail generation should happen in background",
+    "Search uses PDF.js findController for text matching"
+  ]
+}

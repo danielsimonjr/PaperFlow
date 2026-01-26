@@ -1,0 +1,78 @@
+{
+  "phase": 1,
+  "sprint": 4,
+  "todoFile": 4,
+  "title": "Stamps",
+  "priority": "HIGH",
+  "effort": "19 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "4.3.1",
+      "category": "stamps",
+      "title": "Create StampTool Component",
+      "description": "Tool for placing preset and custom stamps.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/StampTool.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Stamp preview follows cursor", "Click to place stamp", "Stamp can be moved after placement"]
+    },
+    {
+      "id": "4.3.2",
+      "category": "stamps",
+      "title": "Add Preset Stamps",
+      "description": "Built-in stamps: Approved, Rejected, Confidential, Draft, Final, For Review.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/constants/stamps.ts", "src/components/annotations/StampPicker.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["6 preset stamps available", "Each with appropriate color", "Picker shows all options"]
+    },
+    {
+      "id": "4.3.3",
+      "category": "stamps",
+      "title": "Support Custom Text Stamps",
+      "description": "Create custom stamps with user-defined text.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/CustomStampDialog.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Text input for stamp content", "Font selection", "Color selection", "Preview before creation"]
+    },
+    {
+      "id": "4.3.4",
+      "category": "stamps",
+      "title": "Implement Stamp Rotation and Scaling",
+      "description": "Allow rotating and scaling placed stamps.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/annotations/StampTransform.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Rotation: 0°, 45°, 90°, etc.", "Scale handles for resizing", "Maintain readability"]
+    },
+    {
+      "id": "4.3.5",
+      "category": "stamps",
+      "title": "Save Custom Stamps for Reuse",
+      "description": "Store custom stamps to IndexedDB for future use.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/lib/storage/stampStorage.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Custom stamps persist", "Appear in stamp picker", "Can be deleted"]
+    }
+  ],
+  "successCriteria": ["Stamps can be placed and customized", "Preset stamps work correctly", "Custom stamps can be saved for reuse"],
+  "filesCreated": ["src/components/annotations/StampTool.tsx", "src/components/annotations/StampPicker.tsx", "src/components/annotations/CustomStampDialog.tsx", "src/components/annotations/StampTransform.tsx", "src/lib/storage/stampStorage.ts", "src/constants/stamps.ts"],
+  "filesModified": ["src/types/annotations.ts"],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 19,
+  "dependencies": ["PHASE_1_SPRINT_4_TODO_1"],
+  "notes": ["Stamps are commonly used for document workflow status"]
+}

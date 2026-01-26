@@ -1,0 +1,70 @@
+{
+  "phase": 1,
+  "sprint": 9,
+  "todoFile": 2,
+  "title": "Print Dialog & Options",
+  "priority": "MEDIUM",
+  "effort": "19 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "9.2.1",
+      "category": "print",
+      "title": "Create Print Dialog with Preview",
+      "description": "Print dialog showing page preview and options.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/components/print/PrintDialog.tsx", "src/components/print/PrintPreview.tsx"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Comprehensive print dialog with preview",
+        "keyDecisions": ["Custom dialog before browser print", "Page thumbnails for preview", "Apply options before print"]
+      },
+      "acceptanceCriteria": ["Print dialog opens", "Page thumbnails shown", "Navigate between pages", "Preview updates with options"]
+    },
+    {
+      "id": "9.2.2",
+      "category": "print",
+      "title": "Implement Page Range Selection",
+      "description": "Select which pages to print.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/print/PageRangeSelector.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["All pages option", "Current page option", "Custom range (1-5, 8, 10-12)", "Validation of input"]
+    },
+    {
+      "id": "9.2.3",
+      "category": "print",
+      "title": "Implement Scale Options",
+      "description": "Control print scaling.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/print/ScaleOptions.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Fit to page", "Actual size", "Custom percentage", "Preview reflects scaling"]
+    },
+    {
+      "id": "9.2.4",
+      "category": "print",
+      "title": "Implement Orientation Options",
+      "description": "Control print orientation.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/print/OrientationOptions.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Auto (based on page)", "Portrait option", "Landscape option"]
+    }
+  ],
+  "successCriteria": ["Print preview shows correctly", "Print options available"],
+  "filesCreated": ["src/components/print/PrintDialog.tsx", "src/components/print/PrintPreview.tsx", "src/components/print/PageRangeSelector.tsx", "src/components/print/ScaleOptions.tsx", "src/components/print/OrientationOptions.tsx"],
+  "filesModified": ["src/components/layout/Header.tsx"],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 19,
+  "dependencies": ["PHASE_1_SPRINT_9_TODO_1"],
+  "notes": ["Browser print API has limited control", "Consider using print-specific stylesheets"]
+}

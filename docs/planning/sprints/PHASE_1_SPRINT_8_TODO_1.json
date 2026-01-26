@@ -1,0 +1,79 @@
+{
+  "phase": 1,
+  "sprint": 8,
+  "todoFile": 1,
+  "title": "Page Reorder & Selection",
+  "priority": "MEDIUM",
+  "effort": "21 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "reorderLatency": { "current": "N/A", "target": "< 200ms for page reorder" }
+  },
+  "tasks": [
+    {
+      "id": "8.1.1",
+      "category": "reorder",
+      "title": "Drag-and-Drop Page Thumbnails",
+      "description": "Reorder pages by dragging thumbnails in sidebar.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/components/pages/DraggableThumbnail.tsx", "src/hooks/usePageDrag.ts"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Intuitive page reordering via drag and drop",
+        "keyDecisions": ["Use native drag and drop API", "Visual feedback during drag", "Drop indicator between pages"]
+      },
+      "stepByStep": [
+        { "step": 1, "action": "Make thumbnails draggable", "details": "draggable=true, onDragStart" },
+        { "step": 2, "action": "Show visual feedback during drag", "details": "Ghost image, reduced opacity on source" },
+        { "step": 3, "action": "Show drop indicator", "details": "Line between thumbnails at drop position" },
+        { "step": 4, "action": "Reorder on drop", "details": "Update page order in document" }
+      ],
+      "acceptanceCriteria": ["Thumbnails draggable", "Visual feedback during drag", "Drop indicator shows position", "Page order updates on drop"]
+    },
+    {
+      "id": "8.1.2",
+      "category": "selection",
+      "title": "Multi-Select Pages",
+      "description": "Select multiple pages for bulk operations.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/hooks/usePageSelection.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Ctrl+click for individual select", "Shift+click for range select", "Visual indicator on selected", "Selection count shown"]
+    },
+    {
+      "id": "8.1.3",
+      "category": "reorder",
+      "title": "Move Pages to Specific Position",
+      "description": "Right-click menu to move pages to specific position.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/pages/PageContextMenu.tsx", "src/components/pages/MoveToDialog.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Right-click context menu", "Move to page... option", "Dialog for page number input", "Pages move correctly"]
+    },
+    {
+      "id": "8.2.1",
+      "category": "operations",
+      "title": "Delete Single Page",
+      "description": "Remove a page from the document.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/lib/pages/pageOperations.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Delete button on thumbnail", "Confirmation dialog", "Cannot delete last page", "Undo restores page"]
+    }
+  ],
+  "successCriteria": ["Pages can be reordered via drag-and-drop", "Multi-select works for bulk operations", "Delete works with undo"],
+  "filesCreated": ["src/components/pages/DraggableThumbnail.tsx", "src/components/pages/PageContextMenu.tsx", "src/components/pages/MoveToDialog.tsx", "src/hooks/usePageDrag.ts", "src/hooks/usePageSelection.ts", "src/lib/pages/pageOperations.ts"],
+  "filesModified": ["src/components/sidebar/ThumbnailSidebar.tsx", "src/stores/documentStore.ts"],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 21,
+  "dependencies": ["Sprint 2"],
+  "notes": ["Page reorder affects annotation page references"]
+}

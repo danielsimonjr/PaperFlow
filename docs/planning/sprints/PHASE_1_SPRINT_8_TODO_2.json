@@ -1,0 +1,72 @@
+{
+  "phase": 1,
+  "sprint": 8,
+  "todoFile": 2,
+  "title": "Page Operations",
+  "priority": "MEDIUM",
+  "effort": "17 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "8.2.2",
+      "category": "operations",
+      "title": "Delete Multiple Selected Pages",
+      "description": "Delete all selected pages at once.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/lib/pages/pageOperations.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Delete selected option", "Confirmation with count", "All selected pages removed", "Undo restores all"]
+    },
+    {
+      "id": "8.2.3",
+      "category": "operations",
+      "title": "Duplicate Page",
+      "description": "Create a copy of a page.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/lib/pages/pageOperations.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Duplicate option in context menu", "Copy inserted after original", "All content preserved", "Annotations copied"]
+    },
+    {
+      "id": "8.2.4",
+      "category": "operations",
+      "title": "Rotate Page",
+      "description": "Rotate pages 90° clockwise, counter-clockwise, or 180°.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/lib/pages/pageOperations.ts", "src/components/pages/RotateMenu.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["90° clockwise rotation", "90° counter-clockwise", "180° rotation", "Apply to selected pages", "Thumbnail updates"]
+    },
+    {
+      "id": "8.2.5",
+      "category": "operations",
+      "title": "Insert Blank Page",
+      "description": "Add a new blank page before or after current.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/pages/InsertPageDialog.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Insert blank page option", "details": "In context menu or toolbar" },
+        { "step": 2, "action": "Position selection", "details": "Before or after current page" },
+        { "step": 3, "action": "Page size options", "details": "Match document or standard sizes" },
+        { "step": 4, "action": "Create blank page", "details": "Insert with pdf-lib" }
+      ],
+      "acceptanceCriteria": ["Insert before/after options", "Page size selection", "Standard sizes (Letter, A4)", "Match document size option"]
+    }
+  ],
+  "successCriteria": ["Delete, duplicate, rotate all work", "Blank pages can be inserted"],
+  "filesCreated": ["src/components/pages/RotateMenu.tsx", "src/components/pages/InsertPageDialog.tsx"],
+  "filesModified": ["src/lib/pages/pageOperations.ts", "src/stores/historyStore.ts"],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 17,
+  "dependencies": ["PHASE_1_SPRINT_8_TODO_1"],
+  "notes": ["pdf-lib provides all page manipulation capabilities"]
+}

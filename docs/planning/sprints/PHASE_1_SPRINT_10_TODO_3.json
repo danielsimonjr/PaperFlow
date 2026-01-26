@@ -1,0 +1,75 @@
+{
+  "phase": 1,
+  "sprint": 10,
+  "todoFile": 3,
+  "title": "Mobile Gestures & Accessibility",
+  "priority": "HIGH",
+  "effort": "26 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "lighthouseAccessibility": { "current": "N/A", "target": "≥ 90" }
+  },
+  "tasks": [
+    {
+      "id": "10.2.3",
+      "category": "mobile",
+      "title": "Add Mobile-Specific Gestures",
+      "description": "Pinch zoom, two-finger pan, swipe navigation.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/hooks/useTouchGestures.ts"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Pinch to zoom", "details": "Use touch events for zoom" },
+        { "step": 2, "action": "Two-finger pan", "details": "Pan when zoomed in" },
+        { "step": 3, "action": "Long press context menu", "details": "Show context menu on long press" },
+        { "step": 4, "action": "Swipe page navigation", "details": "Swipe left/right for prev/next" }
+      ],
+      "acceptanceCriteria": ["Pinch zoom works", "Two-finger pan works", "Long press shows menu", "Swipe navigates pages"]
+    },
+    {
+      "id": "10.2.4",
+      "category": "mobile",
+      "title": "Test on Various Devices",
+      "description": "Verify functionality on iOS, Android, tablets.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": [],
+      "testCategories": ["e2e"],
+      "acceptanceCriteria": ["iOS Safari works", "Android Chrome works", "iPad works", "Android tablets work"]
+    },
+    {
+      "id": "10.3.1",
+      "category": "accessibility",
+      "title": "Implement Keyboard Navigation",
+      "description": "Full keyboard navigation for all features.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/hooks/useKeyboardNavigation.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Tab order logical", "Arrow keys in lists", "Enter/Space activation", "Escape to close"]
+    },
+    {
+      "id": "10.3.2",
+      "category": "accessibility",
+      "title": "Add Screen Reader Support",
+      "description": "ARIA labels and live regions for screen readers.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/ui/AccessibleComponents.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Meaningful ARIA labels", "Live regions for updates", "Page content accessible"]
+    }
+  ],
+  "successCriteria": ["Touch gestures work correctly", "Keyboard navigation works throughout", "Screen reader can navigate app"],
+  "filesCreated": ["src/hooks/useTouchGestures.ts", "src/hooks/useKeyboardNavigation.ts", "src/components/ui/AccessibleComponents.tsx"],
+  "filesModified": ["src/components/sidebar/ThumbnailSidebar.tsx", "src/components/layout/Toolbar.tsx"],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 26,
+  "dependencies": ["PHASE_1_SPRINT_10_TODO_2"],
+  "notes": ["Test with actual screen readers (NVDA, VoiceOver)"]
+}

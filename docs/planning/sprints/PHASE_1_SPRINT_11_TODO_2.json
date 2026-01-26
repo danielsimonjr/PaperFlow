@@ -1,0 +1,66 @@
+{
+  "phase": 1,
+  "sprint": 11,
+  "todoFile": 2,
+  "title": "Integration Tests",
+  "priority": "HIGH",
+  "effort": "28 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "11.2.1",
+      "category": "integration",
+      "title": "Test File Opening Flow",
+      "description": "Integration tests for drag-drop, file picker, URL loading.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["tests/integration/fileOpening.test.tsx"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Drag and drop tested", "File picker tested", "URL loading tested", "Error states tested"]
+    },
+    {
+      "id": "11.2.2",
+      "category": "integration",
+      "title": "Test Annotation Creation",
+      "description": "Integration tests for highlight, note, drawing tools.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["tests/integration/annotations.test.tsx"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Highlight creation tested", "Note creation tested", "Drawing tools tested", "Edit and delete tested"]
+    },
+    {
+      "id": "11.2.3",
+      "category": "integration",
+      "title": "Test Form Filling",
+      "description": "Integration tests for form detection and filling.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["tests/integration/forms.test.tsx"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Field detection tested", "Value entry tested", "Tab navigation tested", "Validation tested"]
+    },
+    {
+      "id": "11.2.4",
+      "category": "integration",
+      "title": "Test Signature Placement",
+      "description": "Integration tests for signature creation and placement.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["tests/integration/signatures.test.tsx"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Creation modal tested", "Placement flow tested", "Save and reload tested", "Resize/rotation tested"]
+    }
+  ],
+  "successCriteria": ["All integration tests pass", "Core workflows covered"],
+  "filesCreated": ["tests/integration/fileOpening.test.tsx", "tests/integration/annotations.test.tsx", "tests/integration/forms.test.tsx", "tests/integration/signatures.test.tsx"],
+  "filesModified": [],
+  "totalNewTests": 40,
+  "totalEstimatedHours": 28,
+  "dependencies": ["PHASE_1_SPRINT_11_TODO_1"],
+  "notes": ["Use test fixtures for PDF files"]
+}

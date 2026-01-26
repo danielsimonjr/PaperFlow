@@ -1,0 +1,42 @@
+{
+  "phase": 1,
+  "sprint": 11,
+  "todoFile": 4,
+  "title": "Manual QA & Bug Fixing",
+  "priority": "HIGH",
+  "effort": "24 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "11.4.1",
+      "category": "qa",
+      "title": "Manual QA Testing",
+      "description": "Manual testing of all features with test checklist.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "haiku",
+      "files": ["docs/testing/QA_CHECKLIST.md"],
+      "testCategories": ["manual"],
+      "acceptanceCriteria": ["All features manually tested", "Edge cases verified", "Bugs documented", "Checklist completed"]
+    },
+    {
+      "id": "11.4.2",
+      "category": "qa",
+      "title": "Bug Triage and Fixing",
+      "description": "Address bugs found during testing.",
+      "status": "pending",
+      "estimatedHours": 16,
+      "agent": "sonnet",
+      "files": [],
+      "testCategories": [],
+      "acceptanceCriteria": ["Critical bugs fixed", "High priority bugs fixed", "Medium bugs documented"]
+    }
+  ],
+  "successCriteria": ["No critical bugs remaining", "All features manually verified"],
+  "filesCreated": ["docs/testing/QA_CHECKLIST.md"],
+  "filesModified": ["package.json"],
+  "totalNewTests": 0,
+  "totalEstimatedHours": 24,
+  "dependencies": ["PHASE_1_SPRINT_11_TODO_3"],
+  "notes": ["Buffer time for unexpected issues"]
+}

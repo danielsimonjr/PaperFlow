@@ -1,0 +1,97 @@
+{
+  "phase": 1,
+  "sprint": 4,
+  "todoFile": 1,
+  "title": "Drawing Canvas & Tools",
+  "priority": "HIGH",
+  "effort": "24 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "drawingLatency": { "current": "N/A", "target": "< 16ms per frame (60fps)" },
+    "pressureSensitivity": { "current": "N/A", "target": "Smooth variable stroke width" }
+  },
+  "tasks": [
+    {
+      "id": "4.1.1",
+      "category": "drawing",
+      "title": "Create DrawingCanvas Component",
+      "description": "Canvas overlay for freehand drawing with smooth bezier curves.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/DrawingCanvas.tsx"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Canvas layer for freehand drawing with smooth rendering",
+        "keyDecisions": ["Use HTML Canvas for drawing performance", "Bezier curve smoothing for natural lines", "Buffer points for smooth curves"]
+      },
+      "stepByStep": [
+        { "step": 1, "action": "Create canvas overlay", "details": "Position over PDF page, handle pointer events" },
+        { "step": 2, "action": "Implement point capture", "details": "Capture mouse/touch positions on move" },
+        { "step": 3, "action": "Add bezier smoothing", "details": "Use quadratic curves for smooth lines" },
+        { "step": 4, "action": "Handle high-DPI displays", "details": "Scale canvas by devicePixelRatio" }
+      ],
+      "acceptanceCriteria": ["Smooth freehand lines", "No lag during drawing", "Sharp lines on high-DPI displays", "Drawing scales with zoom"]
+    },
+    {
+      "id": "4.1.2",
+      "category": "drawing",
+      "title": "Implement Touch and Stylus Support",
+      "description": "Add touch and stylus input with pressure sensitivity.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/hooks/usePointerInput.ts"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Use Pointer Events API", "details": "Unified touch, mouse, stylus handling" },
+        { "step": 2, "action": "Capture pressure data", "details": "pointerEvent.pressure for variable width" },
+        { "step": 3, "action": "Implement palm rejection", "details": "Ignore large touch contacts" }
+      ],
+      "acceptanceCriteria": ["Touch drawing works", "Stylus pressure affects stroke width", "Palm rejection prevents accidental marks"]
+    },
+    {
+      "id": "4.1.3",
+      "category": "drawing",
+      "title": "Add Stroke Color and Width Options",
+      "description": "Color picker and stroke width selector for drawing tool.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/annotations/DrawingToolOptions.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Same color palette as highlights", "Stroke widths: 1px, 2px, 4px, 8px", "Options persist during session"]
+    },
+    {
+      "id": "4.1.4",
+      "category": "drawing",
+      "title": "Implement Eraser Tool",
+      "description": "Eraser that removes entire strokes on contact.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/EraserTool.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Eraser cursor shows", "Contact with stroke removes it", "Undo restores erased strokes"]
+    },
+    {
+      "id": "4.1.5",
+      "category": "drawing",
+      "title": "Serialize Drawing Paths",
+      "description": "Save and load drawing paths with pressure data.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/lib/annotations/drawingSerializer.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Paths serialize with points and pressure", "Paths deserialize correctly", "Drawing recreates from saved data"]
+    }
+  ],
+  "successCriteria": ["Freehand drawing works smoothly", "Pressure sensitivity works with stylus", "Eraser removes strokes", "Drawings save and load correctly"],
+  "filesCreated": ["src/components/annotations/DrawingCanvas.tsx", "src/components/annotations/DrawingToolOptions.tsx", "src/components/annotations/EraserTool.tsx", "src/hooks/usePointerInput.ts", "src/lib/annotations/drawingSerializer.ts"],
+  "filesModified": ["src/components/toolbar/AnnotationToolbar.tsx", "src/stores/annotationStore.ts"],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 24,
+  "dependencies": ["Sprint 3"],
+  "notes": ["Use requestAnimationFrame for smooth drawing", "Pointer Events API provides unified input handling"]
+}

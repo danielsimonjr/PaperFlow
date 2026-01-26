@@ -1,0 +1,83 @@
+{
+  "phase": 1,
+  "sprint": 12,
+  "todoFile": 3,
+  "title": "CI/CD & Documentation",
+  "priority": "HIGH",
+  "effort": "22 hours",
+  "status": "pending",
+  "milestone": "Public Launch v1.0",
+  "tasks": [
+    {
+      "id": "12.2.1",
+      "category": "cicd",
+      "title": "Set Up CI/CD Pipeline",
+      "description": "GitHub Actions workflow for testing and deployment.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": [".github/workflows/ci.yml", ".github/workflows/deploy.yml"],
+      "testCategories": ["integration"],
+      "implementation": {
+        "purpose": "Automated testing and deployment pipeline",
+        "keyDecisions": ["Run tests on PR", "Deploy to staging on develop", "Deploy to production on main"]
+      },
+      "acceptanceCriteria": ["Lint runs on PR", "Tests run on PR", "Build verified", "Auto-deploy works"]
+    },
+    {
+      "id": "12.3.1",
+      "category": "documentation",
+      "title": "Create User Guide",
+      "description": "Help documentation for end users.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["docs/user-guide/README.md", "docs/user-guide/getting-started.md", "docs/user-guide/features.md", "docs/user-guide/faq.md"],
+      "testCategories": [],
+      "acceptanceCriteria": ["Getting started guide", "Feature documentation", "FAQ section", "Screenshots included"]
+    },
+    {
+      "id": "12.3.2",
+      "category": "documentation",
+      "title": "Update Changelog",
+      "description": "Comprehensive changelog for v1.0 release.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["CHANGELOG.md"],
+      "testCategories": [],
+      "acceptanceCriteria": ["All features listed", "Breaking changes noted", "Migration guide if needed"]
+    },
+    {
+      "id": "12.3.3",
+      "category": "legal",
+      "title": "Create Privacy Policy",
+      "description": "Privacy policy for user data handling.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["docs/legal/PRIVACY.md", "src/pages/Privacy.tsx"],
+      "testCategories": [],
+      "acceptanceCriteria": ["Data collection described", "Local processing explained", "No personal data statement"]
+    },
+    {
+      "id": "12.3.4",
+      "category": "legal",
+      "title": "Create Terms of Service",
+      "description": "Terms of service for application usage.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["docs/legal/TERMS.md", "src/pages/Terms.tsx"],
+      "testCategories": [],
+      "acceptanceCriteria": ["Usage terms defined", "Liability limitations", "Acceptable use policy"]
+    }
+  ],
+  "successCriteria": ["CI/CD pipeline operational", "Documentation published"],
+  "filesCreated": [".github/workflows/ci.yml", ".github/workflows/deploy.yml", "docs/user-guide/README.md", "docs/user-guide/getting-started.md", "docs/user-guide/features.md", "docs/user-guide/faq.md", "docs/legal/PRIVACY.md", "docs/legal/TERMS.md", "src/pages/Privacy.tsx", "src/pages/Terms.tsx"],
+  "filesModified": ["CHANGELOG.md", "src/App.tsx"],
+  "totalNewTests": 2,
+  "totalEstimatedHours": 22,
+  "dependencies": ["PHASE_1_SPRINT_12_TODO_2"],
+  "notes": ["Tag git with v1.0.0 on release"]
+}

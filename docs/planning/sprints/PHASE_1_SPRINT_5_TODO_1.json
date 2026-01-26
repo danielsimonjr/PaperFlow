@@ -1,0 +1,97 @@
+{
+  "phase": 1,
+  "sprint": 5,
+  "todoFile": 1,
+  "title": "Form Detection & Basic Fields",
+  "priority": "HIGH",
+  "effort": "23 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "fieldDetection": { "current": "N/A", "target": "100% detection of standard AcroForm fields" }
+  },
+  "tasks": [
+    {
+      "id": "5.1.1",
+      "category": "detection",
+      "title": "Parse PDF Form Fields",
+      "description": "Extract form field information from PDF using PDF.js.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/lib/forms/formParser.ts"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Extract form field metadata from PDF",
+        "keyDecisions": ["Use PDF.js annotation layer for AcroForm", "Map field types to component types", "Extract validation rules"]
+      },
+      "stepByStep": [
+        { "step": 1, "action": "Get annotations from PDF.js", "details": "page.getAnnotations() returns form fields" },
+        { "step": 2, "action": "Filter for widget annotations", "details": "Type 'Widget' represents form fields" },
+        { "step": 3, "action": "Map to field types", "details": "Text, Checkbox, Radio, Choice" },
+        { "step": 4, "action": "Extract field properties", "details": "Position, name, default value, options" }
+      ],
+      "acceptanceCriteria": ["Text fields detected", "Checkboxes detected", "Radio buttons detected", "Dropdowns detected", "Field positions mapped correctly"]
+    },
+    {
+      "id": "5.1.2",
+      "category": "detection",
+      "title": "Handle Multi-Page Forms",
+      "description": "Track form fields across multiple pages.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/stores/formStore.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Fields tracked by page", "Tab order spans pages", "Field values persist across pages"]
+    },
+    {
+      "id": "5.1.3",
+      "category": "detection",
+      "title": "Detect Required Fields",
+      "description": "Identify and mark required form fields.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/lib/forms/formParser.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Required flag parsed", "Visual indicator for required fields", "Validation enforces required"]
+    },
+    {
+      "id": "5.2.1",
+      "category": "components",
+      "title": "Create TextField Component",
+      "description": "Form field component for text input with formatting support.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/forms/TextField.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Create input component", "details": "Position at field location" },
+        { "step": 2, "action": "Support single and multiline", "details": "Textarea for multiline fields" },
+        { "step": 3, "action": "Add character limit display", "details": "Show count when near limit" },
+        { "step": 4, "action": "Style to match PDF appearance", "details": "Match font, size, color" }
+      ],
+      "acceptanceCriteria": ["Single line text input works", "Multiline text input works", "Character limit enforced", "Styling matches PDF appearance"]
+    },
+    {
+      "id": "5.2.2",
+      "category": "components",
+      "title": "Create Checkbox Component",
+      "description": "Form field component for checkbox inputs.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/forms/Checkbox.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Checkbox toggles on click", "Visual check mark shows", "Matches PDF checkbox appearance"]
+    }
+  ],
+  "successCriteria": ["Form fields are detected correctly", "Text fields can be filled", "Checkboxes can be toggled"],
+  "filesCreated": ["src/lib/forms/formParser.ts", "src/stores/formStore.ts", "src/components/forms/TextField.tsx", "src/components/forms/Checkbox.tsx"],
+  "filesModified": ["src/components/viewer/PDFViewer.tsx", "src/types/forms.ts"],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 23,
+  "dependencies": ["Sprint 2"],
+  "notes": ["PDF.js getAnnotations() returns form fields as widget annotations"]
+}

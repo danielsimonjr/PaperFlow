@@ -1,0 +1,44 @@
+{
+  "phase": 1,
+  "sprint": 1,
+  "todoFile": 6,
+  "title": "History Store",
+  "priority": "MEDIUM",
+  "effort": "3 hours",
+  "status": "pending",
+  "milestone": "Internal Alpha (end of Sprint 2)",
+  "tasks": [
+    {
+      "id": "1.6.4",
+      "category": "state",
+      "title": "Create historyStore",
+      "description": "Implement Zustand store for undo/redo history management.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/stores/historyStore.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": [
+        "State: past[], future[]",
+        "Actions: push, undo, redo, canUndo, canRedo, clear",
+        "Maximum 50 history entries",
+        "Undo/redo works correctly"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Undo/redo works correctly",
+    "History limited to 50 entries",
+    "Clear history works"
+  ],
+  "filesCreated": [
+    "src/stores/historyStore.ts"
+  ],
+  "filesModified": [],
+  "totalNewTests": 3,
+  "totalEstimatedHours": 3,
+  "dependencies": ["PHASE_1_SPRINT_1_TODO_5"],
+  "notes": [
+    "History store will be used by annotations, text editing, and other features"
+  ]
+}

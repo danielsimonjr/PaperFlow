@@ -1,0 +1,97 @@
+{
+  "phase": 1,
+  "sprint": 7,
+  "todoFile": 2,
+  "title": "Inline Text Editing & Fonts",
+  "priority": "MEDIUM",
+  "effort": "26 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "fontMatching": { "current": "N/A", "target": "90%+ font matching accuracy" },
+    "editLatency": { "current": "N/A", "target": "< 50ms response to keystrokes" }
+  },
+  "tasks": [
+    {
+      "id": "7.2.1",
+      "category": "editing",
+      "title": "Edit Existing Text In Place",
+      "description": "Double-click to enter edit mode for existing text.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/components/editor/InlineTextEditor.tsx"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Allow editing existing PDF text in place",
+        "keyDecisions": ["Contenteditable overlay at text position", "Match original font appearance", "Track changes for save"]
+      },
+      "stepByStep": [
+        { "step": 1, "action": "Double-click enters edit mode", "details": "Show cursor in text" },
+        { "step": 2, "action": "Contenteditable overlay", "details": "Position over original text" },
+        { "step": 3, "action": "Match original styling", "details": "Font, size, color from PDF" },
+        { "step": 4, "action": "Click outside to exit", "details": "Commit changes on blur" }
+      ],
+      "acceptanceCriteria": ["Double-click enters edit mode", "Text editable with cursor", "Styling matches original", "Changes saved on blur"]
+    },
+    {
+      "id": "7.2.2",
+      "category": "fonts",
+      "title": "Match Original Font When Available",
+      "description": "Use exact font if embedded in PDF.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/lib/fonts/fontMatcher.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Detect font from PDF text", "details": "Extract font name from text item" },
+        { "step": 2, "action": "Check if font is embedded", "details": "Look for embedded font data" },
+        { "step": 3, "action": "Use embedded font if available", "details": "Apply to text editor" }
+      ],
+      "acceptanceCriteria": ["Embedded fonts detected", "Exact font used when available", "Font size matched"]
+    },
+    {
+      "id": "7.2.3",
+      "category": "fonts",
+      "title": "Fall Back to Similar Fonts",
+      "description": "Map common PDF fonts to web-safe alternatives.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/lib/fonts/fontFallback.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Helvetica → Arial", "Times → Times New Roman", "Courier → Courier New", "Reasonable visual match"]
+    },
+    {
+      "id": "7.2.4",
+      "category": "editing",
+      "title": "Handle Multi-Line Text Blocks",
+      "description": "Support editing multi-line text areas.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/editor/InlineTextEditor.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Multi-line text editable", "Line breaks preserved", "Text reflows within bounds"]
+    },
+    {
+      "id": "7.2.5",
+      "category": "editing",
+      "title": "Add Character Limit Per Line",
+      "description": "Prevent overflow by limiting characters per line.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/editor/InlineTextEditor.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Character limit enforced", "Visual warning near limit", "Text doesn't overflow bounds"]
+    }
+  ],
+  "successCriteria": ["Existing text can be edited inline", "Font matching works reasonably well"],
+  "filesCreated": ["src/components/editor/InlineTextEditor.tsx", "src/lib/fonts/fontMatcher.ts", "src/lib/fonts/fontFallback.ts"],
+  "filesModified": ["src/components/viewer/PDFViewer.tsx"],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 26,
+  "dependencies": ["PHASE_1_SPRINT_7_TODO_1"],
+  "notes": ["PDF text editing is complex due to font encoding issues", "Embedded fonts may have incomplete character sets"]
+}

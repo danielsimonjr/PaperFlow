@@ -1,0 +1,91 @@
+{
+  "phase": 1,
+  "sprint": 8,
+  "todoFile": 3,
+  "title": "Merge & Split PDFs",
+  "priority": "MEDIUM",
+  "effort": "27 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "mergePerformance": { "current": "N/A", "target": "< 5s for 100-page merge" }
+  },
+  "tasks": [
+    {
+      "id": "8.3.1",
+      "category": "merge",
+      "title": "Merge Multiple PDF Files",
+      "description": "Combine multiple PDFs into one document.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["src/components/pages/MergeDialog.tsx", "src/lib/pages/mergePdf.ts"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "Combine multiple PDFs into single document",
+        "keyDecisions": ["Use pdf-lib for merging", "Preserve annotations if possible", "Show progress for large files"]
+      },
+      "stepByStep": [
+        { "step": 1, "action": "Open merge dialog", "details": "From menu or toolbar" },
+        { "step": 2, "action": "Drag-and-drop files", "details": "Add PDFs to merge list" },
+        { "step": 3, "action": "Reorder files", "details": "Drag to change order" },
+        { "step": 4, "action": "Merge and show progress", "details": "Progress indicator for large files" }
+      ],
+      "acceptanceCriteria": ["Multiple PDFs can be added", "Files can be reordered", "Progress indicator shows", "Merged PDF opens in editor"]
+    },
+    {
+      "id": "8.3.2",
+      "category": "split",
+      "title": "Split PDF by Page Range",
+      "description": "Extract specific pages into new PDF.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/pages/SplitDialog.tsx", "src/lib/pages/splitPdf.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Page range input (e.g., 1-5, 8, 10-12)", "Preview pages to extract", "Download split PDF", "Original unchanged"]
+    },
+    {
+      "id": "8.3.3",
+      "category": "split",
+      "title": "Split Every N Pages",
+      "description": "Split document into chunks of N pages each.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/lib/pages/splitPdf.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Input for pages per file", "Multiple PDFs created", "Download as ZIP"]
+    },
+    {
+      "id": "8.3.4",
+      "category": "split",
+      "title": "Split by File Size",
+      "description": "Split document into files under specified size.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/lib/pages/splitPdf.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Input for max file size", "Smart page grouping", "Download as ZIP"]
+    },
+    {
+      "id": "8.3.5",
+      "category": "extract",
+      "title": "Extract Pages to New PDF",
+      "description": "Extract selected pages to a new document.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/lib/pages/extractPages.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Select pages to extract", "Create new PDF with selection", "Option to remove from original", "Download or open extracted"]
+    }
+  ],
+  "successCriteria": ["PDF merge combines multiple files", "PDF split creates multiple files", "Page extraction works", "All operations update document correctly"],
+  "filesCreated": ["src/components/pages/MergeDialog.tsx", "src/components/pages/SplitDialog.tsx", "src/lib/pages/mergePdf.ts", "src/lib/pages/splitPdf.ts", "src/lib/pages/extractPages.ts"],
+  "filesModified": ["src/lib/pdf/saver.ts"],
+  "totalNewTests": 12,
+  "totalEstimatedHours": 27,
+  "dependencies": ["PHASE_1_SPRINT_8_TODO_1"],
+  "notes": ["Large merge operations may need Web Worker", "Consider memory usage for many-page operations", "JSZip for downloading multiple files"]
+}

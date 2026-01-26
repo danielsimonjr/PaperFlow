@@ -1,0 +1,66 @@
+{
+  "phase": 1,
+  "sprint": 7,
+  "todoFile": 4,
+  "title": "Advanced Formatting & Save",
+  "priority": "MEDIUM",
+  "effort": "15 hours",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "7.3.6",
+      "category": "formatting",
+      "title": "Add Text Alignment Options",
+      "description": "Left, center, right, justify alignment.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/editor/AlignmentPicker.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Left align", "Center align", "Right align", "Justify option"]
+    },
+    {
+      "id": "7.3.7",
+      "category": "formatting",
+      "title": "Add Line Spacing Options",
+      "description": "Control line height/spacing in text boxes.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/editor/LineSpacing.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Single spacing", "1.5 spacing", "Double spacing", "Custom value"]
+    },
+    {
+      "id": "7.3.8",
+      "category": "transform",
+      "title": "Implement Text Box Resize/Reposition",
+      "description": "Drag to move, handles to resize text boxes.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/components/editor/TextBoxTransform.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Drag to reposition", "Corner handles to resize", "Text reflows on resize"]
+    },
+    {
+      "id": "7.4.1",
+      "category": "persistence",
+      "title": "Save Text Changes to PDF",
+      "description": "Persist text edits when saving document.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/lib/pdf/textSaver.ts"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": ["Edited text saved to PDF", "New text boxes saved", "Formatting preserved", "Visible in other readers"]
+    }
+  ],
+  "successCriteria": ["Formatting tools work correctly", "Text changes save to PDF", "Undo/redo works for text edits"],
+  "filesCreated": ["src/components/editor/AlignmentPicker.tsx", "src/components/editor/LineSpacing.tsx", "src/components/editor/TextBoxTransform.tsx", "src/lib/pdf/textSaver.ts"],
+  "filesModified": ["src/stores/historyStore.ts", "src/lib/pdf/saver.ts"],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 15,
+  "dependencies": ["PHASE_1_SPRINT_7_TODO_3"],
+  "notes": ["pdf-lib supports adding text but not editing existing", "Font matching is best-effort, not perfect"]
+}

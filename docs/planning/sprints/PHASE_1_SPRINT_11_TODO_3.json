@@ -1,0 +1,75 @@
+{
+  "phase": 1,
+  "sprint": 11,
+  "todoFile": 3,
+  "title": "E2E & Performance Tests",
+  "priority": "HIGH",
+  "effort": "30 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "e2eCriticalPaths": { "current": "N/A", "target": "100% coverage" },
+    "crossBrowserSupport": { "current": "N/A", "target": "Chrome, Firefox, Safari, Edge" }
+  },
+  "tasks": [
+    {
+      "id": "11.3.1",
+      "category": "e2e",
+      "title": "Test Complete User Workflows",
+      "description": "E2E tests for full user journeys.",
+      "status": "pending",
+      "estimatedHours": 10,
+      "agent": "sonnet",
+      "files": ["tests/e2e/workflows/open-edit-save.spec.ts", "tests/e2e/workflows/form-fill.spec.ts", "tests/e2e/workflows/annotate-share.spec.ts"],
+      "testCategories": ["e2e"],
+      "stepByStep": [
+        { "step": 1, "action": "Open → Edit → Save → Reopen", "details": "Full document lifecycle" },
+        { "step": 2, "action": "Form fill and submit", "details": "Complete form workflow" },
+        { "step": 3, "action": "Annotate and share", "details": "Add annotations, export" }
+      ],
+      "acceptanceCriteria": ["Complete workflows pass", "Data persists correctly", "No regressions"]
+    },
+    {
+      "id": "11.3.2",
+      "category": "e2e",
+      "title": "Cross-Browser Testing",
+      "description": "E2E tests on Chrome, Firefox, Safari, Edge.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["playwright.config.ts"],
+      "testCategories": ["e2e"],
+      "acceptanceCriteria": ["Chrome tests pass", "Firefox tests pass", "Safari tests pass", "Edge tests pass"]
+    },
+    {
+      "id": "11.3.3",
+      "category": "e2e",
+      "title": "Mobile Device Testing",
+      "description": "E2E tests on mobile viewports and touch.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["tests/e2e/mobile/touch.spec.ts", "tests/e2e/mobile/responsive.spec.ts"],
+      "testCategories": ["e2e"],
+      "acceptanceCriteria": ["Touch interactions work", "Responsive layout works", "Mobile gestures work"]
+    },
+    {
+      "id": "11.3.4",
+      "category": "performance",
+      "title": "Performance Benchmarks",
+      "description": "Measure and document performance metrics.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["tests/performance/benchmarks.ts", "docs/PERFORMANCE.md"],
+      "testCategories": ["performance"],
+      "acceptanceCriteria": ["PDF load times documented", "Page render times documented", "Memory usage documented", "Targets met"]
+    }
+  ],
+  "successCriteria": ["E2E tests cover critical paths", "Cross-browser tests pass", "Performance benchmarks documented"],
+  "filesCreated": ["tests/e2e/workflows/open-edit-save.spec.ts", "tests/e2e/workflows/form-fill.spec.ts", "tests/e2e/workflows/annotate-share.spec.ts", "tests/e2e/mobile/touch.spec.ts", "tests/e2e/mobile/responsive.spec.ts", "tests/performance/benchmarks.ts", "docs/PERFORMANCE.md"],
+  "filesModified": ["playwright.config.ts"],
+  "totalNewTests": 40,
+  "totalEstimatedHours": 30,
+  "dependencies": ["PHASE_1_SPRINT_11_TODO_2"],
+  "notes": ["Playwright for E2E and cross-browser", "CI should run all tests on PR"]
+}

@@ -1,0 +1,86 @@
+{
+  "phase": 1,
+  "sprint": 3,
+  "todoFile": 1,
+  "title": "Annotation Infrastructure & Types",
+  "priority": "HIGH",
+  "effort": "17 hours",
+  "status": "pending",
+  "milestone": "Closed Beta",
+  "tasks": [
+    {
+      "id": "3.1.1",
+      "category": "infrastructure",
+      "title": "Create AnnotationLayer Component",
+      "description": "SVG overlay component positioned over PDF pages for rendering annotations.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/annotations/AnnotationLayer.tsx"],
+      "testCategories": ["unit", "integration"],
+      "implementation": {
+        "purpose": "SVG layer that sits on top of PDF canvas for annotation rendering",
+        "keyDecisions": ["Use SVG for vector scalability with zoom", "Position absolutely over page canvas", "Handle pointer events for selection"]
+      },
+      "acceptanceCriteria": ["SVG layer positions over page canvas", "Scales correctly with zoom", "Handles pointer events", "Transparent to PDF interaction when appropriate"]
+    },
+    {
+      "id": "3.1.2",
+      "category": "types",
+      "title": "Define Annotation Data Models",
+      "description": "Create TypeScript interfaces for all annotation types.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/types/annotations.ts"],
+      "testCategories": ["typecheck"],
+      "stepByStep": [
+        { "step": 1, "action": "Create base Annotation interface", "details": "id, type, pageIndex, rects, color, opacity, content, author, createdAt, updatedAt, replies" },
+        { "step": 2, "action": "Create AnnotationType enum", "details": "highlight, underline, strikethrough, note, drawing, shape, stamp" },
+        { "step": 3, "action": "Create Rect and Point interfaces", "details": "x, y, width, height for Rect; x, y for Point" },
+        { "step": 4, "action": "Create Reply interface", "details": "id, content, author, createdAt" }
+      ],
+      "acceptanceCriteria": ["All annotation types defined", "Rect and Point types defined", "Reply interface for note threading", "Types exported from index"]
+    },
+    {
+      "id": "3.1.3",
+      "category": "state",
+      "title": "Create annotationStore",
+      "description": "Zustand store for managing annotations with CRUD operations.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/stores/annotationStore.ts"],
+      "testCategories": ["unit"],
+      "implementation": {
+        "purpose": "Central state management for all annotations",
+        "keyDecisions": ["Use UUID v4 for annotation IDs", "Integrate with historyStore for undo/redo", "Track active tool and color"]
+      },
+      "acceptanceCriteria": ["State: annotations, selectedId, activeTool, activeColor, activeOpacity", "Actions: addAnnotation, updateAnnotation, deleteAnnotation, selectAnnotation", "History integration for undo/redo", "Export/import annotations to JSON"]
+    },
+    {
+      "id": "3.1.4",
+      "category": "utils",
+      "title": "Create Coordinate Transformation Utilities",
+      "description": "Utilities to convert between PDF coordinates and screen coordinates.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/utils/coordinates.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        { "step": 1, "action": "Create pdfToScreen function", "details": "screenX = (pdfX * scale) + offsetX; screenY = ((pageHeight - pdfY) * scale) + offsetY" },
+        { "step": 2, "action": "Create screenToPdf function", "details": "Inverse transformation" },
+        { "step": 3, "action": "Handle zoom and scroll offset", "details": "Account for current zoom level and scroll position" }
+      ],
+      "acceptanceCriteria": ["PDF to screen conversion works", "Screen to PDF conversion works", "Zoom level handled correctly", "Scroll offset handled correctly"]
+    }
+  ],
+  "successCriteria": ["Annotation layer component renders over PDF pages", "All annotation types properly defined", "annotationStore manages annotations correctly", "Coordinate transforms work accurately"],
+  "filesCreated": ["src/components/annotations/AnnotationLayer.tsx", "src/stores/annotationStore.ts", "src/types/annotations.ts", "src/utils/coordinates.ts"],
+  "filesModified": ["src/components/viewer/PDFViewer.tsx", "src/types/index.ts"],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 17,
+  "dependencies": ["Sprint 1", "Sprint 2"],
+  "notes": ["Coordinate transformation is critical for accurate annotation placement", "Use SVG for annotations to scale smoothly with zoom"]
+}

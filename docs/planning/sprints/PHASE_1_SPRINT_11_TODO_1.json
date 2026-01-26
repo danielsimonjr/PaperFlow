@@ -1,0 +1,75 @@
+{
+  "phase": 1,
+  "sprint": 11,
+  "todoFile": 1,
+  "title": "Unit Tests",
+  "priority": "HIGH",
+  "effort": "28 hours",
+  "status": "pending",
+  "targetMetrics": {
+    "unitTestCoverage": { "current": "N/A", "target": "≥ 80%" }
+  },
+  "tasks": [
+    {
+      "id": "11.1.1",
+      "category": "unit",
+      "title": "Test All Utility Functions",
+      "description": "Unit tests for coordinate transforms, file helpers, PDF helpers.",
+      "status": "pending",
+      "estimatedHours": 8,
+      "agent": "sonnet",
+      "files": ["tests/unit/utils/coordinates.test.ts", "tests/unit/utils/fileHelpers.test.ts", "tests/unit/utils/pdfHelpers.test.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["Coordinate transforms tested", "File helpers tested", "PDF helpers tested", "cn() utility tested"]
+    },
+    {
+      "id": "11.1.2",
+      "category": "unit",
+      "title": "Test Zustand Stores",
+      "description": "Unit tests for all store actions and state transitions.",
+      "status": "pending",
+      "estimatedHours": 10,
+      "agent": "sonnet",
+      "files": ["tests/unit/stores/documentStore.test.ts", "tests/unit/stores/annotationStore.test.ts", "tests/unit/stores/historyStore.test.ts", "tests/unit/stores/settingsStore.test.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        { "step": 1, "action": "Test documentStore", "details": "Load, navigation, zoom, view mode actions" },
+        { "step": 2, "action": "Test annotationStore", "details": "CRUD operations, selection, tool management" },
+        { "step": 3, "action": "Test historyStore", "details": "Undo/redo functionality" },
+        { "step": 4, "action": "Test settingsStore", "details": "Persistence, reset to defaults" }
+      ],
+      "acceptanceCriteria": ["All stores have comprehensive tests", "State transitions verified", "Edge cases covered"]
+    },
+    {
+      "id": "11.1.3",
+      "category": "unit",
+      "title": "Test PDF Rendering Logic",
+      "description": "Unit tests for PDFRenderer class.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["tests/unit/lib/pdf/renderer.test.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["loadDocument tested", "renderPage tested", "getTextContent tested", "Error handling tested"]
+    },
+    {
+      "id": "11.1.4",
+      "category": "unit",
+      "title": "Test Annotation Serialization",
+      "description": "Unit tests for annotation export/import.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["tests/unit/lib/annotations/serializer.test.ts"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": ["JSON export tested", "JSON import tested", "All annotation types tested", "Coordinate handling tested"]
+    }
+  ],
+  "successCriteria": ["Unit test coverage ≥ 80%", "All utility functions tested", "All stores tested"],
+  "filesCreated": ["tests/unit/utils/coordinates.test.ts", "tests/unit/utils/fileHelpers.test.ts", "tests/unit/utils/pdfHelpers.test.ts", "tests/unit/stores/documentStore.test.ts", "tests/unit/stores/annotationStore.test.ts", "tests/unit/stores/historyStore.test.ts", "tests/unit/stores/settingsStore.test.ts", "tests/unit/lib/pdf/renderer.test.ts", "tests/unit/lib/annotations/serializer.test.ts"],
+  "filesModified": ["vitest.config.ts"],
+  "totalNewTests": 50,
+  "totalEstimatedHours": 28,
+  "dependencies": ["Sprint 1-10"],
+  "notes": ["Vitest for unit and integration tests", "Mock IndexedDB for unit tests"]
+}

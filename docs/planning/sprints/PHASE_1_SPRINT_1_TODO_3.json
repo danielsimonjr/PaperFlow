@@ -1,0 +1,86 @@
+{
+  "phase": 1,
+  "sprint": 1,
+  "todoFile": 3,
+  "title": "PDF Viewer Components",
+  "priority": "HIGH",
+  "effort": "14 hours",
+  "status": "pending",
+  "milestone": "Internal Alpha (end of Sprint 2)",
+  "tasks": [
+    {
+      "id": "1.4.1",
+      "category": "components",
+      "title": "Create PDFViewer Container Component",
+      "description": "Build the main PDF viewer container that manages page display and navigation.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/viewer/PDFViewer.tsx", "src/components/viewer/PageCanvas.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "PDFViewer renders loaded document",
+        "PageCanvas displays single page",
+        "High-DPI canvas support works",
+        "Canvas cleanup on unmount"
+      ]
+    },
+    {
+      "id": "1.4.2",
+      "category": "components",
+      "title": "Implement Page Navigation",
+      "description": "Add page number display, prev/next buttons, and keyboard navigation.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/viewer/PageNavigation.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "Page number shows current/total",
+        "Previous/Next buttons work",
+        "Jump to page input works",
+        "Arrow keys navigate pages",
+        "Page Up/Down keys work"
+      ]
+    },
+    {
+      "id": "1.4.3",
+      "category": "components",
+      "title": "Implement Zoom Controls",
+      "description": "Add zoom in/out buttons, fit modes, and zoom percentage display.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/viewer/ZoomControls.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "Zoom in increases by 25%",
+        "Zoom out decreases by 25%",
+        "Reset to 100% works",
+        "Fit to width works",
+        "Fit to page works",
+        "Zoom range: 10% - 400%"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "PDF files render correctly in viewer",
+    "Page navigation works (prev/next/jump to page)",
+    "Zoom in/out functions properly (10% - 400% range)",
+    "Keyboard navigation works"
+  ],
+  "filesCreated": [
+    "src/components/viewer/PDFViewer.tsx",
+    "src/components/viewer/PageCanvas.tsx",
+    "src/components/viewer/PageNavigation.tsx",
+    "src/components/viewer/ZoomControls.tsx"
+  ],
+  "filesModified": [],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 14,
+  "dependencies": ["PHASE_1_SPRINT_1_TODO_2"],
+  "notes": [
+    "Use devicePixelRatio for sharp rendering on high-DPI displays",
+    "Canvas cleanup is critical to prevent memory leaks"
+  ]
+}

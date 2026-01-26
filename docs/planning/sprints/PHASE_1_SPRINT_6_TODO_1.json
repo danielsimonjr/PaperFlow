@@ -1,0 +1,103 @@
+{
+  "phase": 1,
+  "sprint": 6,
+  "todoFile": 1,
+  "title": "Signature Creation Methods",
+  "priority": "HIGH",
+  "effort": "26 hours",
+  "status": "pending",
+  "milestone": "Open Beta",
+  "targetMetrics": {
+    "signatureCreation": { "current": "N/A", "target": "< 5 seconds to create signature" }
+  },
+  "tasks": [
+    {
+      "id": "6.1.1",
+      "category": "ui",
+      "title": "Create SignatureModal Component",
+      "description": "Modal with tabs for Draw, Type, and Image signature creation.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/signatures/SignatureModal.tsx"],
+      "testCategories": ["unit"],
+      "implementation": {
+        "purpose": "Central interface for creating signatures",
+        "keyDecisions": ["Three creation methods: draw, type, image", "Tab-based interface", "Preview before saving"]
+      },
+      "acceptanceCriteria": ["Modal opens from signature tool", "Three tabs: Draw, Type, Image", "Cancel and Save buttons", "Preview of signature"]
+    },
+    {
+      "id": "6.1.2",
+      "category": "drawing",
+      "title": "Implement Draw Signature Canvas",
+      "description": "Canvas for drawing signatures with smooth rendering.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/signatures/DrawSignature.tsx"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "Create signature canvas", "details": "White/transparent background, black ink" },
+        { "step": 2, "action": "Implement smooth line rendering", "details": "Bezier curves for natural appearance" },
+        { "step": 3, "action": "Add clear button", "details": "Reset canvas to start over" },
+        { "step": 4, "action": "Add line thickness option", "details": "Thin, medium, thick presets" }
+      ],
+      "acceptanceCriteria": ["Smooth line drawing", "Black ink on white/transparent", "Clear button works", "Line thickness adjustable"]
+    },
+    {
+      "id": "6.1.3",
+      "category": "input",
+      "title": "Support Mouse, Touch, and Stylus Input",
+      "description": "Handle all input methods for signature drawing.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": ["src/hooks/useSignatureInput.ts"],
+      "testCategories": ["integration"],
+      "acceptanceCriteria": ["Mouse drawing works", "Touch drawing works", "Stylus drawing works", "Pressure sensitivity optional"]
+    },
+    {
+      "id": "6.1.4",
+      "category": "type",
+      "title": "Implement Type Signature",
+      "description": "Text input with cursive font selection for typed signatures.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/signatures/TypeSignature.tsx"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        { "step": 1, "action": "Create text input", "details": "Large input for name entry" },
+        { "step": 2, "action": "Add font selection", "details": "4-5 cursive/signature fonts" },
+        { "step": 3, "action": "Real-time preview", "details": "Show signature as user types" }
+      ],
+      "acceptanceCriteria": ["Text input works", "4-5 font options available", "Preview updates in real-time", "Fonts render correctly"]
+    },
+    {
+      "id": "6.1.5",
+      "category": "image",
+      "title": "Support Signature Image Upload",
+      "description": "Upload and process signature images.",
+      "status": "pending",
+      "estimatedHours": 6,
+      "agent": "sonnet",
+      "files": ["src/components/signatures/ImageSignature.tsx", "src/lib/signatures/imageProcessor.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        { "step": 1, "action": "File upload for PNG, JPG, SVG", "details": "Accept common image formats" },
+        { "step": 2, "action": "Auto-remove white background", "details": "Make white pixels transparent" },
+        { "step": 3, "action": "Crop to signature bounds", "details": "Remove excess whitespace" },
+        { "step": 4, "action": "Preview processed image", "details": "Show result before saving" }
+      ],
+      "acceptanceCriteria": ["PNG, JPG, SVG uploads work", "White background removed", "Auto-cropped to content", "Preview shows processed result"]
+    }
+  ],
+  "successCriteria": ["All signature creation methods work", "Draw, type, and image signatures can be created"],
+  "filesCreated": ["src/components/signatures/SignatureModal.tsx", "src/components/signatures/DrawSignature.tsx", "src/components/signatures/TypeSignature.tsx", "src/components/signatures/ImageSignature.tsx", "src/hooks/useSignatureInput.ts", "src/lib/signatures/imageProcessor.ts"],
+  "filesModified": ["src/components/toolbar/AnnotationToolbar.tsx"],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 26,
+  "dependencies": ["Sprint 4", "Sprint 5"],
+  "notes": ["Signature fonts should be bundled, not web fonts", "Image processing for background removal can be CPU intensive"]
+}

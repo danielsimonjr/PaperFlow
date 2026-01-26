@@ -1,0 +1,102 @@
+{
+  "phase": 1,
+  "sprint": 1,
+  "todoFile": 4,
+  "title": "Layout Components",
+  "priority": "HIGH",
+  "effort": "15 hours",
+  "status": "pending",
+  "milestone": "Internal Alpha (end of Sprint 2)",
+  "tasks": [
+    {
+      "id": "1.5.1",
+      "category": "layout",
+      "title": "Create Header Component",
+      "description": "Build the application header with logo, file name, and action buttons.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/layout/Header.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": [
+        "Logo and app name display",
+        "File name shows with modified indicator (*)",
+        "Save/Download buttons present",
+        "Settings link works"
+      ]
+    },
+    {
+      "id": "1.5.2",
+      "category": "layout",
+      "title": "Create Sidebar Component",
+      "description": "Build collapsible sidebar with tabs for thumbnails, bookmarks, and annotations.",
+      "status": "pending",
+      "estimatedHours": 5,
+      "agent": "sonnet",
+      "files": ["src/components/layout/Sidebar.tsx"],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "Sidebar collapses/expands",
+        "Thumbnails tab placeholder works",
+        "Bookmarks tab placeholder works",
+        "Annotations tab placeholder works",
+        "Sidebar width is resizable"
+      ]
+    },
+    {
+      "id": "1.5.3",
+      "category": "layout",
+      "title": "Create Toolbar Component",
+      "description": "Build the main toolbar with tool selection, navigation, and zoom controls.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "haiku",
+      "files": ["src/components/layout/Toolbar.tsx"],
+      "testCategories": ["unit"],
+      "acceptanceCriteria": [
+        "Tool selection buttons render",
+        "Page navigation integrated",
+        "Zoom controls integrated"
+      ]
+    },
+    {
+      "id": "1.5.4",
+      "category": "layout",
+      "title": "Create Main Layout with CSS Grid",
+      "description": "Set up the main application layout using CSS Grid with fixed header/toolbar and scrollable content.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "haiku",
+      "files": ["src/components/layout/AppLayout.tsx", "src/App.tsx"],
+      "testCategories": ["visual"],
+      "acceptanceCriteria": [
+        "Header is fixed at top",
+        "Toolbar is fixed below header",
+        "Sidebar is resizable",
+        "Main content area scrolls"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Header displays correctly with all elements",
+    "Sidebar collapses/expands and is resizable",
+    "Toolbar integrates navigation and zoom",
+    "Main layout uses CSS Grid properly"
+  ],
+  "filesCreated": [
+    "src/components/layout/Header.tsx",
+    "src/components/layout/Sidebar.tsx",
+    "src/components/layout/Toolbar.tsx",
+    "src/components/layout/AppLayout.tsx"
+  ],
+  "filesModified": [
+    "src/App.tsx"
+  ],
+  "totalNewTests": 4,
+  "totalEstimatedHours": 15,
+  "dependencies": ["PHASE_1_SPRINT_1_TODO_3"],
+  "notes": [
+    "CSS Grid provides flexible layout management",
+    "Sidebar resize should be smooth and respect min/max widths"
+  ]
+}
