@@ -80,6 +80,25 @@ UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → Indexed
 ### PDF Coordinate System
 Annotations and form fields use PDF coordinates (origin at bottom-left). The annotation layer handles conversion between PDF coordinates and screen coordinates for rendering.
 
+Coordinate conversion utilities are in `src/utils/coordinates.ts`:
+- `pdfToScreen()` / `screenToPdf()`: Point conversion
+- `pdfRectToScreen()` / `screenRectToPdf()`: Rectangle conversion
+- `normalizeRects()`: Merge adjacent rectangles on same line
+
+### Annotation System (Sprint 3)
+Components in `components/annotations/`:
+- `AnnotationLayer`: SVG overlay for rendering annotations
+- `Highlight`, `Underline`, `Strikethrough`: Text markup components
+- `StickyNote`, `NoteTool`, `NoteReplies`: Note annotations
+- `SelectionPopup`: Context menu for text selection
+- `ExportImportDialog`: Import/export annotations as JSON
+
+Key hooks:
+- `useAnnotationShortcuts`: Keyboard shortcuts (H, U, S, N, V)
+- `useTextSelection`: Text selection handling
+
+Annotation serialization in `lib/annotations/serializer.ts`.
+
 ## Naming Conventions
 
 | Type       | Convention              | Example            |

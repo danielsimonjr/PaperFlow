@@ -5,10 +5,13 @@
   "title": "Text Markup Annotations",
   "priority": "HIGH",
   "effort": "18 hours",
-  "status": "pending",
+  "status": "completed",
   "milestone": "Closed Beta",
   "targetMetrics": {
-    "annotationCreation": { "current": "N/A", "target": "< 100ms to create annotation" }
+    "annotationCreation": {
+      "current": "N/A",
+      "target": "< 100ms to create annotation"
+    }
   },
   "tasks": [
     {
@@ -16,72 +19,148 @@
       "category": "annotations",
       "title": "Implement Highlight Creation Flow",
       "description": "Create highlights from text selection with color picker.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 5,
       "agent": "sonnet",
-      "files": ["src/components/annotations/HighlightTool.tsx"],
-      "testCategories": ["integration"],
-      "stepByStep": [
-        { "step": 1, "action": "Connect text selection to highlight creation", "details": "On selection + highlight button click" },
-        { "step": 2, "action": "Create annotation with color", "details": "Use active color from annotationStore" },
-        { "step": 3, "action": "Push to history for undo", "details": "Integrate with historyStore" }
+      "files": [
+        "src/components/annotations/HighlightTool.tsx"
       ],
-      "acceptanceCriteria": ["Highlight created from selection", "Color picker works", "Default colors: yellow, green, blue, pink, orange", "Undo removes highlight"]
+      "testCategories": [
+        "integration"
+      ],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Connect text selection to highlight creation",
+          "details": "On selection + highlight button click"
+        },
+        {
+          "step": 2,
+          "action": "Create annotation with color",
+          "details": "Use active color from annotationStore"
+        },
+        {
+          "step": 3,
+          "action": "Push to history for undo",
+          "details": "Integrate with historyStore"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Highlight created from selection",
+        "Color picker works",
+        "Default colors: yellow, green, blue, pink, orange",
+        "Undo removes highlight"
+      ]
     },
     {
       "id": "3.3.3",
       "category": "annotations",
       "title": "Add Highlight Opacity Control",
       "description": "Allow adjusting highlight opacity (30% - 100%).",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "agent": "haiku",
-      "files": ["src/components/annotations/OpacitySlider.tsx"],
-      "testCategories": ["unit"],
-      "acceptanceCriteria": ["Opacity slider in properties panel", "Range: 30% - 100%", "Default: 50%", "Updates highlight in real-time"]
+      "files": [
+        "src/components/annotations/OpacitySlider.tsx"
+      ],
+      "testCategories": [
+        "unit"
+      ],
+      "acceptanceCriteria": [
+        "Opacity slider in properties panel",
+        "Range: 30% - 100%",
+        "Default: 50%",
+        "Updates highlight in real-time"
+      ]
     },
     {
       "id": "3.3.4",
       "category": "annotations",
       "title": "Implement Highlight Editing and Deletion",
       "description": "Allow editing color/opacity and deleting highlights.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 3,
       "agent": "haiku",
-      "files": ["src/components/annotations/AnnotationProperties.tsx"],
-      "testCategories": ["unit", "integration"],
-      "acceptanceCriteria": ["Click to select highlight", "Color picker in properties panel", "Delete key removes highlight", "Right-click context menu", "Undo/redo works"]
+      "files": [
+        "src/components/annotations/AnnotationProperties.tsx"
+      ],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
+      "acceptanceCriteria": [
+        "Click to select highlight",
+        "Color picker in properties panel",
+        "Delete key removes highlight",
+        "Right-click context menu",
+        "Undo/redo works"
+      ]
     },
     {
       "id": "3.4.1",
       "category": "annotations",
       "title": "Create Underline Component",
       "description": "SVG line component for rendering underline annotations.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 3,
       "agent": "haiku",
-      "files": ["src/components/annotations/Underline.tsx"],
-      "testCategories": ["unit"],
-      "acceptanceCriteria": ["Line renders below text", "Color configurable", "Default: red #EF4444", "Scales with zoom"]
+      "files": [
+        "src/components/annotations/Underline.tsx"
+      ],
+      "testCategories": [
+        "unit"
+      ],
+      "acceptanceCriteria": [
+        "Line renders below text",
+        "Color configurable",
+        "Default: red #EF4444",
+        "Scales with zoom"
+      ]
     },
     {
       "id": "3.4.2",
       "category": "annotations",
       "title": "Create Strikethrough Component",
       "description": "SVG line component for rendering strikethrough annotations.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 3,
       "agent": "haiku",
-      "files": ["src/components/annotations/Strikethrough.tsx"],
-      "testCategories": ["unit"],
-      "acceptanceCriteria": ["Line renders through text center", "Color configurable", "Default: red #EF4444", "Scales with zoom"]
+      "files": [
+        "src/components/annotations/Strikethrough.tsx"
+      ],
+      "testCategories": [
+        "unit"
+      ],
+      "acceptanceCriteria": [
+        "Line renders through text center",
+        "Color configurable",
+        "Default: red #EF4444",
+        "Scales with zoom"
+      ]
     }
   ],
-  "successCriteria": ["Highlight tool creates colored highlights", "Underline and strikethrough work", "All markup annotations editable and deletable", "Undo/redo works"],
-  "filesCreated": ["src/components/annotations/HighlightTool.tsx", "src/components/annotations/OpacitySlider.tsx", "src/components/annotations/AnnotationProperties.tsx", "src/components/annotations/Underline.tsx", "src/components/annotations/Strikethrough.tsx"],
-  "filesModified": ["src/stores/historyStore.ts"],
+  "successCriteria": [
+    "Highlight tool creates colored highlights",
+    "Underline and strikethrough work",
+    "All markup annotations editable and deletable",
+    "Undo/redo works"
+  ],
+  "filesCreated": [
+    "src/components/annotations/HighlightTool.tsx",
+    "src/components/annotations/OpacitySlider.tsx",
+    "src/components/annotations/AnnotationProperties.tsx",
+    "src/components/annotations/Underline.tsx",
+    "src/components/annotations/Strikethrough.tsx"
+  ],
+  "filesModified": [
+    "src/stores/historyStore.ts"
+  ],
   "totalNewTests": 8,
   "totalEstimatedHours": 16,
-  "dependencies": ["PHASE_1_SPRINT_3_TODO_2"],
-  "notes": ["Integrate all annotation actions with historyStore for undo/redo"]
+  "dependencies": [
+    "PHASE_1_SPRINT_3_TODO_2"
+  ],
+  "notes": [
+    "Integrate all annotation actions with historyStore for undo/redo"
+  ]
 }

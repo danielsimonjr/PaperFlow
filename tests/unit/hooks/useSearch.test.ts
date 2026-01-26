@@ -1,16 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { useSearch } from '@hooks/useSearch';
+import type { PDFRenderer } from '@lib/pdf/renderer';
 
 // Mock PDFRenderer
+const mockGetTextContentAsString = vi.fn();
 const mockRenderer = {
-  getTextContent: vi.fn(),
-};
+  getTextContentAsString: mockGetTextContentAsString,
+} as unknown as PDFRenderer;
 
 describe('useSearch', () => {
   beforeEach(() => {
-    mockRenderer.getTextContent.mockClear();
-    mockRenderer.getTextContent.mockImplementation((pageNum: number) => {
+    mockGetTextContentAsString.mockClear();
+    mockGetTextContentAsString.mockImplementation((pageNum: number) => {
       const pages: Record<number, string> = {
         1: 'This is the first page with some text content.',
         2: 'This is the second page with different content.',
@@ -34,7 +36,7 @@ describe('useSearch', () => {
 
   it('finds matches across pages', async () => {
     const { result } = renderHook(() =>
-      useSearch({ renderer: mockRenderer as any, pageCount: 3 })
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
     );
 
     await act(async () => {
@@ -55,7 +57,7 @@ describe('useSearch', () => {
 
   it('navigates to next match', async () => {
     const { result } = renderHook(() =>
-      useSearch({ renderer: mockRenderer as any, pageCount: 3 })
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
     );
 
     await act(async () => {
@@ -77,7 +79,7 @@ describe('useSearch', () => {
 
   it('navigates to previous match', async () => {
     const { result } = renderHook(() =>
-      useSearch({ renderer: mockRenderer as any, pageCount: 3 })
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
     );
 
     await act(async () => {
@@ -103,7 +105,7 @@ describe('useSearch', () => {
 
   it('wraps around when navigating past last match', async () => {
     const { result } = renderHook(() =>
-      useSearch({ renderer: mockRenderer as any, pageCount: 3 })
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
     );
 
     await act(async () => {
@@ -125,7 +127,7 @@ describe('useSearch', () => {
 
   it('clears search results', async () => {
     const { result } = renderHook(() =>
-      useSearch({ renderer: mockRenderer as any, pageCount: 3 })
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
     );
 
     await act(async () => {
@@ -147,7 +149,7 @@ describe('useSearch', () => {
 
   it('respects case sensitive option', async () => {
     const { result } = renderHook(() =>
-      useSearch({ renderer: mockRenderer as any, pageCount: 3 })
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
     );
 
     // Case insensitive (default)
@@ -175,7 +177,7 @@ describe('useSearch', () => {
 
   it('respects whole word option', async () => {
     const { result } = renderHook(() =>
-      useSearch({ renderer: mockRenderer as any, pageCount: 3 })
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
     );
 
     // Without whole word
@@ -206,7 +208,7 @@ describe('useSearch', () => {
 
   it('returns no matches for empty query', async () => {
     const { result } = renderHook(() =>
-      useSearch({ renderer: mockRenderer as any, pageCount: 3 })
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
     );
 
     await act(async () => {
@@ -214,7 +216,7 @@ describe('useSearch', () => {
     });
 
     expect(result.current.matches).toEqual([]);
-    expect(mockRenderer.getTextContent).not.toHaveBeenCalled();
+    expect(mockGetTextContentAsString).not.toHaveBeenCalled();
   });
 
   it('returns no matches when renderer is null', async () => {

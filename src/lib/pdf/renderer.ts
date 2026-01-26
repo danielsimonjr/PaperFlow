@@ -122,17 +122,27 @@ export class PDFRenderer {
     };
   }
 
-  async getTextContent(pageNumber: number): Promise<string> {
+  async getTextContent(pageNumber: number) {
     if (!this.document) {
       throw new Error('No document loaded');
     }
 
     const page = await this.document.getPage(pageNumber);
-    const textContent = await page.getTextContent();
+    return await page.getTextContent();
+  }
 
+  async getTextContentAsString(pageNumber: number): Promise<string> {
+    const textContent = await this.getTextContent(pageNumber);
     return textContent.items
       .map((item) => ('str' in item ? item.str : ''))
       .join(' ');
+  }
+
+  async getPage(pageNumber: number): Promise<pdfjsLib.PDFPageProxy> {
+    if (!this.document) {
+      throw new Error('No document loaded');
+    }
+    return await this.document.getPage(pageNumber);
   }
 
   async getOutline(): Promise<PDFOutlineItem[]> {
