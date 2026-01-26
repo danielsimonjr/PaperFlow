@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { PDFRenderer } from '@lib/pdf/renderer';
 import { AnnotationLayer } from '@components/annotations/AnnotationLayer';
+import { FormLayer } from '@components/forms/FormLayer';
 import { TextLayer, type TextSelection } from './TextLayer';
 import { SelectionPopup } from '@components/annotations/SelectionPopup';
 import { NoteTool } from '@components/annotations/NoteTool';
 import { useAnnotationStore } from '@stores/annotationStore';
+import { useFormStore } from '@stores/formStore';
 
 interface PageCanvasProps {
   renderer: PDFRenderer;
@@ -27,6 +29,7 @@ export function PageCanvas({
   const [textSelection, setTextSelection] = useState<TextSelection | null>(null);
 
   const activeTool = useAnnotationStore((state) => state.activeTool);
+  const formFields = useFormStore((state) => state.getFieldsForPage(pageNumber - 1));
 
   const renderPage = useCallback(async () => {
     const canvas = canvasRef.current;
@@ -119,6 +122,17 @@ export function PageCanvas({
       {/* Annotation Layer */}
       {dimensions.width > 0 && pageHeight > 0 && (
         <AnnotationLayer
+          pageIndex={pageNumber - 1}
+          width={dimensions.width}
+          height={dimensions.height}
+          scale={scaleValue}
+          pageHeight={pageHeight}
+        />
+      )}
+
+      {/* Form Layer */}
+      {dimensions.width > 0 && pageHeight > 0 && formFields.length > 0 && (
+        <FormLayer
           pageIndex={pageNumber - 1}
           width={dimensions.width}
           height={dimensions.height}

@@ -15,6 +15,10 @@ interface SettingsState {
   defaultHighlightColor: string;
   defaultAnnotationOpacity: number;
 
+  // Forms
+  formAutoAdvance: boolean; // Auto-advance to next field on completion
+  formAutoSave: boolean; // Auto-save form progress
+
   // Signatures
   savedSignatures: string[]; // base64 encoded
 
@@ -26,6 +30,8 @@ interface SettingsState {
   setAutoSaveInterval: (seconds: number) => void;
   setDefaultHighlightColor: (color: string) => void;
   setDefaultAnnotationOpacity: (opacity: number) => void;
+  setFormAutoAdvance: (enabled: boolean) => void;
+  setFormAutoSave: (enabled: boolean) => void;
   addSignature: (signature: string) => void;
   removeSignature: (index: number) => void;
   resetToDefaults: () => void;
@@ -39,6 +45,8 @@ const defaultSettings = {
   autoSaveInterval: 30,
   defaultHighlightColor: '#FFEB3B',
   defaultAnnotationOpacity: 0.5,
+  formAutoAdvance: false,
+  formAutoSave: true,
   savedSignatures: [],
 };
 
@@ -73,6 +81,14 @@ export const useSettingsStore = create<SettingsState>()(
 
       setDefaultAnnotationOpacity: (opacity) => {
         set({ defaultAnnotationOpacity: Math.max(0.1, Math.min(1, opacity)) });
+      },
+
+      setFormAutoAdvance: (enabled) => {
+        set({ formAutoAdvance: enabled });
+      },
+
+      setFormAutoSave: (enabled) => {
+        set({ formAutoSave: enabled });
       },
 
       addSignature: (signature) => {
