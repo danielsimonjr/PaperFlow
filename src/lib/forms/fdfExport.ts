@@ -220,14 +220,14 @@ export function parseFDF(fdfContent: string): Record<string, unknown> {
     } else if (fdfContent[i] === '/') {
       // Name value (for checkboxes, radio buttons)
       const nameMatch = fdfContent.substring(i + 1).match(/^(\w+)/);
-      if (nameMatch) {
+      if (nameMatch && nameMatch[1]) {
         const nameValue = nameMatch[1];
         if (nameValue === 'Off') {
           result[fieldName] = false;
         } else {
           result[fieldName] = nameValue;
         }
-        i += 1 + nameMatch[1].length;
+        i += 1 + nameValue.length;
       }
     }
 
