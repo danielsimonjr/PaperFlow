@@ -14,8 +14,11 @@ export interface SaveOptions {
 export async function savePdf(
   originalPdfBytes: ArrayBuffer,
   // Options will be used in future sprints for annotation embedding, etc.
-  _options: SaveOptions = {}
+  options: SaveOptions = {}
 ): Promise<Uint8Array> {
+  // Mark options as intentionally unused for now
+  void options;
+
   // Load the original PDF
   const pdfDoc = await PDFDocument.load(originalPdfBytes);
 
