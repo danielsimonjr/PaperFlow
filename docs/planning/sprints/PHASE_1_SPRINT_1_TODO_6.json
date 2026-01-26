@@ -5,7 +5,7 @@
   "title": "History Store",
   "priority": "MEDIUM",
   "effort": "3 hours",
-  "status": "pending",
+  "status": "completed",
   "milestone": "Internal Alpha (end of Sprint 2)",
   "tasks": [
     {
@@ -13,7 +13,7 @@
       "category": "state",
       "title": "Create historyStore",
       "description": "Implement Zustand store for undo/redo history management.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 3,
       "agent": "sonnet",
       "files": ["src/stores/historyStore.ts"],
