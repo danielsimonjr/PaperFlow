@@ -5,7 +5,7 @@
   "title": "File Saving Operations",
   "priority": "HIGH",
   "effort": "17 hours",
-  "status": "pending",
+  "status": "completed",
   "milestone": "Internal Alpha Complete",
   "tasks": [
     {
@@ -13,11 +13,16 @@
       "category": "file",
       "title": "Implement Save to Original File",
       "description": "Save changes back to original file using File System Access API.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 5,
       "agent": "sonnet",
-      "files": ["src/hooks/useFileSystem.ts", "src/lib/pdf/saver.ts"],
-      "testCategories": ["integration"],
+      "files": [
+        "src/hooks/useFileSystem.ts",
+        "src/lib/pdf/saver.ts"
+      ],
+      "testCategories": [
+        "integration"
+      ],
       "acceptanceCriteria": [
         "Save overwrites original file when handle exists",
         "Prompt for location if no handle",
@@ -30,11 +35,15 @@
       "category": "file",
       "title": "Implement Save As Functionality",
       "description": "Save document with new filename using file picker.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 3,
       "agent": "haiku",
-      "files": ["src/hooks/useFileSystem.ts"],
-      "testCategories": ["integration"],
+      "files": [
+        "src/hooks/useFileSystem.ts"
+      ],
+      "testCategories": [
+        "integration"
+      ],
       "acceptanceCriteria": [
         "Save As opens file picker",
         "New filename can be specified",
@@ -46,11 +55,15 @@
       "category": "file",
       "title": "Add Download Fallback",
       "description": "Provide download fallback for browsers without File System Access API.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "agent": "haiku",
-      "files": ["src/lib/storage/fileHandler.ts"],
-      "testCategories": ["integration"],
+      "files": [
+        "src/lib/storage/fileHandler.ts"
+      ],
+      "testCategories": [
+        "integration"
+      ],
       "acceptanceCriteria": [
         "Download triggers for unsupported browsers",
         "Suggested filename used",
@@ -62,11 +75,17 @@
       "category": "file",
       "title": "Track Document Modified State",
       "description": "Track changes and warn before closing with unsaved changes.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 3,
       "agent": "haiku",
-      "files": ["src/stores/documentStore.ts", "src/hooks/useBeforeUnload.ts"],
-      "testCategories": ["unit", "integration"],
+      "files": [
+        "src/stores/documentStore.ts",
+        "src/hooks/useBeforeUnload.ts"
+      ],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "acceptanceCriteria": [
         "Modified indicator (*) shows in header",
         "beforeunload warning shows",
@@ -78,11 +97,17 @@
       "category": "file",
       "title": "Implement Auto-Save to IndexedDB",
       "description": "Auto-save document to IndexedDB every 30 seconds (configurable).",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "agent": "sonnet",
-      "files": ["src/lib/storage/indexeddb.ts", "src/hooks/useAutoSave.ts"],
-      "testCategories": ["unit", "integration"],
+      "files": [
+        "src/lib/storage/indexeddb.ts",
+        "src/hooks/useAutoSave.ts"
+      ],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "acceptanceCriteria": [
         "Document saves every 30 seconds",
         "Interval configurable in settings",
@@ -111,7 +136,9 @@
   ],
   "totalNewTests": 8,
   "totalEstimatedHours": 17,
-  "dependencies": ["PHASE_1_SPRINT_2_TODO_1"],
+  "dependencies": [
+    "PHASE_1_SPRINT_2_TODO_1"
+  ],
   "notes": [
     "File System Access API requires user gesture to request file handle",
     "Auto-save should not block the UI"

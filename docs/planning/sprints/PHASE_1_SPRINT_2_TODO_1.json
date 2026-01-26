@@ -5,7 +5,7 @@
   "title": "File Opening Operations",
   "priority": "HIGH",
   "effort": "19 hours",
-  "status": "pending",
+  "status": "completed",
   "milestone": "Internal Alpha Complete",
   "tasks": [
     {
@@ -13,16 +13,38 @@
       "category": "file",
       "title": "Implement Drag-and-Drop File Opening",
       "description": "Add drag-and-drop support for opening PDF files with visual feedback and validation.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "agent": "sonnet",
-      "files": ["src/components/viewer/DropZone.tsx", "src/hooks/useDropZone.ts"],
-      "testCategories": ["unit", "integration"],
+      "files": [
+        "src/components/viewer/DropZone.tsx",
+        "src/hooks/useDropZone.ts"
+      ],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "stepByStep": [
-        { "step": 1, "action": "Create DropZone component", "details": "Full-screen overlay when dragging files" },
-        { "step": 2, "action": "Add drag event handlers", "details": "onDragEnter, onDragOver, onDragLeave, onDrop" },
-        { "step": 3, "action": "Validate file type", "details": "Accept only .pdf files, show error for others" },
-        { "step": 4, "action": "Visual feedback", "details": "Border highlight on drag over" }
+        {
+          "step": 1,
+          "action": "Create DropZone component",
+          "details": "Full-screen overlay when dragging files"
+        },
+        {
+          "step": 2,
+          "action": "Add drag event handlers",
+          "details": "onDragEnter, onDragOver, onDragLeave, onDrop"
+        },
+        {
+          "step": 3,
+          "action": "Validate file type",
+          "details": "Accept only .pdf files, show error for others"
+        },
+        {
+          "step": 4,
+          "action": "Visual feedback",
+          "details": "Border highlight on drag over"
+        }
       ],
       "acceptanceCriteria": [
         "Visual feedback shows on drag over",
@@ -36,11 +58,16 @@
       "category": "file",
       "title": "Create File Picker with browser-fs-access",
       "description": "Implement file picker dialog using browser-fs-access for native file handling with fallback.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "agent": "sonnet",
-      "files": ["src/hooks/useFileSystem.ts", "src/lib/storage/fileHandler.ts"],
-      "testCategories": ["integration"],
+      "files": [
+        "src/hooks/useFileSystem.ts",
+        "src/lib/storage/fileHandler.ts"
+      ],
+      "testCategories": [
+        "integration"
+      ],
       "acceptanceCriteria": [
         "Native file picker opens when supported",
         "Fallback to <input type='file'> when not",
@@ -53,11 +80,15 @@
       "category": "file",
       "title": "Support Opening from URL Parameter",
       "description": "Allow opening PDFs from URL query parameter (?url=...).",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "agent": "haiku",
-      "files": ["src/pages/Editor.tsx"],
-      "testCategories": ["integration"],
+      "files": [
+        "src/pages/Editor.tsx"
+      ],
+      "testCategories": [
+        "integration"
+      ],
       "acceptanceCriteria": [
         "PDF loads from ?url= parameter",
         "CORS-enabled URLs work",
@@ -69,11 +100,15 @@
       "category": "file",
       "title": "Add Loading Indicator with Progress",
       "description": "Show loading progress during file load with cancel option for large files.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 3,
       "agent": "haiku",
-      "files": ["src/components/ui/LoadingIndicator.tsx"],
-      "testCategories": ["unit"],
+      "files": [
+        "src/components/ui/LoadingIndicator.tsx"
+      ],
+      "testCategories": [
+        "unit"
+      ],
       "acceptanceCriteria": [
         "Loading spinner shows during load",
         "Progress bar for large files",
@@ -85,16 +120,38 @@
       "category": "file",
       "title": "Implement Recent Files List",
       "description": "Store and display recent files using IndexedDB with thumbnails.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "agent": "sonnet",
-      "files": ["src/lib/storage/indexeddb.ts", "src/components/home/RecentFiles.tsx"],
-      "testCategories": ["unit", "integration"],
+      "files": [
+        "src/lib/storage/indexeddb.ts",
+        "src/components/home/RecentFiles.tsx"
+      ],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "stepByStep": [
-        { "step": 1, "action": "Set up IndexedDB schema", "details": "Create recentFiles store with id, name, size, lastOpened, thumbnail" },
-        { "step": 2, "action": "Implement addRecentFile function", "details": "Save file metadata and thumbnail" },
-        { "step": 3, "action": "Create RecentFiles component", "details": "Display grid of recent files with thumbnails" },
-        { "step": 4, "action": "Add clear recent files option", "details": "Button to clear all recent files" }
+        {
+          "step": 1,
+          "action": "Set up IndexedDB schema",
+          "details": "Create recentFiles store with id, name, size, lastOpened, thumbnail"
+        },
+        {
+          "step": 2,
+          "action": "Implement addRecentFile function",
+          "details": "Save file metadata and thumbnail"
+        },
+        {
+          "step": 3,
+          "action": "Create RecentFiles component",
+          "details": "Display grid of recent files with thumbnails"
+        },
+        {
+          "step": 4,
+          "action": "Add clear recent files option",
+          "details": "Button to clear all recent files"
+        }
       ],
       "acceptanceCriteria": [
         "Last 10 files stored",
@@ -120,10 +177,15 @@
     "src/lib/storage/indexeddb.ts",
     "src/lib/storage/fileHandler.ts"
   ],
-  "filesModified": ["src/pages/Editor.tsx", "src/pages/Home.tsx"],
+  "filesModified": [
+    "src/pages/Editor.tsx",
+    "src/pages/Home.tsx"
+  ],
   "totalNewTests": 10,
   "totalEstimatedHours": 19,
-  "dependencies": ["Sprint 1"],
+  "dependencies": [
+    "Sprint 1"
+  ],
   "notes": [
     "File System Access API requires user gesture to request file handle",
     "IndexedDB stores documents with encryption consideration for future"

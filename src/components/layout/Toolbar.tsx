@@ -1,8 +1,5 @@
+import { useState } from 'react';
 import {
-  ZoomIn,
-  ZoomOut,
-  ChevronLeft,
-  ChevronRight,
   Highlighter,
   StickyNote,
   Pencil,
@@ -11,23 +8,15 @@ import {
   MousePointer,
   Square,
 } from 'lucide-react';
-import { Button } from '@components/ui/Button';
-import { useDocumentStore } from '@stores/documentStore';
+import { ViewModeToggle } from '@components/toolbar/ViewModeToggle';
+import { PageNavigation } from '@components/viewer/PageNavigation';
+import { ZoomControls } from '@components/viewer/ZoomControls';
 import { cn } from '@utils/cn';
-import { useState } from 'react';
 
 type Tool = 'select' | 'hand' | 'text' | 'highlight' | 'note' | 'draw' | 'shape';
 
 export function Toolbar() {
   const [activeTool, setActiveTool] = useState<Tool>('select');
-
-  const currentPage = useDocumentStore((state) => state.currentPage);
-  const pageCount = useDocumentStore((state) => state.pageCount);
-  const zoom = useDocumentStore((state) => state.zoom);
-  const nextPage = useDocumentStore((state) => state.nextPage);
-  const prevPage = useDocumentStore((state) => state.prevPage);
-  const zoomIn = useDocumentStore((state) => state.zoomIn);
-  const zoomOut = useDocumentStore((state) => state.zoomOut);
 
   const tools: { id: Tool; icon: typeof MousePointer; label: string }[] = [
     { id: 'select', icon: MousePointer, label: 'Select' },
@@ -59,33 +48,20 @@ export function Toolbar() {
         ))}
       </div>
 
-      {/* Navigation & Zoom */}
+      {/* View Mode, Navigation & Zoom */}
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-1">
-          <Button variant="ghost" size="sm" onClick={prevPage}>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <span className="min-w-[80px] text-center text-sm text-gray-600 dark:text-gray-400">
-            {pageCount > 0 ? `${currentPage} / ${pageCount}` : '-'}
-          </span>
-          <Button variant="ghost" size="sm" onClick={nextPage}>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
+        {/* View Mode Toggle */}
+        <ViewModeToggle />
 
         <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
 
-        <div className="flex items-center gap-1">
-          <Button variant="ghost" size="sm" onClick={zoomOut}>
-            <ZoomOut className="h-4 w-4" />
-          </Button>
-          <span className="min-w-[50px] text-center text-sm text-gray-600 dark:text-gray-400">
-            {zoom}%
-          </span>
-          <Button variant="ghost" size="sm" onClick={zoomIn}>
-            <ZoomIn className="h-4 w-4" />
-          </Button>
-        </div>
+        {/* Page Navigation */}
+        <PageNavigation />
+
+        <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+
+        {/* Zoom Controls */}
+        <ZoomControls />
       </div>
     </div>
   );

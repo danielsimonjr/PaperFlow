@@ -1,12 +1,20 @@
 const DB_NAME = 'paperflow';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
-interface RecentFile {
+export interface RecentFile {
   id: string;
   name: string;
   size: number;
   lastOpened: Date;
   thumbnail?: string;
+}
+
+export interface AutoSaveEntry {
+  id: string;
+  documentId: string;
+  fileName: string;
+  data: ArrayBuffer;
+  savedAt: Date;
 }
 
 class IndexedDBStorage {
@@ -27,6 +35,7 @@ class IndexedDBStorage {
 
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
+        const oldVersion = event.oldVersion;
 
         // Store for recent files metadata
         if (!db.objectStoreNames.contains('recentFiles')) {
@@ -42,6 +51,13 @@ class IndexedDBStorage {
         // Store for signatures
         if (!db.objectStoreNames.contains('signatures')) {
           db.createObjectStore('signatures', { keyPath: 'id' });
+        }
+
+        // Store for auto-save (added in version 2)
+        if (oldVersion < 2 && !db.objectStoreNames.contains('autoSave')) {
+          const store = db.createObjectStore('autoSave', { keyPath: 'id' });
+          store.createIndex('documentId', 'documentId', { unique: false });
+          store.createIndex('savedAt', 'savedAt', { unique: false });
         }
       };
     });
@@ -128,18 +144,126 @@ class IndexedDBStorage {
   async clearAll(): Promise<void> {
     if (!this.db) await this.init();
 
-    const stores = ['recentFiles', 'documents', 'signatures'];
+    const stores = ['recentFiles', 'documents', 'signatures', 'autoSave'];
 
     for (const storeName of stores) {
-      await new Promise<void>((resolve, reject) => {
-        const transaction = this.db!.transaction([storeName], 'readwrite');
-        const store = transaction.objectStore(storeName);
-        const request = store.clear();
+      if (this.db!.objectStoreNames.contains(storeName)) {
+        await new Promise<void>((resolve, reject) => {
+          const transaction = this.db!.transaction([storeName], 'readwrite');
+          const store = transaction.objectStore(storeName);
+          const request = store.clear();
 
-        request.onerror = () => reject(new Error(`Failed to clear ${storeName}`));
-        request.onsuccess = () => resolve();
-      });
+          request.onerror = () => reject(new Error(`Failed to clear ${storeName}`));
+          request.onsuccess = () => resolve();
+        });
+      }
     }
+  }
+
+  async clearRecentFiles(): Promise<void> {
+    if (!this.db) await this.init();
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction(['recentFiles'], 'readwrite');
+      const store = transaction.objectStore('recentFiles');
+      const request = store.clear();
+
+      request.onerror = () => reject(new Error('Failed to clear recent files'));
+      request.onsuccess = () => resolve();
+    });
+  }
+
+  // Auto-save methods
+  async saveAutoSave(entry: AutoSaveEntry): Promise<void> {
+    if (!this.db) await this.init();
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction(['autoSave'], 'readwrite');
+      const store = transaction.objectStore('autoSave');
+      const request = store.put(entry);
+
+      request.onerror = () => reject(new Error('Failed to save auto-save entry'));
+      request.onsuccess = () => resolve();
+    });
+  }
+
+  async getAutoSave(documentId: string): Promise<AutoSaveEntry | null> {
+    if (!this.db) await this.init();
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction(['autoSave'], 'readonly');
+      const store = transaction.objectStore('autoSave');
+      const index = store.index('documentId');
+      const request = index.openCursor(IDBKeyRange.only(documentId), 'prev');
+
+      request.onerror = () => reject(new Error('Failed to get auto-save'));
+      request.onsuccess = () => {
+        const cursor = request.result;
+        if (cursor) {
+          resolve(cursor.value);
+        } else {
+          resolve(null);
+        }
+      };
+    });
+  }
+
+  async removeAutoSave(id: string): Promise<void> {
+    if (!this.db) await this.init();
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction(['autoSave'], 'readwrite');
+      const store = transaction.objectStore('autoSave');
+      const request = store.delete(id);
+
+      request.onerror = () => reject(new Error('Failed to remove auto-save'));
+      request.onsuccess = () => resolve();
+    });
+  }
+
+  async clearAutoSaves(): Promise<void> {
+    if (!this.db) await this.init();
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction(['autoSave'], 'readwrite');
+      const store = transaction.objectStore('autoSave');
+      const request = store.clear();
+
+      request.onerror = () => reject(new Error('Failed to clear auto-saves'));
+      request.onsuccess = () => resolve();
+    });
+  }
+
+  // Clean up old auto-saves (keep only last N entries)
+  async cleanupOldAutoSaves(keepCount: number = 5): Promise<void> {
+    if (!this.db) await this.init();
+
+    return new Promise((resolve, reject) => {
+      const transaction = this.db!.transaction(['autoSave'], 'readwrite');
+      const store = transaction.objectStore('autoSave');
+      const index = store.index('savedAt');
+      const request = index.openCursor(null, 'prev');
+
+      let count = 0;
+      const toDelete: string[] = [];
+
+      request.onerror = () => reject(new Error('Failed to cleanup auto-saves'));
+      request.onsuccess = () => {
+        const cursor = request.result;
+        if (cursor) {
+          count++;
+          if (count > keepCount) {
+            toDelete.push(cursor.value.id);
+          }
+          cursor.continue();
+        } else {
+          // Delete old entries
+          Promise.all(toDelete.map((id) => this.removeAutoSave(id)))
+            .then(() => resolve())
+            .catch(reject);
+        }
+      };
+    });
   }
 }
 

@@ -5,7 +5,7 @@
   "title": "Sidebar Panels & Search",
   "priority": "HIGH",
   "effort": "23 hours",
-  "status": "pending",
+  "status": "completed",
   "milestone": "Internal Alpha Complete",
   "targetMetrics": {
     "thumbnailGeneration": {
@@ -19,16 +19,38 @@
       "category": "sidebar",
       "title": "Create ThumbnailSidebar Component",
       "description": "Generate and display page thumbnails with lazy loading.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "agent": "sonnet",
-      "files": ["src/components/sidebar/ThumbnailSidebar.tsx", "src/hooks/useThumbnails.ts"],
-      "testCategories": ["unit", "integration"],
+      "files": [
+        "src/components/sidebar/ThumbnailSidebar.tsx",
+        "src/hooks/useThumbnails.ts"
+      ],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "stepByStep": [
-        { "step": 1, "action": "Generate thumbnails at 0.2 scale", "details": "Render pages to small canvases" },
-        { "step": 2, "action": "Implement lazy loading", "details": "Use IntersectionObserver for visibility" },
-        { "step": 3, "action": "Cache generated thumbnails", "details": "Store in memory for quick access" },
-        { "step": 4, "action": "Add click-to-navigate", "details": "Click thumbnail to jump to page" }
+        {
+          "step": 1,
+          "action": "Generate thumbnails at 0.2 scale",
+          "details": "Render pages to small canvases"
+        },
+        {
+          "step": 2,
+          "action": "Implement lazy loading",
+          "details": "Use IntersectionObserver for visibility"
+        },
+        {
+          "step": 3,
+          "action": "Cache generated thumbnails",
+          "details": "Store in memory for quick access"
+        },
+        {
+          "step": 4,
+          "action": "Add click-to-navigate",
+          "details": "Click thumbnail to jump to page"
+        }
       ],
       "acceptanceCriteria": [
         "Thumbnails render for all pages",
@@ -43,11 +65,15 @@
       "category": "sidebar",
       "title": "Add Thumbnail Size Slider",
       "description": "Allow adjusting thumbnail size (small/medium/large).",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "agent": "haiku",
-      "files": ["src/components/sidebar/ThumbnailSidebar.tsx"],
-      "testCategories": ["unit"],
+      "files": [
+        "src/components/sidebar/ThumbnailSidebar.tsx"
+      ],
+      "testCategories": [
+        "unit"
+      ],
       "acceptanceCriteria": [
         "Slider adjusts thumbnail size",
         "Three presets: small, medium, large",
@@ -59,15 +85,33 @@
       "category": "search",
       "title": "Create SearchBar Component",
       "description": "Implement search bar with keyboard shortcuts and result navigation.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "agent": "sonnet",
-      "files": ["src/components/toolbar/SearchBar.tsx", "src/hooks/useSearch.ts"],
-      "testCategories": ["unit", "integration"],
+      "files": [
+        "src/components/toolbar/SearchBar.tsx",
+        "src/hooks/useSearch.ts"
+      ],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "stepByStep": [
-        { "step": 1, "action": "Create SearchBar UI", "details": "Input field, prev/next buttons, match count" },
-        { "step": 2, "action": "Implement PDF.js text search", "details": "Search all pages using findController" },
-        { "step": 3, "action": "Add keyboard shortcuts", "details": "Ctrl+F to open, Escape to close" }
+        {
+          "step": 1,
+          "action": "Create SearchBar UI",
+          "details": "Input field, prev/next buttons, match count"
+        },
+        {
+          "step": 2,
+          "action": "Implement PDF.js text search",
+          "details": "Search all pages using findController"
+        },
+        {
+          "step": 3,
+          "action": "Add keyboard shortcuts",
+          "details": "Ctrl+F to open, Escape to close"
+        }
       ],
       "acceptanceCriteria": [
         "Ctrl/Cmd + F opens search",
@@ -82,11 +126,15 @@
       "category": "search",
       "title": "Add Search Options",
       "description": "Add case-sensitive and whole word search options.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "agent": "haiku",
-      "files": ["src/components/toolbar/SearchBar.tsx"],
-      "testCategories": ["unit"],
+      "files": [
+        "src/components/toolbar/SearchBar.tsx"
+      ],
+      "testCategories": [
+        "unit"
+      ],
       "acceptanceCriteria": [
         "Case-sensitive toggle works",
         "Whole word toggle works",
@@ -98,15 +146,32 @@
       "category": "outline",
       "title": "Create OutlinePanel Component",
       "description": "Parse and display PDF outline/bookmarks with navigation.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 5,
       "agent": "sonnet",
-      "files": ["src/components/sidebar/OutlinePanel.tsx"],
-      "testCategories": ["unit", "integration"],
+      "files": [
+        "src/components/sidebar/OutlinePanel.tsx"
+      ],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "stepByStep": [
-        { "step": 1, "action": "Parse PDF outline", "details": "Use PDF.js getOutline() method" },
-        { "step": 2, "action": "Display nested structure", "details": "Indented list with expand/collapse" },
-        { "step": 3, "action": "Implement click navigation", "details": "Jump to page on item click" }
+        {
+          "step": 1,
+          "action": "Parse PDF outline",
+          "details": "Use PDF.js getOutline() method"
+        },
+        {
+          "step": 2,
+          "action": "Display nested structure",
+          "details": "Indented list with expand/collapse"
+        },
+        {
+          "step": 3,
+          "action": "Implement click navigation",
+          "details": "Jump to page on item click"
+        }
       ],
       "acceptanceCriteria": [
         "Outline displays nested structure",
@@ -120,7 +185,7 @@
       "category": "testing",
       "title": "Write Unit and Integration Tests",
       "description": "Create test files for Sprint 2 features including fileStore tests, file handling tests, view mode tests, sidebar components, and search functionality.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "agent": "sonnet",
       "files": [
@@ -132,7 +197,10 @@
         "tests/integration/fileOperations.test.tsx",
         "tests/integration/viewModes.test.tsx"
       ],
-      "testCategories": ["unit", "integration"],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "acceptanceCriteria": [
         "All new features have unit tests",
         "Integration tests pass",
@@ -162,7 +230,9 @@
   ],
   "totalNewTests": 18,
   "totalEstimatedHours": 27,
-  "dependencies": ["PHASE_1_SPRINT_2_TODO_1"],
+  "dependencies": [
+    "PHASE_1_SPRINT_2_TODO_1"
+  ],
   "notes": [
     "Thumbnail generation should happen in background",
     "Search uses PDF.js findController for text matching"

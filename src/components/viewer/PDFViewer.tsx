@@ -1,10 +1,10 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useDocumentStore } from '@stores/documentStore';
-import { PageCanvas } from './PageCanvas';
+import { SinglePageView } from './SinglePageView';
+import { ContinuousView } from './ContinuousView';
+import { SpreadView } from './SpreadView';
 
 export function PDFViewer() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const fileName = useDocumentStore((state) => state.fileName);
   const isLoading = useDocumentStore((state) => state.isLoading);
   const error = useDocumentStore((state) => state.error);
@@ -16,22 +16,42 @@ export function PDFViewer() {
   const setCurrentPage = useDocumentStore((state) => state.setCurrentPage);
   const nextPage = useDocumentStore((state) => state.nextPage);
   const prevPage = useDocumentStore((state) => state.prevPage);
+  const zoomIn = useDocumentStore((state) => state.zoomIn);
+  const zoomOut = useDocumentStore((state) => state.zoomOut);
 
   // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!fileName) return;
 
+      // Don't handle if user is typing in an input
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      ) {
+        return;
+      }
+
       switch (e.key) {
         case 'ArrowLeft':
         case 'PageUp':
           e.preventDefault();
-          prevPage();
+          if (viewMode === 'spread') {
+            // Jump by 2 pages in spread mode
+            setCurrentPage(Math.max(1, currentPage - 2));
+          } else {
+            prevPage();
+          }
           break;
         case 'ArrowRight':
         case 'PageDown':
           e.preventDefault();
-          nextPage();
+          if (viewMode === 'spread') {
+            // Jump by 2 pages in spread mode
+            setCurrentPage(Math.min(pageCount, currentPage + 2));
+          } else {
+            nextPage();
+          }
           break;
         case 'Home':
           e.preventDefault();
@@ -41,19 +61,41 @@ export function PDFViewer() {
           e.preventDefault();
           setCurrentPage(pageCount);
           break;
+        case '+':
+        case '=':
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            zoomIn();
+          }
+          break;
+        case '-':
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            zoomOut();
+          }
+          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [fileName, pageCount, nextPage, prevPage, setCurrentPage]);
+  }, [
+    fileName,
+    pageCount,
+    currentPage,
+    viewMode,
+    nextPage,
+    prevPage,
+    setCurrentPage,
+    zoomIn,
+    zoomOut,
+  ]);
 
   // Handle wheel zoom with Ctrl
   const handleWheel = useCallback(
     (e: React.WheelEvent) => {
-      if (e.ctrlKey) {
+      if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
-        const { zoomIn, zoomOut } = useDocumentStore.getState();
         if (e.deltaY < 0) {
           zoomIn();
         } else {
@@ -61,7 +103,15 @@ export function PDFViewer() {
         }
       }
     },
-    []
+    [zoomIn, zoomOut]
+  );
+
+  // Handle page change from continuous view
+  const handlePageChange = useCallback(
+    (page: number) => {
+      setCurrentPage(page);
+    },
+    [setCurrentPage]
   );
 
   if (isLoading) {
@@ -97,81 +147,42 @@ export function PDFViewer() {
     );
   }
 
-  // Single page view
-  if (viewMode === 'single') {
-    return (
-      <div
-        ref={containerRef}
-        className="flex h-full items-center justify-center overflow-auto bg-gray-200 p-8 dark:bg-gray-800"
-        onWheel={handleWheel}
-      >
-        <PageCanvas
+  // Render based on view mode
+  switch (viewMode) {
+    case 'single':
+      return (
+        <SinglePageView
           renderer={renderer}
-          pageNumber={currentPage}
-          scale={zoom}
+          currentPage={currentPage}
+          zoom={zoom}
+          onWheel={handleWheel}
         />
-      </div>
-    );
+      );
+
+    case 'continuous':
+      return (
+        <ContinuousView
+          renderer={renderer}
+          pageCount={pageCount}
+          currentPage={currentPage}
+          zoom={zoom}
+          onPageChange={handlePageChange}
+          onWheel={handleWheel}
+        />
+      );
+
+    case 'spread':
+      return (
+        <SpreadView
+          renderer={renderer}
+          currentPage={currentPage}
+          pageCount={pageCount}
+          zoom={zoom}
+          onWheel={handleWheel}
+        />
+      );
+
+    default:
+      return null;
   }
-
-  // Continuous view - show all pages
-  if (viewMode === 'continuous') {
-    return (
-      <div
-        ref={containerRef}
-        className="flex h-full flex-col items-center gap-4 overflow-auto bg-gray-200 p-8 dark:bg-gray-800"
-        onWheel={handleWheel}
-      >
-        {Array.from({ length: pageCount }, (_, i) => i + 1).map((pageNum) => (
-          <PageCanvas
-            key={pageNum}
-            renderer={renderer}
-            pageNumber={pageNum}
-            scale={zoom}
-          />
-        ))}
-      </div>
-    );
-  }
-
-  // Spread view - show two pages side by side
-  return (
-    <div
-      ref={containerRef}
-      className="flex h-full items-start justify-center gap-4 overflow-auto bg-gray-200 p-8 dark:bg-gray-800"
-      onWheel={handleWheel}
-    >
-      {/* Left page */}
-      {currentPage > 1 && currentPage % 2 === 0 && (
-        <PageCanvas
-          renderer={renderer}
-          pageNumber={currentPage - 1}
-          scale={zoom}
-        />
-      )}
-      {currentPage % 2 === 1 && (
-        <PageCanvas
-          renderer={renderer}
-          pageNumber={currentPage}
-          scale={zoom}
-        />
-      )}
-
-      {/* Right page */}
-      {currentPage % 2 === 0 && (
-        <PageCanvas
-          renderer={renderer}
-          pageNumber={currentPage}
-          scale={zoom}
-        />
-      )}
-      {currentPage % 2 === 1 && currentPage < pageCount && (
-        <PageCanvas
-          renderer={renderer}
-          pageNumber={currentPage + 1}
-          scale={zoom}
-        />
-      )}
-    </div>
-  );
 }

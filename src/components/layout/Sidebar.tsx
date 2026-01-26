@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Layers, Bookmark, FileText } from 'lucide-react';
+import { ThumbnailSidebar } from '@components/sidebar/ThumbnailSidebar';
+import { OutlinePanel } from '@components/sidebar/OutlinePanel';
 import { cn } from '@utils/cn';
 
 type SidebarTab = 'thumbnails' | 'outline' | 'annotations';
@@ -63,21 +65,19 @@ export function Sidebar() {
       </div>
 
       {!isCollapsed && (
-        <div className="flex-1 overflow-auto p-4">
+        <div className="flex flex-1 flex-col overflow-hidden">
           {activeTab === 'thumbnails' && (
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              No document loaded
-            </p>
+            <ThumbnailSidebar className="flex-1" />
           )}
           {activeTab === 'outline' && (
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              No bookmarks
-            </p>
+            <OutlinePanel className="flex-1" />
           )}
           {activeTab === 'annotations' && (
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              No annotations
-            </p>
+            <div className="flex-1 p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                No annotations yet
+              </p>
+            </div>
           )}
         </div>
       )}
