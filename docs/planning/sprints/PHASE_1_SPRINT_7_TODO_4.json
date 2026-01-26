@@ -54,13 +54,39 @@
       "files": ["src/lib/pdf/textSaver.ts"],
       "testCategories": ["unit", "integration"],
       "acceptanceCriteria": ["Edited text saved to PDF", "New text boxes saved", "Formatting preserved", "Visible in other readers"]
+    },
+    {
+      "id": "7.4.2",
+      "category": "testing",
+      "title": "Write Unit and Integration Tests",
+      "description": "Create test files for Sprint 7 features including text editing tests, text box creation tests, formatting tests, and text persistence.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": [
+        "tests/unit/components/editor/TextEditor.test.tsx",
+        "tests/unit/components/editor/TextBoxTransform.test.tsx",
+        "tests/unit/lib/pdf/textSaver.test.ts",
+        "tests/integration/textEditing/textBox.test.tsx",
+        "tests/integration/textEditing/formatting.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "Text editing operations tested",
+        "Text box creation/positioning tested",
+        "Font/formatting changes tested",
+        "Text persistence in PDF tested"
+      ]
     }
   ],
   "successCriteria": ["Formatting tools work correctly", "Text changes save to PDF", "Undo/redo works for text edits"],
   "filesCreated": ["src/components/editor/AlignmentPicker.tsx", "src/components/editor/LineSpacing.tsx", "src/components/editor/TextBoxTransform.tsx", "src/lib/pdf/textSaver.ts"],
   "filesModified": ["src/stores/historyStore.ts", "src/lib/pdf/saver.ts"],
-  "totalNewTests": 6,
-  "totalEstimatedHours": 15,
+  "totalNewTests": 12,
+  "totalEstimatedHours": 18,
   "dependencies": ["PHASE_1_SPRINT_7_TODO_3"],
   "notes": ["pdf-lib supports adding text but not editing existing", "Font matching is best-effort, not perfect"]
 }

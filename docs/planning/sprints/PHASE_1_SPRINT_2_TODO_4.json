@@ -114,6 +114,34 @@
         "Click navigates to page",
         "'No bookmarks' message when empty"
       ]
+    },
+    {
+      "id": "2.4.6",
+      "category": "testing",
+      "title": "Write Unit and Integration Tests",
+      "description": "Create test files for Sprint 2 features including fileStore tests, file handling tests, view mode tests, sidebar components, and search functionality.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": [
+        "tests/unit/stores/fileStore.test.ts",
+        "tests/unit/components/sidebar/ThumbnailSidebar.test.tsx",
+        "tests/unit/components/toolbar/SearchBar.test.tsx",
+        "tests/unit/hooks/useThumbnails.test.ts",
+        "tests/unit/hooks/useSearch.test.ts",
+        "tests/integration/fileOperations.test.tsx",
+        "tests/integration/viewModes.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "File operations tested",
+        "View modes tested",
+        "Sidebar components tested",
+        "Search functionality tested"
+      ]
     }
   ],
   "successCriteria": [
@@ -132,8 +160,8 @@
     "src/components/layout/Sidebar.tsx",
     "src/components/layout/Toolbar.tsx"
   ],
-  "totalNewTests": 10,
-  "totalEstimatedHours": 23,
+  "totalNewTests": 18,
+  "totalEstimatedHours": 27,
   "dependencies": ["PHASE_1_SPRINT_2_TODO_1"],
   "notes": [
     "Thumbnail generation should happen in background",

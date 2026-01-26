@@ -78,13 +78,40 @@
       "files": ["src/lib/share/copyLink.ts"],
       "testCategories": ["unit"],
       "acceptanceCriteria": ["Copy URL if loaded from URL", "Toast confirms copy", "Disabled for local files"]
+    },
+    {
+      "id": "9.3.3",
+      "category": "testing",
+      "title": "Write Unit and Integration Tests",
+      "description": "Create test files for Sprint 9 features including export tests, print tests, and sharing functionality.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": [
+        "tests/unit/lib/export/pdfExport.test.ts",
+        "tests/unit/lib/print/printRenderer.test.ts",
+        "tests/unit/lib/print/executePrint.test.ts",
+        "tests/unit/lib/share/copyLink.test.ts",
+        "tests/integration/export/exportFlow.test.tsx",
+        "tests/integration/print/printFlow.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "PDF export tested",
+        "Image export tested",
+        "Print rendering tested",
+        "Sharing functionality tested"
+      ]
     }
   ],
   "successCriteria": ["Print options apply correctly", "Printed output matches preview", "Sharing options work"],
   "filesCreated": ["src/lib/print/printRenderer.ts", "src/lib/print/executePrint.ts", "src/lib/share/emailShare.ts", "src/lib/share/copyLink.ts"],
   "filesModified": ["src/components/print/PrintDialog.tsx", "src/components/layout/Toolbar.tsx"],
-  "totalNewTests": 10,
-  "totalEstimatedHours": 18,
+  "totalNewTests": 17,
+  "totalEstimatedHours": 21,
   "dependencies": ["PHASE_1_SPRINT_9_TODO_2"],
   "notes": ["Email attachment size limits apply"]
 }

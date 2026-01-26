@@ -42,13 +42,40 @@
       "files": ["tailwind.config.js"],
       "testCategories": ["visual"],
       "acceptanceCriteria": ["4.5:1 contrast for text", "3:1 for large text/UI", "Lighthouse Accessibility ≥ 90"]
+    },
+    {
+      "id": "10.3.6",
+      "category": "testing",
+      "title": "Write Performance and Accessibility Tests",
+      "description": "Create test files for Sprint 10 features including performance benchmarks, memory leak tests, and accessibility compliance tests.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": [
+        "tests/performance/rendering.perf.ts",
+        "tests/performance/memory.perf.ts",
+        "tests/performance/largeDocument.perf.ts",
+        "tests/accessibility/keyboard.test.tsx",
+        "tests/accessibility/screenReader.test.tsx",
+        "tests/integration/performance/lazyLoading.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "Performance benchmarks documented",
+        "Memory leak tests pass",
+        "Keyboard navigation tested",
+        "Screen reader compatibility tested"
+      ]
     }
   ],
   "successCriteria": ["Focus is always visible", "Lighthouse Accessibility score ≥ 90"],
   "filesCreated": ["src/styles/high-contrast.css", "src/styles/focus.css"],
   "filesModified": ["tailwind.config.js"],
-  "totalNewTests": 3,
-  "totalEstimatedHours": 11,
+  "totalNewTests": 11,
+  "totalEstimatedHours": 15,
   "dependencies": ["PHASE_1_SPRINT_10_TODO_3"],
   "notes": ["Lighthouse audit for accessibility verification"]
 }

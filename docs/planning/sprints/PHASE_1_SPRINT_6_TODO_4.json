@@ -67,13 +67,40 @@
       "files": ["src/lib/pdf/signatureEmbed.ts"],
       "testCategories": ["unit", "integration"],
       "acceptanceCriteria": ["Signatures embedded in PDF", "Correct position and size", "Visible in other PDF readers"]
+    },
+    {
+      "id": "6.4.2",
+      "category": "testing",
+      "title": "Write Unit and Integration Tests",
+      "description": "Create test files for Sprint 6 features including signatureStore tests, signature creation tests, signature placement tests, and signature embedding.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": [
+        "tests/unit/stores/signatureStore.test.ts",
+        "tests/unit/components/signatures/SignatureCanvas.test.tsx",
+        "tests/unit/components/signatures/SignaturePlacer.test.tsx",
+        "tests/unit/lib/pdf/signatureEmbed.test.ts",
+        "tests/integration/signatures/signatureCreation.test.tsx",
+        "tests/integration/signatures/signaturePlacement.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "Signature store actions tested",
+        "Signature canvas drawing tested",
+        "Signature placement/positioning tested",
+        "Signature embedding in PDF tested"
+      ]
     }
   ],
   "successCriteria": ["Signatures can be rotated", "Multiple signatures per document", "Signature fields in forms are fillable", "Signatures are embedded when saving PDF"],
   "filesCreated": ["src/components/signatures/SignatureRotation.tsx", "src/lib/signatures/fieldAlignment.ts", "src/components/signatures/DateStamp.tsx", "src/lib/pdf/signatureEmbed.ts"],
   "filesModified": ["src/stores/signatureStore.ts", "src/stores/annotationStore.ts", "src/lib/pdf/saver.ts"],
-  "totalNewTests": 8,
-  "totalEstimatedHours": 18,
+  "totalNewTests": 16,
+  "totalEstimatedHours": 22,
   "dependencies": ["PHASE_1_SPRINT_6_TODO_3"],
   "notes": ["This is visual signature only, not cryptographic signing"]
 }

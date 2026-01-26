@@ -42,13 +42,41 @@
       "files": ["src/components/forms/FormActions.tsx"],
       "testCategories": ["unit"],
       "acceptanceCriteria": ["Clear all fields option", "Reset to defaults option", "Confirmation dialog", "Undo support"]
+    },
+    {
+      "id": "5.4.6",
+      "category": "testing",
+      "title": "Write Unit and Integration Tests",
+      "description": "Create test files for Sprint 5 features including formStore tests, form field detection tests, field input tests, and form data export/import.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": [
+        "tests/unit/stores/formStore.test.ts",
+        "tests/unit/components/forms/FormField.test.tsx",
+        "tests/unit/components/forms/FormActions.test.tsx",
+        "tests/unit/lib/forms/importData.test.ts",
+        "tests/unit/lib/forms/xfdfExport.test.ts",
+        "tests/integration/forms/formFilling.test.tsx",
+        "tests/integration/forms/formExport.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "Form store actions tested",
+        "Form field detection tested",
+        "Field value entry tested",
+        "Form data export/import tested"
+      ]
     }
   ],
   "successCriteria": ["Form data imports correctly", "Clear and reset options work", "Form data is included when saving PDF"],
   "filesCreated": ["src/lib/forms/xfdfExport.ts", "src/lib/forms/importData.ts", "src/components/forms/FormActions.tsx"],
   "filesModified": ["src/lib/pdf/saver.ts"],
-  "totalNewTests": 6,
-  "totalEstimatedHours": 11,
+  "totalNewTests": 14,
+  "totalEstimatedHours": 15,
   "dependencies": ["PHASE_1_SPRINT_5_TODO_3"],
   "notes": ["XFDF format documented in PDF specification", "Form values embed into PDF via pdf-lib when saving"]
 }

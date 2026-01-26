@@ -79,13 +79,41 @@
       "files": ["src/lib/pages/extractPages.ts"],
       "testCategories": ["unit", "integration"],
       "acceptanceCriteria": ["Select pages to extract", "Create new PDF with selection", "Option to remove from original", "Download or open extracted"]
+    },
+    {
+      "id": "8.3.6",
+      "category": "testing",
+      "title": "Write Unit and Integration Tests",
+      "description": "Create test files for Sprint 8 features including page operation tests, page reordering tests, merge/split tests, and page extraction.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": [
+        "tests/unit/lib/pages/mergePdf.test.ts",
+        "tests/unit/lib/pages/splitPdf.test.ts",
+        "tests/unit/lib/pages/extractPages.test.ts",
+        "tests/unit/components/pages/PageThumbnails.test.tsx",
+        "tests/integration/pages/pageReorder.test.tsx",
+        "tests/integration/pages/mergeSplit.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "Page reordering tested",
+        "Page rotation tested",
+        "PDF merge operation tested",
+        "PDF split operation tested",
+        "Page extraction tested"
+      ]
     }
   ],
   "successCriteria": ["PDF merge combines multiple files", "PDF split creates multiple files", "Page extraction works", "All operations update document correctly"],
   "filesCreated": ["src/components/pages/MergeDialog.tsx", "src/components/pages/SplitDialog.tsx", "src/lib/pages/mergePdf.ts", "src/lib/pages/splitPdf.ts", "src/lib/pages/extractPages.ts"],
   "filesModified": ["src/lib/pdf/saver.ts"],
-  "totalNewTests": 12,
-  "totalEstimatedHours": 27,
+  "totalNewTests": 20,
+  "totalEstimatedHours": 31,
   "dependencies": ["PHASE_1_SPRINT_8_TODO_1"],
   "notes": ["Large merge operations may need Web Worker", "Consider memory usage for many-page operations", "JSZip for downloading multiple files"]
 }

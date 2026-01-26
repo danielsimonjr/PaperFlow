@@ -66,13 +66,40 @@
       "files": ["src/lib/storage/stampStorage.ts"],
       "testCategories": ["unit", "integration"],
       "acceptanceCriteria": ["Custom stamps persist", "Appear in stamp picker", "Can be deleted"]
+    },
+    {
+      "id": "4.3.6",
+      "category": "testing",
+      "title": "Write Unit and Integration Tests",
+      "description": "Create test files for Sprint 4 features including drawing tool tests, shape annotation tests, freehand drawing tests, and stamp functionality.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": [
+        "tests/unit/components/annotations/DrawingCanvas.test.tsx",
+        "tests/unit/components/annotations/ShapeTool.test.tsx",
+        "tests/unit/components/annotations/StampTool.test.tsx",
+        "tests/unit/lib/storage/stampStorage.test.ts",
+        "tests/integration/annotations/drawing.test.tsx",
+        "tests/integration/annotations/shapes.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "Drawing canvas interactions tested",
+        "Shape creation/editing tested",
+        "Stamp placement tested",
+        "Custom stamp persistence tested"
+      ]
     }
   ],
   "successCriteria": ["Stamps can be placed and customized", "Preset stamps work correctly", "Custom stamps can be saved for reuse"],
   "filesCreated": ["src/components/annotations/StampTool.tsx", "src/components/annotations/StampPicker.tsx", "src/components/annotations/CustomStampDialog.tsx", "src/components/annotations/StampTransform.tsx", "src/lib/storage/stampStorage.ts", "src/constants/stamps.ts"],
   "filesModified": ["src/types/annotations.ts"],
-  "totalNewTests": 6,
-  "totalEstimatedHours": 19,
+  "totalNewTests": 14,
+  "totalEstimatedHours": 23,
   "dependencies": ["PHASE_1_SPRINT_4_TODO_1"],
   "notes": ["Stamps are commonly used for document workflow status"]
 }

@@ -55,13 +55,40 @@
       "files": ["src/components/annotations/ExportImportDialog.tsx"],
       "testCategories": ["integration"],
       "acceptanceCriteria": ["Export button downloads JSON", "Import button loads JSON", "Merge option for import", "Replace option for import"]
+    },
+    {
+      "id": "3.5.6",
+      "category": "testing",
+      "title": "Write Unit and Integration Tests",
+      "description": "Create test files for Sprint 3 features including annotationStore tests, highlight/note annotation tests, text markup tests, and sticky note functionality.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "agent": "sonnet",
+      "files": [
+        "tests/unit/stores/annotationStore.test.ts",
+        "tests/unit/components/annotations/HighlightTool.test.tsx",
+        "tests/unit/components/annotations/StickyNote.test.tsx",
+        "tests/unit/lib/annotations/serializer.test.ts",
+        "tests/integration/annotations/highlights.test.tsx",
+        "tests/integration/annotations/notes.test.tsx"
+      ],
+      "testCategories": ["unit", "integration"],
+      "acceptanceCriteria": [
+        "All new features have unit tests",
+        "Integration tests pass",
+        "Code coverage meets target",
+        "Annotation store actions tested",
+        "Highlight creation/editing tested",
+        "Sticky note functionality tested",
+        "Text markup tools tested"
+      ]
     }
   ],
   "successCriteria": ["Annotation toolbar provides easy tool access", "Keyboard shortcuts work", "Annotations persist when document is saved", "Export/import works"],
   "filesCreated": ["src/components/toolbar/AnnotationToolbar.tsx", "src/hooks/useAnnotationShortcuts.ts", "src/lib/annotations/serializer.ts", "src/components/annotations/ExportImportDialog.tsx"],
   "filesModified": ["src/components/layout/Toolbar.tsx"],
-  "totalNewTests": 5,
-  "totalEstimatedHours": 13,
+  "totalNewTests": 13,
+  "totalEstimatedHours": 17,
   "dependencies": ["PHASE_1_SPRINT_3_TODO_3", "PHASE_1_SPRINT_3_TODO_4"],
   "notes": ["Consider PDF annotation standard format for future PDF embedding"]
 }
