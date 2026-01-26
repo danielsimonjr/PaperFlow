@@ -5,7 +5,7 @@
   "title": "Annotation Toolbar & Persistence",
   "priority": "HIGH",
   "effort": "13 hours",
-  "status": "pending",
+  "status": "completed",
   "milestone": "Closed Beta",
   "tasks": [
     {
@@ -13,55 +13,93 @@
       "category": "toolbar",
       "title": "Create Annotation Toolbar",
       "description": "Floating toolbar with annotation tool selection.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "agent": "sonnet",
-      "files": ["src/components/toolbar/AnnotationToolbar.tsx"],
-      "testCategories": ["unit"],
-      "acceptanceCriteria": ["Tool buttons: Select, Highlight, Underline, Strikethrough, Note", "Color picker popover", "Opacity slider in popover", "Active tool highlighted", "Keyboard shortcuts work"]
+      "files": [
+        "src/components/toolbar/AnnotationToolbar.tsx"
+      ],
+      "testCategories": [
+        "unit"
+      ],
+      "acceptanceCriteria": [
+        "Tool buttons: Select, Highlight, Underline, Strikethrough, Note",
+        "Color picker popover",
+        "Opacity slider in popover",
+        "Active tool highlighted",
+        "Keyboard shortcuts work"
+      ]
     },
     {
       "id": "3.6.2",
       "category": "toolbar",
       "title": "Implement Annotation Keyboard Shortcuts",
       "description": "Add keyboard shortcuts for annotation tools.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "agent": "haiku",
-      "files": ["src/hooks/useAnnotationShortcuts.ts"],
-      "testCategories": ["unit"],
-      "acceptanceCriteria": ["H for Highlight", "U for Underline", "S for Strikethrough", "N for Note", "Escape to deselect tool"]
+      "files": [
+        "src/hooks/useAnnotationShortcuts.ts"
+      ],
+      "testCategories": [
+        "unit"
+      ],
+      "acceptanceCriteria": [
+        "H for Highlight",
+        "U for Underline",
+        "S for Strikethrough",
+        "N for Note",
+        "Escape to deselect tool"
+      ]
     },
     {
       "id": "3.7.1",
       "category": "persistence",
       "title": "Implement Annotation Serialization",
       "description": "Serialize annotations to JSON for save/load.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "agent": "sonnet",
-      "files": ["src/lib/annotations/serializer.ts"],
-      "testCategories": ["unit"],
-      "acceptanceCriteria": ["Annotations serialize to JSON", "JSON deserializes to annotations", "Handles all annotation types", "Preserves replies"]
+      "files": [
+        "src/lib/annotations/serializer.ts"
+      ],
+      "testCategories": [
+        "unit"
+      ],
+      "acceptanceCriteria": [
+        "Annotations serialize to JSON",
+        "JSON deserializes to annotations",
+        "Handles all annotation types",
+        "Preserves replies"
+      ]
     },
     {
       "id": "3.7.2",
       "category": "persistence",
       "title": "Add Annotation Export/Import",
       "description": "Export and import annotations as JSON file.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 3,
       "agent": "haiku",
-      "files": ["src/components/annotations/ExportImportDialog.tsx"],
-      "testCategories": ["integration"],
-      "acceptanceCriteria": ["Export button downloads JSON", "Import button loads JSON", "Merge option for import", "Replace option for import"]
+      "files": [
+        "src/components/annotations/ExportImportDialog.tsx"
+      ],
+      "testCategories": [
+        "integration"
+      ],
+      "acceptanceCriteria": [
+        "Export button downloads JSON",
+        "Import button loads JSON",
+        "Merge option for import",
+        "Replace option for import"
+      ]
     },
     {
       "id": "3.5.6",
       "category": "testing",
       "title": "Write Unit and Integration Tests",
       "description": "Create test files for Sprint 3 features including annotationStore tests, highlight/note annotation tests, text markup tests, and sticky note functionality.",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "agent": "sonnet",
       "files": [
@@ -72,7 +110,10 @@
         "tests/integration/annotations/highlights.test.tsx",
         "tests/integration/annotations/notes.test.tsx"
       ],
-      "testCategories": ["unit", "integration"],
+      "testCategories": [
+        "unit",
+        "integration"
+      ],
       "acceptanceCriteria": [
         "All new features have unit tests",
         "Integration tests pass",
@@ -84,11 +125,28 @@
       ]
     }
   ],
-  "successCriteria": ["Annotation toolbar provides easy tool access", "Keyboard shortcuts work", "Annotations persist when document is saved", "Export/import works"],
-  "filesCreated": ["src/components/toolbar/AnnotationToolbar.tsx", "src/hooks/useAnnotationShortcuts.ts", "src/lib/annotations/serializer.ts", "src/components/annotations/ExportImportDialog.tsx"],
-  "filesModified": ["src/components/layout/Toolbar.tsx"],
+  "successCriteria": [
+    "Annotation toolbar provides easy tool access",
+    "Keyboard shortcuts work",
+    "Annotations persist when document is saved",
+    "Export/import works"
+  ],
+  "filesCreated": [
+    "src/components/toolbar/AnnotationToolbar.tsx",
+    "src/hooks/useAnnotationShortcuts.ts",
+    "src/lib/annotations/serializer.ts",
+    "src/components/annotations/ExportImportDialog.tsx"
+  ],
+  "filesModified": [
+    "src/components/layout/Toolbar.tsx"
+  ],
   "totalNewTests": 13,
   "totalEstimatedHours": 17,
-  "dependencies": ["PHASE_1_SPRINT_3_TODO_3", "PHASE_1_SPRINT_3_TODO_4"],
-  "notes": ["Consider PDF annotation standard format for future PDF embedding"]
+  "dependencies": [
+    "PHASE_1_SPRINT_3_TODO_3",
+    "PHASE_1_SPRINT_3_TODO_4"
+  ],
+  "notes": [
+    "Consider PDF annotation standard format for future PDF embedding"
+  ]
 }

@@ -69,7 +69,7 @@ export function useSearch({
       if (cached !== undefined) return cached;
 
       try {
-        const text = await renderer.getTextContent(pageNumber);
+        const text = await renderer.getTextContentAsString(pageNumber);
         textCacheRef.current.set(pageNumber, text);
         return text;
       } catch (error) {

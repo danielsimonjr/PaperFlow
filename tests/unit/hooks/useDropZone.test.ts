@@ -26,7 +26,6 @@ describe('useDropZone', () => {
 
     // Create mock PDF file
     const pdfFile = new File([''], 'test.pdf', { type: 'application/pdf' });
-    const textFile = new File([''], 'test.txt', { type: 'text/plain' });
 
     // Create mock DataTransfer
     const mockEvent = {
