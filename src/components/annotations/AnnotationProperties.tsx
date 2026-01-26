@@ -87,6 +87,7 @@ export function AnnotationProperties({ onClose }: AnnotationPropertiesProps) {
     drawing: 'Drawing',
     shape: 'Shape',
     stamp: 'Stamp',
+    eraser: 'Eraser',
   }[selectedAnnotation.type];
 
   return (
