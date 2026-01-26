@@ -5,7 +5,8 @@ export type AnnotationType =
   | 'note'
   | 'drawing'
   | 'shape'
-  | 'stamp';
+  | 'stamp'
+  | 'eraser';
 
 export interface AnnotationRect {
   x: number;
@@ -21,6 +22,11 @@ export interface AnnotationReply {
   createdAt: Date;
 }
 
+// Drawing path for freehand annotations
+export interface DrawingPath {
+  points: { x: number; y: number; pressure?: number }[];
+}
+
 export interface Annotation {
   id: string;
   type: AnnotationType;
@@ -33,6 +39,23 @@ export interface Annotation {
   createdAt: Date;
   updatedAt: Date;
   replies?: AnnotationReply[];
+  // Drawing properties (Sprint 4)
+  paths?: DrawingPath[];
+  strokeWidth?: number;
+  // Shape properties (Sprint 4)
+  shapeType?: 'rectangle' | 'ellipse' | 'arrow' | 'line';
+  bounds?: AnnotationRect;
+  fillColor?: string;
+  rotation?: number;
+  startPoint?: { x: number; y: number };
+  endPoint?: { x: number; y: number };
+  // Stamp properties (Sprint 4)
+  stampType?: 'approved' | 'rejected' | 'confidential' | 'draft' | 'final' | 'for-review' | 'custom';
+  position?: { x: number; y: number };
+  scale?: number;
+  customText?: string;
+  backgroundColor?: string;
+  borderColor?: string;
 }
 
 export interface PDFDocument {

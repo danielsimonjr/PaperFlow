@@ -2,12 +2,21 @@ import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
 import type { Annotation, AnnotationType, AnnotationReply } from '@/types';
 
+// Extended annotation type for Sprint 4 drawing/shape/stamp features
+export type ShapeType = 'rectangle' | 'ellipse' | 'arrow' | 'line';
+export type StampType = 'approved' | 'rejected' | 'confidential' | 'draft' | 'final' | 'for-review' | 'custom';
+
 interface AnnotationState {
   annotations: Annotation[];
   selectedId: string | null;
   activeTool: AnnotationType | null;
   activeColor: string;
   activeOpacity: number;
+  // Sprint 4: Drawing and shape properties
+  activeStrokeWidth: number;
+  activeFillColor: string | undefined;
+  activeShapeType: ShapeType;
+  activeStampType: StampType;
 
   // Actions
   addAnnotation: (
@@ -19,6 +28,10 @@ interface AnnotationState {
   setActiveTool: (tool: AnnotationType | null) => void;
   setActiveColor: (color: string) => void;
   setActiveOpacity: (opacity: number) => void;
+  setActiveStrokeWidth: (width: number) => void;
+  setActiveFillColor: (color: string | undefined) => void;
+  setActiveShapeType: (shapeType: ShapeType) => void;
+  setActiveStampType: (stampType: StampType) => void;
   addReply: (annotationId: string, content: string, author: string) => void;
   getPageAnnotations: (pageIndex: number) => Annotation[];
   exportAnnotations: () => string;
@@ -32,6 +45,11 @@ export const useAnnotationStore = create<AnnotationState>((set, get) => ({
   activeTool: null,
   activeColor: '#FFEB3B',
   activeOpacity: 0.5,
+  // Sprint 4 defaults
+  activeStrokeWidth: 2,
+  activeFillColor: undefined,
+  activeShapeType: 'rectangle',
+  activeStampType: 'approved',
 
   addAnnotation: (annotationData) => {
     const id = uuidv4();
@@ -80,6 +98,22 @@ export const useAnnotationStore = create<AnnotationState>((set, get) => ({
 
   setActiveOpacity: (opacity) => {
     set({ activeOpacity: opacity });
+  },
+
+  setActiveStrokeWidth: (width) => {
+    set({ activeStrokeWidth: width });
+  },
+
+  setActiveFillColor: (color) => {
+    set({ activeFillColor: color });
+  },
+
+  setActiveShapeType: (shapeType) => {
+    set({ activeShapeType: shapeType });
+  },
+
+  setActiveStampType: (stampType) => {
+    set({ activeStampType: stampType });
   },
 
   addReply: (annotationId, content, author) => {
