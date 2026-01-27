@@ -82,7 +82,7 @@ export function SplitDialog({
   }, [mode, rangeStr, pagesPerFile, maxSizeKb, onSplitByRange, onSplitEveryN, onSplitBySize]);
 
   const handleDownload = useCallback((result: SplitResult) => {
-    const blob = new Blob([result.data], { type: 'application/pdf' });
+    const blob = new Blob([result.data.buffer as ArrayBuffer], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -98,7 +98,7 @@ export function SplitDialog({
 
     // For a single file, just download it directly
     if (results.length === 1) {
-      handleDownload(results[0]);
+      handleDownload(results[0]!);
       return;
     }
 

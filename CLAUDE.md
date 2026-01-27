@@ -35,6 +35,12 @@ npm run test:e2e
 
 # Watch mode for tests
 npm run test:watch
+
+# Run a single test file
+npx vitest run tests/unit/stores/documentStore.test.ts
+
+# Run tests matching a pattern
+npx vitest run -t "should load PDF"
 ```
 
 ## Architecture
@@ -52,6 +58,9 @@ npm run test:watch
 - `historyStore`: Undo/redo stack
 - `uiStore`: UI state (sidebar, dialogs, active tool)
 - `settingsStore`: User preferences (persisted to localStorage)
+- `formStore`: Form field state and values
+- `signatureStore`: Saved signatures and placements
+- `textStore`: Text editing state
 
 ### Key Data Flow
 ```
@@ -98,6 +107,14 @@ Key hooks:
 - `useTextSelection`: Text selection handling
 
 Annotation serialization in `lib/annotations/serializer.ts`.
+
+### Core Library Modules (lib/)
+- `lib/pdf/`: PDF rendering (`renderer.ts`), saving (`saver.ts`, `textSaver.ts`), signature embedding
+- `lib/pages/`: Page operations (merge, split, extract, reorder, rotate, delete)
+- `lib/forms/`: Form parsing, validation, FDF/XFDF export/import
+- `lib/signatures/`: Image processing, field alignment, date utilities
+- `lib/storage/`: IndexedDB operations, file handling, signature/stamp storage
+- `lib/fonts/`: Font matching and fallback system
 
 ## Naming Conventions
 

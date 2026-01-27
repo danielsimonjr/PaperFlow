@@ -339,7 +339,7 @@ export function ThumbnailSidebar({ className }: ThumbnailSidebarProps) {
         const result = await extractPages(fileData, pageIndices, false);
 
         // Download the extracted PDF
-        const blob = new Blob([result.extractedPdf], { type: 'application/pdf' });
+        const blob = new Blob([result.extractedPdf.buffer as ArrayBuffer], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -361,7 +361,7 @@ export function ThumbnailSidebar({ className }: ThumbnailSidebarProps) {
 
       try {
         const mergedData = await mergePdfs(files);
-        await loadDocumentFromArrayBuffer(mergedData.buffer, `merged_${fileName}`);
+        await loadDocumentFromArrayBuffer(mergedData.buffer as ArrayBuffer, `merged_${fileName}`);
         setModified(true);
         clearThumbnails();
       } catch (error) {

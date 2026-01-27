@@ -107,7 +107,7 @@ export function MergeDialog({
         setFiles((prev) => {
           const newFiles = [...prev];
           const [removed] = newFiles.splice(draggedIndex, 1);
-          newFiles.splice(dropTargetIndex, 0, removed);
+          newFiles.splice(dropTargetIndex, 0, removed!);
           return newFiles;
         });
       }

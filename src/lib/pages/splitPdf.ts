@@ -29,8 +29,8 @@ export function parsePageRange(rangeStr: string, totalPages: number): number[] {
   for (const part of parts) {
     if (part.includes('-')) {
       const [startStr, endStr] = part.split('-').map((s) => s.trim());
-      const start = parseInt(startStr, 10);
-      const end = parseInt(endStr, 10);
+      const start = parseInt(startStr!, 10);
+      const end = parseInt(endStr!, 10);
 
       if (isNaN(start) || isNaN(end)) {
         throw new Error(`Invalid page range: ${part}`);
@@ -227,8 +227,8 @@ export async function splitBySize(
 
       newPdf.setProducer('PaperFlow');
 
-      const startPage = currentChunkPages[0] + 1;
-      const endPage = currentChunkPages[currentChunkPages.length - 1] + 1;
+      const startPage = currentChunkPages[0]! + 1;
+      const endPage = currentChunkPages[currentChunkPages.length - 1]! + 1;
 
       results.push({
         name: `${baseName}_${String(chunkNumber).padStart(3, '0')}.pdf`,
@@ -264,8 +264,8 @@ export async function splitBySize(
 
     newPdf.setProducer('PaperFlow');
 
-    const startPage = currentChunkPages[0] + 1;
-    const endPage = currentChunkPages[currentChunkPages.length - 1] + 1;
+    const startPage = currentChunkPages[0]! + 1;
+    const endPage = currentChunkPages[currentChunkPages.length - 1]! + 1;
 
     results.push({
       name: `${baseName}_${String(chunkNumber).padStart(3, '0')}.pdf`,
