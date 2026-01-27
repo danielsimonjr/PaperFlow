@@ -124,6 +124,7 @@ interface UseLazyThumbnailReturn {
   thumbnails: ThumbnailCache;
   observeElement: (pageNumber: number, element: HTMLElement | null) => void;
   unobserveAll: () => void;
+  clearThumbnails: () => void;
 }
 
 export function useLazyThumbnails({
@@ -222,9 +223,15 @@ export function useLazyThumbnails({
     elementsRef.current.clear();
   }, []);
 
+  const clearThumbnails = useCallback(() => {
+    setThumbnails({});
+    generatingRef.current.clear();
+  }, []);
+
   return {
     thumbnails,
     observeElement,
     unobserveAll,
+    clearThumbnails,
   };
 }
