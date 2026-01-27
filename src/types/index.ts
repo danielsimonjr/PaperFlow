@@ -77,6 +77,8 @@ export interface Signature {
   type: 'draw' | 'type' | 'image';
   data: string;
   createdAt: Date;
+  isDefault?: boolean;
+  isInitials?: boolean;
 }
 
 export interface FormField {
