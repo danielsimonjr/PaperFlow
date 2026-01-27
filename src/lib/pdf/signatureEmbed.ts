@@ -1,4 +1,4 @@
-import { PDFDocument, rgb } from 'pdf-lib';
+import { PDFDocument, rgb, degrees } from 'pdf-lib';
 import type { PlacedSignature } from '@stores/signatureStore';
 import { formatDate } from '@lib/signatures/dateUtils';
 
@@ -46,7 +46,7 @@ async function embedSignature(pdfDoc: PDFDocument, signature: PlacedSignature): 
       y,
       width: signature.size.width,
       height: signature.size.height,
-      rotate: { type: 'degrees' as const, angle: -signature.rotation },
+      rotate: degrees(-signature.rotation),
     });
   } else {
     // Draw without rotation
