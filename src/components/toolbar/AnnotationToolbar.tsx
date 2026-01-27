@@ -13,13 +13,16 @@ import {
   ArrowUpRight,
   Minus,
   Stamp,
+  PenTool,
 } from 'lucide-react';
 import { useAnnotationStore, type ShapeType, type StampType } from '@stores/annotationStore';
+import { useSignatureStore } from '@stores/signatureStore';
 import { HIGHLIGHT_COLORS } from '@components/annotations/SelectionPopup';
 import { OpacitySlider } from '@components/annotations/OpacitySlider';
 import { DrawingToolOptions } from '@components/annotations/DrawingToolOptions';
 import { ShapeOptions } from '@components/annotations/ShapeOptions';
 import { StampPicker } from '@components/annotations/StampPicker';
+import { SignatureModal, InitialsModal } from '@components/signatures';
 import type { AnnotationType } from '@/types';
 
 interface ToolButtonProps {
@@ -64,6 +67,14 @@ export function AnnotationToolbar() {
   const [showDrawingOptions, setShowDrawingOptions] = useState(false);
   const [showShapeOptions, setShowShapeOptions] = useState(false);
   const [showStampPicker, setShowStampPicker] = useState(false);
+  const [showSignatureDropdown, setShowSignatureDropdown] = useState(false);
+
+  // Signature store
+  const isSignatureModalOpen = useSignatureStore((state) => state.isModalOpen);
+  const isInitialsMode = useSignatureStore((state) => state.isInitialsMode);
+  const openSignatureModal = useSignatureStore((state) => state.openModal);
+  const closeSignatureModal = useSignatureStore((state) => state.closeModal);
+  const isPlacingSignature = useSignatureStore((state) => state.isPlacingSignature);
 
   const activeTool = useAnnotationStore((state) => state.activeTool);
   const activeColor = useAnnotationStore((state) => state.activeColor);
@@ -85,9 +96,20 @@ export function AnnotationToolbar() {
       setShowDrawingOptions(false);
       setShowShapeOptions(false);
       setShowStampPicker(false);
+      setShowSignatureDropdown(false);
     },
     [activeTool, setActiveTool]
   );
+
+  const handleSignatureClick = useCallback(() => {
+    openSignatureModal(false);
+    setShowSignatureDropdown(false);
+  }, [openSignatureModal]);
+
+  const handleInitialsClick = useCallback(() => {
+    openSignatureModal(true);
+    setShowSignatureDropdown(false);
+  }, [openSignatureModal]);
 
   const handleColorSelect = useCallback(
     (color: string) => {
@@ -313,6 +335,46 @@ export function AnnotationToolbar() {
 
       <div className="mx-1 h-6 w-px bg-gray-200 dark:bg-gray-700" />
 
+      {/* Signature tool with dropdown */}
+      <div className="relative flex">
+        <ToolButton
+          icon={<PenTool size={16} />}
+          label="Sign"
+          isActive={isPlacingSignature}
+          onClick={handleSignatureClick}
+        />
+        <button
+          className="rounded-r px-1 py-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+          onClick={() => setShowSignatureDropdown(!showSignatureDropdown)}
+          title="Signature options"
+        >
+          <ChevronDown size={12} />
+        </button>
+
+        {showSignatureDropdown && (
+          <div className="absolute left-0 top-full z-50 mt-1 w-44 rounded-lg border border-gray-200 bg-white p-1 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <button
+              className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+              onClick={handleSignatureClick}
+            >
+              <PenTool size={16} />
+              Add Signature
+            </button>
+            <button
+              className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+              onClick={handleInitialsClick}
+            >
+              <span className="flex h-4 w-4 items-center justify-center text-xs font-bold">
+                AB
+              </span>
+              Add Initials
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="mx-1 h-6 w-px bg-gray-200 dark:bg-gray-700" />
+
       {/* Opacity control */}
       <div className="relative">
         <button
@@ -331,6 +393,16 @@ export function AnnotationToolbar() {
           </div>
         )}
       </div>
+
+      {/* Signature Modal */}
+      {isSignatureModalOpen && !isInitialsMode && (
+        <SignatureModal isOpen={true} onClose={closeSignatureModal} />
+      )}
+
+      {/* Initials Modal */}
+      {isSignatureModalOpen && isInitialsMode && (
+        <InitialsModal isOpen={true} onClose={closeSignatureModal} />
+      )}
     </div>
   );
 }
