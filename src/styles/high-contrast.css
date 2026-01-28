@@ -1,0 +1,66 @@
+/* High contrast mode styles */
+/* Activated by system preference (prefers-contrast: more) or manual toggle */
+
+@media (prefers-contrast: more) {
+  :root {
+    --high-contrast: 1;
+  }
+}
+
+.high-contrast,
+:root[data-contrast="high"] {
+  /* Text */
+  --text-primary: #000000;
+  --text-secondary: #1a1a1a;
+  --text-muted: #333333;
+
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f0f0;
+
+  /* Borders */
+  --border-color: #000000;
+  --border-width: 2px;
+
+  /* Focus */
+  --focus-ring-color: #000000;
+  --focus-ring-width: 3px;
+}
+
+/* High contrast overrides */
+.high-contrast button,
+:root[data-contrast="high"] button {
+  border: 2px solid currentColor;
+}
+
+.high-contrast a,
+:root[data-contrast="high"] a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.high-contrast [role="tablist"] [role="tab"][aria-selected="true"],
+:root[data-contrast="high"] [role="tablist"] [role="tab"][aria-selected="true"] {
+  border-bottom: 3px solid currentColor;
+  font-weight: bold;
+}
+
+/* Ensure minimum contrast for annotation highlights */
+.high-contrast .annotation-highlight,
+:root[data-contrast="high"] .annotation-highlight {
+  outline: 2px solid #000000;
+}
+
+/* Dark mode high contrast */
+@media (prefers-color-scheme: dark) {
+  .high-contrast,
+  :root[data-contrast="high"] {
+    --text-primary: #ffffff;
+    --text-secondary: #e5e5e5;
+    --text-muted: #cccccc;
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+    --border-color: #ffffff;
+    --focus-ring-color: #ffffff;
+  }
+}

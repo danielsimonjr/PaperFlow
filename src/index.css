@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './styles/focus.css';
+@import './styles/mobile.css';
+@import './styles/high-contrast.css';
+
 :root {
   --primary-900: #1E3A5F;
   --primary-500: #3b82f6;

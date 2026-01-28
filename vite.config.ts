@@ -61,4 +61,20 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['pdfjs-dist'],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'pdf-engine': ['pdfjs-dist', 'pdf-lib'],
+          'ui-framework': ['react', 'react-dom', 'react-router-dom'],
+          'ui-components': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-tooltip',
+          ],
+        },
+      },
+    },
+  },
 });
