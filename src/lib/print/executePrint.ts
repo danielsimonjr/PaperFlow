@@ -1,6 +1,8 @@
 import type { ScaleType } from '@components/print/ScaleOptions';
 import type { Orientation } from '@components/print/OrientationOptions';
 import type { PageRenderer } from '@lib/export/imageExport';
+import type { Annotation } from '@/types';
+import type { FormField } from '@/types/forms';
 import { renderPageForPrint, type PrintRenderOptions } from './printRenderer';
 
 export interface PrintOptions {
@@ -11,6 +13,8 @@ export interface PrintOptions {
   copies: number;
   includeAnnotations: boolean;
   includeFormFields: boolean;
+  annotations?: Annotation[];
+  formFields?: FormField[];
 }
 
 /**
@@ -54,6 +58,8 @@ export async function executePrint(
     includeAnnotations: options.includeAnnotations,
     includeFormFields: options.includeFormFields,
     scale,
+    annotations: options.annotations,
+    formFields: options.formFields,
   };
 
   // Create a hidden iframe for printing

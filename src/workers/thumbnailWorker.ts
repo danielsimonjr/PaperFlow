@@ -95,14 +95,19 @@ export function createThumbnailWorkerClient() {
       return new Promise((resolve, reject) => {
         pendingRequests.set(pageNumber, { resolve, reject });
 
+        // Clone the buffer before transfer to avoid detaching the original
+        // This allows the same PDF data to be used for multiple thumbnail requests
+        const clonedData = pdfData.slice(0);
+
         const request: ThumbnailRequest = {
           type: 'generate',
           pageNumber,
-          pdfData,
+          pdfData: clonedData,
           scale,
         };
 
-        w.postMessage(request, [pdfData]);
+        // Transfer ownership of the cloned buffer to the worker
+        w.postMessage(request, [clonedData]);
       });
     },
 

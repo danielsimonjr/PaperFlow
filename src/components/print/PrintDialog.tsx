@@ -3,6 +3,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { X, Printer } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 import { useDocumentStore } from '@stores/documentStore';
+import { useAnnotationStore } from '@stores/annotationStore';
+import { useFormStore } from '@stores/formStore';
 import { PageRangeSelector } from './PageRangeSelector';
 import { ScaleOptions, type ScaleType } from './ScaleOptions';
 import { OrientationOptions, type Orientation } from './OrientationOptions';
@@ -28,6 +30,8 @@ export function PrintDialog({ isOpen, onClose }: PrintDialogProps) {
   const renderer = useDocumentStore((s) => s.renderer);
   const currentPage = useDocumentStore((s) => s.currentPage);
   const pageCount = useDocumentStore((s) => s.pageCount);
+  const annotations = useAnnotationStore((s) => s.annotations);
+  const formFields = useFormStore((s) => s.fields);
 
   const handleRangeChange = useCallback((newPages: number[]) => {
     setPages(newPages);
@@ -47,6 +51,8 @@ export function PrintDialog({ isOpen, onClose }: PrintDialogProps) {
         copies,
         includeAnnotations,
         includeFormFields,
+        annotations: includeAnnotations ? annotations : undefined,
+        formFields: includeFormFields ? formFields : undefined,
       };
 
       await executePrint(renderer, printOptions);

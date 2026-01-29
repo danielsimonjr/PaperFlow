@@ -3,6 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { X, Download, Image } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 import { useDocumentStore } from '@stores/documentStore';
+import { useAnnotationStore } from '@stores/annotationStore';
 import type { ImageFormat, ImageDpi } from '@lib/export/imageExport';
 import { exportSinglePage, exportPagesAsZip } from '@lib/export/imageExport';
 
@@ -16,12 +17,14 @@ export function ImageExportDialog({ isOpen, onClose }: ImageExportDialogProps) {
   const [dpi, setDpi] = useState<ImageDpi>(150);
   const [quality, setQuality] = useState(0.85);
   const [exportRange, setExportRange] = useState<'current' | 'all'>('current');
+  const [includeAnnotations, setIncludeAnnotations] = useState(true);
   const [isExporting, setIsExporting] = useState(false);
 
   const renderer = useDocumentStore((s) => s.renderer);
   const currentPage = useDocumentStore((s) => s.currentPage);
   const pageCount = useDocumentStore((s) => s.pageCount);
   const fileName = useDocumentStore((s) => s.fileName) ?? 'document';
+  const annotations = useAnnotationStore((s) => s.annotations);
 
   const baseName = fileName.replace(/\.pdf$/i, '');
 
@@ -37,7 +40,8 @@ export function ImageExportDialog({ isOpen, onClose }: ImageExportDialogProps) {
         pageNumbers: exportRange === 'current'
           ? [currentPage]
           : Array.from({ length: pageCount }, (_, i) => i + 1),
-        includeAnnotations: true,
+        includeAnnotations,
+        annotations: includeAnnotations ? annotations : undefined,
       };
 
       if (exportRange === 'current' || pageCount === 1) {
@@ -139,6 +143,22 @@ export function ImageExportDialog({ isOpen, onClose }: ImageExportDialogProps) {
                   All Pages ({pageCount})
                 </button>
               </div>
+            </div>
+
+            {/* Include Annotations */}
+            <div>
+              <label className="flex items-center gap-2 text-sm font-medium dark:text-gray-300">
+                <input
+                  type="checkbox"
+                  checked={includeAnnotations}
+                  onChange={(e) => setIncludeAnnotations(e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300"
+                />
+                Include annotations
+              </label>
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                Render highlights, notes, shapes, and drawings onto the image
+              </p>
             </div>
           </div>
 

@@ -41,6 +41,8 @@ export function MobileToolbar() {
   const secondaryTools: { id: AnnotationType; icon: typeof Highlighter; label: string }[] = [
     { id: 'highlight', icon: Highlighter, label: 'Highlight' },
     { id: 'note', icon: StickyNote, label: 'Note' },
+    { id: 'drawing', icon: Pencil, label: 'Draw' },
+    { id: 'underline', icon: Type, label: 'Underline' },
   ];
 
   return (
@@ -141,13 +143,18 @@ export function MobileToolbar() {
                 ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400'
                 : 'text-gray-600 dark:text-gray-400'
             )}
-            aria-label="Text tool"
+            aria-label="Select"
           >
             <Type className="h-5 w-5" />
           </button>
           <button
-            onClick={() => setActiveTool(null)}
-            className="touch-target rounded-lg p-2 text-gray-600 dark:text-gray-400"
+            onClick={() => handleToolClick('drawing')}
+            className={cn(
+              'touch-target rounded-lg p-2',
+              activeTool === 'drawing'
+                ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400'
+                : 'text-gray-600 dark:text-gray-400'
+            )}
             aria-label="Draw"
           >
             <Pencil className="h-5 w-5" />
