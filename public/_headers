@@ -1,0 +1,62 @@
+# Cloudflare Pages Headers Configuration
+# See: https://developers.cloudflare.com/pages/configuration/headers/
+
+# Global security headers for all pages
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+
+# Content Security Policy
+# Allows:
+# - Self for scripts, styles, images, fonts
+# - blob: and data: for PDF.js rendering
+# - Inline styles (required for some UI components)
+# - Worker scripts (for PDF.js web worker)
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://*.sentry.io; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
+
+# Cache static assets aggressively (1 year)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache fonts (1 year)
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache images (1 month)
+/*.png
+  Cache-Control: public, max-age=2592000
+
+/*.jpg
+  Cache-Control: public, max-age=2592000
+
+/*.svg
+  Cache-Control: public, max-age=2592000
+
+/*.ico
+  Cache-Control: public, max-age=2592000
+
+# Service worker - no caching
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Manifest - short cache for updates
+/manifest.webmanifest
+  Cache-Control: public, max-age=86400
+
+# PDF worker - long cache
+/pdf.worker.min.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML files - no cache to ensure fresh content
+/*.html
+  Cache-Control: no-cache
+
+/
+  Cache-Control: no-cache

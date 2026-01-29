@@ -30,7 +30,7 @@ export async function mergePdfs(
 
   if (files.length === 1) {
     // Just return the single file
-    const pdfDoc = await PDFDocument.load(files[0].data);
+    const pdfDoc = await PDFDocument.load(files[0]!.data);
     return pdfDoc.save();
   }
 
@@ -38,7 +38,7 @@ export async function mergePdfs(
   const mergedPdf = await PDFDocument.create();
 
   for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+    const file = files[i]!;
 
     // Report progress
     if (onProgress) {
@@ -110,7 +110,7 @@ export async function mergePdfsWithSelection(
   const mergedPdf = await PDFDocument.create();
 
   for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+    const file = files[i]!;
 
     if (onProgress) {
       onProgress({

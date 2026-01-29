@@ -1,0 +1,76 @@
+/* Focus indicator styles for keyboard navigation */
+
+/* Default focus ring for all interactive elements */
+:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove default outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Enhanced focus ring for primary actions */
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+}
+
+/* Focus within for composite widgets */
+[role="toolbar"]:focus-within {
+  outline: 1px dashed #3B82F6;
+  outline-offset: 4px;
+}
+
+/* Focus ring for form elements */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 0;
+  border-color: #3B82F6;
+}
+
+/* Focus ring for checkboxes and radios */
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Tab list focus */
+[role="tab"]:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: -2px;
+}
+
+/* Dialog focus trap indicator */
+[role="dialog"]:focus-visible {
+  outline: none;
+}
+
+/* Thumbnail and page focus */
+.page-thumbnail:focus-visible {
+  outline: 3px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  :focus-visible {
+    outline-color: #60A5FA;
+  }
+
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  a:focus-visible {
+    outline-color: #60A5FA;
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.3);
+  }
+}

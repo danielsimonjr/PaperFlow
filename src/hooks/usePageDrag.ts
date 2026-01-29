@@ -72,7 +72,7 @@ export function usePageDrag({
         'bg-primary-500 text-white px-3 py-1 rounded-lg shadow-lg text-sm font-medium';
       dragImage.textContent =
         draggedPages.length === 1
-          ? `Page ${draggedPages[0] + 1}`
+          ? `Page ${draggedPages[0]! + 1}`
           : `${draggedPages.length} pages`;
       dragImage.style.position = 'absolute';
       dragImage.style.top = '-1000px';

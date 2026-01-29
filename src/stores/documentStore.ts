@@ -19,7 +19,7 @@ interface DocumentState {
 
   // Actions
   loadDocument: (file: File) => Promise<void>;
-  loadDocumentFromArrayBuffer: (data: ArrayBuffer, fileName: string) => Promise<void>;
+  loadDocumentFromArrayBuffer: (data: ArrayBuffer | Uint8Array, fileName: string) => Promise<void>;
   setCurrentPage: (page: number) => void;
   nextPage: () => void;
   prevPage: () => void;
@@ -64,8 +64,10 @@ export const useDocumentStore = create<DocumentState>()(
         }
       },
 
-      loadDocumentFromArrayBuffer: async (data: ArrayBuffer, fileName: string) => {
+      loadDocumentFromArrayBuffer: async (data: ArrayBuffer | Uint8Array, fileName: string) => {
         set({ isLoading: true, error: null });
+
+        const arrayBuffer = data instanceof Uint8Array ? data.buffer as ArrayBuffer : data;
 
         try {
           // Clean up existing renderer
@@ -76,11 +78,11 @@ export const useDocumentStore = create<DocumentState>()(
 
           // Create new renderer and load document
           const renderer = new PDFRenderer();
-          const documentInfo = await renderer.loadDocument(data);
+          const documentInfo = await renderer.loadDocument(arrayBuffer);
 
           set({
             fileName,
-            fileData: data,
+            fileData: arrayBuffer,
             documentInfo,
             pageCount: documentInfo.numPages,
             currentPage: 1,

@@ -1,0 +1,29 @@
+# Cloudflare Pages Configuration for PaperFlow
+# See: https://developers.cloudflare.com/pages/configuration/wrangler-configuration/
+
+name = "paperflow"
+compatibility_date = "2024-01-01"
+
+# Build configuration
+[build]
+command = "npm run build"
+cwd = "."
+
+[build.upload]
+dir = "dist"
+
+# Environment variables for production
+[env.production]
+vars = { NODE_ENV = "production" }
+
+# Environment variables for staging/preview
+[env.staging]
+vars = { NODE_ENV = "staging" }
+
+# Pages-specific configuration
+[pages]
+# Automatically handle SPA routing
+spa = true
+
+# Custom headers are handled in public/_headers file
+# See: https://developers.cloudflare.com/pages/configuration/headers/
