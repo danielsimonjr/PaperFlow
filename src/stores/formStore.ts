@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import type { FormField } from '@/types/forms';
 
+// Stable empty array to prevent infinite re-render loops in selectors
+const EMPTY_FIELDS: FormField[] = [];
+
 interface FormState {
   // Form fields data
   fields: FormField[];
@@ -198,7 +201,7 @@ export const useFormStore = create<FormState>()((set, get) => ({
 
   // Get fields for a specific page
   getFieldsForPage: (pageIndex) => {
-    return get().fieldsByPage.get(pageIndex) || [];
+    return get().fieldsByPage.get(pageIndex) || EMPTY_FIELDS;
   },
 
   // Get next field in tab order

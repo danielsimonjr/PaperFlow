@@ -47,8 +47,8 @@ export function PageCanvas({
       const pageInfo = await renderer.getPageInfo(pageNumber);
       setPageHeight(pageInfo.height);
     } catch (err) {
-      // Ignore cancelled render errors
-      if (err instanceof Error && err.message === 'Rendering cancelled') {
+      // Ignore cancelled render errors (PDF.js can return various formats)
+      if (err instanceof Error && err.message.includes('cancelled')) {
         return;
       }
       setError(err instanceof Error ? err.message : 'Failed to render page');
