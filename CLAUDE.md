@@ -77,14 +77,20 @@ UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → Indexed
 - `@types/` → `src/types/`
 
 ### Component Organization
-- `components/ui/`: Reusable UI primitives (Button, Dialog, Dropdown, Tooltip)
-- `components/layout/`: App shell (Header, Sidebar, Toolbar, StatusBar)
-- `components/viewer/`: PDF rendering (PDFViewer, PageCanvas, Thumbnails)
+- `components/ui/`: Reusable UI primitives (Button, Dialog, Dropdown, Tooltip, Skeleton)
+- `components/layout/`: App shell (Header, Sidebar, Toolbar, StatusBar, MobileToolbar)
+- `components/viewer/`: PDF rendering (PDFViewer, PageCanvas, Thumbnails, VirtualizedViewer)
 - `components/editor/`: Text editing (TextEditor, TextBox, FontPicker)
 - `components/annotations/`: Markup tools (Highlight, StickyNote, Drawing, ShapeOverlay)
 - `components/forms/`: Form fields (TextField, Checkbox, RadioButton, Dropdown)
 - `components/signatures/`: Signature handling (SignaturePad, SignatureModal)
-- `components/pages/`: Page management (PageManager, MergeModal)
+- `components/pages/`: Page management (PageManager, MergeDialog, SplitDialog)
+- `components/export/`: Export dialogs (ImageExportDialog, CompressDialog)
+- `components/print/`: Print functionality (PrintDialog, PrintPreview, PageRangeSelector)
+- `components/sidebar/`: Sidebar panels (ThumbnailSidebar)
+- `components/toolbar/`: Toolbar components
+- `components/home/`: Home page components (FileDropZone)
+- `components/lazy/`: Lazy-loaded component definitions for code splitting
 
 ### PDF Coordinate System
 Annotations and form fields use PDF coordinates (origin at bottom-left). The annotation layer handles conversion between PDF coordinates and screen coordinates for rendering.
@@ -115,6 +121,13 @@ Annotation serialization in `lib/annotations/serializer.ts`.
 - `lib/signatures/`: Image processing, field alignment, date utilities
 - `lib/storage/`: IndexedDB operations, file handling, signature/stamp storage
 - `lib/fonts/`: Font matching and fallback system
+- `lib/annotations/`: Annotation serialization and management
+- `lib/export/`: PDF export, image export, compression, flattening
+- `lib/print/`: Print rendering, page range parsing, print execution
+- `lib/share/`: Clipboard operations, email sharing
+- `lib/thumbnails/`: Thumbnail caching (LRU cache)
+- `lib/performance/`: Memory monitoring, canvas disposal
+- `lib/monitoring/`: Error tracking (Sentry), analytics
 
 ## Naming Conventions
 

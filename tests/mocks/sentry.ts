@@ -3,33 +3,35 @@
  * This is used when the actual package is not installed
  */
 
-export function init(_options: Record<string, unknown>): void {
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+export function init(options: Record<string, unknown>): void {
   // Mock implementation - does nothing
 }
 
 export function captureException(
-  _error: Error,
-  _context?: { extra?: Record<string, unknown> }
+  error: Error,
+  context?: { extra?: Record<string, unknown> }
 ): void {
   // Mock implementation - does nothing
 }
 
 export function captureMessage(
-  _message: string,
-  _level?: 'debug' | 'info' | 'warning' | 'error'
+  message: string,
+  level?: 'debug' | 'info' | 'warning' | 'error'
 ): void {
   // Mock implementation - does nothing
 }
 
-export function setUser(_user: { id?: string } | null): void {
+export function setUser(user: { id?: string } | null): void {
   // Mock implementation - does nothing
 }
 
-export function setTag(_key: string, _value: string): void {
+export function setTag(key: string, value: string): void {
   // Mock implementation - does nothing
 }
 
-export function addBreadcrumb(_breadcrumb: {
+export function addBreadcrumb(breadcrumb: {
   category?: string;
   message?: string;
   data?: Record<string, unknown>;
