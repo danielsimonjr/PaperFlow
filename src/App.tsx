@@ -6,6 +6,8 @@ import { LoadingIndicator } from '@components/ui/LoadingIndicator';
 const Home = lazy(() => import('@/pages/Home'));
 const Editor = lazy(() => import('@/pages/Editor'));
 const Settings = lazy(() => import('@/pages/Settings'));
+const Privacy = lazy(() => import('@/pages/Privacy'));
+const Terms = lazy(() => import('@/pages/Terms'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/editor" element={<Editor />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

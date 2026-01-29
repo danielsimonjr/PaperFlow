@@ -24,6 +24,8 @@ export default defineConfig({
       '@lib': path.resolve(__dirname, './src/lib'),
       '@utils': path.resolve(__dirname, './src/utils'),
       '@types': path.resolve(__dirname, './src/types'),
+      // Mock optional dependencies for testing
+      '@sentry/browser': path.resolve(__dirname, './tests/mocks/sentry.ts'),
     },
   },
 });
