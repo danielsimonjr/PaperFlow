@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { useDocumentStore } from '@stores/documentStore';
 
 // Mock components that use file opening
@@ -122,10 +122,12 @@ describe('File Opening Integration', () => {
 
       fireEvent.change(input, { target: { files: [file] } });
 
-      // Simulate FileReader onload
-      if (mockFileReader.onload) {
-        mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
-      }
+      // Simulate FileReader onload - wrap in act() to handle state updates
+      await act(async () => {
+        if (mockFileReader.onload) {
+          mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
+        }
+      });
 
       await waitFor(() => {
         expect(useDocumentStore.getState().fileName).toBe('test.pdf');
@@ -169,10 +171,12 @@ describe('File Opening Integration', () => {
 
       fireEvent.drop(dropZone, dropEvent);
 
-      // Simulate FileReader onload
-      if (mockFileReader.onload) {
-        mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
-      }
+      // Simulate FileReader onload - wrap in act() to handle state updates
+      await act(async () => {
+        if (mockFileReader.onload) {
+          mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
+        }
+      });
 
       await waitFor(() => {
         expect(useDocumentStore.getState().fileName).toBe('dropped.pdf');

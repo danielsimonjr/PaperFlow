@@ -352,4 +352,53 @@ describe('PDFRenderer', () => {
       renderer.destroy();
     });
   });
+
+  describe('error handling', () => {
+    it('should throw error for invalid PDF data', async () => {
+      // Mock getDocument to reject
+      vi.mocked(pdfjsLib.getDocument).mockReturnValueOnce({
+        promise: Promise.reject(new Error('Invalid PDF structure')),
+      } as ReturnType<typeof pdfjsLib.getDocument>);
+
+      await expect(renderer.loadDocument(new ArrayBuffer(10)))
+        .rejects.toThrow('Invalid PDF structure');
+    });
+
+    it('should throw error for password-protected PDF with wrong password', async () => {
+      // Mock getDocument to reject with password error
+      vi.mocked(pdfjsLib.getDocument).mockReturnValueOnce({
+        promise: Promise.reject(new Error('Incorrect password')),
+      } as ReturnType<typeof pdfjsLib.getDocument>);
+
+      await expect(renderer.loadDocument(new ArrayBuffer(10), 'wrongpassword'))
+        .rejects.toThrow('Incorrect password');
+    });
+
+    it('should throw error when rendering page out of range', async () => {
+      const buffer = new ArrayBuffer(100);
+      await renderer.loadDocument(buffer);
+
+      // Mock getPage to reject for out of range
+      mockDocument.getPage.mockRejectedValueOnce(new Error('Page not found'));
+
+      const mockContext = {
+        fillRect: vi.fn(),
+      } as unknown as CanvasRenderingContext2D;
+      const mockCanvas = document.createElement('canvas');
+      vi.spyOn(mockCanvas, 'getContext').mockReturnValue(mockContext);
+
+      await expect(renderer.renderPage(999, mockCanvas))
+        .rejects.toThrow('Page not found');
+    });
+
+    it('should propagate metadata extraction failure', async () => {
+      // Mock getMetadata to reject
+      mockDocument.getMetadata.mockRejectedValueOnce(new Error('No metadata'));
+
+      const buffer = new ArrayBuffer(100);
+      // Current implementation propagates metadata errors
+      await expect(renderer.loadDocument(buffer))
+        .rejects.toThrow('No metadata');
+    });
+  });
 });

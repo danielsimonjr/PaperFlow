@@ -4,6 +4,15 @@
  * This file contains benchmark functions to measure and track performance metrics.
  * Run with: npx vitest run tests/performance/benchmarks.ts
  *
+ * IMPORTANT: These benchmarks currently use SIMULATED timings for CI/CD verification.
+ * For actual performance testing, replace setTimeout delays with real PDF operations
+ * using test PDF fixtures from tests/fixtures/ directory.
+ *
+ * TODO: Add test PDF fixtures and replace simulated operations with:
+ * - Actual PDFRenderer.loadDocument() calls
+ * - Actual renderPage() operations
+ * - Real annotation creation through stores
+ *
  * Target metrics:
  * - PDF load time: < 2 seconds for documents up to 100 pages
  * - Page render time: < 100ms per page at 100% zoom

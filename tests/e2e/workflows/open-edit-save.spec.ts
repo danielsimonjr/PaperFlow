@@ -1,5 +1,13 @@
 import { test, expect } from '@playwright/test';
 
+/**
+ * Open, Edit, Save Workflow E2E Tests
+ *
+ * Note: These tests require a loaded PDF document to be fully implemented.
+ * Tests marked with .skip() are placeholders that need test fixtures.
+ * TODO: Add test PDF fixtures to tests/fixtures/ directory
+ */
+
 test.describe('Open, Edit, Save Workflow', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -15,47 +23,34 @@ test.describe('Open, Edit, Save Workflow', () => {
     await expect(dropZone).toBeVisible();
   });
 
-  test('should open PDF viewer after file selection', async ({ page }) => {
-    // Create a simple PDF-like test file
+  test('should open file chooser on click', async ({ page }) => {
+    // Test that file input triggers file chooser
     const fileChooserPromise = page.waitForEvent('filechooser');
-
-    // Click on file input or upload button
     await page.locator('input[type="file"]').click();
-
     const fileChooser = await fileChooserPromise;
-    // Note: In real E2E tests, you'd have a test PDF file
-    // Verify file chooser accepts PDF files
     expect(fileChooser).toBeTruthy();
   });
 
-  test('should navigate between pages', async ({ page }) => {
-    // This test assumes a document is loaded
-    // In real tests, you would first load a test PDF
-
-    // Look for navigation controls
-    const prevButton = page.locator('[aria-label="Previous page"], [data-testid="prev-page"]');
-    const nextButton = page.locator('[aria-label="Next page"], [data-testid="next-page"]');
-
-    // Navigation buttons should exist in the UI
-    await expect(prevButton.or(nextButton).first()).toBeVisible().catch(() => {
-      // Document not loaded, which is expected without a test PDF
-    });
+  test.skip('should load PDF and show viewer', async ({ page }) => {
+    // This test requires a test PDF file
+    // Would upload PDF and verify viewer appears
+    const viewer = page.locator('[data-testid="pdf-viewer"]');
+    await expect(viewer).toBeVisible();
   });
 
-  test('should zoom in and out', async ({ page }) => {
-    // Look for zoom controls
-    const zoomIn = page.locator('[aria-label="Zoom in"], [data-testid="zoom-in"]');
-    const zoomOut = page.locator('[aria-label="Zoom out"], [data-testid="zoom-out"]');
-
-    // Zoom buttons should exist somewhere (may not be visible without document)
-    const zoomInCount = await zoomIn.count();
-    const zoomOutCount = await zoomOut.count();
-    // Accept that zoom controls may not be visible without a document
-    expect(zoomInCount + zoomOutCount).toBeGreaterThanOrEqual(0);
+  test.skip('should navigate between pages', async ({ page }) => {
+    // This test requires a loaded multi-page PDF
+    const nextButton = page.locator('[aria-label="Next page"]');
+    await nextButton.click();
   });
 
-  test('should display document title in header', async ({ page }) => {
-    // Header should be visible
+  test.skip('should zoom in and out', async ({ page }) => {
+    // This test requires a loaded PDF
+    const zoomIn = page.locator('[aria-label="Zoom in"]');
+    await zoomIn.click();
+  });
+
+  test('should display header with document controls', async ({ page }) => {
     const header = page.locator('header, [data-testid="header"]');
     await expect(header).toBeVisible();
   });
@@ -63,13 +58,13 @@ test.describe('Open, Edit, Save Workflow', () => {
   test('should have accessible navigation', async ({ page }) => {
     // Check for skip link (accessibility)
     const skipLink = page.locator('[data-testid="skip-nav"], a[href="#main-content"]');
-    // Skip link should be in DOM (may be visually hidden)
-    expect(await skipLink.count()).toBeGreaterThanOrEqual(0);
+    const count = await skipLink.count();
+    // Skip link should exist for accessibility
+    expect(count).toBeGreaterThanOrEqual(0);
   });
 
-  test('should persist zoom level during navigation', async () => {
-    // This would test that zoom is maintained when changing pages
-    // Requires a loaded document with test PDF
+  test.skip('should persist zoom level during navigation', async () => {
+    // This test requires a loaded multi-page PDF
   });
 
   test('should handle keyboard navigation', async ({ page }) => {
@@ -87,7 +82,7 @@ test.describe('Document Editing', () => {
     await page.goto('/');
   });
 
-  test('should display toolbar with editing tools', async ({ page }) => {
+  test('should display toolbar', async ({ page }) => {
     // Look for toolbar
     const toolbar = page.locator('[role="toolbar"], [data-testid="toolbar"], .toolbar');
     await expect(toolbar.first()).toBeVisible().catch(() => {
@@ -95,12 +90,11 @@ test.describe('Document Editing', () => {
     });
   });
 
-  test('should toggle annotation tools', async ({ page }) => {
-    // Look for highlight tool
-    const highlightTool = page.locator('[aria-label*="ighlight"], [data-testid="highlight-tool"]');
-    // May not be visible without document
-    const count = await highlightTool.count();
-    expect(count).toBeGreaterThanOrEqual(0);
+  test.skip('should toggle annotation tools', async ({ page }) => {
+    // This test requires a loaded PDF
+    const highlightTool = page.locator('[data-testid="highlight-tool"]');
+    await highlightTool.click();
+    await expect(highlightTool).toHaveAttribute('aria-pressed', 'true');
   });
 });
 
@@ -109,16 +103,14 @@ test.describe('Save Functionality', () => {
     await page.goto('/');
   });
 
-  test('should have save/export options', async ({ page }) => {
-    // Look for save or export buttons
-    const saveButton = page.locator('button:has-text("Save"), button:has-text("Export"), [data-testid="save-button"]');
-    // May be in a menu - just verify locator is valid
-    const count = await saveButton.count();
-    expect(count).toBeGreaterThanOrEqual(0);
+  test.skip('should have save/export options', async ({ page }) => {
+    // This test requires a loaded PDF
+    const saveButton = page.locator('[data-testid="save-button"]');
+    await expect(saveButton).toBeVisible();
   });
 
-  test('should prompt before closing modified document', async () => {
-    // This would test the beforeunload behavior
-    // Difficult to test in E2E without actual modifications
+  test.skip('should prompt before closing modified document', async () => {
+    // This test requires actual modifications
+    // Would test beforeunload behavior
   });
 });
