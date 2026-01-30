@@ -16,11 +16,11 @@ Focus: Core editing experience that's immediately better than Adobe for common t
 
 ### MVP Features
 - [x] Project setup and architecture
-- [ ] PDF viewing and navigation
-- [ ] Basic annotations (highlight, underline, strikethrough, notes)
-- [ ] Form filling
-- [ ] Digital signatures
-- [ ] Page management (reorder, delete, rotate, merge, split)
+- [x] PDF viewing and navigation
+- [x] Basic annotations (highlight, underline, strikethrough, notes)
+- [x] Form filling
+- [x] Digital signatures
+- [x] Page management (reorder, delete, rotate, merge, split)
 
 ## Phase 2: Advanced Features (Months 7-12)
 
