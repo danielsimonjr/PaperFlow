@@ -206,10 +206,12 @@ describe('File Opening Integration', () => {
 
       fireEvent.change(input, { target: { files: [file] } });
 
-      // Should show loading
-      if (mockFileReader.onload) {
-        mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
-      }
+      // Should show loading - wrap in act() to handle state updates
+      await act(async () => {
+        if (mockFileReader.onload) {
+          mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
+        }
+      });
     });
 
     it('should display document info after loading', async () => {
@@ -220,9 +222,12 @@ describe('File Opening Integration', () => {
 
       fireEvent.change(input, { target: { files: [file] } });
 
-      if (mockFileReader.onload) {
-        mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
-      }
+      // Wrap in act() to handle state updates
+      await act(async () => {
+        if (mockFileReader.onload) {
+          mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
+        }
+      });
 
       await waitFor(() => {
         expect(screen.getByTestId('document-info')).toBeInTheDocument();
@@ -264,9 +269,12 @@ describe('File Opening Integration', () => {
 
       fireEvent.change(input, { target: { files: [file] } });
 
-      if (mockFileReader.onload) {
-        mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
-      }
+      // Wrap in act() to handle state updates
+      await act(async () => {
+        if (mockFileReader.onload) {
+          mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
+        }
+      });
 
       await waitFor(() => {
         const state = useDocumentStore.getState();
@@ -283,9 +291,12 @@ describe('File Opening Integration', () => {
 
       fireEvent.change(input, { target: { files: [file] } });
 
-      if (mockFileReader.onload) {
-        mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
-      }
+      // Wrap in act() to handle state updates
+      await act(async () => {
+        if (mockFileReader.onload) {
+          mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
+        }
+      });
 
       await waitFor(() => {
         const state = useDocumentStore.getState();

@@ -211,7 +211,6 @@ test.describe('PaperFlow Full Feature Test', () => {
     await screenshot(page, '05b-page-backward');
 
     // Try direct page input
-    const pageInput = page.locator('input[type="text"], input[type="number"]').filter({ hasText: '' }).first();
     const pageInputs = await page.locator('input').all();
     for (const input of pageInputs) {
       const value = await input.inputValue();

@@ -3,7 +3,7 @@
  * Run with: npx playwright test tests/manual/browser-test.ts --headed
  */
 
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import path from 'path';
 
 const PDF_PATH = 'C:\\Users\\danie\\Dropbox\\Misc\\ Large Language Models - A Survey.pdf';

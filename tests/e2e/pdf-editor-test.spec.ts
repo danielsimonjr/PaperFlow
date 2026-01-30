@@ -3,7 +3,7 @@
  * Diagnose why PDF isn't rendering
  */
 
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
 const PDF_PATH = 'C:\\Users\\danie\\Dropbox\\Misc\\ Large Language Models - A Survey.pdf';
 const BASE_URL = 'http://localhost:5173';
