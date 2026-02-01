@@ -18,7 +18,6 @@ import {
   parsePageRangeString,
   createPreset,
 } from '@/lib/batch/headerFooter';
-import type { PageNumberFormat } from '@/lib/batch/types';
 
 describe('Header/Footer Module', () => {
   describe('formatPageNumber', () => {

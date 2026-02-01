@@ -20,7 +20,7 @@ import {
   FLATTEN_PRESETS,
   DEFAULT_FLATTEN_OPTIONS,
 } from '@/lib/batch/flatten';
-import type { FlattenStats, PageFlattenResult, FlattenOptions } from '@/lib/batch/flatten';
+import type { FlattenStats, PageFlattenResult, FlattenTarget } from '@/lib/batch/flatten';
 
 describe('PDF Flatten Module', () => {
   describe('createEmptyFlattenStats', () => {
@@ -118,7 +118,7 @@ describe('PDF Flatten Module', () => {
     });
 
     it('should reject invalid targets', () => {
-      const result = validateFlattenOptions({ targets: ['invalid' as any] });
+      const result = validateFlattenOptions({ targets: ['invalid' as FlattenTarget] });
 
       expect(result.valid).toBe(false);
       expect(result.errors[0]).toContain('Invalid flatten target');
@@ -180,32 +180,32 @@ describe('PDF Flatten Module', () => {
 
   describe('shouldFlattenPage', () => {
     it('should return true for all pages when type is all', () => {
-      expect(shouldFlattenPage(0, { type: 'all' }, 10)).toBe(true);
-      expect(shouldFlattenPage(9, { type: 'all' }, 10)).toBe(true);
+      expect(shouldFlattenPage(0, { type: 'all' })).toBe(true);
+      expect(shouldFlattenPage(9, { type: 'all' })).toBe(true);
     });
 
     it('should return true for even pages', () => {
-      expect(shouldFlattenPage(1, { type: 'even' }, 10)).toBe(true); // page 2
-      expect(shouldFlattenPage(0, { type: 'even' }, 10)).toBe(false); // page 1
+      expect(shouldFlattenPage(1, { type: 'even' })).toBe(true); // page 2
+      expect(shouldFlattenPage(0, { type: 'even' })).toBe(false); // page 1
     });
 
     it('should return true for odd pages', () => {
-      expect(shouldFlattenPage(0, { type: 'odd' }, 10)).toBe(true); // page 1
-      expect(shouldFlattenPage(1, { type: 'odd' }, 10)).toBe(false); // page 2
+      expect(shouldFlattenPage(0, { type: 'odd' })).toBe(true); // page 1
+      expect(shouldFlattenPage(1, { type: 'odd' })).toBe(false); // page 2
     });
 
     it('should handle custom pages array', () => {
       const range = { type: 'custom' as const, pages: [1, 5, 10] };
-      expect(shouldFlattenPage(0, range, 10)).toBe(true); // page 1
-      expect(shouldFlattenPage(4, range, 10)).toBe(true); // page 5
-      expect(shouldFlattenPage(2, range, 10)).toBe(false); // page 3
+      expect(shouldFlattenPage(0, range)).toBe(true); // page 1
+      expect(shouldFlattenPage(4, range)).toBe(true); // page 5
+      expect(shouldFlattenPage(2, range)).toBe(false); // page 3
     });
 
     it('should handle custom range', () => {
       const range = { type: 'custom' as const, start: 3, end: 7 };
-      expect(shouldFlattenPage(2, range, 10)).toBe(true); // page 3
-      expect(shouldFlattenPage(6, range, 10)).toBe(true); // page 7
-      expect(shouldFlattenPage(7, range, 10)).toBe(false); // page 8
+      expect(shouldFlattenPage(2, range)).toBe(true); // page 3
+      expect(shouldFlattenPage(6, range)).toBe(true); // page 7
+      expect(shouldFlattenPage(7, range)).toBe(false); // page 8
     });
   });
 

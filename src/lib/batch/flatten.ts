@@ -204,8 +204,7 @@ export function generateFlattenSummary(options: FlattenOptions): string[] {
  */
 export function shouldFlattenPage(
   pageIndex: number, // 0-indexed
-  pageRange: PageRange,
-  _totalPages: number
+  pageRange: PageRange
 ): boolean {
   const pageNumber = pageIndex + 1; // Convert to 1-indexed
 

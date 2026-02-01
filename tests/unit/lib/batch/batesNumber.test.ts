@@ -21,7 +21,7 @@ import {
   BATES_PRESETS,
   DEFAULT_BATES_OPTIONS,
 } from '@/lib/batch/batesNumber';
-import type { BatesState, BatesNumberOptions } from '@/lib/batch/batesNumber';
+import type { BatesState } from '@/lib/batch/batesNumber';
 
 describe('Bates Numbering Module', () => {
   describe('formatBatesNumber', () => {
@@ -254,7 +254,7 @@ describe('Bates Numbering Module', () => {
 
     it('should preserve nested options', () => {
       const merged = mergeBatesOptions({
-        font: { size: 14 } as any,
+        font: { family: 'Helvetica', size: 14, color: '#000000' },
       });
 
       expect(merged.font.size).toBe(14);
@@ -368,32 +368,32 @@ describe('Bates Numbering Module', () => {
 
   describe('shouldApplyBatesToPage', () => {
     it('should return true for all pages when type is all', () => {
-      expect(shouldApplyBatesToPage(0, { type: 'all' }, 10)).toBe(true);
-      expect(shouldApplyBatesToPage(5, { type: 'all' }, 10)).toBe(true);
+      expect(shouldApplyBatesToPage(0, { type: 'all' })).toBe(true);
+      expect(shouldApplyBatesToPage(5, { type: 'all' })).toBe(true);
     });
 
     it('should return true for even pages', () => {
-      expect(shouldApplyBatesToPage(1, { type: 'even' }, 10)).toBe(true); // page 2
-      expect(shouldApplyBatesToPage(0, { type: 'even' }, 10)).toBe(false); // page 1
+      expect(shouldApplyBatesToPage(1, { type: 'even' })).toBe(true); // page 2
+      expect(shouldApplyBatesToPage(0, { type: 'even' })).toBe(false); // page 1
     });
 
     it('should return true for odd pages', () => {
-      expect(shouldApplyBatesToPage(0, { type: 'odd' }, 10)).toBe(true); // page 1
-      expect(shouldApplyBatesToPage(1, { type: 'odd' }, 10)).toBe(false); // page 2
+      expect(shouldApplyBatesToPage(0, { type: 'odd' })).toBe(true); // page 1
+      expect(shouldApplyBatesToPage(1, { type: 'odd' })).toBe(false); // page 2
     });
 
     it('should handle custom pages array', () => {
       const range = { type: 'custom' as const, pages: [1, 3, 5] };
-      expect(shouldApplyBatesToPage(0, range, 10)).toBe(true); // page 1
-      expect(shouldApplyBatesToPage(2, range, 10)).toBe(true); // page 3
-      expect(shouldApplyBatesToPage(1, range, 10)).toBe(false); // page 2
+      expect(shouldApplyBatesToPage(0, range)).toBe(true); // page 1
+      expect(shouldApplyBatesToPage(2, range)).toBe(true); // page 3
+      expect(shouldApplyBatesToPage(1, range)).toBe(false); // page 2
     });
 
     it('should handle custom range', () => {
       const range = { type: 'custom' as const, start: 2, end: 5 };
-      expect(shouldApplyBatesToPage(1, range, 10)).toBe(true); // page 2
-      expect(shouldApplyBatesToPage(4, range, 10)).toBe(true); // page 5
-      expect(shouldApplyBatesToPage(5, range, 10)).toBe(false); // page 6
+      expect(shouldApplyBatesToPage(1, range)).toBe(true); // page 2
+      expect(shouldApplyBatesToPage(4, range)).toBe(true); // page 5
+      expect(shouldApplyBatesToPage(5, range)).toBe(false); // page 6
     });
   });
 

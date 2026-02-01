@@ -357,8 +357,7 @@ export function getBatesPreset(
  */
 export function shouldApplyBatesToPage(
   pageIndex: number, // 0-indexed
-  pageRange: PageRange,
-  _totalPages: number
+  pageRange: PageRange
 ): boolean {
   const pageNumber = pageIndex + 1; // Convert to 1-indexed
 

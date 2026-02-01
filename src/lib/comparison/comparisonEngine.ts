@@ -142,7 +142,7 @@ export function comparePage(
           id: generateChangeId(),
           type: changeType,
           text: token.value,
-          location: estimateTextLocation(position, token.value.length, pageIndex),
+          location: estimateTextLocation(position, token.value.length),
           pageIndex,
           wordIndex,
         });
@@ -167,7 +167,7 @@ export function comparePage(
 /**
  * Estimate text location on page (simplified)
  */
-function estimateTextLocation(charPosition: number, length: number, _pageIndex: number): Rect {
+function estimateTextLocation(charPosition: number, length: number): Rect {
   const charsPerLine = 80;
   const lineHeight = 20;
   const charWidth = 8;

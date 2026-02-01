@@ -11,7 +11,7 @@ import {
   exportReport,
 } from '@/lib/comparison/reportGenerator';
 import { compareDocuments } from '@/lib/comparison/comparisonEngine';
-import type { DocumentInfo } from '@/lib/comparison/types';
+import type { DocumentInfo, ReportFormat } from '@/lib/comparison/types';
 
 describe('Report Generator', () => {
   const doc1Info: DocumentInfo = { name: 'original.pdf', pageCount: 2 };
@@ -203,7 +203,7 @@ describe('Report Generator', () => {
     it('should default to text format for unknown format', () => {
       const result = createTestResult();
       const report = generateReport(result);
-      const output = exportReport(report, 'unknown' as any);
+      const output = exportReport(report, 'unknown' as ReportFormat);
 
       expect(output).toContain('DOCUMENT COMPARISON REPORT');
     });

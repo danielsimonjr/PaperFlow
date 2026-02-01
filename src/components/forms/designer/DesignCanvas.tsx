@@ -154,7 +154,7 @@ export function DesignCanvas({ pageIndex, pageWidth, pageHeight, scale }: Design
         });
       } else if (dragState.type === 'resize' && dragState.resizeHandle) {
         const original = dragState.originalBounds;
-        let newBounds = { ...original };
+        const newBounds = { ...original };
 
         switch (dragState.resizeHandle) {
           case 'e':

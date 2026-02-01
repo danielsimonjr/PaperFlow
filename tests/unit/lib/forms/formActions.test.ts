@@ -21,7 +21,7 @@ import {
   mergeActionResults,
   SCRIPT_TEMPLATES,
 } from '@/lib/forms/formActions';
-import type { FormAction, ActionContext, ActionResult } from '@/lib/forms/formActions';
+import type { FormAction, ActionContext, ActionResult, BuiltInActionType } from '@/lib/forms/formActions';
 
 describe('Form Actions Module', () => {
   const createTestContext = (): ActionContext => ({
@@ -245,7 +245,7 @@ describe('Form Actions Module', () => {
     });
 
     it('should handle unknown action type', () => {
-      const action = createFormAction('onClick', 'unknownAction' as any);
+      const action = createFormAction('onClick', 'unknownAction' as BuiltInActionType);
       const result = executeAction(action, createTestContext());
 
       expect(result.success).toBe(false);

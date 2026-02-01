@@ -16,7 +16,7 @@ import {
   DEFAULT_RESET_CONFIG,
   DEFAULT_PRINT_CONFIG,
 } from '@/lib/forms/formSubmit';
-import type { SubmitConfig, SubmitFieldValue, ResetConfig } from '@/lib/forms/formSubmit';
+import type { SubmitConfig, SubmitFieldValue, ResetConfig, SubmitMethod, SubmitFormat } from '@/lib/forms/formSubmit';
 
 describe('Form Submit Module', () => {
   describe('validateSubmitConfig', () => {
@@ -80,7 +80,7 @@ describe('Form Submit Module', () => {
     it('should reject invalid method', () => {
       const config: Partial<SubmitConfig> = {
         url: 'https://example.com/submit',
-        method: 'PUT' as any,
+        method: 'PUT' as SubmitMethod,
       };
 
       const result = validateSubmitConfig(config);
@@ -92,7 +92,7 @@ describe('Form Submit Module', () => {
     it('should reject invalid format', () => {
       const config: Partial<SubmitConfig> = {
         url: 'https://example.com/submit',
-        format: 'xml' as any,
+        format: 'xml' as SubmitFormat,
       };
 
       const result = validateSubmitConfig(config);
@@ -353,7 +353,7 @@ describe('Form Submit Module', () => {
         headers: new Headers({ 'content-type': 'application/json' }),
         json: vi.fn().mockResolvedValue({ success: true }),
       };
-      vi.mocked(fetch).mockResolvedValue(mockResponse as any);
+      vi.mocked(fetch).mockResolvedValue(mockResponse as Response);
 
       const fields: SubmitFieldValue[] = [{ name: 'name', value: 'John', type: 'text' }];
       const config = mergeSubmitConfig({ url: 'https://example.com/submit' });
@@ -381,7 +381,7 @@ describe('Form Submit Module', () => {
         headers: new Headers({ 'content-type': 'text/plain' }),
         text: vi.fn().mockResolvedValue('OK'),
       };
-      vi.mocked(fetch).mockResolvedValue(mockResponse as any);
+      vi.mocked(fetch).mockResolvedValue(mockResponse as Response);
 
       const fields: SubmitFieldValue[] = [{ name: 'name', value: 'John', type: 'text' }];
       const config = mergeSubmitConfig({
@@ -406,7 +406,7 @@ describe('Form Submit Module', () => {
         headers: new Headers({ 'content-type': 'text/plain' }),
         text: vi.fn().mockResolvedValue('OK'),
       };
-      vi.mocked(fetch).mockResolvedValue(mockResponse as any);
+      vi.mocked(fetch).mockResolvedValue(mockResponse as Response);
 
       const fields: SubmitFieldValue[] = [{ name: 'name', value: 'John', type: 'text' }];
       const config = mergeSubmitConfig({
@@ -434,7 +434,7 @@ describe('Form Submit Module', () => {
         headers: new Headers({ 'content-type': 'text/plain' }),
         text: vi.fn().mockResolvedValue('OK'),
       };
-      vi.mocked(fetch).mockResolvedValue(mockResponse as any);
+      vi.mocked(fetch).mockResolvedValue(mockResponse as Response);
 
       const fields: SubmitFieldValue[] = [{ name: 'name', value: 'John', type: 'text' }];
       const config = mergeSubmitConfig({
@@ -474,7 +474,7 @@ describe('Form Submit Module', () => {
         headers: new Headers({ 'content-type': 'text/plain' }),
         text: vi.fn().mockResolvedValue('Invalid data'),
       };
-      vi.mocked(fetch).mockResolvedValue(mockResponse as any);
+      vi.mocked(fetch).mockResolvedValue(mockResponse as Response);
 
       const fields: SubmitFieldValue[] = [{ name: 'name', value: 'John', type: 'text' }];
       const config = mergeSubmitConfig({ url: 'https://example.com/submit' });

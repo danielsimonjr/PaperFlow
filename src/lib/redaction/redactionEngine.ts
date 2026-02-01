@@ -165,7 +165,7 @@ export function mergeOverlappingMarks(marks: RedactionMark[]): RedactionMark[] {
   const result: RedactionMark[] = [];
   const grouped = groupMarksByPage(marks);
 
-  for (const [_pageIndex, pageMarks] of grouped) {
+  for (const pageMarks of grouped.values()) {
     const merged: RedactionMark[] = [];
     const sorted = sortMarksByPosition(pageMarks);
 
@@ -301,7 +301,7 @@ export function importMarksFromJSON(json: string): RedactionMark[] {
 
     // Validate each mark
     return parsed.map((item) => {
-      if (!item.id || !item.pageIndex === undefined || !item.bounds || !item.type) {
+      if (!item.id || item.pageIndex === undefined || !item.bounds || !item.type) {
         throw new Error('Invalid mark format');
       }
       return {
