@@ -1,0 +1,286 @@
+{
+  "phase": 3,
+  "sprint": 16,
+  "quarter": "Q4",
+  "title": "API Foundation",
+  "goal": "Build public API infrastructure",
+  "milestone": "Platform Technical Foundation",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.16.1",
+      "category": "infrastructure",
+      "title": "Create API directory structure",
+      "description": "Create lib/api/ directory with router.ts, middleware.ts, validators.ts, serializers.ts, errorHandler.ts, and types.ts",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/api/router.ts",
+        "src/lib/api/middleware.ts",
+        "src/lib/api/validators.ts",
+        "src/lib/api/serializers.ts",
+        "src/lib/api/errorHandler.ts",
+        "src/lib/api/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "Directory structure created",
+        "All type definitions in place",
+        "Base modules exportable"
+      ]
+    },
+    {
+      "id": "3.16.2",
+      "category": "api",
+      "title": "Design RESTful API architecture",
+      "description": "Design resource-based endpoints with consistent naming and versioning (v1)",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/api/router.ts",
+        "src/lib/api/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "Resource-based endpoints defined",
+        "Consistent naming conventions",
+        "API versioning (v1) implemented",
+        "REST best practices followed"
+      ]
+    },
+    {
+      "id": "3.16.3",
+      "category": "api",
+      "title": "Implement GraphQL option",
+      "description": "Create GraphQL schema definition, resolvers, and subscriptions as alternative to REST",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "src/lib/api/graphql/schema.ts",
+        "src/lib/api/graphql/resolvers.ts",
+        "src/lib/api/graphql/subscriptions.ts"
+      ],
+      "acceptanceCriteria": [
+        "GraphQL schema defined",
+        "Resolvers implemented",
+        "Subscriptions working",
+        "Playground available"
+      ]
+    },
+    {
+      "id": "3.16.4",
+      "category": "infrastructure",
+      "title": "Implement API key authentication",
+      "description": "Create API key generation, rotation, and scope restriction functionality",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/api/auth/apiKeys.ts",
+        "src/lib/api/middleware.ts"
+      ],
+      "acceptanceCriteria": [
+        "API key generation working",
+        "Key rotation supported",
+        "Scope restrictions enforced",
+        "Keys stored securely"
+      ]
+    },
+    {
+      "id": "3.16.5",
+      "category": "infrastructure",
+      "title": "Add OAuth 2.0 for API",
+      "description": "Implement client credentials flow, authorization code flow, and token management",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "src/lib/api/auth/oauth.ts",
+        "src/lib/api/auth/tokenManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Client credentials flow working",
+        "Authorization code flow working",
+        "Token refresh implemented",
+        "Token validation working"
+      ]
+    },
+    {
+      "id": "3.16.6",
+      "category": "infrastructure",
+      "title": "Create JWT token system",
+      "description": "Implement access tokens, refresh tokens, and token validation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/api/auth/jwt.ts"
+      ],
+      "acceptanceCriteria": [
+        "Access token generation working",
+        "Refresh token generation working",
+        "Token validation implemented",
+        "Token expiration handled"
+      ]
+    },
+    {
+      "id": "3.16.7",
+      "category": "infrastructure",
+      "title": "Implement rate limiting",
+      "description": "Create per-key limits, per-endpoint limits, and burst allowance",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/api/rateLimit/rateLimiter.ts",
+        "src/lib/api/middleware.ts"
+      ],
+      "acceptanceCriteria": [
+        "Per-key rate limits enforced",
+        "Per-endpoint limits working",
+        "Burst allowance configured",
+        "429 responses returned appropriately"
+      ]
+    },
+    {
+      "id": "3.16.8",
+      "category": "infrastructure",
+      "title": "Add quota management",
+      "description": "Implement monthly quotas, quota alerts, and overage handling",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/api/rateLimit/quotaManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Monthly quotas tracked",
+        "Quota alerts triggered",
+        "Overage handling implemented",
+        "Usage dashboard data available"
+      ]
+    },
+    {
+      "id": "3.16.9",
+      "category": "api",
+      "title": "Create rate limit headers",
+      "description": "Add X-RateLimit-Limit, X-RateLimit-Remaining, and X-RateLimit-Reset headers",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/api/middleware.ts"
+      ],
+      "acceptanceCriteria": [
+        "X-RateLimit-Limit header present",
+        "X-RateLimit-Remaining header accurate",
+        "X-RateLimit-Reset header shows reset time",
+        "Headers follow standard format"
+      ]
+    },
+    {
+      "id": "3.16.10",
+      "category": "api",
+      "title": "Implement Documents API",
+      "description": "Create GET/POST/PUT/DELETE endpoints for documents and pages",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "src/lib/api/endpoints/documents.ts"
+      ],
+      "acceptanceCriteria": [
+        "GET /documents returns list",
+        "POST /documents creates document",
+        "GET /documents/{id} returns document",
+        "PUT /documents/{id} updates document",
+        "DELETE /documents/{id} removes document",
+        "GET /documents/{id}/pages returns pages"
+      ]
+    },
+    {
+      "id": "3.16.11",
+      "category": "api",
+      "title": "Implement Annotations API",
+      "description": "Create CRUD endpoints for document annotations",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/api/endpoints/annotations.ts"
+      ],
+      "acceptanceCriteria": [
+        "GET /documents/{id}/annotations returns annotations",
+        "POST /documents/{id}/annotations creates annotation",
+        "PUT /annotations/{id} updates annotation",
+        "DELETE /annotations/{id} removes annotation"
+      ]
+    },
+    {
+      "id": "3.16.12",
+      "category": "api",
+      "title": "Implement Forms API",
+      "description": "Create endpoints for form fields and form submission",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/api/endpoints/forms.ts"
+      ],
+      "acceptanceCriteria": [
+        "GET /documents/{id}/fields returns form fields",
+        "PUT /documents/{id}/fields updates field values",
+        "POST /documents/{id}/submit processes submission"
+      ]
+    },
+    {
+      "id": "3.16.13",
+      "category": "testing",
+      "title": "Write API unit tests",
+      "description": "Create comprehensive unit tests for all API modules",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "tests/unit/lib/api/router.test.ts",
+        "tests/unit/lib/api/middleware.test.ts",
+        "tests/unit/lib/api/auth.test.ts",
+        "tests/unit/lib/api/endpoints.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Router tests pass",
+        "Middleware tests pass",
+        "Authentication tests pass",
+        "Endpoint tests pass",
+        "80%+ code coverage"
+      ]
+    },
+    {
+      "id": "3.16.14",
+      "category": "testing",
+      "title": "Write API integration tests",
+      "description": "Create integration tests for API authentication and endpoints",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/integration/api/documents.test.ts",
+        "tests/integration/api/annotations.test.ts",
+        "tests/integration/api/forms.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Document API integration tests pass",
+        "Annotation API integration tests pass",
+        "Forms API integration tests pass",
+        "Authentication flow tests pass"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "API architecture established",
+    "Authentication works (API keys, OAuth 2.0, JWT)",
+    "Rate limiting enforced",
+    "Core endpoints functional (Documents, Annotations, Forms)",
+    "API follows REST best practices",
+    "80%+ test coverage"
+  ],
+  "dependencies": [
+    "Sprint 15 - Custom Branding & Q3 Release completed",
+    "Enterprise authentication infrastructure"
+  ],
+  "notes": [
+    "This sprint establishes the Platform Technical Foundation milestone",
+    "API versioning should use /v1/ prefix",
+    "Rate limit headers must follow standard format",
+    "Consider GraphQL as alternative to REST for complex queries",
+    "All endpoints must be documented for Sprint 17"
+  ]
+}

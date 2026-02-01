@@ -1,0 +1,285 @@
+{
+  "phase": 3,
+  "sprint": 2,
+  "quarter": "Q1",
+  "title": "Document Summarization",
+  "goal": "Implement AI-powered document summarization",
+  "milestone": "AI Document Intelligence",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.2.1",
+      "category": "infrastructure",
+      "title": "Create summarization library",
+      "description": "Create lib/ai/summarization.ts with SummaryOptions interface and core summarization functions",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/ai/summarization.ts"
+      ],
+      "acceptanceCriteria": [
+        "SummaryOptions interface is defined with length, style, focusAreas, maxTokens",
+        "Summary interface is defined",
+        "Type exports are properly configured"
+      ]
+    },
+    {
+      "id": "3.2.2",
+      "category": "infrastructure",
+      "title": "Implement summarizeDocument function",
+      "description": "Create function to summarize full document with configurable length and style options",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/summarization.ts"
+      ],
+      "acceptanceCriteria": [
+        "Function accepts text and SummaryOptions",
+        "Brief, standard, and detailed lengths work",
+        "Bullets, paragraph, and outline styles work",
+        "Focus areas filter content appropriately"
+      ]
+    },
+    {
+      "id": "3.2.3",
+      "category": "infrastructure",
+      "title": "Implement summarizePage function",
+      "description": "Create function to summarize individual pages with optional document context",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/ai/summarization.ts"
+      ],
+      "acceptanceCriteria": [
+        "Function summarizes individual page text",
+        "Document context improves summary relevance",
+        "Summary respects page boundaries"
+      ]
+    },
+    {
+      "id": "3.2.4",
+      "category": "infrastructure",
+      "title": "Implement summarizeSelection function",
+      "description": "Create function to summarize selected text with document context",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/ai/summarization.ts"
+      ],
+      "acceptanceCriteria": [
+        "Function summarizes selected text",
+        "Document context provides background",
+        "Short selections get concise summaries"
+      ]
+    },
+    {
+      "id": "3.2.5",
+      "category": "infrastructure",
+      "title": "Implement multi-level summarization",
+      "description": "Create executive summary (1-2 paragraphs), section summaries, key points extraction, and action items detection",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/ai/summarization.ts"
+      ],
+      "acceptanceCriteria": [
+        "Executive summary provides high-level overview",
+        "Section summaries break down by document parts",
+        "Key points are extracted accurately",
+        "Action items are detected and listed"
+      ]
+    },
+    {
+      "id": "3.2.6",
+      "category": "infrastructure",
+      "title": "Add specialized document summaries",
+      "description": "Implement specialized summary templates for legal, technical, financial, and academic documents",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/ai/summarization.ts",
+        "src/lib/ai/promptTemplates.ts"
+      ],
+      "acceptanceCriteria": [
+        "Legal document summary extracts parties, terms, obligations",
+        "Technical document summary extracts specifications, requirements",
+        "Financial document summary extracts figures, trends, risks",
+        "Academic paper summary extracts thesis, methodology, findings"
+      ]
+    },
+    {
+      "id": "3.2.7",
+      "category": "ui",
+      "title": "Create SummarizePanel component",
+      "description": "Build SummarizePanel.tsx with summary length selector, output style options, focus area input, and generate button",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/ai/SummarizePanel.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Summary length selector has brief/standard/detailed options",
+        "Output style options include bullets/paragraph/outline",
+        "Focus area input accepts keywords or phrases",
+        "Generate button triggers summarization",
+        "Loading state is displayed during processing"
+      ]
+    },
+    {
+      "id": "3.2.8",
+      "category": "ui",
+      "title": "Add summary overlay on document",
+      "description": "Create floating summary panel with collapsible sections, copy to clipboard, and export options",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/ai/SummaryOverlay.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Floating panel displays summary",
+        "Sections are collapsible",
+        "Copy to clipboard button works",
+        "Export options include text and markdown"
+      ]
+    },
+    {
+      "id": "3.2.9",
+      "category": "ui",
+      "title": "Create summary sidebar tab",
+      "description": "Add persistent summary view tab in sidebar with navigation to relevant sections and highlight key passages",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/sidebar/SummarySidebar.tsx",
+        "src/components/layout/Sidebar.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Summary tab appears in sidebar",
+        "Clicking section navigates to document location",
+        "Key passages can be highlighted",
+        "Summary persists during session"
+      ]
+    },
+    {
+      "id": "3.2.10",
+      "category": "infrastructure",
+      "title": "Implement key points detection",
+      "description": "Create function to extract main arguments, supporting evidence, conclusions, and recommendations",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/keyPoints.ts"
+      ],
+      "acceptanceCriteria": [
+        "Main arguments/thesis are identified",
+        "Supporting evidence is extracted",
+        "Conclusions are detected",
+        "Recommendations are listed"
+      ]
+    },
+    {
+      "id": "3.2.11",
+      "category": "ui",
+      "title": "Create visual key points display",
+      "description": "Build component with numbered list, confidence indicators, and source page references",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/ai/KeyPointsDisplay.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Key points displayed as numbered list",
+        "Confidence indicators show reliability",
+        "Page references link to source",
+        "Points can be collapsed/expanded"
+      ]
+    },
+    {
+      "id": "3.2.12",
+      "category": "ui",
+      "title": "Implement right-click to summarize selection",
+      "description": "Add context menu option for quick summary popup, explain in simpler terms, and identify key terms",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/viewer/SelectionContextMenu.tsx",
+        "src/components/ai/QuickSummaryPopup.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Right-click on selection shows AI options",
+        "Quick summary popup appears",
+        "Explain simpler option works",
+        "Key terms are identified and displayed"
+      ]
+    },
+    {
+      "id": "3.2.13",
+      "category": "infrastructure",
+      "title": "Implement page-level summary",
+      "description": "Create function to summarize current page with comparison to document context",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/ai/summarization.ts"
+      ],
+      "acceptanceCriteria": [
+        "Current page can be summarized",
+        "Summary relates to overall document",
+        "Page position context is provided"
+      ]
+    },
+    {
+      "id": "3.2.14",
+      "category": "infrastructure",
+      "title": "Implement multi-document summarization",
+      "description": "Create functionality to summarize across merged documents and compare document summaries",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/multiDocSummary.ts"
+      ],
+      "acceptanceCriteria": [
+        "Multiple documents can be summarized together",
+        "Cross-document themes are identified",
+        "Document summaries can be compared",
+        "Differences and commonalities highlighted"
+      ]
+    },
+    {
+      "id": "3.2.15",
+      "category": "testing",
+      "title": "Create unit tests for summarization module",
+      "description": "Write comprehensive tests for all summarization functions with quality validation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/ai/summarization.test.ts",
+        "tests/unit/lib/ai/keyPoints.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "All summarization functions have tests",
+        "Different document types are tested",
+        "Edge cases (empty, very long) are covered",
+        "Summary quality is validated"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Document summarization produces accurate summaries",
+    "Multiple summary lengths work correctly",
+    "Key points extraction is relevant",
+    "Selection summarization works",
+    "Summary UI is intuitive",
+    "Summary generated in < 10 seconds"
+  ],
+  "dependencies": [
+    "Sprint 1: AI Infrastructure must be complete"
+  ],
+  "notes": [
+    "Summarization quality depends on LLM choice",
+    "Large documents require chunking strategy",
+    "Specialized summaries improve domain-specific accuracy",
+    "Performance target: < 10 seconds for full document"
+  ]
+}

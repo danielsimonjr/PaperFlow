@@ -65,6 +65,40 @@ Focus: Core editing experience that's immediately better than Adobe for common t
 - [ ] Integrations marketplace
 - [ ] White-label solutions
 
+## Phase 4: Desktop Application (Year 3)
+
+### Q1: Electron Foundation
+- [ ] Electron app shell and build system
+- [ ] Native file system integration (full access)
+- [ ] System tray integration
+- [ ] Auto-updater functionality
+- [ ] Native menus and keyboard shortcuts
+- [ ] Deep OS integration (file associations, protocol handlers)
+
+### Q2: Desktop-Specific Features
+- [ ] Offline-first architecture
+- [ ] Local file watching and hot reload
+- [ ] Batch processing with native performance
+- [ ] Print to physical printers (native dialog)
+- [ ] Scanner integration (TWAIN/WIA)
+- [ ] Hardware security key support (FIDO2)
+
+### Q3: Cross-Platform Polish
+- [ ] Windows installer (MSI, MSIX)
+- [ ] macOS app bundle and notarization
+- [ ] Linux packages (AppImage, deb, rpm, snap)
+- [ ] Platform-specific UI adaptations
+- [ ] Touch Bar support (macOS)
+- [ ] Windows taskbar integration
+
+### Q4: Enterprise Desktop
+- [ ] MDM/GPO deployment support
+- [ ] Centralized configuration
+- [ ] Offline license validation
+- [ ] Local network collaboration (LAN sync)
+- [ ] On-premise update server
+- [ ] Kiosk mode for shared workstations
+
 ## Success Metrics
 
 | Metric | Year 1 Target | Year 3 Target |
@@ -73,3 +107,6 @@ Focus: Core editing experience that's immediately better than Adobe for common t
 | Conversion Rate (Free to Paid) | 5% | 8% |
 | Net Promoter Score (NPS) | +40 | +60 |
 | App Store Rating | 4.5+ stars | 4.7+ stars |
+| Desktop App Downloads | - | 100,000 |
+| Enterprise Desktop Licenses | - | 500 |
+| Cross-platform coverage | - | Windows, macOS, Linux |

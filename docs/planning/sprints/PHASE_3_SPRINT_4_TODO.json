@@ -1,0 +1,269 @@
+{
+  "phase": 3,
+  "sprint": 4,
+  "quarter": "Q1",
+  "title": "Natural Language Queries",
+  "goal": "Implement natural language document queries",
+  "milestone": "AI Document Query",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.4.1",
+      "category": "infrastructure",
+      "title": "Create query engine library",
+      "description": "Create lib/ai/queryEngine.ts with QueryResult and SourceReference interfaces",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/ai/queryEngine.ts"
+      ],
+      "acceptanceCriteria": [
+        "QueryResult interface defined with answer, confidence, sources, relatedQueries",
+        "SourceReference interface defined with pageIndex, excerpt, relevance",
+        "DocumentContext interface is defined",
+        "Types are properly exported"
+      ]
+    },
+    {
+      "id": "3.4.2",
+      "category": "infrastructure",
+      "title": "Implement queryDocument function",
+      "description": "Create main function to query document with natural language and return structured results",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/ai/queryEngine.ts"
+      ],
+      "acceptanceCriteria": [
+        "Function accepts question and document context",
+        "Returns structured QueryResult",
+        "Confidence score reflects answer reliability",
+        "Source references are accurate"
+      ]
+    },
+    {
+      "id": "3.4.3",
+      "category": "infrastructure",
+      "title": "Implement suggestQuestions function",
+      "description": "Create function to suggest relevant questions based on document context",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/queryEngine.ts"
+      ],
+      "acceptanceCriteria": [
+        "Questions are relevant to document content",
+        "Suggestions vary based on document type",
+        "Common and specific questions are included"
+      ]
+    },
+    {
+      "id": "3.4.4",
+      "category": "infrastructure",
+      "title": "Implement RAG (Retrieval-Augmented Generation)",
+      "description": "Build RAG system with document section embedding, semantic search for relevant sections, and answer generation from context",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/ai/rag.ts"
+      ],
+      "acceptanceCriteria": [
+        "Document sections are embedded",
+        "Semantic search returns relevant sections",
+        "Answers are generated from retrieved context",
+        "Context window is efficiently used"
+      ]
+    },
+    {
+      "id": "3.4.5",
+      "category": "infrastructure",
+      "title": "Create query understanding system",
+      "description": "Implement user intent parsing, follow-up question handling, and comparison query support",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/queryParser.ts"
+      ],
+      "acceptanceCriteria": [
+        "User intent is correctly parsed",
+        "Follow-up questions use conversation context",
+        "Comparison queries identify comparison targets",
+        "Query type is classified (factual, analytical, navigation)"
+      ]
+    },
+    {
+      "id": "3.4.6",
+      "category": "ui",
+      "title": "Create QueryPanel component",
+      "description": "Build QueryPanel.tsx with natural language input field, voice input option, query history, and suggested questions",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/ai/QueryPanel.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Natural language input accepts questions",
+        "Voice input uses Web Speech API",
+        "Query history is displayed",
+        "Suggested questions are clickable"
+      ]
+    },
+    {
+      "id": "3.4.7",
+      "category": "ui",
+      "title": "Add answer display component",
+      "description": "Create component with formatted response, source citations with page links, and related questions",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/ai/AnswerDisplay.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Answers are formatted readably",
+        "Source citations link to document pages",
+        "Related questions encourage exploration",
+        "Answer confidence is indicated"
+      ]
+    },
+    {
+      "id": "3.4.8",
+      "category": "ui",
+      "title": "Create conversational interface",
+      "description": "Build chat-like UI with context-aware follow-ups and clear conversation option",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/ai/ConversationView.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Chat-like message bubbles display conversation",
+        "Follow-up questions use prior context",
+        "Clear conversation button resets context",
+        "Scroll to latest message works"
+      ]
+    },
+    {
+      "id": "3.4.9",
+      "category": "infrastructure",
+      "title": "Implement factual queries",
+      "description": "Support factual questions like 'What is the contract value?', 'When does this agreement expire?', 'Who are the parties involved?'",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/factualQueries.ts"
+      ],
+      "acceptanceCriteria": [
+        "Value/amount questions are answered accurately",
+        "Date-related questions return correct dates",
+        "Entity identification questions list relevant parties",
+        "Answers include source references"
+      ]
+    },
+    {
+      "id": "3.4.10",
+      "category": "infrastructure",
+      "title": "Implement analytical queries",
+      "description": "Support analytical questions like 'Summarize the main risks', 'Compare section 3 and section 5', 'What are the payment terms?'",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/ai/analyticalQueries.ts"
+      ],
+      "acceptanceCriteria": [
+        "Risk summarization identifies key risks",
+        "Section comparisons highlight differences and similarities",
+        "Term extraction finds specific clause types",
+        "Analysis is well-structured"
+      ]
+    },
+    {
+      "id": "3.4.11",
+      "category": "infrastructure",
+      "title": "Implement navigation queries",
+      "description": "Support navigation questions like 'Find the signature page', 'Show me the definitions section', 'Where is liability discussed?'",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/navigationQueries.ts"
+      ],
+      "acceptanceCriteria": [
+        "Signature page location is found",
+        "Definition sections are identified",
+        "Topic-based navigation works",
+        "Document scrolls to found location"
+      ]
+    },
+    {
+      "id": "3.4.12",
+      "category": "infrastructure",
+      "title": "Auto-suggest relevant questions",
+      "description": "Implement suggestion system based on document type, user history, and common queries",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/questionSuggester.ts"
+      ],
+      "acceptanceCriteria": [
+        "Suggestions match document type (contract, report, etc.)",
+        "User history influences suggestions",
+        "Common queries for document type are included",
+        "Suggestions update as user explores"
+      ]
+    },
+    {
+      "id": "3.4.13",
+      "category": "infrastructure",
+      "title": "Implement query refinement",
+      "description": "Create clarifying questions, alternative phrasings, and scope narrowing functionality",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/queryRefinement.ts"
+      ],
+      "acceptanceCriteria": [
+        "Clarifying questions are asked for ambiguous queries",
+        "Alternative phrasings are suggested",
+        "Scope can be narrowed (specific sections, date ranges)",
+        "Refinements improve answer quality"
+      ]
+    },
+    {
+      "id": "3.4.14",
+      "category": "testing",
+      "title": "Create unit tests for query engine",
+      "description": "Write comprehensive tests for query parsing, RAG, and answer generation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/ai/queryEngine.test.ts",
+        "tests/unit/lib/ai/rag.test.ts",
+        "tests/unit/lib/ai/queryParser.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Query parsing has comprehensive tests",
+        "RAG retrieval is tested",
+        "Different query types are tested",
+        "Edge cases are covered"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Natural language queries return accurate answers",
+    "Sources are correctly cited",
+    "Follow-up questions maintain context",
+    "Navigation queries scroll to relevant sections",
+    "Query suggestions are helpful",
+    "Response time < 5 seconds"
+  ],
+  "dependencies": [
+    "Sprint 1: AI Infrastructure must be complete",
+    "Sprint 1: Document embeddings system"
+  ],
+  "notes": [
+    "RAG quality depends on embedding model and chunking strategy",
+    "Voice input requires HTTPS in production",
+    "Conversation context window should be managed to avoid token limits",
+    "Performance target: < 5 seconds response time"
+  ]
+}

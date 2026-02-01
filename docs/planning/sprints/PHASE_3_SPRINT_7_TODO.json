@@ -1,0 +1,245 @@
+{
+  "phase": 3,
+  "sprint": 7,
+  "quarter": "Q2",
+  "title": "Real-Time Collaboration Infrastructure",
+  "goal": "Set up infrastructure for real-time collaborative editing",
+  "milestone": "Collaboration Technical Foundation",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.7.1",
+      "category": "infrastructure",
+      "title": "Create collaboration library directory structure",
+      "description": "Create lib/collaboration/ directory with core modules: syncEngine.ts, presenceManager.ts, cursorTracker.ts, conflictResolver.ts, websocketClient.ts, and types.ts",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/collaboration/syncEngine.ts",
+        "src/lib/collaboration/presenceManager.ts",
+        "src/lib/collaboration/cursorTracker.ts",
+        "src/lib/collaboration/conflictResolver.ts",
+        "src/lib/collaboration/websocketClient.ts",
+        "src/lib/collaboration/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "Directory structure created with all core files",
+        "Types defined for collaboration state and events",
+        "Module exports configured correctly"
+      ]
+    },
+    {
+      "id": "3.7.2",
+      "category": "infrastructure",
+      "title": "Implement Yjs integration for CRDT synchronization",
+      "description": "Integrate Yjs library for conflict-free replicated data types including Y.Doc for document state, Y.Map for annotations, and Y.Array for pages",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/collaboration/syncEngine.ts",
+        "src/lib/collaboration/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "Y.Doc initialized for document state management",
+        "Y.Map configured for annotation synchronization",
+        "Y.Array configured for page order tracking",
+        "Sync engine properly handles document changes",
+        "Changes are automatically merged without conflicts"
+      ]
+    },
+    {
+      "id": "3.7.3",
+      "category": "infrastructure",
+      "title": "Set up WebSocket server infrastructure",
+      "description": "Create Node.js WebSocket server with room-based connections and authentication middleware for real-time collaboration",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "server/websocket/server.ts",
+        "server/websocket/rooms.ts",
+        "server/websocket/auth.ts",
+        "src/lib/collaboration/websocketClient.ts"
+      ],
+      "acceptanceCriteria": [
+        "WebSocket server accepts connections",
+        "Room-based architecture supports multiple documents",
+        "Authentication middleware validates user sessions",
+        "Client can connect and disconnect cleanly",
+        "Server handles reconnection gracefully"
+      ]
+    },
+    {
+      "id": "3.7.4",
+      "category": "infrastructure",
+      "title": "Implement user presence system",
+      "description": "Create UserPresence interface and implementation tracking userId, name, color, avatar, currentPage, cursor position, selection range, lastActivity, and status",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/presenceManager.ts",
+        "src/lib/collaboration/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "UserPresence interface defined with all required fields",
+        "Presence updates broadcast to all users in room",
+        "Idle detection transitions status appropriately",
+        "Presence data persists across page changes"
+      ]
+    },
+    {
+      "id": "3.7.5",
+      "category": "ui",
+      "title": "Create presence indicators in UI",
+      "description": "Add user avatars in toolbar, user count badge, and user list panel showing active collaborators",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/collaboration/PresenceIndicator.tsx",
+        "src/components/collaboration/UserAvatarList.tsx",
+        "src/components/collaboration/UserListPanel.tsx"
+      ],
+      "acceptanceCriteria": [
+        "User avatars display in toolbar area",
+        "User count badge shows number of active collaborators",
+        "User list panel shows detailed user information",
+        "Clicking avatar shows user details popup"
+      ]
+    },
+    {
+      "id": "3.7.6",
+      "category": "infrastructure",
+      "title": "Add activity tracking system",
+      "description": "Implement last active timestamp tracking, current action detection (editing, viewing), and idle detection with configurable timeouts",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/collaboration/presenceManager.ts",
+        "src/lib/collaboration/activityTracker.ts"
+      ],
+      "acceptanceCriteria": [
+        "Last activity timestamp updates on user actions",
+        "Current action detected and displayed correctly",
+        "Idle detection triggers after configurable timeout",
+        "Away status set after extended idle period"
+      ]
+    },
+    {
+      "id": "3.7.7",
+      "category": "infrastructure",
+      "title": "Create collaboration Zustand store",
+      "description": "Implement collaborationStore with state for isConnected, roomId, users Map, localUser, syncStatus, pendingChanges, and actions for joinRoom, leaveRoom, updatePresence, inviteUser",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/stores/collaborationStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Store manages all collaboration state",
+        "joinRoom action connects to WebSocket server",
+        "leaveRoom action cleanly disconnects",
+        "updatePresence broadcasts changes",
+        "inviteUser sends invitation via server"
+      ]
+    },
+    {
+      "id": "3.7.8",
+      "category": "infrastructure",
+      "title": "Implement connection handling with auto-reconnect",
+      "description": "Create robust connection management with auto-reconnect on disconnect, offline queue for pending changes, and sync on reconnect",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/websocketClient.ts",
+        "src/lib/collaboration/offlineQueue.ts"
+      ],
+      "acceptanceCriteria": [
+        "Auto-reconnect attempts on connection loss",
+        "Exponential backoff for reconnection attempts",
+        "Changes queued locally when offline",
+        "Queued changes sync on reconnection",
+        "No data loss during disconnection"
+      ]
+    },
+    {
+      "id": "3.7.9",
+      "category": "ui",
+      "title": "Add connection status indicator",
+      "description": "Create visual indicator showing connection state: Connected (green), Syncing (yellow), Offline (red) with tooltip showing details",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/collaboration/ConnectionStatus.tsx",
+        "src/components/layout/StatusBar.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Green indicator when connected and synced",
+        "Yellow indicator during sync operations",
+        "Red indicator when offline",
+        "Tooltip shows connection details",
+        "Click opens connection diagnostics"
+      ]
+    },
+    {
+      "id": "3.7.10",
+      "category": "infrastructure",
+      "title": "Create offline mode with change queuing",
+      "description": "Implement offline mode that queues changes locally using IndexedDB, syncs when back online, and handles conflict resolution",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/collaboration/offlineQueue.ts",
+        "src/lib/collaboration/conflictResolver.ts",
+        "src/lib/storage/collaborationStorage.ts"
+      ],
+      "acceptanceCriteria": [
+        "Changes persist to IndexedDB when offline",
+        "Queue preserves operation order",
+        "Sync merges local and remote changes",
+        "Conflicts detected and resolved automatically",
+        "User notified of any manual conflict resolution needed"
+      ]
+    },
+    {
+      "id": "3.7.11",
+      "category": "testing",
+      "title": "Write unit tests for sync engine",
+      "description": "Create comprehensive unit tests for Yjs synchronization, presence management, and conflict resolution",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/collaboration/syncEngine.test.ts",
+        "tests/unit/lib/collaboration/presenceManager.test.ts",
+        "tests/unit/lib/collaboration/conflictResolver.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Yjs synchronization tests cover all operations",
+        "Presence update tests verify broadcasting",
+        "Conflict resolution tests cover edge cases",
+        "Offline queue tests verify persistence",
+        "Test coverage >= 80% for collaboration module"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Yjs synchronization works correctly",
+    "WebSocket connections are stable",
+    "Presence updates in real-time",
+    "Offline mode queues changes",
+    "Reconnection syncs correctly",
+    "Unit tests for sync engine pass"
+  ],
+  "dependencies": [
+    "yjs",
+    "y-websocket",
+    "y-indexeddb",
+    "socket.io",
+    "socket.io-client"
+  ],
+  "notes": [
+    "This sprint establishes the technical foundation for all collaboration features",
+    "WebSocket server may require separate deployment infrastructure",
+    "Consider using Liveblocks as alternative to self-hosted WebSocket server",
+    "Offline support is critical for PWA functionality"
+  ]
+}

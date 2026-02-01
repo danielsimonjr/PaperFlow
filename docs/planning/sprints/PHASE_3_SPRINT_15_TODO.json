@@ -1,0 +1,262 @@
+{
+  "phase": 3,
+  "sprint": 15,
+  "quarter": "Q3",
+  "title": "Custom Branding & Q3 Release",
+  "goal": "Implement white-labeling and release v4.0",
+  "milestone": "v4.0 Enterprise Release",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.15.1",
+      "category": "infrastructure",
+      "title": "Create branding configuration system",
+      "description": "Build configuration for logo upload, color scheme, font selection, and custom CSS",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/branding.ts",
+        "src/lib/enterprise/brandingTypes.ts"
+      ],
+      "acceptanceCriteria": [
+        "Logo can be uploaded and stored (PNG, SVG supported)",
+        "Color scheme configurable with primary, secondary, accent colors",
+        "Font selection from approved font list",
+        "Custom CSS can be added for advanced customization",
+        "Branding configuration persists per organization"
+      ]
+    },
+    {
+      "id": "3.15.2",
+      "category": "ui",
+      "title": "Implement theme engine",
+      "description": "Create CSS variable-based theming with component theming and dark mode variants",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "src/lib/enterprise/themeEngine.ts",
+        "src/styles/themes/base.css",
+        "src/styles/themes/enterprise.css",
+        "src/components/enterprise/ThemeProvider.tsx"
+      ],
+      "acceptanceCriteria": [
+        "CSS variables control all themeable properties",
+        "Components respond to theme changes dynamically",
+        "Dark mode variant maintains brand colors appropriately",
+        "Theme preview available before applying",
+        "Theme changes apply without page reload"
+      ]
+    },
+    {
+      "id": "3.15.3",
+      "category": "ui",
+      "title": "Create branding configuration UI",
+      "description": "Build admin UI for configuring logo, colors, fonts, and previewing changes",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/components/enterprise/BrandingConfig.tsx",
+        "src/components/enterprise/branding/LogoUpload.tsx",
+        "src/components/enterprise/branding/ColorPicker.tsx",
+        "src/components/enterprise/branding/FontSelector.tsx",
+        "src/components/enterprise/branding/ThemePreview.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Logo upload with size and format validation",
+        "Color picker with hex/RGB input",
+        "Font selector shows font preview",
+        "Live preview of branding changes",
+        "Reset to default option available"
+      ]
+    },
+    {
+      "id": "3.15.4",
+      "category": "infrastructure",
+      "title": "Add email branding",
+      "description": "Implement branded email templates with logo, custom footer, and organization styling",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/enterprise/emailBranding.ts",
+        "src/lib/enterprise/emailTemplates/"
+      ],
+      "acceptanceCriteria": [
+        "Email templates include organization logo",
+        "Email colors match brand colors",
+        "Custom footer text configurable",
+        "Email preview available in admin",
+        "All transactional emails use branding"
+      ]
+    },
+    {
+      "id": "3.15.5",
+      "category": "infrastructure",
+      "title": "Support custom domains",
+      "description": "Implement custom domain support with DNS configuration guide, SSL, and domain verification",
+      "status": "pending",
+      "estimatedHours": 14,
+      "files": [
+        "src/lib/enterprise/customDomain.ts",
+        "src/components/enterprise/CustomDomainSetup.tsx"
+      ],
+      "acceptanceCriteria": [
+        "DNS configuration guide provided",
+        "SSL certificate provisioned automatically",
+        "Domain verification via DNS TXT record",
+        "Custom domain serves application correctly",
+        "Verification status displayed in admin"
+      ]
+    },
+    {
+      "id": "3.15.6",
+      "category": "infrastructure",
+      "title": "Add subdomain support",
+      "description": "Implement company.paperflow.app subdomains with custom routing",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/enterprise/subdomain.ts"
+      ],
+      "acceptanceCriteria": [
+        "Subdomains can be reserved per organization",
+        "Subdomain routes to organization tenant",
+        "Subdomain conflicts prevented",
+        "Subdomain visible in share links"
+      ]
+    },
+    {
+      "id": "3.15.7",
+      "category": "infrastructure",
+      "title": "Implement vanity URLs",
+      "description": "Create custom share links and branded document URLs",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/enterprise/vanityUrls.ts"
+      ],
+      "acceptanceCriteria": [
+        "Share links use custom domain/subdomain",
+        "Document URLs are branded",
+        "Vanity URLs redirect correctly",
+        "URL shortening available"
+      ]
+    },
+    {
+      "id": "3.15.8",
+      "category": "testing",
+      "title": "Enterprise feature testing",
+      "description": "Comprehensive testing of SSO with multiple IdPs, admin console, and audit log verification",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "tests/e2e/enterprise/ssoIntegration.test.ts",
+        "tests/e2e/enterprise/adminConsole.test.ts",
+        "tests/e2e/enterprise/auditLog.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "SSO tested with Okta, Azure AD, Google Workspace",
+        "Admin console workflows tested end-to-end",
+        "Audit log captures all required events",
+        "Compliance reports generate correctly",
+        "All E2E tests pass consistently"
+      ]
+    },
+    {
+      "id": "3.15.9",
+      "category": "testing",
+      "title": "Security audit",
+      "description": "Perform penetration testing, vulnerability assessment, and security review",
+      "status": "pending",
+      "estimatedHours": 20,
+      "files": [
+        "docs/security/penetration-test-report.md",
+        "docs/security/vulnerability-assessment.md",
+        "docs/security/security-review.md"
+      ],
+      "acceptanceCriteria": [
+        "Penetration testing identifies no critical vulnerabilities",
+        "Vulnerability assessment completed",
+        "All high-severity issues remediated",
+        "Security review sign-off obtained",
+        "Security findings documented"
+      ]
+    },
+    {
+      "id": "3.15.10",
+      "category": "infrastructure",
+      "title": "Create enterprise documentation",
+      "description": "Write admin guide, security whitepaper, and compliance documentation",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "docs/enterprise/admin-guide.md",
+        "docs/enterprise/security-whitepaper.md",
+        "docs/enterprise/compliance-documentation.md"
+      ],
+      "acceptanceCriteria": [
+        "Admin guide covers all admin console features",
+        "Security whitepaper details security architecture",
+        "Compliance documentation covers SOC 2, GDPR, HIPAA",
+        "Documentation is professionally formatted",
+        "All features documented with screenshots"
+      ]
+    },
+    {
+      "id": "3.15.11",
+      "category": "infrastructure",
+      "title": "Version bump and changelog",
+      "description": "Update version to 4.0.0, update changelog with all Q3 features",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "package.json",
+        "CHANGELOG.md"
+      ],
+      "acceptanceCriteria": [
+        "Version updated to 4.0.0",
+        "Changelog includes all Q3 features",
+        "Breaking changes documented",
+        "Migration guide if needed",
+        "Release notes prepared"
+      ]
+    },
+    {
+      "id": "3.15.12",
+      "category": "infrastructure",
+      "title": "Deploy v4.0",
+      "description": "Deploy v4.0 to production with enterprise features enabled",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [],
+      "acceptanceCriteria": [
+        "Production deployment successful",
+        "All enterprise features functional",
+        "Monitoring and alerting configured",
+        "Rollback plan in place",
+        "Customer communication sent"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Custom branding applies across entire application",
+    "Custom domains work with SSL",
+    "All enterprise features complete and tested",
+    "Security audit passed with no critical issues",
+    "Documentation complete and professional",
+    "v4.0 released successfully"
+  ],
+  "dependencies": [
+    "Sprint 14 (Audit & Compliance) completed",
+    "Security audit scheduled",
+    "SSL certificate provisioning capability",
+    "DNS management for subdomains"
+  ],
+  "notes": [
+    "This sprint marks the v4.0 Enterprise release milestone",
+    "Security audit must be completed before release",
+    "Enterprise documentation is critical for sales enablement",
+    "Custom domain SSL must support automatic provisioning (Let's Encrypt)",
+    "Coordinate release announcement with marketing"
+  ]
+}

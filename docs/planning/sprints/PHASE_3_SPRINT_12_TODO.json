@@ -1,0 +1,230 @@
+{
+  "phase": 3,
+  "sprint": 12,
+  "quarter": "Q3",
+  "title": "Enterprise Infrastructure & SSO",
+  "goal": "Implement enterprise authentication",
+  "milestone": "Enterprise Technical Foundation",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.12.1",
+      "category": "infrastructure",
+      "title": "Create SSO library structure",
+      "description": "Create lib/enterprise/sso.ts with SSOConfig and SSOProvider interfaces for provider abstraction",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/enterprise/sso.ts",
+        "src/lib/enterprise/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "SSOConfig interface defined with provider, issuer, clientId, clientSecret, redirectUri, scopes, attributeMapping",
+        "SSOProvider interface with initialize, login, logout, refreshToken, validateSession methods",
+        "Type definitions exported properly"
+      ]
+    },
+    {
+      "id": "3.12.2",
+      "category": "infrastructure",
+      "title": "Implement SAML 2.0 authentication",
+      "description": "Implement SAML 2.0 Service Provider with IdP metadata handling and assertion parsing",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "src/lib/enterprise/samlProvider.ts",
+        "src/lib/enterprise/samlUtils.ts"
+      ],
+      "acceptanceCriteria": [
+        "Service Provider configuration works",
+        "Identity Provider metadata can be imported",
+        "SAML assertions are correctly parsed",
+        "Attribute mapping extracts user info correctly"
+      ]
+    },
+    {
+      "id": "3.12.3",
+      "category": "infrastructure",
+      "title": "Implement OpenID Connect authentication",
+      "description": "Implement OIDC with authorization code flow, token validation, and user info endpoint",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/enterprise/oidcProvider.ts"
+      ],
+      "acceptanceCriteria": [
+        "Authorization code flow completes successfully",
+        "Tokens are validated correctly",
+        "User info endpoint returns user data",
+        "Token refresh works"
+      ]
+    },
+    {
+      "id": "3.12.4",
+      "category": "infrastructure",
+      "title": "Add OAuth 2.0 support",
+      "description": "Implement OAuth 2.0 with multiple grant types, token management, and scope handling",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/oauthProvider.ts"
+      ],
+      "acceptanceCriteria": [
+        "Multiple grant types supported",
+        "Token management handles access and refresh tokens",
+        "Scopes are properly requested and validated"
+      ]
+    },
+    {
+      "id": "3.12.5",
+      "category": "infrastructure",
+      "title": "Integrate common Identity Providers",
+      "description": "Create integrations for Okta, Azure AD, Google Workspace, OneLogin, and Auth0",
+      "status": "pending",
+      "estimatedHours": 20,
+      "files": [
+        "src/lib/enterprise/providers/okta.ts",
+        "src/lib/enterprise/providers/azureAd.ts",
+        "src/lib/enterprise/providers/googleWorkspace.ts",
+        "src/lib/enterprise/providers/oneLogin.ts",
+        "src/lib/enterprise/providers/auth0.ts"
+      ],
+      "acceptanceCriteria": [
+        "Okta integration works with SAML and OIDC",
+        "Azure AD integration supports enterprise tenants",
+        "Google Workspace integration works",
+        "OneLogin integration works",
+        "Auth0 integration works"
+      ]
+    },
+    {
+      "id": "3.12.6",
+      "category": "ui",
+      "title": "Create IdP configuration UI",
+      "description": "Build connection setup wizard with metadata upload and test connection functionality",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/components/enterprise/IdPConfigWizard.tsx",
+        "src/components/enterprise/MetadataUpload.tsx",
+        "src/components/enterprise/ConnectionTest.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Setup wizard guides through IdP configuration",
+        "Metadata can be uploaded via file or URL",
+        "Connection test validates configuration",
+        "Error messages are helpful and actionable"
+      ]
+    },
+    {
+      "id": "3.12.7",
+      "category": "infrastructure",
+      "title": "Implement IdP discovery",
+      "description": "Create email domain mapping for auto-redirect to correct Identity Provider",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/enterprise/idpDiscovery.ts"
+      ],
+      "acceptanceCriteria": [
+        "Email domains can be mapped to IdPs",
+        "Users are auto-redirected based on email domain",
+        "Multiple domains can map to same IdP"
+      ]
+    },
+    {
+      "id": "3.12.8",
+      "category": "infrastructure",
+      "title": "Implement enterprise session management",
+      "description": "Create session handling with configurable timeout, forced re-auth, and concurrent session limits",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/sessionManager.ts",
+        "src/stores/enterpriseStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Session timeout is configurable per organization",
+        "Forced re-authentication can be triggered",
+        "Concurrent session limits are enforced",
+        "Session state persists correctly"
+      ]
+    },
+    {
+      "id": "3.12.9",
+      "category": "ui",
+      "title": "Add session monitoring UI",
+      "description": "Create UI for viewing active sessions, remote logout, and session history",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/enterprise/SessionMonitor.tsx",
+        "src/components/enterprise/SessionList.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Active sessions are listed with device/location info",
+        "Remote logout terminates selected sessions",
+        "Session history shows login/logout events"
+      ]
+    },
+    {
+      "id": "3.12.10",
+      "category": "infrastructure",
+      "title": "Create security policies",
+      "description": "Implement password requirements, MFA enforcement, and IP restrictions",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/enterprise/securityPolicies.ts",
+        "src/lib/enterprise/mfaManager.ts",
+        "src/lib/enterprise/ipRestrictions.ts"
+      ],
+      "acceptanceCriteria": [
+        "Password requirements are enforced for non-SSO users",
+        "MFA can be required at org level",
+        "IP restrictions block access from disallowed IPs",
+        "Policies are configurable per organization"
+      ]
+    },
+    {
+      "id": "3.12.11",
+      "category": "testing",
+      "title": "SSO integration tests",
+      "description": "Write comprehensive tests for SAML, OIDC, OAuth2, and IdP integrations",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "tests/integration/enterprise/sso.test.ts",
+        "tests/integration/enterprise/saml.test.ts",
+        "tests/integration/enterprise/oidc.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "SAML SSO flow tested with mock IdP",
+        "OIDC flow tested end-to-end",
+        "Session management tested",
+        "Security policies tested",
+        "80%+ code coverage for SSO module"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "SAML SSO works with major IdPs (Okta, Azure AD, Google Workspace)",
+    "OIDC authentication works",
+    "Session management enforces policies",
+    "IdP configuration UI is user-friendly",
+    "Security requirements met",
+    "SSO authentication completes in < 3 seconds"
+  ],
+  "dependencies": [
+    "Sprint 11 (Team Features & Q2 Release) completed",
+    "@auth0/auth0-spa-js package installed",
+    "passport-saml package installed"
+  ],
+  "notes": [
+    "This sprint establishes the enterprise technical foundation",
+    "SSO is critical for enterprise adoption",
+    "Security must be thoroughly tested before release",
+    "Consider SOC 2 compliance requirements during implementation"
+  ]
+}

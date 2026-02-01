@@ -1,0 +1,344 @@
+{
+  "phase": 3,
+  "sprint": 6,
+  "quarter": "Q1",
+  "title": "AI Polish & Q1 Release",
+  "goal": "Polish AI features and release v3.0",
+  "milestone": "v3.0 Release",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.6.1",
+      "category": "ui",
+      "title": "Unify AI features in single panel",
+      "description": "Create unified AI panel with tab-based interface, consistent styling, and shared settings",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/ai/AIPanel.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Single panel contains all AI features",
+        "Tab-based navigation between features",
+        "Consistent styling across all tabs",
+        "Shared settings accessible from panel"
+      ]
+    },
+    {
+      "id": "3.6.2",
+      "category": "ui",
+      "title": "Add AI toolbar button",
+      "description": "Create toolbar button with quick access dropdown, recent AI actions, and keyboard shortcuts display",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/toolbar/AIToolbarButton.tsx",
+        "src/components/layout/Toolbar.tsx"
+      ],
+      "acceptanceCriteria": [
+        "AI button appears in main toolbar",
+        "Dropdown shows quick access options",
+        "Recent AI actions are listed",
+        "Keyboard shortcuts are displayed"
+      ]
+    },
+    {
+      "id": "3.6.3",
+      "category": "ui",
+      "title": "Create AI keyboard shortcuts",
+      "description": "Implement Ctrl/Cmd + Shift + S (Summarize), Q (Query), T (Translate), F (Auto-fill) shortcuts",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/hooks/useAIShortcuts.ts",
+        "src/components/App.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Ctrl/Cmd + Shift + S opens summarize panel",
+        "Ctrl/Cmd + Shift + Q opens query panel",
+        "Ctrl/Cmd + Shift + T opens translate panel",
+        "Ctrl/Cmd + Shift + F opens auto-fill panel",
+        "Shortcuts work from anywhere in app"
+      ]
+    },
+    {
+      "id": "3.6.4",
+      "category": "infrastructure",
+      "title": "Implement token tracking",
+      "description": "Create system to track usage per feature, daily/monthly limits, and usage visualization",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/tokenTracker.ts",
+        "src/stores/aiStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Token usage is tracked per AI feature",
+        "Daily and monthly limits are configurable",
+        "Usage is persisted across sessions",
+        "Usage data is accurate"
+      ]
+    },
+    {
+      "id": "3.6.5",
+      "category": "ui",
+      "title": "Create usage visualization",
+      "description": "Build usage dashboard with charts and graphs showing token consumption over time",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/ai/UsageDashboard.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Usage shown per feature",
+        "Daily/weekly/monthly views available",
+        "Charts visualize consumption trends",
+        "Current period usage is prominent"
+      ]
+    },
+    {
+      "id": "3.6.6",
+      "category": "ui",
+      "title": "Add usage alerts",
+      "description": "Implement approaching limit warnings and upgrade prompts when limits reached",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/ai/UsageAlerts.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Warning at 80% of limit",
+        "Critical alert at 95% of limit",
+        "Upgrade prompt when limit reached",
+        "Alerts can be dismissed"
+      ]
+    },
+    {
+      "id": "3.6.7",
+      "category": "infrastructure",
+      "title": "Create billing integration",
+      "description": "Implement usage-based pricing tracking, subscription tier support, and invoice generation preparation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/billing.ts"
+      ],
+      "acceptanceCriteria": [
+        "Usage-based pricing is calculated",
+        "Subscription tiers are supported",
+        "Usage data is exportable for billing",
+        "Billing events are logged"
+      ]
+    },
+    {
+      "id": "3.6.8",
+      "category": "infrastructure",
+      "title": "Implement response caching",
+      "description": "Create caching for common queries, summaries, with invalidation on document change",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/responseCache.ts"
+      ],
+      "acceptanceCriteria": [
+        "Common queries return cached results",
+        "Summaries are cached",
+        "Cache invalidates on document change",
+        "Cache size is bounded"
+      ]
+    },
+    {
+      "id": "3.6.9",
+      "category": "ui",
+      "title": "Add streaming responses",
+      "description": "Implement partial result display, progressive loading, and cancel mid-stream functionality",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/ai/StreamingResponse.tsx",
+        "src/lib/ai/streaming.ts"
+      ],
+      "acceptanceCriteria": [
+        "Partial results display as they arrive",
+        "Progressive loading shows content building",
+        "Cancel button stops mid-stream",
+        "Completed stream is formatted properly"
+      ]
+    },
+    {
+      "id": "3.6.10",
+      "category": "infrastructure",
+      "title": "Optimize token usage",
+      "description": "Create efficient prompts, context compression, and batch operations for reduced token consumption",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/promptOptimizer.ts",
+        "src/lib/ai/contextCompressor.ts"
+      ],
+      "acceptanceCriteria": [
+        "Prompts are optimized for token efficiency",
+        "Context is compressed without losing meaning",
+        "Batch operations reduce overhead",
+        "Token savings are measurable"
+      ]
+    },
+    {
+      "id": "3.6.11",
+      "category": "testing",
+      "title": "Test AI accuracy",
+      "description": "Create test suite for summarization quality, query accuracy, and translation quality",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "tests/integration/ai/summarization.test.ts",
+        "tests/integration/ai/queries.test.ts",
+        "tests/integration/ai/translation.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Summarization quality metrics are defined and tested",
+        "Query accuracy is validated",
+        "Translation quality is assessed",
+        "Baseline scores are established"
+      ]
+    },
+    {
+      "id": "3.6.12",
+      "category": "testing",
+      "title": "Test edge cases",
+      "description": "Test very long documents, mixed languages, and complex formatting scenarios",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/integration/ai/edgeCases.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Very long documents (100+ pages) are handled",
+        "Mixed language documents work correctly",
+        "Complex formatting is preserved",
+        "Edge cases don't cause crashes"
+      ]
+    },
+    {
+      "id": "3.6.13",
+      "category": "testing",
+      "title": "Performance testing",
+      "description": "Test response time benchmarks, concurrent users, and token efficiency",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/performance/ai/benchmarks.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Response time meets targets (< 5s queries, < 10s summaries)",
+        "Concurrent users are supported",
+        "Token efficiency is within targets",
+        "Performance doesn't degrade under load"
+      ]
+    },
+    {
+      "id": "3.6.14",
+      "category": "infrastructure",
+      "title": "Update version to 3.0.0",
+      "description": "Update package.json version and all version references to 3.0.0",
+      "status": "pending",
+      "estimatedHours": 1,
+      "files": [
+        "package.json",
+        "src/constants/version.ts"
+      ],
+      "acceptanceCriteria": [
+        "package.json version is 3.0.0",
+        "All version references are updated",
+        "Version is displayed in app"
+      ]
+    },
+    {
+      "id": "3.6.15",
+      "category": "infrastructure",
+      "title": "Update changelog",
+      "description": "Document all Phase 3 Q1 changes in CHANGELOG.md",
+      "status": "pending",
+      "estimatedHours": 2,
+      "files": [
+        "CHANGELOG.md"
+      ],
+      "acceptanceCriteria": [
+        "All AI features are documented",
+        "Breaking changes are noted",
+        "Migration guide is included if needed",
+        "Changelog follows keep-a-changelog format"
+      ]
+    },
+    {
+      "id": "3.6.16",
+      "category": "infrastructure",
+      "title": "Create release notes",
+      "description": "Write user-facing release notes for v3.0 highlighting AI features",
+      "status": "pending",
+      "estimatedHours": 2,
+      "files": [
+        "docs/releases/v3.0.0.md"
+      ],
+      "acceptanceCriteria": [
+        "Release notes highlight AI features",
+        "Benefits are explained clearly",
+        "Setup instructions are included",
+        "Known limitations are documented"
+      ]
+    },
+    {
+      "id": "3.6.17",
+      "category": "infrastructure",
+      "title": "Update documentation",
+      "description": "Update all documentation to reflect AI features and new capabilities",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "docs/features/ai-summarization.md",
+        "docs/features/ai-query.md",
+        "docs/features/ai-translation.md",
+        "docs/features/ai-autofill.md",
+        "README.md"
+      ],
+      "acceptanceCriteria": [
+        "AI feature documentation is complete",
+        "Usage examples are provided",
+        "Configuration is documented",
+        "README reflects AI capabilities"
+      ]
+    },
+    {
+      "id": "3.6.18",
+      "category": "infrastructure",
+      "title": "Deploy to production",
+      "description": "Deploy v3.0 to production environment with all AI features",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [],
+      "acceptanceCriteria": [
+        "Production build succeeds",
+        "All AI features work in production",
+        "API keys are configured securely",
+        "Monitoring is in place"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "All AI features work together seamlessly",
+    "Usage tracking is accurate",
+    "Performance targets met (< 5s queries, < 10s summaries, < 5s translation)",
+    "Documentation is complete",
+    "v3.0 is released successfully"
+  ],
+  "dependencies": [
+    "Sprint 1-5: All Q1 sprints must be complete"
+  ],
+  "notes": [
+    "This is the Q1 release sprint - focus on polish and stability",
+    "Token usage optimization reduces costs",
+    "Streaming responses improve perceived performance",
+    "Comprehensive testing ensures quality release"
+  ]
+}

@@ -1,0 +1,280 @@
+{
+  "phase": 3,
+  "sprint": 11,
+  "quarter": "Q2",
+  "title": "Team Features & Q2 Release",
+  "goal": "Add team management features and release v3.5",
+  "milestone": "v3.5 Release - Collaboration Complete",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.11.1",
+      "category": "infrastructure",
+      "title": "Create team structure system",
+      "description": "Implement team management with create teams, add/remove members, and team roles (admin, member, viewer)",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/collaboration/teamManager.ts",
+        "src/lib/collaboration/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "Teams can be created with name and description",
+        "Members can be added/removed from teams",
+        "Team roles defined: admin, member, viewer",
+        "Role changes applied immediately",
+        "Team deletion handles cleanup properly"
+      ]
+    },
+    {
+      "id": "3.11.2",
+      "category": "infrastructure",
+      "title": "Implement permissions system",
+      "description": "Create document-level, team-level, and role-based access control for fine-grained permission management",
+      "status": "pending",
+      "estimatedHours": 14,
+      "files": [
+        "src/lib/collaboration/permissionManager.ts",
+        "src/lib/collaboration/roleManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Document-level permissions (view, edit, admin)",
+        "Team-level permissions apply to all team docs",
+        "Role-based access control enforced",
+        "Permission inheritance works correctly",
+        "Permission checks are performant"
+      ]
+    },
+    {
+      "id": "3.11.3",
+      "category": "ui",
+      "title": "Add team settings panel",
+      "description": "Create settings UI for default permissions, basic branding, and team notification preferences",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/collaboration/TeamSettings.tsx",
+        "src/components/collaboration/TeamBranding.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Default permissions configurable",
+        "Basic branding (logo, color) settings",
+        "Notification preferences per team",
+        "Settings saved and applied",
+        "Admin-only access to settings"
+      ]
+    },
+    {
+      "id": "3.11.4",
+      "category": "infrastructure",
+      "title": "Implement @mention system",
+      "description": "Create @mention functionality with type-to-trigger, user autocomplete, and profile linking",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/mentionManager.ts",
+        "src/components/collaboration/MentionAutocomplete.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Typing @ triggers autocomplete",
+        "Autocomplete shows team members",
+        "Selected mention links to user profile",
+        "Mentions highlighted in text",
+        "Mention parsing works in comments and notes"
+      ]
+    },
+    {
+      "id": "3.11.5",
+      "category": "infrastructure",
+      "title": "Create mention notifications",
+      "description": "Notify mentioned users via in-app and email with document highlight and quick navigation",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/collaboration/mentionManager.ts",
+        "src/lib/collaboration/notificationManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Mentioned users notified immediately",
+        "Notification links to mention location",
+        "Mention highlighted in document",
+        "Email notification includes context",
+        "Notification respects user preferences"
+      ]
+    },
+    {
+      "id": "3.11.6",
+      "category": "infrastructure",
+      "title": "Create workspace concept",
+      "description": "Implement workspaces to group documents with shared access and workspace-level settings",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/workspaceManager.ts",
+        "src/stores/workspaceStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Workspaces can be created and named",
+        "Documents can be added to workspaces",
+        "Shared access at workspace level",
+        "Workspace settings configurable",
+        "Workspace deletion handles documents"
+      ]
+    },
+    {
+      "id": "3.11.7",
+      "category": "ui",
+      "title": "Add workspace UI components",
+      "description": "Create workspace switcher, document list view, and member management interface",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/collaboration/WorkspaceSwitcher.tsx",
+        "src/components/collaboration/WorkspaceDocuments.tsx",
+        "src/components/collaboration/WorkspaceMembers.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Workspace switcher in header/sidebar",
+        "Document list shows workspace contents",
+        "Member management panel available",
+        "Create/edit workspace dialogs",
+        "Responsive design for all components"
+      ]
+    },
+    {
+      "id": "3.11.8",
+      "category": "infrastructure",
+      "title": "Implement workspace search",
+      "description": "Create search functionality across workspace documents with filters for type, date, and author",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/collaboration/workspaceSearch.ts",
+        "src/components/collaboration/WorkspaceSearch.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Full-text search across documents",
+        "Filter by document type",
+        "Filter by date range",
+        "Filter by author/uploader",
+        "Search results ranked by relevance"
+      ]
+    },
+    {
+      "id": "3.11.9",
+      "category": "testing",
+      "title": "Integration testing for collaboration features",
+      "description": "Comprehensive testing of all collaboration features including teams, workspaces, and cross-browser testing",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "tests/integration/collaboration/teams.test.ts",
+        "tests/integration/collaboration/workspaces.test.ts",
+        "tests/e2e/collaboration/fullWorkflow.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Team operations tested end-to-end",
+        "Workspace operations tested",
+        "Permission enforcement verified",
+        "Cross-browser testing completed",
+        "Mobile responsiveness verified"
+      ]
+    },
+    {
+      "id": "3.11.10",
+      "category": "infrastructure",
+      "title": "Performance optimization for collaboration",
+      "description": "Optimize WebSocket efficiency, sync performance, and memory management for collaboration features",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/syncEngine.ts",
+        "src/lib/collaboration/websocketClient.ts"
+      ],
+      "acceptanceCriteria": [
+        "WebSocket messages batched efficiently",
+        "Sync latency consistently < 500ms",
+        "Memory usage stable over long sessions",
+        "Connection pooling optimized",
+        "Performance benchmarks documented"
+      ]
+    },
+    {
+      "id": "3.11.11",
+      "category": "infrastructure",
+      "title": "Update documentation for collaboration",
+      "description": "Create user documentation for all collaboration features including setup guides and best practices",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "docs/features/collaboration.md",
+        "docs/features/teams.md",
+        "docs/features/workspaces.md",
+        "docs/features/review-workflows.md"
+      ],
+      "acceptanceCriteria": [
+        "Collaboration overview documentation",
+        "Team management guide",
+        "Workspace usage guide",
+        "Review workflow documentation",
+        "Troubleshooting section included"
+      ]
+    },
+    {
+      "id": "3.11.12",
+      "category": "infrastructure",
+      "title": "Prepare v3.5 release",
+      "description": "Update version, changelog, create release notes, and prepare for production deployment",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "package.json",
+        "CHANGELOG.md",
+        "docs/releases/v3.5.md"
+      ],
+      "acceptanceCriteria": [
+        "Version updated to 3.5.0",
+        "Changelog documents all new features",
+        "Release notes highlight collaboration capabilities",
+        "Migration guide if needed",
+        "All CI/CD checks passing"
+      ]
+    },
+    {
+      "id": "3.11.13",
+      "category": "infrastructure",
+      "title": "Deploy v3.5 to production",
+      "description": "Execute production deployment with WebSocket server, database migrations, and monitoring setup",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [],
+      "acceptanceCriteria": [
+        "Production deployment successful",
+        "WebSocket server operational",
+        "Database migrations applied",
+        "Monitoring and alerting configured",
+        "Rollback plan documented and tested"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Teams can be created and managed",
+    "Permissions work correctly",
+    "@mentions notify users",
+    "Workspaces organize documents",
+    "v3.5 released successfully"
+  ],
+  "dependencies": [
+    "Sprint 7-10 collaboration features complete",
+    "WebSocket infrastructure stable",
+    "Notification system operational"
+  ],
+  "notes": [
+    "This sprint completes the Q2 collaboration milestone",
+    "v3.5 represents a major feature release",
+    "Consider phased rollout for collaboration features",
+    "Monitor WebSocket server performance post-launch",
+    "Plan for increased support requests with new features"
+  ]
+}

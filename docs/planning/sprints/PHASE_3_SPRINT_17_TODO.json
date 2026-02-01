@@ -1,0 +1,281 @@
+{
+  "phase": 3,
+  "sprint": 17,
+  "quarter": "Q4",
+  "title": "Developer Portal",
+  "goal": "Build developer documentation and portal",
+  "milestone": "Developer Experience",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.17.1",
+      "category": "api",
+      "title": "Create OpenAPI specification",
+      "description": "Document all endpoints with request/response schemas and authentication details",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "docs/api/openapi.yaml",
+        "src/lib/api/spec/openapi.ts"
+      ],
+      "acceptanceCriteria": [
+        "All endpoints documented",
+        "Request schemas defined",
+        "Response schemas defined",
+        "Authentication documented",
+        "Error responses documented"
+      ]
+    },
+    {
+      "id": "3.17.2",
+      "category": "ui",
+      "title": "Generate interactive API docs",
+      "description": "Integrate Swagger UI with try-it-out functionality and code samples",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/api/docs/swagger.ts",
+        "src/components/api/SwaggerUI.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Swagger UI integrated",
+        "Try-it-out functionality works",
+        "Code samples available",
+        "Multiple language examples"
+      ]
+    },
+    {
+      "id": "3.17.3",
+      "category": "api",
+      "title": "Create JavaScript/TypeScript SDK",
+      "description": "Build official JavaScript/TypeScript SDK for API access",
+      "status": "pending",
+      "estimatedHours": 20,
+      "files": [
+        "packages/sdk-js/src/index.ts",
+        "packages/sdk-js/src/client.ts",
+        "packages/sdk-js/src/types.ts",
+        "packages/sdk-js/README.md"
+      ],
+      "acceptanceCriteria": [
+        "SDK covers all API endpoints",
+        "TypeScript types included",
+        "Error handling implemented",
+        "Examples provided",
+        "NPM package ready"
+      ]
+    },
+    {
+      "id": "3.17.4",
+      "category": "api",
+      "title": "Create Python SDK",
+      "description": "Build official Python SDK for API access",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "packages/sdk-python/paperflow/__init__.py",
+        "packages/sdk-python/paperflow/client.py",
+        "packages/sdk-python/README.md",
+        "packages/sdk-python/setup.py"
+      ],
+      "acceptanceCriteria": [
+        "SDK covers all API endpoints",
+        "Type hints included",
+        "Error handling implemented",
+        "Examples provided",
+        "PyPI package ready"
+      ]
+    },
+    {
+      "id": "3.17.5",
+      "category": "api",
+      "title": "Create API client generator",
+      "description": "Set up OpenAPI Generator for additional language support",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "scripts/generate-sdk.ts",
+        "packages/sdk-generator/config.yaml"
+      ],
+      "acceptanceCriteria": [
+        "Generator configured",
+        "Multiple languages supported",
+        "Build automation set up",
+        "Documentation generated"
+      ]
+    },
+    {
+      "id": "3.17.6",
+      "category": "ui",
+      "title": "Create developer portal website",
+      "description": "Build developers.paperflow.com with documentation, API reference, and getting started guide",
+      "status": "pending",
+      "estimatedHours": 24,
+      "files": [
+        "apps/developer-portal/src/pages/index.tsx",
+        "apps/developer-portal/src/pages/docs.tsx",
+        "apps/developer-portal/src/pages/api-reference.tsx",
+        "apps/developer-portal/src/pages/getting-started.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Portal deployed at developers.paperflow.com",
+        "Documentation section complete",
+        "API reference integrated",
+        "Getting started guide available",
+        "Code examples searchable"
+      ]
+    },
+    {
+      "id": "3.17.7",
+      "category": "ui",
+      "title": "Add developer dashboard",
+      "description": "Create dashboard for API key management, usage analytics, and webhook configuration",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "apps/developer-portal/src/pages/dashboard/index.tsx",
+        "apps/developer-portal/src/pages/dashboard/api-keys.tsx",
+        "apps/developer-portal/src/pages/dashboard/usage.tsx",
+        "apps/developer-portal/src/pages/dashboard/webhooks.tsx"
+      ],
+      "acceptanceCriteria": [
+        "API key management UI working",
+        "Usage analytics displayed",
+        "Webhook configuration available",
+        "Account settings accessible"
+      ]
+    },
+    {
+      "id": "3.17.8",
+      "category": "infrastructure",
+      "title": "Create sandbox environment",
+      "description": "Set up test API access with sample documents and reset capability",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/api/sandbox/sandboxManager.ts",
+        "apps/developer-portal/src/pages/sandbox.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Sandbox API accessible",
+        "Sample documents available",
+        "Reset capability works",
+        "Isolated from production"
+      ]
+    },
+    {
+      "id": "3.17.9",
+      "category": "infrastructure",
+      "title": "Implement webhook system",
+      "description": "Create event subscription, payload delivery, and retry logic for webhooks",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "src/lib/api/webhooks/webhookManager.ts",
+        "src/lib/api/webhooks/delivery.ts",
+        "src/lib/api/webhooks/retry.ts"
+      ],
+      "acceptanceCriteria": [
+        "Event subscription working",
+        "Payload delivery reliable",
+        "Retry logic implemented",
+        "Exponential backoff used"
+      ]
+    },
+    {
+      "id": "3.17.10",
+      "category": "api",
+      "title": "Create webhook events",
+      "description": "Implement document.created, document.updated, document.signed, form.submitted, review.completed events",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/api/webhooks/events.ts",
+        "src/lib/api/webhooks/payloads.ts"
+      ],
+      "acceptanceCriteria": [
+        "document.created event fires",
+        "document.updated event fires",
+        "document.signed event fires",
+        "form.submitted event fires",
+        "review.completed event fires",
+        "Payload format documented"
+      ]
+    },
+    {
+      "id": "3.17.11",
+      "category": "ui",
+      "title": "Add webhook management UI",
+      "description": "Create UI for creating webhooks, viewing delivery history, and testing webhooks",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "apps/developer-portal/src/components/webhooks/WebhookCreate.tsx",
+        "apps/developer-portal/src/components/webhooks/DeliveryHistory.tsx",
+        "apps/developer-portal/src/components/webhooks/WebhookTest.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Create webhook UI working",
+        "Delivery history viewable",
+        "Test webhook button functional",
+        "Webhook editing supported"
+      ]
+    },
+    {
+      "id": "3.17.12",
+      "category": "testing",
+      "title": "Write SDK tests",
+      "description": "Create comprehensive tests for JavaScript and Python SDKs",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "packages/sdk-js/tests/client.test.ts",
+        "packages/sdk-python/tests/test_client.py"
+      ],
+      "acceptanceCriteria": [
+        "JavaScript SDK tests pass",
+        "Python SDK tests pass",
+        "Integration tests included",
+        "Edge cases covered"
+      ]
+    },
+    {
+      "id": "3.17.13",
+      "category": "testing",
+      "title": "Write webhook tests",
+      "description": "Create tests for webhook delivery and retry functionality",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/api/webhooks.test.ts",
+        "tests/integration/api/webhooks.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Webhook delivery tests pass",
+        "Retry logic tests pass",
+        "Event firing tests pass",
+        "Payload format verified"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "API documentation complete (100% endpoint coverage)",
+    "Developer portal launched",
+    "JavaScript/TypeScript SDK available",
+    "Python SDK available",
+    "Webhooks functional",
+    "Sandbox environment operational"
+  ],
+  "dependencies": [
+    "Sprint 16 - API Foundation completed",
+    "All core API endpoints functional"
+  ],
+  "notes": [
+    "OpenAPI spec should follow 3.0+ specification",
+    "SDKs should be published to package managers (npm, PyPI)",
+    "Developer portal should have responsive design",
+    "Webhook retries should use exponential backoff",
+    "Sandbox data should reset automatically after 24 hours"
+  ]
+}

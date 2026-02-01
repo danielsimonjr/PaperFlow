@@ -1,0 +1,257 @@
+{
+  "phase": 3,
+  "sprint": 3,
+  "quarter": "Q1",
+  "title": "Smart Form Auto-Fill",
+  "goal": "Implement AI-powered form auto-fill from existing documents",
+  "milestone": "AI Form Intelligence",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.3.1",
+      "category": "infrastructure",
+      "title": "Create form analysis library",
+      "description": "Create lib/ai/formAnalysis.ts with FormField and FieldSuggestion interfaces",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/ai/formAnalysis.ts"
+      ],
+      "acceptanceCriteria": [
+        "FormField interface defined with id, name, type, label, description, validationRules",
+        "FieldSuggestion interface defined with fieldId, suggestedValue, confidence, source, reasoning",
+        "FieldAnalysis interface is defined",
+        "Types are properly exported"
+      ]
+    },
+    {
+      "id": "3.3.2",
+      "category": "infrastructure",
+      "title": "Implement analyzeFormFields function",
+      "description": "Create function to analyze form fields and understand their purpose, requirements, and relationships",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/formAnalysis.ts"
+      ],
+      "acceptanceCriteria": [
+        "Field purpose is detected from label/name",
+        "Validation requirements are understood",
+        "Related fields are identified (e.g., address parts)",
+        "Field type is correctly categorized"
+      ]
+    },
+    {
+      "id": "3.3.3",
+      "category": "infrastructure",
+      "title": "Implement suggestFieldValues function",
+      "description": "Create function to suggest values for form fields based on source documents",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/ai/formAnalysis.ts"
+      ],
+      "acceptanceCriteria": [
+        "Suggestions are generated from source documents",
+        "Confidence scores reflect accuracy likelihood",
+        "Source references are provided",
+        "Reasoning explains the suggestion"
+      ]
+    },
+    {
+      "id": "3.3.4",
+      "category": "infrastructure",
+      "title": "Create source document manager",
+      "description": "Build system to upload reference documents, extract structured data, and build knowledge base",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/sourceDocManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Reference documents can be uploaded",
+        "Structured data is extracted from documents",
+        "Knowledge base is built from extracted data",
+        "Multiple documents can be used together"
+      ]
+    },
+    {
+      "id": "3.3.5",
+      "category": "infrastructure",
+      "title": "Implement entity extraction",
+      "description": "Create entity extraction for names, contact info, addresses, dates, financial figures, and legal entities",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/ai/entityExtractor.ts"
+      ],
+      "acceptanceCriteria": [
+        "Names and contact info are extracted",
+        "Addresses are parsed into components",
+        "Dates are recognized and normalized",
+        "Financial figures are extracted",
+        "Legal entities (company names) are identified"
+      ]
+    },
+    {
+      "id": "3.3.6",
+      "category": "infrastructure",
+      "title": "Create entity matching system",
+      "description": "Implement matching of extracted entities to form fields with variation handling and confidence scoring",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/entityMatcher.ts"
+      ],
+      "acceptanceCriteria": [
+        "Entities are matched to appropriate fields",
+        "Name variations are handled (John Smith vs J. Smith)",
+        "Confidence scoring reflects match quality",
+        "Ambiguous matches are flagged"
+      ]
+    },
+    {
+      "id": "3.3.7",
+      "category": "ui",
+      "title": "Create AutoFillPanel component",
+      "description": "Build AutoFillPanel.tsx with source document upload, field mapping preview, apply suggestions button, and manual override options",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/ai/AutoFillPanel.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Source documents can be uploaded via drag-drop or file picker",
+        "Field mappings are previewed before applying",
+        "Apply all suggestions button works",
+        "Individual fields can be manually overridden",
+        "Loading state during processing"
+      ]
+    },
+    {
+      "id": "3.3.8",
+      "category": "ui",
+      "title": "Add field-level suggestion indicators",
+      "description": "Create inline suggestion indicators on form fields with click to apply and alternatives dropdown",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/forms/FieldSuggestionIndicator.tsx",
+        "src/components/forms/SuggestionDropdown.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Suggestion indicator appears on fields with suggestions",
+        "Click applies the suggestion",
+        "Dropdown shows alternative suggestions",
+        "Indicator color reflects confidence level"
+      ]
+    },
+    {
+      "id": "3.3.9",
+      "category": "ui",
+      "title": "Create confidence indicators",
+      "description": "Build visual confidence indicators for high (auto-fill ready), medium (review suggested), and low (manual entry needed) confidence levels",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/ai/ConfidenceIndicator.tsx"
+      ],
+      "acceptanceCriteria": [
+        "High confidence shows green indicator",
+        "Medium confidence shows yellow indicator",
+        "Low confidence shows red indicator",
+        "Tooltip explains confidence level"
+      ]
+    },
+    {
+      "id": "3.3.10",
+      "category": "infrastructure",
+      "title": "Implement contextual suggestions",
+      "description": "Create smart suggestions for date fields (relevant dates), amount fields (extracted figures), and name fields (detected names)",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/contextualSuggestions.ts"
+      ],
+      "acceptanceCriteria": [
+        "Date fields suggest relevant dates from context",
+        "Amount fields suggest extracted financial figures",
+        "Name fields suggest detected names",
+        "Suggestions are contextually appropriate"
+      ]
+    },
+    {
+      "id": "3.3.11",
+      "category": "infrastructure",
+      "title": "Add AI-powered field validation",
+      "description": "Implement validation checking if value makes sense, suggesting corrections, and format standardization",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/fieldValidation.ts"
+      ],
+      "acceptanceCriteria": [
+        "AI validates if entered values make sense",
+        "Corrections are suggested for invalid values",
+        "Format standardization is applied (dates, phone numbers)",
+        "Validation messages are helpful"
+      ]
+    },
+    {
+      "id": "3.3.12",
+      "category": "infrastructure",
+      "title": "Create learning from corrections",
+      "description": "Implement system to remember user preferences, improve suggestions over time, and store mapping patterns",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/learningEngine.ts",
+        "src/lib/storage/mappingPatterns.ts"
+      ],
+      "acceptanceCriteria": [
+        "User corrections are remembered",
+        "Suggestion accuracy improves with use",
+        "Mapping patterns are stored in IndexedDB",
+        "Patterns can be exported/imported"
+      ]
+    },
+    {
+      "id": "3.3.13",
+      "category": "testing",
+      "title": "Create unit tests for form auto-fill module",
+      "description": "Write comprehensive tests for form analysis, entity extraction, and suggestion generation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/ai/formAnalysis.test.ts",
+        "tests/unit/lib/ai/entityExtractor.test.ts",
+        "tests/unit/lib/ai/entityMatcher.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Form analysis functions have tests",
+        "Entity extraction has tests for all entity types",
+        "Entity matching has tests for variations",
+        "Edge cases are covered"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Form fields are correctly analyzed",
+    "Entity extraction from source documents works",
+    "Auto-fill suggestions are accurate",
+    "Confidence scores reflect accuracy",
+    "UI allows easy review and override",
+    "Suggestions generated in < 5 seconds"
+  ],
+  "dependencies": [
+    "Sprint 1: AI Infrastructure must be complete",
+    "Existing form parsing from Phase 1/2"
+  ],
+  "notes": [
+    "Entity extraction quality depends on document formatting",
+    "Learning system improves accuracy over time",
+    "Confidence thresholds may need tuning",
+    "Performance target: < 5 seconds for suggestions"
+  ]
+}

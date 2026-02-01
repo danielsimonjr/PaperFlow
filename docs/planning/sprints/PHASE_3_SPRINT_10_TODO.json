@@ -1,0 +1,283 @@
+{
+  "phase": 3,
+  "sprint": 10,
+  "quarter": "Q2",
+  "title": "Review Workflows",
+  "goal": "Implement document review and approval workflows",
+  "milestone": "Review System",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.10.1",
+      "category": "infrastructure",
+      "title": "Create review manager module",
+      "description": "Implement lib/collaboration/reviewManager.ts with ReviewWorkflow and ReviewStage interfaces supporting sequential and parallel review types",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/collaboration/reviewManager.ts",
+        "src/lib/collaboration/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "ReviewWorkflow interface defined with id, documentId, type, stages, currentStage, status, deadline, createdBy, createdAt",
+        "ReviewStage interface defined with id, name, reviewers, requiredApprovals, deadline, status, comments",
+        "Create workflow function initializes review process",
+        "Get workflow status returns current state",
+        "Advance stage moves to next review stage"
+      ]
+    },
+    {
+      "id": "3.10.2",
+      "category": "infrastructure",
+      "title": "Implement sequential review workflow",
+      "description": "Create sequential review flow where one reviewer acts at a time, passes to next on approval, and returns on rejection",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/reviewManager.ts",
+        "src/lib/collaboration/sequentialReview.ts"
+      ],
+      "acceptanceCriteria": [
+        "Single reviewer active at a time",
+        "Approval advances to next reviewer",
+        "Rejection returns to document owner",
+        "Skip option available for reviewers",
+        "Reassignment supported"
+      ]
+    },
+    {
+      "id": "3.10.3",
+      "category": "infrastructure",
+      "title": "Implement parallel review workflow",
+      "description": "Create parallel review flow with multiple simultaneous reviewers, threshold-based approval, and deadline enforcement",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/reviewManager.ts",
+        "src/lib/collaboration/parallelReview.ts"
+      ],
+      "acceptanceCriteria": [
+        "Multiple reviewers can act simultaneously",
+        "Configurable approval threshold (e.g., 2 of 3)",
+        "Deadline enforced for all reviewers",
+        "Early completion if threshold met",
+        "Tie-breaking rules configurable"
+      ]
+    },
+    {
+      "id": "3.10.4",
+      "category": "ui",
+      "title": "Create review panel UI",
+      "description": "Build ReviewPanel.tsx component showing workflow status overview, current reviewers, progress indicators, and action buttons",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/collaboration/ReviewPanel.tsx",
+        "src/components/collaboration/ReviewStatus.tsx",
+        "src/components/collaboration/ReviewProgress.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Status overview shows workflow state",
+        "Current reviewers listed with status",
+        "Progress indicator shows completion percentage",
+        "Action buttons for approve/reject/comment",
+        "Timeline shows review history"
+      ]
+    },
+    {
+      "id": "3.10.5",
+      "category": "ui",
+      "title": "Add review toolbar actions",
+      "description": "Create toolbar with Approve, Reject, Request Changes, and Add Comment buttons for reviewers",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/collaboration/ReviewToolbar.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Approve button submits approval",
+        "Reject button submits rejection with required reason",
+        "Request changes button allows specific feedback",
+        "Add comment button opens comment interface",
+        "Buttons disabled for non-reviewers"
+      ]
+    },
+    {
+      "id": "3.10.6",
+      "category": "ui",
+      "title": "Create review comments system",
+      "description": "Implement comments pinned to document locations with thread replies, resolve/unresolve, and @mention functionality",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/components/collaboration/ReviewComment.tsx",
+        "src/components/collaboration/CommentThread.tsx",
+        "src/components/collaboration/CommentPin.tsx",
+        "src/lib/collaboration/commentManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Comments pin to specific document locations",
+        "Thread replies support conversations",
+        "Resolve/unresolve toggles comment status",
+        "@mentions trigger user notifications",
+        "Comments persist across sessions"
+      ]
+    },
+    {
+      "id": "3.10.7",
+      "category": "infrastructure",
+      "title": "Implement notification system",
+      "description": "Create notification infrastructure supporting email, in-app, and push notifications (PWA) for review events",
+      "status": "pending",
+      "estimatedHours": 14,
+      "files": [
+        "src/lib/collaboration/notificationManager.ts",
+        "src/lib/collaboration/emailNotifier.ts",
+        "src/components/collaboration/NotificationCenter.tsx",
+        "server/notifications/emailService.ts"
+      ],
+      "acceptanceCriteria": [
+        "Email notifications sent for review assignments",
+        "In-app notifications display in notification center",
+        "Push notifications work in PWA",
+        "Notifications link to relevant document/comment",
+        "Notification delivery is reliable"
+      ]
+    },
+    {
+      "id": "3.10.8",
+      "category": "ui",
+      "title": "Create notification preferences panel",
+      "description": "Build settings panel for notification types, frequency settings, and quiet hours configuration",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/settings/NotificationSettings.tsx",
+        "src/stores/settingsStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Toggle notification types individually",
+        "Set notification frequency (immediate/digest)",
+        "Configure quiet hours",
+        "Per-document notification settings",
+        "Settings persist to user profile"
+      ]
+    },
+    {
+      "id": "3.10.9",
+      "category": "infrastructure",
+      "title": "Add deadline reminder system",
+      "description": "Implement automatic reminders for upcoming deadlines, overdue notifications, and escalation rules",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/collaboration/deadlineManager.ts",
+        "server/jobs/deadlineReminders.ts"
+      ],
+      "acceptanceCriteria": [
+        "Reminders sent before deadline (configurable)",
+        "Overdue notifications escalate appropriately",
+        "Escalation rules configurable per workflow",
+        "Reminder frequency configurable",
+        "Snooze option available"
+      ]
+    },
+    {
+      "id": "3.10.10",
+      "category": "ui",
+      "title": "Generate review status reports",
+      "description": "Create reports showing overall progress, pending reviews, and overdue items for workflow management",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/collaboration/ReviewReport.tsx",
+        "src/lib/collaboration/reportGenerator.ts"
+      ],
+      "acceptanceCriteria": [
+        "Report shows overall workflow progress",
+        "Pending reviews listed with status",
+        "Overdue items highlighted",
+        "Filter by date range, reviewer, status",
+        "Export to PDF/CSV supported"
+      ]
+    },
+    {
+      "id": "3.10.11",
+      "category": "infrastructure",
+      "title": "Create review audit trail",
+      "description": "Log all review actions with timestamps and user attributions for compliance and accountability",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/collaboration/reviewAudit.ts",
+        "src/lib/collaboration/auditLogger.ts"
+      ],
+      "acceptanceCriteria": [
+        "All review actions logged",
+        "Timestamps recorded accurately",
+        "User attributions tracked",
+        "Audit trail is immutable",
+        "Export audit trail for compliance"
+      ]
+    },
+    {
+      "id": "3.10.12",
+      "category": "ui",
+      "title": "Export review history functionality",
+      "description": "Allow exporting review history as PDF report or CSV for record-keeping and compliance",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/collaboration/reviewExport.ts",
+        "src/components/collaboration/ExportReviewDialog.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Export to PDF with formatting",
+        "Export to CSV for data analysis",
+        "Include all review actions and comments",
+        "Date range selection for export",
+        "Export includes audit information"
+      ]
+    },
+    {
+      "id": "3.10.13",
+      "category": "testing",
+      "title": "Write tests for review workflows",
+      "description": "Create comprehensive tests for sequential and parallel reviews, notifications, and audit trails",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/unit/lib/collaboration/reviewManager.test.ts",
+        "tests/integration/collaboration/reviews.test.ts",
+        "tests/integration/collaboration/notifications.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Sequential review workflow tested",
+        "Parallel review workflow tested",
+        "Notification delivery tested",
+        "Deadline enforcement tested",
+        "Audit trail completeness verified"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Review workflows can be created",
+    "Sequential and parallel reviews work",
+    "Comments pin to correct locations",
+    "Notifications deliver reliably",
+    "Deadlines are enforced",
+    "Reports generate correctly"
+  ],
+  "dependencies": [
+    "Sprint 7-9 collaboration features complete",
+    "Email service configured",
+    "Push notification support enabled"
+  ],
+  "notes": [
+    "Email notifications require SMTP configuration",
+    "Consider using third-party notification service (SendGrid, etc.)",
+    "Review audit trail important for enterprise compliance",
+    "Test notification delivery across email providers"
+  ]
+}

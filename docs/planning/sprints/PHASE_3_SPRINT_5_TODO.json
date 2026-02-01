@@ -1,0 +1,306 @@
+{
+  "phase": 3,
+  "sprint": 5,
+  "quarter": "Q1",
+  "title": "Translation Integration",
+  "goal": "Implement document translation capabilities",
+  "milestone": "AI Translation",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.5.1",
+      "category": "infrastructure",
+      "title": "Create translation library",
+      "description": "Create lib/ai/translation.ts with TranslationOptions and TranslationResult interfaces",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/ai/translation.ts"
+      ],
+      "acceptanceCriteria": [
+        "TranslationOptions interface defined with sourceLang, targetLang, preserveFormatting, domain",
+        "TranslationResult interface defined with translatedText, detectedLanguage, confidence, segments",
+        "TranslationSegment interface is defined",
+        "Types are properly exported"
+      ]
+    },
+    {
+      "id": "3.5.2",
+      "category": "infrastructure",
+      "title": "Implement translateText function",
+      "description": "Create function to translate text with configurable options",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/translation.ts"
+      ],
+      "acceptanceCriteria": [
+        "Function accepts text and translation options",
+        "Source language can be auto-detected",
+        "Domain-specific translation works (legal, medical, technical)",
+        "Confidence score reflects translation quality"
+      ]
+    },
+    {
+      "id": "3.5.3",
+      "category": "infrastructure",
+      "title": "Implement translateDocument function",
+      "description": "Create function to translate full document while preserving structure",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/ai/translation.ts"
+      ],
+      "acceptanceCriteria": [
+        "Full document can be translated",
+        "Document structure is preserved",
+        "Segments maintain original positions",
+        "Progress can be tracked for large documents"
+      ]
+    },
+    {
+      "id": "3.5.4",
+      "category": "infrastructure",
+      "title": "Integrate Google Cloud Translation",
+      "description": "Create provider integration for Google Cloud Translation API",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/providers/googleTranslate.ts"
+      ],
+      "acceptanceCriteria": [
+        "Google Cloud Translation API is integrated",
+        "API key configuration works",
+        "All supported languages are available",
+        "Error handling is implemented"
+      ]
+    },
+    {
+      "id": "3.5.5",
+      "category": "infrastructure",
+      "title": "Integrate DeepL API",
+      "description": "Create provider integration for DeepL translation API",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/providers/deeplTranslate.ts"
+      ],
+      "acceptanceCriteria": [
+        "DeepL API is integrated",
+        "API key configuration works",
+        "Formality settings are supported",
+        "Error handling is implemented"
+      ]
+    },
+    {
+      "id": "3.5.6",
+      "category": "infrastructure",
+      "title": "Integrate AI-powered translation",
+      "description": "Create translation using GPT-4/Claude for context-aware translation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/providers/aiTranslate.ts"
+      ],
+      "acceptanceCriteria": [
+        "GPT-4 and Claude can be used for translation",
+        "Context-aware translation improves quality",
+        "Domain expertise prompts are used",
+        "Fallback to other providers on failure"
+      ]
+    },
+    {
+      "id": "3.5.7",
+      "category": "infrastructure",
+      "title": "Implement language detection",
+      "description": "Create auto-detection of source language with support for mixed-language documents and confidence scoring",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/languageDetector.ts"
+      ],
+      "acceptanceCriteria": [
+        "Source language is auto-detected",
+        "Mixed-language documents are handled",
+        "Confidence score reflects detection certainty",
+        "Unsupported languages are flagged"
+      ]
+    },
+    {
+      "id": "3.5.8",
+      "category": "ui",
+      "title": "Create TranslationPanel component",
+      "description": "Build TranslationPanel.tsx with source language selector (with auto-detect), target language selector, domain selector, and translate button",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/ai/TranslationPanel.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Source language selector includes auto-detect option",
+        "Target language dropdown with common languages",
+        "Domain selector for specialized translation",
+        "Translate button triggers translation",
+        "Progress indicator for document translation"
+      ]
+    },
+    {
+      "id": "3.5.9",
+      "category": "ui",
+      "title": "Add side-by-side translation view",
+      "description": "Create view with original and translated content, synchronized scrolling, and corresponding section highlighting",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/ai/SideBySideView.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Original and translated display side by side",
+        "Scrolling is synchronized between views",
+        "Hovering highlights corresponding section",
+        "View can be collapsed to single pane"
+      ]
+    },
+    {
+      "id": "3.5.10",
+      "category": "ui",
+      "title": "Create inline translation feature",
+      "description": "Implement hover to see translation, click to replace, and undo translation functionality",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/ai/InlineTranslation.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Hovering over text shows translation tooltip",
+        "Clicking replaces with translation",
+        "Undo reverts to original text",
+        "Multiple inline translations can be active"
+      ]
+    },
+    {
+      "id": "3.5.11",
+      "category": "infrastructure",
+      "title": "Implement full document translation",
+      "description": "Create system to preserve formatting, handle images with text (OCR + translate), and maintain layout",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/ai/documentTranslator.ts"
+      ],
+      "acceptanceCriteria": [
+        "Document formatting is preserved",
+        "Text in images is OCR'd and translated",
+        "Layout is maintained after translation",
+        "Headers, footers, and page numbers are handled"
+      ]
+    },
+    {
+      "id": "3.5.12",
+      "category": "ui",
+      "title": "Create translation overlay toggle",
+      "description": "Build toggle between original and translated view with blended view option",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/ai/TranslationOverlay.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Toggle switches between original and translated",
+        "Blended view shows both with styling differences",
+        "Toggle state persists during session",
+        "Keyboard shortcut for quick toggle"
+      ]
+    },
+    {
+      "id": "3.5.13",
+      "category": "infrastructure",
+      "title": "Add translation export options",
+      "description": "Implement export translated PDF, export bilingual PDF, and export translation memory (TMX)",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/translationExport.ts"
+      ],
+      "acceptanceCriteria": [
+        "Translated PDF can be exported",
+        "Bilingual PDF shows both languages",
+        "TMX format export for translation memory",
+        "Export includes metadata"
+      ]
+    },
+    {
+      "id": "3.5.14",
+      "category": "infrastructure",
+      "title": "Build translation memory system",
+      "description": "Create system to store previous translations, reuse for consistency, and track user corrections",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/translationMemory.ts",
+        "src/lib/storage/translationStorage.ts"
+      ],
+      "acceptanceCriteria": [
+        "Previous translations are stored",
+        "Stored translations are reused for consistency",
+        "User corrections update memory",
+        "Memory can be imported/exported"
+      ]
+    },
+    {
+      "id": "3.5.15",
+      "category": "infrastructure",
+      "title": "Implement terminology management",
+      "description": "Create custom glossaries, domain-specific terms, and do-not-translate lists",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/terminology.ts"
+      ],
+      "acceptanceCriteria": [
+        "Custom glossaries can be created and managed",
+        "Domain-specific terms are respected",
+        "Do-not-translate list prevents translation of specific terms",
+        "Glossaries can be imported/exported"
+      ]
+    },
+    {
+      "id": "3.5.16",
+      "category": "testing",
+      "title": "Create unit tests for translation module",
+      "description": "Write comprehensive tests for translation functions, providers, and memory system",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/ai/translation.test.ts",
+        "tests/unit/lib/ai/translationMemory.test.ts",
+        "tests/unit/lib/ai/languageDetector.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "All translation functions have tests",
+        "Provider integrations are tested",
+        "Translation memory is tested",
+        "Edge cases are covered"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Text translation works accurately",
+    "Language detection is reliable",
+    "Document translation preserves formatting",
+    "Side-by-side view works correctly",
+    "Translation memory improves consistency",
+    "Page translation < 5 seconds"
+  ],
+  "dependencies": [
+    "Sprint 1: AI Infrastructure must be complete",
+    "npm install @google-cloud/translate deepl-node"
+  ],
+  "notes": [
+    "Multiple translation providers offer redundancy",
+    "AI translation provides better context awareness",
+    "Translation memory improves consistency for repeat content",
+    "Performance target: < 5 seconds per page"
+  ]
+}

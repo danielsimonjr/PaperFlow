@@ -1,0 +1,277 @@
+{
+  "phase": 3,
+  "sprint": 8,
+  "quarter": "Q2",
+  "title": "Collaborative Editing",
+  "goal": "Implement real-time collaborative editing",
+  "milestone": "Real-Time Collaboration",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.8.1",
+      "category": "infrastructure",
+      "title": "Implement annotation synchronization",
+      "description": "Create real-time sync for annotations: adding annotations syncs to all users, updating annotations broadcasts changes, deleting annotations syncs removal",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/collaboration/annotationSync.ts",
+        "src/stores/annotationStore.ts",
+        "src/lib/collaboration/syncEngine.ts"
+      ],
+      "acceptanceCriteria": [
+        "New annotations appear for all users in < 500ms",
+        "Annotation updates sync in real-time",
+        "Annotation deletions propagate immediately",
+        "Annotation ownership tracked correctly",
+        "No annotation duplication on sync"
+      ]
+    },
+    {
+      "id": "3.8.2",
+      "category": "infrastructure",
+      "title": "Implement form filling synchronization",
+      "description": "Sync form field value changes, focus/blur events, and validation states across all collaborators",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/formSync.ts",
+        "src/stores/formStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Field value changes sync to all users",
+        "Focus events show which user is editing",
+        "Blur events release field lock",
+        "Validation states sync correctly",
+        "Conflicting edits handled gracefully"
+      ]
+    },
+    {
+      "id": "3.8.3",
+      "category": "infrastructure",
+      "title": "Implement text edit synchronization",
+      "description": "Create character-level sync for text editing with selection awareness and cursor positions using Yjs text CRDT",
+      "status": "pending",
+      "estimatedHours": 14,
+      "files": [
+        "src/lib/collaboration/textSync.ts",
+        "src/stores/textStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Character-level changes sync in real-time",
+        "Concurrent text edits merge correctly",
+        "Selection ranges preserved during sync",
+        "Cursor positions update smoothly",
+        "No text loss during concurrent edits"
+      ]
+    },
+    {
+      "id": "3.8.4",
+      "category": "ui",
+      "title": "Create remote cursor display",
+      "description": "Display other users' cursors with user-specific colors, name labels on hover, and smooth cursor animation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/collaboration/RemoteCursor.tsx",
+        "src/components/collaboration/CollaboratorCursors.tsx",
+        "src/lib/collaboration/cursorTracker.ts"
+      ],
+      "acceptanceCriteria": [
+        "Remote cursors display in correct positions",
+        "Each user has distinct cursor color",
+        "Name labels appear on cursor hover",
+        "Cursor movement is smooth and animated",
+        "Cursors disappear when user leaves"
+      ]
+    },
+    {
+      "id": "3.8.5",
+      "category": "ui",
+      "title": "Implement selection highlighting",
+      "description": "Show other users' text selections with distinct colors per user using semi-transparent overlays",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/collaboration/RemoteSelection.tsx",
+        "src/components/collaboration/CollaboratorCursors.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Remote selections visible with user colors",
+        "Selection colors match cursor colors",
+        "Overlays are semi-transparent",
+        "Multiple overlapping selections visible",
+        "Selections update in real-time"
+      ]
+    },
+    {
+      "id": "3.8.6",
+      "category": "ui",
+      "title": "Add viewport awareness indicators",
+      "description": "Show which page other users are viewing with minimap indicators and page navigation hints",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/collaboration/ViewportIndicator.tsx",
+        "src/components/sidebar/ThumbnailSidebar.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Thumbnails show user indicators per page",
+        "Minimap displays user viewport positions",
+        "Clicking indicator navigates to user's view",
+        "Multiple users on same page shown clearly"
+      ]
+    },
+    {
+      "id": "3.8.7",
+      "category": "infrastructure",
+      "title": "Implement CRDT conflict resolution",
+      "description": "Create automatic merge for most changes using CRDT, last-writer-wins for simple conflicts, and user prompts for complex conflicts",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/collaboration/conflictResolver.ts",
+        "src/lib/collaboration/syncEngine.ts"
+      ],
+      "acceptanceCriteria": [
+        "Most conflicts resolve automatically via CRDT",
+        "Simple conflicts use last-writer-wins",
+        "Complex conflicts prompt user for resolution",
+        "No data loss during conflict resolution",
+        "Conflict history logged for debugging"
+      ]
+    },
+    {
+      "id": "3.8.8",
+      "category": "ui",
+      "title": "Create conflict notification system",
+      "description": "Implement toast notifications for conflicts with resolution options and undo capability for conflicting changes",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/collaboration/ConflictNotification.tsx",
+        "src/components/collaboration/ConflictResolver.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Toast notification appears on conflict",
+        "Resolution options clearly presented",
+        "Undo option available for conflicting changes",
+        "Notification dismisses after resolution"
+      ]
+    },
+    {
+      "id": "3.8.9",
+      "category": "infrastructure",
+      "title": "Add operation history tracking",
+      "description": "Track all collaboration operations with user attribution, timestamps, and replay capability for debugging",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/collaboration/operationHistory.ts",
+        "src/lib/collaboration/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "All operations logged with timestamps",
+        "Operations attributed to correct users",
+        "History supports replay for debugging",
+        "History pruned to prevent memory issues"
+      ]
+    },
+    {
+      "id": "3.8.10",
+      "category": "ui",
+      "title": "Add collaborator avatars with interactions",
+      "description": "Display collaborator avatars in toolbar with click-to-follow and right-click options menu",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/collaboration/CollaboratorAvatar.tsx",
+        "src/components/collaboration/CollaboratorMenu.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Avatars display in toolbar presence list",
+        "Clicking avatar follows user's view",
+        "Right-click shows options menu",
+        "Menu includes send message, view profile options"
+      ]
+    },
+    {
+      "id": "3.8.11",
+      "category": "ui",
+      "title": "Create activity feed panel",
+      "description": "Implement activity feed showing recent actions, user attributions, and timestamps for collaboration awareness",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/collaboration/ActivityFeed.tsx",
+        "src/components/collaboration/ActivityItem.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Activity feed shows recent collaborative actions",
+        "Actions attributed to correct users",
+        "Timestamps displayed in relative format",
+        "Feed auto-updates in real-time",
+        "Click on activity navigates to location"
+      ]
+    },
+    {
+      "id": "3.8.12",
+      "category": "ui",
+      "title": "Implement follow mode",
+      "description": "Allow users to follow another user's view with auto-scroll synchronization and easy exit option",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/collaboration/FollowMode.tsx",
+        "src/hooks/useFollowMode.ts"
+      ],
+      "acceptanceCriteria": [
+        "Following user syncs viewport",
+        "Auto-scroll matches followed user",
+        "Indicator shows who is being followed",
+        "Any user action exits follow mode",
+        "ESC key exits follow mode"
+      ]
+    },
+    {
+      "id": "3.8.13",
+      "category": "testing",
+      "title": "Write integration tests for collaborative editing",
+      "description": "Create tests verifying multi-user editing scenarios, sync performance, and conflict resolution",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/integration/collaboration/multiUser.test.ts",
+        "tests/integration/collaboration/sync.test.ts",
+        "tests/integration/collaboration/conflicts.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Multi-user annotation sync tested",
+        "Form filling sync tested",
+        "Text edit sync tested",
+        "Conflict scenarios tested",
+        "Performance benchmarks pass (< 500ms sync)"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Multiple users can edit simultaneously",
+    "Changes sync in < 500ms",
+    "Cursors display correctly",
+    "Conflicts resolve automatically",
+    "No data loss under network issues",
+    "10+ concurrent users supported"
+  ],
+  "dependencies": [
+    "Sprint 7 collaboration infrastructure complete",
+    "Yjs CRDT library integrated",
+    "WebSocket server operational"
+  ],
+  "notes": [
+    "Sync latency target is < 500ms for optimal user experience",
+    "Consider implementing operational transforms as fallback to CRDT",
+    "Test with various network conditions (high latency, packet loss)",
+    "Memory management important for long editing sessions"
+  ]
+}

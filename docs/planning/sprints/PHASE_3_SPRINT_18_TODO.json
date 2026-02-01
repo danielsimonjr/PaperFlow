@@ -1,0 +1,372 @@
+{
+  "phase": 3,
+  "sprint": 18,
+  "quarter": "Q4",
+  "title": "Integrations Marketplace",
+  "goal": "Build integrations marketplace",
+  "milestone": "Ecosystem Growth",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.18.1",
+      "category": "infrastructure",
+      "title": "Create integrations directory structure",
+      "description": "Create lib/integrations/ directory with Integration interface, manager, and provider framework",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/integrations/types.ts",
+        "src/lib/integrations/integrationManager.ts",
+        "src/lib/integrations/providers/index.ts"
+      ],
+      "acceptanceCriteria": [
+        "Integration interface defined",
+        "IntegrationManager implemented",
+        "Provider framework established",
+        "Types exported"
+      ]
+    },
+    {
+      "id": "3.18.2",
+      "category": "infrastructure",
+      "title": "Implement OAuth for integrations",
+      "description": "Create authorization flows, token storage, and token refresh for third-party integrations",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/integrations/oauth/oauthManager.ts",
+        "src/lib/integrations/oauth/tokenStorage.ts"
+      ],
+      "acceptanceCriteria": [
+        "Authorization flows working",
+        "Tokens stored securely",
+        "Token refresh automated",
+        "Multiple providers supported"
+      ]
+    },
+    {
+      "id": "3.18.3",
+      "category": "infrastructure",
+      "title": "Create action framework",
+      "description": "Implement import from integration, export to integration, and bidirectional sync actions",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/integrations/actions/actionRunner.ts",
+        "src/lib/integrations/actions/importAction.ts",
+        "src/lib/integrations/actions/exportAction.ts",
+        "src/lib/integrations/actions/syncAction.ts"
+      ],
+      "acceptanceCriteria": [
+        "Import actions execute correctly",
+        "Export actions execute correctly",
+        "Bidirectional sync works",
+        "Error handling implemented"
+      ]
+    },
+    {
+      "id": "3.18.4",
+      "category": "api",
+      "title": "Implement Google Drive integration",
+      "description": "Create Google Drive provider for importing and exporting PDFs",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/integrations/providers/googleDrive.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Import from Drive works",
+        "Export to Drive works",
+        "File picker integrated"
+      ]
+    },
+    {
+      "id": "3.18.5",
+      "category": "api",
+      "title": "Implement Dropbox integration",
+      "description": "Create Dropbox provider for importing and exporting PDFs",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/integrations/providers/dropbox.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Import from Dropbox works",
+        "Export to Dropbox works",
+        "Chooser integrated"
+      ]
+    },
+    {
+      "id": "3.18.6",
+      "category": "api",
+      "title": "Implement OneDrive integration",
+      "description": "Create OneDrive provider for importing and exporting PDFs",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/integrations/providers/oneDrive.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Import from OneDrive works",
+        "Export to OneDrive works",
+        "Picker integrated"
+      ]
+    },
+    {
+      "id": "3.18.7",
+      "category": "api",
+      "title": "Implement Box integration",
+      "description": "Create Box provider for importing and exporting PDFs",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/integrations/providers/box.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Import from Box works",
+        "Export to Box works",
+        "File explorer integrated"
+      ]
+    },
+    {
+      "id": "3.18.8",
+      "category": "api",
+      "title": "Implement Salesforce integration",
+      "description": "Create Salesforce provider for document attachment and retrieval",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/integrations/providers/salesforce.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Attach to records works",
+        "Retrieve from records works",
+        "Object mapping available"
+      ]
+    },
+    {
+      "id": "3.18.9",
+      "category": "api",
+      "title": "Implement HubSpot integration",
+      "description": "Create HubSpot provider for document attachment and retrieval",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/integrations/providers/hubspot.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Attach to contacts/deals works",
+        "Retrieve from records works",
+        "Activity logging available"
+      ]
+    },
+    {
+      "id": "3.18.10",
+      "category": "api",
+      "title": "Implement Slack integration",
+      "description": "Create Slack provider for sharing documents and receiving notifications",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/integrations/providers/slack.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Share to channel works",
+        "Notifications delivered",
+        "Channel picker available"
+      ]
+    },
+    {
+      "id": "3.18.11",
+      "category": "api",
+      "title": "Implement Microsoft Teams integration",
+      "description": "Create Microsoft Teams provider for sharing and notifications",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/integrations/providers/microsoftTeams.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Share to Teams works",
+        "Notifications delivered",
+        "Tab app available"
+      ]
+    },
+    {
+      "id": "3.18.12",
+      "category": "api",
+      "title": "Implement Jira integration",
+      "description": "Create Jira provider for attaching documents to issues",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/integrations/providers/jira.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Attach to issues works",
+        "Issue picker available",
+        "Comments sync available"
+      ]
+    },
+    {
+      "id": "3.18.13",
+      "category": "api",
+      "title": "Implement Notion integration",
+      "description": "Create Notion provider for embedding and syncing documents",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/integrations/providers/notion.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Embed in pages works",
+        "Page picker available",
+        "Sync status displayed"
+      ]
+    },
+    {
+      "id": "3.18.14",
+      "category": "api",
+      "title": "Implement DocuSign integration",
+      "description": "Create DocuSign provider for e-signature workflows",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/integrations/providers/docusign.ts"
+      ],
+      "acceptanceCriteria": [
+        "OAuth flow works",
+        "Send for signature works",
+        "Status tracking works",
+        "Signed document retrieval works"
+      ]
+    },
+    {
+      "id": "3.18.15",
+      "category": "ui",
+      "title": "Create marketplace browse UI",
+      "description": "Build marketplace page with category filters, search, and featured integrations",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/components/integrations/Marketplace.tsx",
+        "src/components/integrations/IntegrationCard.tsx",
+        "src/components/integrations/CategoryFilter.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Category filters working",
+        "Search functional",
+        "Featured integrations displayed",
+        "Grid layout responsive"
+      ]
+    },
+    {
+      "id": "3.18.16",
+      "category": "ui",
+      "title": "Add integration detail page",
+      "description": "Create detail page with description, screenshots, setup guide, and reviews",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/integrations/IntegrationDetail.tsx",
+        "src/components/integrations/SetupGuide.tsx",
+        "src/components/integrations/Reviews.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Description displayed",
+        "Screenshots gallery working",
+        "Setup guide clear",
+        "Reviews displayed"
+      ]
+    },
+    {
+      "id": "3.18.17",
+      "category": "ui",
+      "title": "Create installed integrations management",
+      "description": "Build UI for managing connections, configuring settings, and disconnecting",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/integrations/InstalledIntegrations.tsx",
+        "src/components/integrations/IntegrationSettings.tsx",
+        "src/components/integrations/ConnectionStatus.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Installed integrations listed",
+        "Connection management works",
+        "Settings configurable",
+        "Disconnect option available"
+      ]
+    },
+    {
+      "id": "3.18.18",
+      "category": "testing",
+      "title": "Write integration framework tests",
+      "description": "Create tests for integration manager, OAuth, and action framework",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/unit/lib/integrations/integrationManager.test.ts",
+        "tests/unit/lib/integrations/oauth.test.ts",
+        "tests/unit/lib/integrations/actions.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Integration manager tests pass",
+        "OAuth flow tests pass",
+        "Action execution tests pass",
+        "80%+ coverage"
+      ]
+    },
+    {
+      "id": "3.18.19",
+      "category": "testing",
+      "title": "Write provider integration tests",
+      "description": "Create integration tests for each provider with mocked APIs",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "tests/integration/integrations/cloudStorage.test.ts",
+        "tests/integration/integrations/crm.test.ts",
+        "tests/integration/integrations/communication.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Cloud storage providers tested",
+        "CRM providers tested",
+        "Communication providers tested",
+        "E-signature providers tested"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Integration framework operational",
+    "5+ integrations available (minimum requirement met)",
+    "Marketplace UI complete",
+    "OAuth flows work for all providers",
+    "Actions execute correctly",
+    "All integrations documented"
+  ],
+  "dependencies": [
+    "Sprint 17 - Developer Portal completed",
+    "OAuth infrastructure from Sprint 16"
+  ],
+  "notes": [
+    "Cloud storage integrations: Google Drive, Dropbox, OneDrive, Box",
+    "CRM integrations: Salesforce, HubSpot",
+    "Project Management: Jira, Asana, Monday.com, Notion",
+    "Communication: Slack, Microsoft Teams",
+    "E-Signature: DocuSign, Adobe Sign",
+    "Start with most popular integrations, expand based on user demand",
+    "Each integration should have clear documentation and setup guide"
+  ]
+}

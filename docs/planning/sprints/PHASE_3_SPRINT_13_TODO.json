@@ -1,0 +1,275 @@
+{
+  "phase": 3,
+  "sprint": 13,
+  "quarter": "Q3",
+  "title": "Admin Console",
+  "goal": "Build enterprise admin console",
+  "milestone": "Enterprise Administration",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.13.1",
+      "category": "ui",
+      "title": "Create Admin Dashboard",
+      "description": "Build AdminDashboard.tsx with usage statistics, active users, document metrics, and system health widgets",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "src/components/enterprise/AdminDashboard.tsx",
+        "src/components/enterprise/dashboard/UsageStats.tsx",
+        "src/components/enterprise/dashboard/ActiveUsers.tsx",
+        "src/components/enterprise/dashboard/DocumentMetrics.tsx",
+        "src/components/enterprise/dashboard/SystemHealth.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Dashboard displays usage statistics in real-time",
+        "Active user count and trends shown",
+        "Document metrics (created, edited, signed) displayed",
+        "System health indicators visible",
+        "Dashboard is responsive and performant"
+      ]
+    },
+    {
+      "id": "3.13.2",
+      "category": "ui",
+      "title": "Add quick actions panel",
+      "description": "Create quick action buttons for common admin tasks: add users, manage teams, view alerts, generate reports",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/enterprise/dashboard/QuickActions.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Quick action buttons are prominently displayed",
+        "Add users action opens user creation modal",
+        "Manage teams navigates to team management",
+        "View alerts shows recent alerts",
+        "Generate reports opens report builder"
+      ]
+    },
+    {
+      "id": "3.13.3",
+      "category": "ui",
+      "title": "Create user management UI",
+      "description": "Build user list with search/filter, user details panel, and bulk action capabilities",
+      "status": "pending",
+      "estimatedHours": 14,
+      "files": [
+        "src/components/enterprise/UserManagement.tsx",
+        "src/components/enterprise/users/UserList.tsx",
+        "src/components/enterprise/users/UserDetails.tsx",
+        "src/components/enterprise/users/UserFilters.tsx",
+        "src/components/enterprise/users/BulkActions.tsx"
+      ],
+      "acceptanceCriteria": [
+        "User list displays all organization users",
+        "Search filters by name, email, role",
+        "User details panel shows full profile",
+        "Bulk actions work for multiple selections",
+        "Pagination handles large user lists"
+      ]
+    },
+    {
+      "id": "3.13.4",
+      "category": "infrastructure",
+      "title": "Implement user provisioning",
+      "description": "Create manual user creation, CSV import, and SCIM support for automated provisioning",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "src/lib/enterprise/userProvisioning.ts",
+        "src/lib/enterprise/csvImport.ts",
+        "src/lib/enterprise/scim.ts",
+        "src/components/enterprise/users/UserCreateModal.tsx",
+        "src/components/enterprise/users/CsvImportDialog.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Manual user creation with required fields",
+        "CSV import handles bulk user creation",
+        "CSV validation provides helpful error messages",
+        "SCIM endpoint handles IdP-initiated provisioning",
+        "SCIM supports create, update, delete operations"
+      ]
+    },
+    {
+      "id": "3.13.5",
+      "category": "infrastructure",
+      "title": "Add user lifecycle management",
+      "description": "Implement invite flow, activate/deactivate users, and delete with data handling options",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/userLifecycle.ts",
+        "src/components/enterprise/users/InviteUser.tsx",
+        "src/components/enterprise/users/DeactivateDialog.tsx",
+        "src/components/enterprise/users/DeleteUserDialog.tsx"
+      ],
+      "acceptanceCriteria": [
+        "User invitations send email with setup link",
+        "Users can be activated/deactivated",
+        "Deactivated users cannot access system",
+        "Delete handles data transfer/retention options",
+        "Audit trail captures lifecycle events"
+      ]
+    },
+    {
+      "id": "3.13.6",
+      "category": "ui",
+      "title": "Create organization settings panel",
+      "description": "Build settings UI for general, security, feature toggles, and integration settings",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/components/enterprise/OrgSettings.tsx",
+        "src/components/enterprise/settings/GeneralSettings.tsx",
+        "src/components/enterprise/settings/SecuritySettings.tsx",
+        "src/components/enterprise/settings/FeatureToggles.tsx",
+        "src/components/enterprise/settings/IntegrationSettings.tsx"
+      ],
+      "acceptanceCriteria": [
+        "General settings (name, logo, timezone) configurable",
+        "Security settings control auth policies",
+        "Feature toggles enable/disable capabilities",
+        "Integration settings manage connected apps",
+        "Settings save and apply immediately"
+      ]
+    },
+    {
+      "id": "3.13.7",
+      "category": "infrastructure",
+      "title": "Implement policy management",
+      "description": "Create data retention policies, sharing policies, and export policies with enforcement",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/enterprise/policyManager.ts",
+        "src/lib/enterprise/policies/dataRetention.ts",
+        "src/lib/enterprise/policies/sharing.ts",
+        "src/lib/enterprise/policies/export.ts"
+      ],
+      "acceptanceCriteria": [
+        "Data retention policies can be configured",
+        "Sharing policies control external sharing",
+        "Export policies restrict data export",
+        "Policies are enforced at API level",
+        "Policy violations are logged"
+      ]
+    },
+    {
+      "id": "3.13.8",
+      "category": "infrastructure",
+      "title": "Add resource limits",
+      "description": "Implement storage quotas, user limits, and API rate limits per organization",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/resourceLimits.ts",
+        "src/components/enterprise/settings/ResourceLimits.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Storage quotas are tracked and enforced",
+        "User limit prevents exceeding license count",
+        "API rate limits are per-organization",
+        "Approaching limits trigger warnings",
+        "Exceeded limits block actions gracefully"
+      ]
+    },
+    {
+      "id": "3.13.9",
+      "category": "ui",
+      "title": "Create role builder UI",
+      "description": "Build interface for defining custom roles with permission matrix and role assignment",
+      "status": "pending",
+      "estimatedHours": 14,
+      "files": [
+        "src/components/enterprise/RoleBuilder.tsx",
+        "src/components/enterprise/roles/PermissionMatrix.tsx",
+        "src/components/enterprise/roles/RoleAssignment.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Custom roles can be created with name and description",
+        "Permission matrix shows all available permissions",
+        "Permissions can be toggled per role",
+        "Roles can be assigned to users",
+        "Role changes apply immediately"
+      ]
+    },
+    {
+      "id": "3.13.10",
+      "category": "infrastructure",
+      "title": "Implement predefined roles",
+      "description": "Create built-in roles: Super Admin, Admin, Manager, User, Viewer with appropriate permissions",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/enterprise/roles/predefinedRoles.ts",
+        "src/lib/enterprise/roles/rolePermissions.ts"
+      ],
+      "acceptanceCriteria": [
+        "Super Admin has all permissions",
+        "Admin has org management permissions",
+        "Manager has team management permissions",
+        "User has standard document permissions",
+        "Viewer has read-only permissions",
+        "Predefined roles cannot be deleted"
+      ]
+    },
+    {
+      "id": "3.13.11",
+      "category": "infrastructure",
+      "title": "Add role hierarchy",
+      "description": "Implement role inheritance and permission override capabilities",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/enterprise/roles/roleHierarchy.ts"
+      ],
+      "acceptanceCriteria": [
+        "Roles can inherit from parent roles",
+        "Inherited permissions can be overridden",
+        "Role hierarchy is displayed visually",
+        "Circular dependencies are prevented"
+      ]
+    },
+    {
+      "id": "3.13.12",
+      "category": "testing",
+      "title": "Admin console integration tests",
+      "description": "Write tests for dashboard, user management, settings, and role management",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/integration/enterprise/adminConsole.test.ts",
+        "tests/integration/enterprise/userManagement.test.ts",
+        "tests/integration/enterprise/roles.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Dashboard displays correct metrics",
+        "User CRUD operations tested",
+        "Role permissions enforced correctly",
+        "Policy enforcement tested",
+        "80%+ code coverage for admin module"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Admin dashboard shows key metrics accurately",
+    "User management is comprehensive and intuitive",
+    "Organization settings work correctly",
+    "Custom roles can be created and assigned",
+    "All admin actions are audited",
+    "Admin console is responsive and fast"
+  ],
+  "dependencies": [
+    "Sprint 12 (Enterprise Infrastructure & SSO) completed",
+    "Enterprise store with authentication state",
+    "Audit logging infrastructure"
+  ],
+  "notes": [
+    "Admin console is critical for enterprise self-service",
+    "SCIM support enables IdP-managed provisioning",
+    "Role-based access control is fundamental for enterprise security",
+    "All admin actions must be logged for audit compliance"
+  ]
+}

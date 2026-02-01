@@ -1,0 +1,305 @@
+{
+  "phase": 3,
+  "sprint": 1,
+  "quarter": "Q1",
+  "title": "AI Infrastructure & LLM Integration",
+  "goal": "Set up AI infrastructure for document intelligence features",
+  "milestone": "AI Technical Foundation",
+  "priority": "HIGH",
+  "status": "pending",
+  "tasks": [
+    {
+      "id": "3.1.1",
+      "category": "infrastructure",
+      "title": "Create AI library directory structure",
+      "description": "Create lib/ai/ directory with aiProvider.ts, openaiProvider.ts, anthropicProvider.ts, localProvider.ts, promptTemplates.ts, tokenCounter.ts, and types.ts",
+      "status": "pending",
+      "estimatedHours": 2,
+      "files": [
+        "src/lib/ai/aiProvider.ts",
+        "src/lib/ai/openaiProvider.ts",
+        "src/lib/ai/anthropicProvider.ts",
+        "src/lib/ai/localProvider.ts",
+        "src/lib/ai/promptTemplates.ts",
+        "src/lib/ai/tokenCounter.ts",
+        "src/lib/ai/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "Directory structure is created",
+        "All files have proper TypeScript types",
+        "Exports are properly configured"
+      ]
+    },
+    {
+      "id": "3.1.2",
+      "category": "infrastructure",
+      "title": "Implement provider abstraction layer",
+      "description": "Create AIProvider interface with initialize(), complete(), streamComplete(), embed(), and countTokens() methods",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/aiProvider.ts",
+        "src/lib/ai/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "AIProvider interface is defined with all required methods",
+        "AIConfig, CompletionOptions, StreamOptions, and AIResponse types are defined",
+        "Provider can be swapped without changing consumer code"
+      ]
+    },
+    {
+      "id": "3.1.3",
+      "category": "infrastructure",
+      "title": "Create OpenAI provider implementation",
+      "description": "Implement OpenAI provider with GPT-4 for complex reasoning, GPT-3.5-turbo for fast queries, and text-embedding-ada-002 for embeddings",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/openaiProvider.ts"
+      ],
+      "acceptanceCriteria": [
+        "OpenAI provider implements AIProvider interface",
+        "GPT-4 model is available for complex reasoning",
+        "GPT-3.5-turbo model is available for fast queries",
+        "Text embeddings work with ada-002",
+        "Streaming responses are supported",
+        "Error handling is implemented"
+      ]
+    },
+    {
+      "id": "3.1.4",
+      "category": "infrastructure",
+      "title": "Create Anthropic provider implementation",
+      "description": "Implement Anthropic provider with Claude 3 for document analysis and streaming support",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/anthropicProvider.ts"
+      ],
+      "acceptanceCriteria": [
+        "Anthropic provider implements AIProvider interface",
+        "Claude 3 model is available for document analysis",
+        "Streaming responses are supported",
+        "Error handling is implemented"
+      ]
+    },
+    {
+      "id": "3.1.5",
+      "category": "infrastructure",
+      "title": "Implement local fallback provider",
+      "description": "Create local provider with basic keyword extraction and simple summarization heuristics for offline use",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/localProvider.ts"
+      ],
+      "acceptanceCriteria": [
+        "Local provider implements AIProvider interface",
+        "Basic keyword extraction works offline",
+        "Simple summarization heuristics are functional",
+        "Provider gracefully handles all method calls"
+      ]
+    },
+    {
+      "id": "3.1.6",
+      "category": "infrastructure",
+      "title": "Create AI store with Zustand",
+      "description": "Create stores/aiStore.ts with provider, apiKey, isProcessing, currentTask, history, tokenUsage, and error state management",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/stores/aiStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "AIState interface is defined",
+        "setProvider() action works",
+        "setApiKey() action works",
+        "executeTask() action works with async support",
+        "cancelTask() action works",
+        "clearHistory() action works",
+        "Token usage is tracked"
+      ]
+    },
+    {
+      "id": "3.1.7",
+      "category": "infrastructure",
+      "title": "Implement document text extraction for AI",
+      "description": "Create utilities for full document text extraction, page-by-page extraction, and structured content extraction (headings, paragraphs, lists)",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/documentExtractor.ts"
+      ],
+      "acceptanceCriteria": [
+        "Full document text can be extracted",
+        "Individual page text can be extracted",
+        "Structured content (headings, paragraphs, lists) is identified",
+        "Extraction preserves reading order"
+      ]
+    },
+    {
+      "id": "3.1.8",
+      "category": "infrastructure",
+      "title": "Create document chunking system",
+      "description": "Implement document chunking with token limit splitting, overlap for context continuity, and semantic chunking by sections",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/documentChunker.ts"
+      ],
+      "acceptanceCriteria": [
+        "Large documents are split respecting token limits",
+        "Chunks have configurable overlap for context",
+        "Semantic chunking preserves section boundaries",
+        "Chunk metadata includes position information"
+      ]
+    },
+    {
+      "id": "3.1.9",
+      "category": "infrastructure",
+      "title": "Build document embeddings system",
+      "description": "Generate embeddings for document sections, store in IndexedDB for fast retrieval, and enable semantic search",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/embeddings.ts",
+        "src/lib/storage/embeddingStorage.ts"
+      ],
+      "acceptanceCriteria": [
+        "Document section embeddings are generated",
+        "Embeddings are stored in IndexedDB",
+        "Semantic search returns relevant sections",
+        "Similarity scoring is accurate"
+      ]
+    },
+    {
+      "id": "3.1.10",
+      "category": "infrastructure",
+      "title": "Implement client-side preprocessing for privacy",
+      "description": "Create preprocessing to remove sensitive data before sending, including PII detection, redaction, and user consent prompts",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/ai/privacy.ts",
+        "src/lib/ai/piiDetector.ts"
+      ],
+      "acceptanceCriteria": [
+        "PII (names, emails, SSN, etc.) is detected",
+        "Sensitive data can be redacted before API calls",
+        "User consent prompts are displayed",
+        "Privacy settings are respected"
+      ]
+    },
+    {
+      "id": "3.1.11",
+      "category": "infrastructure",
+      "title": "Add data handling options",
+      "description": "Implement local-only processing toggle, data retention settings, and clear AI history functionality",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/ai/dataHandling.ts",
+        "src/stores/settingsStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Local-only processing toggle works",
+        "Data retention settings are configurable",
+        "AI history can be cleared",
+        "Settings are persisted"
+      ]
+    },
+    {
+      "id": "3.1.12",
+      "category": "infrastructure",
+      "title": "Implement API key management",
+      "description": "Create secure storage (encrypted) for API keys, key validation, and usage monitoring",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/ai/keyManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "API keys are stored encrypted",
+        "Key validation checks with provider",
+        "Usage is monitored and tracked",
+        "Invalid keys are handled gracefully"
+      ]
+    },
+    {
+      "id": "3.1.13",
+      "category": "ui",
+      "title": "Create AI settings panel component",
+      "description": "Build settings panel with provider selection, API key input, privacy settings, and token usage display",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/ai/AISettingsPanel.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Provider selection dropdown works",
+        "API key input with secure field",
+        "Privacy settings toggles work",
+        "Token usage is displayed",
+        "Settings are saved on change"
+      ]
+    },
+    {
+      "id": "3.1.14",
+      "category": "ui",
+      "title": "Add AI indicator in toolbar",
+      "description": "Create toolbar indicator showing AI feature availability, processing status, and quick access to AI panel",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/toolbar/AIIndicator.tsx",
+        "src/components/layout/Toolbar.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Indicator shows when AI features are available",
+        "Processing indicator animates during tasks",
+        "Click opens AI settings panel",
+        "Disabled state when no API key configured"
+      ]
+    },
+    {
+      "id": "3.1.15",
+      "category": "testing",
+      "title": "Create unit tests for AI module",
+      "description": "Write comprehensive unit tests for all AI providers, store, and utility functions with 80%+ coverage",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "tests/unit/lib/ai/aiProvider.test.ts",
+        "tests/unit/lib/ai/openaiProvider.test.ts",
+        "tests/unit/lib/ai/anthropicProvider.test.ts",
+        "tests/unit/lib/ai/localProvider.test.ts",
+        "tests/unit/stores/aiStore.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "All AI providers have unit tests",
+        "AI store has unit tests",
+        "Document extraction has unit tests",
+        "Chunking has unit tests",
+        "Coverage is 80% or higher"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "AI provider abstraction works with OpenAI and Anthropic",
+    "Document text extraction works correctly",
+    "Chunking handles large documents",
+    "API keys are stored securely",
+    "Privacy settings are enforced",
+    "Unit tests achieve 80%+ coverage"
+  ],
+  "dependencies": [
+    "npm install openai @anthropic-ai/sdk",
+    "npm install langchain @langchain/core"
+  ],
+  "notes": [
+    "GPT-4 is used for complex reasoning, GPT-3.5-turbo for fast queries",
+    "Claude 3 is the primary Anthropic model for document analysis",
+    "Local fallback provides basic functionality without API access",
+    "Privacy-first approach with PII detection and redaction"
+  ]
+}
