@@ -83,3 +83,55 @@ export {
   resetFailedOperations,
   groupOperationsByType,
 } from './batchProcessor';
+
+// Bates numbering functions
+export {
+  formatBatesNumber,
+  getNextBatesNumber,
+  createBatesState,
+  resetBatesState,
+  calculateBatesPosition,
+  estimateBatesTextDimensions,
+  validateBatesOptions,
+  mergeBatesOptions,
+  generateBatesPreview,
+  calculateLastBatesNumber,
+  parseBatesNumber,
+  createBatesOperationData,
+  getBatesPreset,
+  shouldApplyBatesToPage,
+  BATES_PRESETS,
+  DEFAULT_BATES_OPTIONS,
+} from './batesNumber';
+
+export type {
+  BatesPosition,
+  BatesNumberOptions,
+  BatesState,
+} from './batesNumber';
+
+// Flatten functions
+export {
+  createEmptyFlattenStats,
+  updateFlattenStats,
+  shouldFlattenTarget,
+  validateFlattenOptions,
+  mergeFlattenOptions,
+  generateFlattenSummary,
+  shouldFlattenPage,
+  estimateSizeReduction,
+  createPageFlattenResult,
+  getFlattenPreset,
+  getTotalItemsFlattened,
+  isFlattenComplete,
+  calculateFlattenProgress,
+  FLATTEN_PRESETS,
+  DEFAULT_FLATTEN_OPTIONS,
+} from './flatten';
+
+export type {
+  FlattenTarget,
+  FlattenOptions,
+  PageFlattenResult,
+  FlattenStats,
+} from './flatten';
