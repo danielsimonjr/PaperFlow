@@ -124,7 +124,14 @@
     "src/lib/forms/validation.ts",
     "src/lib/forms/calculations.ts",
     "src/components/forms/designer/ValidationBuilder.tsx",
-    "src/components/forms/designer/CalculationBuilder.tsx"
+    "src/components/forms/designer/CalculationBuilder.tsx",
+    "tests/unit/lib/forms/validation.test.ts",
+    "tests/unit/lib/forms/calculations.test.ts",
+    "tests/unit/components/forms/designer/fields/DropdownField.test.tsx",
+    "tests/unit/components/forms/designer/fields/DateField.test.tsx",
+    "tests/unit/components/forms/designer/fields/SignatureField.test.tsx",
+    "tests/unit/components/forms/designer/ValidationBuilder.test.tsx",
+    "tests/unit/components/forms/designer/CalculationBuilder.test.tsx"
   ],
   "filesModified": [],
   "totalNewTests": 18,

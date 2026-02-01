@@ -135,7 +135,9 @@
     "src/lib/comparison/index.ts",
     "src/stores/comparisonStore.ts",
     "src/components/comparison/SideBySideView.tsx",
-    "src/components/comparison/ChangeHighlight.tsx"
+    "src/components/comparison/ChangeHighlight.tsx",
+    "tests/unit/lib/comparison/textDiff.test.ts",
+    "tests/unit/stores/comparisonStore.test.ts"
   ],
   "filesModified": [],
   "totalNewTests": 15,

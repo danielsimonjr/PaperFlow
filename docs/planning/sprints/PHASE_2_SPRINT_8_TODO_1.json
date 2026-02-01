@@ -166,7 +166,9 @@
     "src/lib/batch/watermark.ts",
     "src/lib/batch/index.ts",
     "src/stores/batchStore.ts",
-    "src/components/batch/WatermarkDialog.tsx"
+    "src/components/batch/WatermarkDialog.tsx",
+    "tests/unit/stores/batchStore.test.ts",
+    "tests/unit/components/batch/WatermarkDialog.test.tsx"
   ],
   "filesModified": [],
   "totalNewTests": 12,

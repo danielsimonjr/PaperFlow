@@ -129,7 +129,11 @@
     "src/lib/ocr/batchOCR.ts",
     "src/lib/ocr/layoutAnalyzer.ts",
     "src/lib/ocr/textLayerEmbed.ts",
-    "src/components/ocr/BatchOCRProgress.tsx"
+    "src/components/ocr/BatchOCRProgress.tsx",
+    "tests/unit/lib/ocr/batchOCR.test.ts",
+    "tests/unit/lib/ocr/layoutAnalyzer.test.ts",
+    "tests/unit/lib/ocr/textLayerEmbed.test.ts",
+    "tests/integration/ocr/batchOCR.integration.test.ts"
   ],
   "filesModified": [
     "src/lib/ocr/index.ts"

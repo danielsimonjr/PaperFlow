@@ -167,7 +167,11 @@
     "src/components/forms/designer/FieldRenderer.tsx",
     "src/components/forms/designer/index.ts",
     "src/stores/formDesignerStore.ts",
-    "src/types/formDesigner.ts"
+    "src/types/formDesigner.ts",
+    "tests/unit/stores/formDesignerStore.test.ts",
+    "tests/unit/components/forms/designer/FieldPalette.test.tsx",
+    "tests/unit/components/forms/designer/DesignCanvas.test.tsx",
+    "tests/integration/forms/designer/FormDesigner.integration.test.tsx"
   ],
   "filesModified": [
     "package.json"

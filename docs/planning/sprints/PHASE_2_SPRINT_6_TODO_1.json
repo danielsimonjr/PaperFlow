@@ -158,7 +158,9 @@
     "src/lib/redaction/index.ts",
     "src/stores/redactionStore.ts",
     "src/components/redaction/RedactionTool.tsx",
-    "src/components/redaction/RedactionMark.tsx"
+    "src/components/redaction/RedactionMark.tsx",
+    "tests/unit/lib/redaction/patternMatcher.test.ts",
+    "tests/unit/stores/redactionStore.test.ts"
   ],
   "filesModified": [],
   "totalNewTests": 15,

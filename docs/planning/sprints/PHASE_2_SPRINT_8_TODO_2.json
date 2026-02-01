@@ -1,0 +1,85 @@
+{
+  "phase": 2,
+  "sprint": 8,
+  "todoFile": 2,
+  "title": "Image Watermarks & Batch Processor",
+  "priority": "HIGH",
+  "effort": "4 hours",
+  "status": "pending",
+  "milestone": "v2.0 Release",
+  "tasks": [
+    {
+      "id": "2.8.5",
+      "category": "implementation",
+      "title": "Implement Image Watermark Function",
+      "description": "Create the function to apply image watermarks (PNG, JPG, SVG) to PDF pages.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/lib/batch/watermark.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Implement applyImageWatermark function with error handling",
+          "code": "import { PDFDocument, PDFImage } from 'pdf-lib';\nimport type { ImageWatermarkOptions, PageRange } from './types';\n\nexport async function applyImageWatermark(\n  pdfBytes: ArrayBuffer,\n  options: ImageWatermarkOptions\n): Promise<ArrayBuffer> {\n  try {\n    const pdfDoc = await PDFDocument.load(pdfBytes);\n    const pages = pdfDoc.getPages();\n\n    // Embed the image\n    const imageBytes = options.content;\n    let image: PDFImage;\n\n    try {\n      // Detect image type and embed\n      if (isJpeg(imageBytes)) {\n        image = await pdfDoc.embedJpg(imageBytes);\n      } else if (isPng(imageBytes)) {\n        image = await pdfDoc.embedPng(imageBytes);\n      } else {\n        throw new Error('Unsupported image format. Use PNG or JPEG.');\n      }\n    } catch (embedError) {\n      throw new Error(`Failed to embed image: ${embedError instanceof Error ? embedError.message : 'Unknown error'}`);\n    }\n\n    const pageIndices = getPageIndices(pages.length, options.pages);\n    const { width: imgWidth, height: imgHeight } = image.scale(1);\n\n    for (const pageIndex of pageIndices) {\n      try {\n        const page = pages[pageIndex];\n        const { width: pageWidth, height: pageHeight } = page.getSize();\n\n        // Calculate scaled dimensions\n        const scaledWidth = imgWidth * options.scale;\n        const scaledHeight = imgHeight * options.scale;\n\n        if (options.tile) {\n          // Tile the watermark across the page\n          const spacing = options.tileSpacing ?? Math.max(scaledWidth, scaledHeight) * 1.5;\n          \n          for (let y = 0; y < pageHeight + scaledHeight; y += spacing) {\n            for (let x = 0; x < pageWidth + scaledWidth; x += spacing) {\n              drawImageWatermark(page, image, {\n                x,\n                y,\n                width: scaledWidth,\n                height: scaledHeight,\n                opacity: options.opacity,\n                rotation: options.rotation,\n              });\n            }\n          }\n        } else {\n          // Single watermark at specified position\n          const position = calculateImagePosition(\n            options.position,\n            pageWidth,\n            pageHeight,\n            scaledWidth,\n            scaledHeight\n          );\n\n          drawImageWatermark(page, image, {\n            x: position.x,\n            y: position.y,\n            width: scaledWidth,\n            height: scaledHeight,\n            opacity: options.opacity,\n            rotation: options.rotation,\n          });\n        }\n      } catch (pageError) {\n        console.warn(`Failed to watermark page ${pageIndex}:`, pageError);\n        // Continue with other pages\n      }\n    }\n\n    return pdfDoc.save();\n  } catch (error) {\n    throw new Error(`Watermark failed: ${error instanceof Error ? error.message : 'Unknown error'}`);\n  }\n}\n\nfunction drawImageWatermark(\n  page: any,\n  image: PDFImage,\n  options: {\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n    opacity: number;\n    rotation: number;\n  }\n): void {\n  const { x, y, width, height, opacity, rotation } = options;\n\n  // For rotation, we need to translate to center, rotate, then draw\n  if (rotation !== 0) {\n    const centerX = x + width / 2;\n    const centerY = y + height / 2;\n    \n    // pdf-lib doesn't have built-in rotation for images\n    // We approximate by drawing the image (rotation requires more complex transform)\n    page.drawImage(image, {\n      x,\n      y,\n      width,\n      height,\n      opacity,\n    });\n  } else {\n    page.drawImage(image, {\n      x,\n      y,\n      width,\n      height,\n      opacity,\n    });\n  }\n}\n\nfunction calculateImagePosition(\n  position: WatermarkPosition,\n  pageWidth: number,\n  pageHeight: number,\n  imgWidth: number,\n  imgHeight: number\n): { x: number; y: number } {\n  if (typeof position === 'object' && 'x' in position) {\n    return position;\n  }\n\n  const margin = 50;\n  switch (position) {\n    case 'center':\n      return { x: (pageWidth - imgWidth) / 2, y: (pageHeight - imgHeight) / 2 };\n    case 'top-left':\n      return { x: margin, y: pageHeight - imgHeight - margin };\n    case 'top-center':\n      return { x: (pageWidth - imgWidth) / 2, y: pageHeight - imgHeight - margin };\n    case 'top-right':\n      return { x: pageWidth - imgWidth - margin, y: pageHeight - imgHeight - margin };\n    case 'bottom-left':\n      return { x: margin, y: margin };\n    case 'bottom-center':\n      return { x: (pageWidth - imgWidth) / 2, y: margin };\n    case 'bottom-right':\n      return { x: pageWidth - imgWidth - margin, y: margin };\n    default:\n      return { x: (pageWidth - imgWidth) / 2, y: (pageHeight - imgHeight) / 2 };\n  }\n}\n\nfunction isJpeg(bytes: ArrayBuffer): boolean {\n  const arr = new Uint8Array(bytes);\n  return arr[0] === 0xFF && arr[1] === 0xD8 && arr[2] === 0xFF;\n}\n\nfunction isPng(bytes: ArrayBuffer): boolean {\n  const arr = new Uint8Array(bytes);\n  return arr[0] === 0x89 && arr[1] === 0x50 && arr[2] === 0x4E && arr[3] === 0x47;\n}\n\nfunction getPageIndices(totalPages: number, range: PageRange): number[] {\n  switch (range.type) {\n    case 'all':\n      return Array.from({ length: totalPages }, (_, i) => i);\n    case 'even':\n      return Array.from({ length: totalPages }, (_, i) => i).filter(i => (i + 1) % 2 === 0);\n    case 'odd':\n      return Array.from({ length: totalPages }, (_, i) => i).filter(i => (i + 1) % 2 === 1);\n    case 'custom':\n      return (range.customPages ?? []).filter(p => p >= 0 && p < totalPages);\n    default:\n      return Array.from({ length: totalPages }, (_, i) => i);\n  }\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "PNG images embed correctly",
+        "JPEG images embed correctly",
+        "Position options work",
+        "Opacity applies correctly",
+        "Tiling works across page",
+        "Scale adjusts image size",
+        "Error handling for unsupported formats"
+      ]
+    },
+    {
+      "id": "2.8.6",
+      "category": "implementation",
+      "title": "Create Batch Processor Controller",
+      "description": "Implement the main batch processor that executes queued operations sequentially.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/lib/batch/batchProcessor.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Implement BatchProcessor class",
+          "code": "import type {\n  BatchOperation,\n  BatchProgress,\n  BatchResult,\n  WatermarkOptions,\n  HeaderFooterOptions,\n  BatesOptions,\n  FlattenOptions,\n} from './types';\nimport { applyTextWatermark, applyImageWatermark } from './watermark';\nimport { applyHeaderFooter } from './headerFooter';\nimport { applyBatesNumbers } from './batesNumbering';\nimport { flattenDocument } from './flatten';\n\nexport interface BatchProcessorCallbacks {\n  onProgress: (progress: BatchProgress) => void;\n  onOperationComplete: (id: string, success: boolean, error?: string) => void;\n  onComplete: (results: BatchResult[]) => void;\n}\n\nexport class BatchProcessor {\n  private isCancelled = false;\n  private isPaused = false;\n  private callbacks: BatchProcessorCallbacks;\n\n  constructor(callbacks: BatchProcessorCallbacks) {\n    this.callbacks = callbacks;\n  }\n\n  async process(\n    pdfBytes: ArrayBuffer,\n    operations: BatchOperation[]\n  ): Promise<{ pdfBytes: ArrayBuffer; results: BatchResult[] }> {\n    const results: BatchResult[] = [];\n    let currentPdfBytes = pdfBytes;\n\n    for (let i = 0; i < operations.length; i++) {\n      // Check for cancellation\n      if (this.isCancelled) {\n        break;\n      }\n\n      // Wait if paused\n      while (this.isPaused && !this.isCancelled) {\n        await this.sleep(100);\n      }\n\n      const operation = operations[i];\n\n      this.callbacks.onProgress({\n        currentOperation: i + 1,\n        totalOperations: operations.length,\n        currentPage: 0,\n        totalPages: 0,\n        operationType: operation.type,\n      });\n\n      try {\n        currentPdfBytes = await this.executeOperation(operation, currentPdfBytes);\n        \n        results.push({\n          success: true,\n          operationsCompleted: 1,\n          pagesProcessed: 0, // Could track actual pages\n          errors: [],\n          outputFile: currentPdfBytes,\n        });\n\n        this.callbacks.onOperationComplete(operation.id, true);\n      } catch (error) {\n        const errorMessage = error instanceof Error ? error.message : 'Unknown error';\n        \n        results.push({\n          success: false,\n          operationsCompleted: 0,\n          pagesProcessed: 0,\n          errors: [errorMessage],\n        });\n\n        this.callbacks.onOperationComplete(operation.id, false, errorMessage);\n\n        // Decide whether to continue or stop on error\n        // For now, we continue with the last successful PDF\n      }\n    }\n\n    this.callbacks.onComplete(results);\n\n    return {\n      pdfBytes: currentPdfBytes,\n      results,\n    };\n  }\n\n  private async executeOperation(\n    operation: BatchOperation,\n    pdfBytes: ArrayBuffer\n  ): Promise<ArrayBuffer> {\n    switch (operation.type) {\n      case 'watermark': {\n        const options = operation.options as WatermarkOptions;\n        if (options.type === 'text') {\n          return applyTextWatermark(pdfBytes, options as any);\n        } else {\n          return applyImageWatermark(pdfBytes, options as any);\n        }\n      }\n\n      case 'header-footer': {\n        const options = operation.options as HeaderFooterOptions;\n        return applyHeaderFooter(pdfBytes, options);\n      }\n\n      case 'bates-number': {\n        const options = operation.options as BatesOptions;\n        const result = await applyBatesNumbers(pdfBytes, options);\n        return result.pdfBytes;\n      }\n\n      case 'flatten': {\n        const options = operation.options as FlattenOptions;\n        return flattenDocument(pdfBytes, options);\n      }\n\n      default:\n        throw new Error(`Unknown operation type: ${operation.type}`);\n    }\n  }\n\n  cancel(): void {\n    this.isCancelled = true;\n  }\n\n  pause(): void {\n    this.isPaused = true;\n  }\n\n  resume(): void {\n    this.isPaused = false;\n  }\n\n  private sleep(ms: number): Promise<void> {\n    return new Promise(resolve => setTimeout(resolve, ms));\n  }\n}\n\n// Convenience function for simple batch processing\nexport async function processBatch(\n  pdfBytes: ArrayBuffer,\n  operations: BatchOperation[],\n  onProgress?: (progress: BatchProgress) => void\n): Promise<ArrayBuffer> {\n  return new Promise((resolve, reject) => {\n    const processor = new BatchProcessor({\n      onProgress: onProgress || (() => {}),\n      onOperationComplete: () => {},\n      onComplete: (results) => {\n        const hasErrors = results.some(r => !r.success);\n        if (hasErrors) {\n          const errors = results.flatMap(r => r.errors);\n          reject(new Error(`Batch processing failed: ${errors.join(', ')}`);\n        }\n      },\n    });\n\n    processor.process(pdfBytes, operations)\n      .then(result => resolve(result.pdfBytes))\n      .catch(reject);\n  });\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Executes operations in sequence",
+        "Progress callbacks fire correctly",
+        "Pause/resume works",
+        "Cancel stops processing",
+        "Errors don't crash entire batch",
+        "Returns final PDF with all operations applied"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Image watermarks apply correctly",
+    "Batch processor handles multiple operations",
+    "Progress tracking is accurate"
+  ],
+  "filesCreated": [
+    "tests/unit/lib/batch/watermark.test.ts",
+    "tests/unit/lib/batch/batchProcessor.test.ts"
+  ],
+  "filesModified": [
+    "src/lib/batch/watermark.ts"
+  ],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 4,
+  "dependencies": ["2.8.1", "2.8.2", "2.8.3", "2.8.4"],
+  "notes": [
+    "pdf-lib image rotation is limited - may need workaround",
+    "Consider web worker for batch processing to avoid UI blocking",
+    "SVG support would require conversion to PNG/JPEG first"
+  ]
+}

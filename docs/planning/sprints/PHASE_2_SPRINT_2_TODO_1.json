@@ -111,7 +111,10 @@
     "src/components/ocr/LanguageSelector.tsx",
     "src/components/ocr/PageRangeSelector.tsx",
     "src/components/ocr/PreprocessingOptions.tsx",
-    "src/components/ocr/OCRProgress.tsx"
+    "src/components/ocr/OCRProgress.tsx",
+    "tests/unit/components/ocr/OCRDialog.test.tsx",
+    "tests/unit/components/ocr/LanguageSelector.test.tsx",
+    "tests/unit/components/ocr/OCRProgress.test.tsx"
   ],
   "filesModified": [],
   "totalNewTests": 6,

@@ -1,0 +1,83 @@
+{
+  "phase": 2,
+  "sprint": 11,
+  "todoFile": 2,
+  "title": "Text Alternatives & Table Accessibility Rules",
+  "priority": "HIGH",
+  "effort": "4 hours",
+  "status": "pending",
+  "milestone": "v2.5 Release",
+  "tasks": [
+    {
+      "id": "2.11.5",
+      "category": "implementation",
+      "title": "Implement Text Alternative Rules",
+      "description": "Create rules for checking alt text on images and decorative image marking.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/lib/accessibility/rules/textAlternatives.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create text alternatives rules",
+          "code": "import type { AccessibilityRule, AccessibilityIssue, CheckContext } from '../types';\nimport { v4 as uuidv4 } from 'uuid';\n\nexport const TEXT_ALTERNATIVE_RULES: AccessibilityRule[] = [\n  {\n    id: 'image-alt-text',\n    name: 'Image Alternative Text',\n    description: 'Images must have alternative text descriptions',\n    category: 'text-alternatives',\n    severity: 'error',\n    wcagCriteria: '1.1.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n\n      if (!context.structureTree) {\n        return issues;\n      }\n\n      // Find all Figure elements in structure tree\n      const figures = findElements(context.structureTree, ['Figure']);\n\n      for (const figure of figures) {\n        const altText = getAltText(figure);\n\n        if (!altText || altText.trim() === '') {\n          issues.push({\n            id: uuidv4(),\n            ruleId: 'image-alt-text',\n            ruleName: 'Image Alternative Text',\n            category: 'text-alternatives',\n            severity: 'error',\n            pageIndex: figure.pageIndex,\n            element: 'Figure',\n            elementId: figure.id,\n            description: 'Image does not have alternative text.',\n            recommendation: 'Add an Alt attribute to the Figure element describing the image content, or mark it as decorative.',\n            wcagCriteria: '1.1.1',\n            wcagLevel: 'A',\n            canAutoFix: false,\n          });\n        } else if (isLikelyFilename(altText)) {\n          issues.push({\n            id: uuidv4(),\n            ruleId: 'image-alt-text',\n            ruleName: 'Image Alternative Text',\n            category: 'text-alternatives',\n            severity: 'warning',\n            pageIndex: figure.pageIndex,\n            element: 'Figure',\n            elementId: figure.id,\n            description: `Image alt text appears to be a filename: \"${altText}\"`,\n            recommendation: 'Replace the filename with a descriptive alternative text that conveys the meaning of the image.',\n            wcagCriteria: '1.1.1',\n            wcagLevel: 'A',\n            canAutoFix: false,\n          });\n        } else if (altText.length > 150) {\n          issues.push({\n            id: uuidv4(),\n            ruleId: 'image-alt-text',\n            ruleName: 'Image Alternative Text',\n            category: 'text-alternatives',\n            severity: 'warning',\n            pageIndex: figure.pageIndex,\n            element: 'Figure',\n            elementId: figure.id,\n            description: `Image alt text is very long (${altText.length} characters). Consider using a shorter description with a long description link.`,\n            recommendation: 'Keep alt text concise (under 150 characters). For complex images, use a long description or describe in surrounding text.',\n            wcagCriteria: '1.1.1',\n            wcagLevel: 'A',\n            canAutoFix: false,\n          });\n        }\n      }\n\n      return issues;\n    },\n  },\n\n  {\n    id: 'decorative-images',\n    name: 'Decorative Images',\n    description: 'Decorative images should be marked as artifacts',\n    category: 'text-alternatives',\n    severity: 'warning',\n    wcagCriteria: '1.1.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      // This is informational - checking if decorative images are properly marked\n      // Requires detecting which images are decorative vs meaningful\n      // This is difficult to automate, so we provide guidance\n      return [];\n    },\n  },\n\n  {\n    id: 'link-purpose',\n    name: 'Link Purpose',\n    description: 'Links must have descriptive text that indicates their purpose',\n    category: 'text-alternatives',\n    severity: 'error',\n    wcagCriteria: '2.4.4',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n\n      if (!context.structureTree) {\n        return issues;\n      }\n\n      const links = findElements(context.structureTree, ['Link']);\n\n      for (const link of links) {\n        const linkText = getTextContent(link).trim();\n\n        if (!linkText) {\n          issues.push({\n            id: uuidv4(),\n            ruleId: 'link-purpose',\n            ruleName: 'Link Purpose',\n            category: 'text-alternatives',\n            severity: 'error',\n            pageIndex: link.pageIndex,\n            element: 'Link',\n            description: 'Link has no accessible text.',\n            recommendation: 'Add text content to the link that describes its purpose or destination.',\n            wcagCriteria: '2.4.4',\n            wcagLevel: 'A',\n            canAutoFix: false,\n          });\n        } else if (isGenericLinkText(linkText)) {\n          issues.push({\n            id: uuidv4(),\n            ruleId: 'link-purpose',\n            ruleName: 'Link Purpose',\n            category: 'text-alternatives',\n            severity: 'warning',\n            pageIndex: link.pageIndex,\n            element: 'Link',\n            description: `Link text \"${linkText}\" is not descriptive.`,\n            recommendation: 'Replace generic text like \"click here\" or \"read more\" with descriptive text that explains where the link goes.',\n            wcagCriteria: '2.4.4',\n            wcagLevel: 'A',\n            canAutoFix: false,\n          });\n        }\n      }\n\n      return issues;\n    },\n  },\n];\n\nfunction findElements(tree: any, tagNames: string[]): any[] {\n  const results: any[] = [];\n  \n  function traverse(node: any, pageIndex: number = 0): void {\n    if (!node) return;\n\n    const tag = node.role || node.name;\n    if (tagNames.includes(tag)) {\n      results.push({ ...node, pageIndex });\n    }\n\n    if (node.children) {\n      for (const child of node.children) {\n        traverse(child, pageIndex);\n      }\n    }\n  }\n\n  traverse(tree);\n  return results;\n}\n\nfunction getAltText(element: any): string | null {\n  return element.alt || element.Alt || element.attributes?.Alt || null;\n}\n\nfunction getTextContent(element: any): string {\n  if (typeof element === 'string') return element;\n  if (element.str) return element.str;\n  if (element.children) {\n    return element.children.map(getTextContent).join('');\n  }\n  return '';\n}\n\nfunction isLikelyFilename(text: string): boolean {\n  const fileExtensions = /\\.(jpg|jpeg|png|gif|svg|bmp|tiff|webp|pdf|doc)$/i;\n  return fileExtensions.test(text) || /^IMG_\\d+$/i.test(text) || /^DSC\\d+$/i.test(text);\n}\n\nfunction isGenericLinkText(text: string): boolean {\n  const genericTerms = [\n    'click here',\n    'click',\n    'here',\n    'read more',\n    'more',\n    'learn more',\n    'link',\n    'go',\n    'continue',\n  ];\n  return genericTerms.includes(text.toLowerCase());\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Missing alt text on images is detected",
+        "Filename-as-alt-text is flagged",
+        "Overly long alt text is warned",
+        "Empty link text is detected",
+        "Generic link text is flagged",
+        "WCAG references are correct"
+      ]
+    },
+    {
+      "id": "2.11.6",
+      "category": "implementation",
+      "title": "Implement Table Accessibility Rules",
+      "description": "Create rules for checking table structure, headers, and accessibility.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/lib/accessibility/rules/tables.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create table accessibility rules",
+          "code": "import type { AccessibilityRule, AccessibilityIssue, CheckContext } from '../types';\nimport { v4 as uuidv4 } from 'uuid';\n\nexport const TABLE_RULES: AccessibilityRule[] = [\n  {\n    id: 'table-headers',\n    name: 'Table Headers',\n    description: 'Tables must have header cells (TH) that identify columns and/or rows',\n    category: 'tables',\n    severity: 'error',\n    wcagCriteria: '1.3.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n\n      if (!context.structureTree) {\n        return issues;\n      }\n\n      const tables = findElements(context.structureTree, ['Table']);\n\n      for (const table of tables) {\n        const headers = findElements(table, ['TH']);\n        const rows = findElements(table, ['TR']);\n\n        if (rows.length > 0 && headers.length === 0) {\n          issues.push({\n            id: uuidv4(),\n            ruleId: 'table-headers',\n            ruleName: 'Table Headers',\n            category: 'tables',\n            severity: 'error',\n            pageIndex: table.pageIndex,\n            element: 'Table',\n            description: 'Table does not have any header cells (TH elements).',\n            recommendation: 'Add TH elements to identify column and/or row headers. Headers help screen reader users understand the table structure.',\n            wcagCriteria: '1.3.1',\n            wcagLevel: 'A',\n            canAutoFix: false,\n          });\n        }\n      }\n\n      return issues;\n    },\n  },\n\n  {\n    id: 'table-header-scope',\n    name: 'Table Header Scope',\n    description: 'Table headers should have scope attributes for complex tables',\n    category: 'tables',\n    severity: 'warning',\n    wcagCriteria: '1.3.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n\n      if (!context.structureTree) {\n        return issues;\n      }\n\n      const tables = findElements(context.structureTree, ['Table']);\n\n      for (const table of tables) {\n        const headers = findElements(table, ['TH']);\n        const rows = findElements(table, ['TR']);\n\n        // Check if table is complex (more than 2 columns or has multiple header rows)\n        const isComplexTable = rows.length > 5 || headers.length > 4;\n\n        if (isComplexTable) {\n          for (const header of headers) {\n            const scope = header.attributes?.Scope || header.scope;\n            if (!scope) {\n              issues.push({\n                id: uuidv4(),\n                ruleId: 'table-header-scope',\n                ruleName: 'Table Header Scope',\n                category: 'tables',\n                severity: 'warning',\n                pageIndex: table.pageIndex,\n                element: 'TH',\n                description: 'Complex table header does not have a scope attribute.',\n                recommendation: 'Add Scope attribute (col, row, colgroup, or rowgroup) to header cells to clarify which cells they apply to.',\n                wcagCriteria: '1.3.1',\n                wcagLevel: 'A',\n                canAutoFix: false,\n              });\n              break; // Only report once per table\n            }\n          }\n        }\n      }\n\n      return issues;\n    },\n  },\n\n  {\n    id: 'table-summary',\n    name: 'Table Summary',\n    description: 'Complex tables should have a caption or summary',\n    category: 'tables',\n    severity: 'info',\n    wcagCriteria: '1.3.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n\n      if (!context.structureTree) {\n        return issues;\n      }\n\n      const tables = findElements(context.structureTree, ['Table']);\n\n      for (const table of tables) {\n        const rows = findElements(table, ['TR']);\n        const isLargeTable = rows.length > 5;\n\n        if (isLargeTable) {\n          const caption = findElements(table, ['Caption']);\n          const summary = table.attributes?.Summary || table.summary;\n\n          if (caption.length === 0 && !summary) {\n            issues.push({\n              id: uuidv4(),\n              ruleId: 'table-summary',\n              ruleName: 'Table Summary',\n              category: 'tables',\n              severity: 'info',\n              pageIndex: table.pageIndex,\n              element: 'Table',\n              description: 'Large table does not have a caption or summary.',\n              recommendation: 'Consider adding a Caption element or Summary attribute to describe the table purpose and structure.',\n              wcagCriteria: '1.3.1',\n              wcagLevel: 'A',\n              canAutoFix: false,\n            });\n          }\n        }\n      }\n\n      return issues;\n    },\n  },\n\n  {\n    id: 'layout-table',\n    name: 'Layout Tables',\n    description: 'Tables used for layout should not have header cells',\n    category: 'tables',\n    severity: 'warning',\n    wcagCriteria: '1.3.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      // This is informational - detecting layout tables is complex\n      // Layout tables should be marked with role=\"presentation\"\n      return [];\n    },\n  },\n];\n\nfunction findElements(tree: any, tagNames: string[]): any[] {\n  const results: any[] = [];\n  \n  function traverse(node: any, pageIndex: number = 0): void {\n    if (!node) return;\n\n    const tag = node.role || node.name;\n    if (tagNames.includes(tag)) {\n      results.push({ ...node, pageIndex });\n    }\n\n    if (node.children) {\n      for (const child of node.children) {\n        traverse(child, pageIndex);\n      }\n    }\n  }\n\n  traverse(tree);\n  return results;\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Missing table headers are detected",
+        "Missing scope attributes flagged for complex tables",
+        "Missing captions noted for large tables",
+        "Issues include clear recommendations",
+        "WCAG level references are accurate"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Image alt text rules work correctly",
+    "Link purpose rules detect issues",
+    "Table structure rules comprehensive"
+  ],
+  "filesCreated": [
+    "src/lib/accessibility/rules/textAlternatives.ts",
+    "src/lib/accessibility/rules/tables.ts",
+    "tests/unit/lib/accessibility/rules/textAlternatives.test.ts",
+    "tests/unit/lib/accessibility/rules/tables.test.ts"
+  ],
+  "filesModified": [],
+  "totalNewTests": 12,
+  "totalEstimatedHours": 4,
+  "dependencies": ["2.11.1", "2.11.2", "2.11.3"],
+  "notes": [
+    "Detecting decorative vs meaningful images is difficult to automate",
+    "Structure tree access depends on PDF.js capabilities",
+    "Consider adding quick-fix buttons for simple issues"
+  ]
+}

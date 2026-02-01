@@ -1,0 +1,87 @@
+{
+  "phase": 2,
+  "sprint": 6,
+  "todoFile": 2,
+  "title": "Pattern Search Dialog & Redaction Application",
+  "priority": "HIGH",
+  "effort": "4 hours",
+  "status": "pending",
+  "milestone": "v2.0 Release",
+  "tasks": [
+    {
+      "id": "2.6.5",
+      "category": "ui",
+      "title": "Create Pattern Search Dialog",
+      "description": "Build the dialog for searching sensitive data patterns with preview and selection.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/components/redaction/PatternSearchDialog.tsx"],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create PatternSearchDialog component with accessibility",
+          "code": "import { useState, useMemo } from 'react';\nimport { Search, AlertTriangle, Check, X } from 'lucide-react';\nimport { Dialog, DialogContent, DialogHeader, DialogTitle } from '@components/ui/Dialog';\nimport { Button } from '@components/ui/Button';\nimport { Input } from '@components/ui/Input';\nimport { Select } from '@components/ui/Select';\nimport { Checkbox } from '@components/ui/Checkbox';\nimport { useRedactionStore } from '@stores/redactionStore';\nimport { PatternMatcher, BUILT_IN_PATTERNS } from '@lib/redaction/patternMatcher';\nimport { useDocumentStore } from '@stores/documentStore';\n\ninterface PatternSearchDialogProps {\n  isOpen: boolean;\n  onClose: () => void;\n}\n\nexport function PatternSearchDialog({ isOpen, onClose }: PatternSearchDialogProps) {\n  const { addMark } = useRedactionStore();\n  const { pageTexts } = useDocumentStore();\n  const [selectedPattern, setSelectedPattern] = useState('');\n  const [customPattern, setCustomPattern] = useState('');\n  const [isSearching, setIsSearching] = useState(false);\n  const [matches, setMatches] = useState<DocumentMatch[]>([]);\n  const [selectedMatches, setSelectedMatches] = useState<Set<number>>(new Set());\n  const [error, setError] = useState<string | null>(null);\n\n  const patternOptions = useMemo(() => [\n    { value: '', label: 'Select a pattern...' },\n    ...BUILT_IN_PATTERNS.map(p => ({ value: p.id, label: p.name })),\n    { value: 'custom', label: 'Custom regex...' },\n  ], []);\n\n  const handleSearch = async () => {\n    setIsSearching(true);\n    setError(null);\n    setMatches([]);\n\n    try {\n      const matcher = new PatternMatcher();\n\n      if (selectedPattern === 'custom') {\n        if (!customPattern.trim()) {\n          throw new Error('Please enter a custom pattern');\n        }\n        // Validate regex\n        try {\n          new RegExp(customPattern, 'g');\n        } catch {\n          throw new Error('Invalid regular expression');\n        }\n        matcher.addPattern({\n          id: 'custom',\n          name: 'Custom Pattern',\n          pattern: new RegExp(customPattern, 'g'),\n          description: 'User-defined pattern',\n          category: 'custom',\n        });\n      }\n\n      const patternId = selectedPattern === 'custom' ? 'custom' : selectedPattern;\n      const results = matcher.findMatchesInDocument(pageTexts, patternId);\n      \n      setMatches(results);\n      setSelectedMatches(new Set(results.map((_, i) => i)));\n    } catch (err) {\n      setError(err instanceof Error ? err.message : 'Search failed');\n    } finally {\n      setIsSearching(false);\n    }\n  };\n\n  const handleToggleMatch = (index: number) => {\n    const newSelected = new Set(selectedMatches);\n    if (newSelected.has(index)) {\n      newSelected.delete(index);\n    } else {\n      newSelected.add(index);\n    }\n    setSelectedMatches(newSelected);\n  };\n\n  const handleSelectAll = () => {\n    setSelectedMatches(new Set(matches.map((_, i) => i)));\n  };\n\n  const handleDeselectAll = () => {\n    setSelectedMatches(new Set());\n  };\n\n  const handleMarkSelected = () => {\n    for (const index of selectedMatches) {\n      const match = matches[index];\n      addMark({\n        pageIndex: match.pageIndex,\n        bounds: match.bounds,\n        type: 'pattern',\n        matchedText: match.text,\n        pattern: selectedPattern,\n        overlayColor: '#000000',\n      });\n    }\n    onClose();\n  };\n\n  return (\n    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>\n      <DialogContent className=\"max-w-2xl\" aria-describedby=\"pattern-search-desc\">\n        <DialogHeader>\n          <DialogTitle>Search & Redact Patterns</DialogTitle>\n        </DialogHeader>\n        <p id=\"pattern-search-desc\" className=\"text-sm text-gray-600\">\n          Find and mark sensitive information patterns for redaction.\n        </p>\n\n        <div className=\"space-y-4\">\n          {/* Pattern Selection */}\n          <div className=\"flex gap-2\">\n            <Select\n              value={selectedPattern}\n              onChange={(e) => setSelectedPattern(e.target.value)}\n              className=\"flex-1\"\n              aria-label=\"Select pattern type\"\n            >\n              {patternOptions.map(opt => (\n                <option key={opt.value} value={opt.value}>{opt.label}</option>\n              ))}\n            </Select>\n            <Button onClick={handleSearch} disabled={!selectedPattern || isSearching}>\n              <Search className=\"h-4 w-4 mr-1\" />\n              {isSearching ? 'Searching...' : 'Search'}\n            </Button>\n          </div>\n\n          {/* Custom Pattern Input */}\n          {selectedPattern === 'custom' && (\n            <div>\n              <label className=\"text-sm font-medium\" htmlFor=\"custom-pattern\">\n                Custom Regex Pattern\n              </label>\n              <Input\n                id=\"custom-pattern\"\n                value={customPattern}\n                onChange={(e) => setCustomPattern(e.target.value)}\n                placeholder=\"e.g., \\\\b[A-Z]{2}\\\\d{6}\\\\b\"\n                className=\"font-mono\"\n              />\n              <p className=\"text-xs text-gray-500 mt-1\">\n                Use JavaScript regex syntax. The 'g' flag is added automatically.\n              </p>\n            </div>\n          )}\n\n          {/* Error Message */}\n          {error && (\n            <div className=\"flex items-center gap-2 text-red-600 bg-red-50 p-2 rounded\" role=\"alert\">\n              <AlertTriangle className=\"h-4 w-4\" />\n              <span>{error}</span>\n            </div>\n          )}\n\n          {/* Results */}\n          {matches.length > 0 && (\n            <div>\n              <div className=\"flex justify-between items-center mb-2\">\n                <span className=\"text-sm font-medium\">\n                  Found {matches.length} matches ({selectedMatches.size} selected)\n                </span>\n                <div className=\"flex gap-2\">\n                  <Button variant=\"ghost\" size=\"sm\" onClick={handleSelectAll}>Select All</Button>\n                  <Button variant=\"ghost\" size=\"sm\" onClick={handleDeselectAll}>Deselect All</Button>\n                </div>\n              </div>\n\n              <div className=\"max-h-64 overflow-y-auto border rounded-md\" role=\"listbox\" aria-label=\"Pattern matches\">\n                {matches.map((match, index) => (\n                  <label\n                    key={index}\n                    className=\"flex items-center gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer border-b last:border-b-0\"\n                  >\n                    <Checkbox\n                      checked={selectedMatches.has(index)}\n                      onChange={() => handleToggleMatch(index)}\n                      aria-label={`Select match: ${match.text}`}\n                    />\n                    <span className=\"font-mono text-sm bg-yellow-100 dark:bg-yellow-900/30 px-1 rounded\">\n                      {match.text}\n                    </span>\n                    <span className=\"text-xs text-gray-500\">\n                      Page {match.pageIndex + 1}\n                    </span>\n                  </label>\n                ))}\n              </div>\n            </div>\n          )}\n\n          {/* No Results */}\n          {matches.length === 0 && !isSearching && selectedPattern && !error && (\n            <div className=\"text-center py-8 text-gray-500\">\n              <Check className=\"h-8 w-8 mx-auto mb-2 text-green-500\" />\n              <p>No matches found for this pattern.</p>\n            </div>\n          )}\n        </div>\n\n        {/* Actions */}\n        <div className=\"flex justify-end gap-2 mt-4\">\n          <Button variant=\"ghost\" onClick={onClose}>Cancel</Button>\n          <Button\n            onClick={handleMarkSelected}\n            disabled={selectedMatches.size === 0}\n          >\n            Mark {selectedMatches.size} for Redaction\n          </Button>\n        </div>\n      </DialogContent>\n    </Dialog>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Dialog opens and closes correctly",
+        "All built-in patterns are selectable",
+        "Custom regex input validates pattern",
+        "Matches are highlighted and selectable",
+        "Select all/deselect all works",
+        "Marking creates redaction marks",
+        "Dialog is fully keyboard accessible",
+        "Error states are communicated to screen readers"
+      ]
+    },
+    {
+      "id": "2.6.6",
+      "category": "implementation",
+      "title": "Implement Redaction Application",
+      "description": "Create the function that permanently applies redactions by removing content from PDF.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/lib/redaction/redactionApply.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Implement applyRedactions function with error handling",
+          "code": "import { PDFDocument, rgb, PDFPage } from 'pdf-lib';\nimport type { RedactionMark, RedactionResult } from './types';\n\nexport interface ApplyRedactionOptions {\n  removeMetadata: boolean;\n  flattenPages: boolean;\n  overlayText?: string;\n}\n\nexport async function applyRedactions(\n  pdfBytes: ArrayBuffer,\n  marks: RedactionMark[],\n  options: ApplyRedactionOptions = { removeMetadata: true, flattenPages: true }\n): Promise<RedactionResult> {\n  const errors: string[] = [];\n  const pagesAffected = new Set<number>();\n  let marksApplied = 0;\n\n  try {\n    const pdfDoc = await PDFDocument.load(pdfBytes);\n    const pages = pdfDoc.getPages();\n\n    // Group marks by page for efficient processing\n    const marksByPage = new Map<number, RedactionMark[]>();\n    for (const mark of marks) {\n      if (mark.status === 'applied') continue; // Skip already applied\n      if (!marksByPage.has(mark.pageIndex)) {\n        marksByPage.set(mark.pageIndex, []);\n      }\n      marksByPage.get(mark.pageIndex)!.push(mark);\n    }\n\n    // Process each page\n    for (const [pageIndex, pageMarks] of marksByPage) {\n      if (pageIndex >= pages.length) {\n        errors.push(`Page ${pageIndex} does not exist`);\n        continue;\n      }\n\n      try {\n        const page = pages[pageIndex];\n        const appliedCount = await applyPageRedactions(page, pageMarks, options);\n        marksApplied += appliedCount;\n        pagesAffected.add(pageIndex);\n      } catch (pageError) {\n        errors.push(`Failed to redact page ${pageIndex}: ${pageError instanceof Error ? pageError.message : 'Unknown error'}`);\n      }\n    }\n\n    // Remove metadata if requested\n    if (options.removeMetadata) {\n      try {\n        scrubMetadata(pdfDoc);\n      } catch (metaError) {\n        errors.push(`Failed to remove metadata: ${metaError instanceof Error ? metaError.message : 'Unknown error'}`);\n      }\n    }\n\n    const savedBytes = await pdfDoc.save();\n\n    return {\n      success: errors.length === 0,\n      marksApplied,\n      pagesAffected: pagesAffected.size,\n      errors,\n      pdfBytes: savedBytes.buffer,\n    };\n  } catch (error) {\n    return {\n      success: false,\n      marksApplied: 0,\n      pagesAffected: 0,\n      errors: [`Failed to process PDF: ${error instanceof Error ? error.message : 'Unknown error'}`],\n    };\n  }\n}\n\nasync function applyPageRedactions(\n  page: PDFPage,\n  marks: RedactionMark[],\n  options: ApplyRedactionOptions\n): Promise<number> {\n  const { height } = page.getSize();\n  let count = 0;\n\n  for (const mark of marks) {\n    try {\n      // Draw black (or colored) rectangle over content\n      // Note: This covers content but doesn't remove underlying data\n      // True redaction requires manipulating content streams (complex with pdf-lib)\n      const { x, y, width, height: h } = mark.bounds;\n      const pdfY = height - y - h; // Convert to PDF coordinates\n\n      const color = hexToRgb(mark.overlayColor);\n\n      page.drawRectangle({\n        x,\n        y: pdfY,\n        width,\n        height: h,\n        color: rgb(color.r, color.g, color.b),\n        opacity: 1,\n      });\n\n      // Add overlay text if specified\n      if (mark.overlayText || options.overlayText) {\n        const text = mark.overlayText || options.overlayText || '';\n        if (text) {\n          // Calculate centered position\n          const fontSize = Math.min(h * 0.6, 12);\n          page.drawText(text, {\n            x: x + 2,\n            y: pdfY + (h - fontSize) / 2,\n            size: fontSize,\n            color: rgb(1, 1, 1), // White text on black\n          });\n        }\n      }\n\n      count++;\n    } catch (markError) {\n      console.warn(`Failed to apply mark:`, markError);\n    }\n  }\n\n  return count;\n}\n\nfunction scrubMetadata(pdfDoc: PDFDocument): void {\n  // Remove document info\n  pdfDoc.setTitle('');\n  pdfDoc.setAuthor('');\n  pdfDoc.setSubject('');\n  pdfDoc.setKeywords([]);\n  pdfDoc.setProducer('');\n  pdfDoc.setCreator('');\n  // Note: Creation/modification dates cannot be fully removed with pdf-lib\n}\n\nfunction hexToRgb(hex: string): { r: number; g: number; b: number } {\n  const result = /^#?([a-f\\d]{2})([a-f\\d]{2})([a-f\\d]{2})$/i.exec(hex);\n  return result ? {\n    r: parseInt(result[1], 16) / 255,\n    g: parseInt(result[2], 16) / 255,\n    b: parseInt(result[3], 16) / 255,\n  } : { r: 0, g: 0, b: 0 };\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Redaction rectangles are drawn correctly",
+        "Multiple marks per page are handled",
+        "Overlay text displays when configured",
+        "Metadata scrubbing removes author, title, etc.",
+        "Error handling doesn't crash on individual failures",
+        "Returns accurate count of applied marks"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Pattern search finds sensitive data",
+    "Users can select/deselect matches",
+    "Redaction application covers content",
+    "Metadata is optionally removed"
+  ],
+  "filesCreated": [
+    "src/components/redaction/PatternSearchDialog.tsx",
+    "src/lib/redaction/redactionApply.ts",
+    "tests/unit/components/redaction/PatternSearchDialog.test.tsx",
+    "tests/unit/lib/redaction/redactionApply.test.ts"
+  ],
+  "filesModified": [],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 4,
+  "dependencies": ["2.6.1", "2.6.2", "2.6.3"],
+  "notes": [
+    "pdf-lib cannot truly remove content streams - this implementation covers content",
+    "For forensic-grade redaction, consider server-side processing with specialized tools",
+    "Custom regex validation is important for security"
+  ]
+}

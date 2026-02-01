@@ -4,7 +4,7 @@
   "todoFile": 1,
   "title": "Phase 2 Testing & QA",
   "priority": "HIGH",
-  "effort": "10 hours",
+  "effort": "18 hours",
   "status": "pending",
   "milestone": "v2.5 Release",
   "tasks": [
@@ -177,7 +177,7 @@
     "docs/roadmap/ROADMAP.md"
   ],
   "totalNewTests": 50,
-  "totalEstimatedHours": 10,
+  "totalEstimatedHours": 18,
   "dependencies": ["All previous Phase 2 sprints"],
   "notes": [
     "Testing should not be rushed - quality over speed",

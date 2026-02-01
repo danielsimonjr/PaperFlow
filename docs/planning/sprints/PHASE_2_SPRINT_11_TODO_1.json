@@ -140,7 +140,10 @@
     "src/lib/accessibility/accessibilityChecker.ts",
     "src/lib/accessibility/rules/documentStructure.ts",
     "src/lib/accessibility/index.ts",
-    "src/stores/accessibilityStore.ts"
+    "src/stores/accessibilityStore.ts",
+    "tests/unit/lib/accessibility/accessibilityChecker.test.ts",
+    "tests/unit/lib/accessibility/rules/documentStructure.test.ts",
+    "tests/unit/stores/accessibilityStore.test.ts"
   ],
   "filesModified": [],
   "totalNewTests": 20,

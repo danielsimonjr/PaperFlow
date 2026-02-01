@@ -98,7 +98,11 @@
   "filesCreated": [
     "src/lib/forms/conditionalLogic.ts",
     "src/components/forms/designer/ConditionBuilder.tsx",
-    "src/hooks/useConditionalFields.ts"
+    "src/hooks/useConditionalFields.ts",
+    "tests/unit/lib/forms/conditionalLogic.test.ts",
+    "tests/unit/components/forms/designer/ConditionBuilder.test.tsx",
+    "tests/unit/hooks/useConditionalFields.test.ts",
+    "tests/integration/forms/conditionalLogic.integration.test.tsx"
   ],
   "filesModified": [
     "src/components/forms/FormLayer.tsx"

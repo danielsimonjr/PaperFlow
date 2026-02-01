@@ -114,7 +114,12 @@
     "src/lib/batch/batesNumbering.ts",
     "src/lib/batch/flatten.ts",
     "src/components/batch/BatesNumberDialog.tsx",
-    "src/components/batch/FlattenDialog.tsx"
+    "src/components/batch/FlattenDialog.tsx",
+    "tests/unit/lib/batch/batesNumbering.test.ts",
+    "tests/unit/lib/batch/flatten.test.ts",
+    "tests/unit/components/batch/BatesNumberDialog.test.tsx",
+    "tests/unit/components/batch/FlattenDialog.test.tsx",
+    "tests/integration/batch/batesNumbering.integration.test.ts"
   ],
   "filesModified": [
     "src/lib/batch/index.ts"

@@ -1,0 +1,85 @@
+{
+  "phase": 2,
+  "sprint": 7,
+  "todoFile": 2,
+  "title": "Overlay View & Comparison Report",
+  "priority": "HIGH",
+  "effort": "4 hours",
+  "status": "pending",
+  "milestone": "v2.0 Release",
+  "tasks": [
+    {
+      "id": "2.7.5",
+      "category": "ui",
+      "title": "Create Overlay View Component",
+      "description": "Build the overlay comparison view with flicker toggle and opacity control.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/components/comparison/OverlayView.tsx"],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create OverlayView component with accessibility",
+          "code": "import { useState, useEffect, useRef, useCallback } from 'react';\nimport { Play, Pause, Layers } from 'lucide-react';\nimport { Button } from '@components/ui/Button';\nimport { Slider } from '@components/ui/Slider';\nimport { useComparisonStore } from '@stores/comparisonStore';\nimport { PDFViewer } from '@components/viewer/PDFViewer';\nimport { cn } from '@utils/cn';\n\nexport function OverlayView() {\n  const { document1, document2, result, currentChangeIndex } = useComparisonStore();\n  const [activeDocument, setActiveDocument] = useState<1 | 2>(1);\n  const [opacity, setOpacity] = useState(50);\n  const [isFlickering, setIsFlickering] = useState(false);\n  const [flickerSpeed, setFlickerSpeed] = useState(1000); // ms\n  const flickerInterval = useRef<NodeJS.Timer | null>(null);\n\n  // Handle flicker mode\n  useEffect(() => {\n    if (isFlickering) {\n      flickerInterval.current = setInterval(() => {\n        setActiveDocument(prev => prev === 1 ? 2 : 1);\n      }, flickerSpeed);\n    } else {\n      if (flickerInterval.current) {\n        clearInterval(flickerInterval.current);\n        flickerInterval.current = null;\n      }\n    }\n\n    return () => {\n      if (flickerInterval.current) {\n        clearInterval(flickerInterval.current);\n      }\n    };\n  }, [isFlickering, flickerSpeed]);\n\n  const handleKeyDown = useCallback((e: KeyboardEvent) => {\n    if (e.key === ' ') {\n      e.preventDefault();\n      setIsFlickering(prev => !prev);\n    } else if (e.key === 'ArrowLeft') {\n      setActiveDocument(1);\n    } else if (e.key === 'ArrowRight') {\n      setActiveDocument(2);\n    }\n  }, []);\n\n  useEffect(() => {\n    window.addEventListener('keydown', handleKeyDown);\n    return () => window.removeEventListener('keydown', handleKeyDown);\n  }, [handleKeyDown]);\n\n  return (\n    <div className=\"flex flex-col h-full\">\n      {/* Controls */}\n      <div \n        className=\"p-2 border-b flex items-center gap-4 flex-wrap\"\n        role=\"toolbar\"\n        aria-label=\"Overlay view controls\"\n      >\n        {/* Document Toggle */}\n        <div className=\"flex items-center gap-2\">\n          <span className=\"text-sm font-medium\">Active:</span>\n          <div className=\"flex rounded-md border overflow-hidden\" role=\"radiogroup\">\n            <button\n              onClick={() => { setIsFlickering(false); setActiveDocument(1); }}\n              className={cn(\n                'px-3 py-1 text-sm',\n                activeDocument === 1 && !isFlickering\n                  ? 'bg-primary-500 text-white'\n                  : 'hover:bg-gray-100'\n              )}\n              role=\"radio\"\n              aria-checked={activeDocument === 1 && !isFlickering}\n            >\n              Original\n            </button>\n            <button\n              onClick={() => { setIsFlickering(false); setActiveDocument(2); }}\n              className={cn(\n                'px-3 py-1 text-sm',\n                activeDocument === 2 && !isFlickering\n                  ? 'bg-primary-500 text-white'\n                  : 'hover:bg-gray-100'\n              )}\n              role=\"radio\"\n              aria-checked={activeDocument === 2 && !isFlickering}\n            >\n              Revised\n            </button>\n          </div>\n        </div>\n\n        {/* Flicker Toggle */}\n        <Button\n          variant={isFlickering ? 'primary' : 'ghost'}\n          size=\"sm\"\n          onClick={() => setIsFlickering(!isFlickering)}\n          aria-pressed={isFlickering}\n        >\n          {isFlickering ? <Pause className=\"h-4 w-4 mr-1\" /> : <Play className=\"h-4 w-4 mr-1\" />}\n          {isFlickering ? 'Stop Flicker' : 'Start Flicker'}\n        </Button>\n\n        {/* Flicker Speed */}\n        {isFlickering && (\n          <div className=\"flex items-center gap-2\">\n            <label htmlFor=\"flicker-speed\" className=\"text-sm\">Speed:</label>\n            <Slider\n              id=\"flicker-speed\"\n              value={[flickerSpeed]}\n              onValueChange={([v]) => setFlickerSpeed(v)}\n              min={200}\n              max={2000}\n              step={100}\n              className=\"w-24\"\n              aria-label=\"Flicker speed in milliseconds\"\n            />\n            <span className=\"text-xs text-gray-500\">{flickerSpeed}ms</span>\n          </div>\n        )}\n\n        {/* Opacity Slider */}\n        <div className=\"flex items-center gap-2\">\n          <Layers className=\"h-4 w-4\" aria-hidden=\"true\" />\n          <label htmlFor=\"overlay-opacity\" className=\"text-sm\">Blend:</label>\n          <Slider\n            id=\"overlay-opacity\"\n            value={[opacity]}\n            onValueChange={([v]) => setOpacity(v)}\n            min={0}\n            max={100}\n            className=\"w-24\"\n            aria-label=\"Overlay blend opacity\"\n          />\n          <span className=\"text-xs text-gray-500\">{opacity}%</span>\n        </div>\n      </div>\n\n      {/* Overlay Container */}\n      <div \n        className=\"flex-1 relative overflow-auto\"\n        aria-label={`Showing ${activeDocument === 1 ? 'original' : 'revised'} document${isFlickering ? ' (flickering)' : ''}`}\n        aria-live=\"polite\"\n      >\n        {/* Document 1 (Original) */}\n        <div\n          className={cn(\n            'absolute inset-0 transition-opacity duration-150',\n            activeDocument === 1 || opacity > 0 ? 'visible' : 'invisible'\n          )}\n          style={{ \n            opacity: activeDocument === 1 ? 1 : (100 - opacity) / 100,\n            zIndex: activeDocument === 1 ? 2 : 1,\n          }}\n        >\n          <PDFViewer pdfData={document1} />\n        </div>\n\n        {/* Document 2 (Revised) */}\n        <div\n          className={cn(\n            'absolute inset-0 transition-opacity duration-150',\n            activeDocument === 2 || opacity > 0 ? 'visible' : 'invisible'\n          )}\n          style={{ \n            opacity: activeDocument === 2 ? 1 : opacity / 100,\n            zIndex: activeDocument === 2 ? 2 : 1,\n          }}\n        >\n          <PDFViewer pdfData={document2} />\n        </div>\n\n        {/* Change Highlights */}\n        {result?.pages.map(page => (\n          page.textChanges.map((change, i) => (\n            <div\n              key={`${page.pageNumber}-${i}`}\n              className={cn(\n                'absolute pointer-events-none',\n                change.type === 'added' && 'bg-green-500/30 border border-green-500',\n                change.type === 'removed' && 'bg-red-500/30 border border-red-500',\n                change.type === 'modified' && 'bg-yellow-500/30 border border-yellow-500'\n              )}\n              style={{\n                left: change.location.x,\n                top: change.location.y,\n                width: change.location.width,\n                height: change.location.height,\n                zIndex: 3,\n              }}\n            />\n          ))\n        ))}\n      </div>\n\n      {/* Status Bar */}\n      <div className=\"p-2 border-t text-sm text-gray-600 flex justify-between\">\n        <span>Press Space to toggle flicker, Arrow keys to switch documents</span>\n        <span>Viewing: {activeDocument === 1 ? 'Original' : 'Revised'}</span>\n      </div>\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Overlay shows both documents layered",
+        "Document toggle switches active view",
+        "Opacity slider blends documents",
+        "Flicker mode alternates between documents",
+        "Flicker speed is adjustable",
+        "Keyboard shortcuts work",
+        "Component is accessible"
+      ]
+    },
+    {
+      "id": "2.7.6",
+      "category": "implementation",
+      "title": "Create Comparison Report Generator",
+      "description": "Implement report generation for document comparison results.",
+      "status": "pending",
+      "estimatedHours": 1.5,
+      "agent": "sonnet",
+      "files": ["src/lib/comparison/reportGenerator.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Implement report generation functions",
+          "code": "import type { ComparisonResult, TextChange, PageComparison } from './types';\n\nexport interface ReportOptions {\n  format: 'html' | 'text' | 'json';\n  includeDetails: boolean;\n  includePageThumbnails: boolean;\n}\n\nexport function generateReport(\n  result: ComparisonResult,\n  options: ReportOptions\n): string {\n  switch (options.format) {\n    case 'html':\n      return generateHTMLReport(result, options);\n    case 'text':\n      return generateTextReport(result, options);\n    case 'json':\n      return JSON.stringify(result, null, 2);\n    default:\n      throw new Error(`Unknown format: ${options.format}`);\n  }\n}\n\nfunction generateHTMLReport(result: ComparisonResult, options: ReportOptions): string {\n  const { summary, pages, document1, document2 } = result;\n\n  let html = `\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Document Comparison Report</title>\n  <style>\n    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }\n    h1 { color: #1e3a5f; }\n    .summary { background: #f3f4f6; padding: 16px; border-radius: 8px; margin-bottom: 24px; }\n    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }\n    .stat { text-align: center; }\n    .stat-value { font-size: 24px; font-weight: bold; }\n    .stat-label { font-size: 12px; color: #666; }\n    .page { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }\n    .page-header { font-weight: 600; margin-bottom: 8px; }\n    .change { padding: 8px; margin: 4px 0; border-radius: 4px; }\n    .change-added { background: #dcfce7; border-left: 4px solid #22c55e; }\n    .change-removed { background: #fee2e2; border-left: 4px solid #ef4444; }\n    .change-modified { background: #fef9c3; border-left: 4px solid #eab308; }\n    .similarity { color: #666; font-size: 14px; }\n  </style>\n</head>\n<body>\n  <h1>Document Comparison Report</h1>\n  \n  <div class=\"summary\">\n    <h2>Summary</h2>\n    <div class=\"summary-grid\">\n      <div class=\"stat\">\n        <div class=\"stat-value\">${summary.totalChanges}</div>\n        <div class=\"stat-label\">Total Changes</div>\n      </div>\n      <div class=\"stat\">\n        <div class=\"stat-value\">${summary.pagesChanged}</div>\n        <div class=\"stat-label\">Pages Changed</div>\n      </div>\n      <div class=\"stat\">\n        <div class=\"stat-value\">${summary.overallSimilarity.toFixed(1)}%</div>\n        <div class=\"stat-label\">Similarity</div>\n      </div>\n    </div>\n    <div style=\"margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 14px;\">\n      <div><span style=\"color: #22c55e;\">●</span> ${summary.textAdditions} additions</div>\n      <div><span style=\"color: #ef4444;\">●</span> ${summary.textDeletions} deletions</div>\n      <div><span style=\"color: #eab308;\">●</span> ${summary.textModifications} modifications</div>\n    </div>\n  </div>\n\n  <h2>Documents</h2>\n  <table style=\"width: 100%; margin-bottom: 24px;\">\n    <tr>\n      <td><strong>Original:</strong> ${escapeHtml(document1.name)}</td>\n      <td>${document1.pageCount} pages</td>\n    </tr>\n    <tr>\n      <td><strong>Revised:</strong> ${escapeHtml(document2.name)}</td>\n      <td>${document2.pageCount} pages</td>\n    </tr>\n  </table>\n`;\n\n  if (options.includeDetails) {\n    html += '<h2>Changes by Page</h2>\\n';\n    \n    for (const page of pages) {\n      if (page.textChanges.length === 0) continue;\n      \n      html += `\n  <div class=\"page\">\n    <div class=\"page-header\">\n      Page ${page.pageNumber}\n      <span class=\"similarity\">(${page.similarity.toFixed(1)}% similar)</span>\n    </div>\n`;\n\n      for (const change of page.textChanges) {\n        const typeClass = `change-${change.type}`;\n        const typeLabel = change.type.charAt(0).toUpperCase() + change.type.slice(1);\n        \n        html += `\n    <div class=\"change ${typeClass}\">\n      <strong>${typeLabel}:</strong> ${escapeHtml(change.text)}\n      ${change.oldText ? `<br><em>Was:</em> ${escapeHtml(change.oldText)}` : ''}\n    </div>\n`;\n      }\n\n      html += '  </div>\\n';\n    }\n  }\n\n  html += `\n  <footer style=\"margin-top: 32px; padding-top: 16px; border-top: 1px solid #ddd; color: #666; font-size: 12px;\">\n    Generated by PaperFlow on ${new Date().toLocaleString()}\n  </footer>\n</body>\n</html>\n`;\n\n  return html;\n}\n\nfunction generateTextReport(result: ComparisonResult, options: ReportOptions): string {\n  const { summary, pages, document1, document2 } = result;\n\n  let text = `DOCUMENT COMPARISON REPORT\n${'='.repeat(50)}\n\nOriginal: ${document1.name} (${document1.pageCount} pages)\nRevised:  ${document2.name} (${document2.pageCount} pages)\n\nSUMMARY\n${'='.repeat(50)}\nTotal Changes:    ${summary.totalChanges}\nPages Changed:    ${summary.pagesChanged}\nOverall Similarity: ${summary.overallSimilarity.toFixed(1)}%\n\n  Additions:     ${summary.textAdditions}\n  Deletions:     ${summary.textDeletions}\n  Modifications: ${summary.textModifications}\n\n`;\n\n  if (options.includeDetails) {\n    text += `CHANGES BY PAGE\\n${'='.repeat(50)}\\n\\n`;\n\n    for (const page of pages) {\n      if (page.textChanges.length === 0) continue;\n\n      text += `Page ${page.pageNumber} (${page.similarity.toFixed(1)}% similar)\\n${\"-\".repeat(30)}\\n`;\n\n      for (const change of page.textChanges) {\n        const prefix = change.type === 'added' ? '+' : change.type === 'removed' ? '-' : '~';\n        text += `  ${prefix} ${change.text}\\n`;\n        if (change.oldText) {\n          text += `    (was: ${change.oldText})\\n`;\n        }\n      }\n      text += '\\n';\n    }\n  }\n\n  text += `\\nGenerated by PaperFlow on ${new Date().toLocaleString()}\\n`;\n\n  return text;\n}\n\nfunction escapeHtml(text: string): string {\n  return text\n    .replace(/&/g, '&amp;')\n    .replace(/</g, '&lt;')\n    .replace(/>/g, '&gt;')\n    .replace(/\"/g, '&quot;')\n    .replace(/'/g, '&#039;');\n}\n\nexport function downloadReport(\n  result: ComparisonResult,\n  options: ReportOptions\n): void {\n  const content = generateReport(result, options);\n  const mimeType = options.format === 'html' \n    ? 'text/html' \n    : options.format === 'json' \n      ? 'application/json' \n      : 'text/plain';\n  const extension = options.format === 'html' ? 'html' : options.format === 'json' ? 'json' : 'txt';\n\n  const blob = new Blob([content], { type: mimeType });\n  const url = URL.createObjectURL(blob);\n  const a = document.createElement('a');\n  a.href = url;\n  a.download = `comparison-report.${extension}`;\n  a.click();\n  URL.revokeObjectURL(url);\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "HTML report renders correctly",
+        "Text report is readable",
+        "JSON export contains all data",
+        "Download function works",
+        "HTML escaping prevents XSS",
+        "Summary statistics are accurate"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Overlay view provides visual comparison",
+    "Flicker mode helps spot differences",
+    "Reports export in multiple formats"
+  ],
+  "filesCreated": [
+    "src/components/comparison/OverlayView.tsx",
+    "src/lib/comparison/reportGenerator.ts",
+    "tests/unit/components/comparison/OverlayView.test.tsx",
+    "tests/unit/lib/comparison/reportGenerator.test.ts"
+  ],
+  "filesModified": [],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 4,
+  "dependencies": ["2.7.1", "2.7.2", "2.7.3", "2.7.4"],
+  "notes": [
+    "Flicker mode may cause issues for users with photosensitive epilepsy - add warning",
+    "Consider adding a difference-only view mode",
+    "Report generation could be moved to a web worker for large documents"
+  ]
+}
