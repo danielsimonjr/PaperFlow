@@ -6,13 +6,102 @@ PaperFlow is a Progressive Web Application (PWA) that brings professional-grade 
 
 ## Features
 
-### Core Capabilities
-- **PDF Viewing** - High-fidelity rendering with smooth zoom, multiple view modes, and dark mode support
-- **Text Editing** - Direct text editing with automatic font matching
-- **Annotations** - Highlight, underline, strikethrough, sticky notes, freehand drawing, and shapes
-- **Form Filling** - Automatic field detection with support for text, checkboxes, radio buttons, and dropdowns
-- **Digital Signatures** - Draw, type, or upload signatures with secure storage
-- **Page Management** - Reorder, delete, rotate, merge, and split PDFs
+PaperFlow includes a comprehensive set of PDF editing features spanning two major development phases.
+
+### Core PDF Editing (Phase 1)
+
+#### PDF Viewing and Navigation
+- High-fidelity rendering with smooth zoom and pan
+- Multiple view modes (single page, continuous scroll, two-page spread)
+- Dark mode support for comfortable reading
+- Thumbnail navigation and page jumping
+
+#### Annotations
+- **Highlight** - Mark important text with customizable colors
+- **Underline** - Emphasize text passages
+- **Strikethrough** - Mark text for deletion or review
+- **Sticky Notes** - Add comments and notes anywhere on the page
+- **Freehand Drawing** - Sketch and annotate with drawing tools
+- **Shapes** - Add rectangles, circles, arrows, and lines
+
+#### Form Filling
+- Automatic field detection
+- Support for text fields, checkboxes, radio buttons, and dropdowns
+- Form data validation
+- FDF/XFDF import and export
+
+#### Digital Signatures
+- Draw signatures with mouse or touch
+- Type signatures with font selection
+- Upload signature images
+- Secure local storage for saved signatures
+- Date field insertion
+
+#### Page Management
+- Reorder pages with drag-and-drop
+- Delete unwanted pages
+- Rotate pages (90, 180, 270 degrees)
+- Merge multiple PDFs into one
+- Split PDFs into separate documents
+- Extract specific pages
+
+#### Text Editing
+- Direct text editing on PDF pages
+- Automatic font matching and fallback
+- Font size and style adjustments
+
+#### Export Options
+- Save edited PDFs with embedded changes
+- Export pages as images (PNG, JPEG)
+- PDF compression and optimization
+- Flatten annotations into the document
+
+#### Print Functionality
+- Print entire documents or page ranges
+- Print preview with layout options
+- Custom page scaling
+
+#### Share Functionality
+- Copy to clipboard
+- Email sharing integration
+
+### Premium Features (Phase 2)
+
+#### OCR for Scanned Documents
+- Convert scanned PDFs to searchable text
+- Support for 50+ languages via Tesseract.js
+- Automatic language detection
+- Maintains original document layout
+
+#### Form Creation and Designer
+- Create interactive PDF forms from scratch
+- Add text fields, checkboxes, radio buttons, and dropdowns
+- Configure field properties and validation rules
+- Design custom form layouts
+
+#### Redaction Tools
+- **True Redaction** - Permanently remove sensitive content
+- **Pattern Search** - Find and redact by pattern (SSN, phone numbers, emails)
+- Preview redactions before applying
+- Secure removal with no data recovery
+
+#### Document Comparison
+- **Side-by-Side View** - Compare two documents simultaneously
+- **Overlay Mode** - View differences highlighted on a single view
+- Text difference highlighting
+- Change navigation and summary
+
+#### Batch Processing
+- **Watermarks** - Add text or image watermarks to multiple documents
+- **Headers/Footers** - Insert consistent headers and footers
+- **Bates Numbering** - Apply sequential numbering for legal documents
+- Process multiple files in one operation
+
+#### Accessibility Checker
+- PDF/UA compliance validation
+- Accessibility issue detection
+- Remediation suggestions
+- Structure and tag verification
 
 ### Why PaperFlow?
 - **Zero Installation** - Works instantly in any modern browser
@@ -72,6 +161,7 @@ npm run preview
 - **State Management:** Zustand
 - **PDF Rendering:** PDF.js
 - **PDF Manipulation:** pdf-lib
+- **OCR:** Tesseract.js (50+ languages)
 - **PWA:** Workbox via vite-plugin-pwa
 
 ### Project Structure
