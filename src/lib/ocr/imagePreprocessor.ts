@@ -3,6 +3,7 @@
  * Provides image enhancement functions to improve OCR accuracy.
  */
 
+import type { PDFPageProxy } from 'pdfjs-dist';
 import type { PreprocessingOptions } from './types';
 
 /**
@@ -252,13 +253,7 @@ function applyDenoise(imageData: ImageData, kernelSize: number = 3): ImageData {
  * @returns Canvas with rendered page
  */
 export async function renderPageToCanvas(
-  page: {
-    getViewport: (options: { scale: number }) => { width: number; height: number };
-    render: (context: {
-      canvasContext: CanvasRenderingContext2D;
-      viewport: { width: number; height: number };
-    }) => { promise: Promise<void> };
-  },
+  page: PDFPageProxy,
   scale: number = 2.0
 ): Promise<HTMLCanvasElement> {
   const viewport = page.getViewport({ scale });

@@ -40,3 +40,12 @@ export {
   calculateOptimalScale,
   shouldInvertImage,
 } from './imagePreprocessor';
+
+// Text Layer Embedding
+export {
+  embedTextLayer,
+  createSearchablePDF,
+  validateOCRResults,
+  type EmbedOptions,
+  type EmbedResult,
+} from './textLayerEmbed';

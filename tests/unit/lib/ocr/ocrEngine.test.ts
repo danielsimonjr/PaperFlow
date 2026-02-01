@@ -4,7 +4,6 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { OCREngine, createOCREngine, PageSegmentationMode, OCREngineMode } from '@/lib/ocr/ocrEngine';
-import type { OCRProgress } from '@/lib/ocr/types';
 
 // Mock tesseract.js
 vi.mock('tesseract.js', () => ({

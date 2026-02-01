@@ -2,7 +2,7 @@
  * Tests for OCR Image Preprocessor
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { calculateOptimalScale } from '@/lib/ocr/imagePreprocessor';
 
 // Note: Most image preprocessing functions require DOM/Canvas which is not available in Node.js

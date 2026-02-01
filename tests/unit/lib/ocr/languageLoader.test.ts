@@ -2,9 +2,8 @@
  * Tests for OCR Language Loader
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { LanguageLoader, checkOCRSupport } from '@/lib/ocr/languageLoader';
-import { SUPPORTED_LANGUAGES } from '@/lib/ocr/types';
 
 describe('Language Loader', () => {
   let loader: LanguageLoader;
