@@ -61,6 +61,12 @@ npx vitest run -t "should load PDF"
 - `formStore`: Form field state and values
 - `signatureStore`: Saved signatures and placements
 - `textStore`: Text editing state
+- `ocrStore`: OCR processing state and results
+- `formDesignerStore`: Form design mode state
+- `redactionStore`: Redaction marks and patterns
+- `comparisonStore`: Document comparison state
+- `batchStore`: Batch processing queue
+- `accessibilityStore`: Accessibility check results
 
 ### Key Data Flow
 ```
@@ -128,6 +134,11 @@ Annotation serialization in `lib/annotations/serializer.ts`.
 - `lib/thumbnails/`: Thumbnail caching (LRU cache)
 - `lib/performance/`: Memory monitoring, canvas disposal
 - `lib/monitoring/`: Error tracking (Sentry), analytics
+- `lib/ocr/`: OCR engine, image preprocessing, language loading, batch processing, layout analysis, export formats
+- `lib/redaction/`: Pattern matching, redaction engine, verification
+- `lib/comparison/`: Text diff, comparison engine, report generation
+- `lib/batch/`: Watermarks, headers/footers, Bates numbering, PDF flattening
+- `lib/accessibility/`: PDF/UA checker, WCAG compliance, contrast calculation
 
 ## Naming Conventions
 

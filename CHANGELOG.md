@@ -5,6 +5,69 @@ All notable changes to PaperFlow will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+---
+
+## [2.5.0] - 2026-02-01
+
+### Phase 2: Advanced Features Release
+
+This release completes Phase 2 development, adding professional-grade tools for OCR, form design, redaction, document comparison, batch processing, and accessibility compliance.
+
+### Added
+
+#### OCR (Optical Character Recognition)
+- Tesseract.js integration for client-side OCR
+- Multi-language support with dynamic language pack loading
+- Image preprocessing (deskew, denoise, contrast enhancement)
+- Batch OCR processing for multi-page documents
+- Layout analysis for preserving document structure
+- Export to searchable PDF, plain text, and hOCR formats
+
+#### Form Designer
+- Drag-and-drop form field creation
+- Field types: text, checkbox, radio button, dropdown, date picker, signature
+- Calculated fields with formula support
+- Conditional logic for field visibility and validation
+- Form actions (submit, reset, JavaScript triggers)
+- Form submission configuration (email, HTTP endpoint)
+
+#### Redaction Tools
+- Pattern-based redaction (SSN, credit cards, phone numbers, emails)
+- Custom regex pattern support
+- Search and redact across entire document
+- Redaction verification workflow
+- Metadata scrubbing (author, timestamps, comments)
+- Permanent redaction with content removal
+
+#### Document Comparison
+- Text-based diff comparison
+- Side-by-side view with synchronized scrolling
+- Overlay mode with change highlighting
+- Change summary statistics
+- Comparison report export (PDF, HTML)
+- Support for comparing different document versions
+
+#### Batch Processing
+- Watermark application (text and image)
+- Headers and footers with page numbering
+- Bates numbering with prefix/suffix support
+- Batch PDF flattening
+- Process multiple files with consistent settings
+- Progress tracking and error handling
+
+#### PDF/UA Accessibility Checker
+- PDF/UA compliance validation
+- WCAG 2.1 AA guideline checks
+- Color contrast ratio calculation
+- Alt text verification for images
+- Reading order validation
+- Tag structure analysis
+- Accessibility report generation
+
+---
+
 ## [1.0.0] - 2026-01-30
 
 ### Phase 1: MVP Release
@@ -97,14 +160,3 @@ This release marks the completion of Phase 1 development, delivering the core PD
 - Tailwind CSS styling
 - Comprehensive test suite (unit, integration, e2e)
 - Playwright browser tests
-
----
-
-## [Unreleased]
-
-### Planned for Phase 2
-- OCR for scanned documents
-- Form creation and designer
-- Redaction tools
-- Document comparison
-- Batch processing
