@@ -1,0 +1,187 @@
+{
+  "phase": 2,
+  "sprint": 12,
+  "todoFile": 1,
+  "title": "Phase 2 Testing & QA",
+  "priority": "HIGH",
+  "effort": "10 hours",
+  "status": "pending",
+  "milestone": "v2.5 Release",
+  "tasks": [
+    {
+      "id": "2.12.1",
+      "category": "testing",
+      "title": "OCR Module Unit Tests",
+      "description": "Create comprehensive unit tests for the OCR module.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["tests/unit/lib/ocr/ocrEngine.test.ts", "tests/unit/lib/ocr/imagePreprocessor.test.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create OCR engine tests",
+          "code": "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { OCREngine } from '@lib/ocr/ocrEngine';\n\ndescribe('OCREngine', () => {\n  let engine: OCREngine;\n\n  beforeEach(() => {\n    engine = new OCREngine();\n  });\n\n  afterEach(async () => {\n    await engine.terminate();\n  });\n\n  describe('initialization', () => {\n    it('should initialize with default language', async () => {\n      await engine.initialize();\n      expect(engine.isInitialized).toBe(true);\n    });\n\n    it('should initialize with specified language', async () => {\n      await engine.initialize('spa');\n      expect(engine.currentLanguage).toBe('spa');\n    });\n\n    it('should throw error for invalid language', async () => {\n      await expect(engine.initialize('invalid')).rejects.toThrow();\n    });\n  });\n\n  describe('recognize', () => {\n    it('should recognize text from canvas', async () => {\n      await engine.initialize('eng');\n      const canvas = createTestCanvas('Hello World');\n      const result = await engine.recognize(canvas);\n      \n      expect(result.text).toContain('Hello');\n      expect(result.confidence).toBeGreaterThan(0);\n      expect(result.words.length).toBeGreaterThan(0);\n    });\n\n    it('should report progress during recognition', async () => {\n      const progressFn = vi.fn();\n      engine = new OCREngine(progressFn);\n      await engine.initialize('eng');\n      \n      const canvas = createTestCanvas('Test text');\n      await engine.recognize(canvas);\n      \n      expect(progressFn).toHaveBeenCalled();\n    });\n\n    it('should throw error if not initialized', async () => {\n      const canvas = createTestCanvas('Test');\n      await expect(engine.recognize(canvas)).rejects.toThrow('not initialized');\n    });\n  });\n\n  describe('terminate', () => {\n    it('should clean up worker', async () => {\n      await engine.initialize('eng');\n      await engine.terminate();\n      expect(engine.isInitialized).toBe(false);\n    });\n  });\n});\n\nfunction createTestCanvas(text: string): HTMLCanvasElement {\n  const canvas = document.createElement('canvas');\n  canvas.width = 300;\n  canvas.height = 100;\n  const ctx = canvas.getContext('2d')!;\n  ctx.fillStyle = 'white';\n  ctx.fillRect(0, 0, 300, 100);\n  ctx.fillStyle = 'black';\n  ctx.font = '24px Arial';\n  ctx.fillText(text, 10, 50);\n  return canvas;\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create image preprocessor tests",
+          "code": "import { describe, it, expect } from 'vitest';\nimport { ImagePreprocessor } from '@lib/ocr/imagePreprocessor';\n\ndescribe('ImagePreprocessor', () => {\n  let preprocessor: ImagePreprocessor;\n  let testImageData: ImageData;\n\n  beforeEach(() => {\n    preprocessor = new ImagePreprocessor(100, 100);\n    testImageData = new ImageData(100, 100);\n    // Fill with gray pixels\n    for (let i = 0; i < testImageData.data.length; i += 4) {\n      testImageData.data[i] = 128;     // R\n      testImageData.data[i + 1] = 128; // G\n      testImageData.data[i + 2] = 128; // B\n      testImageData.data[i + 3] = 255; // A\n    }\n  });\n\n  describe('grayscale', () => {\n    it('should convert to grayscale', () => {\n      const result = preprocessor.process(testImageData, { grayscale: true });\n      // Check that R, G, B values are equal\n      expect(result.data[0]).toBe(result.data[1]);\n      expect(result.data[1]).toBe(result.data[2]);\n    });\n  });\n\n  describe('contrast', () => {\n    it('should increase contrast', () => {\n      const result = preprocessor.process(testImageData, { contrast: 50 });\n      // Higher contrast should push mid-gray values toward black or white\n      expect(result.data[0]).not.toBe(128);\n    });\n  });\n\n  describe('binarize', () => {\n    it('should binarize to black and white', () => {\n      const result = preprocessor.process(testImageData, { binarize: true, binarizeThreshold: 128 });\n      // All pixels should be 0 or 255\n      for (let i = 0; i < result.data.length; i += 4) {\n        expect([0, 255]).toContain(result.data[i]);\n      }\n    });\n  });\n});"
+        }
+      ],
+      "acceptanceCriteria": [
+        "OCR engine tests cover initialization, recognition, termination",
+        "Preprocessor tests cover all transformations",
+        "80%+ code coverage for OCR module",
+        "Tests run in under 30 seconds"
+      ]
+    },
+    {
+      "id": "2.12.2",
+      "category": "testing",
+      "title": "Form Designer Integration Tests",
+      "description": "Create integration tests for the form designer workflow.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["tests/integration/formDesigner.test.tsx"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create form designer integration tests",
+          "code": "import { describe, it, expect, beforeEach } from 'vitest';\nimport { render, screen, fireEvent } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport { FormDesigner } from '@components/forms/designer';\nimport { useFormDesignerStore } from '@stores/formDesignerStore';\n\ndescribe('Form Designer Integration', () => {\n  beforeEach(() => {\n    useFormDesignerStore.getState().enterDesignMode();\n  });\n\n  describe('Field Creation', () => {\n    it('should add text field when clicking on canvas after selecting from palette', async () => {\n      const user = userEvent.setup();\n      render(<FormDesigner pageIndex={0} />);\n\n      // Select text field from palette\n      const textFieldButton = screen.getByRole('button', { name: /text field/i });\n      await user.click(textFieldButton);\n\n      // Click on canvas to place field\n      const canvas = screen.getByTestId('design-canvas');\n      await user.click(canvas, { clientX: 100, clientY: 100 });\n\n      // Verify field was created\n      const { fields } = useFormDesignerStore.getState();\n      expect(fields.length).toBe(1);\n      expect(fields[0].type).toBe('text');\n    });\n\n    it('should create field via drag and drop', async () => {\n      render(<FormDesigner pageIndex={0} />);\n\n      const textFieldButton = screen.getByRole('button', { name: /text field/i });\n      const canvas = screen.getByTestId('design-canvas');\n\n      // Simulate drag and drop\n      fireEvent.dragStart(textFieldButton);\n      fireEvent.dragOver(canvas);\n      fireEvent.drop(canvas, {\n        clientX: 150,\n        clientY: 200,\n      });\n\n      const { fields } = useFormDesignerStore.getState();\n      expect(fields.length).toBe(1);\n    });\n  });\n\n  describe('Field Selection', () => {\n    it('should select field when clicked', async () => {\n      const user = userEvent.setup();\n      // Add a field first\n      useFormDesignerStore.getState().addField('text', 0, { x: 100, y: 100 });\n      \n      render(<FormDesigner pageIndex={0} />);\n\n      const field = screen.getByTestId('form-field-0');\n      await user.click(field);\n\n      const { selectedFieldIds } = useFormDesignerStore.getState();\n      expect(selectedFieldIds.length).toBe(1);\n    });\n\n    it('should support multi-select with shift key', async () => {\n      const user = userEvent.setup();\n      useFormDesignerStore.getState().addField('text', 0, { x: 100, y: 100 });\n      useFormDesignerStore.getState().addField('checkbox', 0, { x: 200, y: 100 });\n      \n      render(<FormDesigner pageIndex={0} />);\n\n      const field1 = screen.getByTestId('form-field-0');\n      const field2 = screen.getByTestId('form-field-1');\n\n      await user.click(field1);\n      await user.keyboard('{Shift>}');\n      await user.click(field2);\n      await user.keyboard('{/Shift}');\n\n      const { selectedFieldIds } = useFormDesignerStore.getState();\n      expect(selectedFieldIds.length).toBe(2);\n    });\n  });\n\n  describe('Field Properties', () => {\n    it('should update field properties when changed', async () => {\n      const user = userEvent.setup();\n      const fieldId = useFormDesignerStore.getState().addField('text', 0, { x: 100, y: 100 });\n      \n      render(<FormDesigner pageIndex={0} />);\n\n      // Select field\n      const field = screen.getByTestId('form-field-0');\n      await user.click(field);\n\n      // Find and update name input\n      const nameInput = screen.getByLabelText(/field name/i);\n      await user.clear(nameInput);\n      await user.type(nameInput, 'myTextField');\n\n      const { fields } = useFormDesignerStore.getState();\n      expect(fields.find(f => f.id === fieldId)?.name).toBe('myTextField');\n    });\n  });\n});"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Field creation via click and drag works",
+        "Selection and multi-selection work",
+        "Property editing updates fields",
+        "Tests cover main user workflows"
+      ]
+    },
+    {
+      "id": "2.12.3",
+      "category": "testing",
+      "title": "E2E Tests for Phase 2 Features",
+      "description": "Create Playwright E2E tests for all Phase 2 features.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["tests/e2e/ocr.spec.ts", "tests/e2e/formDesigner.spec.ts", "tests/e2e/redaction.spec.ts"],
+      "testCategories": ["e2e"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create OCR E2E test",
+          "code": "import { test, expect } from '@playwright/test';\n\ntest.describe('OCR Feature', () => {\n  test.beforeEach(async ({ page }) => {\n    await page.goto('/');\n    // Upload a scanned PDF\n    await page.setInputFiles('input[type=\"file\"]', 'tests/fixtures/scanned-document.pdf');\n    await page.waitForSelector('[data-testid=\"pdf-viewer\"]');\n  });\n\n  test('should open OCR dialog', async ({ page }) => {\n    await page.click('[data-testid=\"ocr-button\"]');\n    await expect(page.locator('[data-testid=\"ocr-dialog\"]')).toBeVisible();\n  });\n\n  test('should run OCR on current page', async ({ page }) => {\n    await page.click('[data-testid=\"ocr-button\"]');\n    await page.click('[data-testid=\"ocr-start\"]');\n    \n    // Wait for processing\n    await expect(page.locator('[data-testid=\"ocr-progress\"]')).toBeVisible();\n    await expect(page.locator('[data-testid=\"ocr-complete\"]')).toBeVisible({ timeout: 30000 });\n\n    // Check results\n    await expect(page.locator('[data-testid=\"ocr-results\"]')).toContainText(/\\w+/);\n  });\n\n  test('should allow language selection', async ({ page }) => {\n    await page.click('[data-testid=\"ocr-button\"]');\n    await page.click('[data-testid=\"language-selector\"]');\n    await page.click('text=Spanish');\n    \n    await expect(page.locator('[data-testid=\"selected-language\"]')).toContainText('Spanish');\n  });\n});"
+        },
+        {
+          "step": 2,
+          "action": "Create Redaction E2E test",
+          "code": "test.describe('Redaction Feature', () => {\n  test.beforeEach(async ({ page }) => {\n    await page.goto('/');\n    await page.setInputFiles('input[type=\"file\"]', 'tests/fixtures/sample-with-pii.pdf');\n    await page.waitForSelector('[data-testid=\"pdf-viewer\"]');\n  });\n\n  test('should mark area for redaction', async ({ page }) => {\n    // Enable redaction tool\n    await page.click('[data-testid=\"redaction-tool\"]');\n    \n    // Draw redaction box\n    const canvas = page.locator('[data-testid=\"page-canvas-0\"]');\n    await canvas.dragTo(canvas, {\n      sourcePosition: { x: 100, y: 100 },\n      targetPosition: { x: 300, y: 150 },\n    });\n\n    // Verify mark was created\n    await expect(page.locator('[data-testid=\"redaction-mark\"]')).toBeVisible();\n  });\n\n  test('should find SSN patterns', async ({ page }) => {\n    await page.click('[data-testid=\"redaction-search\"]');\n    await page.selectOption('[data-testid=\"pattern-select\"]', 'ssn');\n    await page.click('[data-testid=\"search-pattern\"]');\n\n    // Should find matches\n    await expect(page.locator('[data-testid=\"pattern-matches\"]')).toBeVisible();\n    await expect(page.locator('[data-testid=\"match-count\"]')).not.toHaveText('0');\n  });\n\n  test('should apply redactions permanently', async ({ page }) => {\n    // Mark something first\n    await page.click('[data-testid=\"redaction-tool\"]');\n    const canvas = page.locator('[data-testid=\"page-canvas-0\"]');\n    await canvas.click({ position: { x: 100, y: 100 } });\n    await canvas.click({ position: { x: 200, y: 150 } });\n\n    // Apply redactions\n    await page.click('[data-testid=\"apply-redactions\"]');\n    await page.click('[data-testid=\"confirm-apply\"]');\n\n    // Verify status changed\n    await expect(page.locator('[data-testid=\"redaction-applied\"]')).toBeVisible();\n  });\n});"
+        }
+      ],
+      "acceptanceCriteria": [
+        "OCR workflow test passes",
+        "Form designer workflow test passes",
+        "Redaction workflow test passes",
+        "Tests run in CI environment",
+        "Reasonable test execution time (< 2 min each)"
+      ]
+    },
+    {
+      "id": "2.12.4",
+      "category": "testing",
+      "title": "Performance Benchmarks",
+      "description": "Create and run performance benchmarks for Phase 2 features.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["tests/performance/phase2-benchmarks.ts"],
+      "testCategories": ["performance"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create performance benchmark suite",
+          "code": "import { describe, it, expect } from 'vitest';\n\ndescribe('Phase 2 Performance Benchmarks', () => {\n  describe('OCR Performance', () => {\n    it('should OCR single page in under 3 seconds', async () => {\n      const start = performance.now();\n      // Run OCR on test page\n      const duration = performance.now() - start;\n      \n      expect(duration).toBeLessThan(3000);\n      console.log(`Single page OCR: ${duration.toFixed(0)}ms`);\n    });\n\n    it('should OCR 10 pages in under 30 seconds', async () => {\n      const start = performance.now();\n      // Run batch OCR\n      const duration = performance.now() - start;\n      \n      expect(duration).toBeLessThan(30000);\n      console.log(`10 page OCR: ${duration.toFixed(0)}ms`);\n    });\n  });\n\n  describe('Form Designer Performance', () => {\n    it('should remain responsive with 100 fields', async () => {\n      // Add 100 fields\n      const start = performance.now();\n      for (let i = 0; i < 100; i++) {\n        // Add field\n      }\n      const addDuration = performance.now() - start;\n\n      // Measure interaction time\n      const interactionStart = performance.now();\n      // Select a field\n      const interactionDuration = performance.now() - interactionStart;\n\n      expect(interactionDuration).toBeLessThan(100);\n      console.log(`Add 100 fields: ${addDuration.toFixed(0)}ms`);\n      console.log(`Field interaction: ${interactionDuration.toFixed(0)}ms`);\n    });\n  });\n\n  describe('Redaction Performance', () => {\n    it('should apply redactions in under 2 seconds per page', async () => {\n      // Benchmark redaction application\n    });\n\n    it('should search patterns in under 5 seconds for 100 pages', async () => {\n      // Benchmark pattern search\n    });\n  });\n\n  describe('Batch Processing Performance', () => {\n    it('should apply watermark to 100 pages in under 60 seconds', async () => {\n      const start = performance.now();\n      // Apply watermark\n      const duration = performance.now() - start;\n\n      expect(duration).toBeLessThan(60000);\n      console.log(`100 page watermark: ${duration.toFixed(0)}ms`);\n    });\n  });\n\n  describe('Accessibility Check Performance', () => {\n    it('should complete accessibility check in under 30 seconds', async () => {\n      const start = performance.now();\n      // Run accessibility check\n      const duration = performance.now() - start;\n\n      expect(duration).toBeLessThan(30000);\n      console.log(`Accessibility check: ${duration.toFixed(0)}ms`);\n    });\n  });\n});"
+        }
+      ],
+      "acceptanceCriteria": [
+        "All benchmarks pass target metrics",
+        "Results are logged for tracking",
+        "Benchmarks run in CI",
+        "No performance regressions"
+      ]
+    },
+    {
+      "id": "2.12.5",
+      "category": "release",
+      "title": "v2.5 Release Preparation",
+      "description": "Prepare for v2.5 release including version bump, changelog, and documentation.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": ["package.json", "CHANGELOG.md", "docs/roadmap/ROADMAP.md"],
+      "testCategories": [],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Update version to 2.5.0",
+          "details": "Update package.json version field"
+        },
+        {
+          "step": 2,
+          "action": "Update CHANGELOG.md",
+          "details": "Document all Phase 2 features and changes"
+        },
+        {
+          "step": 3,
+          "action": "Update ROADMAP.md",
+          "details": "Mark Phase 2 features as complete"
+        },
+        {
+          "step": 4,
+          "action": "Create GitHub release",
+          "details": "Tag v2.5.0 and create release notes"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Version is 2.5.0",
+        "CHANGELOG documents all features",
+        "Roadmap shows Phase 2 complete",
+        "GitHub release created"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Unit test coverage ≥ 80% for Phase 2 modules",
+    "All integration tests pass",
+    "E2E tests cover all major workflows",
+    "Performance benchmarks meet targets",
+    "v2.5.0 released"
+  ],
+  "filesCreated": [
+    "tests/unit/lib/ocr/ocrEngine.test.ts",
+    "tests/unit/lib/ocr/imagePreprocessor.test.ts",
+    "tests/integration/formDesigner.test.tsx",
+    "tests/e2e/ocr.spec.ts",
+    "tests/e2e/formDesigner.spec.ts",
+    "tests/e2e/redaction.spec.ts",
+    "tests/performance/phase2-benchmarks.ts"
+  ],
+  "filesModified": [
+    "package.json",
+    "CHANGELOG.md",
+    "docs/roadmap/ROADMAP.md"
+  ],
+  "totalNewTests": 50,
+  "totalEstimatedHours": 10,
+  "dependencies": ["All previous Phase 2 sprints"],
+  "notes": [
+    "Testing should not be rushed - quality over speed",
+    "Performance regressions should block release",
+    "Cross-browser testing essential before release"
+  ]
+}

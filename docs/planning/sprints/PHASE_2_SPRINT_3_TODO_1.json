@@ -1,0 +1,145 @@
+{
+  "phase": 2,
+  "sprint": 3,
+  "todoFile": 1,
+  "title": "Batch OCR & Layout Preservation",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "OCR Complete",
+  "tasks": [
+    {
+      "id": "2.3.1",
+      "category": "implementation",
+      "title": "Implement Batch OCR Controller",
+      "description": "Create controller for processing multiple pages with queue management and progress tracking.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/lib/ocr/batchOCR.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create BatchOCRController class",
+          "code": "import { OCREngine } from './ocrEngine';\nimport type { OCRResult, OCRProgress } from './types';\n\nexport interface BatchOCROptions {\n  pageIndices: number[];\n  language: string;\n  parallel: boolean;\n  maxConcurrent: number;\n  onPageComplete?: (pageIndex: number, result: OCRResult) => void;\n  onProgress?: (current: number, total: number, pageProgress: number) => void;\n  onError?: (pageIndex: number, error: Error) => void;\n}\n\nexport class BatchOCRController {\n  private engine: OCREngine;\n  private isCancelled = false;\n  private isPaused = false;\n\n  constructor(engine: OCREngine) {\n    this.engine = engine;\n  }\n\n  async processPages(options: BatchOCROptions): Promise<Map<number, OCRResult>> {\n    const results = new Map<number, OCRResult>();\n    const { pageIndices, onPageComplete, onProgress, onError } = options;\n\n    for (let i = 0; i < pageIndices.length; i++) {\n      if (this.isCancelled) break;\n      \n      while (this.isPaused) {\n        await this.sleep(100);\n        if (this.isCancelled) break;\n      }\n\n      const pageIndex = pageIndices[i];\n      onProgress?.(i, pageIndices.length, 0);\n\n      try {\n        const result = await this.processPage(pageIndex, (progress) => {\n          onProgress?.(i, pageIndices.length, progress);\n        });\n        results.set(pageIndex, result);\n        onPageComplete?.(pageIndex, result);\n      } catch (error) {\n        onError?.(pageIndex, error as Error);\n      }\n    }\n\n    return results;\n  }\n\n  private async processPage(pageIndex: number, onProgress: (p: number) => void): Promise<OCRResult> {\n    // Render page and run OCR\n    return {} as OCRResult;\n  }\n\n  cancel(): void {\n    this.isCancelled = true;\n  }\n\n  pause(): void {\n    this.isPaused = true;\n  }\n\n  resume(): void {\n    this.isPaused = false;\n  }\n\n  private sleep(ms: number): Promise<void> {\n    return new Promise(resolve => setTimeout(resolve, ms));\n  }\n}"
+        },
+        {
+          "step": 2,
+          "action": "Add memory management",
+          "code": "private async cleanupPageResources(canvas: HTMLCanvasElement): void {\n  canvas.width = 0;\n  canvas.height = 0;\n  // Force garbage collection hint\n  if (typeof window !== 'undefined' && 'gc' in window) {\n    (window as any).gc();\n  }\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Batch processing works for multiple pages",
+        "Progress callbacks fire correctly",
+        "Cancel and pause/resume work",
+        "Memory is cleaned up between pages",
+        "Errors don't stop entire batch"
+      ]
+    },
+    {
+      "id": "2.3.2",
+      "category": "implementation",
+      "title": "Implement Layout Analyzer",
+      "description": "Create layout analysis to detect columns, tables, and reading order.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/lib/ocr/layoutAnalyzer.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define layout types",
+          "code": "export interface LayoutAnalysis {\n  columns: Column[];\n  tables: TableRegion[];\n  images: ImageRegion[];\n  headers: TextRegion[];\n  footers: TextRegion[];\n  readingOrder: Region[];\n  pageOrientation: 'portrait' | 'landscape';\n  textDirection: 'ltr' | 'rtl' | 'ttb';\n}\n\nexport interface Column {\n  bounds: BoundingBox;\n  lines: OCRLine[];\n  index: number;\n}\n\nexport interface TableRegion {\n  bounds: BoundingBox;\n  rows: number;\n  cols: number;\n  cells: TableCell[][];\n}\n\nexport interface TableCell {\n  bounds: BoundingBox;\n  text: string;\n  rowSpan: number;\n  colSpan: number;\n  isHeader: boolean;\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create LayoutAnalyzer class",
+          "code": "export class LayoutAnalyzer {\n  analyze(ocrResult: OCRResult): LayoutAnalysis {\n    const columns = this.detectColumns(ocrResult);\n    const tables = this.detectTables(ocrResult);\n    const readingOrder = this.determineReadingOrder(ocrResult, columns);\n\n    return {\n      columns,\n      tables,\n      images: [],\n      headers: this.detectHeaders(ocrResult),\n      footers: this.detectFooters(ocrResult),\n      readingOrder,\n      pageOrientation: this.detectOrientation(ocrResult),\n      textDirection: this.detectTextDirection(ocrResult),\n    };\n  }\n\n  private detectColumns(result: OCRResult): Column[] {\n    // Analyze horizontal gaps between text blocks\n    const blocks = result.blocks;\n    const gaps: number[] = [];\n    \n    // Find significant vertical gaps that indicate column boundaries\n    // Group blocks by column based on x-position clustering\n    return [];\n  }\n\n  private detectTables(result: OCRResult): TableRegion[] {\n    // Look for grid-like patterns in text positions\n    // Detect aligned rows and columns of text\n    return [];\n  }\n\n  private determineReadingOrder(result: OCRResult, columns: Column[]): Region[] {\n    // For single column: top-to-bottom\n    // For multi-column: column by column, top-to-bottom within each\n    // Handle RTL languages\n    return [];\n  }\n\n  private detectHeaders(result: OCRResult): TextRegion[] {\n    // Look for text in top margin area\n    // Often smaller font, page numbers, document title\n    return [];\n  }\n\n  private detectFooters(result: OCRResult): TextRegion[] {\n    // Look for text in bottom margin area\n    return [];\n  }\n\n  private detectOrientation(result: OCRResult): 'portrait' | 'landscape' {\n    // Compare page dimensions\n    return 'portrait';\n  }\n\n  private detectTextDirection(result: OCRResult): 'ltr' | 'rtl' | 'ttb' {\n    // Analyze character scripts and word positions\n    return 'ltr';\n  }\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Column detection works for 1-3 columns",
+        "Table detection finds grid structures",
+        "Reading order is correct for multi-column",
+        "Headers and footers identified",
+        "RTL text direction detected"
+      ]
+    },
+    {
+      "id": "2.3.3",
+      "category": "implementation",
+      "title": "Implement Searchable PDF Export",
+      "description": "Create function to embed OCR text layer into PDF for searchability.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/lib/ocr/textLayerEmbed.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create text layer embedding function",
+          "code": "import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';\nimport type { OCRResult, OCRWord } from './types';\n\nexport interface EmbedOptions {\n  invisible: boolean; // True for searchable PDF (text behind image)\n  preserveFormatting: boolean;\n}\n\nexport async function embedTextLayer(\n  pdfBytes: ArrayBuffer,\n  ocrResults: Map<number, OCRResult>,\n  options: EmbedOptions = { invisible: true, preserveFormatting: true }\n): Promise<ArrayBuffer> {\n  const pdfDoc = await PDFDocument.load(pdfBytes);\n  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);\n  const pages = pdfDoc.getPages();\n\n  for (const [pageIndex, result] of ocrResults) {\n    if (pageIndex >= pages.length) continue;\n    \n    const page = pages[pageIndex];\n    const { width, height } = page.getSize();\n\n    for (const word of result.words) {\n      const { bbox, text, fontSize: detectedSize } = word;\n      \n      // Convert OCR coordinates to PDF coordinates\n      // OCR uses top-left origin, PDF uses bottom-left\n      const x = bbox.x0;\n      const y = height - bbox.y1;\n      \n      // Calculate font size to match word width\n      const fontSize = calculateFontSize(font, text, bbox.width, detectedSize);\n\n      page.drawText(text, {\n        x,\n        y,\n        size: fontSize,\n        font,\n        color: options.invisible ? rgb(1, 1, 1) : rgb(0, 0, 0),\n        opacity: options.invisible ? 0 : 1,\n      });\n    }\n  }\n\n  return pdfDoc.save();\n}\n\nfunction calculateFontSize(\n  font: any,\n  text: string,\n  targetWidth: number,\n  hintSize: number\n): number {\n  // Start with hint and adjust to fit width\n  let size = hintSize || 12;\n  const measuredWidth = font.widthOfTextAtSize(text, size);\n  \n  if (measuredWidth > 0) {\n    size = (targetWidth / measuredWidth) * size;\n  }\n  \n  return Math.max(4, Math.min(size, 72)); // Clamp to reasonable range\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Text layer embeds correctly",
+        "Text positions match original",
+        "Invisible text for searchable PDF works",
+        "Text is selectable in output PDF",
+        "Search finds embedded text"
+      ]
+    },
+    {
+      "id": "2.3.4",
+      "category": "ui",
+      "title": "Create Batch OCR Progress UI",
+      "description": "Build UI for batch OCR with page-level progress and thumbnail status.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/components/ocr/BatchOCRProgress.tsx"],
+      "testCategories": ["visual"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create BatchOCRProgress component",
+          "code": "import { Check, X, Loader2, Clock } from 'lucide-react';\nimport { Progress } from '@components/ui/Progress';\nimport { useOCRStore } from '@stores/ocrStore';\n\ninterface PageStatus {\n  pageIndex: number;\n  status: 'pending' | 'processing' | 'complete' | 'error';\n  progress: number;\n  error?: string;\n}\n\nexport function BatchOCRProgress() {\n  const { currentPage, totalPages, progress, results } = useOCRStore();\n  const [pageStatuses, setPageStatuses] = useState<PageStatus[]>([]);\n\n  const overallProgress = totalPages > 0 ? (currentPage / totalPages) * 100 : 0;\n  const completedCount = pageStatuses.filter(p => p.status === 'complete').length;\n  const errorCount = pageStatuses.filter(p => p.status === 'error').length;\n\n  return (\n    <div className=\"space-y-6\">\n      {/* Overall Progress */}\n      <div className=\"space-y-2\">\n        <div className=\"flex justify-between text-sm\">\n          <span>Overall Progress</span>\n          <span>{completedCount} of {totalPages} pages</span>\n        </div>\n        <Progress value={overallProgress} className=\"h-2\" />\n      </div>\n\n      {/* Page Grid */}\n      <div className=\"grid grid-cols-5 gap-2 max-h-64 overflow-y-auto\">\n        {pageStatuses.map((page) => (\n          <PageStatusTile key={page.pageIndex} {...page} />\n        ))}\n      </div>\n\n      {/* Stats */}\n      <div className=\"flex justify-between text-sm text-gray-600\">\n        <span className=\"flex items-center gap-1\">\n          <Check className=\"h-4 w-4 text-green-500\" />\n          {completedCount} complete\n        </span>\n        {errorCount > 0 && (\n          <span className=\"flex items-center gap-1\">\n            <X className=\"h-4 w-4 text-red-500\" />\n            {errorCount} failed\n          </span>\n        )}\n        <span className=\"flex items-center gap-1\">\n          <Clock className=\"h-4 w-4\" />\n          Est. {estimateTimeRemaining()} remaining\n        </span>\n      </div>\n\n      {/* Controls */}\n      <div className=\"flex justify-center gap-2\">\n        <Button variant=\"ghost\" onClick={handlePause}>\n          {isPaused ? 'Resume' : 'Pause'}\n        </Button>\n        <Button variant=\"ghost\" onClick={handleCancel}>Cancel</Button>\n      </div>\n    </div>\n  );\n}\n\nfunction PageStatusTile({ pageIndex, status, progress, error }: PageStatus) {\n  return (\n    <div\n      className={cn(\n        'aspect-[3/4] rounded border flex items-center justify-center',\n        status === 'complete' && 'bg-green-50 border-green-200',\n        status === 'error' && 'bg-red-50 border-red-200',\n        status === 'processing' && 'bg-blue-50 border-blue-200',\n        status === 'pending' && 'bg-gray-50'\n      )}\n      title={error || `Page ${pageIndex + 1}`}\n    >\n      {status === 'complete' && <Check className=\"h-4 w-4 text-green-500\" />}\n      {status === 'error' && <X className=\"h-4 w-4 text-red-500\" />}\n      {status === 'processing' && <Loader2 className=\"h-4 w-4 text-blue-500 animate-spin\" />}\n      {status === 'pending' && <span className=\"text-xs text-gray-400\">{pageIndex + 1}</span>}\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Page grid shows all pages",
+        "Status icons update in real-time",
+        "Progress bar is accurate",
+        "Pause/resume controls work",
+        "Error pages are highlighted"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Batch OCR processes 100 pages successfully",
+    "Layout analysis detects multi-column documents",
+    "Searchable PDF export works",
+    "UI shows accurate progress"
+  ],
+  "filesCreated": [
+    "src/lib/ocr/batchOCR.ts",
+    "src/lib/ocr/layoutAnalyzer.ts",
+    "src/lib/ocr/textLayerEmbed.ts",
+    "src/components/ocr/BatchOCRProgress.tsx"
+  ],
+  "filesModified": [
+    "src/lib/ocr/index.ts"
+  ],
+  "totalNewTests": 15,
+  "totalEstimatedHours": 10,
+  "dependencies": ["2.1.1-2.1.9", "2.2.1-2.2.3"],
+  "notes": [
+    "Memory management critical for large documents",
+    "Layout analysis accuracy depends on OCR quality",
+    "Searchable PDF is key deliverable for OCR feature"
+  ]
+}

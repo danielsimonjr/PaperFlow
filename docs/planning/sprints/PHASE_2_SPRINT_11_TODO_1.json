@@ -1,0 +1,154 @@
+{
+  "phase": 2,
+  "sprint": 11,
+  "todoFile": 1,
+  "title": "PDF/UA Accessibility Checker Infrastructure",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "v2.5 Release",
+  "tasks": [
+    {
+      "id": "2.11.1",
+      "category": "architecture",
+      "title": "Create Accessibility Library Structure",
+      "description": "Set up lib/accessibility/ directory with checker modules.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": [
+        "src/lib/accessibility/accessibilityChecker.ts",
+        "src/lib/accessibility/tagChecker.ts",
+        "src/lib/accessibility/readingOrderChecker.ts",
+        "src/lib/accessibility/altTextChecker.ts",
+        "src/lib/accessibility/contrastChecker.ts",
+        "src/lib/accessibility/types.ts",
+        "src/lib/accessibility/index.ts"
+      ],
+      "testCategories": ["typecheck"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create accessibility directory",
+          "details": "mkdir -p src/lib/accessibility src/lib/accessibility/rules"
+        },
+        {
+          "step": 2,
+          "action": "Define accessibility types",
+          "code": "// src/lib/accessibility/types.ts\nexport type IssueSeverity = 'error' | 'warning' | 'info';\n\nexport type IssueCategory = \n  | 'document-structure'\n  | 'text-alternatives'\n  | 'tables'\n  | 'lists'\n  | 'links'\n  | 'reading-order'\n  | 'color-contrast'\n  | 'metadata';\n\nexport interface AccessibilityIssue {\n  id: string;\n  ruleId: string;\n  ruleName: string;\n  category: IssueCategory;\n  severity: IssueSeverity;\n  pageIndex?: number;\n  element?: string;\n  elementId?: string;\n  description: string;\n  recommendation: string;\n  wcagCriteria?: string;\n  wcagLevel?: 'A' | 'AA' | 'AAA';\n  helpUrl?: string;\n  canAutoFix: boolean;\n}\n\nexport interface AccessibilityRule {\n  id: string;\n  name: string;\n  description: string;\n  category: IssueCategory;\n  severity: IssueSeverity;\n  wcagCriteria?: string;\n  wcagLevel?: 'A' | 'AA' | 'AAA';\n  check: (context: CheckContext) => AccessibilityIssue[];\n  autoFix?: (context: FixContext) => Promise<void>;\n}\n\nexport interface CheckContext {\n  pdfDocument: any; // PDFDocumentProxy from PDF.js\n  pageIndex?: number;\n  structureTree?: any;\n  metadata?: any;\n}\n\nexport interface FixContext extends CheckContext {\n  pdfLib: any; // PDFDocument from pdf-lib\n}\n\nexport interface AccessibilityReport {\n  documentTitle: string;\n  documentPath?: string;\n  checkDate: Date;\n  checkerVersion: string;\n  pdfUACompliant: boolean;\n  wcagLevel: 'none' | 'A' | 'AA' | 'AAA';\n  score: number; // 0-100\n  summary: {\n    errors: number;\n    warnings: number;\n    passed: number;\n    totalChecks: number;\n  };\n  issues: AccessibilityIssue[];\n  passedRules: string[];\n  categorySummary: Record<IssueCategory, {\n    errors: number;\n    warnings: number;\n    passed: number;\n  }>;\n}"
+        },
+        {
+          "step": 3,
+          "action": "Create barrel export",
+          "code": "// src/lib/accessibility/index.ts\nexport * from './types';\nexport { AccessibilityChecker } from './accessibilityChecker';\nexport { checkDocumentStructure } from './tagChecker';\nexport { checkReadingOrder } from './readingOrderChecker';\nexport { checkAltText } from './altTextChecker';\nexport { checkColorContrast } from './contrastChecker';"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Directory structure created",
+        "All types defined with WCAG references",
+        "Categories cover all accessibility areas",
+        "TypeScript compiles"
+      ]
+    },
+    {
+      "id": "2.11.2",
+      "category": "state",
+      "title": "Create Accessibility Zustand Store",
+      "description": "Implement state management for accessibility checking and results.",
+      "status": "pending",
+      "estimatedHours": 1.5,
+      "agent": "sonnet",
+      "files": ["src/stores/accessibilityStore.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create accessibility store",
+          "code": "import { create } from 'zustand';\nimport type { AccessibilityReport, AccessibilityIssue, IssueCategory, IssueSeverity } from '@lib/accessibility/types';\n\ninterface AccessibilityState {\n  // State\n  isChecking: boolean;\n  progress: number;\n  currentCheck: string | null;\n  report: AccessibilityReport | null;\n  selectedIssueId: string | null;\n  filterCategory: IssueCategory | 'all';\n  filterSeverity: IssueSeverity | 'all';\n\n  // Actions\n  runCheck: () => Promise<void>;\n  cancelCheck: () => void;\n  setReport: (report: AccessibilityReport) => void;\n  clearReport: () => void;\n  selectIssue: (id: string | null) => void;\n  setFilterCategory: (category: IssueCategory | 'all') => void;\n  setFilterSeverity: (severity: IssueSeverity | 'all') => void;\n  getFilteredIssues: () => AccessibilityIssue[];\n  applyAutoFix: (issueId: string) => Promise<void>;\n  exportReport: (format: 'pdf' | 'html' | 'json') => Promise<Blob>;\n}\n\nexport const useAccessibilityStore = create<AccessibilityState>((set, get) => ({\n  isChecking: false,\n  progress: 0,\n  currentCheck: null,\n  report: null,\n  selectedIssueId: null,\n  filterCategory: 'all',\n  filterSeverity: 'all',\n\n  runCheck: async () => {\n    set({ isChecking: true, progress: 0, currentCheck: 'Initializing...' });\n    // Actual checking handled by AccessibilityChecker\n  },\n\n  cancelCheck: () => {\n    set({ isChecking: false, progress: 0, currentCheck: null });\n  },\n\n  setReport: (report) => {\n    set({ report, isChecking: false, progress: 100, currentCheck: null });\n  },\n\n  clearReport: () => {\n    set({ report: null, selectedIssueId: null });\n  },\n\n  selectIssue: (id) => {\n    set({ selectedIssueId: id });\n  },\n\n  setFilterCategory: (category) => {\n    set({ filterCategory: category });\n  },\n\n  setFilterSeverity: (severity) => {\n    set({ filterSeverity: severity });\n  },\n\n  getFilteredIssues: () => {\n    const { report, filterCategory, filterSeverity } = get();\n    if (!report) return [];\n\n    return report.issues.filter(issue => {\n      if (filterCategory !== 'all' && issue.category !== filterCategory) return false;\n      if (filterSeverity !== 'all' && issue.severity !== filterSeverity) return false;\n      return true;\n    });\n  },\n\n  applyAutoFix: async (issueId) => {\n    const { report } = get();\n    const issue = report?.issues.find(i => i.id === issueId);\n    if (!issue || !issue.canAutoFix) return;\n    // Apply fix and re-run check\n  },\n\n  exportReport: async (format) => {\n    const { report } = get();\n    if (!report) throw new Error('No report to export');\n    // Generate export based on format\n    return new Blob([''], { type: 'application/json' });\n  },\n}));"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Store initializes correctly",
+        "Check progress updates",
+        "Filtering works",
+        "Issue selection works",
+        "Export generates blob"
+      ]
+    },
+    {
+      "id": "2.11.3",
+      "category": "implementation",
+      "title": "Implement Core Accessibility Checker",
+      "description": "Create the main AccessibilityChecker class that runs all rules.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/lib/accessibility/accessibilityChecker.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create AccessibilityChecker class",
+          "code": "import type { \n  AccessibilityRule, \n  AccessibilityReport, \n  AccessibilityIssue, \n  CheckContext,\n  IssueCategory \n} from './types';\nimport { DOCUMENT_STRUCTURE_RULES } from './rules/documentStructure';\nimport { TEXT_ALTERNATIVE_RULES } from './rules/textAlternatives';\nimport { TABLE_RULES } from './rules/tables';\nimport { READING_ORDER_RULES } from './rules/readingOrder';\nimport { COLOR_CONTRAST_RULES } from './rules/colorContrast';\n\nexport class AccessibilityChecker {\n  private rules: AccessibilityRule[] = [];\n  private onProgress?: (progress: number, currentCheck: string) => void;\n\n  constructor(onProgress?: (progress: number, currentCheck: string) => void) {\n    this.onProgress = onProgress;\n    this.registerDefaultRules();\n  }\n\n  private registerDefaultRules(): void {\n    this.rules = [\n      ...DOCUMENT_STRUCTURE_RULES,\n      ...TEXT_ALTERNATIVE_RULES,\n      ...TABLE_RULES,\n      ...READING_ORDER_RULES,\n      ...COLOR_CONTRAST_RULES,\n    ];\n  }\n\n  addRule(rule: AccessibilityRule): void {\n    this.rules.push(rule);\n  }\n\n  async check(pdfDocument: any): Promise<AccessibilityReport> {\n    const issues: AccessibilityIssue[] = [];\n    const passedRules: string[] = [];\n    const totalRules = this.rules.length;\n\n    // Get document metadata\n    const metadata = await pdfDocument.getMetadata();\n    const structureTree = await this.getStructureTree(pdfDocument);\n\n    const context: CheckContext = {\n      pdfDocument,\n      structureTree,\n      metadata: metadata?.info,\n    };\n\n    // Run each rule\n    for (let i = 0; i < this.rules.length; i++) {\n      const rule = this.rules[i];\n      this.onProgress?.(\n        Math.round((i / totalRules) * 100),\n        `Checking: ${rule.name}`\n      );\n\n      try {\n        const ruleIssues = await this.runRule(rule, context);\n        if (ruleIssues.length === 0) {\n          passedRules.push(rule.id);\n        } else {\n          issues.push(...ruleIssues);\n        }\n      } catch (error) {\n        console.error(`Error running rule ${rule.id}:`, error);\n      }\n    }\n\n    this.onProgress?.(100, 'Complete');\n\n    return this.generateReport(pdfDocument, issues, passedRules);\n  }\n\n  private async runRule(rule: AccessibilityRule, context: CheckContext): Promise<AccessibilityIssue[]> {\n    return rule.check(context);\n  }\n\n  private async getStructureTree(pdfDocument: any): Promise<any> {\n    try {\n      return await pdfDocument.getStructTree();\n    } catch {\n      return null;\n    }\n  }\n\n  private generateReport(\n    pdfDocument: any,\n    issues: AccessibilityIssue[],\n    passedRules: string[]\n  ): AccessibilityReport {\n    const errors = issues.filter(i => i.severity === 'error').length;\n    const warnings = issues.filter(i => i.severity === 'warning').length;\n\n    // Calculate score (0-100)\n    const totalChecks = this.rules.length;\n    const passedCount = passedRules.length;\n    const score = Math.round((passedCount / totalChecks) * 100);\n\n    // Determine WCAG level\n    const wcagLevel = this.determineWcagLevel(issues);\n\n    // Category summary\n    const categorySummary = this.buildCategorySummary(issues, passedRules);\n\n    return {\n      documentTitle: '', // Get from metadata\n      checkDate: new Date(),\n      checkerVersion: '1.0.0',\n      pdfUACompliant: errors === 0,\n      wcagLevel,\n      score,\n      summary: {\n        errors,\n        warnings,\n        passed: passedCount,\n        totalChecks,\n      },\n      issues,\n      passedRules,\n      categorySummary,\n    };\n  }\n\n  private determineWcagLevel(issues: AccessibilityIssue[]): 'none' | 'A' | 'AA' | 'AAA' {\n    const hasLevelAErrors = issues.some(i => i.wcagLevel === 'A' && i.severity === 'error');\n    const hasLevelAAErrors = issues.some(i => i.wcagLevel === 'AA' && i.severity === 'error');\n    const hasLevelAAAErrors = issues.some(i => i.wcagLevel === 'AAA' && i.severity === 'error');\n\n    if (hasLevelAErrors) return 'none';\n    if (hasLevelAAErrors) return 'A';\n    if (hasLevelAAAErrors) return 'AA';\n    return 'AAA';\n  }\n\n  private buildCategorySummary(\n    issues: AccessibilityIssue[],\n    passedRules: string[]\n  ): Record<IssueCategory, { errors: number; warnings: number; passed: number }> {\n    // Implementation to count by category\n    const categories: IssueCategory[] = [\n      'document-structure',\n      'text-alternatives',\n      'tables',\n      'lists',\n      'links',\n      'reading-order',\n      'color-contrast',\n      'metadata'\n    ];\n\n    const summary = {} as Record<IssueCategory, { errors: number; warnings: number; passed: number }>;\n\n    for (const cat of categories) {\n      const catIssues = issues.filter(i => i.category === cat);\n      summary[cat] = {\n        errors: catIssues.filter(i => i.severity === 'error').length,\n        warnings: catIssues.filter(i => i.severity === 'warning').length,\n        passed: this.rules.filter(r => r.category === cat && passedRules.includes(r.id)).length,\n      };\n    }\n\n    return summary;\n  }\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Checker runs all registered rules",
+        "Progress updates during check",
+        "Report contains all required fields",
+        "Score calculation is correct",
+        "WCAG level determination works",
+        "Category summary is accurate"
+      ]
+    },
+    {
+      "id": "2.11.4",
+      "category": "implementation",
+      "title": "Implement Document Structure Rules",
+      "description": "Create rules for checking document title, language, and tagged PDF.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/lib/accessibility/rules/documentStructure.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create document structure rules",
+          "code": "import type { AccessibilityRule, AccessibilityIssue, CheckContext } from '../types';\nimport { v4 as uuidv4 } from 'uuid';\n\nexport const DOCUMENT_STRUCTURE_RULES: AccessibilityRule[] = [\n  {\n    id: 'doc-title',\n    name: 'Document Title',\n    description: 'Document must have a title',\n    category: 'document-structure',\n    severity: 'error',\n    wcagCriteria: '2.4.2',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n      const title = context.metadata?.Title;\n\n      if (!title || title.trim() === '') {\n        issues.push({\n          id: uuidv4(),\n          ruleId: 'doc-title',\n          ruleName: 'Document Title',\n          category: 'document-structure',\n          severity: 'error',\n          description: 'The document does not have a title.',\n          recommendation: 'Add a descriptive title to the document properties.',\n          wcagCriteria: '2.4.2',\n          wcagLevel: 'A',\n          canAutoFix: true,\n        });\n      } else if (title.toLowerCase().includes('.pdf')) {\n        issues.push({\n          id: uuidv4(),\n          ruleId: 'doc-title',\n          ruleName: 'Document Title',\n          category: 'document-structure',\n          severity: 'warning',\n          description: 'The document title appears to be a filename.',\n          recommendation: 'Replace the filename with a descriptive title.',\n          wcagCriteria: '2.4.2',\n          wcagLevel: 'A',\n          canAutoFix: false,\n        });\n      }\n\n      return issues;\n    },\n    autoFix: async (context) => {\n      // Set title from first heading or filename\n    },\n  },\n\n  {\n    id: 'doc-language',\n    name: 'Document Language',\n    description: 'Document must specify a language',\n    category: 'document-structure',\n    severity: 'error',\n    wcagCriteria: '3.1.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n      // Check for Lang entry in catalog\n      // This requires deeper PDF structure access\n\n      if (!context.metadata?.Language) {\n        issues.push({\n          id: uuidv4(),\n          ruleId: 'doc-language',\n          ruleName: 'Document Language',\n          category: 'document-structure',\n          severity: 'error',\n          description: 'The document does not specify a language.',\n          recommendation: 'Set the document language in the document properties.',\n          wcagCriteria: '3.1.1',\n          wcagLevel: 'A',\n          canAutoFix: true,\n        });\n      }\n\n      return issues;\n    },\n  },\n\n  {\n    id: 'tagged-pdf',\n    name: 'Tagged PDF',\n    description: 'Document must be a tagged PDF with structure',\n    category: 'document-structure',\n    severity: 'error',\n    wcagCriteria: '1.3.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n\n      if (!context.structureTree) {\n        issues.push({\n          id: uuidv4(),\n          ruleId: 'tagged-pdf',\n          ruleName: 'Tagged PDF',\n          category: 'document-structure',\n          severity: 'error',\n          description: 'The document is not a tagged PDF.',\n          recommendation: 'The document needs to be converted to a tagged PDF structure. This typically requires using authoring tools that generate tagged PDFs.',\n          wcagCriteria: '1.3.1',\n          wcagLevel: 'A',\n          canAutoFix: false,\n        });\n      }\n\n      return issues;\n    },\n  },\n\n  {\n    id: 'heading-structure',\n    name: 'Heading Structure',\n    description: 'Headings must be properly nested',\n    category: 'document-structure',\n    severity: 'error',\n    wcagCriteria: '1.3.1',\n    wcagLevel: 'A',\n    check: (context: CheckContext): AccessibilityIssue[] => {\n      const issues: AccessibilityIssue[] = [];\n\n      if (!context.structureTree) return issues;\n\n      // Traverse structure tree for heading elements\n      const headings = findElements(context.structureTree, ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H']);\n      \n      let lastLevel = 0;\n      for (const heading of headings) {\n        const level = getHeadingLevel(heading);\n        \n        // Check for skipped levels\n        if (level > lastLevel + 1 && lastLevel > 0) {\n          issues.push({\n            id: uuidv4(),\n            ruleId: 'heading-structure',\n            ruleName: 'Heading Structure',\n            category: 'document-structure',\n            severity: 'error',\n            pageIndex: heading.pageIndex,\n            element: heading.text,\n            description: `Heading level ${level} follows level ${lastLevel}, skipping level(s).`,\n            recommendation: `Use heading level ${lastLevel + 1} instead, or adjust the document structure.`,\n            wcagCriteria: '1.3.1',\n            wcagLevel: 'A',\n            canAutoFix: false,\n          });\n        }\n        \n        lastLevel = level;\n      }\n\n      return issues;\n    },\n  },\n];\n\nfunction findElements(tree: any, tagNames: string[]): any[] {\n  // Recursive structure tree traversal\n  return [];\n}\n\nfunction getHeadingLevel(element: any): number {\n  const tag = element.role || element.tag;\n  if (tag === 'H') return 1; // Generic heading\n  const match = tag?.match(/H(\\d)/);\n  return match ? parseInt(match[1], 10) : 1;\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Document title check works",
+        "Document language check works",
+        "Tagged PDF detection works",
+        "Heading structure validation works",
+        "Issues have proper WCAG references",
+        "Auto-fix flags are correct"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Accessibility types defined comprehensively",
+    "Store manages check state",
+    "Core checker runs all rules",
+    "Document structure rules implemented",
+    "Progress tracking works"
+  ],
+  "filesCreated": [
+    "src/lib/accessibility/types.ts",
+    "src/lib/accessibility/accessibilityChecker.ts",
+    "src/lib/accessibility/rules/documentStructure.ts",
+    "src/lib/accessibility/index.ts",
+    "src/stores/accessibilityStore.ts"
+  ],
+  "filesModified": [],
+  "totalNewTests": 20,
+  "totalEstimatedHours": 8,
+  "dependencies": [],
+  "notes": [
+    "PDF.js structure tree access may be limited",
+    "Some checks require deep PDF parsing",
+    "WCAG criteria references should link to official docs"
+  ]
+}

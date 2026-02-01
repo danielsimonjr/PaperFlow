@@ -1,0 +1,183 @@
+{
+  "phase": 2,
+  "sprint": 4,
+  "todoFile": 1,
+  "title": "Form Designer Architecture & Field Palette",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "v1.5 Release",
+  "tasks": [
+    {
+      "id": "2.4.1",
+      "category": "architecture",
+      "title": "Create Form Designer Directory Structure",
+      "description": "Set up the component directory structure for the form designer module.",
+      "status": "pending",
+      "estimatedHours": 0.5,
+      "agent": "haiku",
+      "files": [
+        "src/components/forms/designer/FormDesigner.tsx",
+        "src/components/forms/designer/FieldPalette.tsx",
+        "src/components/forms/designer/DesignCanvas.tsx",
+        "src/components/forms/designer/FieldProperties.tsx",
+        "src/components/forms/designer/DesignerToolbar.tsx",
+        "src/components/forms/designer/index.ts"
+      ],
+      "testCategories": ["typecheck"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create designer directory",
+          "details": "mkdir -p src/components/forms/designer"
+        },
+        {
+          "step": 2,
+          "action": "Create skeleton component files",
+          "details": "Create each component file with basic export"
+        },
+        {
+          "step": 3,
+          "action": "Create barrel export",
+          "code": "// src/components/forms/designer/index.ts\nexport { FormDesigner } from './FormDesigner';\nexport { FieldPalette } from './FieldPalette';\nexport { DesignCanvas } from './DesignCanvas';\nexport { FieldProperties } from './FieldProperties';\nexport { DesignerToolbar } from './DesignerToolbar';"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Directory structure created",
+        "All files have basic exports",
+        "Barrel export works",
+        "TypeScript compiles without errors"
+      ]
+    },
+    {
+      "id": "2.4.2",
+      "category": "state",
+      "title": "Create Form Designer Zustand Store",
+      "description": "Implement state management for the form designer including field management, selection, and clipboard.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/stores/formDesignerStore.ts", "src/types/formDesigner.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define form designer types",
+          "code": "// src/types/formDesigner.ts\nexport type FieldType = \n  | 'text' \n  | 'textarea' \n  | 'checkbox' \n  | 'radio' \n  | 'dropdown' \n  | 'date' \n  | 'signature' \n  | 'button';\n\nexport interface FormFieldDefinition {\n  id: string;\n  type: FieldType;\n  name: string;\n  pageIndex: number;\n  bounds: {\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n  };\n  properties: FieldProperties;\n  validation?: ValidationRule[];\n  conditions?: FieldCondition[];\n}\n\nexport interface FieldProperties {\n  label?: string;\n  placeholder?: string;\n  tooltip?: string;\n  required: boolean;\n  readOnly: boolean;\n  defaultValue?: string;\n  maxLength?: number;\n  fontSize: number;\n  fontFamily: string;\n  fontColor: string;\n  backgroundColor: string;\n  borderColor: string;\n  borderWidth: number;\n  textAlign: 'left' | 'center' | 'right';\n}\n\nexport interface ValidationRule {\n  type: 'required' | 'minLength' | 'maxLength' | 'pattern' | 'range';\n  value?: string | number;\n  message: string;\n}\n\nexport interface FieldCondition {\n  sourceFieldId: string;\n  operator: 'equals' | 'notEquals' | 'contains' | 'isEmpty' | 'isNotEmpty';\n  value?: string;\n  action: 'show' | 'hide' | 'enable' | 'disable' | 'require';\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create form designer store",
+          "code": "// src/stores/formDesignerStore.ts\nimport { create } from 'zustand';\nimport { v4 as uuidv4 } from 'uuid';\nimport type { FormFieldDefinition, FieldType, FieldProperties } from '@/types/formDesigner';\n\ninterface FormDesignerState {\n  // State\n  isDesignMode: boolean;\n  fields: FormFieldDefinition[];\n  selectedFieldIds: string[];\n  clipboard: FormFieldDefinition[] | null;\n  snapToGrid: boolean;\n  gridSize: number;\n  showGrid: boolean;\n  activeFieldType: FieldType | null;\n\n  // Actions\n  enterDesignMode: () => void;\n  exitDesignMode: () => void;\n  addField: (type: FieldType, pageIndex: number, position: { x: number; y: number }) => string;\n  updateField: (id: string, updates: Partial<FormFieldDefinition>) => void;\n  updateFieldProperties: (id: string, properties: Partial<FieldProperties>) => void;\n  deleteField: (id: string) => void;\n  deleteSelectedFields: () => void;\n  duplicateField: (id: string) => string;\n  selectField: (id: string, addToSelection?: boolean) => void;\n  selectFields: (ids: string[]) => void;\n  clearSelection: () => void;\n  copySelectedFields: () => void;\n  pasteFields: (pageIndex: number, position: { x: number; y: number }) => void;\n  setSnapToGrid: (enabled: boolean) => void;\n  setGridSize: (size: number) => void;\n  setActiveFieldType: (type: FieldType | null) => void;\n  getFieldById: (id: string) => FormFieldDefinition | undefined;\n  getFieldsByPage: (pageIndex: number) => FormFieldDefinition[];\n}"
+        },
+        {
+          "step": 3,
+          "action": "Implement store actions",
+          "code": "export const useFormDesignerStore = create<FormDesignerState>((set, get) => ({\n  isDesignMode: false,\n  fields: [],\n  selectedFieldIds: [],\n  clipboard: null,\n  snapToGrid: true,\n  gridSize: 10,\n  showGrid: true,\n  activeFieldType: null,\n\n  enterDesignMode: () => set({ isDesignMode: true }),\n  exitDesignMode: () => set({ isDesignMode: false, selectedFieldIds: [], activeFieldType: null }),\n\n  addField: (type, pageIndex, position) => {\n    const id = uuidv4();\n    const { gridSize, snapToGrid } = get();\n    \n    const x = snapToGrid ? Math.round(position.x / gridSize) * gridSize : position.x;\n    const y = snapToGrid ? Math.round(position.y / gridSize) * gridSize : position.y;\n\n    const newField: FormFieldDefinition = {\n      id,\n      type,\n      name: `field_${id.slice(0, 8)}`,\n      pageIndex,\n      bounds: { x, y, width: getDefaultWidth(type), height: getDefaultHeight(type) },\n      properties: getDefaultProperties(type),\n    };\n\n    set(state => ({ fields: [...state.fields, newField], selectedFieldIds: [id] }));\n    return id;\n  },\n\n  updateField: (id, updates) => {\n    set(state => ({\n      fields: state.fields.map(f => f.id === id ? { ...f, ...updates } : f)\n    }));\n  },\n\n  deleteField: (id) => {\n    set(state => ({\n      fields: state.fields.filter(f => f.id !== id),\n      selectedFieldIds: state.selectedFieldIds.filter(fid => fid !== id)\n    }));\n  },\n\n  selectField: (id, addToSelection = false) => {\n    set(state => ({\n      selectedFieldIds: addToSelection\n        ? [...state.selectedFieldIds, id]\n        : [id]\n    }));\n  },\n\n  // ... more actions\n}));\n\nfunction getDefaultWidth(type: FieldType): number {\n  switch (type) {\n    case 'checkbox': return 20;\n    case 'radio': return 20;\n    case 'textarea': return 200;\n    case 'signature': return 200;\n    default: return 150;\n  }\n}\n\nfunction getDefaultHeight(type: FieldType): number {\n  switch (type) {\n    case 'checkbox': return 20;\n    case 'radio': return 20;\n    case 'textarea': return 80;\n    case 'signature': return 60;\n    default: return 24;\n  }\n}\n\nfunction getDefaultProperties(type: FieldType): FieldProperties {\n  return {\n    required: false,\n    readOnly: false,\n    fontSize: 12,\n    fontFamily: 'Helvetica',\n    fontColor: '#000000',\n    backgroundColor: '#ffffff',\n    borderColor: '#000000',\n    borderWidth: 1,\n    textAlign: 'left',\n  };\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Store initializes with default values",
+        "Fields can be added, updated, deleted",
+        "Selection management works",
+        "Copy/paste functionality works",
+        "Grid snapping works correctly",
+        "All actions are type-safe"
+      ]
+    },
+    {
+      "id": "2.4.3",
+      "category": "ui",
+      "title": "Create Field Palette Component",
+      "description": "Build the draggable field palette with all available field types.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/components/forms/designer/FieldPalette.tsx"],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define field type metadata",
+          "code": "const FIELD_TYPES = [\n  { type: 'text', label: 'Text Field', icon: Type, description: 'Single line text input' },\n  { type: 'textarea', label: 'Text Area', icon: AlignLeft, description: 'Multi-line text input' },\n  { type: 'checkbox', label: 'Checkbox', icon: CheckSquare, description: 'Yes/No selection' },\n  { type: 'radio', label: 'Radio Group', icon: Circle, description: 'Single selection from options' },\n  { type: 'dropdown', label: 'Dropdown', icon: ChevronDown, description: 'Select from list' },\n  { type: 'date', label: 'Date Picker', icon: Calendar, description: 'Date selection' },\n  { type: 'signature', label: 'Signature', icon: PenTool, description: 'Signature field' },\n  { type: 'button', label: 'Button', icon: MousePointer, description: 'Action button' },\n] as const;"
+        },
+        {
+          "step": 2,
+          "action": "Create FieldPalette component with drag support",
+          "code": "import { useDrag } from 'react-dnd';\nimport type { FieldType } from '@/types/formDesigner';\nimport { useFormDesignerStore } from '@stores/formDesignerStore';\n\nexport function FieldPalette() {\n  return (\n    <div className=\"w-64 bg-white dark:bg-gray-900 border-r p-4\">\n      <h3 className=\"font-semibold mb-4\">Form Fields</h3>\n      <div className=\"space-y-2\">\n        {FIELD_TYPES.map(field => (\n          <DraggableField key={field.type} {...field} />\n        ))}\n      </div>\n    </div>\n  );\n}\n\nfunction DraggableField({ type, label, icon: Icon, description }: FieldTypeInfo) {\n  const { setActiveFieldType, activeFieldType } = useFormDesignerStore();\n  \n  const [{ isDragging }, drag] = useDrag(() => ({\n    type: 'FORM_FIELD',\n    item: { fieldType: type },\n    collect: (monitor) => ({\n      isDragging: monitor.isDragging(),\n    }),\n  }));\n\n  const isActive = activeFieldType === type;\n\n  return (\n    <div\n      ref={drag}\n      onClick={() => setActiveFieldType(isActive ? null : type)}\n      className={cn(\n        'flex items-center gap-3 p-3 rounded-lg border cursor-grab transition-colors',\n        isDragging && 'opacity-50',\n        isActive && 'border-primary-500 bg-primary-50 dark:bg-primary-900/20',\n        !isActive && 'hover:bg-gray-50 dark:hover:bg-gray-800'\n      )}\n    >\n      <Icon className=\"h-5 w-5 text-gray-600 dark:text-gray-400\" />\n      <div>\n        <div className=\"font-medium text-sm\">{label}</div>\n        <div className=\"text-xs text-gray-500\">{description}</div>\n      </div>\n    </div>\n  );\n}"
+        },
+        {
+          "step": 3,
+          "action": "Add react-dnd dependency if not present",
+          "details": "npm install react-dnd react-dnd-html5-backend"
+        }
+      ],
+      "acceptanceCriteria": [
+        "All field types displayed with icons",
+        "Fields are draggable",
+        "Active field type highlighted",
+        "Click to select field type works",
+        "Descriptions help users understand fields",
+        "Accessible via keyboard"
+      ]
+    },
+    {
+      "id": "2.4.4",
+      "category": "ui",
+      "title": "Create Design Canvas Drop Zone",
+      "description": "Implement the PDF page overlay that accepts dropped fields and handles field placement.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/components/forms/designer/DesignCanvas.tsx"],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create DesignCanvas component",
+          "code": "import { useDrop } from 'react-dnd';\nimport { useFormDesignerStore } from '@stores/formDesignerStore';\nimport { useDocumentStore } from '@stores/documentStore';\nimport { FieldRenderer } from './FieldRenderer';\n\ninterface DesignCanvasProps {\n  pageIndex: number;\n}\n\nexport function DesignCanvas({ pageIndex }: DesignCanvasProps) {\n  const { addField, getFieldsByPage, snapToGrid, gridSize, showGrid, activeFieldType } = useFormDesignerStore();\n  const fields = getFieldsByPage(pageIndex);\n\n  const [{ isOver, canDrop }, drop] = useDrop(() => ({\n    accept: 'FORM_FIELD',\n    drop: (item: { fieldType: FieldType }, monitor) => {\n      const offset = monitor.getClientOffset();\n      const canvasRect = canvasRef.current?.getBoundingClientRect();\n      \n      if (offset && canvasRect) {\n        const x = offset.x - canvasRect.left;\n        const y = offset.y - canvasRect.top;\n        addField(item.fieldType, pageIndex, { x, y });\n      }\n    },\n    collect: (monitor) => ({\n      isOver: monitor.isOver(),\n      canDrop: monitor.canDrop(),\n    }),\n  }));\n\n  const canvasRef = useRef<HTMLDivElement>(null);\n\n  // Handle click to place when field type is active\n  const handleCanvasClick = (e: React.MouseEvent) => {\n    if (activeFieldType && canvasRef.current) {\n      const rect = canvasRef.current.getBoundingClientRect();\n      const x = e.clientX - rect.left;\n      const y = e.clientY - rect.top;\n      addField(activeFieldType, pageIndex, { x, y });\n    }\n  };\n\n  return (\n    <div\n      ref={(node) => {\n        drop(node);\n        canvasRef.current = node;\n      }}\n      onClick={handleCanvasClick}\n      className={cn(\n        'absolute inset-0 pointer-events-auto',\n        isOver && canDrop && 'ring-2 ring-primary-500 ring-inset',\n        activeFieldType && 'cursor-crosshair'\n      )}\n      style={{\n        backgroundImage: showGrid\n          ? `linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),\n             linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)`\n          : 'none',\n        backgroundSize: `${gridSize}px ${gridSize}px`,\n      }}\n    >\n      {fields.map(field => (\n        <FieldRenderer key={field.id} field={field} />\n      ))}\n    </div>\n  );\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create FieldRenderer component",
+          "code": "function FieldRenderer({ field }: { field: FormFieldDefinition }) {\n  const { selectedFieldIds, selectField, updateField } = useFormDesignerStore();\n  const isSelected = selectedFieldIds.includes(field.id);\n\n  return (\n    <div\n      onClick={(e) => {\n        e.stopPropagation();\n        selectField(field.id, e.shiftKey);\n      }}\n      style={{\n        position: 'absolute',\n        left: field.bounds.x,\n        top: field.bounds.y,\n        width: field.bounds.width,\n        height: field.bounds.height,\n      }}\n      className={cn(\n        'border rounded',\n        isSelected && 'ring-2 ring-primary-500'\n      )}\n    >\n      <FieldPreview field={field} />\n      {isSelected && <ResizeHandles field={field} />}\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Drag and drop places fields correctly",
+        "Click to place works with active field type",
+        "Grid overlay displays when enabled",
+        "Fields snap to grid",
+        "Visual feedback on drag over",
+        "Multiple fields render correctly"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Form designer structure in place",
+    "Store manages all field operations",
+    "Field palette is draggable",
+    "Design canvas accepts drops",
+    "Fields render on canvas"
+  ],
+  "filesCreated": [
+    "src/components/forms/designer/FormDesigner.tsx",
+    "src/components/forms/designer/FieldPalette.tsx",
+    "src/components/forms/designer/DesignCanvas.tsx",
+    "src/components/forms/designer/FieldRenderer.tsx",
+    "src/components/forms/designer/index.ts",
+    "src/stores/formDesignerStore.ts",
+    "src/types/formDesigner.ts"
+  ],
+  "filesModified": [
+    "package.json"
+  ],
+  "totalNewTests": 12,
+  "totalEstimatedHours": 8,
+  "dependencies": [],
+  "notes": [
+    "react-dnd provides robust drag-and-drop support",
+    "Grid snapping improves field alignment",
+    "Consider touch support for tablet users"
+  ]
+}

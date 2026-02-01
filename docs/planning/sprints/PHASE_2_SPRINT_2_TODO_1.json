@@ -1,0 +1,125 @@
+{
+  "phase": 2,
+  "sprint": 2,
+  "todoFile": 1,
+  "title": "OCR Dialog & Processing UI",
+  "priority": "HIGH",
+  "effort": "6 hours",
+  "status": "pending",
+  "milestone": "OCR Processing UI",
+  "tasks": [
+    {
+      "id": "2.2.1",
+      "category": "ui",
+      "title": "Create OCR Dialog Component",
+      "description": "Build the main OCR dialog with page selection, language selection, and processing options.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/components/ocr/OCRDialog.tsx"],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create OCR dialog with base structure",
+          "code": "import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@components/ui/Dialog';\nimport { Button } from '@components/ui/Button';\nimport { Tabs, TabsList, TabsTrigger, TabsContent } from '@radix-ui/react-tabs';\nimport { useUIStore } from '@stores/uiStore';\nimport { useOCRStore } from '@stores/ocrStore';\nimport { LanguageSelector } from './LanguageSelector';\nimport { PageRangeSelector } from './PageRangeSelector';\nimport { PreprocessingOptions } from './PreprocessingOptions';\nimport { OCRProgress } from './OCRProgress';\n\nexport function OCRDialog() {\n  const { activeDialog, closeDialog } = useUIStore();\n  const { isProcessing } = useOCRStore();\n  const isOpen = activeDialog === 'ocr';\n\n  return (\n    <Dialog open={isOpen} onOpenChange={(open) => !open && closeDialog()}>\n      <DialogContent className=\"max-w-2xl\">\n        <DialogHeader>\n          <DialogTitle>Recognize Text (OCR)</DialogTitle>\n        </DialogHeader>\n        \n        {isProcessing ? (\n          <OCRProgress />\n        ) : (\n          <div className=\"space-y-6\">\n            <PageRangeSelector />\n            <LanguageSelector />\n            <PreprocessingOptions />\n            \n            <div className=\"flex justify-end gap-2\">\n              <Button variant=\"ghost\" onClick={closeDialog}>Cancel</Button>\n              <Button onClick={handleStartOCR}>Start OCR</Button>\n            </div>\n          </div>\n        )}\n      </DialogContent>\n    </Dialog>\n  );\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create PageRangeSelector component",
+          "code": "export function PageRangeSelector() {\n  const [range, setRange] = useState<'current' | 'all' | 'custom'>('current');\n  const [customRange, setCustomRange] = useState('');\n  const { pageCount, currentPage } = useDocumentStore();\n\n  return (\n    <div className=\"space-y-2\">\n      <label className=\"text-sm font-medium\">Pages to Process</label>\n      <RadioGroup value={range} onValueChange={setRange}>\n        <RadioGroupItem value=\"current\" label={`Current page (${currentPage})`} />\n        <RadioGroupItem value=\"all\" label={`All pages (${pageCount})`} />\n        <RadioGroupItem value=\"custom\" label=\"Custom range\" />\n      </RadioGroup>\n      {range === 'custom' && (\n        <Input\n          placeholder=\"e.g., 1-5, 8, 10-12\"\n          value={customRange}\n          onChange={(e) => setCustomRange(e.target.value)}\n        />\n      )}\n    </div>\n  );\n}"
+        },
+        {
+          "step": 3,
+          "action": "Implement dialog state management",
+          "details": "Track selected pages, language, and preprocessing options in local state"
+        },
+        {
+          "step": 4,
+          "action": "Implement startOCR handler",
+          "code": "const handleStartOCR = async () => {\n  const pagesToProcess = getSelectedPages();\n  await startOCR(pagesToProcess);\n};"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Dialog opens from toolbar button",
+        "Page range selection works",
+        "Language selector shows available languages",
+        "Preprocessing options are configurable",
+        "Start OCR initiates processing",
+        "Dialog is accessible (keyboard, screen reader)"
+      ]
+    },
+    {
+      "id": "2.2.2",
+      "category": "ui",
+      "title": "Create Language Selector Component",
+      "description": "Build language selection dropdown with search and popular languages quick access.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "haiku",
+      "files": ["src/components/ocr/LanguageSelector.tsx"],
+      "testCategories": ["visual", "unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create LanguageSelector component",
+          "code": "import { useState, useMemo } from 'react';\nimport { Search } from 'lucide-react';\nimport { Input } from '@components/ui/Input';\nimport { SUPPORTED_LANGUAGES, type LanguageInfo } from '@lib/ocr/languageLoader';\nimport { useOCRStore } from '@stores/ocrStore';\n\nconst POPULAR_LANGUAGES = ['eng', 'spa', 'fra', 'deu', 'chi_sim', 'jpn', 'kor', 'ara', 'rus', 'por'];\n\nexport function LanguageSelector() {\n  const { language, setLanguage } = useOCRStore();\n  const [search, setSearch] = useState('');\n\n  const filteredLanguages = useMemo(() => {\n    if (!search) return SUPPORTED_LANGUAGES;\n    const lower = search.toLowerCase();\n    return SUPPORTED_LANGUAGES.filter(\n      lang => lang.name.toLowerCase().includes(lower) ||\n              lang.nativeName.toLowerCase().includes(lower) ||\n              lang.code.includes(lower)\n    );\n  }, [search]);\n\n  const popularLanguages = SUPPORTED_LANGUAGES.filter(\n    lang => POPULAR_LANGUAGES.includes(lang.code)\n  );\n\n  return (\n    <div className=\"space-y-3\">\n      <label className=\"text-sm font-medium\">Recognition Language</label>\n      \n      <div className=\"flex flex-wrap gap-2\">\n        {popularLanguages.map(lang => (\n          <button\n            key={lang.code}\n            onClick={() => setLanguage(lang.code)}\n            className={cn(\n              'px-3 py-1 rounded-full text-sm border',\n              language === lang.code\n                ? 'bg-primary-500 text-white border-primary-500'\n                : 'hover:bg-gray-100 dark:hover:bg-gray-800'\n            )}\n          >\n            {lang.name}\n          </button>\n        ))}\n      </div>\n\n      <div className=\"relative\">\n        <Search className=\"absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400\" />\n        <Input\n          placeholder=\"Search languages...\"\n          value={search}\n          onChange={(e) => setSearch(e.target.value)}\n          className=\"pl-10\"\n        />\n      </div>\n\n      {search && (\n        <div className=\"max-h-48 overflow-y-auto border rounded-md\">\n          {filteredLanguages.map(lang => (\n            <button\n              key={lang.code}\n              onClick={() => {\n                setLanguage(lang.code);\n                setSearch('');\n              }}\n              className=\"w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-800 flex justify-between\"\n            >\n              <span>{lang.name}</span>\n              <span className=\"text-gray-500\">{lang.nativeName}</span>\n            </button>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Popular languages shown as quick buttons",
+        "Search filters language list",
+        "Selected language is highlighted",
+        "Language selection updates store",
+        "Native names displayed for non-Latin scripts"
+      ]
+    },
+    {
+      "id": "2.2.3",
+      "category": "ui",
+      "title": "Create OCR Progress Component",
+      "description": "Build progress display showing OCR processing status with cancel option.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": ["src/components/ocr/OCRProgress.tsx"],
+      "testCategories": ["visual"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create OCRProgress component",
+          "code": "import { Loader2 } from 'lucide-react';\nimport { Button } from '@components/ui/Button';\nimport { Progress } from '@components/ui/Progress';\nimport { useOCRStore } from '@stores/ocrStore';\n\nexport function OCRProgress() {\n  const { progress, currentPage, totalPages, cancelOCR } = useOCRStore();\n\n  const overallProgress = totalPages > 0 ? (currentPage / totalPages) * 100 : 0;\n  const statusText = getStatusText(progress?.status);\n\n  return (\n    <div className=\"space-y-4 py-8\">\n      <div className=\"flex items-center justify-center gap-3\">\n        <Loader2 className=\"h-6 w-6 animate-spin text-primary-500\" />\n        <span className=\"text-lg font-medium\">{statusText}</span>\n      </div>\n\n      <div className=\"space-y-2\">\n        <div className=\"flex justify-between text-sm text-gray-600\">\n          <span>Page {currentPage} of {totalPages}</span>\n          <span>{Math.round(overallProgress)}%</span>\n        </div>\n        <Progress value={overallProgress} />\n      </div>\n\n      {progress && progress.status === 'recognizing' && (\n        <div className=\"space-y-1\">\n          <div className=\"text-sm text-gray-600\">Current page progress</div>\n          <Progress value={progress.progress * 100} className=\"h-1\" />\n        </div>\n      )}\n\n      <div className=\"flex justify-center\">\n        <Button variant=\"ghost\" onClick={cancelOCR}>Cancel</Button>\n      </div>\n    </div>\n  );\n}\n\nfunction getStatusText(status?: string): string {\n  switch (status) {\n    case 'loading': return 'Loading language data...';\n    case 'initializing': return 'Initializing OCR engine...';\n    case 'recognizing': return 'Recognizing text...';\n    default: return 'Processing...';\n  }\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Progress bar shows overall completion",
+        "Current page indicator updates",
+        "Status text reflects current operation",
+        "Cancel button stops processing",
+        "Smooth progress animation"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "OCR dialog fully functional",
+    "Language selection with search works",
+    "Progress display shows accurate status",
+    "User can cancel OCR mid-process"
+  ],
+  "filesCreated": [
+    "src/components/ocr/OCRDialog.tsx",
+    "src/components/ocr/LanguageSelector.tsx",
+    "src/components/ocr/PageRangeSelector.tsx",
+    "src/components/ocr/PreprocessingOptions.tsx",
+    "src/components/ocr/OCRProgress.tsx"
+  ],
+  "filesModified": [],
+  "totalNewTests": 6,
+  "totalEstimatedHours": 6,
+  "dependencies": ["2.1.7", "2.1.8"],
+  "notes": [
+    "Dialog should be responsive for mobile",
+    "Consider adding estimated time remaining",
+    "Progress should be accurate, not fake"
+  ]
+}

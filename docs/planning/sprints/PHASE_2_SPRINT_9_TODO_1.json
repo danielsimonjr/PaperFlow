@@ -1,0 +1,114 @@
+{
+  "phase": 2,
+  "sprint": 9,
+  "todoFile": 1,
+  "title": "Advanced Form Features - Conditional Logic",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "Advanced Forms",
+  "tasks": [
+    {
+      "id": "2.9.1",
+      "category": "implementation",
+      "title": "Implement Conditional Logic Engine",
+      "description": "Create engine for evaluating field conditions and triggering actions.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/lib/forms/conditionalLogic.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define conditional logic types",
+          "code": "export type ConditionOperator = \n  | 'equals'\n  | 'notEquals'\n  | 'contains'\n  | 'notContains'\n  | 'startsWith'\n  | 'endsWith'\n  | 'isEmpty'\n  | 'isNotEmpty'\n  | 'greaterThan'\n  | 'lessThan'\n  | 'greaterOrEqual'\n  | 'lessOrEqual';\n\nexport type ConditionAction = \n  | 'show'\n  | 'hide'\n  | 'enable'\n  | 'disable'\n  | 'require'\n  | 'optional'\n  | 'setValue';\n\nexport interface Condition {\n  fieldId: string;\n  operator: ConditionOperator;\n  value?: string | number;\n}\n\nexport interface ConditionGroup {\n  logic: 'and' | 'or';\n  conditions: (Condition | ConditionGroup)[];\n}\n\nexport interface ConditionalRule {\n  id: string;\n  name: string;\n  trigger: 'onChange' | 'onLoad';\n  sourceFieldId: string;\n  conditions: ConditionGroup;\n  actions: {\n    action: ConditionAction;\n    targetFieldId: string;\n    value?: string;\n  }[];\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create ConditionalLogicEngine class",
+          "code": "export class ConditionalLogicEngine {\n  private rules: ConditionalRule[] = [];\n  private fieldValues: Map<string, string> = new Map();\n\n  setRules(rules: ConditionalRule[]): void {\n    this.rules = rules;\n  }\n\n  updateFieldValue(fieldId: string, value: string): FieldUpdate[] {\n    this.fieldValues.set(fieldId, value);\n    \n    // Find rules triggered by this field\n    const triggeredRules = this.rules.filter(\n      r => r.trigger === 'onChange' && r.sourceFieldId === fieldId\n    );\n\n    const updates: FieldUpdate[] = [];\n    \n    for (const rule of triggeredRules) {\n      if (this.evaluateConditionGroup(rule.conditions)) {\n        for (const action of rule.actions) {\n          updates.push({\n            fieldId: action.targetFieldId,\n            action: action.action,\n            value: action.value,\n          });\n        }\n      }\n    }\n\n    return updates;\n  }\n\n  evaluateConditionGroup(group: ConditionGroup): boolean {\n    const results = group.conditions.map(cond => {\n      if ('logic' in cond) {\n        return this.evaluateConditionGroup(cond as ConditionGroup);\n      }\n      return this.evaluateCondition(cond as Condition);\n    });\n\n    return group.logic === 'and'\n      ? results.every(Boolean)\n      : results.some(Boolean);\n  }\n\n  private evaluateCondition(condition: Condition): boolean {\n    const value = this.fieldValues.get(condition.fieldId) || '';\n    const compareValue = condition.value?.toString() || '';\n\n    switch (condition.operator) {\n      case 'equals':\n        return value === compareValue;\n      case 'notEquals':\n        return value !== compareValue;\n      case 'contains':\n        return value.includes(compareValue);\n      case 'notContains':\n        return !value.includes(compareValue);\n      case 'startsWith':\n        return value.startsWith(compareValue);\n      case 'endsWith':\n        return value.endsWith(compareValue);\n      case 'isEmpty':\n        return value.trim() === '';\n      case 'isNotEmpty':\n        return value.trim() !== '';\n      case 'greaterThan':\n        return parseFloat(value) > parseFloat(compareValue);\n      case 'lessThan':\n        return parseFloat(value) < parseFloat(compareValue);\n      case 'greaterOrEqual':\n        return parseFloat(value) >= parseFloat(compareValue);\n      case 'lessOrEqual':\n        return parseFloat(value) <= parseFloat(compareValue);\n      default:\n        return false;\n    }\n  }\n}\n\nexport interface FieldUpdate {\n  fieldId: string;\n  action: ConditionAction;\n  value?: string;\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "All operators evaluate correctly",
+        "AND/OR logic groups work",
+        "Nested condition groups work",
+        "All actions produce correct updates",
+        "Engine is performant"
+      ]
+    },
+    {
+      "id": "2.9.2",
+      "category": "ui",
+      "title": "Create Condition Builder UI",
+      "description": "Build visual condition builder for creating conditional rules.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/components/forms/designer/ConditionBuilder.tsx"],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create ConditionBuilder component",
+          "code": "import { Plus, Trash2, Copy } from 'lucide-react';\nimport { Button } from '@components/ui/Button';\nimport { Select } from '@components/ui/Select';\nimport { Input } from '@components/ui/Input';\nimport type { ConditionalRule, ConditionGroup, Condition, ConditionAction } from '@lib/forms/conditionalLogic';\n\ninterface ConditionBuilderProps {\n  rule: ConditionalRule;\n  fields: FormFieldDefinition[];\n  onChange: (rule: ConditionalRule) => void;\n  onDelete: () => void;\n}\n\nexport function ConditionBuilder({ rule, fields, onChange, onDelete }: ConditionBuilderProps) {\n  return (\n    <div className=\"border rounded-lg p-4 space-y-4\">\n      <div className=\"flex items-center justify-between\">\n        <Input\n          value={rule.name}\n          onChange={(e) => onChange({ ...rule, name: e.target.value })}\n          placeholder=\"Rule name\"\n          className=\"w-48\"\n        />\n        <Button variant=\"ghost\" size=\"icon\" onClick={onDelete}>\n          <Trash2 className=\"h-4 w-4\" />\n        </Button>\n      </div>\n\n      {/* When section */}\n      <div className=\"space-y-2\">\n        <div className=\"text-sm font-medium\">When</div>\n        <ConditionGroupEditor\n          group={rule.conditions}\n          fields={fields}\n          onChange={(conditions) => onChange({ ...rule, conditions })}\n        />\n      </div>\n\n      {/* Then section */}\n      <div className=\"space-y-2\">\n        <div className=\"text-sm font-medium\">Then</div>\n        {rule.actions.map((action, index) => (\n          <ActionEditor\n            key={index}\n            action={action}\n            fields={fields}\n            onChange={(updated) => {\n              const newActions = [...rule.actions];\n              newActions[index] = updated;\n              onChange({ ...rule, actions: newActions });\n            }}\n            onDelete={() => {\n              onChange({ ...rule, actions: rule.actions.filter((_, i) => i !== index) });\n            }}\n          />\n        ))}\n        <Button\n          variant=\"ghost\"\n          size=\"sm\"\n          onClick={() => onChange({\n            ...rule,\n            actions: [...rule.actions, { action: 'show', targetFieldId: '' }]\n          })}\n        >\n          <Plus className=\"h-4 w-4 mr-1\" /> Add Action\n        </Button>\n      </div>\n    </div>\n  );\n}\n\nfunction ConditionGroupEditor({ group, fields, onChange }) {\n  return (\n    <div className=\"pl-4 border-l-2 border-gray-200 space-y-2\">\n      <div className=\"flex items-center gap-2\">\n        <Select\n          value={group.logic}\n          onChange={(e) => onChange({ ...group, logic: e.target.value })}\n          className=\"w-20\"\n        >\n          <option value=\"and\">AND</option>\n          <option value=\"or\">OR</option>\n        </Select>\n        <span className=\"text-sm text-gray-500\">of the following conditions:</span>\n      </div>\n\n      {group.conditions.map((cond, index) => (\n        <div key={index} className=\"flex items-center gap-2\">\n          {'logic' in cond ? (\n            <ConditionGroupEditor\n              group={cond}\n              fields={fields}\n              onChange={(updated) => {\n                const newConds = [...group.conditions];\n                newConds[index] = updated;\n                onChange({ ...group, conditions: newConds });\n              }}\n            />\n          ) : (\n            <ConditionEditor\n              condition={cond}\n              fields={fields}\n              onChange={(updated) => {\n                const newConds = [...group.conditions];\n                newConds[index] = updated;\n                onChange({ ...group, conditions: newConds });\n              }}\n              onDelete={() => {\n                onChange({ ...group, conditions: group.conditions.filter((_, i) => i !== index) });\n              }}\n            />\n          )}\n        </div>\n      ))}\n\n      <Button\n        variant=\"ghost\"\n        size=\"sm\"\n        onClick={() => onChange({\n          ...group,\n          conditions: [...group.conditions, { fieldId: '', operator: 'equals', value: '' }]\n        })}\n      >\n        <Plus className=\"h-4 w-4 mr-1\" /> Add Condition\n      </Button>\n    </div>\n  );\n}\n\nfunction ConditionEditor({ condition, fields, onChange, onDelete }) {\n  return (\n    <div className=\"flex items-center gap-2 flex-wrap\">\n      <Select\n        value={condition.fieldId}\n        onChange={(e) => onChange({ ...condition, fieldId: e.target.value })}\n        className=\"w-40\"\n      >\n        <option value=\"\">Select field...</option>\n        {fields.map(f => (\n          <option key={f.id} value={f.id}>{f.name}</option>\n        ))}\n      </Select>\n\n      <Select\n        value={condition.operator}\n        onChange={(e) => onChange({ ...condition, operator: e.target.value })}\n        className=\"w-36\"\n      >\n        <option value=\"equals\">equals</option>\n        <option value=\"notEquals\">does not equal</option>\n        <option value=\"contains\">contains</option>\n        <option value=\"isEmpty\">is empty</option>\n        <option value=\"isNotEmpty\">is not empty</option>\n        <option value=\"greaterThan\">greater than</option>\n        <option value=\"lessThan\">less than</option>\n      </Select>\n\n      {!['isEmpty', 'isNotEmpty'].includes(condition.operator) && (\n        <Input\n          value={condition.value || ''}\n          onChange={(e) => onChange({ ...condition, value: e.target.value })}\n          placeholder=\"Value\"\n          className=\"w-32\"\n        />\n      )}\n\n      <Button variant=\"ghost\" size=\"icon\" onClick={onDelete}>\n        <Trash2 className=\"h-4 w-4\" />\n      </Button>\n    </div>\n  );\n}\n\nfunction ActionEditor({ action, fields, onChange, onDelete }) {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <Select\n        value={action.action}\n        onChange={(e) => onChange({ ...action, action: e.target.value })}\n        className=\"w-32\"\n      >\n        <option value=\"show\">Show</option>\n        <option value=\"hide\">Hide</option>\n        <option value=\"enable\">Enable</option>\n        <option value=\"disable\">Disable</option>\n        <option value=\"require\">Make Required</option>\n        <option value=\"optional\">Make Optional</option>\n        <option value=\"setValue\">Set Value</option>\n      </Select>\n\n      <Select\n        value={action.targetFieldId}\n        onChange={(e) => onChange({ ...action, targetFieldId: e.target.value })}\n        className=\"w-40\"\n      >\n        <option value=\"\">Select field...</option>\n        {fields.map(f => (\n          <option key={f.id} value={f.id}>{f.name}</option>\n        ))}\n      </Select>\n\n      {action.action === 'setValue' && (\n        <Input\n          value={action.value || ''}\n          onChange={(e) => onChange({ ...action, value: e.target.value })}\n          placeholder=\"Value\"\n          className=\"w-32\"\n        />\n      )}\n\n      <Button variant=\"ghost\" size=\"icon\" onClick={onDelete}>\n        <Trash2 className=\"h-4 w-4\" />\n      </Button>\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Condition groups can be created",
+        "Conditions can be added/removed",
+        "All operators available",
+        "Actions can be configured",
+        "UI is intuitive"
+      ]
+    },
+    {
+      "id": "2.9.3",
+      "category": "integration",
+      "title": "Integrate Conditional Logic with Form Runtime",
+      "description": "Connect conditional logic engine to form filling experience.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/hooks/useConditionalFields.ts"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create useConditionalFields hook",
+          "code": "import { useEffect, useMemo, useCallback } from 'react';\nimport { useFormStore } from '@stores/formStore';\nimport { useFormDesignerStore } from '@stores/formDesignerStore';\nimport { ConditionalLogicEngine, FieldUpdate } from '@lib/forms/conditionalLogic';\n\nexport function useConditionalFields() {\n  const { fields } = useFormDesignerStore();\n  const { values, setFieldValue, setFieldVisibility, setFieldEnabled, setFieldRequired } = useFormStore();\n\n  const engine = useMemo(() => {\n    const eng = new ConditionalLogicEngine();\n    const rules = fields.flatMap(f => f.conditions || []);\n    eng.setRules(rules);\n    return eng;\n  }, [fields]);\n\n  const applyUpdates = useCallback((updates: FieldUpdate[]) => {\n    for (const update of updates) {\n      switch (update.action) {\n        case 'show':\n          setFieldVisibility(update.fieldId, true);\n          break;\n        case 'hide':\n          setFieldVisibility(update.fieldId, false);\n          break;\n        case 'enable':\n          setFieldEnabled(update.fieldId, true);\n          break;\n        case 'disable':\n          setFieldEnabled(update.fieldId, false);\n          break;\n        case 'require':\n          setFieldRequired(update.fieldId, true);\n          break;\n        case 'optional':\n          setFieldRequired(update.fieldId, false);\n          break;\n        case 'setValue':\n          if (update.value !== undefined) {\n            setFieldValue(update.fieldId, update.value);\n          }\n          break;\n      }\n    }\n  }, [setFieldVisibility, setFieldEnabled, setFieldRequired, setFieldValue]);\n\n  const handleFieldChange = useCallback((fieldId: string, value: string) => {\n    const updates = engine.updateFieldValue(fieldId, value);\n    applyUpdates(updates);\n  }, [engine, applyUpdates]);\n\n  // Run on-load rules\n  useEffect(() => {\n    const onLoadRules = fields.flatMap(f => \n      (f.conditions || []).filter(r => r.trigger === 'onLoad')\n    );\n    \n    for (const rule of onLoadRules) {\n      if (engine.evaluateConditionGroup(rule.conditions)) {\n        applyUpdates(rule.actions.map(a => ({\n          fieldId: a.targetFieldId,\n          action: a.action,\n          value: a.value,\n        })));\n      }\n    }\n  }, [fields, engine, applyUpdates]);\n\n  return { handleFieldChange };\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Fields show/hide based on conditions",
+        "Enable/disable works",
+        "Required status changes",
+        "Set value action works",
+        "On-load rules execute"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Conditional logic engine works",
+    "Condition builder UI is intuitive",
+    "Runtime integration works",
+    "All action types function correctly"
+  ],
+  "filesCreated": [
+    "src/lib/forms/conditionalLogic.ts",
+    "src/components/forms/designer/ConditionBuilder.tsx",
+    "src/hooks/useConditionalFields.ts"
+  ],
+  "filesModified": [
+    "src/components/forms/FormLayer.tsx"
+  ],
+  "totalNewTests": 20,
+  "totalEstimatedHours": 8,
+  "dependencies": ["2.4.1-2.4.4", "2.5.1-2.5.3"],
+  "notes": [
+    "Nested conditions can get complex - consider UI limits",
+    "Performance important for many rules",
+    "Consider circular dependency detection"
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "phase": 2,
+  "sprint": 1,
+  "todoFile": 2,
+  "title": "Language Data Management & Caching",
+  "priority": "HIGH",
+  "effort": "5 hours",
+  "status": "pending",
+  "milestone": "OCR Technical Foundation",
+  "tasks": [
+    {
+      "id": "2.1.5",
+      "category": "implementation",
+      "title": "Create Language Loader Module",
+      "description": "Implement lazy loading of Tesseract language files with caching to IndexedDB.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/lib/ocr/languageLoader.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define language metadata",
+          "code": "export interface LanguageInfo {\n  code: string;\n  name: string;\n  nativeName: string;\n  size: number; // bytes\n  script: 'latin' | 'cyrillic' | 'cjk' | 'arabic' | 'devanagari' | 'other';\n}\n\nexport const SUPPORTED_LANGUAGES: LanguageInfo[] = [\n  { code: 'eng', name: 'English', nativeName: 'English', size: 10500000, script: 'latin' },\n  { code: 'spa', name: 'Spanish', nativeName: 'Español', size: 9800000, script: 'latin' },\n  { code: 'fra', name: 'French', nativeName: 'Français', size: 9600000, script: 'latin' },\n  { code: 'deu', name: 'German', nativeName: 'Deutsch', size: 10200000, script: 'latin' },\n  { code: 'chi_sim', name: 'Chinese (Simplified)', nativeName: '简体中文', size: 18500000, script: 'cjk' },\n  { code: 'chi_tra', name: 'Chinese (Traditional)', nativeName: '繁體中文', size: 19200000, script: 'cjk' },\n  { code: 'jpn', name: 'Japanese', nativeName: '日本語', size: 14800000, script: 'cjk' },\n  { code: 'kor', name: 'Korean', nativeName: '한국어', size: 8900000, script: 'cjk' },\n  { code: 'ara', name: 'Arabic', nativeName: 'العربية', size: 7200000, script: 'arabic' },\n  { code: 'rus', name: 'Russian', nativeName: 'Русский', size: 8100000, script: 'cyrillic' },\n  { code: 'por', name: 'Portuguese', nativeName: 'Português', size: 9400000, script: 'latin' },\n  { code: 'ita', name: 'Italian', nativeName: 'Italiano', size: 9100000, script: 'latin' },\n  { code: 'hin', name: 'Hindi', nativeName: 'हिन्दी', size: 8500000, script: 'devanagari' },\n  { code: 'tha', name: 'Thai', nativeName: 'ไทย', size: 7800000, script: 'other' },\n  { code: 'vie', name: 'Vietnamese', nativeName: 'Tiếng Việt', size: 6900000, script: 'latin' }\n];"
+        },
+        {
+          "step": 2,
+          "action": "Create LanguageLoader class",
+          "code": "export class LanguageLoader {\n  private static DB_NAME = 'paperflow-ocr';\n  private static STORE_NAME = 'language-cache';\n  private static DB_VERSION = 1;\n  private db: IDBDatabase | null = null;\n\n  async init(): Promise<void> {\n    return new Promise((resolve, reject) => {\n      const request = indexedDB.open(LanguageLoader.DB_NAME, LanguageLoader.DB_VERSION);\n      request.onerror = () => reject(request.error);\n      request.onsuccess = () => {\n        this.db = request.result;\n        resolve();\n      };\n      request.onupgradeneeded = (event) => {\n        const db = (event.target as IDBOpenDBRequest).result;\n        if (!db.objectStoreNames.contains(LanguageLoader.STORE_NAME)) {\n          db.createObjectStore(LanguageLoader.STORE_NAME);\n        }\n      };\n    });\n  }\n}"
+        },
+        {
+          "step": 3,
+          "action": "Implement cache check method",
+          "code": "async isLanguageCached(langCode: string): Promise<boolean> {\n  if (!this.db) await this.init();\n  return new Promise((resolve, reject) => {\n    const tx = this.db!.transaction(LanguageLoader.STORE_NAME, 'readonly');\n    const store = tx.objectStore(LanguageLoader.STORE_NAME);\n    const request = store.get(langCode);\n    request.onerror = () => reject(request.error);\n    request.onsuccess = () => resolve(!!request.result);\n  });\n}"
+        },
+        {
+          "step": 4,
+          "action": "Implement cache storage method",
+          "code": "async cacheLanguageData(langCode: string, data: ArrayBuffer): Promise<void> {\n  if (!this.db) await this.init();\n  return new Promise((resolve, reject) => {\n    const tx = this.db!.transaction(LanguageLoader.STORE_NAME, 'readwrite');\n    const store = tx.objectStore(LanguageLoader.STORE_NAME);\n    const request = store.put(data, langCode);\n    request.onerror = () => reject(request.error);\n    request.onsuccess = () => resolve();\n  });\n}"
+        },
+        {
+          "step": 5,
+          "action": "Implement cache retrieval method",
+          "code": "async getCachedLanguageData(langCode: string): Promise<ArrayBuffer | null> {\n  if (!this.db) await this.init();\n  return new Promise((resolve, reject) => {\n    const tx = this.db!.transaction(LanguageLoader.STORE_NAME, 'readonly');\n    const store = tx.objectStore(LanguageLoader.STORE_NAME);\n    const request = store.get(langCode);\n    request.onerror = () => reject(request.error);\n    request.onsuccess = () => resolve(request.result || null);\n  });\n}"
+        },
+        {
+          "step": 6,
+          "action": "Implement download with progress",
+          "code": "async downloadLanguage(\n  langCode: string,\n  onProgress?: (progress: number) => void\n): Promise<void> {\n  const cached = await this.isLanguageCached(langCode);\n  if (cached) {\n    onProgress?.(100);\n    return;\n  }\n\n  // Tesseract.js handles download internally, but we track it\n  // The actual caching happens via Tesseract's built-in mechanism\n  // This is mainly for UI progress tracking\n  onProgress?.(0);\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "IndexedDB database initializes correctly",
+        "Language cache check works",
+        "Cache storage and retrieval work",
+        "Language metadata available for all 50+ languages",
+        "Download progress tracking works"
+      ]
+    },
+    {
+      "id": "2.1.6",
+      "category": "implementation",
+      "title": "Implement Image Preprocessing Module",
+      "description": "Create image preprocessing functions to improve OCR accuracy on poor quality scans.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/lib/ocr/imagePreprocessor.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define preprocessing options",
+          "code": "export interface PreprocessOptions {\n  grayscale: boolean;\n  contrast: number; // -100 to 100\n  brightness: number; // -100 to 100\n  sharpen: boolean;\n  denoise: boolean;\n  deskew: boolean;\n  binarize: boolean;\n  binarizeThreshold: number; // 0-255\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create ImagePreprocessor class",
+          "code": "export class ImagePreprocessor {\n  private canvas: OffscreenCanvas;\n  private ctx: OffscreenCanvasRenderingContext2D;\n\n  constructor(width: number, height: number) {\n    this.canvas = new OffscreenCanvas(width, height);\n    this.ctx = this.canvas.getContext('2d')!;\n  }\n\n  process(imageData: ImageData, options: Partial<PreprocessOptions>): ImageData {\n    let processed = imageData;\n    \n    if (options.grayscale) processed = this.toGrayscale(processed);\n    if (options.contrast) processed = this.adjustContrast(processed, options.contrast);\n    if (options.brightness) processed = this.adjustBrightness(processed, options.brightness);\n    if (options.sharpen) processed = this.sharpen(processed);\n    if (options.denoise) processed = this.denoise(processed);\n    if (options.binarize) processed = this.binarize(processed, options.binarizeThreshold ?? 128);\n    \n    return processed;\n  }\n}"
+        },
+        {
+          "step": 3,
+          "action": "Implement grayscale conversion",
+          "code": "private toGrayscale(imageData: ImageData): ImageData {\n  const data = new Uint8ClampedArray(imageData.data);\n  for (let i = 0; i < data.length; i += 4) {\n    const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];\n    data[i] = data[i + 1] = data[i + 2] = gray;\n  }\n  return new ImageData(data, imageData.width, imageData.height);\n}"
+        },
+        {
+          "step": 4,
+          "action": "Implement contrast adjustment",
+          "code": "private adjustContrast(imageData: ImageData, contrast: number): ImageData {\n  const factor = (259 * (contrast + 255)) / (255 * (259 - contrast));\n  const data = new Uint8ClampedArray(imageData.data);\n  for (let i = 0; i < data.length; i += 4) {\n    data[i] = this.clamp(factor * (data[i] - 128) + 128);\n    data[i + 1] = this.clamp(factor * (data[i + 1] - 128) + 128);\n    data[i + 2] = this.clamp(factor * (data[i + 2] - 128) + 128);\n  }\n  return new ImageData(data, imageData.width, imageData.height);\n}\n\nprivate clamp(value: number): number {\n  return Math.max(0, Math.min(255, value));\n}"
+        },
+        {
+          "step": 5,
+          "action": "Implement binarization (threshold)",
+          "code": "private binarize(imageData: ImageData, threshold: number): ImageData {\n  const data = new Uint8ClampedArray(imageData.data);\n  for (let i = 0; i < data.length; i += 4) {\n    const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];\n    const binary = gray > threshold ? 255 : 0;\n    data[i] = data[i + 1] = data[i + 2] = binary;\n  }\n  return new ImageData(data, imageData.width, imageData.height);\n}"
+        },
+        {
+          "step": 6,
+          "action": "Implement sharpening filter",
+          "code": "private sharpen(imageData: ImageData): ImageData {\n  const kernel = [\n    0, -1, 0,\n    -1, 5, -1,\n    0, -1, 0\n  ];\n  return this.applyConvolution(imageData, kernel);\n}\n\nprivate applyConvolution(imageData: ImageData, kernel: number[]): ImageData {\n  // 3x3 convolution implementation\n  const { width, height, data } = imageData;\n  const output = new Uint8ClampedArray(data.length);\n  const kSize = 3;\n  const kHalf = Math.floor(kSize / 2);\n  \n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let r = 0, g = 0, b = 0;\n      for (let ky = 0; ky < kSize; ky++) {\n        for (let kx = 0; kx < kSize; kx++) {\n          const px = Math.min(width - 1, Math.max(0, x + kx - kHalf));\n          const py = Math.min(height - 1, Math.max(0, y + ky - kHalf));\n          const idx = (py * width + px) * 4;\n          const k = kernel[ky * kSize + kx];\n          r += data[idx] * k;\n          g += data[idx + 1] * k;\n          b += data[idx + 2] * k;\n        }\n      }\n      const idx = (y * width + x) * 4;\n      output[idx] = this.clamp(r);\n      output[idx + 1] = this.clamp(g);\n      output[idx + 2] = this.clamp(b);\n      output[idx + 3] = data[idx + 3];\n    }\n  }\n  return new ImageData(output, width, height);\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Grayscale conversion works correctly",
+        "Contrast adjustment improves readability",
+        "Binarization produces clean black/white output",
+        "Sharpening enhances text edges",
+        "All operations preserve image dimensions",
+        "Processing is performant (< 500ms for typical page)"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Language loader caches data to IndexedDB",
+    "Popular languages defined with metadata",
+    "Image preprocessing improves OCR accuracy",
+    "All preprocessing options functional"
+  ],
+  "filesCreated": [
+    "src/lib/ocr/languageLoader.ts",
+    "src/lib/ocr/imagePreprocessor.ts"
+  ],
+  "filesModified": [],
+  "totalNewTests": 10,
+  "totalEstimatedHours": 5,
+  "dependencies": ["2.1.1", "2.1.2"],
+  "notes": [
+    "IndexedDB caching reduces repeated downloads",
+    "Preprocessing can significantly improve accuracy on poor scans",
+    "Consider offering 'auto' preprocessing that detects optimal settings"
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "phase": 2,
+  "sprint": 6,
+  "todoFile": 1,
+  "title": "Redaction Infrastructure & Manual Redaction Tool",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "v2.0 Release",
+  "tasks": [
+    {
+      "id": "2.6.1",
+      "category": "architecture",
+      "title": "Create Redaction Library Structure",
+      "description": "Set up the lib/redaction/ directory with core modules for redaction functionality.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": [
+        "src/lib/redaction/redactionEngine.ts",
+        "src/lib/redaction/patternMatcher.ts",
+        "src/lib/redaction/redactionApply.ts",
+        "src/lib/redaction/redactionVerify.ts",
+        "src/lib/redaction/types.ts",
+        "src/lib/redaction/index.ts"
+      ],
+      "testCategories": ["typecheck"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create redaction directory",
+          "details": "mkdir -p src/lib/redaction"
+        },
+        {
+          "step": 2,
+          "action": "Define redaction types",
+          "code": "// src/lib/redaction/types.ts\nexport interface RedactionMark {\n  id: string;\n  pageIndex: number;\n  bounds: {\n    x: number;\n    y: number;\n    width: number;\n    height: number;\n  };\n  type: 'text' | 'area' | 'pattern';\n  matchedText?: string;\n  pattern?: string;\n  overlayText?: string;\n  overlayColor: string;\n  status: 'marked' | 'applied';\n  createdAt: Date;\n  appliedAt?: Date;\n}\n\nexport interface RedactionPattern {\n  id: string;\n  name: string;\n  pattern: RegExp;\n  description: string;\n  category: 'pii' | 'financial' | 'contact' | 'custom';\n}\n\nexport interface RedactionResult {\n  success: boolean;\n  marksApplied: number;\n  pagesAffected: number;\n  errors: string[];\n}\n\nexport interface VerificationResult {\n  passed: boolean;\n  issues: VerificationIssue[];\n  metadataClean: boolean;\n  hiddenTextFound: boolean;\n}\n\nexport interface VerificationIssue {\n  pageIndex: number;\n  type: 'content-behind-redaction' | 'hidden-text' | 'metadata';\n  description: string;\n  severity: 'error' | 'warning';\n}"
+        },
+        {
+          "step": 3,
+          "action": "Create barrel export",
+          "code": "// src/lib/redaction/index.ts\nexport * from './types';\nexport { RedactionEngine } from './redactionEngine';\nexport { PatternMatcher, BUILT_IN_PATTERNS } from './patternMatcher';\nexport { applyRedactions } from './redactionApply';\nexport { verifyRedactions } from './redactionVerify';"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Directory structure created",
+        "All type definitions complete",
+        "Barrel export works",
+        "TypeScript compiles"
+      ]
+    },
+    {
+      "id": "2.6.2",
+      "category": "state",
+      "title": "Create Redaction Zustand Store",
+      "description": "Implement state management for redaction marks, patterns, and application status.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/stores/redactionStore.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create redaction store",
+          "code": "import { create } from 'zustand';\nimport { v4 as uuidv4 } from 'uuid';\nimport type { RedactionMark, RedactionPattern, VerificationResult } from '@lib/redaction/types';\n\ninterface RedactionState {\n  // State\n  marks: RedactionMark[];\n  selectedMarkIds: string[];\n  activePattern: RedactionPattern | null;\n  overlayColor: string;\n  overlayText: string;\n  isApplying: boolean;\n  verificationResult: VerificationResult | null;\n\n  // Actions\n  addMark: (mark: Omit<RedactionMark, 'id' | 'createdAt' | 'status'>) => string;\n  updateMark: (id: string, updates: Partial<RedactionMark>) => void;\n  removeMark: (id: string) => void;\n  removeSelectedMarks: () => void;\n  selectMark: (id: string, addToSelection?: boolean) => void;\n  selectMarks: (ids: string[]) => void;\n  clearSelection: () => void;\n  setOverlayColor: (color: string) => void;\n  setOverlayText: (text: string) => void;\n  setActivePattern: (pattern: RedactionPattern | null) => void;\n  getMarksByPage: (pageIndex: number) => RedactionMark[];\n  clearMarks: () => void;\n  applyRedactions: () => Promise<void>;\n  verifyRedactions: () => Promise<VerificationResult>;\n}"
+        },
+        {
+          "step": 2,
+          "action": "Implement store",
+          "code": "export const useRedactionStore = create<RedactionState>((set, get) => ({\n  marks: [],\n  selectedMarkIds: [],\n  activePattern: null,\n  overlayColor: '#000000',\n  overlayText: '',\n  isApplying: false,\n  verificationResult: null,\n\n  addMark: (markData) => {\n    const id = uuidv4();\n    const mark: RedactionMark = {\n      ...markData,\n      id,\n      status: 'marked',\n      createdAt: new Date(),\n      overlayColor: get().overlayColor,\n      overlayText: get().overlayText,\n    };\n    set(state => ({ marks: [...state.marks, mark] }));\n    return id;\n  },\n\n  updateMark: (id, updates) => {\n    set(state => ({\n      marks: state.marks.map(m => m.id === id ? { ...m, ...updates } : m)\n    }));\n  },\n\n  removeMark: (id) => {\n    set(state => ({\n      marks: state.marks.filter(m => m.id !== id),\n      selectedMarkIds: state.selectedMarkIds.filter(mid => mid !== id)\n    }));\n  },\n\n  selectMark: (id, addToSelection = false) => {\n    set(state => ({\n      selectedMarkIds: addToSelection\n        ? [...state.selectedMarkIds, id]\n        : [id]\n    }));\n  },\n\n  getMarksByPage: (pageIndex) => {\n    return get().marks.filter(m => m.pageIndex === pageIndex);\n  },\n\n  applyRedactions: async () => {\n    set({ isApplying: true });\n    try {\n      // Implementation in applyRedactions service\n      const marks = get().marks.filter(m => m.status === 'marked');\n      // ... apply logic\n      set(state => ({\n        marks: state.marks.map(m => \n          m.status === 'marked' ? { ...m, status: 'applied', appliedAt: new Date() } : m\n        )\n      }));\n    } finally {\n      set({ isApplying: false });\n    }\n  },\n\n  // ... more actions\n}));"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Store initializes correctly",
+        "Marks can be added, updated, removed",
+        "Selection management works",
+        "Overlay options configurable",
+        "Page filtering works"
+      ]
+    },
+    {
+      "id": "2.6.3",
+      "category": "implementation",
+      "title": "Implement Pattern Matcher",
+      "description": "Create the pattern matching engine with built-in patterns for sensitive data.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/lib/redaction/patternMatcher.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define built-in patterns",
+          "code": "import type { RedactionPattern } from './types';\n\nexport const BUILT_IN_PATTERNS: RedactionPattern[] = [\n  {\n    id: 'ssn',\n    name: 'Social Security Number',\n    pattern: /\\b\\d{3}-\\d{2}-\\d{4}\\b/g,\n    description: 'US Social Security Numbers (###-##-####)',\n    category: 'pii'\n  },\n  {\n    id: 'ssn-no-dashes',\n    name: 'SSN (no dashes)',\n    pattern: /\\b\\d{9}\\b/g,\n    description: 'US Social Security Numbers without dashes',\n    category: 'pii'\n  },\n  {\n    id: 'phone-us',\n    name: 'US Phone Number',\n    pattern: /\\b(?:\\+1[-\\s]?)?(?:\\(?\\d{3}\\)?[-\\s]?)?\\d{3}[-\\s]?\\d{4}\\b/g,\n    description: 'US phone numbers in various formats',\n    category: 'contact'\n  },\n  {\n    id: 'email',\n    name: 'Email Address',\n    pattern: /\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b/g,\n    description: 'Email addresses',\n    category: 'contact'\n  },\n  {\n    id: 'credit-card',\n    name: 'Credit Card Number',\n    pattern: /\\b(?:\\d{4}[-\\s]?){3}\\d{4}\\b/g,\n    description: 'Credit card numbers (16 digits)',\n    category: 'financial'\n  },\n  {\n    id: 'date-us',\n    name: 'Date (US Format)',\n    pattern: /\\b(?:0?[1-9]|1[0-2])\\/(?:0?[1-9]|[12]\\d|3[01])\\/(?:19|20)?\\d{2}\\b/g,\n    description: 'Dates in MM/DD/YYYY or MM/DD/YY format',\n    category: 'pii'\n  },\n  {\n    id: 'ip-address',\n    name: 'IP Address',\n    pattern: /\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b/g,\n    description: 'IPv4 addresses',\n    category: 'pii'\n  },\n];"
+        },
+        {
+          "step": 2,
+          "action": "Create PatternMatcher class",
+          "code": "export class PatternMatcher {\n  private patterns: RedactionPattern[];\n\n  constructor(patterns: RedactionPattern[] = BUILT_IN_PATTERNS) {\n    this.patterns = patterns;\n  }\n\n  addPattern(pattern: RedactionPattern): void {\n    this.patterns.push(pattern);\n  }\n\n  removePattern(id: string): void {\n    this.patterns = this.patterns.filter(p => p.id !== id);\n  }\n\n  findMatches(text: string, patternId?: string): PatternMatch[] {\n    const patternsToUse = patternId\n      ? this.patterns.filter(p => p.id === patternId)\n      : this.patterns;\n\n    const matches: PatternMatch[] = [];\n\n    for (const pattern of patternsToUse) {\n      // Reset regex lastIndex\n      pattern.pattern.lastIndex = 0;\n      \n      let match;\n      while ((match = pattern.pattern.exec(text)) !== null) {\n        matches.push({\n          patternId: pattern.id,\n          patternName: pattern.name,\n          text: match[0],\n          startIndex: match.index,\n          endIndex: match.index + match[0].length,\n        });\n      }\n    }\n\n    return matches;\n  }\n\n  findMatchesInDocument(\n    pages: PageText[],\n    patternId?: string\n  ): DocumentMatch[] {\n    const allMatches: DocumentMatch[] = [];\n\n    for (const page of pages) {\n      const pageMatches = this.findMatches(page.text, patternId);\n      \n      for (const match of pageMatches) {\n        // Map text position to PDF coordinates\n        const bounds = this.getMatchBounds(page, match);\n        if (bounds) {\n          allMatches.push({\n            ...match,\n            pageIndex: page.pageIndex,\n            bounds,\n          });\n        }\n      }\n    }\n\n    return allMatches;\n  }\n\n  private getMatchBounds(page: PageText, match: PatternMatch): Bounds | null {\n    // Use text content items to find position\n    // This requires mapping from string index to PDF coordinates\n    // Implementation depends on how text content is extracted\n    return null; // Implement based on PDF.js text content\n  }\n}\n\ninterface PatternMatch {\n  patternId: string;\n  patternName: string;\n  text: string;\n  startIndex: number;\n  endIndex: number;\n}\n\ninterface DocumentMatch extends PatternMatch {\n  pageIndex: number;\n  bounds: Bounds;\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "All built-in patterns defined",
+        "Pattern matching finds all occurrences",
+        "Custom patterns can be added",
+        "Document-wide search works",
+        "Position mapping to PDF coordinates works"
+      ]
+    },
+    {
+      "id": "2.6.4",
+      "category": "ui",
+      "title": "Create Manual Redaction Tool",
+      "description": "Implement the drawing tool for manually marking areas for redaction.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": [
+        "src/components/redaction/RedactionTool.tsx",
+        "src/components/redaction/RedactionMark.tsx"
+      ],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create RedactionTool component",
+          "code": "import { useState, useRef } from 'react';\nimport { useRedactionStore } from '@stores/redactionStore';\n\ninterface RedactionToolProps {\n  pageIndex: number;\n  scale: number;\n}\n\nexport function RedactionTool({ pageIndex, scale }: RedactionToolProps) {\n  const { addMark, overlayColor } = useRedactionStore();\n  const [isDrawing, setIsDrawing] = useState(false);\n  const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(null);\n  const [currentRect, setCurrentRect] = useState<Bounds | null>(null);\n  const containerRef = useRef<HTMLDivElement>(null);\n\n  const handleMouseDown = (e: React.MouseEvent) => {\n    if (!containerRef.current) return;\n    const rect = containerRef.current.getBoundingClientRect();\n    const x = (e.clientX - rect.left) / scale;\n    const y = (e.clientY - rect.top) / scale;\n    setStartPoint({ x, y });\n    setIsDrawing(true);\n  };\n\n  const handleMouseMove = (e: React.MouseEvent) => {\n    if (!isDrawing || !startPoint || !containerRef.current) return;\n    const rect = containerRef.current.getBoundingClientRect();\n    const x = (e.clientX - rect.left) / scale;\n    const y = (e.clientY - rect.top) / scale;\n\n    setCurrentRect({\n      x: Math.min(startPoint.x, x),\n      y: Math.min(startPoint.y, y),\n      width: Math.abs(x - startPoint.x),\n      height: Math.abs(y - startPoint.y),\n    });\n  };\n\n  const handleMouseUp = () => {\n    if (currentRect && currentRect.width > 5 && currentRect.height > 5) {\n      addMark({\n        pageIndex,\n        bounds: currentRect,\n        type: 'area',\n        overlayColor,\n      });\n    }\n    setIsDrawing(false);\n    setStartPoint(null);\n    setCurrentRect(null);\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      className=\"absolute inset-0 cursor-crosshair\"\n      onMouseDown={handleMouseDown}\n      onMouseMove={handleMouseMove}\n      onMouseUp={handleMouseUp}\n      onMouseLeave={handleMouseUp}\n    >\n      {currentRect && (\n        <div\n          className=\"absolute border-2 border-red-500 bg-red-500/30\"\n          style={{\n            left: currentRect.x * scale,\n            top: currentRect.y * scale,\n            width: currentRect.width * scale,\n            height: currentRect.height * scale,\n          }}\n        />\n      )}\n    </div>\n  );\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create RedactionMark display component",
+          "code": "interface RedactionMarkProps {\n  mark: RedactionMark;\n  scale: number;\n  isSelected: boolean;\n  onSelect: () => void;\n}\n\nexport function RedactionMarkDisplay({ mark, scale, isSelected, onSelect }: RedactionMarkProps) {\n  const isApplied = mark.status === 'applied';\n\n  return (\n    <div\n      onClick={(e) => {\n        e.stopPropagation();\n        onSelect();\n      }}\n      className={cn(\n        'absolute transition-colors cursor-pointer',\n        isApplied ? 'pointer-events-none' : 'hover:ring-2 hover:ring-red-400',\n        isSelected && 'ring-2 ring-red-500'\n      )}\n      style={{\n        left: mark.bounds.x * scale,\n        top: mark.bounds.y * scale,\n        width: mark.bounds.width * scale,\n        height: mark.bounds.height * scale,\n        backgroundColor: isApplied ? mark.overlayColor : `${mark.overlayColor}80`,\n      }}\n    >\n      {!isApplied && mark.overlayText && (\n        <span className=\"absolute inset-0 flex items-center justify-center text-white text-xs font-bold\">\n          {mark.overlayText}\n        </span>\n      )}\n      {isApplied && mark.overlayText && (\n        <span className=\"absolute inset-0 flex items-center justify-center text-white text-sm font-bold\">\n          {mark.overlayText}\n        </span>\n      )}\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Draw rectangle to mark areas",
+        "Visual preview during drawing",
+        "Marks show overlay color",
+        "Applied vs marked visual distinction",
+        "Marks are selectable",
+        "Minimum size threshold prevents tiny marks"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Redaction types defined",
+    "Store manages redaction state",
+    "Pattern matcher finds sensitive data",
+    "Manual redaction tool works",
+    "Marks render correctly on pages"
+  ],
+  "filesCreated": [
+    "src/lib/redaction/types.ts",
+    "src/lib/redaction/redactionEngine.ts",
+    "src/lib/redaction/patternMatcher.ts",
+    "src/lib/redaction/index.ts",
+    "src/stores/redactionStore.ts",
+    "src/components/redaction/RedactionTool.tsx",
+    "src/components/redaction/RedactionMark.tsx"
+  ],
+  "filesModified": [],
+  "totalNewTests": 15,
+  "totalEstimatedHours": 8,
+  "dependencies": [],
+  "notes": [
+    "True redaction must remove content, not just cover it",
+    "Pattern regex must handle edge cases",
+    "Consider internationalization for patterns (non-US formats)"
+  ]
+}

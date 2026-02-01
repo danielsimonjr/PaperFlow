@@ -1,0 +1,138 @@
+{
+  "phase": 2,
+  "sprint": 5,
+  "todoFile": 1,
+  "title": "Form Field Types & Validation",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "Form Designer Complete",
+  "tasks": [
+    {
+      "id": "2.5.1",
+      "category": "implementation",
+      "title": "Implement Advanced Field Types",
+      "description": "Create dropdown, date picker, and signature field components for the form designer.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": [
+        "src/components/forms/designer/fields/DropdownField.tsx",
+        "src/components/forms/designer/fields/DateField.tsx",
+        "src/components/forms/designer/fields/SignatureField.tsx"
+      ],
+      "testCategories": ["unit", "visual"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create DropdownField component",
+          "code": "import { useState } from 'react';\nimport { ChevronDown, Plus, Trash2 } from 'lucide-react';\nimport { Input } from '@components/ui/Input';\nimport { Button } from '@components/ui/Button';\n\ninterface DropdownFieldProps {\n  field: FormFieldDefinition;\n  isDesignMode: boolean;\n  onChange?: (value: string) => void;\n}\n\nexport function DropdownField({ field, isDesignMode, onChange }: DropdownFieldProps) {\n  const options = field.properties.options || [];\n  const [isOpen, setIsOpen] = useState(false);\n  const [value, setValue] = useState(field.properties.defaultValue || '');\n\n  if (isDesignMode) {\n    return (\n      <div className=\"border rounded p-2 bg-white\">\n        <div className=\"flex items-center justify-between\">\n          <span className=\"text-sm text-gray-500\">Dropdown ({options.length} options)</span>\n          <ChevronDown className=\"h-4 w-4\" />\n        </div>\n      </div>\n    );\n  }\n\n  return (\n    <div className=\"relative\">\n      <button\n        onClick={() => setIsOpen(!isOpen)}\n        className=\"w-full border rounded px-3 py-2 text-left flex items-center justify-between\"\n      >\n        <span>{value || field.properties.placeholder || 'Select...'}</span>\n        <ChevronDown className=\"h-4 w-4\" />\n      </button>\n      {isOpen && (\n        <div className=\"absolute z-10 w-full mt-1 bg-white border rounded shadow-lg max-h-48 overflow-auto\">\n          {options.map((opt, i) => (\n            <button\n              key={i}\n              onClick={() => {\n                setValue(opt.value);\n                onChange?.(opt.value);\n                setIsOpen(false);\n              }}\n              className=\"w-full px-3 py-2 text-left hover:bg-gray-100\"\n            >\n              {opt.label}\n            </button>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create DateField component",
+          "code": "import { useState } from 'react';\nimport { Calendar } from 'lucide-react';\n\ninterface DateFieldProps {\n  field: FormFieldDefinition;\n  isDesignMode: boolean;\n  onChange?: (value: string) => void;\n}\n\nexport function DateField({ field, isDesignMode, onChange }: DateFieldProps) {\n  const [value, setValue] = useState(field.properties.defaultValue || '');\n  const format = field.properties.dateFormat || 'MM/DD/YYYY';\n\n  if (isDesignMode) {\n    return (\n      <div className=\"border rounded p-2 bg-white flex items-center gap-2\">\n        <Calendar className=\"h-4 w-4 text-gray-400\" />\n        <span className=\"text-sm text-gray-500\">{format}</span>\n      </div>\n    );\n  }\n\n  return (\n    <div className=\"relative\">\n      <input\n        type=\"date\"\n        value={value}\n        onChange={(e) => {\n          setValue(e.target.value);\n          onChange?.(e.target.value);\n        }}\n        min={field.properties.minDate}\n        max={field.properties.maxDate}\n        className=\"w-full border rounded px-3 py-2\"\n      />\n    </div>\n  );\n}"
+        },
+        {
+          "step": 3,
+          "action": "Create SignatureField component",
+          "code": "import { PenTool } from 'lucide-react';\nimport { useSignatureStore } from '@stores/signatureStore';\n\ninterface SignatureFieldProps {\n  field: FormFieldDefinition;\n  isDesignMode: boolean;\n  onSign?: () => void;\n}\n\nexport function SignatureField({ field, isDesignMode, onSign }: SignatureFieldProps) {\n  const { openSignatureModal } = useSignatureStore();\n  const [signature, setSignature] = useState<string | null>(null);\n\n  if (isDesignMode) {\n    return (\n      <div className=\"border-2 border-dashed rounded p-4 bg-gray-50 flex items-center justify-center gap-2\">\n        <PenTool className=\"h-5 w-5 text-gray-400\" />\n        <span className=\"text-sm text-gray-500\">Signature Field</span>\n      </div>\n    );\n  }\n\n  return (\n    <div \n      onClick={() => {\n        openSignatureModal((sig) => {\n          setSignature(sig);\n          onSign?.();\n        });\n      }}\n      className=\"border-2 border-dashed rounded p-4 bg-gray-50 cursor-pointer hover:bg-gray-100\"\n    >\n      {signature ? (\n        <img src={signature} alt=\"Signature\" className=\"max-h-16\" />\n      ) : (\n        <div className=\"flex items-center justify-center gap-2 text-gray-500\">\n          <PenTool className=\"h-5 w-5\" />\n          <span>Click to sign</span>\n        </div>\n      )}\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Dropdown shows options list",
+        "Date picker respects min/max dates",
+        "Signature field integrates with signature modal",
+        "All fields work in design and fill modes",
+        "Fields are keyboard accessible"
+      ]
+    },
+    {
+      "id": "2.5.2",
+      "category": "implementation",
+      "title": "Implement Field Validation System",
+      "description": "Create validation rule engine and UI for form field validation.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": [
+        "src/lib/forms/validation.ts",
+        "src/components/forms/designer/ValidationBuilder.tsx"
+      ],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create validation engine",
+          "code": "export interface ValidationRule {\n  type: 'required' | 'minLength' | 'maxLength' | 'min' | 'max' | 'pattern' | 'email' | 'phone' | 'custom';\n  value?: string | number;\n  message: string;\n  customFn?: (value: string) => boolean;\n}\n\nexport interface ValidationResult {\n  valid: boolean;\n  errors: string[];\n}\n\nexport function validateField(value: string, rules: ValidationRule[]): ValidationResult {\n  const errors: string[] = [];\n\n  for (const rule of rules) {\n    const isValid = checkRule(value, rule);\n    if (!isValid) {\n      errors.push(rule.message);\n    }\n  }\n\n  return { valid: errors.length === 0, errors };\n}\n\nfunction checkRule(value: string, rule: ValidationRule): boolean {\n  switch (rule.type) {\n    case 'required':\n      return value.trim().length > 0;\n    case 'minLength':\n      return value.length >= (rule.value as number);\n    case 'maxLength':\n      return value.length <= (rule.value as number);\n    case 'min':\n      return parseFloat(value) >= (rule.value as number);\n    case 'max':\n      return parseFloat(value) <= (rule.value as number);\n    case 'pattern':\n      return new RegExp(rule.value as string).test(value);\n    case 'email':\n      return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value);\n    case 'phone':\n      return /^[\\d\\s\\-\\+\\(\\)]+$/.test(value);\n    case 'custom':\n      return rule.customFn ? rule.customFn(value) : true;\n    default:\n      return true;\n  }\n}\n\nexport const BUILT_IN_PATTERNS = [\n  { id: 'email', name: 'Email', pattern: '^[^\\\\s@]+@[^\\\\s@]+\\\\.[^\\\\s@]+$' },\n  { id: 'phone', name: 'Phone', pattern: '^[\\\\d\\\\s\\\\-\\\\+\\\\(\\\\)]+$' },\n  { id: 'ssn', name: 'SSN', pattern: '^\\\\d{3}-\\\\d{2}-\\\\d{4}$' },\n  { id: 'zip', name: 'ZIP Code', pattern: '^\\\\d{5}(-\\\\d{4})?$' },\n  { id: 'date', name: 'Date (MM/DD/YYYY)', pattern: '^\\\\d{2}/\\\\d{2}/\\\\d{4}$' },\n];"
+        },
+        {
+          "step": 2,
+          "action": "Create ValidationBuilder component",
+          "code": "import { Plus, Trash2 } from 'lucide-react';\nimport { Button } from '@components/ui/Button';\nimport { Input } from '@components/ui/Input';\nimport { Select } from '@components/ui/Select';\nimport type { ValidationRule } from '@lib/forms/validation';\n\ninterface ValidationBuilderProps {\n  rules: ValidationRule[];\n  onChange: (rules: ValidationRule[]) => void;\n}\n\nexport function ValidationBuilder({ rules, onChange }: ValidationBuilderProps) {\n  const addRule = (type: ValidationRule['type']) => {\n    const newRule: ValidationRule = {\n      type,\n      message: getDefaultMessage(type),\n      value: getDefaultValue(type),\n    };\n    onChange([...rules, newRule]);\n  };\n\n  const updateRule = (index: number, updates: Partial<ValidationRule>) => {\n    const newRules = [...rules];\n    newRules[index] = { ...newRules[index], ...updates };\n    onChange(newRules);\n  };\n\n  const removeRule = (index: number) => {\n    onChange(rules.filter((_, i) => i !== index));\n  };\n\n  return (\n    <div className=\"space-y-4\">\n      <div className=\"text-sm font-medium\">Validation Rules</div>\n      \n      {rules.map((rule, index) => (\n        <div key={index} className=\"flex gap-2 items-start border rounded p-3\">\n          <div className=\"flex-1 space-y-2\">\n            <div className=\"flex gap-2\">\n              <Select\n                value={rule.type}\n                onChange={(e) => updateRule(index, { type: e.target.value as ValidationRule['type'] })}\n                className=\"w-32\"\n              >\n                <option value=\"required\">Required</option>\n                <option value=\"minLength\">Min Length</option>\n                <option value=\"maxLength\">Max Length</option>\n                <option value=\"min\">Min Value</option>\n                <option value=\"max\">Max Value</option>\n                <option value=\"pattern\">Pattern</option>\n                <option value=\"email\">Email</option>\n                <option value=\"phone\">Phone</option>\n              </Select>\n              \n              {['minLength', 'maxLength', 'min', 'max'].includes(rule.type) && (\n                <Input\n                  type=\"number\"\n                  value={rule.value as number}\n                  onChange={(e) => updateRule(index, { value: parseInt(e.target.value) })}\n                  className=\"w-20\"\n                />\n              )}\n              \n              {rule.type === 'pattern' && (\n                <Input\n                  value={rule.value as string}\n                  onChange={(e) => updateRule(index, { value: e.target.value })}\n                  placeholder=\"Regex pattern\"\n                  className=\"flex-1\"\n                />\n              )}\n            </div>\n            \n            <Input\n              value={rule.message}\n              onChange={(e) => updateRule(index, { message: e.target.value })}\n              placeholder=\"Error message\"\n            />\n          </div>\n          \n          <Button variant=\"ghost\" size=\"icon\" onClick={() => removeRule(index)}>\n            <Trash2 className=\"h-4 w-4\" />\n          </Button>\n        </div>\n      ))}\n\n      <Button variant=\"ghost\" onClick={() => addRule('required')} className=\"w-full\">\n        <Plus className=\"h-4 w-4 mr-2\" /> Add Rule\n      </Button>\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Validation rules evaluate correctly",
+        "Built-in patterns work",
+        "Custom patterns supported",
+        "Error messages display properly",
+        "Rules persist with field"
+      ]
+    },
+    {
+      "id": "2.5.3",
+      "category": "implementation",
+      "title": "Implement Calculated Fields",
+      "description": "Create calculation engine for fields that compute values from other fields.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/lib/forms/calculations.ts", "src/components/forms/designer/CalculationBuilder.tsx"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create calculation engine",
+          "code": "export type CalculationType = 'sum' | 'average' | 'min' | 'max' | 'count' | 'custom';\n\nexport interface Calculation {\n  type: CalculationType;\n  sourceFields: string[];\n  formula?: string; // For custom type\n  format?: 'number' | 'currency' | 'percent';\n  decimals?: number;\n}\n\nexport function evaluateCalculation(\n  calculation: Calculation,\n  fieldValues: Record<string, string>\n): string {\n  const values = calculation.sourceFields\n    .map(id => parseFloat(fieldValues[id] || '0'))\n    .filter(v => !isNaN(v));\n\n  let result: number;\n\n  switch (calculation.type) {\n    case 'sum':\n      result = values.reduce((a, b) => a + b, 0);\n      break;\n    case 'average':\n      result = values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0;\n      break;\n    case 'min':\n      result = values.length > 0 ? Math.min(...values) : 0;\n      break;\n    case 'max':\n      result = values.length > 0 ? Math.max(...values) : 0;\n      break;\n    case 'count':\n      result = values.filter(v => v !== 0).length;\n      break;\n    case 'custom':\n      result = evaluateFormula(calculation.formula || '', fieldValues);\n      break;\n    default:\n      result = 0;\n  }\n\n  return formatResult(result, calculation);\n}\n\nfunction evaluateFormula(formula: string, values: Record<string, string>): number {\n  // Simple expression evaluator\n  // Replace field references with values\n  let expr = formula;\n  for (const [id, value] of Object.entries(values)) {\n    expr = expr.replace(new RegExp(`\\\\{${id}\\\\}`, 'g'), value || '0');\n  }\n  \n  try {\n    // Safe eval using Function constructor\n    return new Function('return ' + expr)();\n  } catch {\n    return 0;\n  }\n}\n\nfunction formatResult(value: number, calc: Calculation): string {\n  const decimals = calc.decimals ?? 2;\n  \n  switch (calc.format) {\n    case 'currency':\n      return '$' + value.toFixed(decimals);\n    case 'percent':\n      return (value * 100).toFixed(decimals) + '%';\n    default:\n      return value.toFixed(decimals);\n  }\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create CalculationBuilder component",
+          "code": "export function CalculationBuilder({ calculation, fields, onChange }) {\n  return (\n    <div className=\"space-y-4\">\n      <div>\n        <label className=\"text-sm font-medium\">Calculation Type</label>\n        <Select\n          value={calculation.type}\n          onChange={(e) => onChange({ ...calculation, type: e.target.value })}\n        >\n          <option value=\"sum\">Sum</option>\n          <option value=\"average\">Average</option>\n          <option value=\"min\">Minimum</option>\n          <option value=\"max\">Maximum</option>\n          <option value=\"count\">Count</option>\n          <option value=\"custom\">Custom Formula</option>\n        </Select>\n      </div>\n\n      <div>\n        <label className=\"text-sm font-medium\">Source Fields</label>\n        <div className=\"space-y-1\">\n          {fields.filter(f => f.type === 'text').map(field => (\n            <label key={field.id} className=\"flex items-center gap-2\">\n              <input\n                type=\"checkbox\"\n                checked={calculation.sourceFields.includes(field.id)}\n                onChange={(e) => {\n                  const newFields = e.target.checked\n                    ? [...calculation.sourceFields, field.id]\n                    : calculation.sourceFields.filter(id => id !== field.id);\n                  onChange({ ...calculation, sourceFields: newFields });\n                }}\n              />\n              {field.name}\n            </label>\n          ))}\n        </div>\n      </div>\n\n      {calculation.type === 'custom' && (\n        <div>\n          <label className=\"text-sm font-medium\">Formula</label>\n          <Input\n            value={calculation.formula}\n            onChange={(e) => onChange({ ...calculation, formula: e.target.value })}\n            placeholder=\"e.g., {field1} + {field2} * 0.1\"\n          />\n          <p className=\"text-xs text-gray-500 mt-1\">\n            Use {'{fieldName}'} to reference other fields\n          </p>\n        </div>\n      )}\n\n      <div>\n        <label className=\"text-sm font-medium\">Format</label>\n        <Select\n          value={calculation.format}\n          onChange={(e) => onChange({ ...calculation, format: e.target.value })}\n        >\n          <option value=\"number\">Number</option>\n          <option value=\"currency\">Currency ($)</option>\n          <option value=\"percent\">Percent (%)</option>\n        </Select>\n      </div>\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Sum calculation works",
+        "Average, min, max work",
+        "Custom formulas evaluate",
+        "Formatting applies correctly",
+        "Calculations update on field change"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "All field types implemented",
+    "Validation rules work correctly",
+    "Calculated fields compute properly",
+    "Form export includes all settings"
+  ],
+  "filesCreated": [
+    "src/components/forms/designer/fields/DropdownField.tsx",
+    "src/components/forms/designer/fields/DateField.tsx",
+    "src/components/forms/designer/fields/SignatureField.tsx",
+    "src/lib/forms/validation.ts",
+    "src/lib/forms/calculations.ts",
+    "src/components/forms/designer/ValidationBuilder.tsx",
+    "src/components/forms/designer/CalculationBuilder.tsx"
+  ],
+  "filesModified": [],
+  "totalNewTests": 18,
+  "totalEstimatedHours": 8,
+  "dependencies": ["2.4.1-2.4.4"],
+  "notes": [
+    "Dropdown options need CRUD UI",
+    "Date format should be locale-aware",
+    "Custom formulas need security consideration"
+  ]
+}

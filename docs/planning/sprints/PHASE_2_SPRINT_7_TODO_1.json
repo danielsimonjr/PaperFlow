@@ -1,0 +1,149 @@
+{
+  "phase": 2,
+  "sprint": 7,
+  "todoFile": 1,
+  "title": "Document Comparison Tools",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "v2.0 Release",
+  "tasks": [
+    {
+      "id": "2.7.1",
+      "category": "architecture",
+      "title": "Create Comparison Library Structure",
+      "description": "Set up lib/comparison/ directory with core comparison modules.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": [
+        "src/lib/comparison/comparisonEngine.ts",
+        "src/lib/comparison/textDiff.ts",
+        "src/lib/comparison/visualDiff.ts",
+        "src/lib/comparison/types.ts",
+        "src/lib/comparison/index.ts"
+      ],
+      "testCategories": ["typecheck"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create comparison directory",
+          "details": "mkdir -p src/lib/comparison"
+        },
+        {
+          "step": 2,
+          "action": "Define comparison types",
+          "code": "// src/lib/comparison/types.ts\nexport interface ComparisonResult {\n  document1: DocumentInfo;\n  document2: DocumentInfo;\n  pages: PageComparison[];\n  summary: ComparisonSummary;\n}\n\nexport interface DocumentInfo {\n  name: string;\n  pageCount: number;\n  fileSize: number;\n}\n\nexport interface PageComparison {\n  pageNumber: number;\n  textChanges: TextChange[];\n  visualChanges: VisualChange[];\n  similarity: number;\n}\n\nexport interface TextChange {\n  type: 'added' | 'removed' | 'modified';\n  text: string;\n  oldText?: string;\n  location: BoundingBox;\n  pageIndex: number;\n}\n\nexport interface VisualChange {\n  type: 'added' | 'removed' | 'modified';\n  bounds: BoundingBox;\n  pageIndex: number;\n}\n\nexport interface ComparisonSummary {\n  totalChanges: number;\n  textAdditions: number;\n  textDeletions: number;\n  textModifications: number;\n  pagesChanged: number;\n  overallSimilarity: number;\n}\n\nexport interface ComparisonOptions {\n  compareText: boolean;\n  compareVisual: boolean;\n  ignoreWhitespace: boolean;\n  ignoreCase: boolean;\n  pageRange?: { start: number; end: number };\n}"
+        },
+        {
+          "step": 3,
+          "action": "Create barrel export",
+          "code": "export * from './types';\nexport { ComparisonEngine } from './comparisonEngine';\nexport { diffText, DiffResult } from './textDiff';\nexport { diffVisual } from './visualDiff';"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Directory structure created",
+        "All types defined",
+        "Barrel export works"
+      ]
+    },
+    {
+      "id": "2.7.2",
+      "category": "state",
+      "title": "Create Comparison Zustand Store",
+      "description": "Implement state management for document comparison.",
+      "status": "pending",
+      "estimatedHours": 1.5,
+      "agent": "sonnet",
+      "files": ["src/stores/comparisonStore.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create comparison store",
+          "code": "import { create } from 'zustand';\nimport type { ComparisonResult, ComparisonOptions, TextChange } from '@lib/comparison/types';\n\ninterface ComparisonState {\n  // State\n  document1: ArrayBuffer | null;\n  document2: ArrayBuffer | null;\n  document1Name: string;\n  document2Name: string;\n  isComparing: boolean;\n  progress: number;\n  result: ComparisonResult | null;\n  viewMode: 'side-by-side' | 'overlay' | 'diff-only';\n  currentChangeIndex: number;\n  options: ComparisonOptions;\n\n  // Actions\n  setDocument1: (data: ArrayBuffer, name: string) => void;\n  setDocument2: (data: ArrayBuffer, name: string) => void;\n  clearDocuments: () => void;\n  compare: () => Promise<void>;\n  setViewMode: (mode: 'side-by-side' | 'overlay' | 'diff-only') => void;\n  nextChange: () => void;\n  previousChange: () => void;\n  goToChange: (index: number) => void;\n  setOptions: (options: Partial<ComparisonOptions>) => void;\n  getCurrentChange: () => TextChange | null;\n}\n\nexport const useComparisonStore = create<ComparisonState>((set, get) => ({\n  document1: null,\n  document2: null,\n  document1Name: '',\n  document2Name: '',\n  isComparing: false,\n  progress: 0,\n  result: null,\n  viewMode: 'side-by-side',\n  currentChangeIndex: 0,\n  options: {\n    compareText: true,\n    compareVisual: false,\n    ignoreWhitespace: true,\n    ignoreCase: false,\n  },\n\n  setDocument1: (data, name) => set({ document1: data, document1Name: name }),\n  setDocument2: (data, name) => set({ document2: data, document2Name: name }),\n  clearDocuments: () => set({ document1: null, document2: null, result: null }),\n\n  compare: async () => {\n    set({ isComparing: true, progress: 0 });\n    // Comparison logic handled by ComparisonEngine\n  },\n\n  setViewMode: (mode) => set({ viewMode: mode }),\n\n  nextChange: () => {\n    const { currentChangeIndex, result } = get();\n    if (!result) return;\n    const totalChanges = result.pages.flatMap(p => p.textChanges).length;\n    set({ currentChangeIndex: Math.min(currentChangeIndex + 1, totalChanges - 1) });\n  },\n\n  previousChange: () => {\n    const { currentChangeIndex } = get();\n    set({ currentChangeIndex: Math.max(currentChangeIndex - 1, 0) });\n  },\n\n  goToChange: (index) => set({ currentChangeIndex: index }),\n\n  setOptions: (options) => set(state => ({ \n    options: { ...state.options, ...options } \n  })),\n\n  getCurrentChange: () => {\n    const { result, currentChangeIndex } = get();\n    if (!result) return null;\n    const allChanges = result.pages.flatMap(p => p.textChanges);\n    return allChanges[currentChangeIndex] || null;\n  },\n}));"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Store manages two documents",
+        "View mode switching works",
+        "Change navigation works",
+        "Options update correctly"
+      ]
+    },
+    {
+      "id": "2.7.3",
+      "category": "implementation",
+      "title": "Implement Text Diff Algorithm",
+      "description": "Create text comparison using diff algorithm to find changes between documents.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/lib/comparison/textDiff.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Implement diff algorithm",
+          "code": "export interface DiffResult {\n  type: 'equal' | 'insert' | 'delete';\n  value: string;\n  oldIndex?: number;\n  newIndex?: number;\n}\n\n// Myers diff algorithm implementation\nexport function diffText(oldText: string, newText: string, options: { ignoreWhitespace?: boolean; ignoreCase?: boolean } = {}): DiffResult[] {\n  let text1 = oldText;\n  let text2 = newText;\n\n  if (options.ignoreCase) {\n    text1 = text1.toLowerCase();\n    text2 = text2.toLowerCase();\n  }\n\n  if (options.ignoreWhitespace) {\n    text1 = normalizeWhitespace(text1);\n    text2 = normalizeWhitespace(text2);\n  }\n\n  const words1 = tokenize(text1);\n  const words2 = tokenize(text2);\n\n  return computeDiff(words1, words2);\n}\n\nfunction tokenize(text: string): string[] {\n  // Split into words while preserving whitespace tokens\n  return text.split(/(\\s+)/).filter(Boolean);\n}\n\nfunction normalizeWhitespace(text: string): string {\n  return text.replace(/\\s+/g, ' ').trim();\n}\n\nfunction computeDiff(oldTokens: string[], newTokens: string[]): DiffResult[] {\n  const results: DiffResult[] = [];\n  \n  // Simple LCS-based diff\n  const lcs = longestCommonSubsequence(oldTokens, newTokens);\n  \n  let oldIdx = 0;\n  let newIdx = 0;\n  let lcsIdx = 0;\n\n  while (oldIdx < oldTokens.length || newIdx < newTokens.length) {\n    if (lcsIdx < lcs.length && oldTokens[oldIdx] === lcs[lcsIdx] && newTokens[newIdx] === lcs[lcsIdx]) {\n      results.push({ type: 'equal', value: oldTokens[oldIdx], oldIndex: oldIdx, newIndex: newIdx });\n      oldIdx++;\n      newIdx++;\n      lcsIdx++;\n    } else if (newIdx < newTokens.length && (lcsIdx >= lcs.length || newTokens[newIdx] !== lcs[lcsIdx])) {\n      results.push({ type: 'insert', value: newTokens[newIdx], newIndex: newIdx });\n      newIdx++;\n    } else if (oldIdx < oldTokens.length) {\n      results.push({ type: 'delete', value: oldTokens[oldIdx], oldIndex: oldIdx });\n      oldIdx++;\n    }\n  }\n\n  return results;\n}\n\nfunction longestCommonSubsequence(a: string[], b: string[]): string[] {\n  const m = a.length;\n  const n = b.length;\n  const dp: number[][] = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));\n\n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (a[i - 1] === b[j - 1]) {\n        dp[i][j] = dp[i - 1][j - 1] + 1;\n      } else {\n        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);\n      }\n    }\n  }\n\n  // Backtrack to find LCS\n  const lcs: string[] = [];\n  let i = m, j = n;\n  while (i > 0 && j > 0) {\n    if (a[i - 1] === b[j - 1]) {\n      lcs.unshift(a[i - 1]);\n      i--;\n      j--;\n    } else if (dp[i - 1][j] > dp[i][j - 1]) {\n      i--;\n    } else {\n      j--;\n    }\n  }\n\n  return lcs;\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Diff correctly identifies additions",
+        "Diff correctly identifies deletions",
+        "Ignore whitespace option works",
+        "Ignore case option works",
+        "Performance acceptable for large documents"
+      ]
+    },
+    {
+      "id": "2.7.4",
+      "category": "ui",
+      "title": "Create Side-by-Side View Component",
+      "description": "Build the side-by-side comparison view with synchronized scrolling.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/components/comparison/SideBySideView.tsx"],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create SideBySideView component",
+          "code": "import { useRef, useEffect, useCallback } from 'react';\nimport { useComparisonStore } from '@stores/comparisonStore';\nimport { PDFViewer } from '@components/viewer/PDFViewer';\nimport { ChangeHighlight } from './ChangeHighlight';\n\nexport function SideBySideView() {\n  const { document1, document2, result, currentChangeIndex } = useComparisonStore();\n  const leftRef = useRef<HTMLDivElement>(null);\n  const rightRef = useRef<HTMLDivElement>(null);\n  const isSyncing = useRef(false);\n\n  // Synchronized scrolling\n  const handleScroll = useCallback((source: 'left' | 'right') => {\n    if (isSyncing.current) return;\n    isSyncing.current = true;\n\n    const sourceEl = source === 'left' ? leftRef.current : rightRef.current;\n    const targetEl = source === 'left' ? rightRef.current : leftRef.current;\n\n    if (sourceEl && targetEl) {\n      const scrollPercent = sourceEl.scrollTop / (sourceEl.scrollHeight - sourceEl.clientHeight);\n      targetEl.scrollTop = scrollPercent * (targetEl.scrollHeight - targetEl.clientHeight);\n    }\n\n    requestAnimationFrame(() => {\n      isSyncing.current = false;\n    });\n  }, []);\n\n  // Scroll to current change\n  useEffect(() => {\n    if (!result) return;\n    const currentChange = result.pages.flatMap(p => p.textChanges)[currentChangeIndex];\n    if (currentChange) {\n      // Scroll both panels to the change location\n      scrollToChange(currentChange, leftRef.current, rightRef.current);\n    }\n  }, [currentChangeIndex, result]);\n\n  return (\n    <div className=\"flex h-full\">\n      {/* Left Panel - Document 1 */}\n      <div \n        ref={leftRef}\n        onScroll={() => handleScroll('left')}\n        className=\"flex-1 overflow-auto border-r\"\n      >\n        <div className=\"relative\">\n          <PDFViewer pdfData={document1} />\n          {result?.pages.map(page => (\n            page.textChanges\n              .filter(c => c.type === 'removed')\n              .map((change, i) => (\n                <ChangeHighlight\n                  key={`${page.pageNumber}-${i}`}\n                  change={change}\n                  type=\"removed\"\n                  isActive={currentChangeIndex === getChangeIndex(result, change)}\n                />\n              ))\n          ))}\n        </div>\n      </div>\n\n      {/* Right Panel - Document 2 */}\n      <div\n        ref={rightRef}\n        onScroll={() => handleScroll('right')}\n        className=\"flex-1 overflow-auto\"\n      >\n        <div className=\"relative\">\n          <PDFViewer pdfData={document2} />\n          {result?.pages.map(page => (\n            page.textChanges\n              .filter(c => c.type === 'added')\n              .map((change, i) => (\n                <ChangeHighlight\n                  key={`${page.pageNumber}-${i}`}\n                  change={change}\n                  type=\"added\"\n                  isActive={currentChangeIndex === getChangeIndex(result, change)}\n                />\n              ))\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n\nfunction ChangeHighlight({ change, type, isActive }) {\n  return (\n    <div\n      className={cn(\n        'absolute pointer-events-none',\n        type === 'added' && 'bg-green-200/50 border-l-4 border-green-500',\n        type === 'removed' && 'bg-red-200/50 border-l-4 border-red-500',\n        isActive && 'ring-2 ring-blue-500'\n      )}\n      style={{\n        left: change.location.x,\n        top: change.location.y,\n        width: change.location.width,\n        height: change.location.height,\n      }}\n    />\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Two documents display side by side",
+        "Scrolling is synchronized",
+        "Changes are highlighted with colors",
+        "Current change is visually distinct",
+        "Navigation scrolls to change"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Comparison types defined",
+    "Text diff algorithm works",
+    "Side-by-side view displays correctly",
+    "Change navigation works"
+  ],
+  "filesCreated": [
+    "src/lib/comparison/types.ts",
+    "src/lib/comparison/textDiff.ts",
+    "src/lib/comparison/comparisonEngine.ts",
+    "src/lib/comparison/index.ts",
+    "src/stores/comparisonStore.ts",
+    "src/components/comparison/SideBySideView.tsx",
+    "src/components/comparison/ChangeHighlight.tsx"
+  ],
+  "filesModified": [],
+  "totalNewTests": 15,
+  "totalEstimatedHours": 8,
+  "dependencies": [],
+  "notes": [
+    "LCS algorithm may need optimization for large documents",
+    "Consider using web workers for diff computation",
+    "Visual diff is more complex and may be deferred"
+  ]
+}

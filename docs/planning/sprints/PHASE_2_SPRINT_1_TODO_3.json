@@ -1,0 +1,145 @@
+{
+  "phase": 2,
+  "sprint": 1,
+  "todoFile": 3,
+  "title": "OCR Store & Basic Integration",
+  "priority": "HIGH",
+  "effort": "5 hours",
+  "status": "pending",
+  "milestone": "OCR Technical Foundation",
+  "tasks": [
+    {
+      "id": "2.1.7",
+      "category": "state",
+      "title": "Create OCR Zustand Store",
+      "description": "Implement Zustand store for managing OCR state, progress, and results.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/stores/ocrStore.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create store file with imports",
+          "code": "import { create } from 'zustand';\nimport type { OCRResult, OCRProgress } from '@lib/ocr/types';\nimport { OCREngine } from '@lib/ocr/ocrEngine';"
+        },
+        {
+          "step": 2,
+          "action": "Define OCRState interface",
+          "code": "interface OCRState {\n  // State\n  isProcessing: boolean;\n  progress: OCRProgress | null;\n  currentPage: number;\n  totalPages: number;\n  results: Map<number, OCRResult>;\n  language: string;\n  error: string | null;\n  engine: OCREngine | null;\n\n  // Actions\n  initializeEngine: () => Promise<void>;\n  startOCR: (pageNumbers: number[]) => Promise<void>;\n  cancelOCR: () => void;\n  setLanguage: (lang: string) => Promise<void>;\n  clearResults: () => void;\n  getPageResult: (pageIndex: number) => OCRResult | undefined;\n  terminateEngine: () => Promise<void>;\n}"
+        },
+        {
+          "step": 3,
+          "action": "Implement store",
+          "code": "export const useOCRStore = create<OCRState>((set, get) => ({\n  isProcessing: false,\n  progress: null,\n  currentPage: 0,\n  totalPages: 0,\n  results: new Map(),\n  language: 'eng',\n  error: null,\n  engine: null,\n\n  initializeEngine: async () => {\n    const engine = new OCREngine((progress) => {\n      set({ progress });\n    });\n    await engine.initialize(get().language);\n    set({ engine });\n  },\n\n  startOCR: async (pageNumbers: number[]) => {\n    const { engine, language } = get();\n    if (!engine) {\n      await get().initializeEngine();\n    }\n    \n    set({\n      isProcessing: true,\n      totalPages: pageNumbers.length,\n      currentPage: 0,\n      error: null\n    });\n\n    // Processing happens in component - store just tracks state\n  },\n\n  cancelOCR: () => {\n    set({ isProcessing: false, progress: null });\n  },\n\n  setLanguage: async (lang: string) => {\n    const { engine } = get();\n    set({ language: lang });\n    if (engine) {\n      await engine.setLanguage(lang);\n    }\n  },\n\n  clearResults: () => {\n    set({ results: new Map() });\n  },\n\n  getPageResult: (pageIndex: number) => {\n    return get().results.get(pageIndex);\n  },\n\n  terminateEngine: async () => {\n    const { engine } = get();\n    if (engine) {\n      await engine.terminate();\n      set({ engine: null });\n    }\n  }\n}));"
+        },
+        {
+          "step": 4,
+          "action": "Add result storage action",
+          "code": "// Add to store actions\naddResult: (pageIndex: number, result: OCRResult) => {\n  const results = new Map(get().results);\n  results.set(pageIndex, result);\n  set({ results, currentPage: pageIndex + 1 });\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Store initializes with default values",
+        "Engine initialization works",
+        "Progress updates propagate to store",
+        "Results stored by page index",
+        "Language changes work",
+        "Cancel stops processing"
+      ]
+    },
+    {
+      "id": "2.1.8",
+      "category": "ui",
+      "title": "Add OCR Button to Toolbar",
+      "description": "Add OCR trigger button to the main toolbar with appropriate icon and tooltip.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": ["src/components/toolbar/Toolbar.tsx", "src/components/toolbar/OCRButton.tsx"],
+      "testCategories": ["visual"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create OCRButton component",
+          "code": "import { ScanText } from 'lucide-react';\nimport { Button } from '@components/ui/Button';\nimport { Tooltip } from '@components/ui/Tooltip';\nimport { useOCRStore } from '@stores/ocrStore';\nimport { useUIStore } from '@stores/uiStore';\n\nexport function OCRButton() {\n  const { isProcessing } = useOCRStore();\n  const { openDialog } = useUIStore();\n\n  return (\n    <Tooltip content=\"Recognize Text (OCR)\" shortcut=\"Ctrl+Shift+O\">\n      <Button\n        variant=\"ghost\"\n        size=\"icon\"\n        onClick={() => openDialog('ocr')}\n        disabled={isProcessing}\n        aria-label=\"Open OCR dialog\"\n      >\n        <ScanText className=\"h-5 w-5\" />\n      </Button>\n    </Tooltip>\n  );\n}"
+        },
+        {
+          "step": 2,
+          "action": "Add OCRButton to Toolbar",
+          "details": "Import and add <OCRButton /> to the toolbar in the appropriate tool group"
+        },
+        {
+          "step": 3,
+          "action": "Add keyboard shortcut",
+          "details": "Register Ctrl+Shift+O shortcut to open OCR dialog in useKeyboardShortcuts hook"
+        }
+      ],
+      "acceptanceCriteria": [
+        "OCR button visible in toolbar",
+        "Icon clearly indicates OCR function",
+        "Tooltip shows shortcut",
+        "Button disabled during OCR processing",
+        "Keyboard shortcut works"
+      ]
+    },
+    {
+      "id": "2.1.9",
+      "category": "implementation",
+      "title": "Implement Single Page OCR Flow",
+      "description": "Create the basic OCR flow for processing a single page and displaying results.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/lib/ocr/ocrEngine.ts", "src/hooks/useOCR.ts"],
+      "testCategories": ["integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Add recognizePage method to OCREngine",
+          "code": "async recognizePage(\n  pageCanvas: HTMLCanvasElement,\n  pageIndex: number\n): Promise<OCRResult> {\n  const result = await this.recognize(pageCanvas);\n  return {\n    ...result,\n    pageIndex\n  };\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create useOCR hook",
+          "code": "import { useCallback } from 'react';\nimport { useOCRStore } from '@stores/ocrStore';\nimport { useDocumentStore } from '@stores/documentStore';\n\nexport function useOCR() {\n  const { engine, initializeEngine, addResult, language } = useOCRStore();\n  const { renderer } = useDocumentStore();\n\n  const recognizePage = useCallback(async (pageIndex: number) => {\n    if (!renderer) throw new Error('No document loaded');\n    if (!engine) await initializeEngine();\n\n    // Render page to canvas at 300 DPI for OCR\n    const scale = 300 / 72; // 72 DPI to 300 DPI\n    const canvas = document.createElement('canvas');\n    await renderer.renderPage(pageIndex + 1, canvas, scale);\n\n    // Run OCR\n    const result = await engine!.recognizePage(canvas, pageIndex);\n    addResult(pageIndex, result);\n\n    // Clean up canvas\n    canvas.width = 0;\n    canvas.height = 0;\n\n    return result;\n  }, [engine, renderer, initializeEngine, addResult]);\n\n  const recognizePages = useCallback(async (\n    pageIndices: number[],\n    onProgress?: (current: number, total: number) => void\n  ) => {\n    const results: OCRResult[] = [];\n    for (let i = 0; i < pageIndices.length; i++) {\n      const result = await recognizePage(pageIndices[i]);\n      results.push(result);\n      onProgress?.(i + 1, pageIndices.length);\n    }\n    return results;\n  }, [recognizePage]);\n\n  return { recognizePage, recognizePages };\n}"
+        },
+        {
+          "step": 3,
+          "action": "Add method to render page at specific DPI",
+          "details": "Ensure renderer can produce high-resolution canvas for OCR (300 DPI)"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Single page OCR completes successfully",
+        "Result contains text and word positions",
+        "Confidence scores are present",
+        "Processing time is tracked",
+        "Memory is cleaned up after processing"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "OCR store manages state correctly",
+    "OCR button triggers dialog",
+    "Single page OCR works end-to-end",
+    "Results are stored and accessible"
+  ],
+  "filesCreated": [
+    "src/stores/ocrStore.ts",
+    "src/components/toolbar/OCRButton.tsx",
+    "src/hooks/useOCR.ts"
+  ],
+  "filesModified": [
+    "src/components/toolbar/Toolbar.tsx"
+  ],
+  "totalNewTests": 8,
+  "totalEstimatedHours": 5,
+  "dependencies": ["2.1.1", "2.1.2", "2.1.3", "2.1.4"],
+  "notes": [
+    "300 DPI is standard for OCR accuracy",
+    "Canvas should be cleaned up to prevent memory leaks",
+    "Consider Web Worker for page rendering too"
+  ]
+}

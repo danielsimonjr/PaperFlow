@@ -1,0 +1,130 @@
+{
+  "phase": 2,
+  "sprint": 10,
+  "todoFile": 1,
+  "title": "Bates Numbering & Document Flattening",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "Batch Processing Complete",
+  "tasks": [
+    {
+      "id": "2.10.1",
+      "category": "implementation",
+      "title": "Implement Bates Numbering Function",
+      "description": "Create Bates numbering function for legal document production.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/lib/batch/batesNumbering.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define Bates options types",
+          "code": "export interface BatesOptions {\n  prefix: string;\n  startNumber: number;\n  digits: number; // 6-10 typically\n  suffix: string;\n  position: BatesPosition;\n  font: {\n    family: string;\n    size: number;\n    color: string;\n  };\n  pages: PageRange;\n  incrementBy: number; // Usually 1\n}\n\nexport type BatesPosition = \n  | 'top-left'\n  | 'top-center'\n  | 'top-right'\n  | 'bottom-left'\n  | 'bottom-center'\n  | 'bottom-right';\n\nexport interface BatesResult {\n  pdf: ArrayBuffer;\n  lastNumber: number;\n  log: BatesLogEntry[];\n}\n\nexport interface BatesLogEntry {\n  pageNumber: number;\n  batesNumber: string;\n  timestamp: Date;\n}"
+        },
+        {
+          "step": 2,
+          "action": "Implement applyBatesNumbers function",
+          "code": "import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';\nimport type { BatesOptions, BatesResult, BatesLogEntry, BatesPosition } from './types';\n\nexport async function applyBatesNumbers(\n  pdfBytes: ArrayBuffer,\n  options: BatesOptions\n): Promise<BatesResult> {\n  const pdfDoc = await PDFDocument.load(pdfBytes);\n  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);\n  const pages = pdfDoc.getPages();\n  const log: BatesLogEntry[] = [];\n\n  const pageIndices = getPageIndices(pages.length, options.pages);\n  let currentNumber = options.startNumber;\n\n  for (const pageIndex of pageIndices) {\n    const page = pages[pageIndex];\n    const { width, height } = page.getSize();\n\n    const batesNumber = formatBatesNumber(\n      options.prefix,\n      currentNumber,\n      options.digits,\n      options.suffix\n    );\n\n    const position = calculateBatesPosition(\n      options.position,\n      width,\n      height,\n      font,\n      batesNumber,\n      options.font.size\n    );\n\n    const color = hexToRgb(options.font.color);\n\n    page.drawText(batesNumber, {\n      x: position.x,\n      y: position.y,\n      size: options.font.size,\n      font,\n      color: rgb(color.r, color.g, color.b),\n    });\n\n    log.push({\n      pageNumber: pageIndex + 1,\n      batesNumber,\n      timestamp: new Date(),\n    });\n\n    currentNumber += options.incrementBy;\n  }\n\n  const resultPdf = await pdfDoc.save();\n\n  return {\n    pdf: resultPdf,\n    lastNumber: currentNumber - options.incrementBy,\n    log,\n  };\n}\n\nfunction formatBatesNumber(\n  prefix: string,\n  number: number,\n  digits: number,\n  suffix: string\n): string {\n  const paddedNumber = number.toString().padStart(digits, '0');\n  return `${prefix}${paddedNumber}${suffix}`;\n}\n\nfunction calculateBatesPosition(\n  position: BatesPosition,\n  pageWidth: number,\n  pageHeight: number,\n  font: any,\n  text: string,\n  fontSize: number\n): { x: number; y: number } {\n  const textWidth = font.widthOfTextAtSize(text, fontSize);\n  const margin = 36; // 0.5 inch\n\n  switch (position) {\n    case 'top-left':\n      return { x: margin, y: pageHeight - margin };\n    case 'top-center':\n      return { x: (pageWidth - textWidth) / 2, y: pageHeight - margin };\n    case 'top-right':\n      return { x: pageWidth - textWidth - margin, y: pageHeight - margin };\n    case 'bottom-left':\n      return { x: margin, y: margin };\n    case 'bottom-center':\n      return { x: (pageWidth - textWidth) / 2, y: margin };\n    case 'bottom-right':\n      return { x: pageWidth - textWidth - margin, y: margin };\n    default:\n      return { x: margin, y: margin };\n  }\n}\n\nfunction hexToRgb(hex: string): { r: number; g: number; b: number } {\n  const result = /^#?([a-f\\d]{2})([a-f\\d]{2})([a-f\\d]{2})$/i.exec(hex);\n  return result ? {\n    r: parseInt(result[1], 16) / 255,\n    g: parseInt(result[2], 16) / 255,\n    b: parseInt(result[3], 16) / 255,\n  } : { r: 0, g: 0, b: 0 };\n}"
+        },
+        {
+          "step": 3,
+          "action": "Implement multi-document Bates numbering",
+          "code": "export async function applyBatesNumbersToMultiple(\n  documents: { name: string; data: ArrayBuffer }[],\n  options: Omit<BatesOptions, 'pages'>,\n  onProgress?: (current: number, total: number, docName: string) => void\n): Promise<{\n  documents: { name: string; data: ArrayBuffer }[];\n  log: { docName: string; entries: BatesLogEntry[] }[];\n}> {\n  const results: { name: string; data: ArrayBuffer }[] = [];\n  const logs: { docName: string; entries: BatesLogEntry[] }[] = [];\n  let currentNumber = options.startNumber;\n\n  for (let i = 0; i < documents.length; i++) {\n    const doc = documents[i];\n    onProgress?.(i + 1, documents.length, doc.name);\n\n    const result = await applyBatesNumbers(doc.data, {\n      ...options,\n      startNumber: currentNumber,\n      pages: { type: 'all' },\n    });\n\n    results.push({ name: doc.name, data: result.pdf });\n    logs.push({ docName: doc.name, entries: result.log });\n    currentNumber = result.lastNumber + options.incrementBy;\n  }\n\n  return { documents: results, log: logs };\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Bates numbers format correctly",
+        "Position options work",
+        "Multi-document continues sequence",
+        "Log captures all assignments",
+        "Configurable prefix/suffix work"
+      ]
+    },
+    {
+      "id": "2.10.2",
+      "category": "ui",
+      "title": "Create Bates Numbering Dialog",
+      "description": "Build UI for configuring and previewing Bates numbers.",
+      "status": "pending",
+      "estimatedHours": 2,
+      "agent": "sonnet",
+      "files": ["src/components/batch/BatesNumberDialog.tsx"],
+      "testCategories": ["visual"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create BatesNumberDialog component",
+          "code": "import { useState } from 'react';\nimport { Dialog, DialogContent, DialogHeader, DialogTitle } from '@components/ui/Dialog';\nimport { Button } from '@components/ui/Button';\nimport { Input } from '@components/ui/Input';\nimport { Select } from '@components/ui/Select';\nimport { useBatchStore } from '@stores/batchStore';\n\nexport function BatesNumberDialog({ isOpen, onClose }) {\n  const { addOperation } = useBatchStore();\n  const [options, setOptions] = useState({\n    prefix: 'DOC-',\n    startNumber: 1,\n    digits: 6,\n    suffix: '',\n    position: 'bottom-right' as BatesPosition,\n    font: {\n      family: 'Helvetica',\n      size: 10,\n      color: '#000000',\n    },\n  });\n\n  const previewNumber = formatBatesNumber(\n    options.prefix,\n    options.startNumber,\n    options.digits,\n    options.suffix\n  );\n\n  const handleApply = () => {\n    addOperation('bates-number', options);\n    onClose();\n  };\n\n  return (\n    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>\n      <DialogContent className=\"max-w-lg\">\n        <DialogHeader>\n          <DialogTitle>Bates Numbering</DialogTitle>\n        </DialogHeader>\n\n        <div className=\"space-y-6\">\n          {/* Preview */}\n          <div className=\"bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center\">\n            <div className=\"text-sm text-gray-500 mb-1\">Preview</div>\n            <div className=\"text-2xl font-mono\">{previewNumber}</div>\n          </div>\n\n          {/* Prefix */}\n          <div>\n            <label className=\"text-sm font-medium\">Prefix</label>\n            <Input\n              value={options.prefix}\n              onChange={(e) => setOptions(prev => ({ ...prev, prefix: e.target.value }))}\n              placeholder=\"e.g., DOC-, EX-, ABC-\"\n            />\n          </div>\n\n          {/* Starting Number */}\n          <div className=\"grid grid-cols-2 gap-4\">\n            <div>\n              <label className=\"text-sm font-medium\">Starting Number</label>\n              <Input\n                type=\"number\"\n                value={options.startNumber}\n                onChange={(e) => setOptions(prev => ({ ...prev, startNumber: parseInt(e.target.value) || 1 }))}\n                min={1}\n              />\n            </div>\n            <div>\n              <label className=\"text-sm font-medium\">Number of Digits</label>\n              <Select\n                value={options.digits.toString()}\n                onChange={(e) => setOptions(prev => ({ ...prev, digits: parseInt(e.target.value) }))}\n              >\n                <option value=\"4\">4 digits (0001)</option>\n                <option value=\"6\">6 digits (000001)</option>\n                <option value=\"8\">8 digits (00000001)</option>\n                <option value=\"10\">10 digits</option>\n              </Select>\n            </div>\n          </div>\n\n          {/* Suffix */}\n          <div>\n            <label className=\"text-sm font-medium\">Suffix (optional)</label>\n            <Input\n              value={options.suffix}\n              onChange={(e) => setOptions(prev => ({ ...prev, suffix: e.target.value }))}\n              placeholder=\"e.g., -A, _REV1\"\n            />\n          </div>\n\n          {/* Position */}\n          <div>\n            <label className=\"text-sm font-medium\">Position</label>\n            <Select\n              value={options.position}\n              onChange={(e) => setOptions(prev => ({ ...prev, position: e.target.value as BatesPosition }))}\n            >\n              <option value=\"top-left\">Top Left</option>\n              <option value=\"top-center\">Top Center</option>\n              <option value=\"top-right\">Top Right</option>\n              <option value=\"bottom-left\">Bottom Left</option>\n              <option value=\"bottom-center\">Bottom Center</option>\n              <option value=\"bottom-right\">Bottom Right</option>\n            </Select>\n          </div>\n\n          {/* Font Settings */}\n          <div className=\"grid grid-cols-2 gap-4\">\n            <div>\n              <label className=\"text-sm font-medium\">Font Size</label>\n              <Select\n                value={options.font.size.toString()}\n                onChange={(e) => setOptions(prev => ({\n                  ...prev,\n                  font: { ...prev.font, size: parseInt(e.target.value) }\n                }))}\n              >\n                <option value=\"8\">8pt</option>\n                <option value=\"10\">10pt</option>\n                <option value=\"12\">12pt</option>\n                <option value=\"14\">14pt</option>\n              </Select>\n            </div>\n            <div>\n              <label className=\"text-sm font-medium\">Color</label>\n              <Input\n                type=\"color\"\n                value={options.font.color}\n                onChange={(e) => setOptions(prev => ({\n                  ...prev,\n                  font: { ...prev.font, color: e.target.value }\n                }))}\n                className=\"h-10\"\n              />\n            </div>\n          </div>\n        </div>\n\n        <div className=\"flex justify-end gap-2 mt-6\">\n          <Button variant=\"ghost\" onClick={onClose}>Cancel</Button>\n          <Button onClick={handleApply}>Add to Queue</Button>\n        </div>\n      </DialogContent>\n    </Dialog>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Preview updates in real-time",
+        "All options configurable",
+        "Validates input",
+        "Adds to batch queue"
+      ]
+    },
+    {
+      "id": "2.10.3",
+      "category": "implementation",
+      "title": "Implement Document Flattening",
+      "description": "Create function to flatten annotations and form fields into PDF content.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/lib/batch/flatten.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Define flatten options",
+          "code": "export interface FlattenOptions {\n  annotations: boolean;\n  formFields: boolean;\n  signatures: boolean;\n  layers: boolean;\n  preserveAppearance: boolean;\n}\n\nexport interface FlattenResult {\n  success: boolean;\n  pagesFlattened: number;\n  annotationsFlattened: number;\n  fieldsFlattened: number;\n}"
+        },
+        {
+          "step": 2,
+          "action": "Implement flattenDocument function",
+          "code": "import { PDFDocument, PDFPage } from 'pdf-lib';\nimport type { FlattenOptions, FlattenResult } from './types';\n\nexport async function flattenDocument(\n  pdfBytes: ArrayBuffer,\n  options: FlattenOptions\n): Promise<{ pdf: ArrayBuffer; result: FlattenResult }> {\n  const pdfDoc = await PDFDocument.load(pdfBytes);\n  const pages = pdfDoc.getPages();\n  \n  let annotationsFlattened = 0;\n  let fieldsFlattened = 0;\n\n  for (const page of pages) {\n    if (options.annotations) {\n      annotationsFlattened += await flattenAnnotations(page);\n    }\n    \n    if (options.formFields) {\n      fieldsFlattened += await flattenFormFields(pdfDoc, page);\n    }\n  }\n\n  // Remove form if fields were flattened\n  if (options.formFields) {\n    const form = pdfDoc.getForm();\n    const fields = form.getFields();\n    for (const field of fields) {\n      form.removeField(field);\n    }\n  }\n\n  const resultPdf = await pdfDoc.save();\n\n  return {\n    pdf: resultPdf,\n    result: {\n      success: true,\n      pagesFlattened: pages.length,\n      annotationsFlattened,\n      fieldsFlattened,\n    },\n  };\n}\n\nasync function flattenAnnotations(page: PDFPage): Promise<number> {\n  // Get annotation appearances and draw them to page content\n  // Then remove the annotation objects\n  const annots = page.node.Annots();\n  if (!annots) return 0;\n\n  let count = 0;\n  // Note: pdf-lib doesn't have direct annotation flattening\n  // This would require low-level PDF manipulation\n  // For now, return count of annotations that would be flattened\n  \n  return count;\n}\n\nasync function flattenFormFields(pdfDoc: PDFDocument, page: PDFPage): Promise<number> {\n  const form = pdfDoc.getForm();\n  const fields = form.getFields();\n  let count = 0;\n\n  for (const field of fields) {\n    // Get field value and appearance\n    // Draw value to page content\n    // Field will be removed after all pages processed\n    \n    const widgets = field.acroField.getWidgets();\n    for (const widget of widgets) {\n      const widgetPage = pdfDoc.getPages().find(p => \n        p.ref === widget.P()\n      );\n      \n      if (widgetPage === page) {\n        // Draw field appearance to page\n        // This is simplified - actual implementation needs appearance stream handling\n        count++;\n      }\n    }\n  }\n\n  return count;\n}"
+        },
+        {
+          "step": 3,
+          "action": "Create flatten dialog",
+          "code": "export function FlattenDialog({ isOpen, onClose }) {\n  const { addOperation } = useBatchStore();\n  const [options, setOptions] = useState<FlattenOptions>({\n    annotations: true,\n    formFields: true,\n    signatures: false,\n    layers: false,\n    preserveAppearance: true,\n  });\n\n  return (\n    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>\n      <DialogContent>\n        <DialogHeader>\n          <DialogTitle>Flatten Document</DialogTitle>\n        </DialogHeader>\n\n        <div className=\"space-y-4\">\n          <p className=\"text-sm text-gray-600\">\n            Flattening permanently merges interactive elements into the document content.\n            This action cannot be undone.\n          </p>\n\n          <div className=\"space-y-3\">\n            <label className=\"flex items-center gap-2\">\n              <input\n                type=\"checkbox\"\n                checked={options.annotations}\n                onChange={(e) => setOptions(prev => ({ ...prev, annotations: e.target.checked }))}\n              />\n              <span>Flatten annotations (highlights, notes, drawings)</span>\n            </label>\n\n            <label className=\"flex items-center gap-2\">\n              <input\n                type=\"checkbox\"\n                checked={options.formFields}\n                onChange={(e) => setOptions(prev => ({ ...prev, formFields: e.target.checked }))}\n              />\n              <span>Flatten form fields (convert to static text)</span>\n            </label>\n\n            <label className=\"flex items-center gap-2\">\n              <input\n                type=\"checkbox\"\n                checked={options.signatures}\n                onChange={(e) => setOptions(prev => ({ ...prev, signatures: e.target.checked }))}\n              />\n              <span>Flatten signatures</span>\n            </label>\n            {options.signatures && (\n              <p className=\"text-xs text-amber-600 ml-6\">\n                Warning: Flattening signatures will invalidate them.\n              </p>\n            )}\n          </div>\n        </div>\n\n        <div className=\"flex justify-end gap-2\">\n          <Button variant=\"ghost\" onClick={onClose}>Cancel</Button>\n          <Button onClick={() => {\n            addOperation('flatten', options);\n            onClose();\n          }}>Add to Queue</Button>\n        </div>\n      </DialogContent>\n    </Dialog>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Annotations flatten to content",
+        "Form fields become static text",
+        "Signatures flatten with warning",
+        "Document still renders correctly",
+        "Interactive elements removed"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Bates numbering works correctly",
+    "Multi-document numbering continues sequence",
+    "Bates log is generated",
+    "Document flattening works",
+    "Flattened docs render identically"
+  ],
+  "filesCreated": [
+    "src/lib/batch/batesNumbering.ts",
+    "src/lib/batch/flatten.ts",
+    "src/components/batch/BatesNumberDialog.tsx",
+    "src/components/batch/FlattenDialog.tsx"
+  ],
+  "filesModified": [
+    "src/lib/batch/index.ts"
+  ],
+  "totalNewTests": 15,
+  "totalEstimatedHours": 8,
+  "dependencies": ["2.8.1-2.8.4"],
+  "notes": [
+    "Bates numbering is critical for legal discovery",
+    "Flattening annotation appearances requires low-level PDF work",
+    "Consider using pdf-lib's limited annotation support"
+  ]
+}

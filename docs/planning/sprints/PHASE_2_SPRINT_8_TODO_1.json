@@ -1,0 +1,180 @@
+{
+  "phase": 2,
+  "sprint": 8,
+  "todoFile": 1,
+  "title": "Batch Processing Infrastructure & Watermarks",
+  "priority": "HIGH",
+  "effort": "8 hours",
+  "status": "pending",
+  "milestone": "v2.0 Release",
+  "tasks": [
+    {
+      "id": "2.8.1",
+      "category": "architecture",
+      "title": "Create Batch Processing Library Structure",
+      "description": "Set up lib/batch/ directory with core modules for batch operations.",
+      "status": "pending",
+      "estimatedHours": 1,
+      "agent": "haiku",
+      "files": [
+        "src/lib/batch/batchProcessor.ts",
+        "src/lib/batch/watermark.ts",
+        "src/lib/batch/headerFooter.ts",
+        "src/lib/batch/types.ts",
+        "src/lib/batch/templates.ts",
+        "src/lib/batch/index.ts"
+      ],
+      "testCategories": ["typecheck"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create batch directory",
+          "details": "mkdir -p src/lib/batch"
+        },
+        {
+          "step": 2,
+          "action": "Define batch processing types",
+          "code": "// src/lib/batch/types.ts\nexport type BatchOperationType = \n  | 'watermark'\n  | 'header-footer'\n  | 'bates-number'\n  | 'flatten'\n  | 'compress';\n\nexport interface BatchOperation {\n  id: string;\n  type: BatchOperationType;\n  options: WatermarkOptions | HeaderFooterOptions | BatesOptions | FlattenOptions;\n  status: 'pending' | 'processing' | 'complete' | 'error';\n  progress: number;\n  error?: string;\n}\n\nexport interface BatchProgress {\n  currentOperation: number;\n  totalOperations: number;\n  currentPage: number;\n  totalPages: number;\n  operationType: BatchOperationType;\n  estimatedTimeRemaining?: number;\n}\n\nexport interface BatchResult {\n  success: boolean;\n  operationsCompleted: number;\n  pagesProcessed: number;\n  errors: string[];\n  outputFile?: ArrayBuffer;\n}\n\nexport interface PageRange {\n  type: 'all' | 'even' | 'odd' | 'custom';\n  customPages?: number[];\n}"
+        },
+        {
+          "step": 3,
+          "action": "Define watermark types",
+          "code": "export interface WatermarkOptions {\n  type: 'text' | 'image';\n  content: string | ArrayBuffer;\n  position: WatermarkPosition;\n  opacity: number; // 0-1\n  rotation: number; // degrees\n  scale: number; // multiplier\n  layer: 'over' | 'under';\n  pages: PageRange;\n  tile: boolean;\n  tileSpacing?: number;\n}\n\nexport type WatermarkPosition = \n  | 'center'\n  | 'top-left'\n  | 'top-center'\n  | 'top-right'\n  | 'bottom-left'\n  | 'bottom-center'\n  | 'bottom-right'\n  | { x: number; y: number };\n\nexport interface TextWatermarkOptions extends WatermarkOptions {\n  type: 'text';\n  content: string;\n  fontFamily: string;\n  fontSize: number;\n  fontColor: string;\n}\n\nexport interface ImageWatermarkOptions extends WatermarkOptions {\n  type: 'image';\n  content: ArrayBuffer;\n  originalWidth: number;\n  originalHeight: number;\n}"
+        },
+        {
+          "step": 4,
+          "action": "Create barrel export",
+          "code": "// src/lib/batch/index.ts\nexport * from './types';\nexport { BatchProcessor } from './batchProcessor';\nexport { applyWatermark, WATERMARK_TEMPLATES } from './watermark';\nexport { applyHeaderFooter } from './headerFooter';"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Directory structure created",
+        "All types defined",
+        "Barrel export works",
+        "TypeScript compiles"
+      ]
+    },
+    {
+      "id": "2.8.2",
+      "category": "state",
+      "title": "Create Batch Processing Zustand Store",
+      "description": "Implement state management for batch operation queue and progress tracking.",
+      "status": "pending",
+      "estimatedHours": 1.5,
+      "agent": "sonnet",
+      "files": ["src/stores/batchStore.ts"],
+      "testCategories": ["unit"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create batch store",
+          "code": "import { create } from 'zustand';\nimport { v4 as uuidv4 } from 'uuid';\nimport type { BatchOperation, BatchProgress, BatchResult, BatchOperationType } from '@lib/batch/types';\n\ninterface BatchState {\n  // State\n  operations: BatchOperation[];\n  isProcessing: boolean;\n  isPaused: boolean;\n  progress: BatchProgress | null;\n  results: BatchResult[];\n\n  // Actions\n  addOperation: (type: BatchOperationType, options: unknown) => string;\n  removeOperation: (id: string) => void;\n  reorderOperations: (fromIndex: number, toIndex: number) => void;\n  clearQueue: () => void;\n  startBatch: () => Promise<void>;\n  pauseBatch: () => void;\n  resumeBatch: () => void;\n  cancelBatch: () => void;\n  updateProgress: (progress: BatchProgress) => void;\n  updateOperationStatus: (id: string, status: BatchOperation['status'], error?: string) => void;\n}\n\nexport const useBatchStore = create<BatchState>((set, get) => ({\n  operations: [],\n  isProcessing: false,\n  isPaused: false,\n  progress: null,\n  results: [],\n\n  addOperation: (type, options) => {\n    const id = uuidv4();\n    const operation: BatchOperation = {\n      id,\n      type,\n      options: options as BatchOperation['options'],\n      status: 'pending',\n      progress: 0,\n    };\n    set(state => ({ operations: [...state.operations, operation] }));\n    return id;\n  },\n\n  removeOperation: (id) => {\n    set(state => ({\n      operations: state.operations.filter(op => op.id !== id)\n    }));\n  },\n\n  reorderOperations: (fromIndex, toIndex) => {\n    set(state => {\n      const ops = [...state.operations];\n      const [removed] = ops.splice(fromIndex, 1);\n      ops.splice(toIndex, 0, removed);\n      return { operations: ops };\n    });\n  },\n\n  startBatch: async () => {\n    set({ isProcessing: true, isPaused: false });\n    // Processing logic handled by BatchProcessor\n  },\n\n  pauseBatch: () => {\n    set({ isPaused: true });\n  },\n\n  resumeBatch: () => {\n    set({ isPaused: false });\n  },\n\n  cancelBatch: () => {\n    set({\n      isProcessing: false,\n      isPaused: false,\n      progress: null,\n      operations: get().operations.map(op => \n        op.status === 'processing' ? { ...op, status: 'pending' as const } : op\n      )\n    });\n  },\n\n  updateProgress: (progress) => {\n    set({ progress });\n  },\n\n  updateOperationStatus: (id, status, error) => {\n    set(state => ({\n      operations: state.operations.map(op =>\n        op.id === id ? { ...op, status, error } : op\n      )\n    }));\n  },\n\n  clearQueue: () => {\n    set({ operations: [], results: [] });\n  },\n}));"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Queue management works",
+        "Operations can be reordered",
+        "Progress tracking updates",
+        "Pause/resume works",
+        "Cancel clears processing state"
+      ]
+    },
+    {
+      "id": "2.8.3",
+      "category": "implementation",
+      "title": "Implement Text Watermark Function",
+      "description": "Create the watermark application function using pdf-lib for text watermarks.",
+      "status": "pending",
+      "estimatedHours": 2.5,
+      "agent": "sonnet",
+      "files": ["src/lib/batch/watermark.ts"],
+      "testCategories": ["unit", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create watermark templates",
+          "code": "export const WATERMARK_TEMPLATES = [\n  { id: 'draft', text: 'DRAFT', color: '#808080' },\n  { id: 'confidential', text: 'CONFIDENTIAL', color: '#FF0000' },\n  { id: 'copy', text: 'COPY', color: '#0000FF' },\n  { id: 'sample', text: 'SAMPLE', color: '#008000' },\n  { id: 'void', text: 'VOID', color: '#FF0000' },\n  { id: 'approved', text: 'APPROVED', color: '#008000' },\n  { id: 'rejected', text: 'REJECTED', color: '#FF0000' },\n];"
+        },
+        {
+          "step": 2,
+          "action": "Implement applyTextWatermark function",
+          "code": "import { PDFDocument, rgb, degrees, StandardFonts } from 'pdf-lib';\nimport type { TextWatermarkOptions, PageRange } from './types';\n\nexport async function applyTextWatermark(\n  pdfBytes: ArrayBuffer,\n  options: TextWatermarkOptions\n): Promise<ArrayBuffer> {\n  const pdfDoc = await PDFDocument.load(pdfBytes);\n  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);\n  const pages = pdfDoc.getPages();\n\n  const pageIndices = getPageIndices(pages.length, options.pages);\n\n  for (const pageIndex of pageIndices) {\n    const page = pages[pageIndex];\n    const { width, height } = page.getSize();\n\n    const textWidth = font.widthOfTextAtSize(options.content, options.fontSize);\n    const textHeight = options.fontSize;\n\n    const position = calculatePosition(\n      options.position,\n      width,\n      height,\n      textWidth * options.scale,\n      textHeight * options.scale\n    );\n\n    const color = hexToRgb(options.fontColor);\n\n    if (options.tile) {\n      // Tile watermark across page\n      const spacing = options.tileSpacing ?? 150;\n      for (let y = 0; y < height; y += spacing) {\n        for (let x = 0; x < width; x += spacing) {\n          drawWatermarkText(page, {\n            text: options.content,\n            x,\n            y,\n            font,\n            fontSize: options.fontSize * options.scale,\n            color,\n            opacity: options.opacity,\n            rotation: options.rotation,\n          });\n        }\n      }\n    } else {\n      // Single watermark\n      drawWatermarkText(page, {\n        text: options.content,\n        x: position.x,\n        y: position.y,\n        font,\n        fontSize: options.fontSize * options.scale,\n        color,\n        opacity: options.opacity,\n        rotation: options.rotation,\n      });\n    }\n  }\n\n  return pdfDoc.save();\n}\n\nfunction drawWatermarkText(page, options) {\n  page.drawText(options.text, {\n    x: options.x,\n    y: options.y,\n    font: options.font,\n    size: options.fontSize,\n    color: rgb(options.color.r, options.color.g, options.color.b),\n    opacity: options.opacity,\n    rotate: degrees(options.rotation),\n  });\n}\n\nfunction calculatePosition(\n  position: WatermarkPosition,\n  pageWidth: number,\n  pageHeight: number,\n  watermarkWidth: number,\n  watermarkHeight: number\n): { x: number; y: number } {\n  if (typeof position === 'object' && 'x' in position) {\n    return position;\n  }\n\n  const margin = 50;\n  switch (position) {\n    case 'center':\n      return { x: (pageWidth - watermarkWidth) / 2, y: (pageHeight - watermarkHeight) / 2 };\n    case 'top-left':\n      return { x: margin, y: pageHeight - watermarkHeight - margin };\n    case 'top-center':\n      return { x: (pageWidth - watermarkWidth) / 2, y: pageHeight - watermarkHeight - margin };\n    case 'top-right':\n      return { x: pageWidth - watermarkWidth - margin, y: pageHeight - watermarkHeight - margin };\n    case 'bottom-left':\n      return { x: margin, y: margin };\n    case 'bottom-center':\n      return { x: (pageWidth - watermarkWidth) / 2, y: margin };\n    case 'bottom-right':\n      return { x: pageWidth - watermarkWidth - margin, y: margin };\n    default:\n      return { x: (pageWidth - watermarkWidth) / 2, y: (pageHeight - watermarkHeight) / 2 };\n  }\n}"
+        },
+        {
+          "step": 3,
+          "action": "Implement helper functions",
+          "code": "function getPageIndices(totalPages: number, range: PageRange): number[] {\n  switch (range.type) {\n    case 'all':\n      return Array.from({ length: totalPages }, (_, i) => i);\n    case 'even':\n      return Array.from({ length: totalPages }, (_, i) => i).filter(i => (i + 1) % 2 === 0);\n    case 'odd':\n      return Array.from({ length: totalPages }, (_, i) => i).filter(i => (i + 1) % 2 === 1);\n    case 'custom':\n      return (range.customPages ?? []).filter(p => p >= 0 && p < totalPages);\n    default:\n      return Array.from({ length: totalPages }, (_, i) => i);\n  }\n}\n\nfunction hexToRgb(hex: string): { r: number; g: number; b: number } {\n  const result = /^#?([a-f\\d]{2})([a-f\\d]{2})([a-f\\d]{2})$/i.exec(hex);\n  return result ? {\n    r: parseInt(result[1], 16) / 255,\n    g: parseInt(result[2], 16) / 255,\n    b: parseInt(result[3], 16) / 255,\n  } : { r: 0, g: 0, b: 0 };\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Text watermark applies to PDF",
+        "Position options work correctly",
+        "Rotation applies",
+        "Opacity is adjustable",
+        "Tiling works",
+        "Page range filtering works"
+      ]
+    },
+    {
+      "id": "2.8.4",
+      "category": "ui",
+      "title": "Create Watermark Dialog Component",
+      "description": "Build the UI for configuring and previewing watermarks.",
+      "status": "pending",
+      "estimatedHours": 3,
+      "agent": "sonnet",
+      "files": ["src/components/batch/WatermarkDialog.tsx"],
+      "testCategories": ["visual", "integration"],
+      "stepByStep": [
+        {
+          "step": 1,
+          "action": "Create WatermarkDialog component",
+          "code": "import { useState } from 'react';\nimport { Dialog, DialogContent, DialogHeader, DialogTitle } from '@components/ui/Dialog';\nimport { Tabs, TabsList, TabsTrigger, TabsContent } from '@radix-ui/react-tabs';\nimport { Button } from '@components/ui/Button';\nimport { Input } from '@components/ui/Input';\nimport { Slider } from '@components/ui/Slider';\nimport { WATERMARK_TEMPLATES } from '@lib/batch/watermark';\nimport { useBatchStore } from '@stores/batchStore';\n\nexport function WatermarkDialog({ isOpen, onClose }) {\n  const { addOperation } = useBatchStore();\n  const [activeTab, setActiveTab] = useState<'text' | 'image'>('text');\n  const [textOptions, setTextOptions] = useState({\n    content: 'DRAFT',\n    fontFamily: 'Helvetica',\n    fontSize: 72,\n    fontColor: '#808080',\n    opacity: 0.5,\n    rotation: -45,\n    position: 'center' as const,\n    scale: 1,\n    tile: false,\n    layer: 'over' as const,\n    pages: { type: 'all' as const },\n  });\n\n  const handleApply = () => {\n    addOperation('watermark', {\n      type: 'text',\n      ...textOptions,\n    });\n    onClose();\n  };\n\n  return (\n    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>\n      <DialogContent className=\"max-w-3xl\">\n        <DialogHeader>\n          <DialogTitle>Add Watermark</DialogTitle>\n        </DialogHeader>\n\n        <Tabs value={activeTab} onValueChange={setActiveTab}>\n          <TabsList>\n            <TabsTrigger value=\"text\">Text Watermark</TabsTrigger>\n            <TabsTrigger value=\"image\">Image Watermark</TabsTrigger>\n          </TabsList>\n\n          <TabsContent value=\"text\" className=\"space-y-6\">\n            {/* Quick Templates */}\n            <div>\n              <label className=\"text-sm font-medium\">Quick Templates</label>\n              <div className=\"flex flex-wrap gap-2 mt-2\">\n                {WATERMARK_TEMPLATES.map(template => (\n                  <button\n                    key={template.id}\n                    onClick={() => setTextOptions(prev => ({\n                      ...prev,\n                      content: template.text,\n                      fontColor: template.color,\n                    }))}\n                    className=\"px-3 py-1 rounded border hover:bg-gray-100\"\n                    style={{ color: template.color }}\n                  >\n                    {template.text}\n                  </button>\n                ))}\n              </div>\n            </div>\n\n            {/* Custom Text */}\n            <div>\n              <label className=\"text-sm font-medium\">Watermark Text</label>\n              <Input\n                value={textOptions.content}\n                onChange={(e) => setTextOptions(prev => ({ ...prev, content: e.target.value }))}\n                placeholder=\"Enter watermark text\"\n              />\n            </div>\n\n            {/* Opacity */}\n            <div>\n              <label className=\"text-sm font-medium\">Opacity: {Math.round(textOptions.opacity * 100)}%</label>\n              <Slider\n                value={[textOptions.opacity * 100]}\n                onValueChange={([value]) => setTextOptions(prev => ({ ...prev, opacity: value / 100 }))}\n                min={10}\n                max={100}\n              />\n            </div>\n\n            {/* Rotation */}\n            <div>\n              <label className=\"text-sm font-medium\">Rotation: {textOptions.rotation}°</label>\n              <Slider\n                value={[textOptions.rotation + 180]}\n                onValueChange={([value]) => setTextOptions(prev => ({ ...prev, rotation: value - 180 }))}\n                min={0}\n                max={360}\n              />\n            </div>\n\n            {/* Position */}\n            <div>\n              <label className=\"text-sm font-medium\">Position</label>\n              <PositionSelector\n                value={textOptions.position}\n                onChange={(position) => setTextOptions(prev => ({ ...prev, position }))}\n              />\n            </div>\n\n            {/* Preview */}\n            <WatermarkPreview options={textOptions} />\n          </TabsContent>\n\n          <TabsContent value=\"image\">\n            <ImageWatermarkOptions />\n          </TabsContent>\n        </Tabs>\n\n        <div className=\"flex justify-end gap-2\">\n          <Button variant=\"ghost\" onClick={onClose}>Cancel</Button>\n          <Button onClick={handleApply}>Add to Queue</Button>\n        </div>\n      </DialogContent>\n    </Dialog>\n  );\n}"
+        },
+        {
+          "step": 2,
+          "action": "Create PositionSelector component",
+          "code": "function PositionSelector({ value, onChange }) {\n  const positions = [\n    ['top-left', 'top-center', 'top-right'],\n    [null, 'center', null],\n    ['bottom-left', 'bottom-center', 'bottom-right'],\n  ];\n\n  return (\n    <div className=\"grid grid-cols-3 gap-1 w-36\">\n      {positions.flat().map((pos, i) => (\n        pos ? (\n          <button\n            key={pos}\n            onClick={() => onChange(pos)}\n            className={cn(\n              'w-10 h-10 border rounded flex items-center justify-center',\n              value === pos && 'bg-primary-500 text-white'\n            )}\n          >\n            •\n          </button>\n        ) : <div key={i} />\n      ))}\n    </div>\n  );\n}"
+        },
+        {
+          "step": 3,
+          "action": "Create WatermarkPreview component",
+          "code": "function WatermarkPreview({ options }) {\n  return (\n    <div className=\"border rounded-lg p-4 bg-gray-50 dark:bg-gray-800\">\n      <div className=\"text-sm font-medium mb-2\">Preview</div>\n      <div \n        className=\"w-full h-40 bg-white border relative overflow-hidden\"\n        style={{ aspectRatio: '8.5/11' }}\n      >\n        <div\n          className=\"absolute font-bold\"\n          style={{\n            ...getPreviewPosition(options.position),\n            color: options.fontColor,\n            opacity: options.opacity,\n            transform: `rotate(${options.rotation}deg)`,\n            fontSize: '14px',\n          }}\n        >\n          {options.content}\n        </div>\n      </div>\n    </div>\n  );\n}"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Dialog opens and closes properly",
+        "Text and image tabs work",
+        "Templates apply settings",
+        "Sliders adjust values smoothly",
+        "Position selector works",
+        "Preview updates in real-time",
+        "Add to queue creates operation"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Batch types defined",
+    "Store manages operation queue",
+    "Text watermark applies correctly",
+    "Watermark dialog is user-friendly",
+    "Preview matches final output"
+  ],
+  "filesCreated": [
+    "src/lib/batch/types.ts",
+    "src/lib/batch/batchProcessor.ts",
+    "src/lib/batch/watermark.ts",
+    "src/lib/batch/index.ts",
+    "src/stores/batchStore.ts",
+    "src/components/batch/WatermarkDialog.tsx"
+  ],
+  "filesModified": [],
+  "totalNewTests": 12,
+  "totalEstimatedHours": 8,
+  "dependencies": [],
+  "notes": [
+    "pdf-lib handles watermark rendering",
+    "Consider font embedding for custom fonts",
+    "Preview should be performant for real-time updates"
+  ]
+}
