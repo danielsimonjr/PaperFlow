@@ -122,3 +122,82 @@ Mobile is designed separately with touch-first interactions:
 - SSO/SAML integration
 - Cloud storage (50 GB/user)
 - Audit trails
+
+## Phase 2: Advanced Features
+
+Phase 2 introduces powerful professional-grade capabilities while maintaining PaperFlow's commitment to simplicity and privacy-first processing.
+
+### OCR (Optical Character Recognition)
+
+Client-side OCR powered by Tesseract.js enables text extraction from scanned documents without sending data to external servers.
+
+| Feature | Description |
+|---------|-------------|
+| Multi-Language Support | 50+ languages with automatic detection |
+| Batch Processing | Process multiple pages with progress tracking |
+| Layout Analysis | Intelligent detection of columns, tables, and reading order |
+| Export Formats | Plain text, HTML, hOCR (with position data) |
+| Searchable PDFs | Convert scanned documents to searchable PDF/A |
+
+### Form Designer
+
+Comprehensive form creation tools for building interactive PDF forms from scratch.
+
+| Feature | Description |
+|---------|-------------|
+| Drag-and-Drop Creation | Intuitive field placement with alignment guides |
+| Field Types | Text, checkbox, radio buttons, dropdowns, date pickers, signature fields, action buttons |
+| Calculated Fields | Formula support for automatic calculations |
+| Conditional Logic | Show/hide/enable/disable fields based on conditions |
+| Validation Rules | Required fields, format validation, custom rules |
+| Form Actions | Submit buttons, reset functionality, scripting support |
+
+### Redaction Tools
+
+Permanently remove sensitive information with verification and compliance features.
+
+| Feature | Description |
+|---------|-------------|
+| Manual Redaction | Select areas or text for redaction |
+| Pattern Detection | Auto-detect SSN, phone numbers, emails, credit card numbers |
+| Custom Patterns | Define regex patterns for domain-specific data |
+| Verification Mode | Review all redactions before applying |
+| Metadata Scrubbing | Remove hidden metadata, comments, and revision history |
+| Audit Trail | Log redaction actions for compliance documentation |
+
+### Document Comparison
+
+Compare document versions to identify changes and track revisions.
+
+| Feature | Description |
+|---------|-------------|
+| Side-by-Side View | Synchronized scrolling between documents |
+| Overlay View | Adjustable opacity for visual comparison |
+| Text Diff Highlighting | Color-coded additions, deletions, and modifications |
+| Change Navigation | Jump between differences with keyboard shortcuts |
+| Comparison Reports | Export as text, HTML, JSON, or annotated PDF |
+
+### Batch Processing
+
+Apply operations to multiple documents or pages efficiently.
+
+| Feature | Description |
+|---------|-------------|
+| Watermarks | Text and image watermarks with position/opacity control |
+| Headers and Footers | Dynamic content with page numbers, dates, and custom variables |
+| Bates Numbering | Sequential numbering for legal document management |
+| PDF Flattening | Flatten forms, annotations, and layers for archival |
+| Queue Management | Process multiple files with progress tracking and error handling |
+
+### Accessibility Checker
+
+Validate and improve document accessibility for compliance and inclusivity.
+
+| Feature | Description |
+|---------|-------------|
+| PDF/UA Compliance | Validate against PDF Universal Accessibility standard |
+| WCAG 2.1 AA Checking | Color contrast and readability validation |
+| Structure Analysis | Verify heading hierarchy and logical document structure |
+| Alt Text Verification | Identify images missing alternative text |
+| Reading Order Validation | Ensure correct reading sequence for screen readers |
+| Accessibility Reports | Detailed reports with fix recommendations |

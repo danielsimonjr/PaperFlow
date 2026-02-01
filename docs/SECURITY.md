@@ -112,6 +112,73 @@ Saved signatures are:
 - Never transmitted to any server
 - Clearable by the user at any time
 
+## Phase 2 Security Considerations
+
+### Redaction Security
+
+PaperFlow implements true content redaction, not just visual overlays:
+
+- **True content removal**: Redacted content is permanently removed from the PDF structure, not merely covered with a black box
+- **Verification system**: After applying redactions, the system verifies that content has been completely removed from the document
+- **Metadata scrubbing**: Redaction includes removal of hidden metadata that could contain sensitive information (document properties, embedded objects, XMP data)
+- **Audit trail**: All redaction operations are logged for compliance tracking (timestamp, page, region coordinates, operator)
+- **Warning system**: Users are warned if redactions cannot be verified as complete; unverified redactions should not be considered secure
+
+**Important**: Always verify redactions before sharing documents. Use the built-in verification tool to confirm content removal.
+
+### Form Script Security
+
+PaperFlow supports basic form calculations and validations with important security limitations:
+
+- **Current implementation**: Form scripts use `new Function()` for evaluation, which has security implications
+- **Trusted context only**: Scripts should only be executed in trusted contexts (known, vetted PDFs)
+- **Sandbox recommendation**: Before enabling user-provided scripts, implement proper sandboxing (e.g., quickjs-emscripten)
+- **API restrictions**: Form scripts have no access to sensitive browser APIs:
+  - No `fetch()` or network access
+  - No `localStorage` or `IndexedDB` access
+  - No DOM manipulation
+  - No file system access
+- **Execution limits**: Scripts have timeout limits to prevent infinite loops
+
+**Recommendation**: Do not enable form scripts for untrusted PDFs until a proper sandbox implementation is in place.
+
+### OCR Data Handling
+
+PaperFlow's OCR functionality is designed with privacy as a priority:
+
+- **Client-side processing**: All text recognition happens locally using Tesseract.js
+- **No external transmission**: Recognized text is never sent to external servers
+- **Language file caching**: OCR language models are downloaded once and cached locally in IndexedDB
+- **Memory management**: OCR data is processed in memory and cleared after use
+- **No training data collection**: Your documents are not used to train any models
+
+### Document Comparison Privacy
+
+The document comparison feature processes documents securely:
+
+- **In-browser processing**: All comparison operations happen entirely in your browser
+- **No server uploads**: Neither document is uploaded to any server for comparison
+- **Memory-only results**: Comparison results are stored only in memory
+- **Session isolation**: Results are cleared when you close the comparison or navigate away
+- **No persistent storage**: Comparison data is not saved to IndexedDB or localStorage
+
+### Pattern Matching Security
+
+PaperFlow includes pattern matching for identifying sensitive information:
+
+- **Built-in PII patterns**: Pre-validated patterns for common sensitive data:
+  - Social Security Numbers (SSN)
+  - Credit card numbers
+  - Phone numbers
+  - Email addresses
+  - Date of birth formats
+- **ReDoS protection**: All regex patterns are validated to prevent Regular Expression Denial of Service attacks
+- **Pattern validation**: Custom patterns are analyzed for potential performance issues before execution
+- **Execution timeouts**: Pattern matching operations have time limits to prevent browser freezing
+- **Local processing only**: Pattern matching runs entirely client-side; matched content is never transmitted
+
+**Best practice**: When creating custom patterns, test them with representative sample text before applying to large documents.
+
 ## Known Limitations
 
 ### PDF Security Features
