@@ -49,3 +49,39 @@ export {
   type EmbedOptions,
   type EmbedResult,
 } from './textLayerEmbed';
+
+// Layout Analyzer
+export {
+  analyzeLayout,
+  tableToCSV,
+  type Column,
+  type TableCell,
+  type Table,
+  type TextRegion,
+  type ImageRegion,
+  type Region,
+  type LayoutAnalysis,
+  type LayoutConfig,
+} from './layoutAnalyzer';
+
+// Batch OCR
+export {
+  BatchOCRController,
+  createBatchOCRController,
+  type BatchPageStatus,
+  type BatchPageResult,
+  type BatchProgress,
+  type BatchConfig,
+  type BatchProgressCallback,
+  type PageCompleteCallback,
+} from './batchOCR';
+
+// Export Formats
+export {
+  exportToPlainText,
+  exportToHTML,
+  exportToHOCR,
+  exportToJSON,
+  exportTablesToCSV,
+  type ExportOptions,
+} from './exportFormats';
