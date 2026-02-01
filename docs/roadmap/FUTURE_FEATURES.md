@@ -31,11 +31,11 @@ Focus: Core editing experience that's immediately better than Adobe for common t
 | 11-12 | Advanced form features, accessibility tools | v2.5 release |
 
 ### Phase 2 Features
-- [ ] OCR for scanned documents (50+ languages)
-- [ ] Form creation and designer
-- [ ] Redaction tools (true redaction, pattern search)
-- [ ] Document comparison (side-by-side, overlay)
-- [ ] Batch processing (watermarks, headers/footers, Bates numbering)
+- [x] OCR for scanned documents (50+ languages)
+- [x] Form creation and designer
+- [x] Redaction tools (true redaction, pattern search)
+- [x] Document comparison (side-by-side, overlay)
+- [x] Batch processing (watermarks, headers/footers, Bates numbering)
 
 ## Phase 3: Premium & Enterprise (Year 2)
 
