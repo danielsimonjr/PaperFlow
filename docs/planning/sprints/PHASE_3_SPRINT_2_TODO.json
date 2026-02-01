@@ -7,7 +7,7 @@
   "milestone": "Native File Operations",
   "priority": "HIGH",
   "status": "pending",
-  "totalEstimatedHours": 96,
+  "totalEstimatedHours": 92,
   "tasks": [
     {
       "id": "3.2.1",

@@ -7,7 +7,7 @@
   "milestone": "v3.0 Annual Release",
   "priority": "HIGH",
   "status": "pending",
-  "totalEstimatedHours": 96,
+  "totalEstimatedHours": 106,
   "tasks": [
     {
       "id": "3.24.1",

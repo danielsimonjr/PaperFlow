@@ -7,7 +7,7 @@
   "milestone": "macOS Distribution Ready",
   "priority": "HIGH",
   "status": "pending",
-  "totalEstimatedHours": 88,
+  "totalEstimatedHours": 94,
   "tasks": [
     {
       "id": "3.14.1",

@@ -7,7 +7,7 @@
   "milestone": "Enterprise Update Infrastructure",
   "priority": "HIGH",
   "status": "pending",
-  "totalEstimatedHours": 94,
+  "totalEstimatedHours": 102,
   "tasks": [
     {
       "id": "3.23.1",

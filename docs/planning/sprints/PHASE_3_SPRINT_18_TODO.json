@@ -7,7 +7,7 @@
   "milestone": "Q3 Release - Cross-Platform Polish Complete",
   "priority": "HIGH",
   "status": "pending",
-  "totalEstimatedHours": 90,
+  "totalEstimatedHours": 110,
   "tasks": [
     {
       "id": "3.18.1",

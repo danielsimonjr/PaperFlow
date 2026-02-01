@@ -7,7 +7,7 @@
   "milestone": "Enterprise Batch Processing",
   "priority": "HIGH",
   "status": "pending",
-  "totalEstimatedHours": 92,
+  "totalEstimatedHours": 102,
   "tasks": [
     {
       "id": "3.9.1",

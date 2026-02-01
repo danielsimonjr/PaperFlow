@@ -7,7 +7,7 @@
   "milestone": "Q2 Desktop Release",
   "priority": "CRITICAL",
   "status": "pending",
-  "totalEstimatedHours": 102,
+  "totalEstimatedHours": 112,
   "tasks": [
     {
       "id": "3.12.1",

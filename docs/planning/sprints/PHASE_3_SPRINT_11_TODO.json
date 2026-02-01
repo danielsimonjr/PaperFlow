@@ -7,7 +7,7 @@
   "milestone": "Document Scanning Support",
   "priority": "HIGH",
   "status": "pending",
-  "totalEstimatedHours": 98,
+  "totalEstimatedHours": 106,
   "tasks": [
     {
       "id": "3.11.1",
