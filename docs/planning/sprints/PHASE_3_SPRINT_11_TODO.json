@@ -7,6 +7,7 @@
   "milestone": "v3.5 Release - Collaboration Complete",
   "priority": "HIGH",
   "status": "pending",
+  "totalEstimatedHours": 124,
   "tasks": [
     {
       "id": "3.11.1",

@@ -7,6 +7,7 @@
   "milestone": "v3.0 Release",
   "priority": "HIGH",
   "status": "pending",
+  "totalEstimatedHours": 109,
   "tasks": [
     {
       "id": "3.6.1",

@@ -7,6 +7,7 @@
   "milestone": "Version Control System",
   "priority": "HIGH",
   "status": "pending",
+  "totalEstimatedHours": 124,
   "tasks": [
     {
       "id": "3.9.1",

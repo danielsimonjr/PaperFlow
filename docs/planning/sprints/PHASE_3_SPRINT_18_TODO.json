@@ -7,6 +7,7 @@
   "milestone": "Ecosystem Growth",
   "priority": "HIGH",
   "status": "pending",
+  "totalEstimatedHours": 180,
   "tasks": [
     {
       "id": "3.18.1",

@@ -37,35 +37,7 @@ Focus: Core editing experience that's immediately better than Adobe for common t
 - [x] Document comparison (side-by-side, overlay)
 - [x] Batch processing (watermarks, headers/footers, Bates numbering)
 
-## Phase 3: Premium & Enterprise (Year 2)
-
-### Q1: AI Features
-- [ ] Document summarization
-- [ ] Auto-fill forms from existing documents
-- [ ] Smart field suggestions
-- [ ] Natural language document queries
-- [ ] Translation integration
-
-### Q2: Collaboration
-- [ ] Real-time collaborative editing
-- [ ] Version history and rollback
-- [ ] Review workflows with assignments and deadlines
-- [ ] Team commenting and @mentions
-- [ ] Integration with project management tools
-
-### Q3: Enterprise
-- [ ] SSO/SAML integration
-- [ ] Admin console and user management
-- [ ] Custom branding
-- [ ] Audit trails and compliance reports
-- [ ] On-premise deployment option
-
-### Q4: Platform
-- [ ] API/Developer platform
-- [ ] Integrations marketplace
-- [ ] White-label solutions
-
-## Phase 4: Desktop Application (Year 3)
+## Phase 3: Desktop Application (Year 2)
 
 ### Q1: Electron Foundation
 - [ ] Electron app shell and build system
@@ -98,6 +70,33 @@ Focus: Core editing experience that's immediately better than Adobe for common t
 - [ ] Local network collaboration (LAN sync)
 - [ ] On-premise update server
 - [ ] Kiosk mode for shared workstations
+
+## Phase 4: Premium & Enterprise (Year 3)
+
+### Q1: AI Features
+- [ ] Document summarization
+- [ ] Auto-fill forms from existing documents
+- [ ] Smart field suggestions
+- [ ] Natural language document queries
+- [ ] Translation integration
+
+### Q2: Collaboration
+- [ ] Real-time collaborative editing
+- [ ] Version history and rollback
+- [ ] Review workflows with assignments and deadlines
+- [ ] Team commenting and @mentions
+- [ ] Integration with project management tools
+
+### Q3: Enterprise
+- [ ] SSO/SAML integration
+- [ ] Admin console and user management
+- [ ] Custom branding
+- [ ] Audit trails and compliance reports
+
+### Q4: Platform
+- [ ] API/Developer platform
+- [ ] Integrations marketplace
+- [ ] White-label solutions
 
 ## Success Metrics
 

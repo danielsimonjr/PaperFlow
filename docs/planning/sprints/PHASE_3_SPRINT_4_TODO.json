@@ -7,6 +7,7 @@
   "milestone": "AI Document Query",
   "priority": "HIGH",
   "status": "pending",
+  "totalEstimatedHours": 110,
   "tasks": [
     {
       "id": "3.4.1",

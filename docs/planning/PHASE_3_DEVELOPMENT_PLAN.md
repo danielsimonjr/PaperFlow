@@ -56,27 +56,119 @@ Phase 3 spans 12 months (Year 2) across 24 two-week sprints, delivering AI-power
 
 ```bash
 # AI/LLM Integration
-npm install openai @anthropic-ai/sdk
-npm install langchain @langchain/core
+npm install openai@^4.0.0 @anthropic-ai/sdk@^0.10.0
+npm install langchain@^0.1.0 @langchain/core@^0.1.0
 
 # Real-Time Collaboration
-npm install yjs y-websocket y-indexeddb
-npm install @liveblocks/client @liveblocks/react
+npm install yjs@^13.0.0 y-websocket@^1.5.0 y-indexeddb@^9.0.0
+npm install @liveblocks/client@^1.0.0 @liveblocks/react@^1.0.0
 
 # Enterprise Authentication
-npm install @auth0/auth0-spa-js
-npm install passport passport-saml
+npm install @auth0/auth0-spa-js@^2.0.0
+npm install passport@^0.7.0 passport-saml@^3.0.0
 
 # API Platform
-npm install express cors helmet rate-limiter-flexible
-npm install swagger-ui-express openapi-types
+npm install express@^4.18.0 cors@^2.8.0 helmet@^7.0.0 rate-limiter-flexible@^3.0.0
+npm install swagger-ui-express@^5.0.0 openapi-types@^12.0.0
 
 # Translation
-npm install @google-cloud/translate deepl-node
+npm install @google-cloud/translate@^8.0.0 deepl-node@^1.10.0
 
 # WebSocket
-npm install socket.io socket.io-client
+npm install socket.io@^4.0.0 socket.io-client@^4.0.0
 ```
+
+> **Note:** Version ranges use caret (^) to allow minor version updates. Pin to exact versions in production if stricter version control is required. See the Appendix for full dependency details.
+
+---
+
+## Server-Side Architecture Considerations
+
+Phase 3 introduces server-side components for collaboration, enterprise features, and the API platform. This section outlines the architectural decisions and infrastructure requirements.
+
+### Backend Deployment Strategy
+
+| Option | Description | Best For |
+|--------|-------------|----------|
+| **Serverless (Recommended)** | AWS Lambda, Google Cloud Functions, or Azure Functions | Startups, variable traffic, cost optimization |
+| **Containers** | Docker on ECS, GKE, or AKS | Medium scale, consistent traffic patterns |
+| **Dedicated Servers** | EC2, Compute Engine, or Azure VMs | Enterprise customers with compliance requirements |
+
+**Recommendation:** Start with serverless for the API endpoints and use managed WebSocket services for real-time collaboration, scaling to containers as traffic grows.
+
+### Infrastructure Provisioning
+
+#### AWS Stack (Primary)
+- **API Gateway** + **Lambda** for REST API endpoints
+- **API Gateway WebSocket API** or **AWS IoT Core** for real-time sync
+- **ElastiCache (Redis)** for session management and caching
+- **RDS PostgreSQL** or **DynamoDB** for persistent storage
+- **S3** for document storage and static assets
+- **CloudFront** for CDN
+
+#### GCP Stack (Alternative)
+- **Cloud Run** for containerized API
+- **Cloud Functions** for serverless endpoints
+- **Firebase Realtime Database** or **Firestore** for real-time sync
+- **Cloud SQL** for relational data
+- **Cloud Storage** for documents
+- **Cloud CDN** for edge caching
+
+#### Azure Stack (Alternative)
+- **Azure Functions** for serverless API
+- **Azure SignalR Service** for real-time WebSocket
+- **Azure Cache for Redis** for caching
+- **Azure SQL** or **Cosmos DB** for storage
+- **Blob Storage** for documents
+- **Azure CDN** for content delivery
+
+### WebSocket Server for Collaboration
+
+The real-time collaboration features (Sprint 7+) require persistent WebSocket connections:
+
+```
+Option A: Managed Service (Recommended for Phase 3)
+├── AWS API Gateway WebSocket API
+├── Socket.io on AWS Lambda with API Gateway
+├── Ably or Pusher (fully managed)
+└── Liveblocks (purpose-built for collaboration)
+
+Option B: Self-Hosted (For greater control)
+├── Node.js + Socket.io on containers (ECS/GKE)
+├── Redis Pub/Sub for horizontal scaling
+└── Sticky sessions or connection migration
+```
+
+**Cost Estimation (Monthly):**
+| Users | Serverless (AWS) | Containers (AWS) | Managed (Liveblocks) |
+|-------|------------------|------------------|---------------------|
+| 1,000 MAU | $50-100 | $150-200 | $100 |
+| 10,000 MAU | $200-400 | $400-600 | $500 |
+| 100,000 MAU | $1,000-2,000 | $2,000-4,000 | $2,500 |
+
+### DevOps Considerations
+
+1. **CI/CD Pipeline**: GitHub Actions or GitLab CI for automated deployments
+2. **Infrastructure as Code**: Terraform or AWS CDK for reproducible environments
+3. **Monitoring**: CloudWatch, Datadog, or Grafana for observability
+4. **Logging**: Centralized logging with CloudWatch Logs, ELK stack, or Loki
+5. **Secrets Management**: AWS Secrets Manager or HashiCorp Vault
+6. **Environment Management**: Separate dev, staging, and production environments
+
+### Database Schema Considerations
+
+The server-side components require new database tables for:
+- User sessions and presence data
+- Document collaboration state
+- Version history snapshots
+- Review workflow state
+- Audit logs
+- API keys and OAuth tokens
+
+Consider using a multi-database approach:
+- **PostgreSQL**: User data, workflows, audit logs (relational, ACID)
+- **Redis**: Sessions, presence, real-time state (fast, ephemeral)
+- **S3/Blob Storage**: Document versions, file attachments (scalable, cheap)
 
 ---
 

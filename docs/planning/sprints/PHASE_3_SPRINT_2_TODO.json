@@ -7,6 +7,7 @@
   "milestone": "AI Document Intelligence",
   "priority": "HIGH",
   "status": "pending",
+  "totalEstimatedHours": 102,
   "tasks": [
     {
       "id": "3.2.1",

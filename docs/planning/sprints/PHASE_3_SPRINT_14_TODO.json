@@ -7,6 +7,7 @@
   "milestone": "Enterprise Compliance",
   "priority": "HIGH",
   "status": "pending",
+  "totalEstimatedHours": 160,
   "tasks": [
     {
       "id": "3.14.1",
