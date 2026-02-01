@@ -1,0 +1,300 @@
+{
+  "phase": 3,
+  "sprint": 8,
+  "quarter": "Q2",
+  "title": "File Watching & Hot Reload",
+  "goal": "Implement native file system watching with automatic document reload when external changes are detected",
+  "milestone": "Live Document Sync",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 88,
+  "tasks": [
+    {
+      "id": "3.8.1",
+      "category": "electron",
+      "title": "Create file watcher service",
+      "description": "Implement Electron main process file watching service using chokidar with debouncing and efficient change detection",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/main/fileWatcher.ts",
+        "electron/main/watcherService.ts"
+      ],
+      "acceptanceCriteria": [
+        "File changes are detected within 500ms",
+        "Watcher handles multiple files efficiently",
+        "Debouncing prevents excessive events",
+        "Memory usage is optimized"
+      ]
+    },
+    {
+      "id": "3.8.2",
+      "category": "electron",
+      "title": "Implement IPC file watch communication",
+      "description": "Create IPC channels for file watch events between main and renderer processes with proper typing",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/main/ipc/fileWatchIPC.ts",
+        "electron/preload/fileWatchPreload.ts",
+        "src/types/electron.d.ts"
+      ],
+      "acceptanceCriteria": [
+        "IPC channels are type-safe",
+        "Events are delivered reliably",
+        "Multiple windows receive updates",
+        "Memory leaks are prevented"
+      ]
+    },
+    {
+      "id": "3.8.3",
+      "category": "infrastructure",
+      "title": "Create file watch store",
+      "description": "Build Zustand store to track watched files, their status, and pending reload operations",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/stores/fileWatchStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Watched files are tracked",
+        "File status updates are immediate",
+        "Pending reloads are queued",
+        "Store syncs with Electron watcher"
+      ]
+    },
+    {
+      "id": "3.8.4",
+      "category": "infrastructure",
+      "title": "Implement change detection engine",
+      "description": "Create engine to detect what changed in a document (pages, annotations, text) to enable smart reloading",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/fileWatch/changeDetector.ts",
+        "src/lib/fileWatch/documentDiff.ts"
+      ],
+      "acceptanceCriteria": [
+        "Page changes are detected",
+        "Annotation changes are identified",
+        "Text modifications are tracked",
+        "Change summary is generated"
+      ]
+    },
+    {
+      "id": "3.8.5",
+      "category": "infrastructure",
+      "title": "Build smart reload system",
+      "description": "Create intelligent reload that preserves user state (scroll position, annotations, unsaved edits) while incorporating external changes",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/fileWatch/smartReload.ts",
+        "src/lib/fileWatch/statePreserver.ts"
+      ],
+      "acceptanceCriteria": [
+        "Scroll position is preserved",
+        "Unsaved annotations are kept",
+        "User edits are merged if possible",
+        "Reload is seamless to user"
+      ]
+    },
+    {
+      "id": "3.8.6",
+      "category": "ui",
+      "title": "Create external change notification",
+      "description": "Build notification component that alerts user to external file changes with options to reload, ignore, or compare",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/components/fileWatch/ExternalChangeNotification.tsx",
+        "src/components/fileWatch/ChangePreview.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Notification appears for external changes",
+        "Reload option reloads document",
+        "Ignore option dismisses notification",
+        "Compare shows side-by-side diff"
+      ]
+    },
+    {
+      "id": "3.8.7",
+      "category": "ui",
+      "title": "Build document comparison view",
+      "description": "Create side-by-side comparison view showing current and external versions of the document with differences highlighted",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/fileWatch/DocumentCompare.tsx",
+        "src/components/fileWatch/PageDiff.tsx",
+        "src/components/fileWatch/DiffHighlight.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Side-by-side view works",
+        "Differences are highlighted",
+        "Users can navigate between changes",
+        "Merge individual changes is supported"
+      ]
+    },
+    {
+      "id": "3.8.8",
+      "category": "infrastructure",
+      "title": "Implement conflict resolution for file changes",
+      "description": "Create conflict resolution when both local and external changes exist, with merge strategies and user prompts",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/fileWatch/conflictHandler.ts",
+        "src/lib/fileWatch/mergeStrategy.ts"
+      ],
+      "acceptanceCriteria": [
+        "Conflicts are detected accurately",
+        "Merge strategies are offered",
+        "User can choose resolution",
+        "Changes are merged correctly"
+      ]
+    },
+    {
+      "id": "3.8.9",
+      "category": "ui",
+      "title": "Create auto-reload settings panel",
+      "description": "Build settings panel for configuring auto-reload behavior including enable/disable, notification preferences, and merge defaults",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/settings/AutoReloadSettings.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Auto-reload can be enabled/disabled",
+        "Notification style is configurable",
+        "Default merge strategy is selectable",
+        "Per-file overrides are supported"
+      ]
+    },
+    {
+      "id": "3.8.10",
+      "category": "electron",
+      "title": "Implement file lock detection",
+      "description": "Detect when files are locked by other applications and handle appropriately with user notification",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "electron/main/fileLock.ts",
+        "src/components/fileWatch/FileLockNotification.tsx"
+      ],
+      "acceptanceCriteria": [
+        "File locks are detected",
+        "User is notified of locked files",
+        "Retry mechanism is available",
+        "Lock release is detected"
+      ]
+    },
+    {
+      "id": "3.8.11",
+      "category": "infrastructure",
+      "title": "Create watch queue manager",
+      "description": "Build queue to manage multiple file watch events, prioritize urgent changes, and batch related updates",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/lib/fileWatch/watchQueue.ts"
+      ],
+      "acceptanceCriteria": [
+        "Events are queued properly",
+        "Priority system works",
+        "Related events are batched",
+        "Queue is processed efficiently"
+      ]
+    },
+    {
+      "id": "3.8.12",
+      "category": "electron",
+      "title": "Implement folder watching for recent files",
+      "description": "Watch folders containing recently opened files for changes, enabling notifications even when documents are not actively open",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/main/folderWatcher.ts",
+        "src/stores/recentFilesStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Recent file folders are watched",
+        "Changes trigger notifications",
+        "Stale files are handled",
+        "Performance is acceptable"
+      ]
+    },
+    {
+      "id": "3.8.13",
+      "category": "infrastructure",
+      "title": "Build hot reload for development",
+      "description": "Create development-only hot reload that instantly reflects code changes without losing document state",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/dev/hotReload.ts",
+        "vite.config.ts"
+      ],
+      "acceptanceCriteria": [
+        "Code changes apply instantly",
+        "Document state is preserved",
+        "Only active in development",
+        "Error boundaries work correctly"
+      ]
+    },
+    {
+      "id": "3.8.14",
+      "category": "testing",
+      "title": "Create file watching tests",
+      "description": "Write comprehensive tests for file watching, change detection, and reload functionality with mocked file system",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/fileWatch/changeDetector.test.ts",
+        "tests/unit/lib/fileWatch/smartReload.test.ts",
+        "tests/integration/fileWatch/externalChanges.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Change detection tests pass",
+        "Reload tests verify state preservation",
+        "Integration tests simulate external changes",
+        "Edge cases are covered"
+      ]
+    },
+    {
+      "id": "3.8.15",
+      "category": "electron",
+      "title": "Optimize watcher performance",
+      "description": "Profile and optimize file watcher to minimize CPU and memory usage, especially when watching many files",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "electron/main/watcherOptimizations.ts"
+      ],
+      "acceptanceCriteria": [
+        "CPU usage is under 2% idle",
+        "Memory usage is minimal",
+        "Watching 100+ files is efficient",
+        "Battery impact is acceptable"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "External file changes are detected within 1 second",
+    "Smart reload preserves user state",
+    "Conflicts are handled gracefully",
+    "Performance impact is minimal",
+    "User has full control over behavior"
+  ],
+  "dependencies": [
+    "chokidar",
+    "diff",
+    "lodash.debounce"
+  ],
+  "notes": [
+    "File watching must handle network drives and cloud-synced folders",
+    "Windows, macOS, and Linux have different file system event behaviors",
+    "Large files should not block the main process",
+    "Consider atomic write detection to avoid partial file reads"
+  ]
+}

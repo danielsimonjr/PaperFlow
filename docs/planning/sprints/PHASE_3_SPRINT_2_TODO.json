@@ -1,0 +1,285 @@
+{
+  "phase": 3,
+  "sprint": 2,
+  "quarter": "Q1",
+  "title": "Native File System Integration",
+  "goal": "Implement native file system access for opening, saving, and watching PDF files",
+  "milestone": "Native File Operations",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 96,
+  "tasks": [
+    {
+      "id": "3.2.1",
+      "category": "feature",
+      "title": "Implement native file open dialog",
+      "description": "Create IPC handler for native file open dialog with PDF filter and multi-select support",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/ipc/fileHandlers.ts",
+        "src/lib/electron/fileSystem.ts"
+      ],
+      "acceptanceCriteria": [
+        "Native file open dialog opens with PDF filter",
+        "Multi-select is supported",
+        "Recent folders are remembered",
+        "Dialog respects OS file picker conventions"
+      ]
+    },
+    {
+      "id": "3.2.2",
+      "category": "feature",
+      "title": "Implement native file save dialog",
+      "description": "Create IPC handler for native file save dialog with format options and overwrite confirmation",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/ipc/fileHandlers.ts",
+        "src/lib/electron/fileSystem.ts"
+      ],
+      "acceptanceCriteria": [
+        "Native file save dialog opens",
+        "Default filename is suggested from document",
+        "Overwrite confirmation is shown",
+        "File extension is enforced"
+      ]
+    },
+    {
+      "id": "3.2.3",
+      "category": "feature",
+      "title": "Create file read/write operations",
+      "description": "Implement native file read and write operations with proper error handling and encoding",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/ipc/fileHandlers.ts",
+        "electron/fileOperations.ts"
+      ],
+      "acceptanceCriteria": [
+        "PDF files can be read as binary",
+        "PDF files can be written with proper encoding",
+        "Large files (100MB+) are handled efficiently",
+        "File permissions are checked before operations"
+      ]
+    },
+    {
+      "id": "3.2.4",
+      "category": "feature",
+      "title": "Implement file watcher for external changes",
+      "description": "Create file watcher using chokidar to detect external modifications to open files",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/fileWatcher.ts",
+        "electron/ipc/fileHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "External file changes are detected",
+        "User is prompted to reload or ignore changes",
+        "File deletion is detected",
+        "Watcher is cleaned up when file is closed"
+      ]
+    },
+    {
+      "id": "3.2.5",
+      "category": "feature",
+      "title": "Create recent files management",
+      "description": "Implement recent files list with storage, clearing, and system integration",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/recentFiles.ts",
+        "electron/ipc/fileHandlers.ts",
+        "src/stores/recentFilesStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Recently opened files are tracked",
+        "Recent files appear in app menu",
+        "Recent files persist between sessions",
+        "Individual or all recent files can be cleared"
+      ]
+    },
+    {
+      "id": "3.2.6",
+      "category": "feature",
+      "title": "Implement drag and drop from desktop",
+      "description": "Handle file drag and drop from desktop with proper file path extraction and validation",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/home/FileDropZone.tsx",
+        "electron/ipc/fileHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "PDF files can be dragged from desktop",
+        "File path is properly extracted",
+        "Invalid files show error message",
+        "Multiple files can be dropped"
+      ]
+    },
+    {
+      "id": "3.2.7",
+      "category": "feature",
+      "title": "Create file association handler",
+      "description": "Handle PDF file association to open files from OS file manager or double-click",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/fileAssociation.ts",
+        "electron/main.ts",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "App registers as PDF handler on install",
+        "Double-click PDF opens in app",
+        "File path is passed to renderer on startup",
+        "Works on Windows, macOS, and Linux"
+      ]
+    },
+    {
+      "id": "3.2.8",
+      "category": "feature",
+      "title": "Implement auto-save functionality",
+      "description": "Create auto-save feature with configurable interval, dirty file tracking, and crash recovery",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/autoSave.ts",
+        "src/stores/settingsStore.ts",
+        "src/lib/electron/autoSave.ts"
+      ],
+      "acceptanceCriteria": [
+        "Auto-save interval is configurable",
+        "Dirty files are auto-saved to temp location",
+        "Crash recovery restores unsaved changes",
+        "Auto-save can be disabled per document"
+      ]
+    },
+    {
+      "id": "3.2.9",
+      "category": "feature",
+      "title": "Create backup and versioning system",
+      "description": "Implement automatic backup creation with configurable retention and version history",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/backup.ts",
+        "electron/ipc/fileHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "Backups are created before overwriting files",
+        "Backup retention period is configurable",
+        "Previous versions can be restored",
+        "Backup storage location is configurable"
+      ]
+    },
+    {
+      "id": "3.2.10",
+      "category": "feature",
+      "title": "Implement unsaved changes detection",
+      "description": "Track document changes and prompt user before closing with unsaved modifications",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/unsavedChanges.ts",
+        "src/hooks/useUnsavedChanges.ts"
+      ],
+      "acceptanceCriteria": [
+        "Unsaved changes are tracked",
+        "Window close prompts to save",
+        "App quit prompts for all unsaved documents",
+        "Window title shows unsaved indicator (*)"
+      ]
+    },
+    {
+      "id": "3.2.11",
+      "category": "feature",
+      "title": "Create file path display and management",
+      "description": "Display current file path in title bar and status bar with truncation for long paths",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/layout/Header.tsx",
+        "src/components/layout/StatusBar.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Current file path is shown in title bar",
+        "Full path is shown in status bar",
+        "Long paths are truncated with ellipsis",
+        "Click on path copies to clipboard"
+      ]
+    },
+    {
+      "id": "3.2.12",
+      "category": "feature",
+      "title": "Implement folder picker for batch operations",
+      "description": "Create folder picker dialog for batch operations like merging multiple PDFs",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/ipc/fileHandlers.ts",
+        "src/lib/electron/fileSystem.ts"
+      ],
+      "acceptanceCriteria": [
+        "Folder picker dialog opens",
+        "Selected folder path is returned",
+        "Folder contents can be listed",
+        "PDF files in folder can be filtered"
+      ]
+    },
+    {
+      "id": "3.2.13",
+      "category": "testing",
+      "title": "Create file system integration tests",
+      "description": "Write tests for file operations including open, save, watch, and recent files",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/electron/fileHandlers.test.ts",
+        "tests/electron/fileWatcher.test.ts",
+        "tests/electron/recentFiles.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "File open/save operations have tests",
+        "File watcher has tests",
+        "Recent files management has tests",
+        "Auto-save has tests"
+      ]
+    },
+    {
+      "id": "3.2.14",
+      "category": "docs",
+      "title": "Document file system integration",
+      "description": "Create documentation for native file system features and developer guide",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/electron/file-system.md"
+      ],
+      "acceptanceCriteria": [
+        "File operations are documented",
+        "Auto-save behavior is documented",
+        "File association setup is documented",
+        "Troubleshooting guide is included"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Native file dialogs work on all platforms",
+    "Files can be opened and saved directly to disk",
+    "External file changes are detected",
+    "Recent files are tracked and accessible",
+    "Unsaved changes prompt before close"
+  ],
+  "dependencies": [
+    "Sprint 1: Electron Setup & App Shell",
+    "npm install chokidar"
+  ],
+  "notes": [
+    "Use Node.js fs/promises for async file operations",
+    "chokidar is more reliable than fs.watch for file watching",
+    "File associations require installer configuration",
+    "macOS has different app lifecycle for file handling"
+  ]
+}

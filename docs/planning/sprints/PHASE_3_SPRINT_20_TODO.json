@@ -1,0 +1,247 @@
+{
+  "phase": 3,
+  "sprint": 20,
+  "quarter": "Q4",
+  "title": "Centralized Configuration",
+  "goal": "Implement centralized configuration management with JSON/YAML file support and remote config capabilities",
+  "milestone": "Configuration Management System",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 92,
+  "tasks": [
+    {
+      "id": "3.20.1",
+      "category": "infrastructure",
+      "title": "Design configuration file schema",
+      "description": "Create JSON Schema defining all configurable application settings, feature flags, security policies, and network settings",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "enterprise/config/config-schema.json",
+        "src/types/enterpriseConfig.ts"
+      ],
+      "acceptanceCriteria": [
+        "JSON Schema validates all configuration options",
+        "TypeScript types generated from schema",
+        "Schema includes defaults for all settings",
+        "Schema versioning system in place"
+      ]
+    },
+    {
+      "id": "3.20.2",
+      "category": "infrastructure",
+      "title": "Implement JSON configuration file parser",
+      "description": "Create parser for JSON configuration files with schema validation, default value merging, and error reporting",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/enterprise/configParser.ts",
+        "src/lib/enterprise/jsonConfigLoader.ts"
+      ],
+      "acceptanceCriteria": [
+        "JSON files parse with schema validation",
+        "Validation errors include line numbers",
+        "Default values merged for missing fields",
+        "Comments supported via JSON5 or JSONC"
+      ]
+    },
+    {
+      "id": "3.20.3",
+      "category": "infrastructure",
+      "title": "Implement YAML configuration file parser",
+      "description": "Create parser for YAML configuration files with schema validation, anchors/aliases support, and multi-document support",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/enterprise/yamlConfigLoader.ts"
+      ],
+      "acceptanceCriteria": [
+        "YAML files parse with schema validation",
+        "Anchors and aliases resolve correctly",
+        "Multi-document YAML handled",
+        "Clear error messages for invalid YAML"
+      ]
+    },
+    {
+      "id": "3.20.4",
+      "category": "infrastructure",
+      "title": "Create configuration file discovery system",
+      "description": "Implement discovery of configuration files from standard locations: /etc/paperflow/, ~/.config/paperflow/, app directory, and environment variable paths",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/enterprise/configDiscovery.ts"
+      ],
+      "acceptanceCriteria": [
+        "Searches standard OS-specific locations",
+        "Environment variable CONFIG_PATH honored",
+        "Command-line config path supported",
+        "Clear precedence order documented"
+      ]
+    },
+    {
+      "id": "3.20.5",
+      "category": "infrastructure",
+      "title": "Implement configuration hierarchy and merging",
+      "description": "Create system to merge configurations from multiple sources with defined precedence: defaults < file < env < GPO/MDM",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/configMerger.ts",
+        "src/lib/enterprise/configPrecedence.ts"
+      ],
+      "acceptanceCriteria": [
+        "Configurations merge in correct precedence order",
+        "Deep merging for nested objects",
+        "Array handling configurable (replace vs merge)",
+        "Merge conflicts logged with resolution"
+      ]
+    },
+    {
+      "id": "3.20.6",
+      "category": "infrastructure",
+      "title": "Create remote configuration endpoint support",
+      "description": "Implement fetching configuration from remote HTTP/HTTPS endpoints with authentication, caching, and offline fallback",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/remoteConfigLoader.ts",
+        "src/lib/enterprise/configCache.ts"
+      ],
+      "acceptanceCriteria": [
+        "HTTP/HTTPS endpoints supported",
+        "Bearer token and basic auth supported",
+        "Response cached with configurable TTL",
+        "Offline mode uses last cached config"
+      ]
+    },
+    {
+      "id": "3.20.7",
+      "category": "infrastructure",
+      "title": "Implement configuration refresh and hot reload",
+      "description": "Create system for automatic configuration refresh with file watchers and periodic remote polling",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/enterprise/configWatcher.ts",
+        "src/lib/enterprise/configRefresh.ts"
+      ],
+      "acceptanceCriteria": [
+        "File changes trigger config reload",
+        "Remote config polled at configurable interval",
+        "UI updates reflect config changes",
+        "Notifications shown for significant changes"
+      ]
+    },
+    {
+      "id": "3.20.8",
+      "category": "infrastructure",
+      "title": "Create configuration encryption support",
+      "description": "Implement encryption/decryption for sensitive configuration values using environment key or hardware keystore",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/enterprise/configEncryption.ts",
+        "src/lib/enterprise/secretsManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Sensitive fields identified by prefix or schema",
+        "AES-256-GCM encryption for secrets",
+        "Key stored in OS keychain/credential manager",
+        "Decryption happens at read time"
+      ]
+    },
+    {
+      "id": "3.20.9",
+      "category": "infrastructure",
+      "title": "Implement environment variable expansion",
+      "description": "Create system to expand environment variables in configuration values using ${VAR} and ${VAR:-default} syntax",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/enterprise/envExpansion.ts"
+      ],
+      "acceptanceCriteria": [
+        "${VAR} syntax expands to env value",
+        "${VAR:-default} provides fallback",
+        "Nested expansion supported",
+        "Undefined variables logged as warnings"
+      ]
+    },
+    {
+      "id": "3.20.10",
+      "category": "ui",
+      "title": "Create configuration management UI",
+      "description": "Build admin interface for viewing current configuration, source attribution, and export/import capabilities",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/enterprise/ConfigurationViewer.tsx",
+        "src/components/enterprise/ConfigSourceBadge.tsx",
+        "src/components/enterprise/ConfigExportDialog.tsx"
+      ],
+      "acceptanceCriteria": [
+        "All settings displayed with current values",
+        "Source attribution shows where each value came from",
+        "Export current config to JSON/YAML",
+        "Import configuration from file"
+      ]
+    },
+    {
+      "id": "3.20.11",
+      "category": "infrastructure",
+      "title": "Create configuration validation CLI tool",
+      "description": "Build command-line tool to validate configuration files against schema before deployment",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "cli/validate-config.ts",
+        "cli/config-schema-check.ts"
+      ],
+      "acceptanceCriteria": [
+        "CLI validates JSON and YAML files",
+        "Exit codes indicate validation status",
+        "Detailed error messages with line numbers",
+        "Can validate remote config endpoints"
+      ]
+    },
+    {
+      "id": "3.20.12",
+      "category": "testing",
+      "title": "Create configuration system test suite",
+      "description": "Write comprehensive tests for configuration loading, merging, validation, and hot reload functionality",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/enterprise/configParser.test.ts",
+        "tests/enterprise/configMerger.test.ts",
+        "tests/enterprise/remoteConfig.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "JSON and YAML parsing tests complete",
+        "Merge precedence tests cover all cases",
+        "Remote config tests use mock server",
+        "Hot reload tests verify UI updates",
+        "Coverage above 80%"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "JSON and YAML configuration files supported",
+    "Configuration merges from multiple sources correctly",
+    "Remote configuration endpoint works",
+    "Hot reload updates application without restart",
+    "Sensitive values encrypted at rest"
+  ],
+  "dependencies": [
+    "npm install yaml js-yaml ajv",
+    "Sprint 19 enterprise policy store in place",
+    "Settings store supports external override"
+  ],
+  "notes": [
+    "JSON5 or JSONC allows comments in JSON files",
+    "YAML preferred by many IT admins for readability",
+    "Remote config enables centralized management",
+    "Always validate config before applying changes"
+  ]
+}

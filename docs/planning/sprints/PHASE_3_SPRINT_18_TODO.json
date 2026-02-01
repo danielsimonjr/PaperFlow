@@ -1,0 +1,284 @@
+{
+  "phase": 3,
+  "sprint": 18,
+  "quarter": "Q3",
+  "title": "Cross-Platform Testing & Q3 Release",
+  "goal": "Comprehensive cross-platform testing, bug fixes, and Q3 release preparation",
+  "milestone": "Q3 Release - Cross-Platform Polish Complete",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 90,
+  "tasks": [
+    {
+      "id": "3.18.1",
+      "category": "testing",
+      "title": "Set up cross-platform CI/CD matrix",
+      "description": "Configure GitHub Actions matrix to build and test on Windows, macOS (Intel + Apple Silicon), and Linux distributions",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        ".github/workflows/cross-platform.yml"
+      ],
+      "acceptanceCriteria": [
+        "Matrix builds on Windows 10/11",
+        "Matrix builds on macOS 12/13/14",
+        "Matrix builds on Ubuntu 22.04/24.04",
+        "Tests run on all platforms",
+        "Artifacts are uploaded for each platform"
+      ]
+    },
+    {
+      "id": "3.18.2",
+      "category": "testing",
+      "title": "Create cross-platform E2E test suite",
+      "description": "Develop comprehensive E2E tests that verify core functionality works identically across all platforms",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "tests/e2e/cross-platform/core-features.spec.ts",
+        "tests/e2e/cross-platform/file-operations.spec.ts",
+        "tests/e2e/cross-platform/editing.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "Core features are tested on all platforms",
+        "File operations work identically",
+        "Editing features work identically",
+        "Tests account for platform differences"
+      ]
+    },
+    {
+      "id": "3.18.3",
+      "category": "testing",
+      "title": "Perform installer testing across platforms",
+      "description": "Test all installer formats (NSIS, MSI, MSIX, DMG, PKG, AppImage, deb, rpm, snap) on fresh systems",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/e2e/installers/windows.spec.ts",
+        "tests/e2e/installers/macos.spec.ts",
+        "tests/e2e/installers/linux.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "All Windows installers work correctly",
+        "All macOS installers work correctly",
+        "All Linux packages install correctly",
+        "Upgrades preserve user data",
+        "Uninstalls remove all files"
+      ]
+    },
+    {
+      "id": "3.18.4",
+      "category": "testing",
+      "title": "Test auto-update across platforms",
+      "description": "Verify auto-update functionality works correctly on all platforms including signature verification and delta updates",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/e2e/auto-update.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "Auto-update works on Windows",
+        "Auto-update works on macOS",
+        "Auto-update works on Linux AppImage",
+        "Signatures are verified",
+        "Delta updates reduce download size"
+      ]
+    },
+    {
+      "id": "3.18.5",
+      "category": "testing",
+      "title": "Perform visual regression testing",
+      "description": "Run visual regression tests comparing UI rendering across platforms to ensure consistent appearance",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/visual/cross-platform.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "UI looks correct on Windows",
+        "UI looks correct on macOS",
+        "UI looks correct on Linux",
+        "Platform-specific differences are acceptable",
+        "No unintended visual regressions"
+      ]
+    },
+    {
+      "id": "3.18.6",
+      "category": "testing",
+      "title": "Test platform-specific features",
+      "description": "Verify all platform-specific features work correctly including Touch Bar, Jump Lists, and taskbar integration",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/e2e/platform-features/macos.spec.ts",
+        "tests/e2e/platform-features/windows.spec.ts",
+        "tests/e2e/platform-features/linux.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "Touch Bar works on macOS",
+        "Jump Lists work on Windows",
+        "Taskbar features work on Windows",
+        "Linux launcher integration works"
+      ]
+    },
+    {
+      "id": "3.18.7",
+      "category": "testing",
+      "title": "Perform accessibility audit on all platforms",
+      "description": "Test accessibility features with screen readers on each platform (VoiceOver, Narrator, Orca)",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/accessibility/cross-platform.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "VoiceOver works on macOS",
+        "Narrator works on Windows",
+        "Orca works on Linux",
+        "Keyboard navigation works on all platforms",
+        "Color contrast meets WCAG standards"
+      ]
+    },
+    {
+      "id": "3.18.8",
+      "category": "bugfix",
+      "title": "Fix platform-specific bugs",
+      "description": "Address bugs discovered during cross-platform testing including rendering issues, keyboard shortcuts, and native integrations",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [],
+      "acceptanceCriteria": [
+        "All critical bugs are fixed",
+        "High-priority bugs are fixed",
+        "Platform-specific issues are resolved",
+        "No regressions introduced"
+      ]
+    },
+    {
+      "id": "3.18.9",
+      "category": "performance",
+      "title": "Optimize performance across platforms",
+      "description": "Profile and optimize performance on each platform to ensure consistent responsiveness and memory usage",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/performance/cross-platform.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "Startup time is under 3 seconds",
+        "PDF rendering is smooth on all platforms",
+        "Memory usage is within acceptable limits",
+        "No platform has significantly worse performance"
+      ]
+    },
+    {
+      "id": "3.18.10",
+      "category": "release",
+      "title": "Prepare release notes for Q3",
+      "description": "Write comprehensive release notes documenting all Q3 features, improvements, bug fixes, and known issues",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "CHANGELOG.md",
+        "docs/releases/v1.3.0.md"
+      ],
+      "acceptanceCriteria": [
+        "All new features are documented",
+        "Bug fixes are listed",
+        "Breaking changes are highlighted",
+        "Known issues are documented"
+      ]
+    },
+    {
+      "id": "3.18.11",
+      "category": "release",
+      "title": "Create release candidates",
+      "description": "Build and publish release candidates for all platforms for final testing and community feedback",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        ".github/workflows/release-candidate.yml"
+      ],
+      "acceptanceCriteria": [
+        "RC builds are created for all platforms",
+        "RCs are published to pre-release channel",
+        "Auto-update points to RC channel",
+        "Community feedback is collected"
+      ]
+    },
+    {
+      "id": "3.18.12",
+      "category": "release",
+      "title": "Publish Q3 release",
+      "description": "Build and publish final Q3 release to all distribution channels including GitHub, Microsoft Store, and package repositories",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        ".github/workflows/release.yml"
+      ],
+      "acceptanceCriteria": [
+        "Release is tagged in Git",
+        "Installers are uploaded to GitHub Releases",
+        "MSIX is submitted to Microsoft Store",
+        "Packages are uploaded to repositories",
+        "Auto-update serves new version"
+      ]
+    },
+    {
+      "id": "3.18.13",
+      "category": "documentation",
+      "title": "Update platform documentation",
+      "description": "Update all platform-specific documentation with Q3 changes including installation guides and feature documentation",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/installation/windows.md",
+        "docs/installation/macos.md",
+        "docs/installation/linux.md"
+      ],
+      "acceptanceCriteria": [
+        "Installation guides are current",
+        "Platform features are documented",
+        "Screenshots are updated",
+        "Troubleshooting is comprehensive"
+      ]
+    },
+    {
+      "id": "3.18.14",
+      "category": "release",
+      "title": "Monitor release metrics",
+      "description": "Set up monitoring for release metrics including download counts, crash reports, and user feedback across platforms",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/monitoring/releaseMetrics.ts"
+      ],
+      "acceptanceCriteria": [
+        "Download counts are tracked per platform",
+        "Crash reports are monitored",
+        "User feedback is collected",
+        "Alerts are set for critical issues"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "All installers work on fresh systems",
+    "Auto-update works on all platforms",
+    "No critical bugs remain",
+    "Performance is consistent across platforms",
+    "Accessibility works on all platforms",
+    "Q3 release is published to all channels"
+  ],
+  "dependencies": [
+    "All Sprint 13-17 tasks completed",
+    "Access to all target platforms for testing",
+    "Sentry for crash reporting",
+    "Release infrastructure configured"
+  ],
+  "notes": [
+    "Focus on stability over new features this sprint",
+    "Coordinate release timing across all channels",
+    "Have rollback plan ready for critical issues",
+    "Monitor closely for first 48 hours after release"
+  ]
+}

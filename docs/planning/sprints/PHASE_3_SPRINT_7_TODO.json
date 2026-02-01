@@ -1,0 +1,305 @@
+{
+  "phase": 3,
+  "sprint": 7,
+  "quarter": "Q2",
+  "title": "Offline-First Architecture",
+  "goal": "Implement comprehensive offline capabilities with enhanced service worker and local data sync",
+  "milestone": "Full Offline Support",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 96,
+  "tasks": [
+    {
+      "id": "3.7.1",
+      "category": "infrastructure",
+      "title": "Create enhanced service worker configuration",
+      "description": "Configure Workbox with advanced caching strategies including stale-while-revalidate for assets, cache-first for PDFs, and network-first for API calls",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/sw.ts",
+        "src/lib/offline/serviceWorkerConfig.ts",
+        "vite.config.ts"
+      ],
+      "acceptanceCriteria": [
+        "Service worker registers successfully",
+        "Caching strategies are configured per resource type",
+        "Cache versioning is implemented",
+        "Cache cleanup removes stale entries"
+      ]
+    },
+    {
+      "id": "3.7.2",
+      "category": "infrastructure",
+      "title": "Implement offline document storage",
+      "description": "Create IndexedDB schema for storing complete PDF documents with metadata, annotations, and edit history for offline access",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/offline/offlineStorage.ts",
+        "src/lib/storage/indexedDB.ts",
+        "src/types/offline.ts"
+      ],
+      "acceptanceCriteria": [
+        "PDFs are stored in IndexedDB with metadata",
+        "Annotations are persisted offline",
+        "Edit history is preserved",
+        "Storage quota is managed appropriately"
+      ]
+    },
+    {
+      "id": "3.7.3",
+      "category": "infrastructure",
+      "title": "Create offline queue manager",
+      "description": "Build a queue system for operations that require network (cloud sync, sharing) with automatic retry when connection is restored",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/offline/offlineQueue.ts",
+        "src/lib/offline/queueProcessor.ts"
+      ],
+      "acceptanceCriteria": [
+        "Operations are queued when offline",
+        "Queue persists across sessions",
+        "Automatic retry on reconnection",
+        "Conflict resolution is handled"
+      ]
+    },
+    {
+      "id": "3.7.4",
+      "category": "infrastructure",
+      "title": "Implement background sync API integration",
+      "description": "Use Background Sync API for reliable data synchronization when connection is available, with fallback for unsupported browsers",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/offline/backgroundSync.ts",
+        "src/sw.ts"
+      ],
+      "acceptanceCriteria": [
+        "Background Sync API is utilized when available",
+        "Fallback polling mechanism works",
+        "Sync events are processed correctly",
+        "Failed syncs are retried with backoff"
+      ]
+    },
+    {
+      "id": "3.7.5",
+      "category": "infrastructure",
+      "title": "Create offline-aware Zustand store",
+      "description": "Build offlineStore with connection status, sync state, pending operations count, and last sync timestamp",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/stores/offlineStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Connection status is tracked in real-time",
+        "Sync state reflects current operation",
+        "Pending operations count is accurate",
+        "Last sync timestamp is updated"
+      ]
+    },
+    {
+      "id": "3.7.6",
+      "category": "electron",
+      "title": "Implement Electron offline detection",
+      "description": "Create Electron main process handlers for network status detection with more reliable connectivity checks than navigator.onLine",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/main/networkStatus.ts",
+        "electron/preload/networkPreload.ts"
+      ],
+      "acceptanceCriteria": [
+        "Network status is detected accurately",
+        "DNS and HTTP connectivity checks work",
+        "Status changes trigger IPC events",
+        "Preload exposes status to renderer"
+      ]
+    },
+    {
+      "id": "3.7.7",
+      "category": "infrastructure",
+      "title": "Build document sync engine",
+      "description": "Create sync engine that handles bidirectional sync between local storage and cloud, with conflict detection and resolution strategies",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/offline/syncEngine.ts",
+        "src/lib/offline/conflictResolver.ts"
+      ],
+      "acceptanceCriteria": [
+        "Documents sync bidirectionally",
+        "Conflicts are detected automatically",
+        "User can choose resolution strategy",
+        "Sync progress is reported"
+      ]
+    },
+    {
+      "id": "3.7.8",
+      "category": "infrastructure",
+      "title": "Implement delta sync for large documents",
+      "description": "Create efficient delta sync that only transfers changed portions of documents rather than full files",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/offline/deltaSync.ts",
+        "src/lib/offline/patchGenerator.ts"
+      ],
+      "acceptanceCriteria": [
+        "Only changed portions are transferred",
+        "Patch generation is efficient",
+        "Patches apply correctly",
+        "Bandwidth usage is significantly reduced"
+      ]
+    },
+    {
+      "id": "3.7.9",
+      "category": "ui",
+      "title": "Create offline indicator component",
+      "description": "Build status bar indicator showing connection status, sync progress, and pending operations with interactive details panel",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/offline/OfflineIndicator.tsx",
+        "src/components/offline/SyncStatusPanel.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Connection status is clearly visible",
+        "Sync progress shows percentage",
+        "Pending operations are listed",
+        "Click opens detailed panel"
+      ]
+    },
+    {
+      "id": "3.7.10",
+      "category": "ui",
+      "title": "Build offline mode banner",
+      "description": "Create dismissible banner that appears when app enters offline mode, explaining available features and limitations",
+      "status": "pending",
+      "estimatedHours": 3,
+      "files": [
+        "src/components/offline/OfflineBanner.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Banner appears when going offline",
+        "Available features are listed",
+        "Limitations are explained",
+        "Banner can be dismissed"
+      ]
+    },
+    {
+      "id": "3.7.11",
+      "category": "ui",
+      "title": "Create sync conflict resolution dialog",
+      "description": "Build dialog for resolving sync conflicts with side-by-side comparison, version selection, and merge options",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/offline/ConflictDialog.tsx",
+        "src/components/offline/VersionCompare.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Conflicts are presented clearly",
+        "Side-by-side comparison works",
+        "User can select which version to keep",
+        "Merge option combines changes"
+      ]
+    },
+    {
+      "id": "3.7.12",
+      "category": "infrastructure",
+      "title": "Implement selective offline availability",
+      "description": "Allow users to mark specific documents as 'available offline' and manage offline storage space",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/lib/offline/offlineAvailability.ts",
+        "src/components/offline/OfflineSettings.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Documents can be marked for offline access",
+        "Storage space is displayed",
+        "Offline documents can be removed",
+        "Priority system for limited storage"
+      ]
+    },
+    {
+      "id": "3.7.13",
+      "category": "infrastructure",
+      "title": "Create offline-first data hooks",
+      "description": "Build React hooks that automatically handle offline/online data fetching with caching and sync",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/hooks/useOfflineData.ts",
+        "src/hooks/useOfflineSync.ts",
+        "src/hooks/useConnectionStatus.ts"
+      ],
+      "acceptanceCriteria": [
+        "Hooks return cached data when offline",
+        "Data syncs automatically when online",
+        "Loading states are managed",
+        "Error handling is implemented"
+      ]
+    },
+    {
+      "id": "3.7.14",
+      "category": "testing",
+      "title": "Create offline functionality tests",
+      "description": "Write comprehensive tests for offline storage, sync, conflict resolution, and service worker functionality",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/unit/lib/offline/offlineStorage.test.ts",
+        "tests/unit/lib/offline/syncEngine.test.ts",
+        "tests/unit/lib/offline/conflictResolver.test.ts",
+        "tests/integration/offline/offlineWorkflow.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Offline storage tests pass",
+        "Sync engine tests pass",
+        "Conflict resolution tests pass",
+        "Integration tests simulate offline scenarios"
+      ]
+    },
+    {
+      "id": "3.7.15",
+      "category": "documentation",
+      "title": "Document offline architecture",
+      "description": "Create technical documentation for offline-first architecture including data flow, sync strategies, and troubleshooting",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "docs/architecture/offline-first.md"
+      ],
+      "acceptanceCriteria": [
+        "Data flow is documented",
+        "Sync strategies are explained",
+        "Troubleshooting guide exists",
+        "API documentation is complete"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "App functions fully when offline",
+    "Documents sync reliably when connection restored",
+    "Conflicts are detected and resolved properly",
+    "Users can control offline availability",
+    "Storage is managed efficiently"
+  ],
+  "dependencies": [
+    "workbox-core",
+    "workbox-precaching",
+    "workbox-routing",
+    "workbox-strategies",
+    "idb-keyval"
+  ],
+  "notes": [
+    "Service worker must be updated carefully to avoid breaking existing installations",
+    "IndexedDB storage limits vary by browser",
+    "Background Sync is not available in all browsers",
+    "Conflict resolution should favor user choice over automatic decisions"
+  ]
+}

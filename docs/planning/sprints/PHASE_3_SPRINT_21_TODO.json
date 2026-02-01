@@ -1,0 +1,250 @@
+{
+  "phase": 3,
+  "sprint": 21,
+  "quarter": "Q4",
+  "title": "Offline License Validation",
+  "goal": "Implement comprehensive license key validation system with offline support and hardware binding",
+  "milestone": "Enterprise License System",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 98,
+  "tasks": [
+    {
+      "id": "3.21.1",
+      "category": "infrastructure",
+      "title": "Design license key format and structure",
+      "description": "Design license key format with encoded product info, edition, expiry, seat count, and cryptographic signature",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/license/licenseFormat.ts",
+        "src/types/license.ts"
+      ],
+      "acceptanceCriteria": [
+        "License key format defined and documented",
+        "Keys are human-readable (XXXXX-XXXXX format)",
+        "Embedded data includes edition and expiry",
+        "Checksum validates key integrity"
+      ]
+    },
+    {
+      "id": "3.21.2",
+      "category": "infrastructure",
+      "title": "Implement license key generation system",
+      "description": "Create server-side license key generator with RSA signing, unique serial numbers, and customer metadata",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "server/license/keyGenerator.ts",
+        "server/license/serialManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Keys generated with RSA-2048 signature",
+        "Serial numbers globally unique",
+        "Customer metadata embedded in key",
+        "Batch generation supported"
+      ]
+    },
+    {
+      "id": "3.21.3",
+      "category": "infrastructure",
+      "title": "Create offline license validation module",
+      "description": "Implement client-side license validation with RSA signature verification using embedded public key",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/license/licenseValidator.ts",
+        "src/lib/license/signatureVerifier.ts"
+      ],
+      "acceptanceCriteria": [
+        "RSA signature verification works offline",
+        "Public key embedded in application",
+        "Expiry date validated against system time",
+        "Tampering detection for modified keys"
+      ]
+    },
+    {
+      "id": "3.21.4",
+      "category": "infrastructure",
+      "title": "Implement hardware fingerprinting",
+      "description": "Create hardware fingerprint generator using CPU ID, disk serial, MAC address, and motherboard ID with fuzzy matching",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/license/hardwareFingerprint.ts",
+        "src/lib/license/fingerPrintMatcher.ts"
+      ],
+      "acceptanceCriteria": [
+        "Multiple hardware identifiers collected",
+        "Fingerprint stable across minor changes",
+        "Fuzzy matching allows some hardware changes",
+        "Works on Windows, macOS, and Linux"
+      ]
+    },
+    {
+      "id": "3.21.5",
+      "category": "infrastructure",
+      "title": "Create license binding system",
+      "description": "Implement license binding to hardware fingerprint with activation/deactivation flow and transfer support",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/license/licenseBinding.ts",
+        "src/lib/license/activationManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "License binds to hardware on first activation",
+        "Bound license only works on registered hardware",
+        "Deactivation releases binding for transfer",
+        "Grace period for hardware changes"
+      ]
+    },
+    {
+      "id": "3.21.6",
+      "category": "infrastructure",
+      "title": "Implement license storage and caching",
+      "description": "Create secure storage for license data with encryption, integrity verification, and offline cache",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/license/licenseStorage.ts",
+        "src/lib/license/licenseCache.ts"
+      ],
+      "acceptanceCriteria": [
+        "License stored encrypted in OS keychain",
+        "Integrity hash prevents tampering",
+        "Offline cache enables validation without network",
+        "Cache expiry forces periodic online check"
+      ]
+    },
+    {
+      "id": "3.21.7",
+      "category": "infrastructure",
+      "title": "Create license server API",
+      "description": "Build server API for license activation, deactivation, validation, and status queries",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "server/license/activationApi.ts",
+        "server/license/validationApi.ts",
+        "server/license/statusApi.ts"
+      ],
+      "acceptanceCriteria": [
+        "POST /activate binds license to hardware",
+        "POST /deactivate releases binding",
+        "GET /validate checks license status",
+        "Rate limiting prevents abuse"
+      ]
+    },
+    {
+      "id": "3.21.8",
+      "category": "infrastructure",
+      "title": "Implement feature gating based on license",
+      "description": "Create feature flag system that enables/disables features based on license edition and add-ons",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/license/featureGating.ts",
+        "src/stores/licenseStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Features mapped to license editions",
+        "Add-on licenses enable specific features",
+        "UI hides or disables unlicensed features",
+        "Upgrade prompts for locked features"
+      ]
+    },
+    {
+      "id": "3.21.9",
+      "category": "ui",
+      "title": "Create license activation UI",
+      "description": "Build license entry dialog with key input, activation status, and error handling",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/license/LicenseActivationDialog.tsx",
+        "src/components/license/LicenseKeyInput.tsx"
+      ],
+      "acceptanceCriteria": [
+        "License key input with formatting",
+        "Activation progress indicator",
+        "Clear error messages for failures",
+        "Success confirmation with license details"
+      ]
+    },
+    {
+      "id": "3.21.10",
+      "category": "ui",
+      "title": "Create license status and management UI",
+      "description": "Build license status panel showing current license, expiry, features, and deactivation option",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/license/LicenseStatusPanel.tsx",
+        "src/components/license/FeatureList.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Current license info displayed",
+        "Expiry date with countdown for near-expiry",
+        "List of enabled features shown",
+        "Deactivation button with confirmation"
+      ]
+    },
+    {
+      "id": "3.21.11",
+      "category": "infrastructure",
+      "title": "Implement grace period and expiry handling",
+      "description": "Create system for handling license expiry with grace period, warnings, and graceful degradation",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/license/expiryHandler.ts",
+        "src/lib/license/gracePeriod.ts"
+      ],
+      "acceptanceCriteria": [
+        "Warnings start 30 days before expiry",
+        "7-day grace period after expiry",
+        "Graceful degradation to free edition",
+        "Clear messaging about status"
+      ]
+    },
+    {
+      "id": "3.21.12",
+      "category": "testing",
+      "title": "Create license system test suite",
+      "description": "Write comprehensive tests for license validation, binding, activation, and feature gating",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/license/licenseValidator.test.ts",
+        "tests/license/hardwareFingerprint.test.ts",
+        "tests/license/featureGating.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Validation tests cover all key formats",
+        "Fingerprint tests verify stability",
+        "Feature gating tests all editions",
+        "Mock server for activation tests",
+        "Coverage above 80%"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "License keys validate correctly offline",
+    "Hardware binding prevents unauthorized sharing",
+    "Activation/deactivation flow works smoothly",
+    "Features gate based on license edition",
+    "Expiry handling is user-friendly"
+  ],
+  "dependencies": [
+    "npm install node-rsa node-machine-id",
+    "License server infrastructure available",
+    "OS keychain access configured"
+  ],
+  "notes": [
+    "RSA-2048 provides strong offline validation",
+    "Hardware fingerprint should tolerate minor changes",
+    "Grace periods prevent frustrating lockouts",
+    "Consider volume license keys for enterprises"
+  ]
+}

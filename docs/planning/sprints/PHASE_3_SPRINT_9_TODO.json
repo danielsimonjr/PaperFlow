@@ -1,0 +1,303 @@
+{
+  "phase": 3,
+  "sprint": 9,
+  "quarter": "Q2",
+  "title": "Native Batch Processing",
+  "goal": "Implement high-performance batch PDF operations using worker threads and native processing",
+  "milestone": "Enterprise Batch Processing",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 92,
+  "tasks": [
+    {
+      "id": "3.9.1",
+      "category": "electron",
+      "title": "Create worker thread pool manager",
+      "description": "Implement Node.js worker threads pool for parallel PDF processing with configurable pool size and task distribution",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "electron/workers/workerPool.ts",
+        "electron/workers/workerManager.ts",
+        "electron/main/batchConfig.ts"
+      ],
+      "acceptanceCriteria": [
+        "Worker pool initializes with configurable size",
+        "Tasks are distributed across workers",
+        "Workers are recycled efficiently",
+        "Resource limits are enforced"
+      ]
+    },
+    {
+      "id": "3.9.2",
+      "category": "electron",
+      "title": "Implement PDF worker thread",
+      "description": "Create dedicated worker for PDF operations (compress, convert, merge, split) using pdf-lib in Node.js context",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/workers/pdfWorker.ts",
+        "electron/workers/pdfOperations.ts"
+      ],
+      "acceptanceCriteria": [
+        "Worker handles PDF compression",
+        "Worker handles format conversion",
+        "Worker handles merge operations",
+        "Worker handles split operations"
+      ]
+    },
+    {
+      "id": "3.9.3",
+      "category": "infrastructure",
+      "title": "Create batch job queue system",
+      "description": "Build priority queue for batch jobs with persistence, status tracking, and pause/resume capabilities",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/batch/jobQueue.ts",
+        "src/lib/batch/jobPersistence.ts",
+        "src/types/batch.ts"
+      ],
+      "acceptanceCriteria": [
+        "Jobs are queued with priority",
+        "Queue persists across restarts",
+        "Jobs can be paused/resumed",
+        "Status is tracked accurately"
+      ]
+    },
+    {
+      "id": "3.9.4",
+      "category": "infrastructure",
+      "title": "Implement batch processing store",
+      "description": "Create Zustand store for batch operations with jobs, progress, errors, and statistics",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/stores/batchStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Jobs are tracked in store",
+        "Progress updates are real-time",
+        "Errors are captured",
+        "Statistics are calculated"
+      ]
+    },
+    {
+      "id": "3.9.5",
+      "category": "ui",
+      "title": "Create batch processing wizard",
+      "description": "Build multi-step wizard for configuring batch operations including file selection, operation type, settings, and output options",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/batch/BatchWizard.tsx",
+        "src/components/batch/FileSelector.tsx",
+        "src/components/batch/OperationConfig.tsx",
+        "src/components/batch/OutputSettings.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Multi-step navigation works",
+        "Files can be selected and previewed",
+        "Operations are configurable",
+        "Output settings are complete"
+      ]
+    },
+    {
+      "id": "3.9.6",
+      "category": "ui",
+      "title": "Build batch progress dashboard",
+      "description": "Create real-time dashboard showing batch job progress with per-file status, ETA, and resource usage",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/batch/BatchDashboard.tsx",
+        "src/components/batch/JobProgress.tsx",
+        "src/components/batch/ResourceMonitor.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Overall progress is shown",
+        "Per-file status is visible",
+        "ETA is calculated",
+        "Resource usage is displayed"
+      ]
+    },
+    {
+      "id": "3.9.7",
+      "category": "infrastructure",
+      "title": "Implement batch compression operation",
+      "description": "Create batch compression with configurable quality levels, image optimization, and font subsetting",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/batch/operations/batchCompress.ts"
+      ],
+      "acceptanceCriteria": [
+        "Multiple files compress in parallel",
+        "Quality levels are respected",
+        "Images are optimized",
+        "Fonts are subsetted"
+      ]
+    },
+    {
+      "id": "3.9.8",
+      "category": "infrastructure",
+      "title": "Implement batch merge operation",
+      "description": "Create batch merge supporting multiple merge strategies (append, interleave, by bookmark) with configurable output",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/batch/operations/batchMerge.ts"
+      ],
+      "acceptanceCriteria": [
+        "Append merge works",
+        "Interleave merge works",
+        "Bookmark-based merge works",
+        "Output naming is configurable"
+      ]
+    },
+    {
+      "id": "3.9.9",
+      "category": "infrastructure",
+      "title": "Implement batch split operation",
+      "description": "Create batch split with options for split by page count, file size, bookmarks, or blank pages",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/batch/operations/batchSplit.ts"
+      ],
+      "acceptanceCriteria": [
+        "Split by page count works",
+        "Split by file size works",
+        "Split by bookmarks works",
+        "Split at blank pages works"
+      ]
+    },
+    {
+      "id": "3.9.10",
+      "category": "infrastructure",
+      "title": "Implement batch watermark operation",
+      "description": "Create batch watermark application with text or image watermarks, position options, and page selection",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/batch/operations/batchWatermark.ts"
+      ],
+      "acceptanceCriteria": [
+        "Text watermarks are applied",
+        "Image watermarks are supported",
+        "Position is configurable",
+        "Page selection works"
+      ]
+    },
+    {
+      "id": "3.9.11",
+      "category": "infrastructure",
+      "title": "Implement batch OCR operation",
+      "description": "Create batch OCR processing with Tesseract.js workers, language selection, and searchable PDF output",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/batch/operations/batchOCR.ts",
+        "electron/workers/ocrWorker.ts"
+      ],
+      "acceptanceCriteria": [
+        "OCR runs on multiple files",
+        "Language selection works",
+        "Searchable PDFs are created",
+        "Accuracy is acceptable"
+      ]
+    },
+    {
+      "id": "3.9.12",
+      "category": "infrastructure",
+      "title": "Create batch error handling system",
+      "description": "Build comprehensive error handling for batch operations with retry logic, skip options, and detailed error reports",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/lib/batch/errorHandler.ts",
+        "src/lib/batch/errorReporter.ts"
+      ],
+      "acceptanceCriteria": [
+        "Errors are caught and logged",
+        "Retry logic works",
+        "Skip option continues batch",
+        "Error report is generated"
+      ]
+    },
+    {
+      "id": "3.9.13",
+      "category": "ui",
+      "title": "Build batch results summary",
+      "description": "Create summary view after batch completion showing successful operations, failures, and output file locations",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/components/batch/BatchSummary.tsx",
+        "src/components/batch/ResultsList.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Success count is shown",
+        "Failures are listed",
+        "Output locations are linked",
+        "Export summary option exists"
+      ]
+    },
+    {
+      "id": "3.9.14",
+      "category": "infrastructure",
+      "title": "Implement batch templates",
+      "description": "Allow users to save and reuse batch operation configurations as templates",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/lib/batch/templates.ts",
+        "src/components/batch/TemplateManager.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Templates can be saved",
+        "Templates can be loaded",
+        "Templates can be edited",
+        "Default templates exist"
+      ]
+    },
+    {
+      "id": "3.9.15",
+      "category": "testing",
+      "title": "Create batch processing tests",
+      "description": "Write comprehensive tests for batch operations, worker pool, and error handling",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/batch/jobQueue.test.ts",
+        "tests/unit/lib/batch/operations.test.ts",
+        "tests/integration/batch/batchWorkflow.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Job queue tests pass",
+        "Operation tests pass",
+        "Worker pool tests pass",
+        "Integration tests cover workflows"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Batch operations process 100+ files efficiently",
+    "Worker threads utilize multiple CPU cores",
+    "Progress reporting is accurate and real-time",
+    "Errors are handled gracefully without stopping batch",
+    "Templates save time for repeated operations"
+  ],
+  "dependencies": [
+    "worker_threads (Node.js built-in)",
+    "pdf-lib",
+    "tesseract.js",
+    "sharp"
+  ],
+  "notes": [
+    "Worker threads share memory with main thread via SharedArrayBuffer",
+    "CPU-bound operations should not block main Electron process",
+    "Memory usage must be monitored for large batches",
+    "Consider implementing batch scheduling for off-hours processing"
+  ]
+}

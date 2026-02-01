@@ -1,0 +1,320 @@
+{
+  "phase": 3,
+  "sprint": 5,
+  "quarter": "Q1",
+  "title": "Native Menus & Shortcuts",
+  "goal": "Implement native application menus and keyboard shortcuts for desktop experience",
+  "milestone": "Native UI Integration",
+  "priority": "MEDIUM",
+  "status": "pending",
+  "totalEstimatedHours": 84,
+  "tasks": [
+    {
+      "id": "3.5.1",
+      "category": "feature",
+      "title": "Create application menu structure",
+      "description": "Implement native menu bar with File, Edit, View, Document, Window, and Help menus",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/menu.ts",
+        "electron/menuTemplate.ts"
+      ],
+      "acceptanceCriteria": [
+        "Menu bar appears on all platforms",
+        "Standard menus (File, Edit, View, Help) are present",
+        "Document-specific menu is added",
+        "Menu respects platform conventions"
+      ]
+    },
+    {
+      "id": "3.5.2",
+      "category": "feature",
+      "title": "Implement File menu items",
+      "description": "Create File menu with New, Open, Open Recent, Save, Save As, Print, and Exit",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/menu.ts",
+        "electron/ipc/menuHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "New Window creates new window",
+        "Open shows file dialog",
+        "Open Recent shows submenu",
+        "Save/Save As work correctly",
+        "Print opens print dialog",
+        "Exit quits app with save prompt"
+      ]
+    },
+    {
+      "id": "3.5.3",
+      "category": "feature",
+      "title": "Implement Edit menu items",
+      "description": "Create Edit menu with Undo, Redo, Cut, Copy, Paste, Select All, and Find",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/menu.ts"
+      ],
+      "acceptanceCriteria": [
+        "Undo/Redo work with document history",
+        "Cut/Copy/Paste use system clipboard",
+        "Select All selects document content",
+        "Find opens search panel"
+      ]
+    },
+    {
+      "id": "3.5.4",
+      "category": "feature",
+      "title": "Implement View menu items",
+      "description": "Create View menu with zoom controls, view modes, toolbar toggle, and full screen",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/menu.ts",
+        "electron/ipc/menuHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "Zoom In/Out/Reset work correctly",
+        "Fit to Width/Page options work",
+        "Single/Continuous view toggle works",
+        "Toggle Toolbar hides/shows toolbar",
+        "Full Screen toggles full screen mode"
+      ]
+    },
+    {
+      "id": "3.5.5",
+      "category": "feature",
+      "title": "Implement Document menu items",
+      "description": "Create Document menu with page operations, annotations, and document info",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/menu.ts",
+        "electron/ipc/menuHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "Rotate Page options work",
+        "Insert/Delete Page options work",
+        "Go to Page opens dialog",
+        "Document Properties shows info",
+        "Add Annotation submenu works"
+      ]
+    },
+    {
+      "id": "3.5.6",
+      "category": "feature",
+      "title": "Implement Window menu items",
+      "description": "Create Window menu with minimize, zoom, window list, and bring all to front",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/menu.ts"
+      ],
+      "acceptanceCriteria": [
+        "Minimize minimizes window",
+        "Zoom maximizes window",
+        "Open windows are listed",
+        "Bring All to Front works (macOS)"
+      ]
+    },
+    {
+      "id": "3.5.7",
+      "category": "feature",
+      "title": "Implement Help menu items",
+      "description": "Create Help menu with documentation, keyboard shortcuts, check for updates, and about",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/menu.ts",
+        "src/components/help/KeyboardShortcutsDialog.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Documentation opens in browser",
+        "Keyboard Shortcuts shows dialog",
+        "Check for Updates triggers update check",
+        "About shows version and credits"
+      ]
+    },
+    {
+      "id": "3.5.8",
+      "category": "feature",
+      "title": "Create macOS application menu",
+      "description": "Implement macOS-specific application menu with About, Preferences, Services, Hide, and Quit",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/menu.ts"
+      ],
+      "acceptanceCriteria": [
+        "App menu uses app name",
+        "About opens about dialog",
+        "Preferences opens settings",
+        "Services submenu is present",
+        "Hide/Show/Quit work correctly"
+      ]
+    },
+    {
+      "id": "3.5.9",
+      "category": "feature",
+      "title": "Implement context menu for document",
+      "description": "Create right-click context menu for document with relevant actions",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/contextMenu.ts",
+        "src/components/viewer/PDFViewer.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Right-click shows context menu",
+        "Menu shows relevant actions for click location",
+        "Copy text when text selected",
+        "Add annotation options available",
+        "Zoom options available"
+      ]
+    },
+    {
+      "id": "3.5.10",
+      "category": "feature",
+      "title": "Create context menu for annotations",
+      "description": "Implement context menu for annotations with edit, delete, and properties options",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/contextMenu.ts",
+        "src/components/annotations/AnnotationLayer.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Right-click on annotation shows menu",
+        "Edit option opens annotation editor",
+        "Delete option removes annotation",
+        "Properties shows annotation details"
+      ]
+    },
+    {
+      "id": "3.5.11",
+      "category": "feature",
+      "title": "Implement global keyboard shortcuts",
+      "description": "Register global keyboard shortcuts that work even when app is not focused",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/shortcuts.ts",
+        "electron/main.ts"
+      ],
+      "acceptanceCriteria": [
+        "Global shortcut brings app to front",
+        "Global shortcut for quick open is available",
+        "Shortcuts are configurable",
+        "Conflicts with other apps are handled"
+      ]
+    },
+    {
+      "id": "3.5.12",
+      "category": "feature",
+      "title": "Create accelerator keys for menus",
+      "description": "Add keyboard accelerators to all menu items following platform conventions",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/menu.ts"
+      ],
+      "acceptanceCriteria": [
+        "All menu items have accelerators",
+        "Accelerators use Cmd on macOS, Ctrl on Windows",
+        "Standard shortcuts are consistent",
+        "No conflicting shortcuts"
+      ]
+    },
+    {
+      "id": "3.5.13",
+      "category": "feature",
+      "title": "Implement keyboard shortcut customization",
+      "description": "Allow users to customize keyboard shortcuts through settings",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/settings/ShortcutSettings.tsx",
+        "electron/shortcuts.ts",
+        "src/stores/shortcutsStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Shortcuts can be viewed in settings",
+        "Shortcuts can be customized",
+        "Conflicts are detected and warned",
+        "Reset to defaults is available"
+      ]
+    },
+    {
+      "id": "3.5.14",
+      "category": "feature",
+      "title": "Create dynamic menu updates",
+      "description": "Update menu items based on document state (enable/disable, checkmarks)",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/menu.ts",
+        "electron/ipc/menuHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "Save is disabled when no changes",
+        "Undo/Redo reflect history state",
+        "View mode shows checkmark",
+        "Zoom shows current level"
+      ]
+    },
+    {
+      "id": "3.5.15",
+      "category": "testing",
+      "title": "Create menu and shortcut tests",
+      "description": "Write tests for menu functionality and keyboard shortcuts",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/electron/menu.test.ts",
+        "tests/electron/shortcuts.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Menu item triggers have tests",
+        "Keyboard shortcuts have tests",
+        "Dynamic updates have tests",
+        "Platform-specific behavior is tested"
+      ]
+    },
+    {
+      "id": "3.5.16",
+      "category": "docs",
+      "title": "Document keyboard shortcuts",
+      "description": "Create comprehensive keyboard shortcuts documentation",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/keyboard-shortcuts.md"
+      ],
+      "acceptanceCriteria": [
+        "All shortcuts are documented",
+        "Platform differences are noted",
+        "Customization is documented",
+        "In-app help references documentation"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Native menus work on all platforms",
+    "Menu items trigger correct actions",
+    "Keyboard shortcuts follow platform conventions",
+    "Context menus provide relevant options",
+    "Shortcuts can be customized"
+  ],
+  "dependencies": [
+    "Sprint 1: Electron Setup & App Shell",
+    "Sprint 2: Native File System Integration"
+  ],
+  "notes": [
+    "macOS has specific menu bar requirements",
+    "Windows and Linux share similar menu patterns",
+    "Electron's Menu module handles platform differences",
+    "Global shortcuts require careful conflict handling"
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "phase": 3,
+  "sprint": 14,
+  "quarter": "Q3",
+  "title": "macOS Bundle & Notarization",
+  "goal": "Create signed and notarized macOS application bundle with DMG installer",
+  "milestone": "macOS Distribution Ready",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 88,
+  "tasks": [
+    {
+      "id": "3.14.1",
+      "category": "infrastructure",
+      "title": "Configure electron-builder for macOS",
+      "description": "Set up electron-builder configuration for macOS with DMG and PKG targets, universal binary support (Intel + Apple Silicon), and app bundle metadata",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "package.json",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "electron-builder is configured for macOS targets",
+        "DMG and PKG targets are defined",
+        "Universal binary (x64 + arm64) is enabled",
+        "App bundle metadata is correct"
+      ]
+    },
+    {
+      "id": "3.14.2",
+      "category": "infrastructure",
+      "title": "Create macOS application icons",
+      "description": "Design and create macOS icons in ICNS format with all required sizes (16x16 to 1024x1024) for app bundle and DMG",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "build/icon.icns",
+        "build/dmg-background.png",
+        "build/dmg-background@2x.png"
+      ],
+      "acceptanceCriteria": [
+        "ICNS file contains all required sizes",
+        "Icons follow PaperFlow brand guidelines",
+        "DMG background image is designed",
+        "Icons render correctly in Finder and Dock"
+      ]
+    },
+    {
+      "id": "3.14.3",
+      "category": "infrastructure",
+      "title": "Set up Apple Developer certificates",
+      "description": "Configure Apple Developer ID Application and Installer certificates for code signing, including provisioning profile for sandboxed distribution",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        ".github/workflows/build-macos.yml"
+      ],
+      "acceptanceCriteria": [
+        "Developer ID Application certificate is acquired",
+        "Developer ID Installer certificate is acquired",
+        "Certificates are exported to base64 for CI/CD",
+        "Provisioning profile is created for app sandbox"
+      ]
+    },
+    {
+      "id": "3.14.4",
+      "category": "infrastructure",
+      "title": "Configure macOS code signing",
+      "description": "Set up code signing configuration with hardened runtime, entitlements file, and proper signature verification",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "build/entitlements.mac.plist",
+        "build/entitlements.mac.inherit.plist"
+      ],
+      "acceptanceCriteria": [
+        "App is signed with Developer ID certificate",
+        "Hardened runtime is enabled",
+        "Entitlements are properly configured",
+        "codesign --verify passes"
+      ]
+    },
+    {
+      "id": "3.14.5",
+      "category": "infrastructure",
+      "title": "Implement Apple notarization workflow",
+      "description": "Configure automated notarization with Apple's notary service using notarytool, including stapling and verification",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "electron-builder.yml",
+        ".github/workflows/build-macos.yml",
+        "scripts/notarize.js"
+      ],
+      "acceptanceCriteria": [
+        "App is submitted to notary service automatically",
+        "Notarization ticket is stapled to app",
+        "spctl --assess --type exec passes",
+        "Gatekeeper allows app to run"
+      ]
+    },
+    {
+      "id": "3.14.6",
+      "category": "infrastructure",
+      "title": "Configure DMG installer",
+      "description": "Create custom DMG installer with branded background, icon positioning, Applications folder alias, and license agreement",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron-builder.yml",
+        "build/dmg-background.png"
+      ],
+      "acceptanceCriteria": [
+        "DMG has custom branded background",
+        "App icon and Applications alias are positioned",
+        "License agreement is displayed on mount",
+        "DMG is notarized and stapled"
+      ]
+    },
+    {
+      "id": "3.14.7",
+      "category": "infrastructure",
+      "title": "Create PKG installer for enterprise",
+      "description": "Configure PKG installer for enterprise deployment with custom installation scripts, welcome/readme screens, and MDM compatibility",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "build/pkg-scripts/preinstall",
+        "build/pkg-scripts/postinstall"
+      ],
+      "acceptanceCriteria": [
+        "PKG installer builds successfully",
+        "Custom installation scripts work",
+        "Package is compatible with MDM solutions",
+        "Package is signed and notarized"
+      ]
+    },
+    {
+      "id": "3.14.8",
+      "category": "infrastructure",
+      "title": "Implement auto-update for macOS",
+      "description": "Configure electron-updater for macOS with code-signed update packages and Sparkle-compatible update server",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/electron/updater.ts",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "Auto-update checks for new versions",
+        "Updates are signed and verified",
+        "User is prompted to install updates",
+        "Update process handles app restart"
+      ]
+    },
+    {
+      "id": "3.14.9",
+      "category": "infrastructure",
+      "title": "Configure macOS app sandbox",
+      "description": "Enable app sandbox with appropriate entitlements for file access, network, and user-selected files",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "build/entitlements.mac.plist"
+      ],
+      "acceptanceCriteria": [
+        "App sandbox is enabled",
+        "File access entitlements are configured",
+        "Network entitlements allow update checks",
+        "App functions correctly within sandbox"
+      ]
+    },
+    {
+      "id": "3.14.10",
+      "category": "ci",
+      "title": "Create macOS build workflow",
+      "description": "Set up GitHub Actions workflow for macOS builds with code signing, notarization, and artifact upload using macOS runners",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        ".github/workflows/build-macos.yml"
+      ],
+      "acceptanceCriteria": [
+        "Workflow triggers on release tags",
+        "Universal binary is built (Intel + Apple Silicon)",
+        "App is signed and notarized",
+        "DMG and PKG are uploaded to release"
+      ]
+    },
+    {
+      "id": "3.14.11",
+      "category": "testing",
+      "title": "Test macOS installers",
+      "description": "Test DMG and PKG installers on macOS Monterey, Ventura, and Sonoma, including Gatekeeper verification and sandbox testing",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/e2e/macos-installer.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "DMG installs correctly on all supported versions",
+        "PKG installs correctly on all supported versions",
+        "Gatekeeper allows app without warnings",
+        "App functions correctly in sandbox",
+        "Universal binary works on Intel and Apple Silicon"
+      ]
+    },
+    {
+      "id": "3.14.12",
+      "category": "documentation",
+      "title": "Document macOS installation process",
+      "description": "Create documentation for macOS installation including system requirements, installation steps, Gatekeeper issues, and enterprise deployment",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/installation/macos.md",
+        "docs/deployment/enterprise-macos.md"
+      ],
+      "acceptanceCriteria": [
+        "System requirements are documented",
+        "Installation steps are clear with screenshots",
+        "Gatekeeper troubleshooting is documented",
+        "MDM deployment guide is included"
+      ]
+    },
+    {
+      "id": "3.14.13",
+      "category": "infrastructure",
+      "title": "Prepare Mac App Store submission",
+      "description": "Configure app for Mac App Store including sandbox requirements, in-app purchase stubs, and App Store Connect metadata",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "build/entitlements.mas.plist"
+      ],
+      "acceptanceCriteria": [
+        "MAS build target is configured",
+        "Sandbox requirements are met",
+        "App Store metadata is prepared",
+        "Screenshots are created for all sizes"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "DMG installer builds and mounts correctly",
+    "PKG installer supports enterprise deployment",
+    "App is properly signed with Developer ID",
+    "Notarization passes and Gatekeeper approves",
+    "Universal binary works on Intel and Apple Silicon",
+    "Auto-update works reliably on macOS"
+  ],
+  "dependencies": [
+    "npm install electron-builder electron-updater",
+    "npm install @electron/notarize",
+    "Apple Developer Program membership ($99/year)",
+    "Developer ID Application certificate",
+    "Developer ID Installer certificate"
+  ],
+  "notes": [
+    "Notarization is required for apps distributed outside Mac App Store",
+    "Hardened runtime is required for notarization",
+    "Universal binaries require building on macOS with Xcode",
+    "Mac App Store has additional sandbox requirements"
+  ]
+}

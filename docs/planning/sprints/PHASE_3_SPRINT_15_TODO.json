@@ -1,0 +1,254 @@
+{
+  "phase": 3,
+  "sprint": 15,
+  "quarter": "Q3",
+  "title": "Linux Packages (AppImage/deb/rpm/snap)",
+  "goal": "Create Linux distribution packages for major package managers and universal formats",
+  "milestone": "Linux Distribution Ready",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 82,
+  "tasks": [
+    {
+      "id": "3.15.1",
+      "category": "infrastructure",
+      "title": "Configure electron-builder for Linux",
+      "description": "Set up electron-builder configuration for Linux with AppImage, deb, rpm, snap, and flatpak targets, including desktop entry and icon configuration",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "package.json",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "electron-builder is configured for Linux targets",
+        "AppImage, deb, rpm, snap targets are defined",
+        "Desktop entry metadata is correct",
+        "Icon paths are configured for all sizes"
+      ]
+    },
+    {
+      "id": "3.15.2",
+      "category": "infrastructure",
+      "title": "Create Linux application icons",
+      "description": "Create PNG icons in all required sizes (16x16, 32x32, 48x48, 64x64, 128x128, 256x256, 512x512) for Linux desktop environments",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "build/icons/16x16.png",
+        "build/icons/32x32.png",
+        "build/icons/48x48.png",
+        "build/icons/64x64.png",
+        "build/icons/128x128.png",
+        "build/icons/256x256.png",
+        "build/icons/512x512.png"
+      ],
+      "acceptanceCriteria": [
+        "PNG icons exist for all required sizes",
+        "Icons follow PaperFlow brand guidelines",
+        "Icons render correctly in all desktop environments",
+        "High-DPI displays are supported"
+      ]
+    },
+    {
+      "id": "3.15.3",
+      "category": "infrastructure",
+      "title": "Build AppImage package",
+      "description": "Configure AppImage build with bundled dependencies, FUSE support detection, and automatic update integration",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "build/appimage-options.yml"
+      ],
+      "acceptanceCriteria": [
+        "AppImage builds successfully",
+        "AppImage is self-contained and portable",
+        "Desktop integration works via appimaged",
+        "AppImage runs on Ubuntu, Fedora, and Arch"
+      ]
+    },
+    {
+      "id": "3.15.4",
+      "category": "infrastructure",
+      "title": "Create Debian package",
+      "description": "Configure deb package for Debian/Ubuntu with proper dependencies, maintainer scripts, and apt repository metadata",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "build/deb/postinst",
+        "build/deb/prerm"
+      ],
+      "acceptanceCriteria": [
+        "Deb package builds successfully",
+        "Dependencies are correctly specified",
+        "Maintainer scripts handle install/uninstall",
+        "Package installs via dpkg and apt"
+      ]
+    },
+    {
+      "id": "3.15.5",
+      "category": "infrastructure",
+      "title": "Create RPM package",
+      "description": "Configure rpm package for Fedora/RHEL/CentOS with proper dependencies, spec file customization, and yum/dnf repository metadata",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "build/rpm/paperflow.spec"
+      ],
+      "acceptanceCriteria": [
+        "RPM package builds successfully",
+        "Dependencies are correctly specified",
+        "Package installs via rpm and dnf",
+        "Package works on Fedora and RHEL"
+      ]
+    },
+    {
+      "id": "3.15.6",
+      "category": "infrastructure",
+      "title": "Create Snap package",
+      "description": "Configure snap package for Ubuntu Snap Store with proper confinement, plugs/slots, and automatic updates",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "snap/snapcraft.yaml"
+      ],
+      "acceptanceCriteria": [
+        "Snap package builds successfully",
+        "Confinement is properly configured",
+        "Required plugs are declared",
+        "Package installs via snap"
+      ]
+    },
+    {
+      "id": "3.15.7",
+      "category": "infrastructure",
+      "title": "Create Flatpak package",
+      "description": "Configure Flatpak package for Flathub with proper runtime dependencies, permissions, and sandbox configuration",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "build/flatpak/com.paperflow.PaperFlow.yml",
+        "build/flatpak/com.paperflow.PaperFlow.metainfo.xml"
+      ],
+      "acceptanceCriteria": [
+        "Flatpak builds successfully",
+        "Runtime dependencies are specified",
+        "Permissions are properly configured",
+        "Package installs via flatpak"
+      ]
+    },
+    {
+      "id": "3.15.8",
+      "category": "infrastructure",
+      "title": "Implement auto-update for Linux",
+      "description": "Configure electron-updater for Linux with AppImage delta updates and package manager integration guidance",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/electron/updater.ts",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "Auto-update works for AppImage",
+        "Delta updates reduce download size",
+        "User is notified about package manager updates",
+        "Update process is transparent"
+      ]
+    },
+    {
+      "id": "3.15.9",
+      "category": "infrastructure",
+      "title": "Configure desktop entry and MIME types",
+      "description": "Create desktop entry file with proper MIME type associations for PDF files and custom protocol handler",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "build/linux/paperflow.desktop",
+        "build/linux/paperflow-mime.xml"
+      ],
+      "acceptanceCriteria": [
+        "Desktop entry follows freedesktop.org spec",
+        "PDF MIME type is associated",
+        "Custom protocol handler is registered",
+        "App appears in application menu"
+      ]
+    },
+    {
+      "id": "3.15.10",
+      "category": "ci",
+      "title": "Create Linux build workflow",
+      "description": "Set up GitHub Actions workflow for Linux builds with multi-distro testing and artifact upload",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        ".github/workflows/build-linux.yml"
+      ],
+      "acceptanceCriteria": [
+        "Workflow triggers on release tags",
+        "All package formats are built",
+        "Packages are tested in containers",
+        "Artifacts are uploaded to release"
+      ]
+    },
+    {
+      "id": "3.15.11",
+      "category": "testing",
+      "title": "Test Linux packages",
+      "description": "Test all Linux packages on Ubuntu, Fedora, and Arch Linux, including installation, file associations, and desktop integration",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/e2e/linux-packages.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "AppImage runs on all tested distros",
+        "Deb package installs on Ubuntu/Debian",
+        "RPM package installs on Fedora/RHEL",
+        "Snap package installs and runs",
+        "Desktop integration works on GNOME and KDE"
+      ]
+    },
+    {
+      "id": "3.15.12",
+      "category": "documentation",
+      "title": "Document Linux installation process",
+      "description": "Create documentation for Linux installation including package-specific instructions, troubleshooting, and Wayland/X11 compatibility",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/installation/linux.md"
+      ],
+      "acceptanceCriteria": [
+        "Installation steps for each package format",
+        "Distribution-specific notes are included",
+        "Wayland/X11 compatibility is documented",
+        "Common issues and solutions are provided"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "AppImage is portable and runs on major distros",
+    "Deb package installs correctly on Debian/Ubuntu",
+    "RPM package installs correctly on Fedora/RHEL",
+    "Snap and Flatpak packages meet store requirements",
+    "Desktop integration works on GNOME and KDE",
+    "Auto-update works for AppImage"
+  ],
+  "dependencies": [
+    "npm install electron-builder electron-updater",
+    "Ubuntu build environment for deb",
+    "Fedora build environment for rpm",
+    "snapcraft for snap packages",
+    "flatpak-builder for flatpak packages"
+  ],
+  "notes": [
+    "AppImage is the most portable format but requires FUSE",
+    "Snap has strict confinement which may limit functionality",
+    "Flatpak requires Flathub submission for wide distribution",
+    "Different distros may need different dependency names"
+  ]
+}

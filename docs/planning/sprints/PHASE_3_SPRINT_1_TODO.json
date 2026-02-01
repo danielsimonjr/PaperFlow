@@ -1,0 +1,294 @@
+{
+  "phase": 3,
+  "sprint": 1,
+  "quarter": "Q1",
+  "title": "Electron Setup & App Shell",
+  "goal": "Set up Electron project structure and create the desktop application shell",
+  "milestone": "Desktop App Foundation",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 92,
+  "tasks": [
+    {
+      "id": "3.1.1",
+      "category": "setup",
+      "title": "Initialize Electron project structure",
+      "description": "Create electron/ directory with main.ts, preload.ts, and electron-builder configuration. Set up TypeScript configuration for Electron main process.",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/main.ts",
+        "electron/preload.ts",
+        "electron/tsconfig.json",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "electron/ directory is created with proper structure",
+        "TypeScript configuration for main process is set up",
+        "electron-builder.yml is configured for Windows, macOS, and Linux",
+        "Build scripts are added to package.json"
+      ]
+    },
+    {
+      "id": "3.1.2",
+      "category": "setup",
+      "title": "Install and configure Electron dependencies",
+      "description": "Install electron, electron-builder, electron-devtools-installer, and configure Vite for Electron integration",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "package.json",
+        "vite.config.ts",
+        "vite.electron.config.ts"
+      ],
+      "acceptanceCriteria": [
+        "Electron and related packages are installed",
+        "Vite is configured to work with Electron",
+        "Development workflow supports hot reload",
+        "Production build creates distributable packages"
+      ]
+    },
+    {
+      "id": "3.1.3",
+      "category": "feature",
+      "title": "Create main process entry point",
+      "description": "Implement main.ts with BrowserWindow creation, app lifecycle events, and IPC setup for main process",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/main.ts",
+        "electron/windowManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "BrowserWindow is created with proper configuration",
+        "App lifecycle events (ready, window-all-closed, activate) are handled",
+        "Window state (size, position) is persisted",
+        "DevTools are available in development mode"
+      ]
+    },
+    {
+      "id": "3.1.4",
+      "category": "feature",
+      "title": "Implement secure preload script",
+      "description": "Create preload.ts with contextBridge API exposure for secure IPC communication between renderer and main process",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/preload.ts",
+        "electron/ipc/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "contextBridge exposes secure API",
+        "IPC channels are typed and documented",
+        "Sensitive Node.js APIs are not exposed",
+        "TypeScript types are available for renderer process"
+      ]
+    },
+    {
+      "id": "3.1.5",
+      "category": "feature",
+      "title": "Set up IPC communication layer",
+      "description": "Create typed IPC handlers and invokers for communication between main and renderer processes",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/ipc/handlers.ts",
+        "electron/ipc/channels.ts",
+        "src/lib/electron/ipc.ts"
+      ],
+      "acceptanceCriteria": [
+        "IPC channels are defined as TypeScript constants",
+        "Type-safe IPC invoke/handle pattern is implemented",
+        "Error handling for IPC calls is in place",
+        "IPC calls are logged in development mode"
+      ]
+    },
+    {
+      "id": "3.1.6",
+      "category": "feature",
+      "title": "Create window configuration and management",
+      "description": "Implement window management with state persistence, multi-window support, and window event handling",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/windowManager.ts",
+        "electron/windowState.ts"
+      ],
+      "acceptanceCriteria": [
+        "Window size and position are persisted between sessions",
+        "Window bounds respect display boundaries",
+        "Multiple windows can be created for different documents",
+        "Window focus and minimize events are handled"
+      ]
+    },
+    {
+      "id": "3.1.7",
+      "category": "feature",
+      "title": "Implement platform detection utility",
+      "description": "Create utility to detect if running in Electron vs browser, with feature flags for platform-specific functionality",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/electron/platform.ts",
+        "src/hooks/usePlatform.ts"
+      ],
+      "acceptanceCriteria": [
+        "isElectron() returns true in Electron, false in browser",
+        "Platform-specific features can be conditionally enabled",
+        "Hook provides reactive platform detection",
+        "Platform info includes OS, version details"
+      ]
+    },
+    {
+      "id": "3.1.8",
+      "category": "feature",
+      "title": "Configure Content Security Policy for Electron",
+      "description": "Set up CSP headers for Electron with appropriate policies for local resources and PDF.js worker",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/main.ts",
+        "electron/security.ts"
+      ],
+      "acceptanceCriteria": [
+        "CSP is configured for local file access",
+        "PDF.js worker loads correctly",
+        "Remote code execution is blocked",
+        "Development mode allows DevTools"
+      ]
+    },
+    {
+      "id": "3.1.9",
+      "category": "feature",
+      "title": "Set up app icon and branding",
+      "description": "Create app icons for all platforms (Windows .ico, macOS .icns, Linux .png) and configure electron-builder for branding",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "build/icon.ico",
+        "build/icon.icns",
+        "build/icon.png",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "Windows icon (.ico) with multiple sizes is created",
+        "macOS icon (.icns) with retina support is created",
+        "Linux icons in various sizes are created",
+        "electron-builder uses correct icons per platform"
+      ]
+    },
+    {
+      "id": "3.1.10",
+      "category": "feature",
+      "title": "Implement development workflow",
+      "description": "Set up concurrent Vite dev server and Electron for hot reload during development",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "scripts/dev-electron.js",
+        "package.json"
+      ],
+      "acceptanceCriteria": [
+        "npm run electron:dev starts both Vite and Electron",
+        "Renderer process hot reloads on change",
+        "Main process restarts on change",
+        "DevTools open automatically in dev mode"
+      ]
+    },
+    {
+      "id": "3.1.11",
+      "category": "feature",
+      "title": "Configure production build pipeline",
+      "description": "Set up build scripts to create distributable packages for Windows (NSIS, portable), macOS (DMG), and Linux (AppImage, deb)",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "scripts/build-electron.js",
+        "electron-builder.yml",
+        "package.json"
+      ],
+      "acceptanceCriteria": [
+        "Windows NSIS installer is generated",
+        "Windows portable executable is generated",
+        "macOS DMG is generated",
+        "Linux AppImage is generated",
+        "Linux deb package is generated"
+      ]
+    },
+    {
+      "id": "3.1.12",
+      "category": "feature",
+      "title": "Create app lifecycle management",
+      "description": "Implement proper app quit handling, single instance lock, and startup options",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/lifecycle.ts",
+        "electron/main.ts"
+      ],
+      "acceptanceCriteria": [
+        "Single instance lock prevents multiple app instances",
+        "Second instance focuses existing window",
+        "App quits properly on all platforms",
+        "macOS continues running when all windows closed"
+      ]
+    },
+    {
+      "id": "3.1.13",
+      "category": "testing",
+      "title": "Create Electron unit tests",
+      "description": "Set up testing infrastructure for Electron main process with tests for IPC, window management, and platform detection",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/electron/main.test.ts",
+        "tests/electron/ipc.test.ts",
+        "tests/electron/windowManager.test.ts",
+        "tests/electron/setup.ts"
+      ],
+      "acceptanceCriteria": [
+        "Test runner is configured for Electron main process",
+        "IPC handlers have unit tests",
+        "Window manager has unit tests",
+        "Platform detection has unit tests"
+      ]
+    },
+    {
+      "id": "3.1.14",
+      "category": "docs",
+      "title": "Document Electron architecture",
+      "description": "Create documentation for Electron project structure, IPC patterns, and development workflow",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "docs/electron/architecture.md",
+        "docs/electron/development.md",
+        "docs/electron/ipc.md"
+      ],
+      "acceptanceCriteria": [
+        "Architecture documentation covers main/renderer separation",
+        "IPC patterns are documented with examples",
+        "Development workflow is documented",
+        "Build and distribution process is documented"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Electron app shell launches successfully",
+    "IPC communication works between main and renderer",
+    "Development workflow supports hot reload",
+    "Production build creates installers for all platforms",
+    "Single instance lock prevents duplicate apps"
+  ],
+  "dependencies": [
+    "npm install electron electron-builder",
+    "npm install -D concurrently electron-devtools-installer",
+    "Phase 2 PWA web app (serves as renderer process)"
+  ],
+  "notes": [
+    "Use Electron Forge or electron-builder based on team preference",
+    "Context isolation must be enabled for security",
+    "Preload scripts bridge the gap between main and renderer",
+    "Window state persistence improves user experience"
+  ]
+}

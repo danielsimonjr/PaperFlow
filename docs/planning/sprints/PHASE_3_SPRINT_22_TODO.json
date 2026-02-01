@@ -1,0 +1,238 @@
+{
+  "phase": 3,
+  "sprint": 22,
+  "quarter": "Q4",
+  "title": "LAN Collaboration & Sync",
+  "goal": "Implement local network discovery and peer-to-peer sync for enterprise environments without internet",
+  "milestone": "LAN Collaboration System",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 102,
+  "tasks": [
+    {
+      "id": "3.22.1",
+      "category": "infrastructure",
+      "title": "Implement mDNS/Bonjour service discovery",
+      "description": "Create service discovery using mDNS (Bonjour) to find other PaperFlow instances on the local network",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/lan/serviceDiscovery.ts",
+        "src/lib/lan/mdnsPublisher.ts",
+        "src/lib/lan/mdnsBrowser.ts"
+      ],
+      "acceptanceCriteria": [
+        "Publishes _paperflow._tcp service on startup",
+        "Discovers other instances within 5 seconds",
+        "Service TXT records include version and capabilities",
+        "Works on Windows, macOS, and Linux"
+      ]
+    },
+    {
+      "id": "3.22.2",
+      "category": "infrastructure",
+      "title": "Create LAN peer management system",
+      "description": "Build peer manager to track discovered instances, their status, capabilities, and last seen time",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/lan/peerManager.ts",
+        "src/stores/lanStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Peer list updated on discovery events",
+        "Peer status (online/offline) tracked",
+        "Capabilities negotiated on connection",
+        "Stale peers removed after timeout"
+      ]
+    },
+    {
+      "id": "3.22.3",
+      "category": "infrastructure",
+      "title": "Implement secure LAN connection protocol",
+      "description": "Create secure connection between peers using TLS with certificate pinning and mutual authentication",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "src/lib/lan/secureConnection.ts",
+        "src/lib/lan/certificateManager.ts",
+        "src/lib/lan/peerAuth.ts"
+      ],
+      "acceptanceCriteria": [
+        "TLS 1.3 encryption for all traffic",
+        "Self-signed certificates with pinning",
+        "Mutual authentication between peers",
+        "Connection verification UI"
+      ]
+    },
+    {
+      "id": "3.22.4",
+      "category": "infrastructure",
+      "title": "Create document sharing protocol",
+      "description": "Design and implement protocol for sharing documents between peers with chunked transfer and resume support",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/lan/documentSharing.ts",
+        "src/lib/lan/chunkedTransfer.ts",
+        "src/lib/lan/transferResume.ts"
+      ],
+      "acceptanceCriteria": [
+        "Documents transfer via chunked protocol",
+        "Resume interrupted transfers",
+        "Progress reporting during transfer",
+        "Integrity verification on completion"
+      ]
+    },
+    {
+      "id": "3.22.5",
+      "category": "infrastructure",
+      "title": "Implement real-time sync protocol",
+      "description": "Create sync protocol using CRDTs or OT for real-time collaborative editing of annotations and forms",
+      "status": "pending",
+      "estimatedHours": 14,
+      "files": [
+        "src/lib/lan/syncProtocol.ts",
+        "src/lib/lan/crdtEngine.ts",
+        "src/lib/lan/conflictResolver.ts"
+      ],
+      "acceptanceCriteria": [
+        "Annotations sync in real-time",
+        "Form field changes propagate",
+        "Conflicts resolved automatically",
+        "Offline changes merge on reconnect"
+      ]
+    },
+    {
+      "id": "3.22.6",
+      "category": "infrastructure",
+      "title": "Create shared workspace management",
+      "description": "Implement shared workspace concept where multiple users can access and collaborate on document collections",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/lan/sharedWorkspace.ts",
+        "src/lib/lan/workspacePermissions.ts"
+      ],
+      "acceptanceCriteria": [
+        "Workspaces created and joined by peers",
+        "Documents added/removed from workspace",
+        "Permission levels (view, annotate, edit)",
+        "Workspace state synced across peers"
+      ]
+    },
+    {
+      "id": "3.22.7",
+      "category": "infrastructure",
+      "title": "Implement presence and cursor sharing",
+      "description": "Create presence system showing who is viewing which page with shared cursor positions",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/lan/presenceManager.ts",
+        "src/lib/lan/cursorSync.ts"
+      ],
+      "acceptanceCriteria": [
+        "Active users shown with avatars",
+        "Current page of each user visible",
+        "Cursor positions shared in real-time",
+        "Presence updates within 500ms"
+      ]
+    },
+    {
+      "id": "3.22.8",
+      "category": "ui",
+      "title": "Create peer discovery and connection UI",
+      "description": "Build UI for discovering peers, initiating connections, and managing trusted peers",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/lan/PeerDiscoveryPanel.tsx",
+        "src/components/lan/PeerListItem.tsx",
+        "src/components/lan/ConnectionDialog.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Discovered peers listed with status",
+        "One-click connection to peers",
+        "Trust management for verified peers",
+        "Connection quality indicator"
+      ]
+    },
+    {
+      "id": "3.22.9",
+      "category": "ui",
+      "title": "Create shared workspace UI",
+      "description": "Build UI for creating, joining, and managing shared workspaces with document browser",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/lan/WorkspacePanel.tsx",
+        "src/components/lan/WorkspaceDocuments.tsx",
+        "src/components/lan/ShareDialog.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Workspace creation wizard",
+        "Workspace browser with documents",
+        "Share document to workspace dialog",
+        "Leave workspace confirmation"
+      ]
+    },
+    {
+      "id": "3.22.10",
+      "category": "ui",
+      "title": "Create collaboration awareness UI",
+      "description": "Build UI showing collaborator presence, cursors, and activity in the document viewer",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/lan/CollaboratorAvatars.tsx",
+        "src/components/lan/RemoteCursor.tsx",
+        "src/components/lan/ActivityFeed.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Collaborator avatars in header",
+        "Remote cursors shown on canvas",
+        "Activity feed shows recent changes",
+        "Click avatar to jump to their view"
+      ]
+    },
+    {
+      "id": "3.22.11",
+      "category": "testing",
+      "title": "Create LAN collaboration test suite",
+      "description": "Write tests for service discovery, sync protocol, and collaboration features with network simulation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/lan/serviceDiscovery.test.ts",
+        "tests/lan/syncProtocol.test.ts",
+        "tests/lan/peerConnection.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "mDNS discovery tests pass",
+        "Sync protocol tests with multiple peers",
+        "Connection tests with network simulation",
+        "Conflict resolution tests cover edge cases",
+        "Coverage above 80%"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Peers discover each other automatically on LAN",
+    "Secure connections established between peers",
+    "Documents sync in real-time between peers",
+    "Presence and cursors shared accurately",
+    "Works without any internet connection"
+  ],
+  "dependencies": [
+    "npm install multicast-dns bonjour-service",
+    "npm install yjs y-websocket for CRDT",
+    "TLS certificate generation library"
+  ],
+  "notes": [
+    "mDNS is standard on macOS, needs Bonjour SDK on Windows",
+    "CRDTs preferred over OT for peer-to-peer scenarios",
+    "Enterprise firewalls may block multicast traffic",
+    "Consider fallback to manual IP entry"
+  ]
+}

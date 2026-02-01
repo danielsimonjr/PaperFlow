@@ -1,0 +1,283 @@
+{
+  "phase": 3,
+  "sprint": 3,
+  "quarter": "Q1",
+  "title": "System Tray & Notifications",
+  "goal": "Implement system tray integration and native desktop notifications",
+  "milestone": "Desktop Integration",
+  "priority": "MEDIUM",
+  "status": "pending",
+  "totalEstimatedHours": 78,
+  "tasks": [
+    {
+      "id": "3.3.1",
+      "category": "feature",
+      "title": "Create system tray icon",
+      "description": "Implement system tray icon with platform-specific sizing and appearance",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/tray.ts",
+        "electron/main.ts",
+        "build/tray-icon.png",
+        "build/tray-icon@2x.png"
+      ],
+      "acceptanceCriteria": [
+        "Tray icon appears in system tray",
+        "Icon uses correct size for each platform",
+        "Icon supports dark/light mode on macOS",
+        "Icon is visible on all supported platforms"
+      ]
+    },
+    {
+      "id": "3.3.2",
+      "category": "feature",
+      "title": "Implement tray context menu",
+      "description": "Create context menu for tray icon with common actions and recent files",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/tray.ts",
+        "electron/trayMenu.ts"
+      ],
+      "acceptanceCriteria": [
+        "Right-click shows context menu",
+        "Menu includes Open, Recent Files, Preferences, Quit",
+        "Recent files submenu shows last 5 files",
+        "Menu items trigger correct actions"
+      ]
+    },
+    {
+      "id": "3.3.3",
+      "category": "feature",
+      "title": "Add minimize to tray functionality",
+      "description": "Implement option to minimize app to system tray instead of closing",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/tray.ts",
+        "electron/windowManager.ts",
+        "src/stores/settingsStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Setting to minimize to tray on close is available",
+        "Window hides instead of closing when enabled",
+        "Tray icon click restores window",
+        "Setting is persisted"
+      ]
+    },
+    {
+      "id": "3.3.4",
+      "category": "feature",
+      "title": "Implement tray icon status indicators",
+      "description": "Change tray icon to indicate app status (processing, notifications pending)",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/tray.ts",
+        "build/tray-icon-busy.png",
+        "build/tray-icon-notification.png"
+      ],
+      "acceptanceCriteria": [
+        "Icon changes when processing a document",
+        "Icon shows badge/indicator for pending notifications",
+        "Icon returns to normal when idle",
+        "Status changes are smooth without flickering"
+      ]
+    },
+    {
+      "id": "3.3.5",
+      "category": "feature",
+      "title": "Create native notification system",
+      "description": "Implement native desktop notifications using Electron's Notification API",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/notifications.ts",
+        "electron/ipc/notificationHandlers.ts",
+        "src/lib/electron/notifications.ts"
+      ],
+      "acceptanceCriteria": [
+        "Native notifications are displayed",
+        "Notifications include title, body, and optional icon",
+        "Click on notification focuses app",
+        "Notifications work on all platforms"
+      ]
+    },
+    {
+      "id": "3.3.6",
+      "category": "feature",
+      "title": "Implement notification preferences",
+      "description": "Create settings for notification types, sounds, and quiet hours",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/stores/settingsStore.ts",
+        "src/components/settings/NotificationSettings.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Users can enable/disable notification types",
+        "Sound can be toggled on/off",
+        "Quiet hours can be configured",
+        "Settings are persisted"
+      ]
+    },
+    {
+      "id": "3.3.7",
+      "category": "feature",
+      "title": "Add notification actions",
+      "description": "Implement interactive notifications with action buttons for common responses",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/notifications.ts",
+        "electron/ipc/notificationHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "Notifications can have action buttons",
+        "Clicking action triggers appropriate response",
+        "Actions are handled when app is in background",
+        "macOS and Windows action styles are correct"
+      ]
+    },
+    {
+      "id": "3.3.8",
+      "category": "feature",
+      "title": "Create notification for file operations",
+      "description": "Implement notifications for save complete, export complete, and error conditions",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/electron/notifications.ts"
+      ],
+      "acceptanceCriteria": [
+        "Save complete notification is shown",
+        "Export complete notification is shown",
+        "Error notifications display with details",
+        "Notifications can be clicked to open file location"
+      ]
+    },
+    {
+      "id": "3.3.9",
+      "category": "feature",
+      "title": "Implement notification for background operations",
+      "description": "Show notifications when background operations complete while app is minimized",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/electron/notifications.ts",
+        "electron/notifications.ts"
+      ],
+      "acceptanceCriteria": [
+        "Background save shows notification",
+        "Background export shows notification",
+        "Background OCR completion shows notification",
+        "Notifications only show when app is not focused"
+      ]
+    },
+    {
+      "id": "3.3.10",
+      "category": "feature",
+      "title": "Add progress in tray tooltip",
+      "description": "Show operation progress in tray icon tooltip for long-running operations",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/tray.ts"
+      ],
+      "acceptanceCriteria": [
+        "Tooltip shows app name when idle",
+        "Tooltip shows progress during operations",
+        "Progress updates in real-time",
+        "Tooltip returns to normal when complete"
+      ]
+    },
+    {
+      "id": "3.3.11",
+      "category": "feature",
+      "title": "Create notification center integration",
+      "description": "Integrate with OS notification centers for history and do-not-disturb support",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/notifications.ts"
+      ],
+      "acceptanceCriteria": [
+        "Notifications appear in Windows Action Center",
+        "Notifications appear in macOS Notification Center",
+        "Do-not-disturb mode is respected",
+        "Notification history is preserved"
+      ]
+    },
+    {
+      "id": "3.3.12",
+      "category": "feature",
+      "title": "Implement badge count for dock (macOS)",
+      "description": "Show badge count on dock icon for pending notifications on macOS",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/dock.ts",
+        "electron/main.ts"
+      ],
+      "acceptanceCriteria": [
+        "Badge count appears on dock icon",
+        "Badge updates with pending notification count",
+        "Badge clears when notifications are viewed",
+        "Feature is macOS-only"
+      ]
+    },
+    {
+      "id": "3.3.13",
+      "category": "testing",
+      "title": "Create tray and notification tests",
+      "description": "Write tests for tray functionality and notification system",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/electron/tray.test.ts",
+        "tests/electron/notifications.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Tray menu has unit tests",
+        "Notification triggers have tests",
+        "Tray status changes have tests",
+        "Platform-specific behavior is tested"
+      ]
+    },
+    {
+      "id": "3.3.14",
+      "category": "docs",
+      "title": "Document tray and notification features",
+      "description": "Create documentation for system tray and notification features",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/electron/tray-notifications.md"
+      ],
+      "acceptanceCriteria": [
+        "Tray features are documented",
+        "Notification types are documented",
+        "Settings are documented",
+        "Platform differences are noted"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "System tray icon appears on all platforms",
+    "Tray menu provides quick access to common actions",
+    "Native notifications display correctly",
+    "Notification preferences are respected",
+    "Background operation completion is notified"
+  ],
+  "dependencies": [
+    "Sprint 1: Electron Setup & App Shell",
+    "Sprint 2: Native File System Integration"
+  ],
+  "notes": [
+    "macOS uses template images for tray icons in dark mode",
+    "Windows requires icon in .ico format for tray",
+    "Notification APIs vary significantly between platforms",
+    "macOS has strict notification permission requirements"
+  ]
+}

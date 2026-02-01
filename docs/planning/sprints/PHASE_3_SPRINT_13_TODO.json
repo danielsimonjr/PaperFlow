@@ -1,0 +1,249 @@
+{
+  "phase": 3,
+  "sprint": 13,
+  "quarter": "Q3",
+  "title": "Windows Installer (MSI/MSIX)",
+  "goal": "Create professional Windows installers using electron-builder with code signing",
+  "milestone": "Windows Distribution Ready",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 86,
+  "tasks": [
+    {
+      "id": "3.13.1",
+      "category": "infrastructure",
+      "title": "Configure electron-builder for Windows",
+      "description": "Set up electron-builder configuration in package.json with Windows-specific build settings including target formats (NSIS, MSI, MSIX), app metadata, and resource paths",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "package.json",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "electron-builder is configured for Windows targets",
+        "NSIS, MSI, and MSIX targets are defined",
+        "App metadata (name, description, version) is correct",
+        "Resource paths for icons and assets are configured"
+      ]
+    },
+    {
+      "id": "3.13.2",
+      "category": "infrastructure",
+      "title": "Create Windows application icons",
+      "description": "Design and create Windows icons in ICO format with all required sizes (16x16, 32x32, 48x48, 64x64, 128x128, 256x256) for installer and application",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "build/icon.ico",
+        "build/installerIcon.ico",
+        "build/uninstallerIcon.ico"
+      ],
+      "acceptanceCriteria": [
+        "ICO file contains all required sizes",
+        "Icons follow PaperFlow brand guidelines",
+        "Installer and uninstaller icons are distinct",
+        "Icons render correctly at all sizes"
+      ]
+    },
+    {
+      "id": "3.13.3",
+      "category": "infrastructure",
+      "title": "Set up Windows code signing certificate",
+      "description": "Acquire and configure Extended Validation (EV) code signing certificate for Windows, set up certificate in CI/CD environment variables",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        ".github/workflows/build-windows.yml"
+      ],
+      "acceptanceCriteria": [
+        "EV code signing certificate is acquired",
+        "Certificate is securely stored in CI/CD secrets",
+        "Signing process is automated in build pipeline",
+        "SmartScreen warnings are eliminated"
+      ]
+    },
+    {
+      "id": "3.13.4",
+      "category": "infrastructure",
+      "title": "Configure NSIS installer",
+      "description": "Create NSIS installer configuration with custom installer pages, license agreement, installation directory selection, desktop shortcut options, and file associations",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "build/installer.nsh"
+      ],
+      "acceptanceCriteria": [
+        "NSIS installer builds successfully",
+        "License agreement page is displayed",
+        "User can choose installation directory",
+        "Desktop and Start Menu shortcuts are created",
+        "PDF file association is registered"
+      ]
+    },
+    {
+      "id": "3.13.5",
+      "category": "infrastructure",
+      "title": "Implement MSI installer",
+      "description": "Configure MSI (Windows Installer) package for enterprise deployment with Group Policy support and silent installation options",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron-builder.yml",
+        "build/msi-config.json"
+      ],
+      "acceptanceCriteria": [
+        "MSI package builds successfully",
+        "Silent installation works (/quiet flag)",
+        "Package is compatible with Group Policy deployment",
+        "Upgrade logic handles previous versions correctly"
+      ]
+    },
+    {
+      "id": "3.13.6",
+      "category": "infrastructure",
+      "title": "Create MSIX package for Microsoft Store",
+      "description": "Configure MSIX packaging for Windows 10/11 with proper manifest, capabilities declarations, and Microsoft Store submission requirements",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "electron-builder.yml",
+        "build/appxmanifest.xml"
+      ],
+      "acceptanceCriteria": [
+        "MSIX package builds successfully",
+        "Package manifest declares required capabilities",
+        "Package passes Windows App Certification Kit",
+        "Package is ready for Microsoft Store submission"
+      ]
+    },
+    {
+      "id": "3.13.7",
+      "category": "infrastructure",
+      "title": "Implement auto-update for Windows",
+      "description": "Configure electron-updater for Windows with NSIS and MSI update mechanisms, including update server configuration and differential updates",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/electron/updater.ts",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "Auto-update checks for new versions on startup",
+        "Updates download in background",
+        "User is prompted to install updates",
+        "Differential updates reduce download size"
+      ]
+    },
+    {
+      "id": "3.13.8",
+      "category": "infrastructure",
+      "title": "Configure Windows registry entries",
+      "description": "Set up registry entries for file associations, protocol handlers (paperflow://), and uninstall information",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "build/installer.nsh",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "PDF file association is registered in registry",
+        "Custom protocol handler is registered",
+        "Uninstall entry appears in Add/Remove Programs",
+        "Registry entries are cleaned up on uninstall"
+      ]
+    },
+    {
+      "id": "3.13.9",
+      "category": "ci",
+      "title": "Create Windows build workflow",
+      "description": "Set up GitHub Actions workflow for Windows builds with code signing, artifact upload, and release automation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        ".github/workflows/build-windows.yml"
+      ],
+      "acceptanceCriteria": [
+        "Workflow triggers on release tags",
+        "All installer formats are built",
+        "Artifacts are signed with EV certificate",
+        "Installers are uploaded to release"
+      ]
+    },
+    {
+      "id": "3.13.10",
+      "category": "testing",
+      "title": "Test Windows installers",
+      "description": "Test all Windows installer formats on Windows 10 and Windows 11, including clean install, upgrade, and uninstall scenarios",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/e2e/windows-installer.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "NSIS installer works on Windows 10 and 11",
+        "MSI installer works on Windows 10 and 11",
+        "MSIX package installs correctly",
+        "Upgrades preserve user data",
+        "Uninstall removes all files and registry entries"
+      ]
+    },
+    {
+      "id": "3.13.11",
+      "category": "documentation",
+      "title": "Document Windows installation process",
+      "description": "Create documentation for Windows installation including system requirements, installation steps, troubleshooting, and enterprise deployment guide",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/installation/windows.md",
+        "docs/deployment/enterprise-windows.md"
+      ],
+      "acceptanceCriteria": [
+        "System requirements are documented",
+        "Installation steps are clear with screenshots",
+        "Common issues and solutions are documented",
+        "Enterprise deployment guide covers GPO and SCCM"
+      ]
+    },
+    {
+      "id": "3.13.12",
+      "category": "infrastructure",
+      "title": "Implement Windows-specific crash reporting",
+      "description": "Configure crash reporting for Windows using electron-crash-reporter with minidump symbols and Sentry integration",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/electron/crashReporter.ts",
+        "electron-builder.yml"
+      ],
+      "acceptanceCriteria": [
+        "Crash dumps are captured and uploaded",
+        "Symbol files are generated for stack traces",
+        "Sentry receives crash reports",
+        "User is notified of crashes with option to report"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "NSIS installer builds and installs correctly",
+    "MSI package supports enterprise deployment",
+    "MSIX package passes Windows App Certification Kit",
+    "Code signing eliminates SmartScreen warnings",
+    "Auto-update works reliably",
+    "All installers tested on Windows 10 and 11"
+  ],
+  "dependencies": [
+    "npm install electron-builder electron-updater",
+    "npm install @electron/windows-sign",
+    "EV code signing certificate from trusted CA"
+  ],
+  "notes": [
+    "EV certificate is required to avoid SmartScreen warnings immediately",
+    "MSIX is required for Microsoft Store submission",
+    "MSI is preferred for enterprise/GPO deployment",
+    "NSIS provides the most customization options"
+  ]
+}

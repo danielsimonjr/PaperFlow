@@ -1,0 +1,232 @@
+{
+  "phase": 3,
+  "sprint": 19,
+  "quarter": "Q4",
+  "title": "MDM/GPO Deployment Support",
+  "goal": "Enable enterprise deployment through Windows GPO and macOS MDM profiles",
+  "milestone": "Enterprise Deployment Foundation",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 96,
+  "tasks": [
+    {
+      "id": "3.19.1",
+      "category": "infrastructure",
+      "title": "Create Windows ADMX template structure",
+      "description": "Design and create ADMX/ADML template files for Windows Group Policy management with proper namespace and schema definitions",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "enterprise/gpo/PaperFlow.admx",
+        "enterprise/gpo/en-US/PaperFlow.adml"
+      ],
+      "acceptanceCriteria": [
+        "ADMX template follows Microsoft schema standards",
+        "ADML language file properly references ADMX",
+        "Template validates with GPO management tools",
+        "Namespace is unique and properly defined"
+      ]
+    },
+    {
+      "id": "3.19.2",
+      "category": "infrastructure",
+      "title": "Define GPO policy categories and settings",
+      "description": "Implement ADMX policies for application settings, feature toggles, security settings, update preferences, and network configuration",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "enterprise/gpo/PaperFlow.admx",
+        "enterprise/gpo/en-US/PaperFlow.adml"
+      ],
+      "acceptanceCriteria": [
+        "Application settings category with 10+ configurable options",
+        "Security settings for encryption and permissions",
+        "Update settings for auto-update behavior",
+        "Feature toggles for enabling/disabling modules",
+        "Network settings for proxy and firewall configuration"
+      ]
+    },
+    {
+      "id": "3.19.3",
+      "category": "infrastructure",
+      "title": "Implement GPO registry reader for Windows",
+      "description": "Create native module to read Group Policy registry values from HKLM and HKCU at application startup",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/gpoReader.ts",
+        "src/lib/enterprise/registryAccess.ts"
+      ],
+      "acceptanceCriteria": [
+        "Registry values are read from correct GPO paths",
+        "HKLM policies take precedence over HKCU",
+        "Graceful handling when policies are not set",
+        "Type conversion handles REG_SZ, REG_DWORD, REG_MULTI_SZ"
+      ]
+    },
+    {
+      "id": "3.19.4",
+      "category": "infrastructure",
+      "title": "Create macOS MDM configuration profile schema",
+      "description": "Design and create mobileconfig profile with PayloadContent for application configuration, restrictions, and preferences",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "enterprise/mdm/PaperFlow.mobileconfig",
+        "enterprise/mdm/profile-schema.json"
+      ],
+      "acceptanceCriteria": [
+        "Mobileconfig follows Apple profile schema",
+        "PayloadIdentifier is unique and properly formatted",
+        "Profile is signed and deployable via MDM",
+        "Schema JSON documents all configurable options"
+      ]
+    },
+    {
+      "id": "3.19.5",
+      "category": "infrastructure",
+      "title": "Define MDM managed preferences",
+      "description": "Implement managed preferences for application settings, feature restrictions, security policies, and update behavior",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "enterprise/mdm/PaperFlow.mobileconfig",
+        "enterprise/mdm/managed-preferences.plist"
+      ],
+      "acceptanceCriteria": [
+        "All application settings are configurable",
+        "Feature restrictions can disable modules",
+        "Security preferences control encryption settings",
+        "Update preferences match GPO equivalents"
+      ]
+    },
+    {
+      "id": "3.19.6",
+      "category": "infrastructure",
+      "title": "Implement macOS managed preferences reader",
+      "description": "Create native module to read managed preferences from NSUserDefaults and CFPreferences at application startup",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/enterprise/mdmReader.ts",
+        "src/lib/enterprise/macPreferences.ts"
+      ],
+      "acceptanceCriteria": [
+        "Managed preferences are read from correct domains",
+        "MCX managed values take precedence over user values",
+        "Graceful handling when preferences are not managed",
+        "Type conversion handles all plist data types"
+      ]
+    },
+    {
+      "id": "3.19.7",
+      "category": "infrastructure",
+      "title": "Create unified enterprise policy store",
+      "description": "Implement Zustand store that merges GPO/MDM policies with local settings, respecting policy precedence and lock states",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/stores/enterprisePolicyStore.ts",
+        "src/lib/enterprise/policyMerger.ts"
+      ],
+      "acceptanceCriteria": [
+        "Policy store loads from platform-specific sources",
+        "Managed settings override user settings",
+        "Locked settings cannot be modified by user",
+        "Policy refresh on application focus"
+      ]
+    },
+    {
+      "id": "3.19.8",
+      "category": "ui",
+      "title": "Create enterprise policy status indicator",
+      "description": "Build UI component showing managed policy status, locked settings indicators, and admin contact information",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/enterprise/PolicyStatusIndicator.tsx",
+        "src/components/enterprise/LockedSettingBadge.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Indicator shows when policies are active",
+        "Locked settings show visual indicator",
+        "Tooltip explains why setting is managed",
+        "Admin contact info is displayed when configured"
+      ]
+    },
+    {
+      "id": "3.19.9",
+      "category": "infrastructure",
+      "title": "Implement MSI installer with GPO deployment support",
+      "description": "Create Windows MSI installer package with silent install options, transform support, and GPO deployment compatibility",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "installer/windows/PaperFlow.wxs",
+        "installer/windows/build-msi.ps1"
+      ],
+      "acceptanceCriteria": [
+        "MSI installs silently with /qn flag",
+        "Custom properties configurable via transforms",
+        "Per-machine and per-user installation supported",
+        "Uninstall removes all components cleanly"
+      ]
+    },
+    {
+      "id": "3.19.10",
+      "category": "infrastructure",
+      "title": "Create PKG installer with MDM deployment support",
+      "description": "Create macOS PKG installer package with preinstall/postinstall scripts and distribution XML for MDM deployment",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "installer/macos/build-pkg.sh",
+        "installer/macos/distribution.xml",
+        "installer/macos/scripts/preinstall",
+        "installer/macos/scripts/postinstall"
+      ],
+      "acceptanceCriteria": [
+        "PKG installs without user interaction",
+        "Distribution XML defines system requirements",
+        "Scripts configure initial settings",
+        "Notarization ready for Gatekeeper"
+      ]
+    },
+    {
+      "id": "3.19.11",
+      "category": "testing",
+      "title": "Create GPO deployment test suite",
+      "description": "Write tests for GPO policy reading, registry access, and policy enforcement on Windows",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "tests/enterprise/gpoReader.test.ts",
+        "tests/enterprise/registryAccess.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Registry reading tests cover all types",
+        "Policy precedence tests verify HKLM over HKCU",
+        "Mock registry for CI/CD testing",
+        "Coverage above 80%"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "ADMX/ADML templates deployable via GPO",
+    "Mobileconfig profiles deployable via MDM",
+    "Application reads and enforces managed policies",
+    "MSI installer works with GPO software deployment",
+    "PKG installer works with MDM deployment"
+  ],
+  "dependencies": [
+    "Electron or Tauri desktop wrapper in place",
+    "Settings store refactored for enterprise override",
+    "Windows and macOS build pipelines configured"
+  ],
+  "notes": [
+    "ADMX templates require Windows 10/11 or Server 2016+",
+    "MDM profiles require macOS 10.13+",
+    "Test with actual GPO and MDM environments when possible",
+    "Document policy settings for IT administrators"
+  ]
+}

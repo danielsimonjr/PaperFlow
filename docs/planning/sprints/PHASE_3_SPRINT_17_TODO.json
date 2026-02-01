@@ -1,0 +1,270 @@
+{
+  "phase": 3,
+  "sprint": 17,
+  "quarter": "Q3",
+  "title": "macOS Touch Bar & Windows Taskbar",
+  "goal": "Implement platform-specific integration features including macOS Touch Bar and Windows taskbar enhancements",
+  "milestone": "Deep Platform Integration",
+  "priority": "MEDIUM",
+  "status": "pending",
+  "totalEstimatedHours": 76,
+  "tasks": [
+    {
+      "id": "3.17.1",
+      "category": "macos",
+      "title": "Set up Touch Bar API integration",
+      "description": "Configure Electron's Touch Bar API with proper TypeScript types and integration with the main process",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/electron/touchbar.ts",
+        "src/types/touchbar.d.ts"
+      ],
+      "acceptanceCriteria": [
+        "Touch Bar API is available in main process",
+        "TypeScript types are defined",
+        "Touch Bar updates on window focus",
+        "Touch Bar clears on window blur"
+      ]
+    },
+    {
+      "id": "3.17.2",
+      "category": "macos",
+      "title": "Implement Touch Bar for document viewing",
+      "description": "Create Touch Bar controls for document viewing including zoom slider, page navigation, view mode buttons, and search",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/electron/touchbar/viewerTouchBar.ts"
+      ],
+      "acceptanceCriteria": [
+        "Zoom slider adjusts document zoom",
+        "Page navigation buttons work",
+        "View mode buttons toggle between modes",
+        "Search button opens search panel"
+      ]
+    },
+    {
+      "id": "3.17.3",
+      "category": "macos",
+      "title": "Implement Touch Bar for editing tools",
+      "description": "Create Touch Bar controls for editing including annotation tools, text formatting, color picker, and undo/redo",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/electron/touchbar/editorTouchBar.ts"
+      ],
+      "acceptanceCriteria": [
+        "Annotation tool buttons work",
+        "Text formatting buttons work",
+        "Color picker shows recent colors",
+        "Undo/redo buttons work"
+      ]
+    },
+    {
+      "id": "3.17.4",
+      "category": "macos",
+      "title": "Add Touch Bar color picker",
+      "description": "Implement native Touch Bar color picker for annotation and text colors with recent colors strip",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/electron/touchbar/colorPicker.ts"
+      ],
+      "acceptanceCriteria": [
+        "Color picker shows color spectrum",
+        "Recent colors are displayed",
+        "Color selection updates active tool",
+        "Picker integrates with system color picker"
+      ]
+    },
+    {
+      "id": "3.17.5",
+      "category": "macos",
+      "title": "Implement Touch Bar context switching",
+      "description": "Automatically switch Touch Bar layout based on active context (viewing, editing, form filling, signature)",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/electron/touchbar/touchBarManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Touch Bar switches with app context",
+        "Context changes are smooth",
+        "Previous context is restored",
+        "Custom contexts can be registered"
+      ]
+    },
+    {
+      "id": "3.17.6",
+      "category": "windows",
+      "title": "Configure Windows Jump Lists",
+      "description": "Implement Windows Jump List with recent documents, pinned documents, and common tasks (New, Open, Print)",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/electron/jumpList.ts"
+      ],
+      "acceptanceCriteria": [
+        "Recent documents appear in Jump List",
+        "Pinned documents are supported",
+        "Common tasks are available",
+        "Jump List updates on document open/save"
+      ]
+    },
+    {
+      "id": "3.17.7",
+      "category": "windows",
+      "title": "Implement Windows taskbar progress",
+      "description": "Show operation progress in Windows taskbar for long-running operations like PDF processing, export, and OCR",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/electron/taskbarProgress.ts"
+      ],
+      "acceptanceCriteria": [
+        "Progress bar appears during operations",
+        "Progress updates in real-time",
+        "Indeterminate progress is supported",
+        "Progress clears on completion"
+      ]
+    },
+    {
+      "id": "3.17.8",
+      "category": "windows",
+      "title": "Add Windows taskbar overlay icons",
+      "description": "Implement taskbar overlay icons for document status (unsaved changes, processing, error states)",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/electron/taskbarOverlay.ts"
+      ],
+      "acceptanceCriteria": [
+        "Unsaved changes show overlay indicator",
+        "Processing shows activity indicator",
+        "Errors show warning overlay",
+        "Overlays clear when resolved"
+      ]
+    },
+    {
+      "id": "3.17.9",
+      "category": "windows",
+      "title": "Implement Windows thumbnail toolbar",
+      "description": "Create thumbnail toolbar buttons for common actions (Previous Page, Next Page, Zoom In, Zoom Out)",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/electron/thumbnailToolbar.ts"
+      ],
+      "acceptanceCriteria": [
+        "Thumbnail toolbar appears on hover",
+        "Navigation buttons work",
+        "Zoom buttons work",
+        "Buttons are properly styled"
+      ]
+    },
+    {
+      "id": "3.17.10",
+      "category": "windows",
+      "title": "Configure Windows notification badges",
+      "description": "Implement notification badge on taskbar icon for pending actions, collaboration updates, or processing completion",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/electron/notificationBadge.ts"
+      ],
+      "acceptanceCriteria": [
+        "Badge count is displayed",
+        "Badge updates on events",
+        "Badge clears appropriately",
+        "Badge style matches system"
+      ]
+    },
+    {
+      "id": "3.17.11",
+      "category": "linux",
+      "title": "Implement Linux Unity/GNOME launcher integration",
+      "description": "Configure launcher quicklist and progress indicators for Unity and GNOME Shell desktop environments",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/electron/linuxLauncher.ts"
+      ],
+      "acceptanceCriteria": [
+        "Quicklist shows common actions",
+        "Progress indicators work",
+        "Recent files are accessible",
+        "Integration works on GNOME and KDE"
+      ]
+    },
+    {
+      "id": "3.17.12",
+      "category": "cross-platform",
+      "title": "Implement dock/taskbar icon flash",
+      "description": "Add dock/taskbar icon flashing to attract attention when background operations complete or errors occur",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/electron/attention.ts"
+      ],
+      "acceptanceCriteria": [
+        "Icon bounces on macOS Dock",
+        "Icon flashes on Windows taskbar",
+        "Urgent hint works on Linux",
+        "Attention stops when app focused"
+      ]
+    },
+    {
+      "id": "3.17.13",
+      "category": "testing",
+      "title": "Test platform integration features",
+      "description": "Test Touch Bar, Jump Lists, taskbar progress, and other platform-specific integrations on each platform",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/e2e/platform-integration.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "Touch Bar works on macOS",
+        "Jump Lists work on Windows",
+        "Taskbar progress works on Windows",
+        "Launcher integration works on Linux"
+      ]
+    },
+    {
+      "id": "3.17.14",
+      "category": "documentation",
+      "title": "Document platform integration features",
+      "description": "Create user documentation for platform-specific features including Touch Bar customization and Jump List usage",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/features/platform-integration.md"
+      ],
+      "acceptanceCriteria": [
+        "Touch Bar features are documented",
+        "Jump List features are documented",
+        "Taskbar features are documented",
+        "Screenshots show features on each platform"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Touch Bar provides useful document controls on macOS",
+    "Jump Lists show recent and pinned documents on Windows",
+    "Taskbar progress indicates operation status on Windows",
+    "Platform integrations feel native and useful",
+    "All integrations are tested on target platforms"
+  ],
+  "dependencies": [
+    "electron with Touch Bar support",
+    "Windows 10/11 for taskbar features",
+    "macOS with Touch Bar hardware"
+  ],
+  "notes": [
+    "Touch Bar is only available on older MacBook Pro models (2016-2020)",
+    "Windows Jump Lists require registration in app manifest",
+    "Linux launcher integration varies by desktop environment",
+    "These features enhance UX but app must work without them"
+  ]
+}

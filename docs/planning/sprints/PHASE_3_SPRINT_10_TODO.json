@@ -1,0 +1,301 @@
+{
+  "phase": 3,
+  "sprint": 10,
+  "quarter": "Q2",
+  "title": "Native Print Integration",
+  "goal": "Implement native print dialogs and advanced printer management for professional printing capabilities",
+  "milestone": "Professional Print Support",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 86,
+  "tasks": [
+    {
+      "id": "3.10.1",
+      "category": "electron",
+      "title": "Create native print dialog integration",
+      "description": "Implement Electron native print dialog with full access to system printers, paper sizes, and print options",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/main/print/printDialog.ts",
+        "electron/main/print/printerManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Native print dialog opens",
+        "All system printers are listed",
+        "Paper sizes are available",
+        "Print options work correctly"
+      ]
+    },
+    {
+      "id": "3.10.2",
+      "category": "electron",
+      "title": "Implement printer discovery service",
+      "description": "Create service to discover and enumerate available printers with capabilities, status, and default printer detection",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/main/print/printerDiscovery.ts",
+        "electron/main/print/printerCapabilities.ts"
+      ],
+      "acceptanceCriteria": [
+        "All printers are discovered",
+        "Capabilities are retrieved",
+        "Status (online/offline) is detected",
+        "Default printer is identified"
+      ]
+    },
+    {
+      "id": "3.10.3",
+      "category": "infrastructure",
+      "title": "Create print store for state management",
+      "description": "Build Zustand store for print settings, job queue, printer status, and print history",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/stores/printStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Print settings are stored",
+        "Job queue is managed",
+        "Printer status is tracked",
+        "History is maintained"
+      ]
+    },
+    {
+      "id": "3.10.4",
+      "category": "ui",
+      "title": "Build custom print preview component",
+      "description": "Create enhanced print preview with actual paper size rendering, margin visualization, and page layout options",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/components/print/PrintPreviewEnhanced.tsx",
+        "src/components/print/PageLayout.tsx",
+        "src/components/print/MarginEditor.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Preview matches actual output",
+        "Paper size is accurately represented",
+        "Margins are visible and editable",
+        "Layout options (portrait/landscape) work"
+      ]
+    },
+    {
+      "id": "3.10.5",
+      "category": "ui",
+      "title": "Create advanced print settings panel",
+      "description": "Build comprehensive print settings with duplex, collation, stapling, color mode, and quality options",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/print/AdvancedPrintSettings.tsx",
+        "src/components/print/PrintQualitySelector.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Duplex printing works",
+        "Collation option works",
+        "Color/grayscale selection works",
+        "Quality settings are applied"
+      ]
+    },
+    {
+      "id": "3.10.6",
+      "category": "infrastructure",
+      "title": "Implement PDF-to-printer rendering",
+      "description": "Create high-fidelity PDF rendering for printing with proper color management and resolution handling",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/print/pdfRenderer.ts",
+        "src/lib/print/colorManagement.ts"
+      ],
+      "acceptanceCriteria": [
+        "PDFs render at printer resolution",
+        "Colors are accurate",
+        "Fonts are embedded correctly",
+        "Images maintain quality"
+      ]
+    },
+    {
+      "id": "3.10.7",
+      "category": "infrastructure",
+      "title": "Create page imposition system",
+      "description": "Implement page imposition for booklet printing, n-up printing, and poster printing across multiple sheets",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/print/imposition.ts",
+        "src/lib/print/bookletLayout.ts",
+        "src/lib/print/nupLayout.ts"
+      ],
+      "acceptanceCriteria": [
+        "Booklet printing works correctly",
+        "N-up printing (2, 4, 6, 9) works",
+        "Poster printing tiles correctly",
+        "Page order is correct"
+      ]
+    },
+    {
+      "id": "3.10.8",
+      "category": "ui",
+      "title": "Build booklet print wizard",
+      "description": "Create step-by-step wizard for booklet printing with binding options, page ordering, and fold guides",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/print/BookletWizard.tsx",
+        "src/components/print/BindingOptions.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Wizard guides through setup",
+        "Binding options are configurable",
+        "Preview shows final booklet",
+        "Fold guides can be printed"
+      ]
+    },
+    {
+      "id": "3.10.9",
+      "category": "infrastructure",
+      "title": "Implement print job queue",
+      "description": "Create print job queue with status tracking, cancellation, and spooler integration",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/lib/print/printQueue.ts",
+        "electron/main/print/spoolerIntegration.ts"
+      ],
+      "acceptanceCriteria": [
+        "Jobs are queued properly",
+        "Status is tracked",
+        "Cancellation works",
+        "Spooler errors are handled"
+      ]
+    },
+    {
+      "id": "3.10.10",
+      "category": "electron",
+      "title": "Create printer status monitor",
+      "description": "Implement real-time printer status monitoring with paper, ink, and error notifications",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/main/print/printerMonitor.ts",
+        "src/components/print/PrinterStatus.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Paper status is shown",
+        "Ink levels are displayed",
+        "Errors are notified",
+        "Status updates in real-time"
+      ]
+    },
+    {
+      "id": "3.10.11",
+      "category": "ui",
+      "title": "Build print presets manager",
+      "description": "Create UI for saving, loading, and managing print presets for different use cases (draft, final, booklet, etc.)",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/components/print/PrintPresetsManager.tsx",
+        "src/lib/print/presets.ts"
+      ],
+      "acceptanceCriteria": [
+        "Presets can be saved",
+        "Presets can be loaded",
+        "Presets can be edited",
+        "Default presets exist"
+      ]
+    },
+    {
+      "id": "3.10.12",
+      "category": "infrastructure",
+      "title": "Implement virtual PDF printer",
+      "description": "Create virtual printer option that saves output as PDF with configurable settings",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/print/virtualPrinter.ts"
+      ],
+      "acceptanceCriteria": [
+        "Virtual printer appears in list",
+        "Output saves as PDF",
+        "Settings are applied",
+        "File location is configurable"
+      ]
+    },
+    {
+      "id": "3.10.13",
+      "category": "infrastructure",
+      "title": "Create print accessibility features",
+      "description": "Implement accessibility options for printing including large print mode, high contrast, and text-only output",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/print/accessibility.ts",
+        "src/components/print/AccessibilityOptions.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Large print mode works",
+        "High contrast option exists",
+        "Text-only output works",
+        "Options are easy to find"
+      ]
+    },
+    {
+      "id": "3.10.14",
+      "category": "testing",
+      "title": "Create print integration tests",
+      "description": "Write tests for print preview, imposition, and queue management with mocked printers",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "tests/unit/lib/print/imposition.test.ts",
+        "tests/unit/lib/print/pdfRenderer.test.ts",
+        "tests/integration/print/printWorkflow.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Imposition tests pass",
+        "Rendering tests pass",
+        "Queue tests pass",
+        "Integration tests cover workflow"
+      ]
+    },
+    {
+      "id": "3.10.15",
+      "category": "electron",
+      "title": "Implement silent printing API",
+      "description": "Create API for silent printing (no dialog) for automated and scheduled print jobs",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/main/print/silentPrint.ts"
+      ],
+      "acceptanceCriteria": [
+        "Silent print works",
+        "Default printer is used",
+        "Settings can be specified",
+        "Status is returned"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Native print dialog integrates seamlessly",
+    "All printer capabilities are exposed",
+    "Print preview accurately represents output",
+    "Booklet and n-up printing work correctly",
+    "Print queue is reliable"
+  ],
+  "dependencies": [
+    "electron (webContents.print)",
+    "pdf-lib",
+    "sharp"
+  ],
+  "notes": [
+    "Printer capabilities vary significantly across OS and printer models",
+    "Color management requires ICC profile support",
+    "Large format printing may require special handling",
+    "Consider PostScript vs PCL printer differences"
+  ]
+}

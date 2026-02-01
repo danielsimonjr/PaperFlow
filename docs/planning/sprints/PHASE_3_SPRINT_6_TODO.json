@@ -1,0 +1,351 @@
+{
+  "phase": 3,
+  "sprint": 6,
+  "quarter": "Q1",
+  "title": "OS Integration & Q1 Release",
+  "goal": "Complete OS integration features and release Phase 3 Q1 desktop app",
+  "milestone": "v2.0 Desktop Release",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 98,
+  "tasks": [
+    {
+      "id": "3.6.1",
+      "category": "feature",
+      "title": "Implement native print dialog",
+      "description": "Create native print integration using Electron's print API with system print dialog",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/print.ts",
+        "electron/ipc/printHandlers.ts",
+        "src/lib/electron/print.ts"
+      ],
+      "acceptanceCriteria": [
+        "Native print dialog opens",
+        "Printer selection works",
+        "Print settings (copies, range) work",
+        "Print preview is available"
+      ]
+    },
+    {
+      "id": "3.6.2",
+      "category": "feature",
+      "title": "Create PDF to printer output",
+      "description": "Implement direct PDF printing to system printer with correct formatting",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/print.ts"
+      ],
+      "acceptanceCriteria": [
+        "PDF prints with correct dimensions",
+        "Margins are respected",
+        "Color/grayscale options work",
+        "Multi-page documents print correctly"
+      ]
+    },
+    {
+      "id": "3.6.3",
+      "category": "feature",
+      "title": "Implement shell integration",
+      "description": "Add Show in Folder, Open in Default App, and Reveal in File Manager features",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/shell.ts",
+        "electron/ipc/shellHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "Show in Folder opens file manager",
+        "Open with Default App works",
+        "Open URL in browser works",
+        "Works on all platforms"
+      ]
+    },
+    {
+      "id": "3.6.4",
+      "category": "feature",
+      "title": "Create protocol handler registration",
+      "description": "Register paperflow:// protocol for deep linking to open files and specific features",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/protocol.ts",
+        "electron/main.ts"
+      ],
+      "acceptanceCriteria": [
+        "paperflow:// protocol is registered",
+        "paperflow://open?file=path opens file",
+        "Protocol works from browser links",
+        "Works on Windows, macOS, and Linux"
+      ]
+    },
+    {
+      "id": "3.6.5",
+      "category": "feature",
+      "title": "Implement startup with OS",
+      "description": "Add option to launch app when user logs in to OS",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/startup.ts",
+        "src/stores/settingsStore.ts",
+        "src/components/settings/GeneralSettings.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Launch at startup toggle is available",
+        "App starts minimized option is available",
+        "Setting persists across sessions",
+        "Works on Windows, macOS, and Linux"
+      ]
+    },
+    {
+      "id": "3.6.6",
+      "category": "feature",
+      "title": "Create native dialogs",
+      "description": "Implement native message boxes, error dialogs, and confirmation dialogs",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/dialogs.ts",
+        "electron/ipc/dialogHandlers.ts",
+        "src/lib/electron/dialogs.ts"
+      ],
+      "acceptanceCriteria": [
+        "Message boxes show native style",
+        "Error dialogs display with icon",
+        "Confirmation dialogs have proper buttons",
+        "Dialogs block parent window appropriately"
+      ]
+    },
+    {
+      "id": "3.6.7",
+      "category": "feature",
+      "title": "Implement clipboard operations",
+      "description": "Enable native clipboard operations for images and formatted text",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/clipboard.ts",
+        "electron/ipc/clipboardHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "Copy PDF page as image works",
+        "Copy selected text with formatting works",
+        "Paste image into document works",
+        "Clipboard format detection works"
+      ]
+    },
+    {
+      "id": "3.6.8",
+      "category": "feature",
+      "title": "Create power save blocker",
+      "description": "Prevent system sleep during long operations like OCR or large file processing",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "electron/powerSave.ts"
+      ],
+      "acceptanceCriteria": [
+        "System stays awake during processing",
+        "Power save blocker is released after operation",
+        "User is informed about power save block",
+        "Works on all platforms"
+      ]
+    },
+    {
+      "id": "3.6.9",
+      "category": "feature",
+      "title": "Implement secure storage",
+      "description": "Use OS keychain/credential store for sensitive data like API keys",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/secureStorage.ts",
+        "electron/ipc/storageHandlers.ts"
+      ],
+      "acceptanceCriteria": [
+        "Sensitive data stored in OS keychain",
+        "Windows Credential Store is used",
+        "macOS Keychain is used",
+        "Linux Secret Service is used"
+      ]
+    },
+    {
+      "id": "3.6.10",
+      "category": "feature",
+      "title": "Create crash reporter integration",
+      "description": "Set up crash reporting for automatic error collection in production",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/crashReporter.ts",
+        "electron/main.ts"
+      ],
+      "acceptanceCriteria": [
+        "Crashes are automatically reported",
+        "User consent is obtained",
+        "Crash reports include useful context",
+        "Reports are sent to error tracking service"
+      ]
+    },
+    {
+      "id": "3.6.11",
+      "category": "testing",
+      "title": "Create E2E tests for desktop features",
+      "description": "Write Playwright tests for Electron-specific features",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "tests/e2e-electron/fileOperations.spec.ts",
+        "tests/e2e-electron/menuShortcuts.spec.ts",
+        "tests/e2e-electron/updates.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "File operations E2E tests pass",
+        "Menu and shortcuts E2E tests pass",
+        "Update flow E2E tests pass",
+        "Tests run in CI pipeline"
+      ]
+    },
+    {
+      "id": "3.6.12",
+      "category": "testing",
+      "title": "Perform cross-platform testing",
+      "description": "Test desktop app on Windows, macOS, and Linux for compatibility",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "docs/testing/cross-platform-results.md"
+      ],
+      "acceptanceCriteria": [
+        "App works on Windows 10/11",
+        "App works on macOS 12+",
+        "App works on Ubuntu 22.04+",
+        "Platform-specific bugs are documented"
+      ]
+    },
+    {
+      "id": "3.6.13",
+      "category": "setup",
+      "title": "Update version to 2.0.0",
+      "description": "Update package.json and all version references for desktop release",
+      "status": "pending",
+      "estimatedHours": 2,
+      "files": [
+        "package.json",
+        "src/constants/version.ts"
+      ],
+      "acceptanceCriteria": [
+        "package.json version is 2.0.0",
+        "All version references are updated",
+        "Version shows in app About dialog",
+        "Version appears in window title"
+      ]
+    },
+    {
+      "id": "3.6.14",
+      "category": "docs",
+      "title": "Update changelog for v2.0",
+      "description": "Document all Phase 3 Q1 changes in CHANGELOG.md",
+      "status": "pending",
+      "estimatedHours": 2,
+      "files": [
+        "CHANGELOG.md"
+      ],
+      "acceptanceCriteria": [
+        "All desktop features are documented",
+        "Breaking changes are noted",
+        "Migration guide from PWA is included",
+        "Changelog follows keep-a-changelog format"
+      ]
+    },
+    {
+      "id": "3.6.15",
+      "category": "docs",
+      "title": "Create v2.0 release notes",
+      "description": "Write user-facing release notes highlighting desktop features",
+      "status": "pending",
+      "estimatedHours": 2,
+      "files": [
+        "docs/releases/v2.0.0.md"
+      ],
+      "acceptanceCriteria": [
+        "Desktop features are highlighted",
+        "Installation instructions per platform",
+        "Known issues are documented",
+        "Upgrade path is explained"
+      ]
+    },
+    {
+      "id": "3.6.16",
+      "category": "docs",
+      "title": "Create desktop installation guide",
+      "description": "Write comprehensive installation guide for all platforms",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "docs/installation.md"
+      ],
+      "acceptanceCriteria": [
+        "Windows installation is documented",
+        "macOS installation is documented",
+        "Linux installation is documented",
+        "Troubleshooting section is included"
+      ]
+    },
+    {
+      "id": "3.6.17",
+      "category": "setup",
+      "title": "Configure CI/CD for desktop builds",
+      "description": "Set up GitHub Actions for building and releasing desktop apps",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        ".github/workflows/build-desktop.yml",
+        ".github/workflows/release-desktop.yml"
+      ],
+      "acceptanceCriteria": [
+        "Desktop builds run on push/PR",
+        "Builds produce artifacts for all platforms",
+        "Release workflow publishes to GitHub Releases",
+        "Code signing happens in CI"
+      ]
+    },
+    {
+      "id": "3.6.18",
+      "category": "setup",
+      "title": "Deploy v2.0 release",
+      "description": "Create and publish v2.0 release with all desktop installers",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [],
+      "acceptanceCriteria": [
+        "GitHub Release is created",
+        "Windows installer is uploaded",
+        "macOS DMG is uploaded",
+        "Linux AppImage and deb are uploaded",
+        "Release notes are attached"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "All OS integration features work correctly",
+    "App passes cross-platform testing",
+    "Auto-updater delivers updates successfully",
+    "v2.0 is released on all platforms",
+    "Documentation is complete and accurate"
+  ],
+  "dependencies": [
+    "Sprint 1-5: All previous Q1 sprints must be complete",
+    "Code signing certificates configured",
+    "CI/CD pipeline set up for desktop builds"
+  ],
+  "notes": [
+    "This is the Q1 release sprint - focus on stability and polish",
+    "Cross-platform testing is critical before release",
+    "Ensure auto-update works before public release",
+    "Monitor crash reports closely after release"
+  ]
+}

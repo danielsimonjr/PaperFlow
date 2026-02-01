@@ -1,0 +1,268 @@
+{
+  "phase": 3,
+  "sprint": 24,
+  "quarter": "Q4",
+  "title": "Kiosk Mode & Year Release",
+  "goal": "Implement kiosk mode lockdown features and prepare v3.0 annual release",
+  "milestone": "v3.0 Annual Release",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 96,
+  "tasks": [
+    {
+      "id": "3.24.1",
+      "category": "infrastructure",
+      "title": "Design kiosk mode architecture",
+      "description": "Design comprehensive kiosk mode with restricted navigation, disabled features, and auto-reset functionality",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/kiosk/kioskMode.ts",
+        "src/types/kioskConfig.ts"
+      ],
+      "acceptanceCriteria": [
+        "Kiosk mode configuration schema defined",
+        "Feature restriction system designed",
+        "Auto-reset mechanism planned",
+        "Exit authentication system planned"
+      ]
+    },
+    {
+      "id": "3.24.2",
+      "category": "infrastructure",
+      "title": "Implement kiosk mode activation system",
+      "description": "Create kiosk mode manager with PIN-protected entry/exit, configuration loading, and state persistence",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/kiosk/kioskManager.ts",
+        "src/lib/kiosk/kioskAuth.ts",
+        "src/stores/kioskStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Kiosk mode activated via config or UI",
+        "PIN required to exit kiosk mode",
+        "Configuration persists across restarts",
+        "Kiosk state tracked in store"
+      ]
+    },
+    {
+      "id": "3.24.3",
+      "category": "infrastructure",
+      "title": "Create feature lockdown system",
+      "description": "Implement feature restriction based on kiosk configuration: disable file save, print, export, sharing, settings access",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/kiosk/featureRestrictions.ts",
+        "src/lib/kiosk/restrictionEnforcer.ts"
+      ],
+      "acceptanceCriteria": [
+        "File operations can be restricted",
+        "Print/export can be disabled",
+        "Settings access blocked",
+        "Restricted features hidden from UI"
+      ]
+    },
+    {
+      "id": "3.24.4",
+      "category": "infrastructure",
+      "title": "Implement navigation lockdown",
+      "description": "Create navigation restrictions for kiosk mode: disable URL bar, restrict to specific documents, block external links",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/kiosk/navigationLock.ts",
+        "src/lib/kiosk/allowedDocuments.ts"
+      ],
+      "acceptanceCriteria": [
+        "URL/file browser navigation disabled",
+        "Only allowed documents accessible",
+        "External links blocked or opened restricted",
+        "Deep link navigation controlled"
+      ]
+    },
+    {
+      "id": "3.24.5",
+      "category": "infrastructure",
+      "title": "Create session auto-reset system",
+      "description": "Implement automatic session reset after inactivity timeout, clearing annotations, form data, and returning to home screen",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/kiosk/sessionReset.ts",
+        "src/lib/kiosk/inactivityMonitor.ts"
+      ],
+      "acceptanceCriteria": [
+        "Inactivity timeout configurable",
+        "Warning countdown before reset",
+        "All user data cleared on reset",
+        "Return to configured home document"
+      ]
+    },
+    {
+      "id": "3.24.6",
+      "category": "ui",
+      "title": "Create kiosk mode UI shell",
+      "description": "Build simplified UI for kiosk mode with minimal chrome, large touch targets, and restricted toolbars",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/kiosk/KioskShell.tsx",
+        "src/components/kiosk/KioskToolbar.tsx",
+        "src/components/kiosk/KioskHeader.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Minimal UI chrome in kiosk mode",
+        "Large touch-friendly controls",
+        "Only allowed tools shown",
+        "Full screen by default"
+      ]
+    },
+    {
+      "id": "3.24.7",
+      "category": "ui",
+      "title": "Create kiosk configuration UI",
+      "description": "Build admin interface for configuring kiosk mode settings, restrictions, and allowed documents",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/kiosk/KioskConfigPanel.tsx",
+        "src/components/kiosk/RestrictionToggleList.tsx",
+        "src/components/kiosk/DocumentAllowList.tsx"
+      ],
+      "acceptanceCriteria": [
+        "All restrictions configurable",
+        "Document allow list manageable",
+        "Timeout settings configurable",
+        "Export/import configuration"
+      ]
+    },
+    {
+      "id": "3.24.8",
+      "category": "testing",
+      "title": "Execute comprehensive regression testing",
+      "description": "Run full regression test suite covering all Phase 3 features across all supported platforms",
+      "status": "pending",
+      "estimatedHours": 16,
+      "files": [
+        "tests/regression/phase3-full.test.ts",
+        "tests/e2e/enterprise-features.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "All unit tests pass",
+        "All integration tests pass",
+        "All E2E tests pass on Windows, macOS, Linux",
+        "No critical or high severity issues"
+      ]
+    },
+    {
+      "id": "3.24.9",
+      "category": "testing",
+      "title": "Conduct enterprise feature UAT",
+      "description": "Execute user acceptance testing with enterprise beta customers for all Phase 3 Q4 features",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "docs/testing/enterprise-uat-results.md"
+      ],
+      "acceptanceCriteria": [
+        "UAT executed with 3+ enterprise customers",
+        "GPO/MDM deployment validated",
+        "License system approved",
+        "LAN collaboration tested in real environment"
+      ]
+    },
+    {
+      "id": "3.24.10",
+      "category": "infrastructure",
+      "title": "Prepare v3.0 release artifacts",
+      "description": "Build and sign all release artifacts: Windows MSI/EXE, macOS PKG/DMG, Linux DEB/RPM/AppImage",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "scripts/build-release-v3.ts",
+        "dist/v3.0.0/"
+      ],
+      "acceptanceCriteria": [
+        "All platform installers built",
+        "Code signing applied",
+        "Notarization complete for macOS",
+        "Checksums generated"
+      ]
+    },
+    {
+      "id": "3.24.11",
+      "category": "infrastructure",
+      "title": "Create v3.0 release documentation",
+      "description": "Write release notes, upgrade guide, enterprise deployment guide, and API changelog for v3.0",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "docs/releases/v3.0.0-release-notes.md",
+        "docs/enterprise/deployment-guide.md",
+        "docs/enterprise/upgrade-guide.md",
+        "CHANGELOG.md"
+      ],
+      "acceptanceCriteria": [
+        "Release notes cover all new features",
+        "Enterprise deployment guide complete",
+        "Upgrade path documented",
+        "Breaking changes highlighted"
+      ]
+    },
+    {
+      "id": "3.24.12",
+      "category": "infrastructure",
+      "title": "Deploy v3.0 to production",
+      "description": "Deploy v3.0 release to production update server, website, and enterprise distribution channels",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "scripts/deploy-v3.ts"
+      ],
+      "acceptanceCriteria": [
+        "Update server has v3.0 release",
+        "Website updated with new features",
+        "Enterprise channels notified",
+        "Rollback plan ready"
+      ]
+    },
+    {
+      "id": "3.24.13",
+      "category": "testing",
+      "title": "Post-release monitoring and hotfix readiness",
+      "description": "Monitor v3.0 release metrics, error rates, and prepare hotfix process for critical issues",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "docs/operations/v3-monitoring.md"
+      ],
+      "acceptanceCriteria": [
+        "Monitoring dashboards active",
+        "Error rates within acceptable range",
+        "Hotfix pipeline tested",
+        "Support team briefed"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Kiosk mode provides secure public terminal experience",
+    "All Phase 3 features tested and approved",
+    "v3.0.0 released on all platforms",
+    "Enterprise customers successfully deploying",
+    "Year 2 Phase 3 complete"
+  ],
+  "dependencies": [
+    "Sprints 19-23 completed",
+    "Enterprise beta customer participation",
+    "Code signing certificates valid",
+    "Release infrastructure ready"
+  ],
+  "notes": [
+    "Kiosk mode essential for public-facing deployments",
+    "v3.0 represents major enterprise milestone",
+    "Coordinate release with marketing and sales",
+    "Plan for post-release support surge"
+  ]
+}

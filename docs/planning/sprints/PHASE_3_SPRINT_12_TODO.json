@@ -1,0 +1,307 @@
+{
+  "phase": 3,
+  "sprint": 12,
+  "quarter": "Q2",
+  "title": "Hardware Security & Q2 Release",
+  "goal": "Implement FIDO2/WebAuthn hardware key support and prepare Q2 release with desktop-specific features",
+  "milestone": "Q2 Desktop Release",
+  "priority": "CRITICAL",
+  "status": "pending",
+  "totalEstimatedHours": 102,
+  "tasks": [
+    {
+      "id": "3.12.1",
+      "category": "infrastructure",
+      "title": "Implement WebAuthn API integration",
+      "description": "Create WebAuthn client for hardware security key authentication using FIDO2 protocol",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/security/webauthn.ts",
+        "src/lib/security/webauthnClient.ts",
+        "src/types/webauthn.ts"
+      ],
+      "acceptanceCriteria": [
+        "WebAuthn registration works",
+        "WebAuthn authentication works",
+        "Credential management works",
+        "Error handling is robust"
+      ]
+    },
+    {
+      "id": "3.12.2",
+      "category": "electron",
+      "title": "Create Electron WebAuthn bridge",
+      "description": "Implement Electron-specific handling for WebAuthn since native browser support may be limited",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/main/security/webauthnBridge.ts",
+        "electron/preload/webauthnPreload.ts"
+      ],
+      "acceptanceCriteria": [
+        "Bridge enables WebAuthn in Electron",
+        "Hardware keys are detected",
+        "USB and NFC authenticators work",
+        "Platform authenticators work"
+      ]
+    },
+    {
+      "id": "3.12.3",
+      "category": "infrastructure",
+      "title": "Implement FIDO2 server verification",
+      "description": "Create server-side verification for FIDO2 credentials with attestation and assertion validation",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/security/fido2Server.ts",
+        "src/lib/security/attestation.ts",
+        "src/lib/security/assertion.ts"
+      ],
+      "acceptanceCriteria": [
+        "Attestation is verified",
+        "Assertions are validated",
+        "Replay attacks are prevented",
+        "Credential storage is secure"
+      ]
+    },
+    {
+      "id": "3.12.4",
+      "category": "ui",
+      "title": "Create hardware key enrollment flow",
+      "description": "Build user flow for enrolling hardware security keys with step-by-step guidance and key management",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/security/HardwareKeyEnrollment.tsx",
+        "src/components/security/KeyManagement.tsx",
+        "src/components/security/EnrollmentGuide.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Enrollment flow is intuitive",
+        "Multiple keys can be enrolled",
+        "Keys can be named",
+        "Keys can be removed"
+      ]
+    },
+    {
+      "id": "3.12.5",
+      "category": "ui",
+      "title": "Build hardware key authentication UI",
+      "description": "Create authentication UI for hardware key challenges with timeout handling and fallback options",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/security/HardwareKeyAuth.tsx",
+        "src/components/security/KeyChallenge.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Authentication prompt is clear",
+        "Key touch is detected",
+        "Timeout is handled gracefully",
+        "Fallback options are available"
+      ]
+    },
+    {
+      "id": "3.12.6",
+      "category": "infrastructure",
+      "title": "Implement document encryption with hardware keys",
+      "description": "Use hardware keys for document encryption key wrapping, enabling secure document protection",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/security/hardwareEncryption.ts",
+        "src/lib/security/keyWrapping.ts"
+      ],
+      "acceptanceCriteria": [
+        "Documents can be encrypted",
+        "Hardware key unlocks documents",
+        "Key wrapping is secure",
+        "Multiple keys can unlock same document"
+      ]
+    },
+    {
+      "id": "3.12.7",
+      "category": "infrastructure",
+      "title": "Create security store",
+      "description": "Build Zustand store for security state including enrolled keys, authentication status, and security settings",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/stores/securityStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Enrolled keys are tracked",
+        "Auth status is managed",
+        "Security settings are stored",
+        "Session timeout is handled"
+      ]
+    },
+    {
+      "id": "3.12.8",
+      "category": "quality",
+      "title": "Perform Q2 feature integration testing",
+      "description": "Comprehensive testing of all Q2 features (offline, file watching, batch, print, scanner, security) working together",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "tests/integration/q2/featureIntegration.test.ts",
+        "tests/e2e/q2/desktopWorkflows.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "All Q2 features work together",
+        "No regressions in existing features",
+        "Performance benchmarks are met",
+        "Memory usage is acceptable"
+      ]
+    },
+    {
+      "id": "3.12.9",
+      "category": "quality",
+      "title": "Conduct security audit",
+      "description": "Perform security audit of all new Q2 features with focus on hardware key implementation and data protection",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "docs/security/q2-audit-report.md"
+      ],
+      "acceptanceCriteria": [
+        "WebAuthn implementation is reviewed",
+        "Encryption is validated",
+        "No security vulnerabilities found",
+        "Recommendations are documented"
+      ]
+    },
+    {
+      "id": "3.12.10",
+      "category": "quality",
+      "title": "Perform cross-platform testing",
+      "description": "Test all features on Windows, macOS, and Linux to ensure consistent behavior",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/e2e/crossPlatform/windows.test.ts",
+        "tests/e2e/crossPlatform/macos.test.ts",
+        "tests/e2e/crossPlatform/linux.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "All features work on Windows",
+        "All features work on macOS",
+        "All features work on Linux",
+        "Platform-specific issues are documented"
+      ]
+    },
+    {
+      "id": "3.12.11",
+      "category": "documentation",
+      "title": "Create Q2 release documentation",
+      "description": "Write release notes, upgrade guide, and feature documentation for Q2 desktop features",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "docs/releases/q2-release-notes.md",
+        "docs/guides/desktop-features.md",
+        "docs/guides/hardware-security.md"
+      ],
+      "acceptanceCriteria": [
+        "Release notes are complete",
+        "Upgrade guide exists",
+        "Feature docs are written",
+        "Known issues are listed"
+      ]
+    },
+    {
+      "id": "3.12.12",
+      "category": "infrastructure",
+      "title": "Prepare release build pipeline",
+      "description": "Configure CI/CD for building signed desktop applications for all platforms",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        ".github/workflows/release-desktop.yml",
+        "electron/scripts/build.ts",
+        "electron/scripts/sign.ts"
+      ],
+      "acceptanceCriteria": [
+        "Windows builds are signed",
+        "macOS builds are notarized",
+        "Linux builds are packaged",
+        "Auto-update works"
+      ]
+    },
+    {
+      "id": "3.12.13",
+      "category": "infrastructure",
+      "title": "Implement auto-update system",
+      "description": "Create Electron auto-update with differential updates, rollback, and update notifications",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "electron/main/updates/autoUpdater.ts",
+        "electron/main/updates/differential.ts",
+        "src/components/updates/UpdateNotification.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Updates are detected",
+        "Differential updates reduce download size",
+        "Rollback is available",
+        "User is notified of updates"
+      ]
+    },
+    {
+      "id": "3.12.14",
+      "category": "testing",
+      "title": "Create hardware security tests",
+      "description": "Write comprehensive tests for WebAuthn, FIDO2, and hardware key functionality with mocked authenticators",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/unit/lib/security/webauthn.test.ts",
+        "tests/unit/lib/security/fido2Server.test.ts",
+        "tests/integration/security/hardwareAuth.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "WebAuthn tests pass",
+        "FIDO2 verification tests pass",
+        "Mock authenticators work",
+        "Edge cases are covered"
+      ]
+    },
+    {
+      "id": "3.12.15",
+      "category": "quality",
+      "title": "Perform final Q2 QA pass",
+      "description": "Complete quality assurance testing including accessibility, performance, and user experience review",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "docs/qa/q2-qa-report.md"
+      ],
+      "acceptanceCriteria": [
+        "Accessibility audit passes",
+        "Performance meets targets",
+        "UX review is positive",
+        "All blockers are resolved"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Hardware security keys work for authentication",
+    "Documents can be encrypted with hardware keys",
+    "All Q2 features are integrated and stable",
+    "Cross-platform builds are signed and working",
+    "Auto-update system is reliable"
+  ],
+  "dependencies": [
+    "@simplewebauthn/browser",
+    "@simplewebauthn/server",
+    "electron-builder",
+    "electron-updater"
+  ],
+  "notes": [
+    "Hardware keys must support FIDO2/WebAuthn (YubiKey 5, Solo keys, etc.)",
+    "Code signing certificates are required for distribution",
+    "macOS notarization requires Apple Developer account",
+    "Consider beta testing period before full release"
+  ]
+}

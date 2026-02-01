@@ -1,0 +1,263 @@
+{
+  "phase": 3,
+  "sprint": 16,
+  "quarter": "Q3",
+  "title": "Platform UI Adaptations",
+  "goal": "Adapt UI for platform-specific conventions including window chrome, fonts, spacing, and native behaviors",
+  "milestone": "Native Look and Feel",
+  "priority": "MEDIUM",
+  "status": "pending",
+  "totalEstimatedHours": 78,
+  "tasks": [
+    {
+      "id": "3.16.1",
+      "category": "ui",
+      "title": "Implement platform detection system",
+      "description": "Create platform detection utilities to identify OS, version, and capabilities, exposing platform info through a React context",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/utils/platform.ts",
+        "src/contexts/PlatformContext.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Platform (Windows/macOS/Linux) is detected",
+        "OS version is detected",
+        "Platform capabilities are exposed",
+        "React context provides platform info to components"
+      ]
+    },
+    {
+      "id": "3.16.2",
+      "category": "ui",
+      "title": "Configure native window chrome",
+      "description": "Implement platform-specific window chrome with frameless window on macOS, native title bar on Windows, and CSD on Linux",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/electron/main.ts",
+        "src/components/layout/TitleBar.tsx"
+      ],
+      "acceptanceCriteria": [
+        "macOS uses frameless window with traffic lights",
+        "Windows uses native title bar with accent color",
+        "Linux supports CSD with GNOME and KDE",
+        "Window controls are in correct positions"
+      ]
+    },
+    {
+      "id": "3.16.3",
+      "category": "ui",
+      "title": "Implement platform-specific fonts",
+      "description": "Configure system font stacks for each platform (SF Pro on macOS, Segoe UI on Windows, system fonts on Linux) with proper fallbacks",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/styles/fonts.css",
+        "src/styles/platform.css"
+      ],
+      "acceptanceCriteria": [
+        "macOS uses SF Pro/San Francisco",
+        "Windows uses Segoe UI Variable",
+        "Linux uses system default fonts",
+        "Font weights and sizes are adjusted per platform"
+      ]
+    },
+    {
+      "id": "3.16.4",
+      "category": "ui",
+      "title": "Adjust spacing and sizing for each platform",
+      "description": "Implement platform-specific spacing tokens to match native UI density (macOS more spacious, Windows denser, Linux varies)",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/styles/spacing.css",
+        "src/styles/platform.css"
+      ],
+      "acceptanceCriteria": [
+        "macOS has more generous spacing",
+        "Windows matches Fluent Design density",
+        "Linux adapts to GTK/Qt conventions",
+        "Touch targets remain accessible"
+      ]
+    },
+    {
+      "id": "3.16.5",
+      "category": "ui",
+      "title": "Implement platform-specific scrollbars",
+      "description": "Configure scrollbar styling to match platform conventions (overlay on macOS, always visible on Windows, varies on Linux)",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/styles/scrollbars.css"
+      ],
+      "acceptanceCriteria": [
+        "macOS uses overlay scrollbars",
+        "Windows uses always-visible scrollbars",
+        "Linux respects GTK/Qt scrollbar settings",
+        "Scrollbar width matches platform"
+      ]
+    },
+    {
+      "id": "3.16.6",
+      "category": "ui",
+      "title": "Configure platform-specific dialogs",
+      "description": "Use native file dialogs and message boxes on each platform, with fallback to styled HTML dialogs when needed",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/electron/dialogs.ts",
+        "src/components/ui/NativeDialog.tsx"
+      ],
+      "acceptanceCriteria": [
+        "File open/save uses native dialogs",
+        "Message boxes use native alerts",
+        "Dialogs follow platform conventions",
+        "Fallback dialogs match native look"
+      ]
+    },
+    {
+      "id": "3.16.7",
+      "category": "ui",
+      "title": "Implement platform-specific keyboard shortcuts",
+      "description": "Configure keyboard shortcuts to match platform conventions (Cmd on macOS, Ctrl on Windows/Linux) with proper display in menus",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/utils/shortcuts.ts",
+        "src/hooks/useKeyboardShortcuts.ts"
+      ],
+      "acceptanceCriteria": [
+        "macOS uses Cmd modifier",
+        "Windows/Linux uses Ctrl modifier",
+        "Shortcuts display correctly in menus",
+        "Platform-specific shortcuts are supported"
+      ]
+    },
+    {
+      "id": "3.16.8",
+      "category": "ui",
+      "title": "Configure native menus for each platform",
+      "description": "Create platform-specific application menus following OS conventions (app menu on macOS, hamburger on Windows, varies on Linux)",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/electron/menu.ts",
+        "src/components/layout/AppMenu.tsx"
+      ],
+      "acceptanceCriteria": [
+        "macOS has standard app menu structure",
+        "Windows uses hamburger menu or menu bar",
+        "Linux respects desktop environment",
+        "Menu items show correct shortcuts"
+      ]
+    },
+    {
+      "id": "3.16.9",
+      "category": "ui",
+      "title": "Implement platform-specific drag and drop",
+      "description": "Configure drag and drop behavior to match platform conventions including drag preview, drop indicators, and feedback",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/utils/dragDrop.ts",
+        "src/hooks/useDragDrop.ts"
+      ],
+      "acceptanceCriteria": [
+        "Drag preview matches platform style",
+        "Drop indicators are platform-appropriate",
+        "Drag feedback follows OS conventions",
+        "File drops work correctly"
+      ]
+    },
+    {
+      "id": "3.16.10",
+      "category": "ui",
+      "title": "Support dark mode on all platforms",
+      "description": "Implement system dark mode detection and response on all platforms with smooth transitions and proper native integration",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/hooks/useSystemTheme.ts",
+        "src/styles/dark-mode.css"
+      ],
+      "acceptanceCriteria": [
+        "System dark mode is detected on all platforms",
+        "Theme changes are responded to in real-time",
+        "Transitions between themes are smooth",
+        "Native elements respect system theme"
+      ]
+    },
+    {
+      "id": "3.16.11",
+      "category": "ui",
+      "title": "Implement high DPI support",
+      "description": "Ensure proper rendering on high DPI displays including Retina, Windows scaling, and Linux fractional scaling",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/utils/dpi.ts",
+        "src/styles/hidpi.css"
+      ],
+      "acceptanceCriteria": [
+        "macOS Retina displays render crisply",
+        "Windows scaling is handled correctly",
+        "Linux fractional scaling works",
+        "Icons and images are sharp at all scales"
+      ]
+    },
+    {
+      "id": "3.16.12",
+      "category": "accessibility",
+      "title": "Configure platform accessibility features",
+      "description": "Integrate with platform accessibility APIs including VoiceOver (macOS), Narrator (Windows), and Orca (Linux)",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/electron/accessibility.ts",
+        "src/utils/a11y.ts"
+      ],
+      "acceptanceCriteria": [
+        "VoiceOver works correctly on macOS",
+        "Narrator works correctly on Windows",
+        "Orca works correctly on Linux",
+        "Screen reader announcements are proper"
+      ]
+    },
+    {
+      "id": "3.16.13",
+      "category": "testing",
+      "title": "Test platform UI adaptations",
+      "description": "Test UI adaptations on all platforms including visual regression tests and accessibility audits",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/e2e/platform-ui.spec.ts"
+      ],
+      "acceptanceCriteria": [
+        "UI looks native on macOS",
+        "UI looks native on Windows",
+        "UI looks native on Linux",
+        "Accessibility features work on all platforms"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "App feels native on macOS",
+    "App feels native on Windows",
+    "App feels native on Linux",
+    "Keyboard shortcuts match platform conventions",
+    "Dark mode works on all platforms",
+    "High DPI displays are fully supported"
+  ],
+  "dependencies": [
+    "electron with native module support",
+    "platform-specific testing environments"
+  ],
+  "notes": [
+    "macOS users expect traffic light window controls on the left",
+    "Windows users expect minimize/maximize/close on the right",
+    "Linux varies significantly between desktop environments",
+    "Consistent behavior should take precedence over native look when needed"
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "phase": 3,
+  "sprint": 23,
+  "quarter": "Q4",
+  "title": "On-Premise Update Server",
+  "goal": "Implement self-hosted update server for enterprises that cannot use cloud update services",
+  "milestone": "Enterprise Update Infrastructure",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 94,
+  "tasks": [
+    {
+      "id": "3.23.1",
+      "category": "infrastructure",
+      "title": "Design update server architecture",
+      "description": "Design self-hosted update server with release management, differential updates, and channel support",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "server/update/architecture.md",
+        "server/update/types.ts"
+      ],
+      "acceptanceCriteria": [
+        "Architecture document created",
+        "API endpoints defined",
+        "Channel system (stable, beta, dev) designed",
+        "Differential update strategy documented"
+      ]
+    },
+    {
+      "id": "3.23.2",
+      "category": "infrastructure",
+      "title": "Create update server core",
+      "description": "Implement Node.js/Express update server with release storage, metadata management, and health endpoints",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "server/update/server.ts",
+        "server/update/releaseManager.ts",
+        "server/update/healthCheck.ts"
+      ],
+      "acceptanceCriteria": [
+        "Server starts and listens on configurable port",
+        "Release files served from storage",
+        "Metadata endpoint returns version info",
+        "Health endpoint for monitoring"
+      ]
+    },
+    {
+      "id": "3.23.3",
+      "category": "infrastructure",
+      "title": "Implement release upload and management API",
+      "description": "Create authenticated API for uploading new releases, managing versions, and setting channel assignments",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "server/update/uploadApi.ts",
+        "server/update/versionManager.ts",
+        "server/update/channelManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "POST /releases uploads new release",
+        "Multipart file upload supported",
+        "Version management (promote, deprecate)",
+        "Channel assignment configurable"
+      ]
+    },
+    {
+      "id": "3.23.4",
+      "category": "infrastructure",
+      "title": "Create differential update generation",
+      "description": "Implement system to generate binary deltas between versions for bandwidth-efficient updates",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "server/update/deltaGenerator.ts",
+        "server/update/bsdiff.ts"
+      ],
+      "acceptanceCriteria": [
+        "Binary diff generated between versions",
+        "Delta files significantly smaller than full",
+        "Delta stored alongside full releases",
+        "Automatic delta generation on upload"
+      ]
+    },
+    {
+      "id": "3.23.5",
+      "category": "infrastructure",
+      "title": "Implement update check endpoint",
+      "description": "Create endpoint for clients to check for updates with version comparison, channel filtering, and platform targeting",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "server/update/checkUpdate.ts",
+        "server/update/versionCompare.ts"
+      ],
+      "acceptanceCriteria": [
+        "GET /check returns update info",
+        "Semver comparison determines if update available",
+        "Channel parameter filters releases",
+        "Platform parameter returns correct binary"
+      ]
+    },
+    {
+      "id": "3.23.6",
+      "category": "infrastructure",
+      "title": "Create update client module",
+      "description": "Implement client-side update checker with configurable server URL, channel selection, and proxy support",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/update/updateClient.ts",
+        "src/lib/update/updateChecker.ts"
+      ],
+      "acceptanceCriteria": [
+        "Server URL configurable via GPO/config",
+        "Proxy settings respected",
+        "Certificate pinning for enterprise servers",
+        "Automatic check on configurable schedule"
+      ]
+    },
+    {
+      "id": "3.23.7",
+      "category": "infrastructure",
+      "title": "Implement update download and verification",
+      "description": "Create download manager with progress reporting, resume capability, and cryptographic verification",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/update/downloadManager.ts",
+        "src/lib/update/updateVerifier.ts"
+      ],
+      "acceptanceCriteria": [
+        "Downloads with progress reporting",
+        "Resume interrupted downloads",
+        "SHA-256 hash verification",
+        "Signature verification with embedded key"
+      ]
+    },
+    {
+      "id": "3.23.8",
+      "category": "infrastructure",
+      "title": "Create update installation module",
+      "description": "Implement update installation with pre-flight checks, backup, and rollback capability",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "src/lib/update/updateInstaller.ts",
+        "src/lib/update/rollbackManager.ts"
+      ],
+      "acceptanceCriteria": [
+        "Pre-flight checks verify system state",
+        "Current version backed up before update",
+        "Installation applies update files",
+        "Rollback restores previous version on failure"
+      ]
+    },
+    {
+      "id": "3.23.9",
+      "category": "ui",
+      "title": "Create update settings UI",
+      "description": "Build settings panel for configuring update server, channel, and automatic update behavior",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/update/UpdateSettingsPanel.tsx",
+        "src/components/update/ServerConfigInput.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Server URL input with validation",
+        "Channel selection dropdown",
+        "Auto-update toggle",
+        "Check frequency configuration"
+      ]
+    },
+    {
+      "id": "3.23.10",
+      "category": "ui",
+      "title": "Create update notification and progress UI",
+      "description": "Build UI components for update availability notification, download progress, and installation status",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/update/UpdateNotification.tsx",
+        "src/components/update/UpdateProgressDialog.tsx",
+        "src/components/update/ReleaseNotesViewer.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Notification when update available",
+        "Progress bar during download",
+        "Release notes displayed before install",
+        "Restart prompt after installation"
+      ]
+    },
+    {
+      "id": "3.23.11",
+      "category": "infrastructure",
+      "title": "Create update server Docker deployment",
+      "description": "Package update server as Docker container with docker-compose for easy enterprise deployment",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "server/update/Dockerfile",
+        "server/update/docker-compose.yml",
+        "server/update/.env.example"
+      ],
+      "acceptanceCriteria": [
+        "Dockerfile builds server image",
+        "docker-compose includes storage volume",
+        "Environment variables configure server",
+        "Health check in compose"
+      ]
+    },
+    {
+      "id": "3.23.12",
+      "category": "testing",
+      "title": "Create update system test suite",
+      "description": "Write tests for update server API, client module, and installation process",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "tests/update/server.test.ts",
+        "tests/update/client.test.ts",
+        "tests/update/installer.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Server API tests cover all endpoints",
+        "Client tests with mock server",
+        "Delta generation tests verify correctness",
+        "Installation tests with sandboxed environment",
+        "Coverage above 80%"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Update server deployable in enterprise environment",
+    "Clients check and download from enterprise server",
+    "Differential updates reduce bandwidth",
+    "Update verification prevents tampering",
+    "Rollback capability ensures safety"
+  ],
+  "dependencies": [
+    "npm install express multer",
+    "npm install bsdiff-node for delta generation",
+    "Docker installed for container deployment"
+  ],
+  "notes": [
+    "On-premise server critical for air-gapped environments",
+    "Differential updates important for large enterprises",
+    "Consider admin dashboard for release management",
+    "Document deployment for IT administrators"
+  ]
+}

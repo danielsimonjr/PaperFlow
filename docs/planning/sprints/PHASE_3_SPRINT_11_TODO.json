@@ -1,0 +1,309 @@
+{
+  "phase": 3,
+  "sprint": 11,
+  "quarter": "Q2",
+  "title": "Scanner Integration (TWAIN/WIA)",
+  "goal": "Implement native scanner support using TWAIN and WIA SDKs for document acquisition",
+  "milestone": "Document Scanning Support",
+  "priority": "HIGH",
+  "status": "pending",
+  "totalEstimatedHours": 98,
+  "tasks": [
+    {
+      "id": "3.11.1",
+      "category": "electron",
+      "title": "Create TWAIN wrapper for Windows",
+      "description": "Implement Node.js native addon wrapper for TWAIN SDK to interface with scanners on Windows",
+      "status": "pending",
+      "estimatedHours": 12,
+      "files": [
+        "electron/native/twain/twainWrapper.cpp",
+        "electron/native/twain/twainWrapper.h",
+        "electron/native/twain/binding.gyp"
+      ],
+      "acceptanceCriteria": [
+        "TWAIN SDK is wrapped successfully",
+        "Scanner enumeration works",
+        "Basic scan acquisition works",
+        "Native addon compiles on Windows"
+      ]
+    },
+    {
+      "id": "3.11.2",
+      "category": "electron",
+      "title": "Create WIA wrapper for Windows",
+      "description": "Implement Windows Image Acquisition (WIA) wrapper as fallback for scanners without TWAIN support",
+      "status": "pending",
+      "estimatedHours": 10,
+      "files": [
+        "electron/native/wia/wiaWrapper.cpp",
+        "electron/native/wia/wiaWrapper.h",
+        "electron/native/wia/binding.gyp"
+      ],
+      "acceptanceCriteria": [
+        "WIA SDK is wrapped successfully",
+        "Scanner enumeration works",
+        "Basic scan acquisition works",
+        "Fallback from TWAIN works"
+      ]
+    },
+    {
+      "id": "3.11.3",
+      "category": "electron",
+      "title": "Implement SANE wrapper for Linux",
+      "description": "Create wrapper for SANE (Scanner Access Now Easy) for Linux scanner support",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/native/sane/saneWrapper.cpp",
+        "electron/native/sane/saneWrapper.h",
+        "electron/native/sane/binding.gyp"
+      ],
+      "acceptanceCriteria": [
+        "SANE is wrapped successfully",
+        "Scanner enumeration works",
+        "Basic scan acquisition works",
+        "Native addon compiles on Linux"
+      ]
+    },
+    {
+      "id": "3.11.4",
+      "category": "electron",
+      "title": "Create ImageCapture API for macOS",
+      "description": "Implement macOS ImageCapture framework wrapper for scanner access on Mac",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "electron/native/imagecapture/imageCaptureWrapper.mm",
+        "electron/native/imagecapture/imageCaptureWrapper.h",
+        "electron/native/imagecapture/binding.gyp"
+      ],
+      "acceptanceCriteria": [
+        "ImageCapture framework is wrapped",
+        "Scanner enumeration works",
+        "Basic scan acquisition works",
+        "Native addon compiles on macOS"
+      ]
+    },
+    {
+      "id": "3.11.5",
+      "category": "infrastructure",
+      "title": "Create unified scanner abstraction layer",
+      "description": "Build abstraction layer that provides unified API across TWAIN, WIA, SANE, and ImageCapture",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/scanner/scannerProvider.ts",
+        "src/lib/scanner/types.ts",
+        "electron/main/scanner/scannerBridge.ts"
+      ],
+      "acceptanceCriteria": [
+        "Unified API works on all platforms",
+        "Platform differences are abstracted",
+        "Scanner capabilities are normalized",
+        "Error handling is consistent"
+      ]
+    },
+    {
+      "id": "3.11.6",
+      "category": "infrastructure",
+      "title": "Implement scanner store",
+      "description": "Create Zustand store for scanner state, available devices, scan settings, and scan history",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/stores/scannerStore.ts"
+      ],
+      "acceptanceCriteria": [
+        "Available scanners are tracked",
+        "Scan settings are stored",
+        "Scan history is maintained",
+        "Active scan status is tracked"
+      ]
+    },
+    {
+      "id": "3.11.7",
+      "category": "ui",
+      "title": "Create scanner selection dialog",
+      "description": "Build dialog for selecting scanner device with device info, capabilities, and status display",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/components/scanner/ScannerSelectDialog.tsx",
+        "src/components/scanner/ScannerInfo.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Available scanners are listed",
+        "Device info is shown",
+        "Capabilities are displayed",
+        "Device can be selected"
+      ]
+    },
+    {
+      "id": "3.11.8",
+      "category": "ui",
+      "title": "Build scan settings panel",
+      "description": "Create comprehensive scan settings with resolution, color mode, paper size, duplex, and quality options",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/scanner/ScanSettingsPanel.tsx",
+        "src/components/scanner/ResolutionPicker.tsx",
+        "src/components/scanner/ColorModeSelector.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Resolution options work",
+        "Color mode selection works",
+        "Paper size is configurable",
+        "Duplex option works for supported scanners"
+      ]
+    },
+    {
+      "id": "3.11.9",
+      "category": "ui",
+      "title": "Create scan preview component",
+      "description": "Build real-time scan preview with crop selection, rotation, and enhancement options",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/components/scanner/ScanPreview.tsx",
+        "src/components/scanner/CropTool.tsx",
+        "src/components/scanner/EnhancementTools.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Preview shows scanned image",
+        "Crop selection is available",
+        "Rotation works",
+        "Basic enhancements apply"
+      ]
+    },
+    {
+      "id": "3.11.10",
+      "category": "infrastructure",
+      "title": "Implement automatic document detection",
+      "description": "Create edge detection and perspective correction to automatically detect and crop document boundaries",
+      "status": "pending",
+      "estimatedHours": 8,
+      "files": [
+        "src/lib/scanner/documentDetection.ts",
+        "src/lib/scanner/perspectiveCorrection.ts"
+      ],
+      "acceptanceCriteria": [
+        "Document edges are detected",
+        "Perspective is corrected automatically",
+        "Multiple documents per scan work",
+        "Manual override is available"
+      ]
+    },
+    {
+      "id": "3.11.11",
+      "category": "infrastructure",
+      "title": "Create scan-to-PDF conversion",
+      "description": "Implement scan image to PDF conversion with multi-page support, compression, and metadata",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/lib/scanner/scanToPdf.ts",
+        "src/lib/scanner/imageCompression.ts"
+      ],
+      "acceptanceCriteria": [
+        "Single page scans convert to PDF",
+        "Multi-page scans combine into PDF",
+        "Compression reduces file size",
+        "Metadata is added"
+      ]
+    },
+    {
+      "id": "3.11.12",
+      "category": "ui",
+      "title": "Build batch scan workflow",
+      "description": "Create workflow for scanning multiple pages with automatic page detection, naming, and organization",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "src/components/scanner/BatchScanWorkflow.tsx",
+        "src/components/scanner/PageOrganizer.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Multiple pages can be scanned",
+        "Pages can be reordered",
+        "Pages can be removed",
+        "Batch outputs to single PDF"
+      ]
+    },
+    {
+      "id": "3.11.13",
+      "category": "infrastructure",
+      "title": "Implement scan profiles",
+      "description": "Create save and load functionality for scan profiles with different settings for various document types",
+      "status": "pending",
+      "estimatedHours": 4,
+      "files": [
+        "src/lib/scanner/scanProfiles.ts",
+        "src/components/scanner/ProfileManager.tsx"
+      ],
+      "acceptanceCriteria": [
+        "Profiles can be saved",
+        "Profiles can be loaded",
+        "Default profiles exist",
+        "Profiles include all settings"
+      ]
+    },
+    {
+      "id": "3.11.14",
+      "category": "infrastructure",
+      "title": "Create OCR integration for scans",
+      "description": "Integrate Tesseract.js OCR to create searchable PDFs from scanned documents",
+      "status": "pending",
+      "estimatedHours": 5,
+      "files": [
+        "src/lib/scanner/scanOcr.ts"
+      ],
+      "acceptanceCriteria": [
+        "OCR runs on scanned images",
+        "Text layer is added to PDF",
+        "Language selection works",
+        "Searchable PDF is created"
+      ]
+    },
+    {
+      "id": "3.11.15",
+      "category": "testing",
+      "title": "Create scanner integration tests",
+      "description": "Write tests for scanner abstraction layer with mocked scanner devices",
+      "status": "pending",
+      "estimatedHours": 6,
+      "files": [
+        "tests/unit/lib/scanner/scannerProvider.test.ts",
+        "tests/unit/lib/scanner/documentDetection.test.ts",
+        "tests/integration/scanner/scanWorkflow.test.ts"
+      ],
+      "acceptanceCriteria": [
+        "Provider tests pass",
+        "Detection tests pass",
+        "Conversion tests pass",
+        "Workflow tests pass"
+      ]
+    }
+  ],
+  "successCriteria": [
+    "Scanners are detected on all platforms",
+    "Scan acquisition works reliably",
+    "Document detection improves scan quality",
+    "Multi-page scanning is intuitive",
+    "OCR creates searchable PDFs"
+  ],
+  "dependencies": [
+    "node-addon-api",
+    "node-gyp",
+    "tesseract.js",
+    "sharp",
+    "opencv4nodejs (optional)"
+  ],
+  "notes": [
+    "Native addon compilation requires platform-specific build tools",
+    "TWAIN is Windows-only, SANE is Linux-only, ImageCapture is macOS-only",
+    "WIA is a fallback for Windows scanners without TWAIN drivers",
+    "Consider using pre-built binaries for complex native modules"
+  ]
+}
