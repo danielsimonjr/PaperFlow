@@ -4,7 +4,7 @@
   "quarter": "Q1",
   "title": "OS Integration & Q1 Release",
   "goal": "Complete OS integration features and release Phase 3 Q1 desktop app",
-  "milestone": "v2.0 Desktop Release",
+  "milestone": "v3.0 Desktop Alpha",
   "priority": "HIGH",
   "status": "pending",
   "totalEstimatedHours": 98,
@@ -229,8 +229,8 @@
     {
       "id": "3.6.13",
       "category": "setup",
-      "title": "Update version to 2.0.0",
-      "description": "Update package.json and all version references for desktop release",
+      "title": "Update version to 3.0.0-alpha.1",
+      "description": "Update package.json and all version references for desktop alpha release",
       "status": "pending",
       "estimatedHours": 2,
       "files": [
@@ -238,7 +238,7 @@
         "src/constants/version.ts"
       ],
       "acceptanceCriteria": [
-        "package.json version is 2.0.0",
+        "package.json version is 3.0.0-alpha.1",
         "All version references are updated",
         "Version shows in app About dialog",
         "Version appears in window title"
@@ -247,7 +247,7 @@
     {
       "id": "3.6.14",
       "category": "docs",
-      "title": "Update changelog for v2.0",
+      "title": "Update changelog for v3.0.0-alpha",
       "description": "Document all Phase 3 Q1 changes in CHANGELOG.md",
       "status": "pending",
       "estimatedHours": 2,
@@ -264,12 +264,12 @@
     {
       "id": "3.6.15",
       "category": "docs",
-      "title": "Create v2.0 release notes",
+      "title": "Create v3.0.0-alpha release notes",
       "description": "Write user-facing release notes highlighting desktop features",
       "status": "pending",
       "estimatedHours": 2,
       "files": [
-        "docs/releases/v2.0.0.md"
+        "docs/releases/v3.0.0-alpha.md"
       ],
       "acceptanceCriteria": [
         "Desktop features are highlighted",
@@ -316,8 +316,8 @@
     {
       "id": "3.6.18",
       "category": "setup",
-      "title": "Deploy v2.0 release",
-      "description": "Create and publish v2.0 release with all desktop installers",
+      "title": "Deploy v3.0.0-alpha release",
+      "description": "Create and publish v3.0.0-alpha release with all desktop installers",
       "status": "pending",
       "estimatedHours": 4,
       "files": [],
@@ -334,7 +334,7 @@
     "All OS integration features work correctly",
     "App passes cross-platform testing",
     "Auto-updater delivers updates successfully",
-    "v2.0 is released on all platforms",
+    "v3.0.0-alpha is released on all platforms",
     "Documentation is complete and accurate"
   ],
   "dependencies": [

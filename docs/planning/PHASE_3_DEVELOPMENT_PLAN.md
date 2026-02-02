@@ -32,9 +32,9 @@ Phase 3 spans 12 months (Year 2) across 24 two-week sprints, delivering a native
 |--------|------------|---------|
 | 1 | Electron Project Setup & Build System | Q1 |
 | 2 | Native File System Integration | Q1 |
-| 3 | System Tray & Native Menus | Q1 |
+| 3 | System Tray & Notifications | Q1 |
 | 4 | Auto-Updater Implementation | Q1 |
-| 5 | Deep OS Integration | Q1 |
+| 5 | Native Menus & Shortcuts | Q1 |
 | 6 | Q1 Polish & Alpha Release | Q1 |
 | 7 | Offline-First Architecture | Q2 |
 | 8 | Local File Watching & Hot Reload | Q2 |
@@ -475,9 +475,9 @@ src/
 
 ---
 
-## Sprint 3: System Tray & Native Menus
+## Sprint 3: System Tray & Notifications
 
-**Goal:** Implement system tray and native application menus
+**Goal:** Implement system tray and notification system
 
 ### System Tray
 
@@ -727,9 +727,9 @@ src/
 
 ---
 
-## Sprint 5: Deep OS Integration
+## Sprint 5: Native Menus & Shortcuts
 
-**Goal:** Implement deep operating system integration features
+**Goal:** Implement native application menus and keyboard shortcuts
 
 ### Protocol Handlers
 
