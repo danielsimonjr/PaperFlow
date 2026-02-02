@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Quick Start
+
+```bash
+npm install
+npm run dev          # http://localhost:5173
+npm run build        # Production build to dist/
+npm run preview      # Preview production build
+```
+
 ## Project Overview
 
 PaperFlow is a Progressive Web Application (PWA) for PDF editing built with React, TypeScript, and Vite. It aims to provide a modern, web-first alternative to Adobe Acrobat with offline capabilities and a privacy-first approach (local processing by default).
@@ -66,7 +75,6 @@ npx vitest run -t "should load PDF"
 - `redactionStore`: Redaction marks and patterns
 - `comparisonStore`: Document comparison state
 - `batchStore`: Batch processing queue
-- `accessibilityStore`: Accessibility check results
 
 ### Key Data Flow
 ```
@@ -81,6 +89,17 @@ UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → Indexed
 - `@lib/` → `src/lib/`
 - `@utils/` → `src/utils/`
 - `@types/` → `src/types/`
+
+### Key Entry Points
+- `src/main.tsx`: App bootstrap and React root
+- `src/App.tsx`: Router and layout
+- `src/pages/`: Route components (Home, Viewer, Settings)
+
+### Constants (`src/constants/`)
+- `config.ts`: App configuration (zoom limits, performance thresholds)
+- `shortcuts.ts`: Keyboard shortcut definitions
+- `tools.ts`: Tool definitions and metadata
+- `stamps.ts`: Predefined stamp templates
 
 ### Component Organization
 - `components/ui/`: Reusable UI primitives (Button, Dialog, Dropdown, Tooltip, Skeleton)
@@ -161,6 +180,20 @@ fix(annotations): correct highlight position
 docs(readme): update installation steps
 ```
 
+## Environment Setup
+
+Copy `.env.example` to `.env.local` for local development:
+
+```bash
+cp .env.example .env.local
+```
+
+All variables are optional (Phase 2+ features):
+- `VITE_ANALYTICS_ID`: Analytics tracking
+- `VITE_GOOGLE_CLIENT_ID`: Google Drive integration
+- `VITE_DROPBOX_APP_KEY`: Dropbox integration
+- `VITE_ONEDRIVE_CLIENT_ID`: OneDrive integration
+
 ## Important Technical Notes
 
 - PDF.js worker must be copied to `public/pdf.worker.min.js`
@@ -184,3 +217,14 @@ docs(readme): update installation steps
 --highlight-pink: #E91E63;
 --highlight-orange: #FF9800;
 ```
+
+## Deployment
+
+Deployed to Cloudflare Pages. Configuration in `wrangler.toml`.
+
+```bash
+npm run build      # Build production bundle to dist/
+# Automatic deployment on push to main branch
+```
+
+Custom headers configured in `public/_headers` (security headers, caching).
