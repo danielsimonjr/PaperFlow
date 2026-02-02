@@ -10,7 +10,7 @@
   "totalEstimatedHours": 98,
   "tasks": [
     {
-      "id": "3.7.1",
+      "id": "4.7.1",
       "category": "infrastructure",
       "title": "Create collaboration library directory structure",
       "description": "Create lib/collaboration/ directory with core modules: syncEngine.ts, presenceManager.ts, cursorTracker.ts, conflictResolver.ts, websocketClient.ts, and types.ts",
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "id": "3.7.2",
+      "id": "4.7.2",
       "category": "infrastructure",
       "title": "Implement Yjs integration for CRDT synchronization",
       "description": "Integrate Yjs library for conflict-free replicated data types including Y.Doc for document state, Y.Map for annotations, and Y.Array for pages",
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "id": "3.7.3",
+      "id": "4.7.3",
       "category": "infrastructure",
       "title": "Set up WebSocket server infrastructure",
       "description": "Create Node.js WebSocket server with room-based connections and authentication middleware for real-time collaboration",
@@ -71,7 +71,7 @@
       ]
     },
     {
-      "id": "3.7.4",
+      "id": "4.7.4",
       "category": "infrastructure",
       "title": "Implement user presence system",
       "description": "Create UserPresence interface and implementation tracking userId, name, color, avatar, currentPage, cursor position, selection range, lastActivity, and status",
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "id": "3.7.5",
+      "id": "4.7.5",
       "category": "ui",
       "title": "Create presence indicators in UI",
       "description": "Add user avatars in toolbar, user count badge, and user list panel showing active collaborators",
@@ -108,7 +108,7 @@
       ]
     },
     {
-      "id": "3.7.6",
+      "id": "4.7.6",
       "category": "infrastructure",
       "title": "Add activity tracking system",
       "description": "Implement last active timestamp tracking, current action detection (editing, viewing), and idle detection with configurable timeouts",
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "id": "3.7.7",
+      "id": "4.7.7",
       "category": "infrastructure",
       "title": "Create collaboration Zustand store",
       "description": "Implement collaborationStore with state for isConnected, roomId, users Map, localUser, syncStatus, pendingChanges, and actions for joinRoom, leaveRoom, updatePresence, inviteUser",
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "id": "3.7.8",
+      "id": "4.7.8",
       "category": "infrastructure",
       "title": "Implement connection handling with auto-reconnect",
       "description": "Create robust connection management with auto-reconnect on disconnect, offline queue for pending changes, and sync on reconnect",
@@ -163,7 +163,7 @@
       ]
     },
     {
-      "id": "3.7.9",
+      "id": "4.7.9",
       "category": "ui",
       "title": "Add connection status indicator",
       "description": "Create visual indicator showing connection state: Connected (green), Syncing (yellow), Offline (red) with tooltip showing details",
@@ -182,7 +182,7 @@
       ]
     },
     {
-      "id": "3.7.10",
+      "id": "4.7.10",
       "category": "infrastructure",
       "title": "Create offline mode with change queuing",
       "description": "Implement offline mode that queues changes locally using IndexedDB, syncs when back online, and handles conflict resolution",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "id": "3.7.11",
+      "id": "4.7.11",
       "category": "testing",
       "title": "Write unit tests for sync engine",
       "description": "Create comprehensive unit tests for Yjs synchronization, presence management, and conflict resolution",

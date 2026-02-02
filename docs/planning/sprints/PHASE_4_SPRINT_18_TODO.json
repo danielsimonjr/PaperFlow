@@ -10,7 +10,7 @@
   "totalEstimatedHours": 180,
   "tasks": [
     {
-      "id": "3.18.1",
+      "id": "4.18.1",
       "category": "infrastructure",
       "title": "Create integrations directory structure",
       "description": "Create lib/integrations/ directory with Integration interface, manager, and provider framework",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "id": "3.18.2",
+      "id": "4.18.2",
       "category": "infrastructure",
       "title": "Implement OAuth for integrations",
       "description": "Create authorization flows, token storage, and token refresh for third-party integrations",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "id": "3.18.3",
+      "id": "4.18.3",
       "category": "infrastructure",
       "title": "Create action framework",
       "description": "Implement import from integration, export to integration, and bidirectional sync actions",
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "id": "3.18.4",
+      "id": "4.18.4",
       "category": "api",
       "title": "Implement Google Drive integration",
       "description": "Create Google Drive provider for importing and exporting PDFs",
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "id": "3.18.5",
+      "id": "4.18.5",
       "category": "api",
       "title": "Implement Dropbox integration",
       "description": "Create Dropbox provider for importing and exporting PDFs",
@@ -101,7 +101,7 @@
       ]
     },
     {
-      "id": "3.18.6",
+      "id": "4.18.6",
       "category": "api",
       "title": "Implement OneDrive integration",
       "description": "Create OneDrive provider for importing and exporting PDFs",
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "id": "3.18.7",
+      "id": "4.18.7",
       "category": "api",
       "title": "Implement Box integration",
       "description": "Create Box provider for importing and exporting PDFs",
@@ -135,7 +135,7 @@
       ]
     },
     {
-      "id": "3.18.8",
+      "id": "4.18.8",
       "category": "api",
       "title": "Implement Salesforce integration",
       "description": "Create Salesforce provider for document attachment and retrieval",
@@ -152,7 +152,7 @@
       ]
     },
     {
-      "id": "3.18.9",
+      "id": "4.18.9",
       "category": "api",
       "title": "Implement HubSpot integration",
       "description": "Create HubSpot provider for document attachment and retrieval",
@@ -169,7 +169,7 @@
       ]
     },
     {
-      "id": "3.18.10",
+      "id": "4.18.10",
       "category": "api",
       "title": "Implement Slack integration",
       "description": "Create Slack provider for sharing documents and receiving notifications",
@@ -186,7 +186,7 @@
       ]
     },
     {
-      "id": "3.18.11",
+      "id": "4.18.11",
       "category": "api",
       "title": "Implement Microsoft Teams integration",
       "description": "Create Microsoft Teams provider for sharing and notifications",
@@ -203,7 +203,7 @@
       ]
     },
     {
-      "id": "3.18.12",
+      "id": "4.18.12",
       "category": "api",
       "title": "Implement Jira integration",
       "description": "Create Jira provider for attaching documents to issues",
@@ -220,7 +220,7 @@
       ]
     },
     {
-      "id": "3.18.13",
+      "id": "4.18.13",
       "category": "api",
       "title": "Implement Notion integration",
       "description": "Create Notion provider for embedding and syncing documents",
@@ -237,7 +237,7 @@
       ]
     },
     {
-      "id": "3.18.14",
+      "id": "4.18.14",
       "category": "api",
       "title": "Implement DocuSign integration",
       "description": "Create DocuSign provider for e-signature workflows",
@@ -254,7 +254,7 @@
       ]
     },
     {
-      "id": "3.18.15",
+      "id": "4.18.15",
       "category": "ui",
       "title": "Create marketplace browse UI",
       "description": "Build marketplace page with category filters, search, and featured integrations",
@@ -273,7 +273,7 @@
       ]
     },
     {
-      "id": "3.18.16",
+      "id": "4.18.16",
       "category": "ui",
       "title": "Add integration detail page",
       "description": "Create detail page with description, screenshots, setup guide, and reviews",
@@ -292,7 +292,7 @@
       ]
     },
     {
-      "id": "3.18.17",
+      "id": "4.18.17",
       "category": "ui",
       "title": "Create installed integrations management",
       "description": "Build UI for managing connections, configuring settings, and disconnecting",
@@ -311,7 +311,7 @@
       ]
     },
     {
-      "id": "3.18.18",
+      "id": "4.18.18",
       "category": "testing",
       "title": "Write integration framework tests",
       "description": "Create tests for integration manager, OAuth, and action framework",
@@ -330,7 +330,7 @@
       ]
     },
     {
-      "id": "3.18.19",
+      "id": "4.18.19",
       "category": "testing",
       "title": "Write provider integration tests",
       "description": "Create integration tests for each provider with mocked APIs",

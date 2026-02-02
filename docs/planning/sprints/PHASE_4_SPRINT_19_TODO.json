@@ -10,7 +10,7 @@
   "totalEstimatedHours": 170,
   "tasks": [
     {
-      "id": "3.19.1",
+      "id": "4.19.1",
       "category": "infrastructure",
       "title": "Create white-label package structure",
       "description": "Create white-label configuration with branding assets, configuration file, and build customization",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "id": "3.19.2",
+      "id": "4.19.2",
       "category": "infrastructure",
       "title": "Implement theme injection system",
       "description": "Create CSS variables injection, component overrides, and icon replacement system",
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "id": "3.19.3",
+      "id": "4.19.3",
       "category": "infrastructure",
       "title": "Add feature flags system",
       "description": "Implement enable/disable features, custom feature sets, and A/B testing support",
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "id": "3.19.4",
+      "id": "4.19.4",
       "category": "ui",
       "title": "Create embeddable PDF viewer",
       "description": "Build iframe embed, JavaScript SDK, and React component for embedding",
@@ -86,7 +86,7 @@
       ]
     },
     {
-      "id": "3.19.5",
+      "id": "4.19.5",
       "category": "api",
       "title": "Add embed configuration options",
       "description": "Create toolbar customization, feature restrictions, and callback hooks for embeds",
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "id": "3.19.6",
+      "id": "4.19.6",
       "category": "infrastructure",
       "title": "Implement secure embedding",
       "description": "Add domain restrictions, token authentication, and content security for embeds",
@@ -124,7 +124,7 @@
       ]
     },
     {
-      "id": "3.19.7",
+      "id": "4.19.7",
       "category": "ui",
       "title": "Create partner dashboard",
       "description": "Build dashboard with customer management, usage analytics, and billing overview",
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "id": "3.19.8",
+      "id": "4.19.8",
       "category": "api",
       "title": "Add customer provisioning",
       "description": "Implement API provisioning, bulk setup, and template configurations for partners",
@@ -163,7 +163,7 @@
       ]
     },
     {
-      "id": "3.19.9",
+      "id": "4.19.9",
       "category": "infrastructure",
       "title": "Create white-label build system",
       "description": "Set up build pipeline for generating customized white-label deployments",
@@ -182,7 +182,7 @@
       ]
     },
     {
-      "id": "3.19.10",
+      "id": "4.19.10",
       "category": "infrastructure",
       "title": "Create partner documentation",
       "description": "Write white-label guide, customization docs, and support resources",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "id": "3.19.11",
+      "id": "4.19.11",
       "category": "ui",
       "title": "Create partner onboarding flow",
       "description": "Build step-by-step onboarding wizard for new white-label partners",
@@ -221,7 +221,7 @@
       ]
     },
     {
-      "id": "3.19.12",
+      "id": "4.19.12",
       "category": "testing",
       "title": "Write white-label tests",
       "description": "Create tests for theme injection, feature flags, and embed functionality",
@@ -240,7 +240,7 @@
       ]
     },
     {
-      "id": "3.19.13",
+      "id": "4.19.13",
       "category": "testing",
       "title": "Pilot partner onboarding",
       "description": "Onboard 3+ pilot partners and gather feedback for improvements",

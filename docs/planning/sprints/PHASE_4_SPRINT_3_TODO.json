@@ -10,7 +10,7 @@
   "totalEstimatedHours": 100,
   "tasks": [
     {
-      "id": "3.3.1",
+      "id": "4.3.1",
       "category": "infrastructure",
       "title": "Create form analysis library",
       "description": "Create lib/ai/formAnalysis.ts with FormField and FieldSuggestion interfaces",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "3.3.2",
+      "id": "4.3.2",
       "category": "infrastructure",
       "title": "Implement analyzeFormFields function",
       "description": "Create function to analyze form fields and understand their purpose, requirements, and relationships",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "id": "3.3.3",
+      "id": "4.3.3",
       "category": "infrastructure",
       "title": "Implement suggestFieldValues function",
       "description": "Create function to suggest values for form fields based on source documents",
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "id": "3.3.4",
+      "id": "4.3.4",
       "category": "infrastructure",
       "title": "Create source document manager",
       "description": "Build system to upload reference documents, extract structured data, and build knowledge base",
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "id": "3.3.5",
+      "id": "4.3.5",
       "category": "infrastructure",
       "title": "Implement entity extraction",
       "description": "Create entity extraction for names, contact info, addresses, dates, financial figures, and legal entities",
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "id": "3.3.6",
+      "id": "4.3.6",
       "category": "infrastructure",
       "title": "Create entity matching system",
       "description": "Implement matching of extracted entities to form fields with variation handling and confidence scoring",
@@ -113,7 +113,7 @@
       ]
     },
     {
-      "id": "3.3.7",
+      "id": "4.3.7",
       "category": "ui",
       "title": "Create AutoFillPanel component",
       "description": "Build AutoFillPanel.tsx with source document upload, field mapping preview, apply suggestions button, and manual override options",
@@ -131,7 +131,7 @@
       ]
     },
     {
-      "id": "3.3.8",
+      "id": "4.3.8",
       "category": "ui",
       "title": "Add field-level suggestion indicators",
       "description": "Create inline suggestion indicators on form fields with click to apply and alternatives dropdown",
@@ -149,7 +149,7 @@
       ]
     },
     {
-      "id": "3.3.9",
+      "id": "4.3.9",
       "category": "ui",
       "title": "Create confidence indicators",
       "description": "Build visual confidence indicators for high (auto-fill ready), medium (review suggested), and low (manual entry needed) confidence levels",
@@ -166,7 +166,7 @@
       ]
     },
     {
-      "id": "3.3.10",
+      "id": "4.3.10",
       "category": "infrastructure",
       "title": "Implement contextual suggestions",
       "description": "Create smart suggestions for date fields (relevant dates), amount fields (extracted figures), and name fields (detected names)",
@@ -183,7 +183,7 @@
       ]
     },
     {
-      "id": "3.3.11",
+      "id": "4.3.11",
       "category": "infrastructure",
       "title": "Add AI-powered field validation",
       "description": "Implement validation checking if value makes sense, suggesting corrections, and format standardization",
@@ -200,7 +200,7 @@
       ]
     },
     {
-      "id": "3.3.12",
+      "id": "4.3.12",
       "category": "infrastructure",
       "title": "Create learning from corrections",
       "description": "Implement system to remember user preferences, improve suggestions over time, and store mapping patterns",
@@ -218,7 +218,7 @@
       ]
     },
     {
-      "id": "3.3.13",
+      "id": "4.3.13",
       "category": "testing",
       "title": "Create unit tests for form auto-fill module",
       "description": "Write comprehensive tests for form analysis, entity extraction, and suggestion generation",

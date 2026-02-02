@@ -10,7 +10,7 @@
   "totalEstimatedHours": 109,
   "tasks": [
     {
-      "id": "3.6.1",
+      "id": "4.6.1",
       "category": "ui",
       "title": "Unify AI features in single panel",
       "description": "Create unified AI panel with tab-based interface, consistent styling, and shared settings",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "3.6.2",
+      "id": "4.6.2",
       "category": "ui",
       "title": "Add AI toolbar button",
       "description": "Create toolbar button with quick access dropdown, recent AI actions, and keyboard shortcuts display",
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "id": "3.6.3",
+      "id": "4.6.3",
       "category": "ui",
       "title": "Create AI keyboard shortcuts",
       "description": "Implement Ctrl/Cmd + Shift + S (Summarize), Q (Query), T (Translate), F (Auto-fill) shortcuts",
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "id": "3.6.4",
+      "id": "4.6.4",
       "category": "infrastructure",
       "title": "Implement token tracking",
       "description": "Create system to track usage per feature, daily/monthly limits, and usage visualization",
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "id": "3.6.5",
+      "id": "4.6.5",
       "category": "ui",
       "title": "Create usage visualization",
       "description": "Build usage dashboard with charts and graphs showing token consumption over time",
@@ -99,7 +99,7 @@
       ]
     },
     {
-      "id": "3.6.6",
+      "id": "4.6.6",
       "category": "ui",
       "title": "Add usage alerts",
       "description": "Implement approaching limit warnings and upgrade prompts when limits reached",
@@ -116,7 +116,7 @@
       ]
     },
     {
-      "id": "3.6.7",
+      "id": "4.6.7",
       "category": "infrastructure",
       "title": "Create billing integration",
       "description": "Implement usage-based pricing tracking, subscription tier support, and invoice generation preparation",
@@ -133,7 +133,7 @@
       ]
     },
     {
-      "id": "3.6.8",
+      "id": "4.6.8",
       "category": "infrastructure",
       "title": "Implement response caching",
       "description": "Create caching for common queries, summaries, with invalidation on document change",
@@ -150,7 +150,7 @@
       ]
     },
     {
-      "id": "3.6.9",
+      "id": "4.6.9",
       "category": "ui",
       "title": "Add streaming responses",
       "description": "Implement partial result display, progressive loading, and cancel mid-stream functionality",
@@ -168,7 +168,7 @@
       ]
     },
     {
-      "id": "3.6.10",
+      "id": "4.6.10",
       "category": "infrastructure",
       "title": "Optimize token usage",
       "description": "Create efficient prompts, context compression, and batch operations for reduced token consumption",
@@ -186,7 +186,7 @@
       ]
     },
     {
-      "id": "3.6.11",
+      "id": "4.6.11",
       "category": "testing",
       "title": "Test AI accuracy",
       "description": "Create test suite for summarization quality, query accuracy, and translation quality",
@@ -205,7 +205,7 @@
       ]
     },
     {
-      "id": "3.6.12",
+      "id": "4.6.12",
       "category": "testing",
       "title": "Test edge cases",
       "description": "Test very long documents, mixed languages, and complex formatting scenarios",
@@ -222,7 +222,7 @@
       ]
     },
     {
-      "id": "3.6.13",
+      "id": "4.6.13",
       "category": "testing",
       "title": "Performance testing",
       "description": "Test response time benchmarks, concurrent users, and token efficiency",
@@ -239,7 +239,7 @@
       ]
     },
     {
-      "id": "3.6.14",
+      "id": "4.6.14",
       "category": "infrastructure",
       "title": "Update version to 3.0.0",
       "description": "Update package.json version and all version references to 3.0.0",
@@ -256,10 +256,10 @@
       ]
     },
     {
-      "id": "3.6.15",
+      "id": "4.6.15",
       "category": "infrastructure",
       "title": "Update changelog",
-      "description": "Document all Phase 3 Q1 changes in CHANGELOG.md",
+      "description": "Document all Phase 4 Q1 changes in CHANGELOG.md",
       "status": "pending",
       "estimatedHours": 2,
       "files": [
@@ -273,7 +273,7 @@
       ]
     },
     {
-      "id": "3.6.16",
+      "id": "4.6.16",
       "category": "infrastructure",
       "title": "Create release notes",
       "description": "Write user-facing release notes for v3.0 highlighting AI features",
@@ -290,7 +290,7 @@
       ]
     },
     {
-      "id": "3.6.17",
+      "id": "4.6.17",
       "category": "infrastructure",
       "title": "Update documentation",
       "description": "Update all documentation to reflect AI features and new capabilities",
@@ -311,7 +311,7 @@
       ]
     },
     {
-      "id": "3.6.18",
+      "id": "4.6.18",
       "category": "infrastructure",
       "title": "Deploy to production",
       "description": "Deploy v3.0 to production environment with all AI features",

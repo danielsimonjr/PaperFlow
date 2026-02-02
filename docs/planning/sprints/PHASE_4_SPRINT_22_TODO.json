@@ -10,7 +10,7 @@
   "totalEstimatedHours": 96,
   "tasks": [
     {
-      "id": "3.22.1",
+      "id": "4.22.1",
       "category": "infrastructure",
       "title": "Frontend bundle optimization",
       "description": "Optimize frontend bundle size and loading performance",
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "id": "3.22.2",
+      "id": "4.22.2",
       "category": "infrastructure",
       "title": "API response time optimization",
       "description": "Further optimize API response times across all endpoints",
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "id": "3.22.3",
+      "id": "4.22.3",
       "category": "infrastructure",
       "title": "Database query optimization",
       "description": "Optimize database queries for performance",
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "id": "3.22.4",
+      "id": "4.22.4",
       "category": "infrastructure",
       "title": "CDN configuration",
       "description": "Configure CDN for optimal asset delivery",
@@ -80,7 +80,7 @@
       ]
     },
     {
-      "id": "3.22.5",
+      "id": "4.22.5",
       "category": "infrastructure",
       "title": "Cache strategy refinement",
       "description": "Refine caching strategy across all layers",

@@ -10,7 +10,7 @@
   "totalEstimatedHours": 120,
   "tasks": [
     {
-      "id": "3.10.1",
+      "id": "4.10.1",
       "category": "infrastructure",
       "title": "Create review manager module",
       "description": "Implement lib/collaboration/reviewManager.ts with ReviewWorkflow and ReviewStage interfaces supporting sequential and parallel review types",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "id": "3.10.2",
+      "id": "4.10.2",
       "category": "infrastructure",
       "title": "Implement sequential review workflow",
       "description": "Create sequential review flow where one reviewer acts at a time, passes to next on approval, and returns on rejection",
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "id": "3.10.3",
+      "id": "4.10.3",
       "category": "infrastructure",
       "title": "Implement parallel review workflow",
       "description": "Create parallel review flow with multiple simultaneous reviewers, threshold-based approval, and deadline enforcement",
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "id": "3.10.4",
+      "id": "4.10.4",
       "category": "ui",
       "title": "Create review panel UI",
       "description": "Build ReviewPanel.tsx component showing workflow status overview, current reviewers, progress indicators, and action buttons",
@@ -87,7 +87,7 @@
       ]
     },
     {
-      "id": "3.10.5",
+      "id": "4.10.5",
       "category": "ui",
       "title": "Add review toolbar actions",
       "description": "Create toolbar with Approve, Reject, Request Changes, and Add Comment buttons for reviewers",
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "id": "3.10.6",
+      "id": "4.10.6",
       "category": "ui",
       "title": "Create review comments system",
       "description": "Implement comments pinned to document locations with thread replies, resolve/unresolve, and @mention functionality",
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "id": "3.10.7",
+      "id": "4.10.7",
       "category": "infrastructure",
       "title": "Implement notification system",
       "description": "Create notification infrastructure supporting email, in-app, and push notifications (PWA) for review events",
@@ -147,7 +147,7 @@
       ]
     },
     {
-      "id": "3.10.8",
+      "id": "4.10.8",
       "category": "ui",
       "title": "Create notification preferences panel",
       "description": "Build settings panel for notification types, frequency settings, and quiet hours configuration",
@@ -166,7 +166,7 @@
       ]
     },
     {
-      "id": "3.10.9",
+      "id": "4.10.9",
       "category": "infrastructure",
       "title": "Add deadline reminder system",
       "description": "Implement automatic reminders for upcoming deadlines, overdue notifications, and escalation rules",
@@ -185,7 +185,7 @@
       ]
     },
     {
-      "id": "3.10.10",
+      "id": "4.10.10",
       "category": "ui",
       "title": "Generate review status reports",
       "description": "Create reports showing overall progress, pending reviews, and overdue items for workflow management",
@@ -204,7 +204,7 @@
       ]
     },
     {
-      "id": "3.10.11",
+      "id": "4.10.11",
       "category": "infrastructure",
       "title": "Create review audit trail",
       "description": "Log all review actions with timestamps and user attributions for compliance and accountability",
@@ -223,7 +223,7 @@
       ]
     },
     {
-      "id": "3.10.12",
+      "id": "4.10.12",
       "category": "ui",
       "title": "Export review history functionality",
       "description": "Allow exporting review history as PDF report or CSV for record-keeping and compliance",
@@ -242,7 +242,7 @@
       ]
     },
     {
-      "id": "3.10.13",
+      "id": "4.10.13",
       "category": "testing",
       "title": "Write tests for review workflows",
       "description": "Create comprehensive tests for sequential and parallel reviews, notifications, and audit trails",

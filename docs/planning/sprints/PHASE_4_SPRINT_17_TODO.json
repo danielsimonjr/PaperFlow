@@ -10,7 +10,7 @@
   "totalEstimatedHours": 180,
   "tasks": [
     {
-      "id": "3.17.1",
+      "id": "4.17.1",
       "category": "api",
       "title": "Create OpenAPI specification",
       "description": "Document all endpoints with request/response schemas and authentication details",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "id": "3.17.2",
+      "id": "4.17.2",
       "category": "ui",
       "title": "Generate interactive API docs",
       "description": "Integrate Swagger UI with try-it-out functionality and code samples",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "id": "3.17.3",
+      "id": "4.17.3",
       "category": "api",
       "title": "Create JavaScript/TypeScript SDK",
       "description": "Build official JavaScript/TypeScript SDK for API access",
@@ -68,7 +68,7 @@
       ]
     },
     {
-      "id": "3.17.4",
+      "id": "4.17.4",
       "category": "api",
       "title": "Create Python SDK",
       "description": "Build official Python SDK for API access",
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "id": "3.17.5",
+      "id": "4.17.5",
       "category": "api",
       "title": "Create API client generator",
       "description": "Set up OpenAPI Generator for additional language support",
@@ -107,7 +107,7 @@
       ]
     },
     {
-      "id": "3.17.6",
+      "id": "4.17.6",
       "category": "ui",
       "title": "Create developer portal website",
       "description": "Build developers.paperflow.com with documentation, API reference, and getting started guide",
@@ -128,7 +128,7 @@
       ]
     },
     {
-      "id": "3.17.7",
+      "id": "4.17.7",
       "category": "ui",
       "title": "Add developer dashboard",
       "description": "Create dashboard for API key management, usage analytics, and webhook configuration",
@@ -148,7 +148,7 @@
       ]
     },
     {
-      "id": "3.17.8",
+      "id": "4.17.8",
       "category": "infrastructure",
       "title": "Create sandbox environment",
       "description": "Set up test API access with sample documents and reset capability",
@@ -166,7 +166,7 @@
       ]
     },
     {
-      "id": "3.17.9",
+      "id": "4.17.9",
       "category": "infrastructure",
       "title": "Implement webhook system",
       "description": "Create event subscription, payload delivery, and retry logic for webhooks",
@@ -185,7 +185,7 @@
       ]
     },
     {
-      "id": "3.17.10",
+      "id": "4.17.10",
       "category": "api",
       "title": "Create webhook events",
       "description": "Implement document.created, document.updated, document.signed, form.submitted, review.completed events",
@@ -205,7 +205,7 @@
       ]
     },
     {
-      "id": "3.17.11",
+      "id": "4.17.11",
       "category": "ui",
       "title": "Add webhook management UI",
       "description": "Create UI for creating webhooks, viewing delivery history, and testing webhooks",
@@ -224,7 +224,7 @@
       ]
     },
     {
-      "id": "3.17.12",
+      "id": "4.17.12",
       "category": "testing",
       "title": "Write SDK tests",
       "description": "Create comprehensive tests for JavaScript and Python SDKs",
@@ -242,7 +242,7 @@
       ]
     },
     {
-      "id": "3.17.13",
+      "id": "4.17.13",
       "category": "testing",
       "title": "Write webhook tests",
       "description": "Create tests for webhook delivery and retry functionality",

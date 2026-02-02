@@ -10,7 +10,7 @@
   "totalEstimatedHours": 124,
   "tasks": [
     {
-      "id": "3.11.1",
+      "id": "4.11.1",
       "category": "infrastructure",
       "title": "Create team structure system",
       "description": "Implement team management with create teams, add/remove members, and team roles (admin, member, viewer)",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "id": "3.11.2",
+      "id": "4.11.2",
       "category": "infrastructure",
       "title": "Implement permissions system",
       "description": "Create document-level, team-level, and role-based access control for fine-grained permission management",
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "id": "3.11.3",
+      "id": "4.11.3",
       "category": "ui",
       "title": "Add team settings panel",
       "description": "Create settings UI for default permissions, basic branding, and team notification preferences",
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "id": "3.11.4",
+      "id": "4.11.4",
       "category": "infrastructure",
       "title": "Implement @mention system",
       "description": "Create @mention functionality with type-to-trigger, user autocomplete, and profile linking",
@@ -86,7 +86,7 @@
       ]
     },
     {
-      "id": "3.11.5",
+      "id": "4.11.5",
       "category": "infrastructure",
       "title": "Create mention notifications",
       "description": "Notify mentioned users via in-app and email with document highlight and quick navigation",
@@ -105,7 +105,7 @@
       ]
     },
     {
-      "id": "3.11.6",
+      "id": "4.11.6",
       "category": "infrastructure",
       "title": "Create workspace concept",
       "description": "Implement workspaces to group documents with shared access and workspace-level settings",
@@ -124,7 +124,7 @@
       ]
     },
     {
-      "id": "3.11.7",
+      "id": "4.11.7",
       "category": "ui",
       "title": "Add workspace UI components",
       "description": "Create workspace switcher, document list view, and member management interface",
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "id": "3.11.8",
+      "id": "4.11.8",
       "category": "infrastructure",
       "title": "Implement workspace search",
       "description": "Create search functionality across workspace documents with filters for type, date, and author",
@@ -163,7 +163,7 @@
       ]
     },
     {
-      "id": "3.11.9",
+      "id": "4.11.9",
       "category": "testing",
       "title": "Integration testing for collaboration features",
       "description": "Comprehensive testing of all collaboration features including teams, workspaces, and cross-browser testing",
@@ -183,7 +183,7 @@
       ]
     },
     {
-      "id": "3.11.10",
+      "id": "4.11.10",
       "category": "infrastructure",
       "title": "Performance optimization for collaboration",
       "description": "Optimize WebSocket efficiency, sync performance, and memory management for collaboration features",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "id": "3.11.11",
+      "id": "4.11.11",
       "category": "infrastructure",
       "title": "Update documentation for collaboration",
       "description": "Create user documentation for all collaboration features including setup guides and best practices",
@@ -223,7 +223,7 @@
       ]
     },
     {
-      "id": "3.11.12",
+      "id": "4.11.12",
       "category": "infrastructure",
       "title": "Prepare v3.5 release",
       "description": "Update version, changelog, create release notes, and prepare for production deployment",
@@ -243,7 +243,7 @@
       ]
     },
     {
-      "id": "3.11.13",
+      "id": "4.11.13",
       "category": "infrastructure",
       "title": "Deploy v3.5 to production",
       "description": "Execute production deployment with WebSocket server, database migrations, and monitoring setup",

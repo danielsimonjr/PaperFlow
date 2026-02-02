@@ -10,7 +10,7 @@
   "totalEstimatedHours": 208,
   "tasks": [
     {
-      "id": "3.21.1",
+      "id": "4.21.1",
       "category": "testing",
       "title": "Achieve unit test coverage >= 85%",
       "description": "Increase unit test coverage across all modules to at least 85%",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "3.21.2",
+      "id": "4.21.2",
       "category": "testing",
       "title": "Integration tests for all features",
       "description": "Create comprehensive integration tests covering all major features",
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "id": "3.21.3",
+      "id": "4.21.3",
       "category": "testing",
       "title": "E2E tests for critical paths",
       "description": "Create end-to-end tests for all critical user journeys",
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "id": "3.21.4",
+      "id": "4.21.4",
       "category": "testing",
       "title": "Load testing for 1000+ concurrent users",
       "description": "Perform load testing to validate system handles 1000+ concurrent users",
@@ -88,7 +88,7 @@
       ]
     },
     {
-      "id": "3.21.5",
+      "id": "4.21.5",
       "category": "testing",
       "title": "Security penetration testing",
       "description": "Conduct comprehensive security penetration testing",
@@ -106,7 +106,7 @@
       ]
     },
     {
-      "id": "3.21.6",
+      "id": "4.21.6",
       "category": "testing",
       "title": "Accessibility audit (WCAG 2.1 AA)",
       "description": "Conduct accessibility audit and ensure WCAG 2.1 AA compliance",
@@ -134,7 +134,7 @@
   ],
   "dependencies": [
     "Sprint 20 - Platform Polish & Q4 Release completed",
-    "All Phase 3 features implemented"
+    "All Phase 4 features implemented"
   ],
   "notes": [
     "Focus on testing coverage and security validation",

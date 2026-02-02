@@ -10,7 +10,7 @@
   "totalEstimatedHours": 160,
   "tasks": [
     {
-      "id": "3.14.1",
+      "id": "4.14.1",
       "category": "infrastructure",
       "title": "Create audit logger library",
       "description": "Build lib/enterprise/auditLogger.ts with AuditEvent interface and logging functions",
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "id": "3.14.2",
+      "id": "4.14.2",
       "category": "infrastructure",
       "title": "Implement comprehensive audit logging",
       "description": "Add logging for authentication, document access, modifications, admin actions, and export/download events",
@@ -49,7 +49,7 @@
       ]
     },
     {
-      "id": "3.14.3",
+      "id": "4.14.3",
       "category": "infrastructure",
       "title": "Add tamper-proof storage",
       "description": "Implement immutable log entries with hash chain verification and external backup",
@@ -68,7 +68,7 @@
       ]
     },
     {
-      "id": "3.14.4",
+      "id": "4.14.4",
       "category": "ui",
       "title": "Create compliance dashboard",
       "description": "Build dashboard showing compliance score, issue summary, and remediation tasks",
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "id": "3.14.5",
+      "id": "4.14.5",
       "category": "infrastructure",
       "title": "Generate compliance reports",
       "description": "Create report generators for SOC 2, GDPR, HIPAA, and custom compliance frameworks",
@@ -111,7 +111,7 @@
       ]
     },
     {
-      "id": "3.14.6",
+      "id": "4.14.6",
       "category": "infrastructure",
       "title": "Add scheduled reports",
       "description": "Implement automated report generation on daily/weekly/monthly schedules with email delivery",
@@ -129,7 +129,7 @@
       ]
     },
     {
-      "id": "3.14.7",
+      "id": "4.14.7",
       "category": "infrastructure",
       "title": "Implement data classification",
       "description": "Create sensitivity labels, auto-classification engine, and manual tagging capabilities",
@@ -149,7 +149,7 @@
       ]
     },
     {
-      "id": "3.14.8",
+      "id": "4.14.8",
       "category": "infrastructure",
       "title": "Add data retention management",
       "description": "Implement retention policies, automatic archival, and scheduled deletion",
@@ -168,7 +168,7 @@
       ]
     },
     {
-      "id": "3.14.9",
+      "id": "4.14.9",
       "category": "infrastructure",
       "title": "Create GDPR data export",
       "description": "Implement user data export for GDPR compliance, bulk export, and format options",
@@ -187,7 +187,7 @@
       ]
     },
     {
-      "id": "3.14.10",
+      "id": "4.14.10",
       "category": "infrastructure",
       "title": "Implement legal hold",
       "description": "Create legal hold functionality to preserve documents, prevent deletion, and notify custodians",
@@ -206,7 +206,7 @@
       ]
     },
     {
-      "id": "3.14.11",
+      "id": "4.14.11",
       "category": "infrastructure",
       "title": "Add eDiscovery search and collect",
       "description": "Implement advanced search for eDiscovery, export for review, and chain of custody tracking",
@@ -226,7 +226,7 @@
       ]
     },
     {
-      "id": "3.14.12",
+      "id": "4.14.12",
       "category": "ui",
       "title": "Create audit log viewer",
       "description": "Build UI for viewing, filtering, and exporting audit logs",
@@ -246,7 +246,7 @@
       ]
     },
     {
-      "id": "3.14.13",
+      "id": "4.14.13",
       "category": "testing",
       "title": "Compliance and audit integration tests",
       "description": "Write comprehensive tests for audit logging, compliance reports, and data governance features",

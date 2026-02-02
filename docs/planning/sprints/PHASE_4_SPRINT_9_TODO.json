@@ -10,7 +10,7 @@
   "totalEstimatedHours": 124,
   "tasks": [
     {
-      "id": "3.9.1",
+      "id": "4.9.1",
       "category": "infrastructure",
       "title": "Create version manager module",
       "description": "Implement lib/collaboration/versionManager.ts with DocumentVersion interface and VersionManager methods: createVersion, getVersions, getVersion, restoreVersion, compareVersions, deleteVersion",
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "id": "3.9.2",
+      "id": "4.9.2",
       "category": "infrastructure",
       "title": "Implement auto-save versioning",
       "description": "Create automatic version saves every 5 minutes (configurable), on significant changes, and before document close",
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "id": "3.9.3",
+      "id": "4.9.3",
       "category": "infrastructure",
       "title": "Create manual checkpoint system",
       "description": "Allow users to create manual version checkpoints with custom names and descriptions/notes",
@@ -68,7 +68,7 @@
       ]
     },
     {
-      "id": "3.9.4",
+      "id": "4.9.4",
       "category": "ui",
       "title": "Create version history panel UI",
       "description": "Build VersionHistory.tsx component with timeline view, version details panel, preview thumbnails, and filter/search functionality",
@@ -88,7 +88,7 @@
       ]
     },
     {
-      "id": "3.9.5",
+      "id": "4.9.5",
       "category": "ui",
       "title": "Implement version comparison view",
       "description": "Create side-by-side diff view with highlighted changes and change summary between any two versions",
@@ -108,7 +108,7 @@
       ]
     },
     {
-      "id": "3.9.6",
+      "id": "4.9.6",
       "category": "ui",
       "title": "Create restore dialog",
       "description": "Build restore confirmation dialog with preview before restore option and automatic backup of current state",
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "id": "3.9.7",
+      "id": "4.9.7",
       "category": "infrastructure",
       "title": "Implement change detection system",
       "description": "Track all modifications, categorize by type (annotation, text, form, page), and attribute changes to users",
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "id": "3.9.8",
+      "id": "4.9.8",
       "category": "infrastructure",
       "title": "Create change summary generator",
       "description": "Generate human-readable summaries showing pages modified, annotations added/removed, text changes, and form field changes",
@@ -163,7 +163,7 @@
       ]
     },
     {
-      "id": "3.9.9",
+      "id": "4.9.9",
       "category": "ui",
       "title": "Add change visualization",
       "description": "Highlight modified areas in document view and show change markers in thumbnail sidebar",
@@ -181,7 +181,7 @@
       ]
     },
     {
-      "id": "3.9.10",
+      "id": "4.9.10",
       "category": "infrastructure",
       "title": "Implement version restore functionality",
       "description": "Create full document restore, selective restore for specific changes, and merge capabilities for combining old and new",
@@ -200,7 +200,7 @@
       ]
     },
     {
-      "id": "3.9.11",
+      "id": "4.9.11",
       "category": "infrastructure",
       "title": "Implement cross-session undo",
       "description": "Allow undo to previous versions and cherry-pick changes from version history",
@@ -218,7 +218,7 @@
       ]
     },
     {
-      "id": "3.9.12",
+      "id": "4.9.12",
       "category": "infrastructure",
       "title": "Create branch support (advanced)",
       "description": "Implement creating branches from versions, merging branches, and comparing branches for advanced version control",
@@ -237,7 +237,7 @@
       ]
     },
     {
-      "id": "3.9.13",
+      "id": "4.9.13",
       "category": "testing",
       "title": "Write tests for version management",
       "description": "Create unit and integration tests for version creation, restoration, comparison, and branching",

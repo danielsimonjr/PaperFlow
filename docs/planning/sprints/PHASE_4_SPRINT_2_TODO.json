@@ -10,7 +10,7 @@
   "totalEstimatedHours": 102,
   "tasks": [
     {
-      "id": "3.2.1",
+      "id": "4.2.1",
       "category": "infrastructure",
       "title": "Create summarization library",
       "description": "Create lib/ai/summarization.ts with SummaryOptions interface and core summarization functions",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "id": "3.2.2",
+      "id": "4.2.2",
       "category": "infrastructure",
       "title": "Implement summarizeDocument function",
       "description": "Create function to summarize full document with configurable length and style options",
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "id": "3.2.3",
+      "id": "4.2.3",
       "category": "infrastructure",
       "title": "Implement summarizePage function",
       "description": "Create function to summarize individual pages with optional document context",
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "id": "3.2.4",
+      "id": "4.2.4",
       "category": "infrastructure",
       "title": "Implement summarizeSelection function",
       "description": "Create function to summarize selected text with document context",
@@ -75,7 +75,7 @@
       ]
     },
     {
-      "id": "3.2.5",
+      "id": "4.2.5",
       "category": "infrastructure",
       "title": "Implement multi-level summarization",
       "description": "Create executive summary (1-2 paragraphs), section summaries, key points extraction, and action items detection",
@@ -92,7 +92,7 @@
       ]
     },
     {
-      "id": "3.2.6",
+      "id": "4.2.6",
       "category": "infrastructure",
       "title": "Add specialized document summaries",
       "description": "Implement specialized summary templates for legal, technical, financial, and academic documents",
@@ -110,7 +110,7 @@
       ]
     },
     {
-      "id": "3.2.7",
+      "id": "4.2.7",
       "category": "ui",
       "title": "Create SummarizePanel component",
       "description": "Build SummarizePanel.tsx with summary length selector, output style options, focus area input, and generate button",
@@ -128,7 +128,7 @@
       ]
     },
     {
-      "id": "3.2.8",
+      "id": "4.2.8",
       "category": "ui",
       "title": "Add summary overlay on document",
       "description": "Create floating summary panel with collapsible sections, copy to clipboard, and export options",
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "id": "3.2.9",
+      "id": "4.2.9",
       "category": "ui",
       "title": "Create summary sidebar tab",
       "description": "Add persistent summary view tab in sidebar with navigation to relevant sections and highlight key passages",
@@ -163,7 +163,7 @@
       ]
     },
     {
-      "id": "3.2.10",
+      "id": "4.2.10",
       "category": "infrastructure",
       "title": "Implement key points detection",
       "description": "Create function to extract main arguments, supporting evidence, conclusions, and recommendations",
@@ -180,7 +180,7 @@
       ]
     },
     {
-      "id": "3.2.11",
+      "id": "4.2.11",
       "category": "ui",
       "title": "Create visual key points display",
       "description": "Build component with numbered list, confidence indicators, and source page references",
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "id": "3.2.12",
+      "id": "4.2.12",
       "category": "ui",
       "title": "Implement right-click to summarize selection",
       "description": "Add context menu option for quick summary popup, explain in simpler terms, and identify key terms",
@@ -215,7 +215,7 @@
       ]
     },
     {
-      "id": "3.2.13",
+      "id": "4.2.13",
       "category": "infrastructure",
       "title": "Implement page-level summary",
       "description": "Create function to summarize current page with comparison to document context",
@@ -231,7 +231,7 @@
       ]
     },
     {
-      "id": "3.2.14",
+      "id": "4.2.14",
       "category": "infrastructure",
       "title": "Implement multi-document summarization",
       "description": "Create functionality to summarize across merged documents and compare document summaries",
@@ -248,7 +248,7 @@
       ]
     },
     {
-      "id": "3.2.15",
+      "id": "4.2.15",
       "category": "testing",
       "title": "Create unit tests for summarization module",
       "description": "Write comprehensive tests for all summarization functions with quality validation",

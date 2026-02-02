@@ -10,7 +10,7 @@
   "totalEstimatedHours": 110,
   "tasks": [
     {
-      "id": "3.4.1",
+      "id": "4.4.1",
       "category": "infrastructure",
       "title": "Create query engine library",
       "description": "Create lib/ai/queryEngine.ts with QueryResult and SourceReference interfaces",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "3.4.2",
+      "id": "4.4.2",
       "category": "infrastructure",
       "title": "Implement queryDocument function",
       "description": "Create main function to query document with natural language and return structured results",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "id": "3.4.3",
+      "id": "4.4.3",
       "category": "infrastructure",
       "title": "Implement suggestQuestions function",
       "description": "Create function to suggest relevant questions based on document context",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "id": "3.4.4",
+      "id": "4.4.4",
       "category": "infrastructure",
       "title": "Implement RAG (Retrieval-Augmented Generation)",
       "description": "Build RAG system with document section embedding, semantic search for relevant sections, and answer generation from context",
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "id": "3.4.5",
+      "id": "4.4.5",
       "category": "infrastructure",
       "title": "Create query understanding system",
       "description": "Implement user intent parsing, follow-up question handling, and comparison query support",
@@ -94,7 +94,7 @@
       ]
     },
     {
-      "id": "3.4.6",
+      "id": "4.4.6",
       "category": "ui",
       "title": "Create QueryPanel component",
       "description": "Build QueryPanel.tsx with natural language input field, voice input option, query history, and suggested questions",
@@ -111,7 +111,7 @@
       ]
     },
     {
-      "id": "3.4.7",
+      "id": "4.4.7",
       "category": "ui",
       "title": "Add answer display component",
       "description": "Create component with formatted response, source citations with page links, and related questions",
@@ -128,7 +128,7 @@
       ]
     },
     {
-      "id": "3.4.8",
+      "id": "4.4.8",
       "category": "ui",
       "title": "Create conversational interface",
       "description": "Build chat-like UI with context-aware follow-ups and clear conversation option",
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "id": "3.4.9",
+      "id": "4.4.9",
       "category": "infrastructure",
       "title": "Implement factual queries",
       "description": "Support factual questions like 'What is the contract value?', 'When does this agreement expire?', 'Who are the parties involved?'",
@@ -162,7 +162,7 @@
       ]
     },
     {
-      "id": "3.4.10",
+      "id": "4.4.10",
       "category": "infrastructure",
       "title": "Implement analytical queries",
       "description": "Support analytical questions like 'Summarize the main risks', 'Compare section 3 and section 5', 'What are the payment terms?'",
@@ -179,7 +179,7 @@
       ]
     },
     {
-      "id": "3.4.11",
+      "id": "4.4.11",
       "category": "infrastructure",
       "title": "Implement navigation queries",
       "description": "Support navigation questions like 'Find the signature page', 'Show me the definitions section', 'Where is liability discussed?'",
@@ -196,7 +196,7 @@
       ]
     },
     {
-      "id": "3.4.12",
+      "id": "4.4.12",
       "category": "infrastructure",
       "title": "Auto-suggest relevant questions",
       "description": "Implement suggestion system based on document type, user history, and common queries",
@@ -213,7 +213,7 @@
       ]
     },
     {
-      "id": "3.4.13",
+      "id": "4.4.13",
       "category": "infrastructure",
       "title": "Implement query refinement",
       "description": "Create clarifying questions, alternative phrasings, and scope narrowing functionality",
@@ -230,7 +230,7 @@
       ]
     },
     {
-      "id": "3.4.14",
+      "id": "4.4.14",
       "category": "testing",
       "title": "Create unit tests for query engine",
       "description": "Write comprehensive tests for query parsing, RAG, and answer generation",

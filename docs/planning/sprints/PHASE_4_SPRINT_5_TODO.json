@@ -10,7 +10,7 @@
   "totalEstimatedHours": 118,
   "tasks": [
     {
-      "id": "3.5.1",
+      "id": "4.5.1",
       "category": "infrastructure",
       "title": "Create translation library",
       "description": "Create lib/ai/translation.ts with TranslationOptions and TranslationResult interfaces",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "3.5.2",
+      "id": "4.5.2",
       "category": "infrastructure",
       "title": "Implement translateText function",
       "description": "Create function to translate text with configurable options",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "id": "3.5.3",
+      "id": "4.5.3",
       "category": "infrastructure",
       "title": "Implement translateDocument function",
       "description": "Create function to translate full document while preserving structure",
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "id": "3.5.4",
+      "id": "4.5.4",
       "category": "infrastructure",
       "title": "Integrate Google Cloud Translation",
       "description": "Create provider integration for Google Cloud Translation API",
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "id": "3.5.5",
+      "id": "4.5.5",
       "category": "infrastructure",
       "title": "Integrate DeepL API",
       "description": "Create provider integration for DeepL translation API",
@@ -95,7 +95,7 @@
       ]
     },
     {
-      "id": "3.5.6",
+      "id": "4.5.6",
       "category": "infrastructure",
       "title": "Integrate AI-powered translation",
       "description": "Create translation using GPT-4/Claude for context-aware translation",
@@ -112,7 +112,7 @@
       ]
     },
     {
-      "id": "3.5.7",
+      "id": "4.5.7",
       "category": "infrastructure",
       "title": "Implement language detection",
       "description": "Create auto-detection of source language with support for mixed-language documents and confidence scoring",
@@ -129,7 +129,7 @@
       ]
     },
     {
-      "id": "3.5.8",
+      "id": "4.5.8",
       "category": "ui",
       "title": "Create TranslationPanel component",
       "description": "Build TranslationPanel.tsx with source language selector (with auto-detect), target language selector, domain selector, and translate button",
@@ -147,7 +147,7 @@
       ]
     },
     {
-      "id": "3.5.9",
+      "id": "4.5.9",
       "category": "ui",
       "title": "Add side-by-side translation view",
       "description": "Create view with original and translated content, synchronized scrolling, and corresponding section highlighting",
@@ -164,7 +164,7 @@
       ]
     },
     {
-      "id": "3.5.10",
+      "id": "4.5.10",
       "category": "ui",
       "title": "Create inline translation feature",
       "description": "Implement hover to see translation, click to replace, and undo translation functionality",
@@ -181,7 +181,7 @@
       ]
     },
     {
-      "id": "3.5.11",
+      "id": "4.5.11",
       "category": "infrastructure",
       "title": "Implement full document translation",
       "description": "Create system to preserve formatting, handle images with text (OCR + translate), and maintain layout",
@@ -198,7 +198,7 @@
       ]
     },
     {
-      "id": "3.5.12",
+      "id": "4.5.12",
       "category": "ui",
       "title": "Create translation overlay toggle",
       "description": "Build toggle between original and translated view with blended view option",
@@ -215,7 +215,7 @@
       ]
     },
     {
-      "id": "3.5.13",
+      "id": "4.5.13",
       "category": "infrastructure",
       "title": "Add translation export options",
       "description": "Implement export translated PDF, export bilingual PDF, and export translation memory (TMX)",
@@ -232,7 +232,7 @@
       ]
     },
     {
-      "id": "3.5.14",
+      "id": "4.5.14",
       "category": "infrastructure",
       "title": "Build translation memory system",
       "description": "Create system to store previous translations, reuse for consistency, and track user corrections",
@@ -250,7 +250,7 @@
       ]
     },
     {
-      "id": "3.5.15",
+      "id": "4.5.15",
       "category": "infrastructure",
       "title": "Implement terminology management",
       "description": "Create custom glossaries, domain-specific terms, and do-not-translate lists",
@@ -267,7 +267,7 @@
       ]
     },
     {
-      "id": "3.5.16",
+      "id": "4.5.16",
       "category": "testing",
       "title": "Create unit tests for translation module",
       "description": "Write comprehensive tests for translation functions, providers, and memory system",

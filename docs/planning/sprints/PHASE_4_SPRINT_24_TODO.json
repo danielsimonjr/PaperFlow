@@ -10,7 +10,7 @@
   "totalEstimatedHours": 80,
   "tasks": [
     {
-      "id": "3.24.1",
+      "id": "4.24.1",
       "category": "testing",
       "title": "Final regression testing",
       "description": "Complete final regression testing before v5.0 release",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "3.24.2",
+      "id": "4.24.2",
       "category": "testing",
       "title": "User acceptance testing",
       "description": "Conduct UAT with beta users",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "id": "3.24.3",
+      "id": "4.24.3",
       "category": "infrastructure",
       "title": "Deploy v5.0 to production",
       "description": "Deploy v5.0 release to production environment",
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "id": "3.24.4",
+      "id": "4.24.4",
       "category": "infrastructure",
       "title": "Post-launch monitoring",
       "description": "Monitor system after v5.0 launch and address issues",
@@ -87,7 +87,7 @@
   ],
   "dependencies": [
     "Sprint 23 - Documentation & Release Preparation completed",
-    "All Phase 3 features tested and approved"
+    "All Phase 4 features tested and approved"
   ],
   "notes": [
     "Final sprint focuses on release and deployment",

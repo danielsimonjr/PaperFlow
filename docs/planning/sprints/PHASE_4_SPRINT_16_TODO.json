@@ -10,7 +10,7 @@
   "totalEstimatedHours": 144,
   "tasks": [
     {
-      "id": "3.16.1",
+      "id": "4.16.1",
       "category": "infrastructure",
       "title": "Create API directory structure",
       "description": "Create lib/api/ directory with router.ts, middleware.ts, validators.ts, serializers.ts, errorHandler.ts, and types.ts",
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "id": "3.16.2",
+      "id": "4.16.2",
       "category": "api",
       "title": "Design RESTful API architecture",
       "description": "Design resource-based endpoints with consistent naming and versioning (v1)",
@@ -49,7 +49,7 @@
       ]
     },
     {
-      "id": "3.16.3",
+      "id": "4.16.3",
       "category": "api",
       "title": "Implement GraphQL option",
       "description": "Create GraphQL schema definition, resolvers, and subscriptions as alternative to REST",
@@ -68,7 +68,7 @@
       ]
     },
     {
-      "id": "3.16.4",
+      "id": "4.16.4",
       "category": "infrastructure",
       "title": "Implement API key authentication",
       "description": "Create API key generation, rotation, and scope restriction functionality",
@@ -86,7 +86,7 @@
       ]
     },
     {
-      "id": "3.16.5",
+      "id": "4.16.5",
       "category": "infrastructure",
       "title": "Add OAuth 2.0 for API",
       "description": "Implement client credentials flow, authorization code flow, and token management",
@@ -104,7 +104,7 @@
       ]
     },
     {
-      "id": "3.16.6",
+      "id": "4.16.6",
       "category": "infrastructure",
       "title": "Create JWT token system",
       "description": "Implement access tokens, refresh tokens, and token validation",
@@ -121,7 +121,7 @@
       ]
     },
     {
-      "id": "3.16.7",
+      "id": "4.16.7",
       "category": "infrastructure",
       "title": "Implement rate limiting",
       "description": "Create per-key limits, per-endpoint limits, and burst allowance",
@@ -139,7 +139,7 @@
       ]
     },
     {
-      "id": "3.16.8",
+      "id": "4.16.8",
       "category": "infrastructure",
       "title": "Add quota management",
       "description": "Implement monthly quotas, quota alerts, and overage handling",
@@ -156,7 +156,7 @@
       ]
     },
     {
-      "id": "3.16.9",
+      "id": "4.16.9",
       "category": "api",
       "title": "Create rate limit headers",
       "description": "Add X-RateLimit-Limit, X-RateLimit-Remaining, and X-RateLimit-Reset headers",
@@ -173,7 +173,7 @@
       ]
     },
     {
-      "id": "3.16.10",
+      "id": "4.16.10",
       "category": "api",
       "title": "Implement Documents API",
       "description": "Create GET/POST/PUT/DELETE endpoints for documents and pages",
@@ -192,7 +192,7 @@
       ]
     },
     {
-      "id": "3.16.11",
+      "id": "4.16.11",
       "category": "api",
       "title": "Implement Annotations API",
       "description": "Create CRUD endpoints for document annotations",
@@ -209,7 +209,7 @@
       ]
     },
     {
-      "id": "3.16.12",
+      "id": "4.16.12",
       "category": "api",
       "title": "Implement Forms API",
       "description": "Create endpoints for form fields and form submission",
@@ -225,7 +225,7 @@
       ]
     },
     {
-      "id": "3.16.13",
+      "id": "4.16.13",
       "category": "testing",
       "title": "Write API unit tests",
       "description": "Create comprehensive unit tests for all API modules",
@@ -246,7 +246,7 @@
       ]
     },
     {
-      "id": "3.16.14",
+      "id": "4.16.14",
       "category": "testing",
       "title": "Write API integration tests",
       "description": "Create integration tests for API authentication and endpoints",

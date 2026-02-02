@@ -10,7 +10,7 @@
   "totalEstimatedHours": 170,
   "tasks": [
     {
-      "id": "3.20.1",
+      "id": "4.20.1",
       "category": "infrastructure",
       "title": "API response time optimization",
       "description": "Optimize API to achieve response time < 200ms for all standard operations",
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "id": "3.20.2",
+      "id": "4.20.2",
       "category": "infrastructure",
       "title": "Implement efficient pagination",
       "description": "Add cursor-based pagination and optimize page size for large datasets",
@@ -46,7 +46,7 @@
       ]
     },
     {
-      "id": "3.20.3",
+      "id": "4.20.3",
       "category": "infrastructure",
       "title": "Configure caching headers",
       "description": "Add proper HTTP caching headers for API responses",
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "id": "3.20.4",
+      "id": "4.20.4",
       "category": "api",
       "title": "Implement consistent error format",
       "description": "Standardize error responses with helpful messages and error codes",
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "id": "3.20.5",
+      "id": "4.20.5",
       "category": "api",
       "title": "Document error codes",
       "description": "Create comprehensive documentation for all API error codes",
@@ -100,7 +100,7 @@
       ]
     },
     {
-      "id": "3.20.6",
+      "id": "4.20.6",
       "category": "api",
       "title": "SDK improvements - TypeScript types",
       "description": "Improve TypeScript types in JavaScript SDK for better developer experience",
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "id": "3.20.7",
+      "id": "4.20.7",
       "category": "api",
       "title": "SDK improvements - More examples",
       "description": "Add comprehensive examples for common SDK use cases",
@@ -138,7 +138,7 @@
       ]
     },
     {
-      "id": "3.20.8",
+      "id": "4.20.8",
       "category": "api",
       "title": "SDK improvements - Error handling",
       "description": "Improve error handling in SDKs with retries and better error messages",
@@ -157,7 +157,7 @@
       ]
     },
     {
-      "id": "3.20.9",
+      "id": "4.20.9",
       "category": "api",
       "title": "Complete API reference documentation",
       "description": "Document all endpoints, parameters, and response codes comprehensively",
@@ -177,7 +177,7 @@
       ]
     },
     {
-      "id": "3.20.10",
+      "id": "4.20.10",
       "category": "api",
       "title": "Add API tutorials",
       "description": "Create tutorials for quick start, common use cases, and advanced scenarios",
@@ -196,7 +196,7 @@
       ]
     },
     {
-      "id": "3.20.11",
+      "id": "4.20.11",
       "category": "api",
       "title": "Create video content",
       "description": "Produce video tutorials for API overview and integration demos",
@@ -213,7 +213,7 @@
       ]
     },
     {
-      "id": "3.20.12",
+      "id": "4.20.12",
       "category": "testing",
       "title": "API load testing",
       "description": "Perform load testing to validate performance under high traffic",
@@ -231,7 +231,7 @@
       ]
     },
     {
-      "id": "3.20.13",
+      "id": "4.20.13",
       "category": "testing",
       "title": "Integration testing",
       "description": "Comprehensive integration testing for all platform features",
@@ -251,7 +251,7 @@
       ]
     },
     {
-      "id": "3.20.14",
+      "id": "4.20.14",
       "category": "testing",
       "title": "White-label testing",
       "description": "Test white-label deployments across different configurations",
@@ -269,7 +269,7 @@
       ]
     },
     {
-      "id": "3.20.15",
+      "id": "4.20.15",
       "category": "testing",
       "title": "Security review and penetration testing",
       "description": "Conduct security audit and penetration testing for API",
@@ -287,7 +287,7 @@
       ]
     },
     {
-      "id": "3.20.16",
+      "id": "4.20.16",
       "category": "infrastructure",
       "title": "Update version to 4.5.0",
       "description": "Bump version number and prepare release artifacts",
@@ -305,7 +305,7 @@
       ]
     },
     {
-      "id": "3.20.17",
+      "id": "4.20.17",
       "category": "infrastructure",
       "title": "Deploy v4.5 to production",
       "description": "Deploy v4.5 release to production environment",

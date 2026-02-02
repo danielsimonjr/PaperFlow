@@ -10,7 +10,7 @@
   "totalEstimatedHours": 54,
   "tasks": [
     {
-      "id": "3.23.1",
+      "id": "4.23.1",
       "category": "infrastructure",
       "title": "Version bump to 5.0.0",
       "description": "Update version number to 5.0.0 for Year 2 completion",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "id": "3.23.2",
+      "id": "4.23.2",
       "category": "infrastructure",
       "title": "Create changelog for Year 2",
       "description": "Document all changes, features, and fixes from Year 2",
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "id": "3.23.3",
+      "id": "4.23.3",
       "category": "infrastructure",
       "title": "Create roadmap for Year 3",
       "description": "Document planned features and direction for Year 3",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "id": "3.23.4",
+      "id": "4.23.4",
       "category": "infrastructure",
       "title": "Create marketing materials",
       "description": "Prepare marketing materials for v5.0 launch",
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "id": "3.23.5",
+      "id": "4.23.5",
       "category": "infrastructure",
       "title": "Prepare launch announcement",
       "description": "Prepare official launch announcement for v5.0",
