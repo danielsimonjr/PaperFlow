@@ -4,7 +4,7 @@
   "quarter": "Q2",
   "title": "Hardware Security & Q2 Release",
   "goal": "Implement FIDO2/WebAuthn hardware key support and prepare Q2 release with desktop-specific features",
-  "milestone": "Q2 Desktop Release",
+  "milestone": "v3.5 Desktop Beta",
   "priority": "CRITICAL",
   "status": "pending",
   "totalEstimatedHours": 112,

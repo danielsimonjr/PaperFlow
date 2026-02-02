@@ -9,7 +9,6 @@
   "status": "pending",
   "totalEstimatedHours": 88,
   "blockedBy": [
-    1,
     2
   ],
   "canParallelWith": [

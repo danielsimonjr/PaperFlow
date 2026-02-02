@@ -5,7 +5,7 @@ This document visualizes sprint dependencies and parallelization opportunities f
 ## Overview
 
 - **Total Sprints**: 24
-- **Total Estimated Hours**: 3,049
+- **Total Estimated Hours**: 2,949
 - **Parallelizable Sprints**: 4 of 24 (17%)
 - **Structure**: Highly sequential with Q1 AI features being the main parallelization opportunity
 

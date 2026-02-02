@@ -3,7 +3,7 @@
   "sprint": 24,
   "quarter": "Q4",
   "title": "Kiosk Mode & Year Release",
-  "goal": "Implement kiosk mode lockdown features and prepare v3.0 annual release",
+  "goal": "Implement kiosk mode lockdown features and prepare v4.5 annual release",
   "milestone": "v4.5 Enterprise Desktop",
   "priority": "HIGH",
   "status": "pending",
@@ -182,13 +182,13 @@
     {
       "id": "3.24.10",
       "category": "infrastructure",
-      "title": "Prepare v3.0 release artifacts",
+      "title": "Prepare v4.5 release artifacts",
       "description": "Build and sign all release artifacts: Windows MSI/EXE, macOS PKG/DMG, Linux DEB/RPM/AppImage",
       "status": "pending",
       "estimatedHours": 8,
       "files": [
-        "scripts/build-release-v3.ts",
-        "dist/v3.0.0/"
+        "scripts/build-release-v4.5.ts",
+        "dist/v4.5.0/"
       ],
       "acceptanceCriteria": [
         "All platform installers built",
@@ -200,12 +200,12 @@
     {
       "id": "3.24.11",
       "category": "infrastructure",
-      "title": "Create v3.0 release documentation",
-      "description": "Write release notes, upgrade guide, enterprise deployment guide, and API changelog for v3.0",
+      "title": "Create v4.5 release documentation",
+      "description": "Write release notes, upgrade guide, enterprise deployment guide, and API changelog for v4.5",
       "status": "pending",
       "estimatedHours": 6,
       "files": [
-        "docs/releases/v3.0.0-release-notes.md",
+        "docs/releases/v4.5.0-release-notes.md",
         "docs/enterprise/deployment-guide.md",
         "docs/enterprise/upgrade-guide.md",
         "CHANGELOG.md"
@@ -220,15 +220,15 @@
     {
       "id": "3.24.12",
       "category": "infrastructure",
-      "title": "Deploy v3.0 to production",
-      "description": "Deploy v3.0 release to production update server, website, and enterprise distribution channels",
+      "title": "Deploy v4.5 to production",
+      "description": "Deploy v4.5 release to production update server, website, and enterprise distribution channels",
       "status": "pending",
       "estimatedHours": 4,
       "files": [
-        "scripts/deploy-v3.ts"
+        "scripts/deploy-v4.5.ts"
       ],
       "acceptanceCriteria": [
-        "Update server has v3.0 release",
+        "Update server has v4.5 release",
         "Website updated with new features",
         "Enterprise channels notified",
         "Rollback plan ready"
@@ -238,11 +238,11 @@
       "id": "3.24.13",
       "category": "testing",
       "title": "Post-release monitoring and hotfix readiness",
-      "description": "Monitor v3.0 release metrics, error rates, and prepare hotfix process for critical issues",
+      "description": "Monitor v4.5 release metrics, error rates, and prepare hotfix process for critical issues",
       "status": "pending",
       "estimatedHours": 6,
       "files": [
-        "docs/operations/v3-monitoring.md"
+        "docs/operations/v4.5-monitoring.md"
       ],
       "acceptanceCriteria": [
         "Monitoring dashboards active",
@@ -255,7 +255,7 @@
   "successCriteria": [
     "Kiosk mode provides secure public terminal experience",
     "All Phase 3 features tested and approved",
-    "v3.0.0 released on all platforms",
+    "v4.5.0 released on all platforms",
     "Enterprise customers successfully deploying",
     "Year 2 Phase 3 complete"
   ],
@@ -267,7 +267,7 @@
   ],
   "notes": [
     "Kiosk mode essential for public-facing deployments",
-    "v3.0 represents major enterprise milestone",
+    "v4.5 represents major enterprise milestone",
     "Coordinate release with marketing and sales",
     "Plan for post-release support surge"
   ]
