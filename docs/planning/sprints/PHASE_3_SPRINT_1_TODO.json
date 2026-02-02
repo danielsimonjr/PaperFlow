@@ -6,7 +6,7 @@
   "goal": "Set up Electron project structure and create the desktop application shell",
   "milestone": "Desktop App Foundation",
   "priority": "HIGH",
-  "status": "pending",
+  "status": "complete",
   "totalEstimatedHours": 88,
   "blockedBy": [],
   "canParallelWith": [],
@@ -16,11 +16,11 @@
       "category": "setup",
       "title": "Initialize Electron project structure",
       "description": "Create electron/ directory with main.ts, preload.ts, and electron-builder configuration. Set up TypeScript configuration for Electron main process.",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 4,
       "files": [
-        "electron/main.ts",
-        "electron/preload.ts",
+        "electron/main/index.ts",
+        "electron/preload/index.ts",
         "electron/tsconfig.json",
         "electron-builder.yml"
       ],
@@ -36,7 +36,7 @@
       "category": "setup",
       "title": "Install and configure Electron dependencies",
       "description": "Install electron, electron-builder, electron-devtools-installer, and configure Vite for Electron integration",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 4,
       "files": [
         "package.json",
@@ -55,11 +55,11 @@
       "category": "feature",
       "title": "Create main process entry point",
       "description": "Implement main.ts with BrowserWindow creation, app lifecycle events, and IPC setup for main process",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 8,
       "files": [
-        "electron/main.ts",
-        "electron/windowManager.ts"
+        "electron/main/index.ts",
+        "electron/main/windowManager.ts"
       ],
       "acceptanceCriteria": [
         "BrowserWindow is created with proper configuration",
@@ -73,11 +73,12 @@
       "category": "feature",
       "title": "Implement secure preload script",
       "description": "Create preload.ts with contextBridge API exposure for secure IPC communication between renderer and main process",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 6,
       "files": [
-        "electron/preload.ts",
-        "electron/ipc/types.ts"
+        "electron/preload/index.ts",
+        "electron/ipc/types.ts",
+        "src/types/electronTypes.ts"
       ],
       "acceptanceCriteria": [
         "contextBridge exposes secure API",
@@ -91,7 +92,7 @@
       "category": "feature",
       "title": "Set up IPC communication layer",
       "description": "Create typed IPC handlers and invokers for communication between main and renderer processes",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 8,
       "files": [
         "electron/ipc/handlers.ts",
@@ -110,11 +111,11 @@
       "category": "feature",
       "title": "Create window configuration and management",
       "description": "Implement window management with state persistence, multi-window support, and window event handling",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 8,
       "files": [
-        "electron/windowManager.ts",
-        "electron/windowState.ts"
+        "electron/main/windowManager.ts",
+        "electron/main/windowState.ts"
       ],
       "acceptanceCriteria": [
         "Window size and position are persisted between sessions",
@@ -128,11 +129,12 @@
       "category": "feature",
       "title": "Implement platform detection utility",
       "description": "Create utility to detect if running in Electron vs browser, with feature flags for platform-specific functionality",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 4,
       "files": [
         "src/lib/electron/platform.ts",
-        "src/hooks/usePlatform.ts"
+        "src/hooks/usePlatform.ts",
+        "src/lib/electron/index.ts"
       ],
       "acceptanceCriteria": [
         "isElectron() returns true in Electron, false in browser",
@@ -146,11 +148,11 @@
       "category": "feature",
       "title": "Configure Content Security Policy for Electron",
       "description": "Set up CSP headers for Electron with appropriate policies for local resources and PDF.js worker",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 4,
       "files": [
-        "electron/main.ts",
-        "electron/security.ts"
+        "electron/main/index.ts",
+        "electron/main/security.ts"
       ],
       "acceptanceCriteria": [
         "CSP is configured for local file access",
@@ -164,7 +166,7 @@
       "category": "feature",
       "title": "Set up app icon and branding",
       "description": "Create app icons for all platforms (Windows .ico, macOS .icns, Linux .png) and configure electron-builder for branding",
-      "status": "pending",
+      "status": "partial",
       "estimatedHours": 6,
       "files": [
         "build/icon.ico",
@@ -177,14 +179,15 @@
         "macOS icon (.icns) with retina support is created",
         "Linux icons in various sizes are created",
         "electron-builder uses correct icons per platform"
-      ]
+      ],
+      "notes": "electron-builder.yml configured, but actual icon files need to be created by design team"
     },
     {
       "id": "3.1.10",
       "category": "feature",
       "title": "Implement development workflow",
       "description": "Set up concurrent Vite dev server and Electron for hot reload during development",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 6,
       "files": [
         "scripts/dev-electron.js",
@@ -202,7 +205,7 @@
       "category": "feature",
       "title": "Configure production build pipeline",
       "description": "Set up build scripts to create distributable packages for Windows (NSIS, portable), macOS (DMG), and Linux (AppImage, deb)",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 8,
       "files": [
         "scripts/build-electron.js",
@@ -222,11 +225,11 @@
       "category": "feature",
       "title": "Create app lifecycle management",
       "description": "Implement proper app quit handling, single instance lock, and startup options",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 6,
       "files": [
-        "electron/lifecycle.ts",
-        "electron/main.ts"
+        "electron/main/lifecycle.ts",
+        "electron/main/index.ts"
       ],
       "acceptanceCriteria": [
         "Single instance lock prevents multiple app instances",
@@ -240,12 +243,12 @@
       "category": "testing",
       "title": "Create Electron unit tests",
       "description": "Set up testing infrastructure for Electron main process with tests for IPC, window management, and platform detection",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 10,
       "files": [
-        "tests/electron/main.test.ts",
         "tests/electron/ipc.test.ts",
         "tests/electron/windowManager.test.ts",
+        "tests/electron/platform.test.ts",
         "tests/electron/setup.ts"
       ],
       "acceptanceCriteria": [
@@ -260,7 +263,7 @@
       "category": "docs",
       "title": "Document Electron architecture",
       "description": "Create documentation for Electron project structure, IPC patterns, and development workflow",
-      "status": "pending",
+      "status": "complete",
       "estimatedHours": 6,
       "files": [
         "docs/electron/architecture.md",

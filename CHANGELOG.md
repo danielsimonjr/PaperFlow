@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Phase 3: Desktop Application (Electron)
+
+This release begins Phase 3 development, adding Electron support for native desktop functionality.
+
+### Added
+
+#### Electron App Shell (Sprint 1)
+- Electron project structure with main, preload, and IPC modules
+- Main process with BrowserWindow management and app lifecycle handling
+- Secure preload script with contextBridge API exposure
+- Type-safe IPC communication layer with 30+ channels
+- Window state persistence (position, size, maximized state)
+- Multi-window support for opening multiple documents
+- Platform detection utilities for conditional feature enabling
+- Content Security Policy configuration for production and development
+- Single instance lock to prevent duplicate app instances
+- Native file dialogs (open, save, save as)
+- Native shell integration (open external URLs, show in folder, trash)
+- Native clipboard operations (text and images)
+- Native notifications
+- Recent files tracking
+- Development workflow with hot reload for both renderer and main process
+- Production build pipeline with electron-builder
+- Support for Windows (NSIS installer, portable), macOS (DMG), and Linux (AppImage, deb, rpm)
+- macOS entitlements for hardened runtime
+- Comprehensive documentation (architecture, development guide, IPC patterns)
+- Unit tests for window manager, IPC channels, and platform detection
+- usePlatform React hook for reactive platform features
+
 ---
 
 ## [2.5.0] - 2026-02-01
