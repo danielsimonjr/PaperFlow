@@ -6,51 +6,13 @@
  */
 
 import { IpcMain, dialog, shell, clipboard, nativeImage, BrowserWindow, Notification, app } from 'electron';
-import fs from 'fs/promises';
-import path from 'path';
 import { IPC_CHANNELS } from './channels';
 import type {
-  FileDialogOptions,
-  SaveDialogOptions,
   MessageDialogOptions,
-  FileReadOptions,
   NotificationOptions,
   WindowBounds,
-  RecentFile,
 } from './types';
-
-// Recent files storage
-const MAX_RECENT_FILES = 10;
-
-/**
- * Get the path to the recent files storage
- */
-function getRecentFilesPath(): string {
-  return path.join(app.getPath('userData'), 'recent-files.json');
-}
-
-/**
- * Load recent files from storage
- */
-async function loadRecentFiles(): Promise<RecentFile[]> {
-  try {
-    const data = await fs.readFile(getRecentFilesPath(), 'utf-8');
-    const parsed = JSON.parse(data) as unknown;
-    if (Array.isArray(parsed)) {
-      return parsed as RecentFile[];
-    }
-  } catch {
-    // File doesn't exist or is invalid, return empty array
-  }
-  return [];
-}
-
-/**
- * Save recent files to storage
- */
-async function saveRecentFiles(files: RecentFile[]): Promise<void> {
-  await fs.writeFile(getRecentFilesPath(), JSON.stringify(files, null, 2), 'utf-8');
-}
+import { setupFileHandlers } from './fileHandlers';
 
 /**
  * Set up all IPC handlers
@@ -63,46 +25,10 @@ export function setupIpcHandlers(ipcMain: IpcMain): void {
     return BrowserWindow.fromWebContents(event.sender);
   };
 
-  // File operations
-  ipcMain.handle(IPC_CHANNELS.DIALOG_OPEN_FILE, async (event, options?: FileDialogOptions) => {
-    const window = getCurrentWindow(event);
-    if (!window) return { canceled: true, filePaths: [] };
+  // Set up file system handlers (dialogs, read/write, watch, autosave, backup)
+  setupFileHandlers(ipcMain);
 
-    const result = await dialog.showOpenDialog(window, {
-      title: options?.title || 'Open PDF',
-      defaultPath: options?.defaultPath,
-      filters: options?.filters || [
-        { name: 'PDF Files', extensions: ['pdf'] },
-        { name: 'All Files', extensions: ['*'] },
-      ],
-      properties: options?.multiSelections ? ['openFile', 'multiSelections'] : ['openFile'],
-    });
-
-    return {
-      canceled: result.canceled,
-      filePaths: result.filePaths,
-    };
-  });
-
-  ipcMain.handle(
-    IPC_CHANNELS.DIALOG_SAVE_FILE,
-    async (event, options?: SaveDialogOptions) => {
-      const window = getCurrentWindow(event);
-      if (!window) return { canceled: true };
-
-      const result = await dialog.showSaveDialog(window, {
-        title: options?.title || 'Save PDF',
-        defaultPath: options?.defaultPath,
-        filters: options?.filters || [{ name: 'PDF Files', extensions: ['pdf'] }],
-      });
-
-      return {
-        canceled: result.canceled,
-        filePath: result.filePath,
-      };
-    }
-  );
-
+  // Message dialog (kept here for non-file-related dialogs)
   ipcMain.handle(
     IPC_CHANNELS.DIALOG_MESSAGE,
     async (event, options: MessageDialogOptions) => {
@@ -122,67 +48,6 @@ export function setupIpcHandlers(ipcMain: IpcMain): void {
       return { response: result.response };
     }
   );
-
-  ipcMain.handle(IPC_CHANNELS.FILE_READ, async (_event, filePath: string, options?: FileReadOptions) => {
-    try {
-      const encoding = options?.encoding;
-      const data = await fs.readFile(filePath, encoding);
-      return { success: true, data };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Failed to read file',
-      };
-    }
-  });
-
-  ipcMain.handle(IPC_CHANNELS.FILE_SAVE, async (_event, filePath: string, data: Uint8Array) => {
-    try {
-      await fs.writeFile(filePath, Buffer.from(data));
-      return { success: true };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Failed to save file',
-      };
-    }
-  });
-
-  ipcMain.handle(IPC_CHANNELS.FILE_EXISTS, async (_event, filePath: string) => {
-    try {
-      await fs.access(filePath);
-      return true;
-    } catch {
-      return false;
-    }
-  });
-
-  ipcMain.handle(IPC_CHANNELS.FILE_GET_RECENT, async () => {
-    return loadRecentFiles();
-  });
-
-  ipcMain.handle(IPC_CHANNELS.FILE_ADD_RECENT, async (_event, filePath: string) => {
-    const files = await loadRecentFiles();
-
-    // Remove if already exists
-    const filtered = files.filter((f) => f.path !== filePath);
-
-    // Add to front
-    filtered.unshift({
-      path: filePath,
-      name: path.basename(filePath),
-      timestamp: Date.now(),
-    });
-
-    // Limit to max
-    const limited = filtered.slice(0, MAX_RECENT_FILES);
-
-    await saveRecentFiles(limited);
-  });
-
-  ipcMain.handle(IPC_CHANNELS.FILE_CLEAR_RECENT, async () => {
-    await saveRecentFiles([]);
-  });
 
   // Window operations
   ipcMain.handle(IPC_CHANNELS.WINDOW_MINIMIZE, (event) => {

@@ -26,6 +26,20 @@ import type {
   SaveDialogResult,
   MessageDialogResult,
   FileReadResult,
+  FileWriteResult,
+  FileStats,
+  FolderDialogOptions,
+  FolderDialogResult,
+  FolderListOptions,
+  FolderEntry,
+  FileWatcherEvent,
+  AutoSaveOptions,
+  RecoveryFileInfo,
+  BackupInfo,
+  BackupOptions,
+  UpdateState,
+  UpdateSettings,
+  UpdateCheckResult,
 } from '../ipc/types';
 
 /**
@@ -75,10 +89,26 @@ const electronAPI: ElectronAPI = {
   },
   readFile: (filePath: string, options?: FileReadOptions) =>
     invoke<FileReadResult>(IPC_CHANNELS.FILE_READ, filePath, options),
+  writeFile: (filePath: string, data: Uint8Array) =>
+    invoke<FileWriteResult>(IPC_CHANNELS.FILE_WRITE, filePath, data),
   fileExists: (filePath: string) => invoke<boolean>(IPC_CHANNELS.FILE_EXISTS, filePath),
+  getFileStats: (filePath: string) => invoke<FileStats | null>(IPC_CHANNELS.FILE_GET_STATS, filePath),
+  deleteFile: (filePath: string) => invoke<boolean>(IPC_CHANNELS.FILE_DELETE, filePath),
+  copyFile: (src: string, dest: string) => invoke<boolean>(IPC_CHANNELS.FILE_COPY, src, dest),
+  moveFile: (src: string, dest: string) => invoke<boolean>(IPC_CHANNELS.FILE_MOVE, src, dest),
+
+  // Recent files
   getRecentFiles: () => invoke<RecentFile[]>(IPC_CHANNELS.FILE_GET_RECENT),
   addRecentFile: (filePath: string) => invoke<void>(IPC_CHANNELS.FILE_ADD_RECENT, filePath),
+  removeRecentFile: (filePath: string) => invoke<void>(IPC_CHANNELS.FILE_REMOVE_RECENT, filePath),
   clearRecentFiles: () => invoke<void>(IPC_CHANNELS.FILE_CLEAR_RECENT),
+
+  // Folder operations
+  pickFolder: (options?: FolderDialogOptions) =>
+    invoke<FolderDialogResult>(IPC_CHANNELS.FOLDER_PICK, options),
+  listFolder: (folderPath: string, options?: FolderListOptions) =>
+    invoke<FolderEntry[]>(IPC_CHANNELS.FOLDER_LIST, folderPath, options),
+  createFolder: (folderPath: string) => invoke<boolean>(IPC_CHANNELS.FOLDER_CREATE, folderPath),
 
   // Dialog operations
   showOpenDialog: (options?: FileDialogOptions) =>
@@ -87,6 +117,26 @@ const electronAPI: ElectronAPI = {
     invoke<SaveDialogResult>(IPC_CHANNELS.DIALOG_SAVE_FILE, options),
   showMessageDialog: (options: MessageDialogOptions) =>
     invoke<MessageDialogResult>(IPC_CHANNELS.DIALOG_MESSAGE, options),
+
+  // File watcher
+  watchFile: (filePath: string) => invoke<boolean>(IPC_CHANNELS.WATCHER_START, filePath),
+  unwatchFile: (filePath: string) => invoke<boolean>(IPC_CHANNELS.WATCHER_STOP, filePath),
+  unwatchAll: () => invoke<void>(IPC_CHANNELS.WATCHER_STOP_ALL),
+
+  // Auto-save
+  enableAutoSave: (options: AutoSaveOptions) =>
+    invoke<boolean>(IPC_CHANNELS.AUTOSAVE_ENABLE, options),
+  disableAutoSave: (filePath: string) => invoke<boolean>(IPC_CHANNELS.AUTOSAVE_DISABLE, filePath),
+  getRecoveryFiles: () => invoke<RecoveryFileInfo[]>(IPC_CHANNELS.AUTOSAVE_GET_RECOVERY),
+  clearRecoveryFile: (recoveryPath: string) =>
+    invoke<boolean>(IPC_CHANNELS.AUTOSAVE_CLEAR_RECOVERY, recoveryPath),
+
+  // Backup
+  createBackup: (filePath: string, options?: BackupOptions) =>
+    invoke<BackupInfo | null>(IPC_CHANNELS.BACKUP_CREATE, filePath, options),
+  listBackups: (filePath: string) => invoke<BackupInfo[]>(IPC_CHANNELS.BACKUP_LIST, filePath),
+  restoreBackup: (backupId: string) => invoke<boolean>(IPC_CHANNELS.BACKUP_RESTORE, backupId),
+  deleteBackup: (backupId: string) => invoke<boolean>(IPC_CHANNELS.BACKUP_DELETE, backupId),
 
   // Window operations
   minimizeWindow: () => {
@@ -105,6 +155,9 @@ const electronAPI: ElectronAPI = {
   getWindowBounds: () => invoke<WindowBounds>(IPC_CHANNELS.WINDOW_GET_BOUNDS),
   setWindowBounds: (bounds: Partial<WindowBounds>) => {
     ipcRenderer.invoke(IPC_CHANNELS.WINDOW_SET_BOUNDS, bounds);
+  },
+  setDocumentEdited: (edited: boolean) => {
+    ipcRenderer.invoke(IPC_CHANNELS.WINDOW_SET_DOCUMENT_EDITED, edited);
   },
 
   // Shell operations
@@ -133,29 +186,76 @@ const electronAPI: ElectronAPI = {
   // System info
   getMemoryInfo: () => invoke<MemoryInfo>(IPC_CHANNELS.SYSTEM_GET_MEMORY_INFO),
 
+  // Auto-update operations
+  getUpdateState: () => invoke<UpdateState>(IPC_CHANNELS.UPDATE_GET_STATE),
+  getUpdateSettings: () => invoke<UpdateSettings>(IPC_CHANNELS.UPDATE_GET_SETTINGS),
+  setUpdateSettings: (settings: Partial<UpdateSettings>) =>
+    invoke<UpdateSettings>(IPC_CHANNELS.UPDATE_SET_SETTINGS, settings),
+  checkForUpdates: () => invoke<UpdateCheckResult>(IPC_CHANNELS.UPDATE_CHECK_FOR_UPDATES),
+  downloadUpdate: () => invoke<{ success: boolean; error?: string }>(IPC_CHANNELS.UPDATE_DOWNLOAD),
+  cancelDownload: () =>
+    invoke<{ success: boolean; error?: string }>(IPC_CHANNELS.UPDATE_CANCEL_DOWNLOAD),
+  installAndRestart: () => {
+    ipcRenderer.invoke(IPC_CHANNELS.UPDATE_INSTALL_AND_RESTART);
+  },
+  installLater: () => invoke<{ success: boolean }>(IPC_CHANNELS.UPDATE_INSTALL_LATER),
+  getReleaseNotes: () => invoke<string | null>(IPC_CHANNELS.UPDATE_GET_RELEASE_NOTES),
+
   // Event listeners
   onFileOpened: (callback: (filePath: string) => void) =>
     createListener(IPC_EVENTS.FILE_OPENED, callback as (...args: unknown[]) => void),
-  onMenuFileNew: (callback: () => void) =>
-    createListener(IPC_EVENTS.MENU_FILE_NEW, callback),
-  onMenuFileOpen: (callback: () => void) =>
-    createListener(IPC_EVENTS.MENU_FILE_OPEN, callback),
-  onMenuFileSave: (callback: () => void) =>
-    createListener(IPC_EVENTS.MENU_FILE_SAVE, callback),
+  onFileChanged: (callback: (event: FileWatcherEvent) => void) =>
+    createListener(IPC_EVENTS.FILE_CHANGED, callback as (...args: unknown[]) => void),
+  onFileDeleted: (callback: (filePath: string) => void) =>
+    createListener(IPC_EVENTS.FILE_DELETED, callback as (...args: unknown[]) => void),
+  onCloseRequested: (callback: () => Promise<boolean>) => {
+    const listener = async () => {
+      const canClose = await callback();
+      ipcRenderer.send('close-response', canClose);
+    };
+    ipcRenderer.on(IPC_EVENTS.WINDOW_CLOSE_REQUESTED, listener);
+    return () => {
+      ipcRenderer.removeListener(IPC_EVENTS.WINDOW_CLOSE_REQUESTED, listener);
+    };
+  },
+  onAutoSaveTriggered: (callback: (filePath: string) => void) =>
+    createListener(IPC_EVENTS.AUTOSAVE_TRIGGERED, callback as (...args: unknown[]) => void),
+  onRecoveryAvailable: (callback: (files: RecoveryFileInfo[]) => void) =>
+    createListener(IPC_EVENTS.RECOVERY_AVAILABLE, callback as (...args: unknown[]) => void),
+  onMenuFileNew: (callback: () => void) => createListener(IPC_EVENTS.MENU_FILE_NEW, callback),
+  onMenuFileOpen: (callback: () => void) => createListener(IPC_EVENTS.MENU_FILE_OPEN, callback),
+  onMenuFileSave: (callback: () => void) => createListener(IPC_EVENTS.MENU_FILE_SAVE, callback),
   onMenuFileSaveAs: (callback: () => void) =>
     createListener(IPC_EVENTS.MENU_FILE_SAVE_AS, callback),
-  onMenuEditUndo: (callback: () => void) =>
-    createListener(IPC_EVENTS.MENU_EDIT_UNDO, callback),
-  onMenuEditRedo: (callback: () => void) =>
-    createListener(IPC_EVENTS.MENU_EDIT_REDO, callback),
+  onMenuFileClose: (callback: () => void) => createListener(IPC_EVENTS.MENU_FILE_CLOSE, callback),
+  onMenuEditUndo: (callback: () => void) => createListener(IPC_EVENTS.MENU_EDIT_UNDO, callback),
+  onMenuEditRedo: (callback: () => void) => createListener(IPC_EVENTS.MENU_EDIT_REDO, callback),
   onMenuViewZoomIn: (callback: () => void) =>
     createListener(IPC_EVENTS.MENU_VIEW_ZOOM_IN, callback),
   onMenuViewZoomOut: (callback: () => void) =>
     createListener(IPC_EVENTS.MENU_VIEW_ZOOM_OUT, callback),
   onMenuViewZoomReset: (callback: () => void) =>
     createListener(IPC_EVENTS.MENU_VIEW_ZOOM_RESET, callback),
-  onBeforeQuit: (callback: () => void) =>
-    createListener(IPC_EVENTS.APP_BEFORE_QUIT, callback),
+  onBeforeQuit: (callback: () => Promise<boolean>) => {
+    const listener = async () => {
+      const canQuit = await callback();
+      ipcRenderer.send('quit-response', canQuit);
+    };
+    ipcRenderer.on(IPC_EVENTS.APP_BEFORE_QUIT, listener);
+    return () => {
+      ipcRenderer.removeListener(IPC_EVENTS.APP_BEFORE_QUIT, listener);
+    };
+  },
+
+  // Update event listeners
+  onUpdateStateChanged: (callback: (state: UpdateState) => void) =>
+    createListener(IPC_EVENTS.UPDATE_STATE_CHANGED, callback as (...args: unknown[]) => void),
+  onUpdateAvailable: (callback: (version: string) => void) =>
+    createListener(IPC_EVENTS.UPDATE_AVAILABLE, callback as (...args: unknown[]) => void),
+  onUpdateDownloaded: (callback: (version: string) => void) =>
+    createListener(IPC_EVENTS.UPDATE_DOWNLOADED, callback as (...args: unknown[]) => void),
+  onUpdateError: (callback: (error: string) => void) =>
+    createListener(IPC_EVENTS.UPDATE_ERROR, callback as (...args: unknown[]) => void),
 };
 
 // Expose the API to the renderer process

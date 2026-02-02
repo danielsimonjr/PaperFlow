@@ -36,6 +36,45 @@ This release begins Phase 3 development, adding Electron support for native desk
 - Unit tests for window manager, IPC channels, and platform detection
 - usePlatform React hook for reactive platform features
 
+#### File System Integration (Sprint 2)
+- Native file open dialog with PDF filter and multi-file selection
+- Native file save dialog with overwrite confirmation and backup creation
+- File read/write operations with proper error handling and data conversion
+- File watcher using chokidar for external change detection with reload prompts
+- Recent files management with OS-level integration and persistence
+- Desktop drag-and-drop file support for Electron app
+- PDF file association handler for opening PDFs from Explorer/Finder
+- Command-line file opening support with startup argument processing
+- Auto-save functionality with configurable intervals
+- Crash recovery system with automatic recovery file detection on startup
+- Backup and versioning system (configurable max backups, restore capability)
+- Unsaved changes detection with React hook (useUnsavedChanges)
+- File path utilities (getFileName, getDirectory, getExtension, truncatePath)
+- Folder picker for batch operations
+- High-level fileSystem.ts API wrapper for renderer process
+- Zustand store for recent files state management
+- Comprehensive file system integration tests
+- Documentation for file system APIs and usage patterns
+
+#### Auto-Updater System (Sprint 4)
+- Automatic update checking on startup with configurable delay
+- Periodic update checks at configurable intervals (hourly, daily, weekly)
+- Manual update check via menu or settings
+- Update notification UI with version info and release notes
+- Download progress tracking with speed, size, and cancel option
+- Install prompt with restart now or later options
+- Release notes display with markdown rendering
+- Update channel selection (stable, beta, alpha)
+- Differential updates to minimize download sizes
+- Code signing configuration for Windows and macOS
+- Notarization support for macOS
+- Error handling with retry and manual download fallback
+- Update settings UI with all configuration options
+- Zustand store for update state management
+- IPC channels for renderer-main process communication
+- Comprehensive unit tests for update system
+- Documentation for auto-update configuration and release process
+
 ---
 
 ## [2.5.0] - 2026-02-01

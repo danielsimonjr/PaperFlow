@@ -25,6 +25,12 @@ win:
     - target: portable
       arch:
         - x64
+  # Code signing configuration (set via environment variables)
+  # CSC_LINK: path to .pfx certificate
+  # CSC_KEY_PASSWORD: certificate password
+  signingHashAlgorithms:
+    - sha256
+  signDlls: true
 
 nsis:
   oneClick: false
@@ -34,6 +40,8 @@ nsis:
   createDesktopShortcut: true
   createStartMenuShortcut: true
   shortcutName: PaperFlow
+  # Differential updates for NSIS
+  differentialPackage: true
 
 # macOS configuration
 mac:
@@ -52,6 +60,11 @@ mac:
       arch:
         - x64
         - arm64
+  # Code signing configuration (set via environment variables)
+  # APPLE_ID: Apple ID email
+  # APPLE_APP_SPECIFIC_PASSWORD: App-specific password
+  # APPLE_TEAM_ID: Team ID for notarization
+  notarize: true
 
 dmg:
   contents:
@@ -91,7 +104,12 @@ publish:
   owner: paperflow
   repo: paperflow
   releaseType: release
+  # For pre-release channels
+  # Set to 'prerelease' for beta releases
 
 # Build optimization
 asar: true
 compression: maximum
+
+# Generate delta updates to minimize download size
+generateUpdatesFilesForAllChannels: true

@@ -517,7 +517,7 @@ export const eventSubscriptions = {
   /**
    * Subscribe to before quit event
    */
-  onBeforeQuit(callback: () => void): () => void {
+  onBeforeQuit(callback: () => Promise<boolean>): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onBeforeQuit(callback);
   },

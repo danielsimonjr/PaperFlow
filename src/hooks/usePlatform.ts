@@ -162,7 +162,7 @@ export interface ElectronMenuEventHandlers {
   onViewZoomIn?: () => void;
   onViewZoomOut?: () => void;
   onViewZoomReset?: () => void;
-  onBeforeQuit?: () => void;
+  onBeforeQuit?: () => Promise<boolean>;
 }
 
 export function useElectronMenuEvents(handlers: ElectronMenuEventHandlers): void {

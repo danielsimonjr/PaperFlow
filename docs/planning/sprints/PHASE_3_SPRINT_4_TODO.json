@@ -6,7 +6,7 @@
   "goal": "Implement automatic update system for seamless app updates",
   "milestone": "Automatic Updates",
   "priority": "HIGH",
-  "status": "pending",
+  "status": "completed",
   "totalEstimatedHours": 90,
   "blockedBy": [
     1
@@ -20,11 +20,11 @@
       "category": "setup",
       "title": "Configure electron-updater",
       "description": "Install and configure electron-updater with provider settings for GitHub releases or custom server",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "package.json",
-        "electron/updater.ts",
+        "electron/main/updater.ts",
         "electron-builder.yml"
       ],
       "acceptanceCriteria": [
@@ -39,11 +39,11 @@
       "category": "feature",
       "title": "Implement update check on startup",
       "description": "Create automatic update check when app starts with configurable delay",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
-        "electron/updater.ts",
-        "electron/main.ts"
+        "electron/main/updater.ts",
+        "electron/main/index.ts"
       ],
       "acceptanceCriteria": [
         "Update check runs on app startup",
@@ -57,11 +57,11 @@
       "category": "feature",
       "title": "Create periodic update checks",
       "description": "Implement scheduled update checks at configurable intervals",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
-        "electron/updater.ts",
-        "src/stores/settingsStore.ts"
+        "electron/main/updater.ts",
+        "src/stores/updateStore.ts"
       ],
       "acceptanceCriteria": [
         "Update checks run at scheduled intervals",
@@ -75,11 +75,11 @@
       "category": "feature",
       "title": "Implement manual update check",
       "description": "Add menu option and UI button to manually check for updates",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
-        "electron/updater.ts",
-        "src/components/settings/UpdateSettings.tsx"
+        "electron/main/updater.ts",
+        "src/components/update/UpdateSettings.tsx"
       ],
       "acceptanceCriteria": [
         "Help menu includes Check for Updates",
@@ -93,11 +93,11 @@
       "category": "feature",
       "title": "Create update notification UI",
       "description": "Design and implement UI to notify users when updates are available",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "src/components/update/UpdateNotification.tsx",
-        "src/components/update/UpdateDialog.tsx"
+        "src/components/update/index.ts"
       ],
       "acceptanceCriteria": [
         "Notification appears when update is available",
@@ -111,11 +111,11 @@
       "category": "feature",
       "title": "Implement download progress UI",
       "description": "Show download progress with speed, size, and cancel option",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "src/components/update/UpdateProgress.tsx",
-        "electron/updater.ts"
+        "electron/main/updater.ts"
       ],
       "acceptanceCriteria": [
         "Download progress bar shows percentage",
@@ -129,11 +129,11 @@
       "category": "feature",
       "title": "Create install and restart prompt",
       "description": "Prompt user to install update and restart app after download",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "src/components/update/InstallPrompt.tsx",
-        "electron/updater.ts"
+        "electron/main/updater.ts"
       ],
       "acceptanceCriteria": [
         "Prompt appears when download is complete",
@@ -147,11 +147,11 @@
       "category": "feature",
       "title": "Implement release notes display",
       "description": "Fetch and display release notes from GitHub or changelog",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "src/components/update/ReleaseNotes.tsx",
-        "electron/releaseNotes.ts"
+        "electron/main/updater.ts"
       ],
       "acceptanceCriteria": [
         "Release notes are fetched from release",
@@ -165,11 +165,11 @@
       "category": "feature",
       "title": "Create update channel selector",
       "description": "Allow users to choose between stable and beta update channels",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
-        "src/components/settings/UpdateSettings.tsx",
-        "electron/updater.ts"
+        "src/components/update/UpdateSettings.tsx",
+        "electron/main/updater.ts"
       ],
       "acceptanceCriteria": [
         "Stable and beta channels are available",
@@ -183,11 +183,11 @@
       "category": "feature",
       "title": "Implement differential updates",
       "description": "Configure electron-updater for delta/differential updates to reduce download size",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "electron-builder.yml",
-        "electron/updater.ts"
+        "electron/main/updater.ts"
       ],
       "acceptanceCriteria": [
         "Delta updates are generated during build",
@@ -201,11 +201,11 @@
       "category": "feature",
       "title": "Create update error handling",
       "description": "Handle update failures gracefully with retry and fallback options",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
-        "electron/updater.ts",
-        "src/components/update/UpdateError.tsx"
+        "electron/main/updater.ts",
+        "src/components/update/UpdateNotification.tsx"
       ],
       "acceptanceCriteria": [
         "Download failures show error message",
@@ -219,10 +219,10 @@
       "category": "feature",
       "title": "Implement update settings UI",
       "description": "Create settings panel for all update-related preferences",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
-        "src/components/settings/UpdateSettings.tsx"
+        "src/components/update/UpdateSettings.tsx"
       ],
       "acceptanceCriteria": [
         "Auto-update toggle is available",
@@ -236,7 +236,7 @@
       "category": "feature",
       "title": "Set up code signing for updates",
       "description": "Configure code signing certificates for Windows and macOS for trusted auto-updates",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "electron-builder.yml",
@@ -254,7 +254,7 @@
       "category": "testing",
       "title": "Create update system tests",
       "description": "Write tests for update checking, downloading, and installation flow",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "tests/electron/updater.test.ts"
@@ -271,7 +271,7 @@
       "category": "docs",
       "title": "Document auto-update system",
       "description": "Create documentation for auto-update configuration and release process",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "docs/electron/auto-update.md",
@@ -302,5 +302,6 @@
     "Code signing is required for auto-update on macOS",
     "Differential updates significantly reduce bandwidth",
     "Always test updates on clean installations"
-  ]
+  ],
+  "completedDate": "2026-02-01"
 }

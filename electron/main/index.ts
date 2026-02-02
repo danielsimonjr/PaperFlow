@@ -13,6 +13,14 @@ import { setupLifecycle, requestSingleInstanceLock } from './lifecycle';
 import { setupContentSecurityPolicy } from './security';
 import { setupIpcHandlers } from '../ipc/handlers';
 import { IPC_CHANNELS } from '../ipc/channels';
+import { initializeUpdater, cleanupUpdater } from './updater';
+import {
+  setupFileAssociationHandlers,
+  processStartupArgs,
+  sendPendingFileToWindow,
+} from '../fileAssociation';
+import { initializeAutoSave, disableAllAutoSave } from '../autoSave';
+import { unwatchAll } from '../fileWatcher';
 
 // ESM __dirname equivalent
 const __filename = fileURLToPath(import.meta.url);
@@ -106,6 +114,9 @@ function setupIpc(): void {
  * Initialize the application
  */
 async function initialize(): Promise<void> {
+  // Set up file association handlers early (before app.whenReady)
+  setupFileAssociationHandlers();
+
   // Request single instance lock
   const gotLock = requestSingleInstanceLock(app, () => {
     // Focus existing window when second instance is launched
@@ -147,13 +158,35 @@ async function initialize(): Promise<void> {
   setupIpc();
 
   // Create the main window
-  await createMainWindow();
+  const mainWindow = await createMainWindow();
+
+  // Send pending file if app was launched with a file argument
+  sendPendingFileToWindow(mainWindow);
+
+  // Process startup arguments (command-line file opening)
+  await processStartupArgs();
+
+  // Initialize auto-save recovery system
+  await initializeAutoSave();
+
+  // Initialize auto-updater (only in production)
+  if (app.isPackaged) {
+    initializeUpdater();
+  }
 
   // On macOS, re-create window when dock icon is clicked
   app.on('activate', async () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      await createMainWindow();
+      const newWindow = await createMainWindow();
+      sendPendingFileToWindow(newWindow);
     }
+  });
+
+  // Clean up on quit
+  app.on('will-quit', async () => {
+    cleanupUpdater();
+    disableAllAutoSave();
+    await unwatchAll();
   });
 }
 
