@@ -27,6 +27,14 @@ import { initializeTray, destroyTray } from '../tray';
 import { createTrayMenuManager, TrayMenuManager } from '../trayMenu';
 import { initializeNotifications } from '../notifications';
 import { setupAllNotificationHandlers } from '../ipc/notificationHandlers';
+import { setupPrintHandlers } from '../ipc/printHandlers';
+import { setupShellHandlers } from '../ipc/shellHandlers';
+import { setupDialogHandlers } from '../ipc/dialogHandlers';
+import { setupClipboardHandlers } from '../ipc/clipboardHandlers';
+import { setupStorageHandlers } from '../ipc/storageHandlers';
+import { initializeProtocol, registerAsDefaultProtocolClient, setProtocolCallback, setupProtocolHandlers } from '../protocol';
+import { initializeStartup } from '../startup';
+import { stopAllBlockers } from '../powerSave';
 import { IPC_EVENTS } from '../ipc/channels';
 
 // ESM __dirname equivalent
@@ -122,8 +130,14 @@ function setupIpc(): void {
  * Initialize the application
  */
 async function initialize(): Promise<void> {
+  // Initialize protocol handling early (before app.whenReady)
+  initializeProtocol();
+
   // Set up file association handlers early (before app.whenReady)
   setupFileAssociationHandlers();
+
+  // Initialize startup settings
+  initializeStartup();
 
   // Request single instance lock
   const gotLock = requestSingleInstanceLock(app, () => {
@@ -168,6 +182,17 @@ async function initialize(): Promise<void> {
   // Set up notification and tray IPC handlers
   setupAllNotificationHandlers(ipcMain);
 
+  // Set up additional IPC handlers for Sprint 6 features
+  setupPrintHandlers(ipcMain);
+  setupShellHandlers(ipcMain);
+  setupDialogHandlers(ipcMain);
+  setupClipboardHandlers(ipcMain);
+  setupStorageHandlers(ipcMain);
+
+  // Set up protocol handlers
+  setupProtocolHandlers();
+  registerAsDefaultProtocolClient();
+
   // Initialize menu system
   await initializeMenu();
 
@@ -205,11 +230,25 @@ async function initialize(): Promise<void> {
     }
   });
 
+  // Set up protocol callback to handle deep links
+  setProtocolCallback((result) => {
+    console.log('[Main] Protocol callback:', result);
+    if (result.filePath && windowManager) {
+      const mainWindow = windowManager.getMainWindow();
+      if (mainWindow) {
+        mainWindow.webContents.send(IPC_EVENTS.FILE_OPENED, result.filePath);
+        mainWindow.show();
+        mainWindow.focus();
+      }
+    }
+  });
+
   // Clean up on quit
   app.on('will-quit', async () => {
     cleanupUpdater();
     disableAllAutoSave();
     destroyTray();
+    stopAllBlockers();
     await unwatchAll();
   });
 }

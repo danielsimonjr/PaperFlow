@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Phase 3: Desktop Application (Electron)
+---
 
-This release begins Phase 3 development, adding Electron support for native desktop functionality.
+## [3.0.0-alpha.1] - 2026-02-02
+
+### Phase 3: Desktop Application (Electron) - Q1 Alpha Release
+
+This release marks the first alpha of the PaperFlow Desktop application, bringing native desktop functionality through Electron while maintaining the full PWA experience.
 
 ### Added
 
@@ -120,6 +124,42 @@ This release begins Phase 3 development, adding Electron support for native desk
 - IPC channels for tray and notification operations
 - Unit tests for TrayManager and NotificationManager
 - Documentation for tray and notification features (docs/electron/tray-notifications.md)
+
+#### OS Integration & Release (Sprint 6)
+- Native print dialog with system printer integration
+- PDF-to-printer output with correct dimensions and margins
+- Shell integration (Show in Folder, Open with Default App)
+- Protocol handler registration (`paperflow://` deep links)
+- Launch-on-startup with optional minimized start
+- Native dialogs (message boxes, error dialogs, confirmations)
+- Enhanced clipboard operations (copy page as image, formatted text)
+- Power save blocker for long-running operations (OCR, batch processing)
+- Secure storage using OS keychain (Windows Credential Manager, macOS Keychain, Linux Secret Service)
+- Crash reporter integration for automatic error collection
+- E2E tests for desktop-specific features using Playwright
+- Cross-platform testing documentation (Windows, macOS, Linux)
+- Version updated to 3.0.0-alpha.1
+- Comprehensive release notes and installation documentation
+- CI/CD workflows for desktop builds and releases
+
+### Changed
+- Package version updated from 1.0.0 to 3.0.0-alpha.1 for desktop alpha release
+- Settings store extended with startup options (launchOnStartup, startMinimized)
+
+### Breaking Changes
+- Minimum supported Node.js version is 18.0.0
+- Electron 40+ required for new APIs
+
+### Migration Guide
+If upgrading from the PWA version:
+1. Install the desktop application for your platform
+2. Your settings will be preserved in localStorage
+3. Recent files will need to be re-opened once
+4. PWA and desktop versions can run simultaneously
+
+### Known Issues
+- Linux file associations may require manual configuration on some distributions
+- System tray may not appear on GNOME + Wayland without AppIndicator extension
 
 ---
 

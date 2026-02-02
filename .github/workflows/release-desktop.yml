@@ -1,0 +1,258 @@
+name: Release Desktop
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 3.0.0-alpha.1)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Is this a prerelease?'
+        required: true
+        type: boolean
+        default: true
+      draft:
+        description: 'Create as draft release?'
+        required: true
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      prerelease: ${{ steps.get_version.outputs.prerelease }}
+    steps:
+      - name: Get version from tag or input
+        id: get_version
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            VERSION="${GITHUB_REF#refs/tags/v}"
+            if [[ "$VERSION" == *"alpha"* ]] || [[ "$VERSION" == *"beta"* ]] || [[ "$VERSION" == *"rc"* ]]; then
+              PRERELEASE="true"
+            else
+              PRERELEASE="false"
+            fi
+          else
+            VERSION="${{ inputs.version }}"
+            PRERELEASE="${{ inputs.prerelease }}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "prerelease=$PRERELEASE" >> $GITHUB_OUTPUT
+
+  build-windows:
+    needs: prepare
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:unit
+
+      - name: Build Electron app
+        run: npm run electron:build -- --win --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Windows code signing (optional)
+          # WIN_CSC_LINK: ${{ secrets.WIN_CERTS }}
+          # WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERTS_PASSWORD }}
+
+      - name: Rename artifacts
+        shell: pwsh
+        run: |
+          $version = "${{ needs.prepare.outputs.version }}"
+          Get-ChildItem -Path dist -Filter "*.exe" | ForEach-Object {
+            $newName = $_.Name -replace '(\d+\.\d+\.\d+)', $version
+            Rename-Item -Path $_.FullName -NewName $newName -ErrorAction SilentlyContinue
+          }
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: |
+            dist/*.exe
+            dist/*.exe.blockmap
+          retention-days: 1
+
+  build-macos:
+    needs: prepare
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:unit
+
+      - name: Build Electron app (x64)
+        run: npm run electron:build -- --mac --x64 --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Code signing
+          # CSC_LINK: ${{ secrets.MAC_CERTS }}
+          # CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+
+      - name: Build Electron app (arm64)
+        run: npm run electron:build -- --mac --arm64 --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Code signing
+          # CSC_LINK: ${{ secrets.MAC_CERTS }}
+          # CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+
+      # Notarization would go here if Apple credentials are configured
+      # - name: Notarize app
+      #   run: npx electron-notarize ...
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-release
+          path: |
+            dist/*.dmg
+            dist/*.dmg.blockmap
+            dist/*.zip
+          retention-days: 1
+
+  build-linux:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:unit
+
+      - name: Build Electron app
+        run: npm run electron:build -- --linux --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-release
+          path: |
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+          retention-days: 1
+
+  create-release:
+    needs: [prepare, build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare release files
+        run: |
+          mkdir -p release
+          cp artifacts/windows-release/* release/ 2>/dev/null || true
+          cp artifacts/macos-release/* release/ 2>/dev/null || true
+          cp artifacts/linux-release/* release/ 2>/dev/null || true
+          ls -la release/
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          VERSION="${{ needs.prepare.outputs.version }}"
+          cat << EOF > release_notes.md
+          # PaperFlow v${VERSION}
+
+          ## Downloads
+
+          ### Windows
+          - **Installer**: \`PaperFlow-Setup-${VERSION}.exe\`
+
+          ### macOS
+          - **Apple Silicon (M1/M2/M3)**: \`PaperFlow-${VERSION}-arm64.dmg\`
+          - **Intel**: \`PaperFlow-${VERSION}-x64.dmg\`
+
+          ### Linux
+          - **AppImage**: \`PaperFlow-${VERSION}.AppImage\`
+          - **Debian/Ubuntu**: \`paperflow_${VERSION}_amd64.deb\`
+          - **Fedora/RHEL**: \`paperflow-${VERSION}.x86_64.rpm\`
+
+          ## Checksums
+
+          \`\`\`
+          $(cd release && sha256sum * 2>/dev/null || shasum -a 256 * 2>/dev/null || echo "Checksums not available")
+          \`\`\`
+
+          ## Changelog
+
+          See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for detailed changes.
+
+          ## Installation
+
+          See [Installation Guide](https://github.com/${{ github.repository }}/blob/main/docs/installation.md) for detailed instructions.
+          EOF
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ needs.prepare.outputs.version }}
+          name: PaperFlow v${{ needs.prepare.outputs.version }}
+          body_path: release_notes.md
+          draft: ${{ inputs.draft || false }}
+          prerelease: ${{ needs.prepare.outputs.prerelease }}
+          files: release/*
+          fail_on_unmatched_files: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify:
+    needs: [create-release, prepare]
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Notify success
+        run: |
+          echo "Release v${{ needs.prepare.outputs.version }} published successfully!"
+          # Add Slack/Discord notification here if needed

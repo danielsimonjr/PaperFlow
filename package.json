@@ -1,7 +1,7 @@
 {
   "name": "paperflow",
   "private": true,
-  "version": "1.0.0",
+  "version": "3.0.0-alpha.1",
   "type": "module",
   "main": "dist-electron/main/index.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "test:unit": "vitest run --dir tests/unit",
     "test:integration": "vitest run --dir tests/integration",
     "test:e2e": "playwright test",
+    "test:e2e-electron": "playwright test tests/e2e-electron",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",

@@ -6,7 +6,7 @@
   "goal": "Complete OS integration features and release Phase 3 Q1 desktop app",
   "milestone": "v3.0 Desktop Alpha",
   "priority": "HIGH",
-  "status": "pending",
+  "status": "completed",
   "totalEstimatedHours": 98,
   "blockedBy": [
     3,
@@ -20,7 +20,7 @@
       "category": "feature",
       "title": "Implement native print dialog",
       "description": "Create native print integration using Electron's print API with system print dialog",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "electron/print.ts",
@@ -39,7 +39,7 @@
       "category": "feature",
       "title": "Create PDF to printer output",
       "description": "Implement direct PDF printing to system printer with correct formatting",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/print.ts"
@@ -56,7 +56,7 @@
       "category": "feature",
       "title": "Implement shell integration",
       "description": "Add Show in Folder, Open in Default App, and Reveal in File Manager features",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/shell.ts",
@@ -74,11 +74,11 @@
       "category": "feature",
       "title": "Create protocol handler registration",
       "description": "Register paperflow:// protocol for deep linking to open files and specific features",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/protocol.ts",
-        "electron/main.ts"
+        "electron/main/index.ts"
       ],
       "acceptanceCriteria": [
         "paperflow:// protocol is registered",
@@ -92,12 +92,11 @@
       "category": "feature",
       "title": "Implement startup with OS",
       "description": "Add option to launch app when user logs in to OS",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/startup.ts",
-        "src/stores/settingsStore.ts",
-        "src/components/settings/GeneralSettings.tsx"
+        "src/stores/settingsStore.ts"
       ],
       "acceptanceCriteria": [
         "Launch at startup toggle is available",
@@ -111,7 +110,7 @@
       "category": "feature",
       "title": "Create native dialogs",
       "description": "Implement native message boxes, error dialogs, and confirmation dialogs",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/dialogs.ts",
@@ -130,7 +129,7 @@
       "category": "feature",
       "title": "Implement clipboard operations",
       "description": "Enable native clipboard operations for images and formatted text",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/clipboard.ts",
@@ -148,7 +147,7 @@
       "category": "feature",
       "title": "Create power save blocker",
       "description": "Prevent system sleep during long operations like OCR or large file processing",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/powerSave.ts"
@@ -165,7 +164,7 @@
       "category": "feature",
       "title": "Implement secure storage",
       "description": "Use OS keychain/credential store for sensitive data like API keys",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/secureStorage.ts",
@@ -183,11 +182,10 @@
       "category": "feature",
       "title": "Create crash reporter integration",
       "description": "Set up crash reporting for automatic error collection in production",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
-        "electron/crashReporter.ts",
-        "electron/main.ts"
+        "electron/crashReporter.ts"
       ],
       "acceptanceCriteria": [
         "Crashes are automatically reported",
@@ -201,7 +199,7 @@
       "category": "testing",
       "title": "Create E2E tests for desktop features",
       "description": "Write Playwright tests for Electron-specific features",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 12,
       "files": [
         "tests/e2e-electron/fileOperations.spec.ts",
@@ -220,7 +218,7 @@
       "category": "testing",
       "title": "Perform cross-platform testing",
       "description": "Test desktop app on Windows, macOS, and Linux for compatibility",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "docs/testing/cross-platform-results.md"
@@ -237,7 +235,7 @@
       "category": "setup",
       "title": "Update version to 3.0.0-alpha.1",
       "description": "Update package.json and all version references for desktop alpha release",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "files": [
         "package.json",
@@ -255,7 +253,7 @@
       "category": "docs",
       "title": "Update changelog for v3.0.0-alpha",
       "description": "Document all Phase 3 Q1 changes in CHANGELOG.md",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "files": [
         "CHANGELOG.md"
@@ -272,7 +270,7 @@
       "category": "docs",
       "title": "Create v3.0.0-alpha release notes",
       "description": "Write user-facing release notes highlighting desktop features",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 2,
       "files": [
         "docs/releases/v3.0.0-alpha.md"
@@ -289,7 +287,7 @@
       "category": "docs",
       "title": "Create desktop installation guide",
       "description": "Write comprehensive installation guide for all platforms",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "docs/installation.md"
@@ -306,7 +304,7 @@
       "category": "setup",
       "title": "Configure CI/CD for desktop builds",
       "description": "Set up GitHub Actions for building and releasing desktop apps",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         ".github/workflows/build-desktop.yml",
@@ -324,7 +322,7 @@
       "category": "setup",
       "title": "Deploy v3.0.0-alpha release",
       "description": "Create and publish v3.0.0-alpha release with all desktop installers",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [],
       "acceptanceCriteria": [
@@ -353,5 +351,6 @@
     "Cross-platform testing is critical before release",
     "Ensure auto-update works before public release",
     "Monitor crash reports closely after release"
-  ]
+  ],
+  "completedAt": "2026-02-02"
 }

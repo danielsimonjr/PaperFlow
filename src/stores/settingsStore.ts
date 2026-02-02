@@ -46,6 +46,10 @@ interface SettingsState {
   notifyOnExport: boolean;
   notifyOnBackgroundComplete: boolean;
 
+  // Startup (Electron)
+  launchOnStartup: boolean;
+  startMinimized: boolean;
+
   // Actions
   setDefaultZoom: (zoom: number) => void;
   setDefaultViewMode: (mode: 'single' | 'continuous' | 'spread') => void;
@@ -67,6 +71,8 @@ interface SettingsState {
   setNotifyOnSave: (enabled: boolean) => void;
   setNotifyOnExport: (enabled: boolean) => void;
   setNotifyOnBackgroundComplete: (enabled: boolean) => void;
+  setLaunchOnStartup: (enabled: boolean) => void;
+  setStartMinimized: (enabled: boolean) => void;
   resetToDefaults: () => void;
 }
 
@@ -98,6 +104,9 @@ const defaultSettings = {
   notifyOnSave: false,
   notifyOnExport: true,
   notifyOnBackgroundComplete: true,
+  // Startup defaults
+  launchOnStartup: false,
+  startMinimized: false,
 };
 
 export const useSettingsStore = create<SettingsState>()(
@@ -189,6 +198,15 @@ export const useSettingsStore = create<SettingsState>()(
 
       setNotifyOnBackgroundComplete: (enabled) => {
         set({ notifyOnBackgroundComplete: enabled });
+      },
+
+      // Startup settings
+      setLaunchOnStartup: (enabled) => {
+        set({ launchOnStartup: enabled });
+      },
+
+      setStartMinimized: (enabled) => {
+        set({ startMinimized: enabled });
       },
 
       resetToDefaults: () => {
