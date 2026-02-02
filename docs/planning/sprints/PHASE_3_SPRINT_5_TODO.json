@@ -6,7 +6,7 @@
   "goal": "Implement native application menus and keyboard shortcuts for desktop experience",
   "milestone": "Native UI Integration",
   "priority": "MEDIUM",
-  "status": "pending",
+  "status": "completed",
   "totalEstimatedHours": 88,
   "blockedBy": [
     2
@@ -20,7 +20,7 @@
       "category": "feature",
       "title": "Create application menu structure",
       "description": "Implement native menu bar with File, Edit, View, Document, Window, and Help menus",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "electron/menu.ts",
@@ -38,7 +38,7 @@
       "category": "feature",
       "title": "Implement File menu items",
       "description": "Create File menu with New, Open, Open Recent, Save, Save As, Print, and Exit",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/menu.ts",
@@ -58,7 +58,7 @@
       "category": "feature",
       "title": "Implement Edit menu items",
       "description": "Create Edit menu with Undo, Redo, Cut, Copy, Paste, Select All, and Find",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/menu.ts"
@@ -75,7 +75,7 @@
       "category": "feature",
       "title": "Implement View menu items",
       "description": "Create View menu with zoom controls, view modes, toolbar toggle, and full screen",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/menu.ts",
@@ -94,7 +94,7 @@
       "category": "feature",
       "title": "Implement Document menu items",
       "description": "Create Document menu with page operations, annotations, and document info",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/menu.ts",
@@ -113,7 +113,7 @@
       "category": "feature",
       "title": "Implement Window menu items",
       "description": "Create Window menu with minimize, zoom, window list, and bring all to front",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/menu.ts"
@@ -130,7 +130,7 @@
       "category": "feature",
       "title": "Implement Help menu items",
       "description": "Create Help menu with documentation, keyboard shortcuts, check for updates, and about",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/menu.ts",
@@ -148,7 +148,7 @@
       "category": "feature",
       "title": "Create macOS application menu",
       "description": "Implement macOS-specific application menu with About, Preferences, Services, Hide, and Quit",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/menu.ts"
@@ -166,7 +166,7 @@
       "category": "feature",
       "title": "Implement context menu for document",
       "description": "Create right-click context menu for document with relevant actions",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/contextMenu.ts",
@@ -185,7 +185,7 @@
       "category": "feature",
       "title": "Create context menu for annotations",
       "description": "Implement context menu for annotations with edit, delete, and properties options",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/contextMenu.ts",
@@ -203,7 +203,7 @@
       "category": "feature",
       "title": "Implement global keyboard shortcuts",
       "description": "Register global keyboard shortcuts that work even when app is not focused",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/shortcuts.ts",
@@ -221,7 +221,7 @@
       "category": "feature",
       "title": "Create accelerator keys for menus",
       "description": "Add keyboard accelerators to all menu items following platform conventions",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/menu.ts"
@@ -238,7 +238,7 @@
       "category": "feature",
       "title": "Implement keyboard shortcut customization",
       "description": "Allow users to customize keyboard shortcuts through settings",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "src/components/settings/ShortcutSettings.tsx",
@@ -257,7 +257,7 @@
       "category": "feature",
       "title": "Create dynamic menu updates",
       "description": "Update menu items based on document state (enable/disable, checkmarks)",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/menu.ts",
@@ -275,11 +275,12 @@
       "category": "testing",
       "title": "Create menu and shortcut tests",
       "description": "Write tests for menu functionality and keyboard shortcuts",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "tests/electron/menu.test.ts",
-        "tests/electron/shortcuts.test.ts"
+        "tests/electron/shortcuts.test.ts",
+        "tests/electron/contextMenu.test.ts"
       ],
       "acceptanceCriteria": [
         "Menu item triggers have tests",
@@ -293,7 +294,7 @@
       "category": "docs",
       "title": "Document keyboard shortcuts",
       "description": "Create comprehensive keyboard shortcuts documentation",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "docs/keyboard-shortcuts.md"

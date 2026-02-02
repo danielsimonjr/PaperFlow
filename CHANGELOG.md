@@ -75,6 +75,52 @@ This release begins Phase 3 development, adding Electron support for native desk
 - Comprehensive unit tests for update system
 - Documentation for auto-update configuration and release process
 
+#### Native Menus & Shortcuts (Sprint 5)
+- Native application menu bar with File, Edit, View, Document, Window, Help menus
+- Platform-specific menu layouts (macOS app menu with About, Preferences, Services, Hide, Quit)
+- Comprehensive keyboard shortcuts for all major actions
+- Context menus for document viewer (copy, zoom, annotations, page navigation)
+- Context menus for annotations (edit, delete, change color, properties)
+- Recent files submenu with quick access shortcuts (Ctrl+1 through Ctrl+9)
+- Window menu with minimize, zoom, and window management
+- Help menu with keyboard shortcuts dialog, documentation links, and update check
+- Dynamic menu state updates (enable/disable based on document state)
+- View mode radio buttons in menu (single, continuous, spread)
+- Global keyboard shortcuts (Quick Open, Bring to Front) that work when app is in background
+- Keyboard shortcut customization with conflict detection
+- Shortcut settings UI with search, edit, and reset functionality
+- KeyboardShortcutsDialog component for viewing all shortcuts
+- Zustand store for managing custom shortcuts
+- Platform-specific accelerators (Cmd on macOS, Ctrl on Windows/Linux)
+- Menu state synchronization between main and renderer processes
+- IPC channels for menu actions and state updates
+- Comprehensive tests for menu templates, shortcuts, and context menus
+- Keyboard shortcuts documentation (docs/keyboard-shortcuts.md)
+
+#### System Tray & Notifications (Sprint 3)
+- System tray icon with platform-specific sizing and appearance
+- Tray icon status indicators (idle, busy, notification, error)
+- Tray context menu with Open, Recent Files, Preferences, Quit
+- Minimize-to-tray functionality (configurable in settings)
+- Close-to-tray option to keep app running in background
+- Progress display in tray icon tooltip for long-running operations
+- Tray icon flash animation for attention
+- Native desktop notifications using Electron Notification API
+- Notification types: info, success, warning, error, file-operation, batch-operation
+- Notification action buttons with click handlers
+- Notification grouping for batch operations
+- Quiet hours / Do Not Disturb mode with configurable time range
+- Notification history with unread count tracking
+- OS notification center integration (Windows Action Center, macOS Notification Center)
+- Dock badge count for pending notifications (macOS only)
+- Dock icon bounce for attention (macOS only)
+- NotificationSettings component for preferences UI
+- Notification preferences persisted in settings store
+- Renderer-side notification helpers in src/lib/electron/notifications.ts
+- IPC channels for tray and notification operations
+- Unit tests for TrayManager and NotificationManager
+- Documentation for tray and notification features (docs/electron/tray-notifications.md)
+
 ---
 
 ## [2.5.0] - 2026-02-01

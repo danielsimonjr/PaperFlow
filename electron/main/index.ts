@@ -21,6 +21,13 @@ import {
 } from '../fileAssociation';
 import { initializeAutoSave, disableAllAutoSave } from '../autoSave';
 import { unwatchAll } from '../fileWatcher';
+import { initializeMenu } from '../menu';
+import { initializeShortcuts } from '../shortcuts';
+import { initializeTray, destroyTray } from '../tray';
+import { createTrayMenuManager, TrayMenuManager } from '../trayMenu';
+import { initializeNotifications } from '../notifications';
+import { setupAllNotificationHandlers } from '../ipc/notificationHandlers';
+import { IPC_EVENTS } from '../ipc/channels';
 
 // ESM __dirname equivalent
 const __filename = fileURLToPath(import.meta.url);
@@ -36,6 +43,7 @@ const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
 
 // Global references
 let windowManager: WindowManager | null = null;
+let trayMenuManager: TrayMenuManager | null = null;
 
 /**
  * Creates the main application window
@@ -157,8 +165,23 @@ async function initialize(): Promise<void> {
   // Set up IPC handlers
   setupIpc();
 
+  // Set up notification and tray IPC handlers
+  setupAllNotificationHandlers(ipcMain);
+
+  // Initialize menu system
+  await initializeMenu();
+
+  // Initialize keyboard shortcuts
+  await initializeShortcuts();
+
   // Create the main window
   const mainWindow = await createMainWindow();
+
+  // Initialize system tray
+  await initializeTraySystem(mainWindow);
+
+  // Initialize notification system
+  initializeNotifications();
 
   // Send pending file if app was launched with a file argument
   sendPendingFileToWindow(mainWindow);
@@ -186,8 +209,86 @@ async function initialize(): Promise<void> {
   app.on('will-quit', async () => {
     cleanupUpdater();
     disableAllAutoSave();
+    destroyTray();
     await unwatchAll();
   });
+}
+
+/**
+ * Initialize the system tray with menu and event handlers
+ */
+async function initializeTraySystem(mainWindow: BrowserWindow): Promise<void> {
+  try {
+    // Initialize tray with event handlers
+    const trayManager = await initializeTray({
+      onTrayClick: () => {
+        // Show/hide window on click
+        if (mainWindow.isVisible()) {
+          if (mainWindow.isFocused()) {
+            mainWindow.hide();
+            mainWindow.webContents.send(IPC_EVENTS.WINDOW_HIDDEN);
+          } else {
+            mainWindow.focus();
+          }
+        } else {
+          mainWindow.show();
+          mainWindow.focus();
+          mainWindow.webContents.send(IPC_EVENTS.WINDOW_SHOWN);
+        }
+      },
+      onTrayDoubleClick: () => {
+        // Always show and focus on double-click
+        if (!mainWindow.isVisible()) {
+          mainWindow.show();
+        }
+        if (mainWindow.isMinimized()) {
+          mainWindow.restore();
+        }
+        mainWindow.focus();
+        mainWindow.webContents.send(IPC_EVENTS.WINDOW_SHOWN);
+      },
+      onTrayRightClick: () => {
+        // Show context menu on right-click
+        if (trayMenuManager) {
+          trayMenuManager.showMenu();
+        }
+      },
+    });
+
+    // Create tray menu manager
+    trayMenuManager = createTrayMenuManager(trayManager, {
+      onShowWindow: () => {
+        if (!mainWindow.isVisible()) {
+          mainWindow.show();
+        }
+        if (mainWindow.isMinimized()) {
+          mainWindow.restore();
+        }
+        mainWindow.focus();
+        mainWindow.webContents.send(IPC_EVENTS.WINDOW_SHOWN);
+      },
+      onNewWindow: () => {
+        mainWindow.webContents.send(IPC_EVENTS.MENU_FILE_NEW);
+      },
+      onOpenFile: () => {
+        if (!mainWindow.isVisible()) {
+          mainWindow.show();
+        }
+        mainWindow.focus();
+        mainWindow.webContents.send(IPC_EVENTS.MENU_FILE_OPEN);
+      },
+      onQuit: () => {
+        app.quit();
+      },
+    });
+
+    // Set the persistent context menu (for platforms that support it)
+    await trayMenuManager.setPersistentMenu();
+
+    console.log('[Main] System tray initialized');
+  } catch (error) {
+    console.error('[Main] Failed to initialize system tray:', error);
+  }
 }
 
 // Start the application

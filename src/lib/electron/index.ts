@@ -7,3 +7,4 @@
 export * from './platform';
 export * from './ipc';
 export * from './fileSystem';
+export * from './notifications';

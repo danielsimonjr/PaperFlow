@@ -115,12 +115,47 @@ export const mockClipboard = {
 
 export const mockNativeImage = {
   createFromDataURL: vi.fn(() => ({})),
+  createFromPath: vi.fn(() => ({
+    isEmpty: vi.fn(() => false),
+    resize: vi.fn().mockReturnThis(),
+    setTemplateImage: vi.fn(),
+    toPNG: vi.fn(() => Buffer.from('')),
+    addRepresentation: vi.fn(),
+  })),
+  createFromBuffer: vi.fn(() => ({
+    isEmpty: vi.fn(() => false),
+    resize: vi.fn().mockReturnThis(),
+  })),
 };
 
 export const mockNotification = vi.fn().mockImplementation(() => ({
   show: vi.fn(),
   on: vi.fn(),
+  close: vi.fn(),
 }));
+
+mockNotification.isSupported = vi.fn(() => true);
+
+export const mockTray = vi.fn().mockImplementation(() => ({
+  setToolTip: vi.fn(),
+  setImage: vi.fn(),
+  setContextMenu: vi.fn(),
+  popUpContextMenu: vi.fn(),
+  on: vi.fn(),
+  destroy: vi.fn(),
+  getBounds: vi.fn(() => ({ x: 0, y: 0, width: 22, height: 22 })),
+}));
+
+export const mockMenu = {
+  buildFromTemplate: vi.fn(() => ({
+    append: vi.fn(),
+    popup: vi.fn(),
+  })),
+  getApplicationMenu: vi.fn(() => null),
+  setApplicationMenu: vi.fn(),
+};
+
+export const mockMenuItem = vi.fn().mockImplementation((options) => options);
 
 export const mockSession = {
   defaultSession: {
@@ -146,6 +181,9 @@ vi.mock('electron', () => ({
   clipboard: mockClipboard,
   nativeImage: mockNativeImage,
   Notification: mockNotification,
+  Tray: mockTray,
+  Menu: mockMenu,
+  MenuItem: mockMenuItem,
   session: mockSession,
 }));
 

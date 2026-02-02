@@ -13,6 +13,9 @@ import type {
   WindowBounds,
 } from './types';
 import { setupFileHandlers } from './fileHandlers';
+import { setupMenuHandlers } from './menuHandlers';
+import { setupContextMenuHandlers } from '../contextMenu';
+import { setupShortcutHandlers } from '../shortcuts';
 
 /**
  * Set up all IPC handlers
@@ -27,6 +30,15 @@ export function setupIpcHandlers(ipcMain: IpcMain): void {
 
   // Set up file system handlers (dialogs, read/write, watch, autosave, backup)
   setupFileHandlers(ipcMain);
+
+  // Set up menu handlers
+  setupMenuHandlers(ipcMain);
+
+  // Set up context menu handlers
+  setupContextMenuHandlers(ipcMain);
+
+  // Set up shortcut handlers
+  setupShortcutHandlers(ipcMain);
 
   // Message dialog (kept here for non-file-related dialogs)
   ipcMain.handle(

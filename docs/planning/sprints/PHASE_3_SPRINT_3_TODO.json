@@ -6,7 +6,7 @@
   "goal": "Implement system tray integration and native desktop notifications",
   "milestone": "Desktop Integration",
   "priority": "MEDIUM",
-  "status": "pending",
+  "status": "completed",
   "totalEstimatedHours": 74,
   "blockedBy": [
     2
@@ -20,7 +20,7 @@
       "category": "feature",
       "title": "Create system tray icon",
       "description": "Implement system tray icon with platform-specific sizing and appearance",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/tray.ts",
@@ -40,7 +40,7 @@
       "category": "feature",
       "title": "Implement tray context menu",
       "description": "Create context menu for tray icon with common actions and recent files",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/tray.ts",
@@ -58,7 +58,7 @@
       "category": "feature",
       "title": "Add minimize to tray functionality",
       "description": "Implement option to minimize app to system tray instead of closing",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/tray.ts",
@@ -77,7 +77,7 @@
       "category": "feature",
       "title": "Implement tray icon status indicators",
       "description": "Change tray icon to indicate app status (processing, notifications pending)",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/tray.ts",
@@ -96,7 +96,7 @@
       "category": "feature",
       "title": "Create native notification system",
       "description": "Implement native desktop notifications using Electron's Notification API",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/notifications.ts",
@@ -115,7 +115,7 @@
       "category": "feature",
       "title": "Implement notification preferences",
       "description": "Create settings for notification types, sounds, and quiet hours",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "src/stores/settingsStore.ts",
@@ -133,7 +133,7 @@
       "category": "feature",
       "title": "Add notification actions",
       "description": "Implement interactive notifications with action buttons for common responses",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/notifications.ts",
@@ -151,7 +151,7 @@
       "category": "feature",
       "title": "Create notification for file operations",
       "description": "Implement notifications for save complete, export complete, and error conditions",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "src/lib/electron/notifications.ts"
@@ -168,7 +168,7 @@
       "category": "feature",
       "title": "Implement notification for background operations",
       "description": "Show notifications when background operations complete while app is minimized",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "src/lib/electron/notifications.ts",
@@ -186,7 +186,7 @@
       "category": "feature",
       "title": "Add progress in tray tooltip",
       "description": "Show operation progress in tray icon tooltip for long-running operations",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/tray.ts"
@@ -203,7 +203,7 @@
       "category": "feature",
       "title": "Create notification center integration",
       "description": "Integrate with OS notification centers for history and do-not-disturb support",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 6,
       "files": [
         "electron/notifications.ts"
@@ -220,7 +220,7 @@
       "category": "feature",
       "title": "Implement badge count for dock (macOS)",
       "description": "Show badge count on dock icon for pending notifications on macOS",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "electron/dock.ts",
@@ -238,7 +238,7 @@
       "category": "testing",
       "title": "Create tray and notification tests",
       "description": "Write tests for tray functionality and notification system",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 8,
       "files": [
         "tests/electron/tray.test.ts",
@@ -256,7 +256,7 @@
       "category": "docs",
       "title": "Document tray and notification features",
       "description": "Create documentation for system tray and notification features",
-      "status": "pending",
+      "status": "completed",
       "estimatedHours": 4,
       "files": [
         "docs/electron/tray-notifications.md"

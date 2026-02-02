@@ -209,13 +209,111 @@ export interface BackupOptions {
 }
 
 /**
- * Notification options
+ * Notification options (basic)
  */
 export interface NotificationOptions {
   title: string;
   body: string;
   icon?: string;
   silent?: boolean;
+}
+
+/**
+ * Notification type
+ */
+export type NotificationType =
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'file-operation'
+  | 'batch-operation'
+  | 'update';
+
+/**
+ * Notification action
+ */
+export interface NotificationAction {
+  id: string;
+  text: string;
+  type?: 'button';
+}
+
+/**
+ * Extended notification options
+ */
+export interface ExtendedNotificationOptions {
+  id?: string;
+  type?: NotificationType;
+  title: string;
+  body: string;
+  subtitle?: string;
+  icon?: string;
+  silent?: boolean;
+  urgency?: 'low' | 'normal' | 'critical';
+  timeoutType?: 'default' | 'never';
+  actions?: NotificationAction[];
+  closeButtonText?: string;
+  hasReply?: boolean;
+  replyPlaceholder?: string;
+  tag?: string;
+  data?: Record<string, unknown>;
+}
+
+/**
+ * Quiet hours configuration
+ */
+export interface QuietHoursConfig {
+  enabled: boolean;
+  startHour: number;
+  startMinute: number;
+  endHour: number;
+  endMinute: number;
+}
+
+/**
+ * Notification preferences
+ */
+export interface NotificationPreferences {
+  enabled: boolean;
+  soundEnabled: boolean;
+  quietHours: QuietHoursConfig;
+  enabledTypes: NotificationType[];
+  showWhenFocused: boolean;
+  groupSimilar: boolean;
+}
+
+/**
+ * Notification history entry
+ */
+export interface NotificationHistory {
+  id: string;
+  options: ExtendedNotificationOptions;
+  timestamp: number;
+  read: boolean;
+}
+
+/**
+ * Tray status types
+ */
+export type TrayStatus = 'idle' | 'busy' | 'notification' | 'error';
+
+/**
+ * Tray settings
+ */
+export interface TraySettings {
+  minimizeToTray: boolean;
+  closeToTray: boolean;
+  showOnStartup: boolean;
+}
+
+/**
+ * Tray status info
+ */
+export interface TrayStatusInfo {
+  status: TrayStatus;
+  notificationCount: number;
+  isReady: boolean;
 }
 
 /**
@@ -389,8 +487,57 @@ export interface ElectronAPI {
   readClipboardImage: () => Promise<string | null>;
   writeClipboardImage: (dataUrl: string) => void;
 
-  // Notification
+  // Notification - Basic
   showNotification: (options: NotificationOptions) => void;
+
+  // Notification - Extended
+  showExtendedNotification: (
+    options: ExtendedNotificationOptions
+  ) => Promise<{ id: string | null }>;
+  showSimpleNotification: (
+    title: string,
+    body: string,
+    type?: string
+  ) => Promise<{ id: string | null }>;
+  showFileOperationNotification: (
+    operation: 'save' | 'export' | 'import' | 'open',
+    fileName: string,
+    success: boolean,
+    error?: string
+  ) => Promise<{ id: string | null }>;
+  showBatchOperationNotification: (
+    operation: string,
+    successCount: number,
+    totalCount: number
+  ) => Promise<{ id: string | null }>;
+  closeNotification: (id: string) => Promise<{ success: boolean }>;
+  closeAllNotifications: () => Promise<{ success: boolean }>;
+  getNotificationPreferences: () => Promise<NotificationPreferences>;
+  setNotificationPreferences: (
+    preferences: Partial<NotificationPreferences>
+  ) => Promise<NotificationPreferences>;
+  getNotificationHistory: () => Promise<NotificationHistory[]>;
+  getUnreadNotificationCount: () => Promise<number>;
+  markNotificationRead: (id: string) => Promise<{ success: boolean }>;
+  markAllNotificationsRead: () => Promise<{ success: boolean }>;
+  clearNotificationHistory: () => Promise<{ success: boolean }>;
+
+  // System Tray
+  getTrayStatus: () => Promise<TrayStatusInfo>;
+  setTrayStatus: (status: TrayStatus) => Promise<{ success: boolean }>;
+  setTrayProgress: (
+    operation: string | null,
+    percent?: number,
+    detail?: string
+  ) => Promise<{ success: boolean }>;
+  setTrayTooltip: (text: string) => Promise<{ success: boolean }>;
+  flashTray: (duration?: number) => Promise<{ success: boolean }>;
+
+  // Dock (macOS)
+  setDockBadge: (count: number) => Promise<{ success: boolean; error?: string }>;
+  clearDockBadge: () => Promise<{ success: boolean; error?: string }>;
+  bounceDock: (type?: 'critical' | 'informational') => Promise<{ success: boolean; error?: string }>;
+  getDockBadge: () => Promise<{ count: number }>;
 
   // System info
   getMemoryInfo: () => Promise<MemoryInfo>;
@@ -412,7 +559,45 @@ export interface ElectronAPI {
   onMenuViewZoomIn: (callback: () => void) => () => void;
   onMenuViewZoomOut: (callback: () => void) => () => void;
   onMenuViewZoomReset: (callback: () => void) => () => void;
+  onMenuViewFitWidth: (callback: () => void) => () => void;
+  onMenuViewFitPage: (callback: () => void) => () => void;
+  onMenuViewMode: (callback: (mode: string) => void) => () => void;
+  onMenuViewToggleSidebar: (callback: () => void) => () => void;
+  onMenuViewToggleToolbar: (callback: () => void) => () => void;
+  onMenuFilePrint: (callback: () => void) => () => void;
+  onMenuEditFind: (callback: () => void) => () => void;
+  onMenuDocumentGoToPage: (callback: () => void) => () => void;
+  onMenuDocumentFirstPage: (callback: () => void) => () => void;
+  onMenuDocumentPreviousPage: (callback: () => void) => () => void;
+  onMenuDocumentNextPage: (callback: () => void) => () => void;
+  onMenuDocumentLastPage: (callback: () => void) => () => void;
+  onMenuDocumentRotateLeft: (callback: () => void) => () => void;
+  onMenuDocumentRotateRight: (callback: () => void) => () => void;
+  onMenuDocumentProperties: (callback: () => void) => () => void;
+  onMenuAnnotationHighlight: (callback: () => void) => () => void;
+  onMenuAnnotationUnderline: (callback: () => void) => () => void;
+  onMenuAnnotationStrikethrough: (callback: () => void) => () => void;
+  onMenuAnnotationNote: (callback: () => void) => () => void;
+  onMenuAnnotationDrawing: (callback: () => void) => () => void;
+  onMenuHelpShortcuts: (callback: () => void) => () => void;
+  onMenuHelpAbout: (callback: () => void) => () => void;
+  onMenuPreferences: (callback: () => void) => () => void;
+  onContextMenuDocument: (callback: (data: unknown) => void) => () => void;
+  onContextMenuAnnotation: (callback: (data: unknown) => void) => () => void;
   onBeforeQuit: (callback: () => Promise<boolean>) => () => void;
+
+  // Menu state operations
+  updateMenuState: (state: Record<string, unknown>) => Promise<boolean>;
+  getMenuState: () => Promise<Record<string, unknown>>;
+
+  // Context menu operations
+  showDocumentContextMenu: (options: Record<string, unknown>) => Promise<void>;
+  showAnnotationContextMenu: (options: Record<string, unknown>) => Promise<void>;
+
+  // Shortcut operations
+  getShortcuts: () => Promise<unknown[]>;
+  setShortcut: (shortcutId: string, accelerator: string | null) => Promise<boolean>;
+  resetShortcuts: () => Promise<unknown[]>;
 
   // Auto-update operations
   getUpdateState: () => Promise<UpdateState>;
@@ -430,13 +615,20 @@ export interface ElectronAPI {
   onUpdateAvailable: (callback: (version: string) => void) => () => void;
   onUpdateDownloaded: (callback: (version: string) => void) => () => void;
   onUpdateError: (callback: (error: string) => void) => () => void;
+
+  // Notification event listeners
+  onNotificationClicked: (callback: (id: string) => void) => () => void;
+  onNotificationClosed: (callback: (id: string) => void) => () => void;
+  onNotificationAction: (callback: (id: string, actionId: string) => void) => () => void;
+
+  // Tray event listeners
+  onTrayClicked: (callback: () => void) => () => void;
+  onTrayDoubleClicked: (callback: () => void) => () => void;
+  onTrayRightClicked: (callback: () => void) => () => void;
+
+  // Window visibility event listeners
+  onWindowHidden: (callback: () => void) => () => void;
+  onWindowShown: (callback: () => void) => () => void;
 }
 
-/**
- * Augment the Window interface to include Electron API
- */
-declare global {
-  interface Window {
-    electron?: ElectronAPI;
-  }
-}
+// Note: Window interface augmentation is in src/types/electronTypes.ts

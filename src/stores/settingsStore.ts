@@ -1,6 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+/**
+ * Quiet hours configuration for notifications
+ */
+interface QuietHoursConfig {
+  enabled: boolean;
+  startHour: number;
+  startMinute: number;
+  endHour: number;
+  endMinute: number;
+}
+
 interface SettingsState {
   // Viewing
   defaultZoom: number;
@@ -22,6 +33,19 @@ interface SettingsState {
   // Signatures
   savedSignatures: string[]; // base64 encoded
 
+  // System Tray (Electron)
+  minimizeToTray: boolean;
+  closeToTray: boolean;
+  showTrayIcon: boolean;
+
+  // Notifications (Electron)
+  notificationsEnabled: boolean;
+  notificationSound: boolean;
+  notificationQuietHours: QuietHoursConfig;
+  notifyOnSave: boolean;
+  notifyOnExport: boolean;
+  notifyOnBackgroundComplete: boolean;
+
   // Actions
   setDefaultZoom: (zoom: number) => void;
   setDefaultViewMode: (mode: 'single' | 'continuous' | 'spread') => void;
@@ -34,6 +58,15 @@ interface SettingsState {
   setFormAutoSave: (enabled: boolean) => void;
   addSignature: (signature: string) => void;
   removeSignature: (index: number) => void;
+  setMinimizeToTray: (enabled: boolean) => void;
+  setCloseToTray: (enabled: boolean) => void;
+  setShowTrayIcon: (enabled: boolean) => void;
+  setNotificationsEnabled: (enabled: boolean) => void;
+  setNotificationSound: (enabled: boolean) => void;
+  setNotificationQuietHours: (config: QuietHoursConfig) => void;
+  setNotifyOnSave: (enabled: boolean) => void;
+  setNotifyOnExport: (enabled: boolean) => void;
+  setNotifyOnBackgroundComplete: (enabled: boolean) => void;
   resetToDefaults: () => void;
 }
 
@@ -48,6 +81,23 @@ const defaultSettings = {
   formAutoAdvance: false,
   formAutoSave: true,
   savedSignatures: [],
+  // System Tray defaults
+  minimizeToTray: false,
+  closeToTray: false,
+  showTrayIcon: true,
+  // Notification defaults
+  notificationsEnabled: true,
+  notificationSound: true,
+  notificationQuietHours: {
+    enabled: false,
+    startHour: 22,
+    startMinute: 0,
+    endHour: 8,
+    endMinute: 0,
+  },
+  notifyOnSave: false,
+  notifyOnExport: true,
+  notifyOnBackgroundComplete: true,
 };
 
 export const useSettingsStore = create<SettingsState>()(
@@ -101,6 +151,44 @@ export const useSettingsStore = create<SettingsState>()(
         set((state) => ({
           savedSignatures: state.savedSignatures.filter((_, i) => i !== index),
         }));
+      },
+
+      // Tray settings
+      setMinimizeToTray: (enabled) => {
+        set({ minimizeToTray: enabled });
+      },
+
+      setCloseToTray: (enabled) => {
+        set({ closeToTray: enabled });
+      },
+
+      setShowTrayIcon: (enabled) => {
+        set({ showTrayIcon: enabled });
+      },
+
+      // Notification settings
+      setNotificationsEnabled: (enabled) => {
+        set({ notificationsEnabled: enabled });
+      },
+
+      setNotificationSound: (enabled) => {
+        set({ notificationSound: enabled });
+      },
+
+      setNotificationQuietHours: (config) => {
+        set({ notificationQuietHours: config });
+      },
+
+      setNotifyOnSave: (enabled) => {
+        set({ notifyOnSave: enabled });
+      },
+
+      setNotifyOnExport: (enabled) => {
+        set({ notifyOnExport: enabled });
+      },
+
+      setNotifyOnBackgroundComplete: (enabled) => {
+        set({ notifyOnBackgroundComplete: enabled });
       },
 
       resetToDefaults: () => {

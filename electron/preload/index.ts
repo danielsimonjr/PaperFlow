@@ -17,6 +17,11 @@ import type {
   MessageDialogOptions,
   FileReadOptions,
   NotificationOptions,
+  ExtendedNotificationOptions,
+  NotificationPreferences,
+  NotificationHistory,
+  TrayStatus,
+  TrayStatusInfo,
   WindowBounds,
   PlatformInfo,
   AppPathInfo,
@@ -178,10 +183,70 @@ const electronAPI: ElectronAPI = {
     ipcRenderer.invoke(IPC_CHANNELS.CLIPBOARD_WRITE_IMAGE, dataUrl);
   },
 
-  // Notification
+  // Notification - Basic
   showNotification: (options: NotificationOptions) => {
     ipcRenderer.invoke(IPC_CHANNELS.NOTIFICATION_SHOW, options);
   },
+
+  // Notification - Extended
+  showExtendedNotification: (options: ExtendedNotificationOptions) =>
+    invoke<{ id: string | null }>(IPC_CHANNELS.NOTIFICATION_SHOW_EXTENDED, options),
+  showSimpleNotification: (title: string, body: string, type?: string) =>
+    invoke<{ id: string | null }>(IPC_CHANNELS.NOTIFICATION_SHOW_SIMPLE, title, body, type),
+  showFileOperationNotification: (
+    operation: 'save' | 'export' | 'import' | 'open',
+    fileName: string,
+    success: boolean,
+    error?: string
+  ) =>
+    invoke<{ id: string | null }>(
+      IPC_CHANNELS.NOTIFICATION_FILE_OPERATION,
+      operation,
+      fileName,
+      success,
+      error
+    ),
+  showBatchOperationNotification: (operation: string, successCount: number, totalCount: number) =>
+    invoke<{ id: string | null }>(
+      IPC_CHANNELS.NOTIFICATION_BATCH_OPERATION,
+      operation,
+      successCount,
+      totalCount
+    ),
+  closeNotification: (id: string) =>
+    invoke<{ success: boolean }>(IPC_CHANNELS.NOTIFICATION_CLOSE, id),
+  closeAllNotifications: () => invoke<{ success: boolean }>(IPC_CHANNELS.NOTIFICATION_CLOSE_ALL),
+  getNotificationPreferences: () =>
+    invoke<NotificationPreferences>(IPC_CHANNELS.NOTIFICATION_GET_PREFERENCES),
+  setNotificationPreferences: (preferences: Partial<NotificationPreferences>) =>
+    invoke<NotificationPreferences>(IPC_CHANNELS.NOTIFICATION_SET_PREFERENCES, preferences),
+  getNotificationHistory: () =>
+    invoke<NotificationHistory[]>(IPC_CHANNELS.NOTIFICATION_GET_HISTORY),
+  getUnreadNotificationCount: () => invoke<number>(IPC_CHANNELS.NOTIFICATION_GET_UNREAD_COUNT),
+  markNotificationRead: (id: string) =>
+    invoke<{ success: boolean }>(IPC_CHANNELS.NOTIFICATION_MARK_READ, id),
+  markAllNotificationsRead: () =>
+    invoke<{ success: boolean }>(IPC_CHANNELS.NOTIFICATION_MARK_ALL_READ),
+  clearNotificationHistory: () =>
+    invoke<{ success: boolean }>(IPC_CHANNELS.NOTIFICATION_CLEAR_HISTORY),
+
+  // System Tray
+  getTrayStatus: () => invoke<TrayStatusInfo>(IPC_CHANNELS.TRAY_GET_STATUS),
+  setTrayStatus: (status: TrayStatus) =>
+    invoke<{ success: boolean }>(IPC_CHANNELS.TRAY_SET_STATUS, status),
+  setTrayProgress: (operation: string | null, percent?: number, detail?: string) =>
+    invoke<{ success: boolean }>(IPC_CHANNELS.TRAY_SET_PROGRESS, operation, percent, detail),
+  setTrayTooltip: (text: string) =>
+    invoke<{ success: boolean }>(IPC_CHANNELS.TRAY_SET_TOOLTIP, text),
+  flashTray: (duration?: number) => invoke<{ success: boolean }>(IPC_CHANNELS.TRAY_FLASH, duration),
+
+  // Dock (macOS)
+  setDockBadge: (count: number) =>
+    invoke<{ success: boolean; error?: string }>(IPC_CHANNELS.DOCK_SET_BADGE, count),
+  clearDockBadge: () => invoke<{ success: boolean; error?: string }>(IPC_CHANNELS.DOCK_CLEAR_BADGE),
+  bounceDock: (type?: 'critical' | 'informational') =>
+    invoke<{ success: boolean; error?: string }>(IPC_CHANNELS.DOCK_BOUNCE, type),
+  getDockBadge: () => invoke<{ count: number }>(IPC_CHANNELS.DOCK_GET_BADGE),
 
   // System info
   getMemoryInfo: () => invoke<MemoryInfo>(IPC_CHANNELS.SYSTEM_GET_MEMORY_INFO),
@@ -236,6 +301,56 @@ const electronAPI: ElectronAPI = {
     createListener(IPC_EVENTS.MENU_VIEW_ZOOM_OUT, callback),
   onMenuViewZoomReset: (callback: () => void) =>
     createListener(IPC_EVENTS.MENU_VIEW_ZOOM_RESET, callback),
+  onMenuViewFitWidth: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_VIEW_FIT_WIDTH, callback),
+  onMenuViewFitPage: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_VIEW_FIT_PAGE, callback),
+  onMenuViewMode: (callback: (mode: string) => void) =>
+    createListener(IPC_EVENTS.MENU_VIEW_MODE, callback as (...args: unknown[]) => void),
+  onMenuViewToggleSidebar: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_VIEW_TOGGLE_SIDEBAR, callback),
+  onMenuViewToggleToolbar: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_VIEW_TOGGLE_TOOLBAR, callback),
+  onMenuFilePrint: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_FILE_PRINT, callback),
+  onMenuEditFind: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_EDIT_FIND, callback),
+  onMenuDocumentGoToPage: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_DOCUMENT_GO_TO_PAGE, callback),
+  onMenuDocumentFirstPage: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_DOCUMENT_FIRST_PAGE, callback),
+  onMenuDocumentPreviousPage: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_DOCUMENT_PREVIOUS_PAGE, callback),
+  onMenuDocumentNextPage: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_DOCUMENT_NEXT_PAGE, callback),
+  onMenuDocumentLastPage: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_DOCUMENT_LAST_PAGE, callback),
+  onMenuDocumentRotateLeft: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_DOCUMENT_ROTATE_LEFT, callback),
+  onMenuDocumentRotateRight: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_DOCUMENT_ROTATE_RIGHT, callback),
+  onMenuDocumentProperties: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_DOCUMENT_PROPERTIES, callback),
+  onMenuAnnotationHighlight: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_ANNOTATION_HIGHLIGHT, callback),
+  onMenuAnnotationUnderline: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_ANNOTATION_UNDERLINE, callback),
+  onMenuAnnotationStrikethrough: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_ANNOTATION_STRIKETHROUGH, callback),
+  onMenuAnnotationNote: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_ANNOTATION_NOTE, callback),
+  onMenuAnnotationDrawing: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_ANNOTATION_DRAWING, callback),
+  onMenuHelpShortcuts: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_HELP_SHORTCUTS, callback),
+  onMenuHelpAbout: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_HELP_ABOUT, callback),
+  onMenuPreferences: (callback: () => void) =>
+    createListener(IPC_EVENTS.MENU_PREFERENCES, callback),
+  onContextMenuDocument: (callback: (data: unknown) => void) =>
+    createListener(IPC_EVENTS.CONTEXT_MENU_DOCUMENT, callback as (...args: unknown[]) => void),
+  onContextMenuAnnotation: (callback: (data: unknown) => void) =>
+    createListener(IPC_EVENTS.CONTEXT_MENU_ANNOTATION, callback as (...args: unknown[]) => void),
   onBeforeQuit: (callback: () => Promise<boolean>) => {
     const listener = async () => {
       const canQuit = await callback();
@@ -247,6 +362,23 @@ const electronAPI: ElectronAPI = {
     };
   },
 
+  // Menu state updates
+  updateMenuState: (state: Record<string, unknown>) =>
+    invoke<boolean>(IPC_CHANNELS.MENU_UPDATE_STATE, state),
+  getMenuState: () => invoke<Record<string, unknown>>(IPC_CHANNELS.MENU_GET_STATE),
+
+  // Context menu
+  showDocumentContextMenu: (options: Record<string, unknown>) =>
+    invoke<void>(IPC_CHANNELS.CONTEXT_MENU_SHOW_DOCUMENT, options),
+  showAnnotationContextMenu: (options: Record<string, unknown>) =>
+    invoke<void>(IPC_CHANNELS.CONTEXT_MENU_SHOW_ANNOTATION, options),
+
+  // Shortcuts
+  getShortcuts: () => invoke<unknown[]>(IPC_CHANNELS.SHORTCUTS_GET_CUSTOM),
+  setShortcut: (shortcutId: string, accelerator: string | null) =>
+    invoke<boolean>(IPC_CHANNELS.SHORTCUTS_SET_CUSTOM, shortcutId, accelerator),
+  resetShortcuts: () => invoke<unknown[]>(IPC_CHANNELS.SHORTCUTS_RESET_DEFAULTS),
+
   // Update event listeners
   onUpdateStateChanged: (callback: (state: UpdateState) => void) =>
     createListener(IPC_EVENTS.UPDATE_STATE_CHANGED, callback as (...args: unknown[]) => void),
@@ -256,6 +388,25 @@ const electronAPI: ElectronAPI = {
     createListener(IPC_EVENTS.UPDATE_DOWNLOADED, callback as (...args: unknown[]) => void),
   onUpdateError: (callback: (error: string) => void) =>
     createListener(IPC_EVENTS.UPDATE_ERROR, callback as (...args: unknown[]) => void),
+
+  // Notification event listeners
+  onNotificationClicked: (callback: (id: string) => void) =>
+    createListener(IPC_EVENTS.NOTIFICATION_CLICKED, callback as (...args: unknown[]) => void),
+  onNotificationClosed: (callback: (id: string) => void) =>
+    createListener(IPC_EVENTS.NOTIFICATION_CLOSED, callback as (...args: unknown[]) => void),
+  onNotificationAction: (callback: (id: string, actionId: string) => void) =>
+    createListener(IPC_EVENTS.NOTIFICATION_ACTION, callback as (...args: unknown[]) => void),
+
+  // Tray event listeners
+  onTrayClicked: (callback: () => void) => createListener(IPC_EVENTS.TRAY_CLICKED, callback),
+  onTrayDoubleClicked: (callback: () => void) =>
+    createListener(IPC_EVENTS.TRAY_DOUBLE_CLICKED, callback),
+  onTrayRightClicked: (callback: () => void) =>
+    createListener(IPC_EVENTS.TRAY_RIGHT_CLICKED, callback),
+
+  // Window visibility event listeners
+  onWindowHidden: (callback: () => void) => createListener(IPC_EVENTS.WINDOW_HIDDEN, callback),
+  onWindowShown: (callback: () => void) => createListener(IPC_EVENTS.WINDOW_SHOWN, callback),
 };
 
 // Expose the API to the renderer process

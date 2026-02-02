@@ -79,8 +79,36 @@ export const IPC_CHANNELS = {
   CLIPBOARD_READ_IMAGE: 'clipboard-read-image',
   CLIPBOARD_WRITE_IMAGE: 'clipboard-write-image',
 
-  // Notification
+  // Notification - Basic
   NOTIFICATION_SHOW: 'notification-show',
+
+  // Notification - Extended
+  NOTIFICATION_SHOW_EXTENDED: 'notification-show-extended',
+  NOTIFICATION_SHOW_SIMPLE: 'notification-show-simple',
+  NOTIFICATION_FILE_OPERATION: 'notification-file-operation',
+  NOTIFICATION_BATCH_OPERATION: 'notification-batch-operation',
+  NOTIFICATION_CLOSE: 'notification-close',
+  NOTIFICATION_CLOSE_ALL: 'notification-close-all',
+  NOTIFICATION_GET_PREFERENCES: 'notification-get-preferences',
+  NOTIFICATION_SET_PREFERENCES: 'notification-set-preferences',
+  NOTIFICATION_GET_HISTORY: 'notification-get-history',
+  NOTIFICATION_GET_UNREAD_COUNT: 'notification-get-unread-count',
+  NOTIFICATION_MARK_READ: 'notification-mark-read',
+  NOTIFICATION_MARK_ALL_READ: 'notification-mark-all-read',
+  NOTIFICATION_CLEAR_HISTORY: 'notification-clear-history',
+
+  // System Tray
+  TRAY_GET_STATUS: 'tray-get-status',
+  TRAY_SET_STATUS: 'tray-set-status',
+  TRAY_SET_PROGRESS: 'tray-set-progress',
+  TRAY_SET_TOOLTIP: 'tray-set-tooltip',
+  TRAY_FLASH: 'tray-flash',
+
+  // Dock (macOS)
+  DOCK_SET_BADGE: 'dock-set-badge',
+  DOCK_CLEAR_BADGE: 'dock-clear-badge',
+  DOCK_BOUNCE: 'dock-bounce',
+  DOCK_GET_BADGE: 'dock-get-badge',
 
   // System
   SYSTEM_GET_MEMORY_INFO: 'system-get-memory-info',
@@ -96,6 +124,21 @@ export const IPC_CHANNELS = {
   UPDATE_INSTALL_AND_RESTART: 'update-install-and-restart',
   UPDATE_INSTALL_LATER: 'update-install-later',
   UPDATE_GET_RELEASE_NOTES: 'update-get-release-notes',
+
+  // Menu state
+  MENU_UPDATE_STATE: 'menu-update-state',
+  MENU_GET_STATE: 'menu-get-state',
+
+  // Context menu
+  CONTEXT_MENU_SHOW_DOCUMENT: 'context-menu-show-document',
+  CONTEXT_MENU_SHOW_ANNOTATION: 'context-menu-show-annotation',
+
+  // Global shortcuts
+  SHORTCUTS_REGISTER_GLOBAL: 'shortcuts-register-global',
+  SHORTCUTS_UNREGISTER_GLOBAL: 'shortcuts-unregister-global',
+  SHORTCUTS_GET_CUSTOM: 'shortcuts-get-custom',
+  SHORTCUTS_SET_CUSTOM: 'shortcuts-set-custom',
+  SHORTCUTS_RESET_DEFAULTS: 'shortcuts-reset-defaults',
 } as const;
 
 /**
@@ -126,18 +169,69 @@ export const IPC_EVENTS = {
   AUTOSAVE_FAILED: 'autosave-failed',
   RECOVERY_AVAILABLE: 'recovery-available',
 
-  // Menu events
+  // Menu events - File
   MENU_FILE_NEW: 'menu-file-new',
+  MENU_FILE_NEW_WINDOW: 'menu-file-new-window',
   MENU_FILE_OPEN: 'menu-file-open',
   MENU_FILE_SAVE: 'menu-file-save',
   MENU_FILE_SAVE_AS: 'menu-file-save-as',
   MENU_FILE_CLOSE: 'menu-file-close',
+  MENU_FILE_PRINT: 'menu-file-print',
+  MENU_FILE_EXPORT_IMAGES: 'menu-file-export-images',
+  MENU_FILE_EXPORT_TEXT: 'menu-file-export-text',
+
+  // Menu events - Edit
   MENU_EDIT_UNDO: 'menu-edit-undo',
   MENU_EDIT_REDO: 'menu-edit-redo',
+  MENU_EDIT_FIND: 'menu-edit-find',
+  MENU_EDIT_FIND_NEXT: 'menu-edit-find-next',
+  MENU_EDIT_FIND_PREVIOUS: 'menu-edit-find-previous',
+
+  // Menu events - View
   MENU_VIEW_ZOOM_IN: 'menu-view-zoom-in',
   MENU_VIEW_ZOOM_OUT: 'menu-view-zoom-out',
   MENU_VIEW_ZOOM_RESET: 'menu-view-zoom-reset',
+  MENU_VIEW_FIT_WIDTH: 'menu-view-fit-width',
+  MENU_VIEW_FIT_PAGE: 'menu-view-fit-page',
+  MENU_VIEW_MODE: 'menu-view-mode',
+  MENU_VIEW_TOGGLE_SIDEBAR: 'menu-view-toggle-sidebar',
+  MENU_VIEW_TOGGLE_TOOLBAR: 'menu-view-toggle-toolbar',
   MENU_VIEW_FULLSCREEN: 'menu-view-fullscreen',
+
+  // Menu events - Document
+  MENU_DOCUMENT_GO_TO_PAGE: 'menu-document-go-to-page',
+  MENU_DOCUMENT_FIRST_PAGE: 'menu-document-first-page',
+  MENU_DOCUMENT_PREVIOUS_PAGE: 'menu-document-previous-page',
+  MENU_DOCUMENT_NEXT_PAGE: 'menu-document-next-page',
+  MENU_DOCUMENT_LAST_PAGE: 'menu-document-last-page',
+  MENU_DOCUMENT_ROTATE_LEFT: 'menu-document-rotate-left',
+  MENU_DOCUMENT_ROTATE_RIGHT: 'menu-document-rotate-right',
+  MENU_DOCUMENT_INSERT_PAGE: 'menu-document-insert-page',
+  MENU_DOCUMENT_DELETE_PAGE: 'menu-document-delete-page',
+  MENU_DOCUMENT_EXTRACT_PAGES: 'menu-document-extract-pages',
+  MENU_DOCUMENT_PROPERTIES: 'menu-document-properties',
+
+  // Menu events - Annotations
+  MENU_ANNOTATION_HIGHLIGHT: 'menu-annotation-highlight',
+  MENU_ANNOTATION_UNDERLINE: 'menu-annotation-underline',
+  MENU_ANNOTATION_STRIKETHROUGH: 'menu-annotation-strikethrough',
+  MENU_ANNOTATION_NOTE: 'menu-annotation-note',
+  MENU_ANNOTATION_DRAWING: 'menu-annotation-drawing',
+  MENU_ANNOTATION_SHAPE: 'menu-annotation-shape',
+
+  // Menu events - Help
+  MENU_HELP_SHORTCUTS: 'menu-help-shortcuts',
+  MENU_HELP_RELEASE_NOTES: 'menu-help-release-notes',
+  MENU_HELP_CHECK_UPDATES: 'menu-help-check-updates',
+  MENU_HELP_ABOUT: 'menu-help-about',
+
+  // Menu events - Preferences
+  MENU_PREFERENCES: 'menu-preferences',
+
+  // Context menu events
+  CONTEXT_MENU_SHOW: 'context-menu-show',
+  CONTEXT_MENU_DOCUMENT: 'context-menu-document',
+  CONTEXT_MENU_ANNOTATION: 'context-menu-annotation',
 
   // Update events
   UPDATE_STATE_CHANGED: 'update-state-changed',
@@ -146,6 +240,20 @@ export const IPC_EVENTS = {
   UPDATE_NOT_AVAILABLE: 'update-not-available',
   UPDATE_DOWNLOADED: 'update-downloaded',
   UPDATE_ERROR: 'update-error',
+
+  // Notification events
+  NOTIFICATION_CLICKED: 'notification-clicked',
+  NOTIFICATION_CLOSED: 'notification-closed',
+  NOTIFICATION_ACTION: 'notification-action',
+
+  // Tray events
+  TRAY_CLICKED: 'tray-clicked',
+  TRAY_DOUBLE_CLICKED: 'tray-double-clicked',
+  TRAY_RIGHT_CLICKED: 'tray-right-clicked',
+
+  // Window visibility events
+  WINDOW_HIDDEN: 'window-hidden',
+  WINDOW_SHOWN: 'window-shown',
 } as const;
 
 /**
