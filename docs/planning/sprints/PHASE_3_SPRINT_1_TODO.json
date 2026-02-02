@@ -8,6 +8,8 @@
   "priority": "HIGH",
   "status": "pending",
   "totalEstimatedHours": 88,
+  "blockedBy": [],
+  "canParallelWith": [],
   "tasks": [
     {
       "id": "3.1.1",

@@ -8,6 +8,14 @@
   "priority": "CRITICAL",
   "status": "pending",
   "totalEstimatedHours": 112,
+  "blockedBy": [
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "canParallelWith": [],
   "tasks": [
     {
       "id": "3.12.1",

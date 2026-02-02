@@ -8,6 +8,10 @@
   "priority": "MEDIUM",
   "status": "pending",
   "totalEstimatedHours": 76,
+  "blockedBy": [
+    16
+  ],
+  "canParallelWith": [],
   "tasks": [
     {
       "id": "3.17.1",
