@@ -6,14 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm install
-npm run dev          # http://localhost:5173
+npm run dev          # http://localhost:5173 (web)
+npm run electron:dev # Desktop app with hot reload
 npm run build        # Production build to dist/
 npm run preview      # Preview production build
 ```
 
 ## Project Overview
 
-PaperFlow is a Progressive Web Application (PWA) for PDF editing built with React, TypeScript, and Vite. It aims to provide a modern, web-first alternative to Adobe Acrobat with offline capabilities and a privacy-first approach (local processing by default).
+PaperFlow is a comprehensive PDF editing solution available as both a Progressive Web Application (PWA) and a native desktop application built with Electron. It provides a modern alternative to Adobe Acrobat with offline capabilities and a privacy-first approach (local processing by default).
 
 ## Build & Development Commands
 
@@ -21,29 +22,31 @@ PaperFlow is a Progressive Web Application (PWA) for PDF editing built with Reac
 # Install dependencies
 npm install
 
-# Development server
-npm run dev
+# Web Development
+npm run dev              # Start Vite dev server at http://localhost:5173
+npm run build            # Build web app to dist/
+npm run preview          # Preview production build
 
-# Production build
-npm run build
+# Desktop Development (Electron)
+npm run electron:dev     # Start Electron with hot reload
+npm run electron:build   # Build desktop app for all platforms
+npm run electron:preview # Preview desktop build without packaging
+npm run electron:compile # Compile TypeScript for Electron
+npm run electron:pack    # Build without creating installers (for testing)
+npm run electron:dist    # Build with installers
 
-# Linting
-npm run lint
+# Linting & Type Checking
+npm run lint             # Run ESLint
+npm run typecheck        # Run TypeScript type checking
 
-# Run all tests with coverage
-npm run test:coverage
-
-# Unit tests only
-npm run test:unit
-
-# Integration tests
-npm run test:integration
-
-# E2E tests (Playwright)
-npm run test:e2e
-
-# Watch mode for tests
-npm run test:watch
+# Testing
+npm run test             # Run all tests
+npm run test:unit        # Run unit tests only
+npm run test:integration # Run integration tests
+npm run test:e2e         # Run Playwright E2E tests (web)
+npm run test:e2e-electron # Run Playwright E2E tests (desktop)
+npm run test:coverage    # Run tests with coverage report
+npm run test:watch       # Watch mode for tests
 
 # Run a single test file
 npx vitest run tests/unit/stores/documentStore.test.ts
@@ -58,10 +61,13 @@ npx vitest run -t "should load PDF"
 - **PDF.js** (`pdfjs-dist`): Rendering and text extraction
 - **pdf-lib**: PDF manipulation (editing, merging, splitting)
 - **Tesseract.js**: Client-side OCR (Phase 2)
+- **Electron**: Desktop application framework (Phase 3)
 - **Zustand**: State management
 - **Workbox/vite-plugin-pwa**: Service worker and offline support
 
 ### State Management (Zustand Stores)
+
+**Core Stores (Phase 1)**
 - `documentStore`: PDF state (renderer, pages, zoom, view mode)
 - `annotationStore`: Annotations (highlights, notes, drawings, shapes)
 - `historyStore`: Undo/redo stack
@@ -70,15 +76,38 @@ npx vitest run -t "should load PDF"
 - `formStore`: Form field state and values
 - `signatureStore`: Saved signatures and placements
 - `textStore`: Text editing state
+
+**Advanced Stores (Phase 2)**
 - `ocrStore`: OCR processing state and results
 - `formDesignerStore`: Form design mode state
 - `redactionStore`: Redaction marks and patterns
 - `comparisonStore`: Document comparison state
-- `batchStore`: Batch processing queue
+- `batchStore`: Batch processing queue (web)
+
+**Desktop Stores (Phase 3)**
+- `recentFilesStore`: Recently opened files tracking
+- `updateStore`: Auto-update state and settings
+- `shortcutsStore`: Custom keyboard shortcuts
+- `fileWatchStore`: File watcher state and events
+- `offlineStore`: Offline sync status and queue
+- `nativeBatchStore`: Native batch processing with worker threads
+- `printStore`: Native print job management
+- `scannerStore`: Scanner device state and scan history
+- `securityStore`: Hardware key authentication state
+
+**Enterprise Stores (Phase 3 Q4)**
+- `enterprisePolicyStore`: MDM/GPO policy state
+- `licenseStore`: License validation and feature gating
+- `lanStore`: LAN peer discovery and sync
+- `kioskStore`: Kiosk mode configuration and session
 
 ### Key Data Flow
 ```
 UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → IndexedDB/File System
+                     ↓
+             (Desktop only)
+                     ↓
+        Electron IPC → Main Process → Native APIs
 ```
 
 ### Path Aliases (configured in vite.config.ts and tsconfig.json)
@@ -94,6 +123,8 @@ UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → Indexed
 - `src/main.tsx`: App bootstrap and React root
 - `src/App.tsx`: Router and layout
 - `src/pages/`: Route components (Home, Viewer, Settings)
+- `electron/main/index.ts`: Electron main process entry point
+- `electron/preload/index.ts`: Preload script exposing APIs to renderer
 
 ### Constants (`src/constants/`)
 - `config.ts`: App configuration (zoom limits, performance thresholds)
@@ -102,6 +133,8 @@ UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → Indexed
 - `stamps.ts`: Predefined stamp templates
 
 ### Component Organization
+
+**Core Components**
 - `components/ui/`: Reusable UI primitives (Button, Dialog, Dropdown, Tooltip, Skeleton)
 - `components/layout/`: App shell (Header, Sidebar, Toolbar, StatusBar, MobileToolbar)
 - `components/viewer/`: PDF rendering (PDFViewer, PageCanvas, Thumbnails, VirtualizedViewer)
@@ -117,29 +150,56 @@ UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → Indexed
 - `components/home/`: Home page components (FileDropZone)
 - `components/lazy/`: Lazy-loaded component definitions for code splitting
 
-### PDF Coordinate System
-Annotations and form fields use PDF coordinates (origin at bottom-left). The annotation layer handles conversion between PDF coordinates and screen coordinates for rendering.
+**Desktop Components (Phase 3)**
+- `components/offline/`: Offline indicators (OfflineIndicator, OfflineBanner, SyncStatusPanel, ConflictDialog)
+- `components/update/`: Auto-update UI (UpdateNotification, UpdateSettings, UpdateProgress, ReleaseNotes)
+- `components/scanner/`: Scanner UI (ScannerSelectDialog, ScanSettingsPanel, ScanPreview, BatchScanWorkflow)
+- `components/security/`: Hardware key UI (HardwareKeyEnrollment, HardwareKeyAuth, KeyManagement)
+- `components/batch/`: Batch processing (BatchWizard, BatchDashboard, BatchSummary, TemplateManager)
+- `components/fileWatch/`: File watching UI (AutoReloadSettings, WatchStatusIndicator)
 
-Coordinate conversion utilities are in `src/utils/coordinates.ts`:
-- `pdfToScreen()` / `screenToPdf()`: Point conversion
-- `pdfRectToScreen()` / `screenRectToPdf()`: Rectangle conversion
-- `normalizeRects()`: Merge adjacent rectangles on same line
+**Enterprise Components (Phase 3 Q4)**
+- `components/enterprise/`: Enterprise config (PolicyStatusIndicator, ConfigurationViewer, LockedSettingBadge)
+- `components/kiosk/`: Kiosk mode (KioskShell, KioskToolbar, KioskHeader)
 
-### Annotation System (Sprint 3)
-Components in `components/annotations/`:
-- `AnnotationLayer`: SVG overlay for rendering annotations
-- `Highlight`, `Underline`, `Strikethrough`: Text markup components
-- `StickyNote`, `NoteTool`, `NoteReplies`: Note annotations
-- `SelectionPopup`: Context menu for text selection
-- `ExportImportDialog`: Import/export annotations as JSON
+### Electron Directory Structure
 
-Key hooks:
-- `useAnnotationShortcuts`: Keyboard shortcuts (H, U, S, N, V)
-- `useTextSelection`: Text selection handling
-
-Annotation serialization in `lib/annotations/serializer.ts`.
+```
+electron/
+├── main/                  # Main process modules
+│   ├── index.ts           # Entry point, app lifecycle
+│   ├── windowManager.ts   # BrowserWindow management
+│   ├── windowState.ts     # Window state persistence
+│   ├── lifecycle.ts       # App lifecycle handlers
+│   ├── security.ts        # CSP and security setup
+│   ├── updater.ts         # Auto-update integration
+│   ├── print/             # Native print integration
+│   ├── scanner/           # Scanner bridge (TWAIN/WIA/SANE)
+│   ├── security/          # WebAuthn bridge
+│   └── updates/           # Auto-updater and differential updates
+├── preload/               # Preload scripts
+│   ├── index.ts           # Main preload with electronAPI
+│   ├── networkPreload.ts  # Network status detection
+│   └── webauthnPreload.ts # WebAuthn API bridge
+├── ipc/                   # IPC handlers and types
+│   ├── channels.ts        # Channel name constants
+│   ├── types.ts           # TypeScript type definitions
+│   ├── handlers.ts        # Core IPC handlers
+│   ├── fileHandlers.ts    # File operation handlers
+│   ├── printHandlers.ts   # Print IPC handlers
+│   └── ...                # Other handler modules
+├── workers/               # Worker threads for heavy operations
+│   ├── workerPool.ts      # Worker thread pool manager
+│   ├── workerManager.ts   # Worker lifecycle management
+│   └── pdfWorker.ts       # PDF processing worker
+├── touchbar/              # macOS Touch Bar
+│   └── touchBarManager.ts # Context-aware Touch Bar
+└── *.ts                   # Feature modules (tray, menu, shortcuts, etc.)
+```
 
 ### Core Library Modules (lib/)
+
+**Core Modules**
 - `lib/pdf/`: PDF rendering (`renderer.ts`), saving (`saver.ts`, `textSaver.ts`), signature embedding
 - `lib/pages/`: Page operations (merge, split, extract, reorder, rotate, delete)
 - `lib/forms/`: Form parsing, validation, FDF/XFDF export/import
@@ -153,11 +213,48 @@ Annotation serialization in `lib/annotations/serializer.ts`.
 - `lib/thumbnails/`: Thumbnail caching (LRU cache)
 - `lib/performance/`: Memory monitoring, canvas disposal
 - `lib/monitoring/`: Error tracking (Sentry), analytics
-- `lib/ocr/`: OCR engine, image preprocessing, language loading, batch processing, layout analysis, export formats
+
+**Advanced Modules (Phase 2)**
+- `lib/ocr/`: OCR engine, image preprocessing, language loading, batch processing, layout analysis
 - `lib/redaction/`: Pattern matching, redaction engine, verification
 - `lib/comparison/`: Text diff, comparison engine, report generation
-- `lib/batch/`: Watermarks, headers/footers, Bates numbering, PDF flattening
+- `lib/batch/`: Watermarks, headers/footers, Bates numbering, PDF flattening, job queue
 - `lib/accessibility/`: PDF/UA checker, WCAG compliance, contrast calculation
+
+**Desktop Modules (Phase 3)**
+- `lib/electron/`: Platform detection, IPC wrappers, file system API, notifications, print, dialogs
+- `lib/offline/`: Service worker config, offline storage, sync engine, delta sync, conflict resolution
+- `lib/fileWatch/`: Change detection, smart reload with state preservation
+- `lib/scanner/`: Scanner providers (TWAIN, WIA, SANE), document detection, image processing
+- `lib/security/`: WebAuthn client, attestation verification, hardware encryption
+
+**Enterprise Modules (Phase 3 Q4)**
+- `lib/enterprise/`: GPO reader, MDM reader, config parser, config discovery, policy merging
+- `lib/license/`: License format, validator, signature verifier, hardware fingerprint, feature gating
+- `lib/lan/`: mDNS discovery, peer manager, sync protocol
+- `lib/kiosk/`: Kiosk config, feature lockdown, session management
+
+### PDF Coordinate System
+Annotations and form fields use PDF coordinates (origin at bottom-left). The annotation layer handles conversion between PDF coordinates and screen coordinates for rendering.
+
+Coordinate conversion utilities are in `src/utils/coordinates.ts`:
+- `pdfToScreen()` / `screenToPdf()`: Point conversion
+- `pdfRectToScreen()` / `screenRectToPdf()`: Rectangle conversion
+- `normalizeRects()`: Merge adjacent rectangles on same line
+
+### Annotation System
+Components in `components/annotations/`:
+- `AnnotationLayer`: SVG overlay for rendering annotations
+- `Highlight`, `Underline`, `Strikethrough`: Text markup components
+- `StickyNote`, `NoteTool`, `NoteReplies`: Note annotations
+- `SelectionPopup`: Context menu for text selection
+- `ExportImportDialog`: Import/export annotations as JSON
+
+Key hooks:
+- `useAnnotationShortcuts`: Keyboard shortcuts (H, U, S, N, V)
+- `useTextSelection`: Text selection handling
+
+Annotation serialization in `lib/annotations/serializer.ts`.
 
 ## Naming Conventions
 
@@ -169,6 +266,7 @@ Annotation serialization in `lib/annotations/serializer.ts`.
 | Utils      | camelCase               | `pdfHelpers.ts`    |
 | Types      | PascalCase              | `Annotation`       |
 | Constants  | SCREAMING_SNAKE_CASE    | `MAX_ZOOM`         |
+| IPC Channels | UPPER_SNAKE_CASE      | `FILE_READ`        |
 
 ## Commit Message Format
 
@@ -176,6 +274,7 @@ Annotation serialization in `lib/annotations/serializer.ts`.
 type(scope): description
 
 feat(viewer): add continuous scroll mode
+feat(electron): implement native file dialogs
 fix(annotations): correct highlight position
 docs(readme): update installation steps
 ```
@@ -196,12 +295,30 @@ All variables are optional (Phase 2+ features):
 
 ## Important Technical Notes
 
+### Web Application
 - PDF.js worker must be copied to `public/pdf.worker.min.js`
 - The app must be installable as a PWA with a Lighthouse PWA score of 100
 - All PDF processing happens client-side by default (privacy-first)
 - Support File System Access API for native file handling with fallback to download
 - Target performance: PDF opens in <2 seconds, edits save in <1 second
 - Support PDFs up to 100MB without performance degradation
+
+### Desktop Application (Electron)
+- Context isolation is always enabled (`contextIsolation: true`)
+- Node integration is disabled in renderer (`nodeIntegration: false`)
+- Sandbox mode is enabled for renderer processes
+- All renderer-main communication goes through the preload script
+- IPC channels are typed and validated
+- Main process entry: `electron/main/index.ts`
+- Preload script: `electron/preload/index.ts`
+- Build output: `dist-electron/` for main process code
+
+### Performance Targets (Desktop)
+- Cold start: < 3 seconds
+- Warm start: < 1 second
+- Memory (idle): < 150 MB
+- Memory (100-page PDF): < 500 MB
+- Native file save: < 500 ms
 
 ## Color Theme
 
@@ -220,6 +337,7 @@ All variables are optional (Phase 2+ features):
 
 ## Deployment
 
+### Web (PWA)
 Deployed to Cloudflare Pages. Configuration in `wrangler.toml`.
 
 ```bash
@@ -228,3 +346,22 @@ npm run build      # Build production bundle to dist/
 ```
 
 Custom headers configured in `public/_headers` (security headers, caching).
+
+### Desktop
+Built with electron-builder. Configuration in `electron-builder.config.js`.
+
+```bash
+npm run electron:build          # Build for current platform
+npm run electron:build -- --win # Windows (NSIS, MSI)
+npm run electron:build -- --mac # macOS (DMG, universal binary)
+npm run electron:build -- --linux # Linux (AppImage, deb, rpm)
+```
+
+Release artifacts output to `release/` directory.
+
+## Architecture Documentation
+
+- [Electron Architecture](docs/architecture/electron-architecture.md)
+- [IPC Patterns](docs/architecture/ipc-patterns.md)
+- [Offline-First Architecture](docs/architecture/offline-first.md)
+- [Enterprise Features](docs/architecture/enterprise-features.md)
