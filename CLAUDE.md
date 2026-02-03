@@ -283,6 +283,14 @@ docs(readme): update installation steps
 
 Always update `CHANGELOG.md` when making codebase changes. Follow [Keep a Changelog](https://keepachangelog.com/) format under `[Unreleased]` section.
 
+## Pre-Commit Checks
+
+Before committing and pushing, always run:
+```bash
+npm run typecheck && npm run build && npm run test
+```
+Only commit if all checks pass.
+
 ## Environment Setup
 
 Copy `.env.example` to `.env.local` for local development:
@@ -458,9 +466,9 @@ Use barrel exports for cleaner imports:
 
 ## Subagent Tips
 
-- Limit parallel subagents to 3 to avoid cascading failures
-- Subagents may fail at completion but still write files - check file existence before retrying
-- For documentation tasks, verify files were created with `Glob` before spawning retry agents
+- Use no more than 3 subagents in parallel to avoid cascading failures
+- If a subagent reports failed, complete the task yourself instead of retrying
+- Subagents may fail at completion but still write files - check file existence with `Glob`
 - Use `gh issue create --repo <repo> --title "<title>" --body "<body>"` to file bug reports
 
 ## Windows Development Notes
