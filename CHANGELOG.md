@@ -7,6 +7,115 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+#### Offline-First Architecture (Sprint 7)
+- Enhanced service worker configuration with Workbox caching strategies
+  - Stale-while-revalidate for static assets (JS, CSS)
+  - Cache-first for PDFs, images, and fonts
+  - Network-first for API calls with cache fallback
+  - Configurable cache expiration and max entries
+- Offline document storage in IndexedDB with comprehensive schema
+  - Document binary data storage
+  - Annotations persistence per document
+  - Edit history tracking for sync
+  - Offline availability settings management
+- Offline queue manager for network operations
+  - Priority-based queue (high, normal, low)
+  - Automatic retry with exponential backoff
+  - Queue persistence across sessions
+  - Conflict detection and resolution
+- Background Sync API integration with browser fallback
+  - One-time sync registration
+  - Periodic sync for regular updates
+  - Fallback polling for unsupported browsers
+- Offline-aware Zustand store (offlineStore)
+  - Connection status tracking (online/offline/connecting)
+  - Sync state management (idle/syncing/error/paused)
+  - Pending operations count
+  - Conflict tracking and resolution
+  - Auto-sync and sync-on-reconnect settings
+- Electron offline detection with reliable connectivity checks
+  - DNS resolution verification
+  - HTTP connectivity probes
+  - IPC-based status updates to renderer
+- Document sync engine with conflict resolution
+  - Bidirectional sync between local and cloud
+  - Conflict detection by checksum and version
+  - Resolution strategies: local-wins, remote-wins, newest-wins, merge, manual
+  - Sync progress reporting
+- Delta sync for large documents
+  - Binary diff calculation
+  - Patch generation and application
+  - Bandwidth usage optimization
+  - Chunk-based transfer for reliability
+- Offline indicator component with interactive status panel
+  - Connection status display
+  - Sync progress visualization
+  - Pending operations list
+  - Quick sync action
+- Offline mode banner with feature guidance
+  - Dismissible notification on going offline
+  - Available features list
+  - Limited features explanation
+  - Auto-hide when back online
+- Sync conflict resolution dialog
+  - Side-by-side version comparison
+  - Change visualization by type
+  - Strategy selection with recommendations
+  - Merge preview for annotations
+- Selective offline availability management
+  - Mark documents for offline access
+  - Priority-based storage management
+  - Storage space monitoring and cleanup
+  - Max offline documents configuration
+- Offline-first React hooks
+  - useOfflineData: Cached data fetching with sync
+  - useOfflineSync: Sync operations and status
+  - useConnectionStatus: Connection monitoring
+- Comprehensive test suite for offline functionality
+  - Unit tests for storage, sync, and conflict resolution
+  - Integration tests for complete offline workflows
+- Technical documentation for offline architecture
+
+#### Native Batch Processing (Sprint 9)
+- Worker thread pool manager with configurable min/max workers and idle timeout
+- PDF worker thread for parallel processing of compress, merge, split, watermark operations
+- Priority-based batch job queue system with pause/resume/cancel capabilities
+- IndexedDB persistence for job recovery across application restarts
+- Native batch processing Zustand store with comprehensive state management
+- Batch processing wizard UI with 5-step configuration flow
+- Batch progress dashboard with real-time job status and resource monitoring
+- Batch compression operation with quality presets and size estimation
+- Batch merge operation with append and interleave strategies
+- Batch split operation supporting page-count, file-size, and custom ranges
+- Batch watermark operation with text/image support and positioning presets
+- Batch OCR operation with multi-language support and accuracy settings
+- Comprehensive error handling with retry logic and exponential backoff
+- Batch results summary with export to TXT, CSV, and JSON formats
+- Batch template system for saving and reusing operation configurations
+- Default templates for common operations (Quick Compress, Archive, etc.)
+- Template import/export functionality
+- Resource usage monitoring (CPU, memory, active workers)
+- Queue statistics tracking (pending, processing, completed, failed jobs)
+- Unit tests for job queue, batch operations, and native batch store
+
+#### File Watching & Hot Reload (Sprint 8)
+- Advanced file watcher service using chokidar with optimized debouncing
+- Document change detection engine for pages, annotations, text, and metadata
+- Smart reload system that preserves scroll position, zoom, and unsaved annotations
+- External change notifications with reload, ignore, and compare options
+- Side-by-side document comparison view with synchronized scrolling
+- Conflict resolution for local vs external changes with merge strategies
+- File lock detection with retry mechanism and user notification
+- Watched folders management for recent files
+- Hot reload development support with state preservation
+- Watch queue manager for batching and prioritizing file events
+- Performance optimizations for watching many files (CPU < 2%, minimal memory)
+- Auto-reload settings panel with configurable behavior
+- Watch status indicators for UI feedback
+- Comprehensive test suite for change detection and smart reload
+
 ---
 
 ## [3.0.0-alpha.1] - 2026-02-02

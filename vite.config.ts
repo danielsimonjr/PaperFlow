@@ -31,16 +31,86 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Skip waiting and claim clients immediately
+        skipWaiting: true,
+        clientsClaim: true,
+        // Clean up outdated caches
+        cleanupOutdatedCaches: true,
+        // Navigation fallback for SPA
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/api\//, /\.[^/]+$/],
         runtimeCaching: [
+          // PDF.js library - cache first for reliability
           {
             urlPattern: /^https:\/\/unpkg\.com\/pdfjs-dist/,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'pdfjs-cache',
+              cacheName: 'paperflow-pdfjs-v1',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 30,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
               },
+            },
+          },
+          // Static assets - stale-while-revalidate for fast loading
+          {
+            urlPattern: /\.(?:js|css)$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'paperflow-static-v1',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+            },
+          },
+          // Images - cache first with background update
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|gif|svg|webp|ico)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'paperflow-images-v1',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+            },
+          },
+          // Fonts - cache first (fonts rarely change)
+          {
+            urlPattern: /\.(?:woff|woff2|ttf|otf|eot)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'paperflow-fonts-v1',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+              },
+            },
+          },
+          // PDF documents - cache first for offline access
+          {
+            urlPattern: /\.pdf$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'paperflow-pdfs-v1',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 90, // 90 days
+              },
+            },
+          },
+          // API calls - network first with cache fallback
+          {
+            urlPattern: /\/api\//,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'paperflow-api-v1',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 5, // 5 minutes
+              },
+              networkTimeoutSeconds: 10,
             },
           },
         ],
