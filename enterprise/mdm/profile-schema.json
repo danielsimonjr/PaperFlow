@@ -1,0 +1,291 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://paperflow.dev/schemas/mdm-profile.json",
+  "title": "PaperFlow MDM Profile Schema",
+  "description": "Schema defining configurable options for PaperFlow MDM profiles",
+  "version": "1.0.0",
+  "type": "object",
+  "definitions": {
+    "viewMode": {
+      "type": "string",
+      "enum": ["single", "continuous", "spread"],
+      "description": "Document view mode"
+    },
+    "encryptionLevel": {
+      "type": "string",
+      "enum": ["AES-128", "AES-256"],
+      "description": "PDF encryption algorithm"
+    },
+    "updateChannel": {
+      "type": "string",
+      "enum": ["stable", "beta", "alpha"],
+      "description": "Update release channel"
+    },
+    "checkFrequency": {
+      "type": "string",
+      "enum": ["hourly", "daily", "weekly", "never"],
+      "description": "Update check frequency"
+    },
+    "hexColor": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$",
+      "description": "Hex color code"
+    }
+  },
+  "properties": {
+    "application": {
+      "type": "object",
+      "description": "Application settings",
+      "properties": {
+        "DefaultZoom": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 400,
+          "default": 100,
+          "description": "Default zoom level percentage"
+        },
+        "DefaultViewMode": {
+          "$ref": "#/definitions/viewMode",
+          "default": "single",
+          "description": "Default document view mode"
+        },
+        "EnableAutoSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic document saving"
+        },
+        "AutoSaveInterval": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 300,
+          "default": 30,
+          "description": "Auto-save interval in seconds"
+        },
+        "MinimizeToTray": {
+          "type": "boolean",
+          "default": false,
+          "description": "Minimize to system tray instead of taskbar/dock"
+        },
+        "LaunchOnStartup": {
+          "type": "boolean",
+          "default": false,
+          "description": "Launch application on system startup"
+        },
+        "SmoothScrolling": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable smooth scrolling animations"
+        },
+        "DefaultHighlightColor": {
+          "$ref": "#/definitions/hexColor",
+          "default": "#FFEB3B",
+          "description": "Default highlight annotation color"
+        },
+        "DefaultAnnotationOpacity": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 1.0,
+          "default": 0.5,
+          "description": "Default opacity for annotations"
+        }
+      }
+    },
+    "security": {
+      "type": "object",
+      "description": "Security settings",
+      "properties": {
+        "RequireEncryption": {
+          "type": "boolean",
+          "default": false,
+          "description": "Require encryption when saving PDFs"
+        },
+        "MinEncryptionLevel": {
+          "$ref": "#/definitions/encryptionLevel",
+          "default": "AES-128",
+          "description": "Minimum encryption algorithm"
+        },
+        "DisableJavaScript": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disable JavaScript execution in PDFs"
+        },
+        "DisableExternalLinks": {
+          "type": "boolean",
+          "default": false,
+          "description": "Prevent opening external URLs"
+        },
+        "TrustedLocations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "List of trusted folder paths"
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "description": "Feature toggles",
+      "properties": {
+        "EnableOCR": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable OCR functionality"
+        },
+        "EnableRedaction": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable content redaction"
+        },
+        "EnableSignatures": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable signature features"
+        },
+        "EnablePrinting": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable document printing"
+        },
+        "EnableExport": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable export features"
+        },
+        "EnableCloudStorage": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable cloud storage integration"
+        },
+        "EnableBatchProcessing": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable batch processing"
+        },
+        "EnableFormFilling": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable form filling"
+        },
+        "EnableAnnotations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable annotations"
+        },
+        "EnableComparison": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable document comparison"
+        }
+      }
+    },
+    "updates": {
+      "type": "object",
+      "description": "Update settings",
+      "properties": {
+        "EnableAutoUpdate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic updates"
+        },
+        "UpdateChannel": {
+          "$ref": "#/definitions/updateChannel",
+          "default": "stable",
+          "description": "Update release channel"
+        },
+        "UpdateServerURL": {
+          "type": "string",
+          "format": "uri",
+          "default": "",
+          "description": "Custom update server URL"
+        },
+        "CheckFrequency": {
+          "$ref": "#/definitions/checkFrequency",
+          "default": "daily",
+          "description": "Update check frequency"
+        },
+        "AllowPrerelease": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow prerelease updates"
+        },
+        "AllowDowngrade": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow version downgrades"
+        }
+      }
+    },
+    "network": {
+      "type": "object",
+      "description": "Network settings",
+      "properties": {
+        "ProxyServer": {
+          "type": "string",
+          "default": "",
+          "description": "Proxy server hostname or IP"
+        },
+        "ProxyPort": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "default": 8080,
+          "description": "Proxy server port"
+        },
+        "ProxyBypass": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["localhost", "127.0.0.1"],
+          "description": "Addresses that bypass proxy"
+        },
+        "AllowTelemetry": {
+          "type": "boolean",
+          "default": true,
+          "description": "Allow anonymous telemetry"
+        },
+        "OfflineMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Force offline mode"
+        }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "description": "Performance settings",
+      "properties": {
+        "MaxMemoryUsageMB": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 8192,
+          "default": 1024,
+          "description": "Maximum memory usage in MB"
+        },
+        "EnableHardwareAcceleration": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable GPU hardware acceleration"
+        },
+        "ThumbnailCacheSize": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 500,
+          "default": 100,
+          "description": "Number of thumbnails to cache"
+        },
+        "MaxConcurrentOperations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16,
+          "default": 4,
+          "description": "Maximum concurrent operations"
+        }
+      }
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

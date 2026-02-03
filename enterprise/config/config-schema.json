@@ -1,0 +1,362 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://paperflow.dev/schemas/enterprise-config.json",
+  "title": "PaperFlow Enterprise Configuration",
+  "description": "JSON Schema for PaperFlow enterprise configuration files",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Configuration schema version"
+    },
+    "application": {
+      "type": "object",
+      "description": "Application settings",
+      "properties": {
+        "defaultZoom": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 400,
+          "default": 100,
+          "description": "Default zoom level percentage"
+        },
+        "defaultViewMode": {
+          "type": "string",
+          "enum": ["single", "continuous", "spread"],
+          "default": "single",
+          "description": "Default document view mode"
+        },
+        "enableAutoSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic document saving"
+        },
+        "autoSaveInterval": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 300,
+          "default": 30,
+          "description": "Auto-save interval in seconds"
+        },
+        "minimizeToTray": {
+          "type": "boolean",
+          "default": false,
+          "description": "Minimize to system tray"
+        },
+        "launchOnStartup": {
+          "type": "boolean",
+          "default": false,
+          "description": "Launch on system startup"
+        },
+        "smoothScrolling": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable smooth scrolling"
+        },
+        "defaultHighlightColor": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "default": "#FFEB3B",
+          "description": "Default highlight color (hex)"
+        },
+        "defaultAnnotationOpacity": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 1.0,
+          "default": 0.5,
+          "description": "Default annotation opacity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "security": {
+      "type": "object",
+      "description": "Security settings",
+      "properties": {
+        "requireEncryption": {
+          "type": "boolean",
+          "default": false,
+          "description": "Require PDF encryption"
+        },
+        "minEncryptionLevel": {
+          "type": "string",
+          "enum": ["AES-128", "AES-256"],
+          "default": "AES-128",
+          "description": "Minimum encryption algorithm"
+        },
+        "disableJavaScript": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disable JavaScript in PDFs"
+        },
+        "disableExternalLinks": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disable external links"
+        },
+        "trustedLocations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Trusted folder paths"
+        }
+      },
+      "additionalProperties": false
+    },
+    "features": {
+      "type": "object",
+      "description": "Feature toggles",
+      "properties": {
+        "enableOCR": { "type": "boolean", "default": true },
+        "enableRedaction": { "type": "boolean", "default": true },
+        "enableSignatures": { "type": "boolean", "default": true },
+        "enablePrinting": { "type": "boolean", "default": true },
+        "enableExport": { "type": "boolean", "default": true },
+        "enableCloudStorage": { "type": "boolean", "default": true },
+        "enableBatchProcessing": { "type": "boolean", "default": true },
+        "enableFormFilling": { "type": "boolean", "default": true },
+        "enableAnnotations": { "type": "boolean", "default": true },
+        "enableComparison": { "type": "boolean", "default": true }
+      },
+      "additionalProperties": false
+    },
+    "updates": {
+      "type": "object",
+      "description": "Update settings",
+      "properties": {
+        "enableAutoUpdate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic updates"
+        },
+        "updateChannel": {
+          "type": "string",
+          "enum": ["stable", "beta", "alpha"],
+          "default": "stable",
+          "description": "Update channel"
+        },
+        "updateServerURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "Custom update server URL"
+        },
+        "checkFrequency": {
+          "type": "string",
+          "enum": ["hourly", "daily", "weekly", "never"],
+          "default": "daily",
+          "description": "Update check frequency"
+        },
+        "allowPrerelease": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow prerelease updates"
+        },
+        "allowDowngrade": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow version downgrades"
+        }
+      },
+      "additionalProperties": false
+    },
+    "network": {
+      "type": "object",
+      "description": "Network settings",
+      "properties": {
+        "proxyServer": {
+          "type": "string",
+          "description": "Proxy server hostname"
+        },
+        "proxyPort": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535,
+          "default": 8080,
+          "description": "Proxy server port"
+        },
+        "proxyBypass": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["localhost", "127.0.0.1"],
+          "description": "Proxy bypass list"
+        },
+        "allowTelemetry": {
+          "type": "boolean",
+          "default": true,
+          "description": "Allow telemetry"
+        },
+        "offlineMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Force offline mode"
+        }
+      },
+      "additionalProperties": false
+    },
+    "performance": {
+      "type": "object",
+      "description": "Performance settings",
+      "properties": {
+        "maxMemoryUsageMB": {
+          "type": "integer",
+          "minimum": 256,
+          "maximum": 8192,
+          "default": 1024,
+          "description": "Maximum memory in MB"
+        },
+        "enableHardwareAcceleration": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable GPU acceleration"
+        },
+        "thumbnailCacheSize": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 500,
+          "default": 100,
+          "description": "Thumbnail cache size"
+        },
+        "maxConcurrentOperations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16,
+          "default": 4,
+          "description": "Max concurrent operations"
+        }
+      },
+      "additionalProperties": false
+    },
+    "license": {
+      "type": "object",
+      "description": "License settings",
+      "properties": {
+        "licenseKey": {
+          "type": "string",
+          "description": "License key"
+        },
+        "licenseServerURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "License server URL"
+        },
+        "offlineGracePeriodDays": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 90,
+          "default": 7,
+          "description": "Offline grace period"
+        },
+        "enableHardwareBinding": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable hardware binding"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lan": {
+      "type": "object",
+      "description": "LAN collaboration settings",
+      "properties": {
+        "enableDiscovery": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable peer discovery"
+        },
+        "discoveryPort": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 65535,
+          "default": 5353,
+          "description": "Discovery port"
+        },
+        "enableSync": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable real-time sync"
+        },
+        "requireAuthentication": {
+          "type": "boolean",
+          "default": true,
+          "description": "Require peer auth"
+        }
+      },
+      "additionalProperties": false
+    },
+    "kiosk": {
+      "type": "object",
+      "description": "Kiosk mode settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable kiosk mode"
+        },
+        "exitPin": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 8,
+          "description": "PIN to exit kiosk"
+        },
+        "allowedDocuments": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Allowed document paths"
+        },
+        "inactivityTimeout": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 3600,
+          "default": 300,
+          "description": "Inactivity timeout seconds"
+        },
+        "enableAutoReset": {
+          "type": "boolean",
+          "default": true,
+          "description": "Auto-reset on inactivity"
+        },
+        "allowedFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["view", "zoom", "print", "annotate", "search"]
+          },
+          "description": "Allowed features in kiosk"
+        }
+      },
+      "additionalProperties": false
+    },
+    "admin": {
+      "type": "object",
+      "description": "Admin contact info",
+      "properties": {
+        "adminContactEmail": {
+          "type": "string",
+          "format": "email",
+          "description": "Admin email"
+        },
+        "adminContactName": {
+          "type": "string",
+          "description": "Admin name"
+        },
+        "organizationName": {
+          "type": "string",
+          "description": "Organization name"
+        },
+        "showManagedIndicator": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show managed indicator"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

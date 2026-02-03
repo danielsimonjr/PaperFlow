@@ -1,0 +1,93 @@
+{
+  "productName": "PaperFlow",
+  "version": "1.0.0",
+  "manufacturer": "PaperFlow",
+  "upgradeCode": "A9B8C7D6-E5F4-3210-9ABC-DEF012345678",
+  "description": "Modern PDF Editor for viewing, editing, and annotating PDF documents",
+  "comments": "A modern, privacy-first PDF editor",
+  "keywords": "PDF, editor, viewer, annotation, signature",
+  "icon": "build/icon.ico",
+  "license": "LICENSE",
+
+  "installScope": "perMachine",
+  "runAfterFinish": false,
+
+  "features": {
+    "desktopShortcut": {
+      "enabled": true,
+      "name": "Desktop Shortcut"
+    },
+    "startMenuShortcut": {
+      "enabled": true,
+      "name": "Start Menu Shortcut"
+    },
+    "fileAssociation": {
+      "enabled": true,
+      "extensions": [".pdf"],
+      "progId": "PaperFlow.Document",
+      "description": "PDF Document"
+    },
+    "protocolHandler": {
+      "enabled": true,
+      "protocol": "paperflow",
+      "description": "PaperFlow Protocol"
+    }
+  },
+
+  "silentInstall": {
+    "supportedFlags": ["/quiet", "/passive", "/norestart"],
+    "defaultLogPath": "%TEMP%\\PaperFlow_Install.log"
+  },
+
+  "groupPolicy": {
+    "supportADM": true,
+    "installLocation": "HKLM\\Software\\Policies\\PaperFlow",
+    "policies": {
+      "DisableAutoUpdate": {
+        "type": "DWORD",
+        "description": "Disable automatic updates",
+        "default": 0
+      },
+      "AllowedUpdateChannel": {
+        "type": "SZ",
+        "description": "Allowed update channel (stable, beta, alpha)",
+        "default": "stable"
+      },
+      "DisableTelemetry": {
+        "type": "DWORD",
+        "description": "Disable telemetry and crash reporting",
+        "default": 0
+      },
+      "DefaultSaveLocation": {
+        "type": "SZ",
+        "description": "Default save location for documents",
+        "default": "%USERPROFILE%\\Documents"
+      }
+    }
+  },
+
+  "upgrade": {
+    "strategy": "majorUpgrade",
+    "allowDowngrade": false,
+    "removeOldVersions": true,
+    "migrateSettings": true
+  },
+
+  "customActions": {
+    "preInstall": [],
+    "postInstall": [
+      {
+        "name": "RegisterFileAssociation",
+        "execute": "SHChangeNotify",
+        "condition": "NOT Installed"
+      }
+    ],
+    "preUninstall": [],
+    "postUninstall": [
+      {
+        "name": "CleanupRegistry",
+        "condition": "REMOVE"
+      }
+    ]
+  }
+}

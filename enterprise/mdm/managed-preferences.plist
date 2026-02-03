@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  PaperFlow Managed Preferences Template for macOS
+
+  This file defines the managed preferences that can be configured via MDM.
+  Copy and modify this template for your organization's needs.
+
+  Preferences domain: com.paperflow.desktop
+
+  Deployment paths:
+  - /Library/Managed Preferences/com.paperflow.desktop.plist (forced)
+  - /Library/Preferences/com.paperflow.desktop.plist (default)
+  - ~/Library/Managed Preferences/com.paperflow.desktop.plist (user forced)
+-->
+<plist version="1.0">
+<dict>
+  <!-- ========== Application Settings ========== -->
+
+  <!-- DefaultZoom: Integer (10-400), default: 100 -->
+  <key>DefaultZoom</key>
+  <integer>100</integer>
+
+  <!-- DefaultViewMode: String (single|continuous|spread), default: single -->
+  <key>DefaultViewMode</key>
+  <string>single</string>
+
+  <!-- EnableAutoSave: Boolean, default: true -->
+  <key>EnableAutoSave</key>
+  <true/>
+
+  <!-- AutoSaveInterval: Integer (10-300 seconds), default: 30 -->
+  <key>AutoSaveInterval</key>
+  <integer>30</integer>
+
+  <!-- MinimizeToTray: Boolean, default: false -->
+  <key>MinimizeToTray</key>
+  <false/>
+
+  <!-- LaunchOnStartup: Boolean, default: false -->
+  <key>LaunchOnStartup</key>
+  <false/>
+
+  <!-- SmoothScrolling: Boolean, default: true -->
+  <key>SmoothScrolling</key>
+  <true/>
+
+  <!-- DefaultHighlightColor: Hex string, default: #FFEB3B -->
+  <key>DefaultHighlightColor</key>
+  <string>#FFEB3B</string>
+
+  <!-- DefaultAnnotationOpacity: Real (0.1-1.0), default: 0.5 -->
+  <key>DefaultAnnotationOpacity</key>
+  <real>0.5</real>
+
+  <!-- ========== Security Settings ========== -->
+
+  <!-- RequireEncryption: Boolean, default: false -->
+  <key>RequireEncryption</key>
+  <false/>
+
+  <!-- MinEncryptionLevel: String (AES-128|AES-256), default: AES-128 -->
+  <key>MinEncryptionLevel</key>
+  <string>AES-128</string>
+
+  <!-- DisableJavaScript: Boolean, default: false -->
+  <key>DisableJavaScript</key>
+  <false/>
+
+  <!-- DisableExternalLinks: Boolean, default: false -->
+  <key>DisableExternalLinks</key>
+  <false/>
+
+  <!-- TrustedLocations: Array of strings (folder paths) -->
+  <key>TrustedLocations</key>
+  <array>
+    <string>~/Documents</string>
+    <string>/Applications</string>
+  </array>
+
+  <!-- ========== Feature Toggles ========== -->
+
+  <!-- EnableOCR: Boolean, default: true -->
+  <key>EnableOCR</key>
+  <true/>
+
+  <!-- EnableRedaction: Boolean, default: true -->
+  <key>EnableRedaction</key>
+  <true/>
+
+  <!-- EnableSignatures: Boolean, default: true -->
+  <key>EnableSignatures</key>
+  <true/>
+
+  <!-- EnablePrinting: Boolean, default: true -->
+  <key>EnablePrinting</key>
+  <true/>
+
+  <!-- EnableExport: Boolean, default: true -->
+  <key>EnableExport</key>
+  <true/>
+
+  <!-- EnableCloudStorage: Boolean, default: true -->
+  <key>EnableCloudStorage</key>
+  <true/>
+
+  <!-- EnableBatchProcessing: Boolean, default: true -->
+  <key>EnableBatchProcessing</key>
+  <true/>
+
+  <!-- EnableFormFilling: Boolean, default: true -->
+  <key>EnableFormFilling</key>
+  <true/>
+
+  <!-- EnableAnnotations: Boolean, default: true -->
+  <key>EnableAnnotations</key>
+  <true/>
+
+  <!-- EnableComparison: Boolean, default: true -->
+  <key>EnableComparison</key>
+  <true/>
+
+  <!-- ========== Update Settings ========== -->
+
+  <!-- EnableAutoUpdate: Boolean, default: true -->
+  <key>EnableAutoUpdate</key>
+  <true/>
+
+  <!-- UpdateChannel: String (stable|beta|alpha), default: stable -->
+  <key>UpdateChannel</key>
+  <string>stable</string>
+
+  <!-- UpdateServerURL: String (URL), default: empty (use default server) -->
+  <key>UpdateServerURL</key>
+  <string></string>
+
+  <!-- CheckFrequency: String (hourly|daily|weekly|never), default: daily -->
+  <key>CheckFrequency</key>
+  <string>daily</string>
+
+  <!-- AllowPrerelease: Boolean, default: false -->
+  <key>AllowPrerelease</key>
+  <false/>
+
+  <!-- AllowDowngrade: Boolean, default: false -->
+  <key>AllowDowngrade</key>
+  <false/>
+
+  <!-- ========== Network Settings ========== -->
+
+  <!-- ProxyServer: String (hostname or IP), default: empty -->
+  <key>ProxyServer</key>
+  <string></string>
+
+  <!-- ProxyPort: Integer (1-65535), default: 8080 -->
+  <key>ProxyPort</key>
+  <integer>8080</integer>
+
+  <!-- ProxyBypass: Array of strings (hostnames/IPs) -->
+  <key>ProxyBypass</key>
+  <array>
+    <string>localhost</string>
+    <string>127.0.0.1</string>
+  </array>
+
+  <!-- AllowTelemetry: Boolean, default: true -->
+  <key>AllowTelemetry</key>
+  <true/>
+
+  <!-- OfflineMode: Boolean, default: false -->
+  <key>OfflineMode</key>
+  <false/>
+
+  <!-- ========== Performance Settings ========== -->
+
+  <!-- MaxMemoryUsageMB: Integer (256-8192), default: 1024 -->
+  <key>MaxMemoryUsageMB</key>
+  <integer>1024</integer>
+
+  <!-- EnableHardwareAcceleration: Boolean, default: true -->
+  <key>EnableHardwareAcceleration</key>
+  <true/>
+
+  <!-- ThumbnailCacheSize: Integer (10-500), default: 100 -->
+  <key>ThumbnailCacheSize</key>
+  <integer>100</integer>
+
+  <!-- MaxConcurrentOperations: Integer (1-16), default: 4 -->
+  <key>MaxConcurrentOperations</key>
+  <integer>4</integer>
+
+  <!-- ========== Admin Settings ========== -->
+
+  <!-- AdminContactEmail: String (email address for support) -->
+  <key>AdminContactEmail</key>
+  <string>it-support@company.com</string>
+
+  <!-- AdminContactName: String (admin/support name) -->
+  <key>AdminContactName</key>
+  <string>IT Support</string>
+
+  <!-- OrganizationName: String (organization name) -->
+  <key>OrganizationName</key>
+  <string></string>
+
+  <!-- ShowManagedIndicator: Boolean, show when settings are managed -->
+  <key>ShowManagedIndicator</key>
+  <true/>
+</dict>
+</plist>

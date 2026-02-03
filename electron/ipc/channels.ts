@@ -139,6 +139,31 @@ export const IPC_CHANNELS = {
   SHORTCUTS_GET_CUSTOM: 'shortcuts-get-custom',
   SHORTCUTS_SET_CUSTOM: 'shortcuts-set-custom',
   SHORTCUTS_RESET_DEFAULTS: 'shortcuts-reset-defaults',
+
+  // Print operations
+  PRINT_GET_PRINTERS: 'print-get-printers',
+  PRINT_GET_DEFAULT_PRINTER: 'print-get-default-printer',
+  PRINT_SHOW_DIALOG: 'print-show-dialog',
+  PRINT_SILENT: 'print-silent',
+  PRINT_CANCEL: 'print-cancel',
+  PRINT_GET_JOB_STATUS: 'print-get-job-status',
+
+  // Scanner operations
+  SCANNER_ENUMERATE: 'scanner-enumerate',
+  SCANNER_SELECT: 'scanner-select',
+  SCANNER_GET_CAPABILITIES: 'scanner-get-capabilities',
+  SCANNER_SCAN: 'scanner-scan',
+  SCANNER_CANCEL: 'scanner-cancel',
+  SCANNER_BATCH_SCAN: 'scanner-batch-scan',
+
+  // WebAuthn operations
+  WEBAUTHN_IS_AVAILABLE: 'webauthn-is-available',
+  WEBAUTHN_IS_PLATFORM_AVAILABLE: 'webauthn-is-platform-available',
+  WEBAUTHN_GET_AUTHENTICATORS: 'webauthn-get-authenticators',
+
+  // Update operations (extended)
+  UPDATE_CHECK: 'update-check',
+  UPDATE_INSTALL: 'update-install',
 } as const;
 
 /**

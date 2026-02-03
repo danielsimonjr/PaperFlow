@@ -1,0 +1,22 @@
+[Desktop Entry]
+Name=PaperFlow
+GenericName=PDF Editor
+Comment=Modern PDF Editor for viewing, editing, and annotating PDF documents
+Exec=paperflow %U
+Icon=paperflow
+Terminal=false
+Type=Application
+Categories=Office;Viewer;Graphics;2DGraphics;
+Keywords=pdf;editor;viewer;annotation;signature;forms;ocr;
+MimeType=application/pdf;
+StartupWMClass=paperflow
+StartupNotify=true
+Actions=new-window;open-file;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=paperflow --new-window
+
+[Desktop Action open-file]
+Name=Open File
+Exec=paperflow --open

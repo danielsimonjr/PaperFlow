@@ -6,7 +6,8 @@
   "goal": "Create signed and notarized macOS application bundle with DMG installer",
   "milestone": "macOS Distribution Ready",
   "priority": "HIGH",
-  "status": "pending",
+  "status": "complete",
+  "completedAt": "2026-02-02",
   "totalEstimatedHours": 94,
   "blockedBy": [
     12

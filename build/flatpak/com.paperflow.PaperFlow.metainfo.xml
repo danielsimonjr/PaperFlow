@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.paperflow.PaperFlow</id>
+  <name>PaperFlow</name>
+  <summary>Modern PDF Editor</summary>
+  <developer_name>PaperFlow</developer_name>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+
+  <description>
+    <p>
+      PaperFlow is a modern, privacy-first PDF editor that runs entirely locally
+      on your device. No cloud processing means your documents stay private.
+    </p>
+    <p>Features include:</p>
+    <ul>
+      <li>View and navigate PDF documents with smooth scrolling</li>
+      <li>Add annotations, highlights, underlines, and sticky notes</li>
+      <li>Fill and sign PDF forms</li>
+      <li>Create and manage digital signatures</li>
+      <li>OCR (Optical Character Recognition) for scanned documents</li>
+      <li>Design and create fillable PDF forms</li>
+      <li>Redact sensitive information</li>
+      <li>Compare documents side by side</li>
+      <li>Batch process multiple PDFs</li>
+      <li>Merge, split, and organize PDF pages</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">com.paperflow.PaperFlow.desktop</launchable>
+
+  <url type="homepage">https://paperflow.app</url>
+  <url type="bugtracker">https://github.com/paperflow/paperflow/issues</url>
+  <url type="donation">https://paperflow.app/donate</url>
+  <url type="help">https://paperflow.app/docs</url>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Document viewing with annotations</caption>
+      <image>https://paperflow.app/screenshots/viewer.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Form filling</caption>
+      <image>https://paperflow.app/screenshots/forms.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Digital signatures</caption>
+      <image>https://paperflow.app/screenshots/signatures.png</image>
+    </screenshot>
+  </screenshots>
+
+  <categories>
+    <category>Office</category>
+    <category>Viewer</category>
+    <category>Graphics</category>
+  </categories>
+
+  <keywords>
+    <keyword>pdf</keyword>
+    <keyword>editor</keyword>
+    <keyword>viewer</keyword>
+    <keyword>annotation</keyword>
+    <keyword>signature</keyword>
+    <keyword>forms</keyword>
+    <keyword>ocr</keyword>
+  </keywords>
+
+  <provides>
+    <binary>paperflow</binary>
+    <mediatype>application/pdf</mediatype>
+  </provides>
+
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+
+  <requires>
+    <display_length compare="ge">768</display_length>
+  </requires>
+
+  <releases>
+    <release version="1.0.0" date="2026-02-01">
+      <description>
+        <p>Initial release of PaperFlow for Linux</p>
+      </description>
+    </release>
+  </releases>
+
+  <content_rating type="oars-1.1" />
+</component>

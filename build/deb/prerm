@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# PaperFlow Debian Package Pre-removal Script
+#
+
+set -e
+
+case "$1" in
+    remove|upgrade|deconfigure)
+        echo "Preparing to remove PaperFlow..."
+
+        # Close any running instances
+        if command -v pkill >/dev/null 2>&1; then
+            pkill -f "paperflow" 2>/dev/null || true
+        fi
+
+        # Remove CLI symlink
+        if [ -L /usr/local/bin/paperflow ]; then
+            rm -f /usr/local/bin/paperflow
+        fi
+
+        # Remove from alternatives
+        if command -v update-alternatives >/dev/null 2>&1; then
+            update-alternatives --remove pdf-viewer /opt/PaperFlow/paperflow 2>/dev/null || true
+        fi
+
+        # Don't remove user data on upgrade
+        if [ "$1" = "remove" ]; then
+            echo "Note: User data in ~/.config/paperflow will be preserved."
+            echo "Run 'rm -rf ~/.config/paperflow' to remove user data."
+        fi
+        ;;
+
+    failed-upgrade)
+        ;;
+
+    *)
+        echo "prerm called with unknown argument '$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

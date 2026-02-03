@@ -7,7 +7,224 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+#### Code Review Fixes (Phase 3 Q4 - Sprints 19-24)
+- Fixed license key format version character ('1' to '2') to use valid CHARSET characters
+- Updated licenseValidator to use licenseFormat module for consistent key encoding/decoding
+- Moved license validator tests to correct location (tests/unit/lib/license/)
+- Fixed license validator tests to use correct edition names (free/pro/business/enterprise)
+- Fixed test API alignment between test expectations and actual implementation
+
+#### Code Review Fixes (Phase 3 Q3)
+- Fixed unused `message` parameter in attention manager's `notifyOperationComplete` and `notifyError` export functions
+- Removed unused `LICENSE_KEY_REGEX` constant in license validator module
+- Fixed unused imports in license validator test file (`isValidKeyFormat`, `decodeLicenseKey`, `LicenseKeyData`)
+
+#### Test and Lint Fixes (Phase 3 Q2)
+- Fixed PrintQueue test assertions to account for auto-start behavior
+- Fixed ScannerProvider tests to properly enumerate devices before selection
+- Added ImageData polyfill for Node.js test environment in document detection tests
+- Fixed React hooks exhaustive-deps warnings in ScannerSelectDialog and HardwareKeyAuth
+- Fixed react-refresh warnings for context hook exports in PlatformContext
+- Fixed react-refresh warning for HOC export in LockedSettingBadge
+- Fixed TypeScript errors with underscore-prefixed unused parameters
+- Fixed TypeScript ArrayBuffer/SharedArrayBuffer compatibility in updateClient.ts
+- Fixed FeatureId type compatibility in license validator
+
 ### Added
+
+#### Hardware Security & WebAuthn (Sprint 12)
+- WebAuthn/FIDO2 type definitions for credentials, attestation, and authentication
+- WebAuthn client with credential registration and authentication
+- Hardware key enrollment component with step-by-step guidance
+- Hardware key authentication component with timeout and retry support
+- Key management UI for viewing, renaming, and removing enrolled keys
+- Enrollment guide with visual step-by-step walkthrough
+- FIDO2 server verification for attestation and assertion
+- Attestation verification with COSE key parsing
+- Assertion verification with signature validation
+- Hardware encryption service for document protection
+- Multi-key encryption allowing multiple hardware keys to decrypt
+- Key wrapping utilities with PBKDF2 key derivation
+- Security store with authentication state and enrolled keys
+- Electron WebAuthn bridge for main process integration
+- WebAuthn preload script for renderer access
+- Auto-update system with electron-updater integration
+- Differential update support for reduced download sizes
+- Update notification component with progress display
+
+#### Scanner Integration (Sprint 11)
+- Scanner types and interfaces for device capabilities
+- Scanner provider abstraction for TWAIN/WIA/SANE/ImageCapture
+- Document detection with Canny edge detection algorithm
+- Perspective correction with homography matrix transformation
+- Image compression utilities for PDF optimization
+- Scan to PDF conversion with multi-page support
+- Scanner store with device management and history
+- Scanner select dialog for device enumeration
+- Scan settings panel with resolution, color mode, and paper size
+- Scan preview component with zoom and crop
+- Resolution picker component
+- Color mode selector component
+- Interactive crop tool for manual adjustment
+- Enhancement tools with brightness, contrast, and sharpening
+- Batch scan workflow for multi-page documents
+- Page organizer with drag-and-drop reordering
+- Scan profiles manager with preset configurations
+- Profile manager UI for create, edit, delete operations
+- OCR integration with Tesseract.js
+- Native addon placeholders for TWAIN, WIA, SANE drivers
+
+#### Native Print Integration (Sprint 10)
+- Print settings types and interfaces
+- Print store with job management and queue
+- Print queue manager with job prioritization
+- Print presets for common configurations
+- Virtual printer for PDF output
+- Page layout component with paper sizes and orientations
+- Print range selector with page/range/current selection
+- Copies and collation control
+- Print preview with zoom and page navigation
+- Native print bridge for Electron IPC
+- Print IPC channels for main process communication
+- Printer enumeration and status monitoring
+
+#### MDM/GPO Deployment Support (Sprint 19)
+- Windows ADMX/ADML templates for Group Policy management
+- Policy categories: Application, Security, Features, Updates, Network, Performance
+- GPO registry reader with HKLM/HKCU precedence
+- macOS MDM configuration profiles (mobileconfig)
+- macOS managed preferences reader (NSUserDefaults/CFPreferences)
+- Unified enterprise policy store with policy merging
+- Policy status indicator and locked setting badges
+- MSI installer with GPO deployment support
+- PKG installer with MDM deployment support
+- GPO and MDM reader test suites
+
+#### Centralized Configuration (Sprint 20)
+- JSON Schema for enterprise configuration validation
+- JSON/JSONC configuration parser with comment support
+- YAML configuration parser with anchor/alias support
+- Configuration file discovery system (standard OS locations)
+- Configuration hierarchy and precedence merging
+- Remote configuration endpoint support with caching
+- Configuration refresh and hot reload with file watchers
+- Configuration encryption for sensitive values (AES-256-GCM)
+- Environment variable expansion (${VAR:-default} syntax)
+- Secrets manager with OS keychain integration
+- Configuration viewer UI component
+- Config source badges and export/import dialogs
+- CLI tools for configuration validation
+- Configuration system test suite
+
+#### Offline License Validation (Sprint 21)
+- License key format with edition, type, expiry, and seat encoding
+- Offline license validation with checksum verification
+- RSA signature verifier for license data
+- Hardware fingerprinting with fuzzy matching
+- License binding and activation manager
+- Secure license storage with encryption
+- License cache for offline validation
+- Feature gating based on license edition
+- License expiry handler with grace periods
+- Warning notifications for expiring licenses
+- License validator test suite
+
+#### LAN Collaboration & Sync (Sprint 22)
+- mDNS/Bonjour service discovery for peer finding
+- LAN peer manager with status tracking
+- LAN collaboration Zustand store
+
+#### On-Premise Update Server (Sprint 23)
+- Update server types and architecture
+- Update client with proxy support
+- Download progress tracking and checksum verification
+- Release notes fetching
+
+#### Kiosk Mode & Year Release (Sprint 24)
+- Kiosk mode configuration types
+- Kiosk store with session management
+- Kiosk mode activation with PIN protection
+- Feature lockdown system
+- Navigation restrictions
+- Session auto-reset on inactivity
+- Kiosk UI shell component
+- Touch-friendly kiosk toolbar
+- Kiosk header with branding support
+
+#### Windows Installer (Sprint 13)
+- Comprehensive electron-builder configuration for Windows targets (NSIS, MSI, MSIX)
+- NSIS installer with custom script for file associations, protocol handlers, and registry entries
+- MSI package configuration for enterprise Group Policy deployment with silent install support
+- MSIX package for Microsoft Store submission with proper manifest and capabilities
+- Windows code signing configuration with EV certificate support
+- Custom installer pages with PDF association, desktop shortcut, and startup options
+- Differential updates for NSIS to minimize download sizes
+- Windows-specific crash reporter with minidump symbols and Sentry integration
+- GitHub Actions workflow for Windows builds with code signing and artifact upload
+- Windows 10/11 compatibility testing configuration
+
+#### macOS Bundle & Notarization (Sprint 14)
+- Universal binary support for Intel (x64) and Apple Silicon (arm64)
+- DMG installer with custom background, icon positioning, and license agreement
+- PKG installer for enterprise MDM deployment with pre/post install scripts
+- Hardened runtime configuration for notarization requirements
+- Apple notarization workflow with notarytool and automatic stapling
+- Mac App Store entitlements and sandbox configuration
+- Inherited entitlements for child processes
+- Notarization script with verification and stapling helpers
+- GitHub Actions workflow for macOS builds with code signing and notarization
+
+#### Linux Packages (Sprint 15)
+- AppImage portable package with automatic updates
+- Debian package (.deb) with proper dependencies and maintainer scripts
+- RPM package (.rpm) for Fedora/RHEL with correct dependencies
+- Snap package with strict confinement and proper plugs for capabilities
+- Flatpak manifest for Flathub submission
+- Desktop entry following freedesktop.org specification
+- MIME type associations for PDF files
+- Custom protocol handler registration (paperflow://)
+- GitHub Actions workflow for Linux builds with multi-distro testing
+- Snapcraft.yaml with GNOME extension and proper environment
+
+#### Platform UI Adaptations (Sprint 16)
+- Comprehensive platform detection utilities (OS, version, capabilities)
+- PlatformContext React provider for platform-aware components
+- Platform-specific CSS with font stacks (SF Pro, Segoe UI, system fonts)
+- Adaptive spacing and sizing matching platform conventions
+- Platform-specific scrollbar styling (overlay on macOS, visible on Windows)
+- TitleBar component with platform-appropriate window controls
+- macOS traffic light buttons on left, Windows buttons on right
+- Dark mode detection and response on all platforms
+- High DPI support for Retina and Windows scaling
+- Reduced motion preference support
+- Touch device detection
+- Platform-specific keyboard shortcut formatting
+
+#### macOS Touch Bar & Windows Taskbar (Sprint 17)
+- TouchBarManager with context-aware layouts (viewer, editor, forms, signature)
+- Touch Bar controls for zoom, navigation, annotation tools, and color picker
+- Automatic Touch Bar context switching based on active mode
+- Windows Jump Lists with recent/pinned documents and common tasks
+- Windows taskbar progress for long-running operations
+- Windows taskbar overlay icons for status (unsaved, processing, error)
+- Windows thumbnail toolbar with navigation and zoom buttons
+- Linux Unity/GNOME launcher integration with quicklists and progress
+- Cross-platform attention manager (dock bounce, taskbar flash, urgent hint)
+- Notification badge support on macOS Dock
+
+#### Cross-Platform Testing & Q3 Release (Sprint 18)
+- Cross-platform CI/CD matrix for Windows 10/11, macOS 12/13/14, Ubuntu 22/24
+- Comprehensive E2E test suite for core features across platforms
+- Installer testing workflows for NSIS, MSI, DMG, PKG, AppImage, deb, rpm
+- Visual regression testing configuration
+- Accessibility audit testing with screen reader support verification
+- Performance benchmarking across platforms
+- Release candidate workflow with version management
+- Release metrics monitoring (downloads, installs, crashes, feature usage)
+- Platform-specific feature tests (Touch Bar, Jump Lists, taskbar)
+- Auto-update testing across all platforms
 
 #### Offline-First Architecture (Sprint 7)
 - Enhanced service worker configuration with Workbox caching strategies

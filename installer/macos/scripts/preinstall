@@ -1,0 +1,158 @@
+#!/bin/bash
+#
+# PaperFlow macOS Installer - Preinstall Script
+#
+# This script runs before the main installation begins.
+# It handles:
+# - Stopping running instances of PaperFlow
+# - Backing up user preferences
+# - Cleaning up previous installations
+#
+
+set -e
+
+# Logging
+LOG_FILE="/tmp/paperflow-install.log"
+exec 1> >(tee -a "$LOG_FILE") 2>&1
+
+echo "=========================================="
+echo "PaperFlow Preinstall Script"
+echo "Date: $(date)"
+echo "User: $USER"
+echo "Target: $3"
+echo "=========================================="
+
+# Function to log messages
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+}
+
+# Stop running instances
+stop_running_instances() {
+    log "Checking for running PaperFlow instances..."
+
+    # Get list of PaperFlow processes
+    PIDS=$(pgrep -f "PaperFlow" || true)
+
+    if [[ -n "$PIDS" ]]; then
+        log "Found running instances: $PIDS"
+
+        # Try graceful shutdown first
+        for PID in $PIDS; do
+            log "Sending SIGTERM to PID $PID"
+            kill -TERM "$PID" 2>/dev/null || true
+        done
+
+        # Wait for graceful shutdown
+        sleep 3
+
+        # Force kill if still running
+        PIDS=$(pgrep -f "PaperFlow" || true)
+        if [[ -n "$PIDS" ]]; then
+            log "Force killing remaining instances..."
+            for PID in $PIDS; do
+                kill -9 "$PID" 2>/dev/null || true
+            done
+        fi
+
+        log "All PaperFlow instances stopped"
+    else
+        log "No running instances found"
+    fi
+}
+
+# Backup user preferences
+backup_preferences() {
+    log "Backing up user preferences..."
+
+    PREFS_DIR="$HOME/Library/Preferences"
+    BACKUP_DIR="$HOME/Library/Application Support/PaperFlow/backup"
+
+    # Create backup directory
+    mkdir -p "$BACKUP_DIR"
+
+    # Backup plist file if exists
+    if [[ -f "$PREFS_DIR/com.paperflow.desktop.plist" ]]; then
+        cp "$PREFS_DIR/com.paperflow.desktop.plist" "$BACKUP_DIR/com.paperflow.desktop.plist.backup"
+        log "Preferences backed up to $BACKUP_DIR"
+    fi
+
+    # Backup any existing config files
+    CONFIG_DIR="$HOME/Library/Application Support/PaperFlow"
+    if [[ -d "$CONFIG_DIR" ]]; then
+        if [[ -f "$CONFIG_DIR/config.json" ]]; then
+            cp "$CONFIG_DIR/config.json" "$BACKUP_DIR/config.json.backup"
+            log "Config file backed up"
+        fi
+    fi
+}
+
+# Clean up old installation
+cleanup_old_installation() {
+    log "Checking for old installation..."
+
+    OLD_APP="/Applications/PaperFlow.app"
+
+    if [[ -d "$OLD_APP" ]]; then
+        log "Found existing installation at $OLD_APP"
+
+        # Get current version if possible
+        if [[ -f "$OLD_APP/Contents/Info.plist" ]]; then
+            OLD_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$OLD_APP/Contents/Info.plist" 2>/dev/null || echo "unknown")
+            log "Old version: $OLD_VERSION"
+        fi
+
+        # Remove the old app bundle
+        log "Removing old installation..."
+        rm -rf "$OLD_APP"
+        log "Old installation removed"
+    else
+        log "No existing installation found"
+    fi
+}
+
+# Clear quarantine attributes (for downloaded apps)
+clear_quarantine() {
+    log "Clearing quarantine attributes..."
+
+    # This will be applied to the new installation in postinstall
+    # Just logging here for completeness
+    log "Quarantine will be cleared in postinstall"
+}
+
+# Check system requirements
+check_requirements() {
+    log "Checking system requirements..."
+
+    # Check macOS version
+    OS_VERSION=$(sw_vers -productVersion)
+    log "macOS version: $OS_VERSION"
+
+    # Check available disk space
+    AVAILABLE_SPACE=$(df -g / | tail -1 | awk '{print $4}')
+    log "Available disk space: ${AVAILABLE_SPACE}GB"
+
+    if [[ "$AVAILABLE_SPACE" -lt 1 ]]; then
+        log "WARNING: Low disk space"
+    fi
+
+    # Check architecture
+    ARCH=$(uname -m)
+    log "Architecture: $ARCH"
+}
+
+# Main execution
+main() {
+    log "Starting preinstall script..."
+
+    check_requirements
+    stop_running_instances
+    backup_preferences
+    cleanup_old_installation
+
+    log "Preinstall script completed successfully"
+    exit 0
+}
+
+# Run main
+main

@@ -1,0 +1,235 @@
+/**
+ * High DPI Styles
+ *
+ * Ensures proper rendering on high DPI displays including
+ * Retina (macOS), Windows scaling, and Linux fractional scaling.
+ */
+
+/* ========================
+   Base High DPI Fixes
+   ======================== */
+
+/* Ensure crisp rendering on all displays */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Image rendering */
+img,
+canvas,
+video {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* SVG icons */
+svg {
+  shape-rendering: geometricPrecision;
+}
+
+/* ========================
+   Retina Media Queries
+   ======================== */
+
+/* 2x displays (Retina, most HiDPI) */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi),
+       only screen and (min-resolution: 2dppx) {
+
+  /* Use 2x images where available */
+  .logo {
+    background-image: url('/images/logo@2x.png');
+    background-size: contain;
+  }
+
+  /* Thinner borders for crisp appearance */
+  .border-thin {
+    border-width: 0.5px;
+  }
+}
+
+/* 3x displays (iPhone Plus, some 4K) */
+@media only screen and (-webkit-min-device-pixel-ratio: 3),
+       only screen and (min-resolution: 288dpi),
+       only screen and (min-resolution: 3dppx) {
+
+  .logo {
+    background-image: url('/images/logo@3x.png');
+    background-size: contain;
+  }
+}
+
+/* ========================
+   Canvas Scaling
+   ======================== */
+
+/* PDF rendering canvas - scaled for device pixel ratio */
+.pdf-canvas {
+  /* Canvas size is set dynamically in JS */
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Ensure canvas is crisp */
+canvas {
+  /* Prevent blurry rendering */
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+}
+
+/* For photo content, use high quality */
+canvas.photo-content {
+  image-rendering: auto;
+}
+
+/* ========================
+   Border Scaling
+   ======================== */
+
+/* Hairline borders */
+.hairline-border {
+  border-width: 1px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi) {
+  .hairline-border {
+    border-width: 0.5px;
+  }
+}
+
+/* ========================
+   Icon Sizing
+   ======================== */
+
+/* Toolbar icons */
+.icon-sm {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-md {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-lg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Ensure icons are pixel-perfect */
+.icon {
+  /* Prevent half-pixel positioning */
+  transform: translateZ(0);
+}
+
+/* ========================
+   Windows Scaling Support
+   ======================== */
+
+/* Windows uses integer scaling by default */
+.platform-windows {
+  /* Text should use ClearType */
+  -webkit-font-smoothing: auto;
+}
+
+/* At 125% or 150% scaling */
+@media screen and (-webkit-device-pixel-ratio: 1.25),
+       screen and (-webkit-device-pixel-ratio: 1.5) {
+  .platform-windows .pixel-perfect {
+    /* Round to nearest pixel */
+    transform: translateZ(0);
+  }
+}
+
+/* ========================
+   Linux Fractional Scaling
+   ======================== */
+
+/* Linux with fractional scaling (e.g., 125%, 150%, 175%) */
+.platform-linux {
+  /* Ensure sub-pixel rendering works */
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* ========================
+   Touch Target Scaling
+   ======================== */
+
+/* Minimum touch target sizes */
+@media (pointer: coarse) {
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* On high DPI touch devices */
+@media (pointer: coarse) and (-webkit-min-device-pixel-ratio: 2) {
+  .touch-target {
+    /* Physical size remains the same */
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* ========================
+   Thumbnail Quality
+   ======================== */
+
+/* PDF page thumbnails */
+.thumbnail-canvas {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .thumbnail-canvas {
+    /* Scale canvas for retina */
+    transform: scale(0.5);
+    transform-origin: top left;
+  }
+}
+
+/* ========================
+   Utilities
+   ======================== */
+
+/* Force pixel-perfect rendering */
+.pixel-perfect {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Disable smoothing for pixel art/icons */
+.no-smoothing {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+}
+
+/* Enable smoothing for photos */
+.smooth-scaling {
+  image-rendering: -webkit-optimize-quality;
+  image-rendering: smooth;
+}
+
+/* ========================
+   Print at High DPI
+   ======================== */
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* High resolution print */
+  .pdf-canvas {
+    image-rendering: auto;
+  }
+}

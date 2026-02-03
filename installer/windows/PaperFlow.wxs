@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PaperFlow Windows Installer WiX Source File
+
+  Build Requirements:
+  - WiX Toolset 3.11+
+  - Visual Studio 2019+ or dotnet CLI
+
+  Build Commands:
+  candle.exe PaperFlow.wxs -ext WixUIExtension -ext WixUtilExtension
+  light.exe PaperFlow.wixobj -ext WixUIExtension -ext WixUtilExtension -out PaperFlow.msi
+
+  GPO Deployment:
+  - Silent install: msiexec /i PaperFlow.msi /qn
+  - With properties: msiexec /i PaperFlow.msi /qn ALLUSERS=1 INSTALLDIR="C:\Program Files\PaperFlow"
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <Product Id="*"
+           Name="PaperFlow"
+           Language="1033"
+           Version="4.5.0.0"
+           Manufacturer="PaperFlow Inc."
+           UpgradeCode="A1B2C3D4-E5F6-4789-ABCD-EF0123456789">
+
+    <Package InstallerVersion="500"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Description="PaperFlow PDF Editor"
+             Comments="Enterprise PDF editing solution"
+             Manufacturer="PaperFlow Inc." />
+
+    <!-- Upgrade handling -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of PaperFlow is already installed."
+                  AllowSameVersionUpgrades="yes" />
+
+    <!-- Embed CAB in MSI -->
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <!-- Icon for Add/Remove Programs -->
+    <Icon Id="PaperFlowIcon" SourceFile="$(var.SourceDir)\resources\icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="PaperFlowIcon" />
+    <Property Id="ARPHELPLINK" Value="https://paperflow.dev/support" />
+    <Property Id="ARPURLINFOABOUT" Value="https://paperflow.dev" />
+
+    <!-- Installation directory properties -->
+    <Property Id="INSTALLDIR">
+      <RegistrySearch Id="InstallDirSearch"
+                      Root="HKLM"
+                      Key="SOFTWARE\PaperFlow"
+                      Name="InstallDir"
+                      Type="directory" />
+    </Property>
+
+    <!-- Custom properties for GPO deployment -->
+    <Property Id="LAUNCH_ON_STARTUP" Value="0" />
+    <Property Id="REGISTER_FILE_ASSOCIATIONS" Value="1" />
+    <Property Id="ADD_TO_PATH" Value="0" />
+    <Property Id="INSTALL_DESKTOP_SHORTCUT" Value="1" />
+    <Property Id="INSTALL_START_MENU_SHORTCUT" Value="1" />
+
+    <!-- Directory structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Program Files -->
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLDIR" Name="PaperFlow">
+          <Directory Id="ResourcesDir" Name="resources" />
+          <Directory Id="LocalesDir" Name="locales" />
+        </Directory>
+      </Directory>
+
+      <!-- Common App Data (for shared config) -->
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="CommonAppDataPaperFlow" Name="PaperFlow">
+          <Directory Id="ConfigDir" Name="config" />
+        </Directory>
+      </Directory>
+
+      <!-- Start Menu -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuPaperFlow" Name="PaperFlow" />
+      </Directory>
+
+      <!-- Desktop -->
+      <Directory Id="DesktopFolder" />
+    </Directory>
+
+    <!-- Main application component group -->
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLDIR">
+      <!-- Main executable -->
+      <Component Id="MainExecutable" Guid="11111111-1111-1111-1111-111111111111">
+        <File Id="PaperFlowExe"
+              Source="$(var.SourceDir)\PaperFlow.exe"
+              KeyPath="yes">
+          <Shortcut Id="StartMenuShortcut"
+                    Directory="ProgramMenuPaperFlow"
+                    Name="PaperFlow"
+                    Description="PaperFlow PDF Editor"
+                    WorkingDirectory="INSTALLDIR"
+                    Icon="PaperFlowIcon"
+                    Advertise="yes" />
+        </File>
+
+        <!-- Registry entries -->
+        <RegistryKey Root="HKLM" Key="SOFTWARE\PaperFlow">
+          <RegistryValue Name="InstallDir" Value="[INSTALLDIR]" Type="string" />
+          <RegistryValue Name="Version" Value="4.5.0" Type="string" />
+        </RegistryKey>
+
+        <!-- Add to PATH (optional) -->
+        <Environment Id="PATH"
+                     Name="PATH"
+                     Value="[INSTALLDIR]"
+                     Permanent="no"
+                     Part="last"
+                     Action="set"
+                     System="yes" />
+        <Condition><![CDATA[ADD_TO_PATH = "1"]]></Condition>
+      </Component>
+
+      <!-- DLL and dependencies -->
+      <Component Id="RuntimeDlls" Guid="22222222-2222-2222-2222-222222222222">
+        <File Id="NodeDll" Source="$(var.SourceDir)\node.dll" KeyPath="yes" />
+      </Component>
+
+      <!-- Resources -->
+      <Component Id="AppResources" Guid="33333333-3333-3333-3333-333333333333" Directory="ResourcesDir">
+        <File Id="AppAsar" Source="$(var.SourceDir)\resources\app.asar" KeyPath="yes" />
+        <File Id="ElectronAsar" Source="$(var.SourceDir)\resources\electron.asar" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Desktop shortcut (conditional) -->
+    <Component Id="DesktopShortcutComponent" Directory="DesktopFolder" Guid="44444444-4444-4444-4444-444444444444">
+      <Shortcut Id="DesktopShortcut"
+                Name="PaperFlow"
+                Description="PaperFlow PDF Editor"
+                Target="[INSTALLDIR]PaperFlow.exe"
+                WorkingDirectory="INSTALLDIR"
+                Icon="PaperFlowIcon" />
+      <RegistryValue Root="HKCU"
+                     Key="SOFTWARE\PaperFlow"
+                     Name="DesktopShortcut"
+                     Type="integer"
+                     Value="1"
+                     KeyPath="yes" />
+      <Condition><![CDATA[INSTALL_DESKTOP_SHORTCUT = "1"]]></Condition>
+    </Component>
+
+    <!-- File associations -->
+    <Component Id="FileAssociations" Directory="INSTALLDIR" Guid="55555555-5555-5555-5555-555555555555">
+      <RegistryValue Root="HKLM"
+                     Key="SOFTWARE\Classes\.pdf\OpenWithProgids"
+                     Name="PaperFlow.PDF"
+                     Type="string"
+                     Value=""
+                     KeyPath="yes" />
+      <RegistryValue Root="HKLM"
+                     Key="SOFTWARE\Classes\PaperFlow.PDF"
+                     Type="string"
+                     Value="PDF Document" />
+      <RegistryValue Root="HKLM"
+                     Key="SOFTWARE\Classes\PaperFlow.PDF\DefaultIcon"
+                     Type="string"
+                     Value="[INSTALLDIR]PaperFlow.exe,0" />
+      <RegistryValue Root="HKLM"
+                     Key="SOFTWARE\Classes\PaperFlow.PDF\shell\open\command"
+                     Type="string"
+                     Value="&quot;[INSTALLDIR]PaperFlow.exe&quot; &quot;%1&quot;" />
+      <Condition><![CDATA[REGISTER_FILE_ASSOCIATIONS = "1"]]></Condition>
+    </Component>
+
+    <!-- Launch on startup (conditional) -->
+    <Component Id="LaunchOnStartup" Directory="INSTALLDIR" Guid="66666666-6666-6666-6666-666666666666">
+      <RegistryValue Root="HKLM"
+                     Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+                     Name="PaperFlow"
+                     Type="string"
+                     Value="&quot;[INSTALLDIR]PaperFlow.exe&quot; --minimized"
+                     KeyPath="yes" />
+      <Condition><![CDATA[LAUNCH_ON_STARTUP = "1"]]></Condition>
+    </Component>
+
+    <!-- Feature definition -->
+    <Feature Id="MainFeature"
+             Title="PaperFlow"
+             Description="PaperFlow PDF Editor"
+             Level="1"
+             ConfigurableDirectory="INSTALLDIR"
+             AllowAdvertise="no">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="DesktopShortcutComponent" />
+      <ComponentRef Id="FileAssociations" />
+      <ComponentRef Id="LaunchOnStartup" />
+    </Feature>
+
+    <!-- UI configuration -->
+    <UIRef Id="WixUI_InstallDir" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.SourceDir)\license.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.SourceDir)\installer\banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.SourceDir)\installer\dialog.bmp" />
+
+    <!-- Property for InstallDir dialog -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
+    <!-- Custom actions -->
+    <CustomAction Id="LaunchApplication"
+                  Directory="INSTALLDIR"
+                  ExeCommand="[INSTALLDIR]PaperFlow.exe"
+                  Return="asyncNoWait" />
+
+    <!-- Install sequence -->
+    <InstallExecuteSequence>
+      <!-- Optionally launch after install -->
+      <Custom Action="LaunchApplication" After="InstallFinalize">
+        <![CDATA[NOT Installed AND UILevel > 2]]>
+      </Custom>
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>

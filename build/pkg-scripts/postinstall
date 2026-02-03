@@ -1,0 +1,51 @@
+#!/bin/bash
+#
+# PaperFlow PKG Postinstall Script
+# Runs after installation completes
+#
+
+set -e
+
+echo "PaperFlow: Running postinstall script..."
+
+APP_PATH="/Applications/PaperFlow.app"
+
+# Verify installation
+if [ ! -d "$APP_PATH" ]; then
+    echo "Error: PaperFlow.app not found in /Applications"
+    exit 1
+fi
+
+# Remove quarantine attribute
+xattr -rd com.apple.quarantine "$APP_PATH" 2>/dev/null || true
+
+# Update the Launch Services database
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$APP_PATH" 2>/dev/null || true
+
+# Set proper permissions
+chmod -R 755 "$APP_PATH"
+
+# Register URL scheme
+defaults write com.apple.LaunchServices LSHandlers -array-add \
+    "<dict>
+        <key>LSHandlerURLScheme</key>
+        <string>paperflow</string>
+        <key>LSHandlerRoleAll</key>
+        <string>com.paperflow.app</string>
+    </dict>" 2>/dev/null || true
+
+# Refresh LaunchServices
+/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user 2>/dev/null || true
+
+# Create symlink for CLI access (optional)
+CLI_PATH="/usr/local/bin/paperflow"
+if [ ! -L "$CLI_PATH" ] && [ -d "/usr/local/bin" ]; then
+    ln -sf "$APP_PATH/Contents/MacOS/PaperFlow" "$CLI_PATH" 2>/dev/null || true
+fi
+
+# Notify Spotlight to index the app
+mdimport "$APP_PATH" 2>/dev/null || true
+
+echo "PaperFlow: Postinstall complete."
+echo "PaperFlow has been installed to /Applications/PaperFlow.app"
+exit 0

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap3 uap5 desktop rescap">
+
+  <Identity
+    Name="PaperFlow.PaperFlow"
+    Publisher="CN=PaperFlow, O=PaperFlow, L=San Francisco, S=California, C=US"
+    Version="1.0.0.0"
+    ProcessorArchitecture="x64"/>
+
+  <Properties>
+    <DisplayName>PaperFlow</DisplayName>
+    <PublisherDisplayName>PaperFlow</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>Modern PDF Editor for viewing, editing, and annotating PDF documents. Features include annotations, form filling, digital signatures, OCR, and batch processing.</Description>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.22621.0"/>
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-US"/>
+    <Resource Language="de-DE"/>
+    <Resource Language="fr-FR"/>
+    <Resource Language="es-ES"/>
+    <Resource Language="ja-JP"/>
+    <Resource Language="zh-CN"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="PaperFlow" Executable="PaperFlow.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="PaperFlow"
+        Description="Modern PDF Editor"
+        BackgroundColor="#1E3A5F"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\Square71x71Logo.png" Square310x310Logo="Assets\Square310x310Logo.png" ShortName="PaperFlow">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo"/>
+            <uap:ShowOn Tile="wide310x150Logo"/>
+            <uap:ShowOn Tile="square310x310Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#1E3A5F"/>
+      </uap:VisualElements>
+
+      <!-- File type associations -->
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="pdf">
+            <uap:SupportedFileTypes>
+              <uap:FileType ContentType="application/pdf">.pdf</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:DisplayName>PDF Document</uap:DisplayName>
+            <uap:Logo>Assets\FileIcon.png</uap:Logo>
+            <uap:InfoTip>PDF Document - Open with PaperFlow</uap:InfoTip>
+            <uap:EditFlags OpenIsSafe="true"/>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+
+        <!-- Protocol handler -->
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="paperflow">
+            <uap:DisplayName>PaperFlow Protocol</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+
+        <!-- App execution alias -->
+        <uap5:Extension Category="windows.appExecutionAlias" Executable="PaperFlow.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap5:AppExecutionAlias>
+            <uap5:ExecutionAlias Alias="paperflow.exe"/>
+          </uap5:AppExecutionAlias>
+        </uap5:Extension>
+
+        <!-- Share target -->
+        <uap:Extension Category="windows.shareTarget">
+          <uap:ShareTarget Description="Open PDF in PaperFlow">
+            <uap:SupportedFileTypes>
+              <uap:FileType>.pdf</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:DataFormat>StorageItems</uap:DataFormat>
+          </uap:ShareTarget>
+        </uap:Extension>
+
+        <!-- Startup task -->
+        <desktop:Extension Category="windows.startupTask" Executable="PaperFlow.exe" EntryPoint="Windows.FullTrustApplication">
+          <desktop:StartupTask TaskId="PaperFlowStartupId" Enabled="false" DisplayName="PaperFlow"/>
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient"/>
+    <rescap:Capability Name="runFullTrust"/>
+    <uap:Capability Name="documentsLibrary"/>
+    <uap:Capability Name="removableStorage"/>
+  </Capabilities>
+</Package>

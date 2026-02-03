@@ -1,0 +1,94 @@
+name: paperflow
+version: '1.0.0'
+summary: Modern PDF Editor
+description: |
+  PaperFlow is a modern, privacy-first PDF editor that runs entirely locally.
+  Edit, annotate, sign, and manage PDF documents with powerful features including:
+
+  - View and navigate PDF documents
+  - Add annotations, highlights, and sticky notes
+  - Fill and sign PDF forms
+  - Digital signatures
+  - OCR (Optical Character Recognition)
+  - Form designer
+  - Redaction tools
+  - Document comparison
+  - Batch processing
+
+  All processing happens locally on your device for maximum privacy.
+
+grade: stable
+confinement: strict
+base: core22
+compression: lzo
+
+architectures:
+  - build-on: amd64
+
+apps:
+  paperflow:
+    command: paperflow
+    desktop: usr/share/applications/paperflow.desktop
+    extensions:
+      - gnome
+    environment:
+      DISABLE_WAYLAND: 0
+      ELECTRON_OZONE_PLATFORM_HINT: auto
+      GTK_USE_PORTAL: 1
+    plugs:
+      - home
+      - removable-media
+      - network
+      - network-bind
+      - cups-control
+      - desktop
+      - desktop-legacy
+      - wayland
+      - x11
+      - unity7
+      - opengl
+      - browser-support
+      - password-manager-service
+      - audio-playback
+      - screen-inhibit-control
+
+parts:
+  paperflow:
+    plugin: dump
+    source: .
+    source-type: local
+    stage-packages:
+      - libgtk-3-0
+      - libnotify4
+      - libnss3
+      - libxss1
+      - libxtst6
+      - xdg-utils
+      - libatspi2.0-0
+      - libuuid1
+      - libsecret-1-0
+      - libappindicator3-1
+      - libgbm1
+      - libasound2
+    organize:
+      '*': /
+
+  cleanup:
+    after: [paperflow]
+    plugin: nil
+    build-snaps:
+      - gnome-42-2204
+    override-prime: |
+      set -eux
+      cd /snap/gnome-42-2204/current
+      find . -type f,l -exec rm -f "$SNAPCRAFT_PRIME/{}" \;
+
+slots:
+  dbus-paperflow:
+    interface: dbus
+    bus: session
+    name: com.paperflow.app
+
+layout:
+  /usr/share/libdrm:
+    bind: $SNAP/usr/share/libdrm

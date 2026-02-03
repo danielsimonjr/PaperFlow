@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# PaperFlow PKG Preinstall Script
+# Runs before installation begins
+#
+
+set -e
+
+echo "PaperFlow: Running preinstall script..."
+
+# Check for running instances and quit them gracefully
+RUNNING_PIDS=$(pgrep -f "PaperFlow" 2>/dev/null || true)
+if [ -n "$RUNNING_PIDS" ]; then
+    echo "Closing running PaperFlow instances..."
+    for pid in $RUNNING_PIDS; do
+        kill -TERM "$pid" 2>/dev/null || true
+    done
+    # Wait a moment for graceful shutdown
+    sleep 2
+    # Force kill if still running
+    for pid in $RUNNING_PIDS; do
+        kill -9 "$pid" 2>/dev/null || true
+    done
+fi
+
+# Remove quarantine attribute if present (from previous downloads)
+if [ -d "/Applications/PaperFlow.app" ]; then
+    xattr -rd com.apple.quarantine "/Applications/PaperFlow.app" 2>/dev/null || true
+fi
+
+# Clean up any stale launch agents
+LAUNCH_AGENT="$HOME/Library/LaunchAgents/com.paperflow.app.plist"
+if [ -f "$LAUNCH_AGENT" ]; then
+    launchctl unload "$LAUNCH_AGENT" 2>/dev/null || true
+fi
+
+echo "PaperFlow: Preinstall complete."
+exit 0

@@ -1,0 +1,267 @@
+#!/bin/bash
+#
+# PaperFlow macOS Installer - Postinstall Script
+#
+# This script runs after the main installation completes.
+# It handles:
+# - Setting file permissions
+# - Registering file associations
+# - Configuring LaunchServices
+# - Setting up managed preferences
+# - Clearing quarantine attributes
+#
+
+set -e
+
+# Logging
+LOG_FILE="/tmp/paperflow-install.log"
+exec 1> >(tee -a "$LOG_FILE") 2>&1
+
+echo "=========================================="
+echo "PaperFlow Postinstall Script"
+echo "Date: $(date)"
+echo "User: $USER"
+echo "Target: $3"
+echo "=========================================="
+
+# Application paths
+APP_PATH="/Applications/PaperFlow.app"
+APP_BUNDLE_ID="com.paperflow.desktop"
+
+# Function to log messages
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+}
+
+# Fix permissions
+fix_permissions() {
+    log "Setting permissions..."
+
+    # Set ownership to root:admin for system-wide installation
+    chown -R root:admin "$APP_PATH"
+
+    # Set directory permissions
+    find "$APP_PATH" -type d -exec chmod 755 {} \;
+
+    # Set file permissions
+    find "$APP_PATH" -type f -exec chmod 644 {} \;
+
+    # Make executables actually executable
+    chmod 755 "$APP_PATH/Contents/MacOS/PaperFlow"
+
+    # Handle any helper binaries
+    if [[ -d "$APP_PATH/Contents/Frameworks" ]]; then
+        find "$APP_PATH/Contents/Frameworks" -name "*.framework" -type d | while read -r framework; do
+            HELPER=$(find "$framework" -type f -perm +111 2>/dev/null || true)
+            if [[ -n "$HELPER" ]]; then
+                chmod 755 "$HELPER"
+            fi
+        done
+    fi
+
+    log "Permissions set"
+}
+
+# Clear quarantine attribute
+clear_quarantine() {
+    log "Clearing quarantine attribute..."
+
+    xattr -rd com.apple.quarantine "$APP_PATH" 2>/dev/null || true
+
+    log "Quarantine attribute cleared"
+}
+
+# Register with LaunchServices
+register_launch_services() {
+    log "Registering with LaunchServices..."
+
+    # Register the application
+    /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+        -f "$APP_PATH"
+
+    log "LaunchServices registration complete"
+}
+
+# Set up file associations
+setup_file_associations() {
+    log "Setting up file associations..."
+
+    # Use duti if available for more reliable UTI handling
+    if command -v duti &> /dev/null; then
+        # Set as handler for PDF files (viewer role)
+        duti -s "$APP_BUNDLE_ID" .pdf viewer 2>/dev/null || true
+        log "File associations set via duti"
+    else
+        log "duti not available, using LaunchServices defaults"
+    fi
+}
+
+# Create user directories
+create_user_directories() {
+    log "Creating application support directories..."
+
+    # Get the console user (may be different from installer user)
+    CONSOLE_USER=$(stat -f "%Su" /dev/console)
+
+    if [[ -n "$CONSOLE_USER" && "$CONSOLE_USER" != "root" ]]; then
+        USER_HOME=$(dscl . -read /Users/"$CONSOLE_USER" NFSHomeDirectory | awk '{print $2}')
+
+        if [[ -n "$USER_HOME" ]]; then
+            APP_SUPPORT_DIR="$USER_HOME/Library/Application Support/PaperFlow"
+
+            # Create directories as the user
+            sudo -u "$CONSOLE_USER" mkdir -p "$APP_SUPPORT_DIR" 2>/dev/null || true
+            sudo -u "$CONSOLE_USER" mkdir -p "$APP_SUPPORT_DIR/cache" 2>/dev/null || true
+            sudo -u "$CONSOLE_USER" mkdir -p "$APP_SUPPORT_DIR/backups" 2>/dev/null || true
+
+            log "Created user directories in $APP_SUPPORT_DIR"
+        fi
+    fi
+}
+
+# Set up managed preferences (for MDM)
+setup_managed_preferences() {
+    log "Setting up managed preferences..."
+
+    MANAGED_PREFS_DIR="/Library/Managed Preferences"
+    PREFS_FILE="$MANAGED_PREFS_DIR/$APP_BUNDLE_ID.plist"
+
+    # Only set defaults if no managed preferences exist
+    if [[ ! -f "$PREFS_FILE" ]]; then
+        log "No MDM managed preferences found, using defaults"
+
+        # Create default preferences directory
+        mkdir -p "/Library/Preferences"
+
+        # Write default preferences
+        defaults write "/Library/Preferences/$APP_BUNDLE_ID" DefaultZoom -int 100
+        defaults write "/Library/Preferences/$APP_BUNDLE_ID" DefaultViewMode -string "single"
+        defaults write "/Library/Preferences/$APP_BUNDLE_ID" EnableAutoSave -bool true
+        defaults write "/Library/Preferences/$APP_BUNDLE_ID" AutoSaveInterval -int 30
+
+        log "Default preferences written"
+    else
+        log "MDM managed preferences detected at $PREFS_FILE"
+    fi
+}
+
+# Configure Login Item (optional, based on preferences)
+configure_login_item() {
+    log "Checking login item configuration..."
+
+    # Check if LaunchOnStartup is enabled in managed preferences
+    LAUNCH_ON_STARTUP=$(defaults read "/Library/Managed Preferences/$APP_BUNDLE_ID" LaunchOnStartup 2>/dev/null || echo "false")
+
+    if [[ "$LAUNCH_ON_STARTUP" == "1" || "$LAUNCH_ON_STARTUP" == "true" ]]; then
+        log "Login item enabled by policy"
+
+        # Create LaunchAgent plist
+        LAUNCH_AGENT_DIR="/Library/LaunchAgents"
+        LAUNCH_AGENT_FILE="$LAUNCH_AGENT_DIR/$APP_BUNDLE_ID.plist"
+
+        mkdir -p "$LAUNCH_AGENT_DIR"
+
+        cat > "$LAUNCH_AGENT_FILE" << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>$APP_BUNDLE_ID</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>$APP_PATH/Contents/MacOS/PaperFlow</string>
+        <string>--hidden</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+</dict>
+</plist>
+EOF
+
+        # Set permissions
+        chmod 644 "$LAUNCH_AGENT_FILE"
+        chown root:wheel "$LAUNCH_AGENT_FILE"
+
+        log "LaunchAgent created at $LAUNCH_AGENT_FILE"
+    else
+        log "Login item not enabled"
+    fi
+}
+
+# Verify installation
+verify_installation() {
+    log "Verifying installation..."
+
+    # Check if app exists
+    if [[ ! -d "$APP_PATH" ]]; then
+        log "ERROR: Application not found at $APP_PATH"
+        exit 1
+    fi
+
+    # Check if executable exists and is runnable
+    if [[ ! -x "$APP_PATH/Contents/MacOS/PaperFlow" ]]; then
+        log "ERROR: Main executable not found or not executable"
+        exit 1
+    fi
+
+    # Verify code signature
+    if codesign --verify --deep --strict "$APP_PATH" 2>/dev/null; then
+        log "Code signature verified"
+    else
+        log "WARNING: Code signature verification failed"
+    fi
+
+    # Check bundle identifier
+    ACTUAL_BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "$APP_PATH/Contents/Info.plist" 2>/dev/null || echo "")
+    if [[ "$ACTUAL_BUNDLE_ID" == "$APP_BUNDLE_ID" ]]; then
+        log "Bundle identifier verified: $ACTUAL_BUNDLE_ID"
+    else
+        log "WARNING: Unexpected bundle identifier: $ACTUAL_BUNDLE_ID"
+    fi
+
+    log "Installation verification complete"
+}
+
+# Send installation complete notification (via MDM if available)
+send_completion_notification() {
+    log "Sending completion notification..."
+
+    # Check if Jamf binary exists (for Jamf Pro)
+    if [[ -x "/usr/local/jamf/bin/jamf" ]]; then
+        /usr/local/jamf/bin/jamf recon 2>/dev/null || true
+        log "Triggered Jamf inventory update"
+    fi
+
+    # Get installed version
+    INSTALLED_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$APP_PATH/Contents/Info.plist" 2>/dev/null || echo "unknown")
+    log "Installed version: $INSTALLED_VERSION"
+}
+
+# Main execution
+main() {
+    log "Starting postinstall script..."
+
+    fix_permissions
+    clear_quarantine
+    register_launch_services
+    setup_file_associations
+    create_user_directories
+    setup_managed_preferences
+    configure_login_item
+    verify_installation
+    send_completion_notification
+
+    log "Postinstall script completed successfully"
+    echo ""
+    echo "PaperFlow has been installed successfully!"
+    echo "Location: $APP_PATH"
+    echo ""
+
+    exit 0
+}
+
+# Run main
+main

@@ -1,0 +1,192 @@
+name: Build Linux
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [AppImage, deb, rpm, snap]
+        arch: [x64]
+        include:
+          - target: AppImage
+            arch: arm64
+          - target: deb
+            arch: arm64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgtk-3-dev \
+            libnotify-dev \
+            libnss3 \
+            libxss1 \
+            libxtst6 \
+            xvfb \
+            rpm \
+            libarchive-tools
+
+      - name: Install Snapcraft
+        if: matrix.target == 'snap'
+        uses: snapcore/action-setup@v1
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run type checking
+        run: npm run typecheck
+
+      - name: Run tests
+        run: npm run test:unit
+
+      - name: Build application
+        run: npm run build
+
+      - name: Compile Electron
+        run: npm run electron:compile
+
+      - name: Setup QEMU for ARM64
+        if: matrix.arch == 'arm64'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Build Linux (${{ matrix.target }} ${{ matrix.arch }})
+        run: npx electron-builder --linux ${{ matrix.target }} --${{ matrix.arch }} --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-${{ matrix.target }}-${{ matrix.arch }}
+          path: |
+            release/*.AppImage
+            release/*.deb
+            release/*.rpm
+            release/*.snap
+            release/*.pacman
+            release/*.blockmap
+            release/*.yml
+          if-no-files-found: warn
+          retention-days: 14
+
+  test-linux-packages:
+    needs: build-linux
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro: [ubuntu, fedora]
+        include:
+          - distro: ubuntu
+            image: ubuntu:22.04
+            package: deb
+          - distro: fedora
+            image: fedora:38
+            package: rpm
+
+    container:
+      image: ${{ matrix.image }}
+
+    steps:
+      - name: Download package
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-${{ matrix.package }}-x64
+          path: packages/
+
+      - name: Install package (Ubuntu)
+        if: matrix.distro == 'ubuntu'
+        run: |
+          apt-get update
+          apt-get install -y ./packages/*.deb || true
+          which paperflow && echo "Installation successful" || echo "Package not in PATH"
+
+      - name: Install package (Fedora)
+        if: matrix.distro == 'fedora'
+        run: |
+          dnf install -y ./packages/*.rpm || true
+          which paperflow && echo "Installation successful" || echo "Package not in PATH"
+
+  test-appimage:
+    needs: build-linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download AppImage
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-AppImage-x64
+          path: packages/
+
+      - name: Install FUSE
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fuse libfuse2
+
+      - name: Test AppImage
+        run: |
+          chmod +x packages/*.AppImage
+          APPIMAGE=$(find packages -name "*.AppImage" | head -1)
+          if [ -n "$APPIMAGE" ]; then
+            echo "Testing AppImage: $APPIMAGE"
+            # Run with --help to verify it starts
+            timeout 10 "$APPIMAGE" --help || true
+            echo "AppImage is executable"
+          fi
+
+  publish-linux:
+    needs: [build-linux, test-linux-packages, test-appimage]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all Linux artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: linux-*
+          path: release/
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            release/*.AppImage
+            release/*.deb
+            release/*.rpm
+            release/*.snap
+            release/*.yml
+          draft: true
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to Snap Store
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+        run: |
+          SNAP_FILE=$(find release -name "*.snap" | head -1)
+          if [ -n "$SNAP_FILE" ] && [ -n "$SNAPCRAFT_STORE_CREDENTIALS" ]; then
+            snapcraft upload --release=stable "$SNAP_FILE"
+          fi

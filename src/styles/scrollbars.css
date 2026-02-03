@@ -1,0 +1,224 @@
+/**
+ * Platform-Specific Scrollbar Styles
+ *
+ * Adapts scrollbar appearance for Windows, macOS, and Linux
+ */
+
+/* ========================
+   Base Scrollbar Styles
+   ======================== */
+
+/* Custom scrollbar for WebKit browsers */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width, 12px);
+  height: var(--scrollbar-width, 12px);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color, transparent);
+  border-radius: var(--scrollbar-radius, 0);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color, rgba(0, 0, 0, 0.3));
+  border-radius: var(--scrollbar-radius, 0);
+  border: var(--scrollbar-thumb-border, none);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color, rgba(0, 0, 0, 0.5));
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-corner-color, transparent);
+}
+
+/* ========================
+   macOS Overlay Scrollbars
+   ======================== */
+
+.platform-macos {
+  --scrollbar-width: 8px;
+  --scrollbar-track-color: transparent;
+  --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-hover-color: rgba(0, 0, 0, 0.35);
+  --scrollbar-radius: 4px;
+  --scrollbar-thumb-border: 2px solid transparent;
+}
+
+/* Overlay behavior - show on scroll */
+.platform-macos ::-webkit-scrollbar {
+  background: transparent;
+}
+
+.platform-macos ::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+}
+
+/* Dark mode */
+.platform-macos.dark {
+  --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
+  --scrollbar-thumb-hover-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ========================
+   Windows Scrollbars
+   ======================== */
+
+.platform-windows {
+  --scrollbar-width: 14px;
+  --scrollbar-track-color: #f1f1f1;
+  --scrollbar-thumb-color: #c1c1c1;
+  --scrollbar-thumb-hover-color: #a1a1a1;
+  --scrollbar-radius: 0;
+  --scrollbar-corner-color: #f1f1f1;
+}
+
+/* Windows always shows scrollbars */
+.platform-windows {
+  overflow-y: scroll;
+}
+
+/* Dark mode */
+.platform-windows.dark {
+  --scrollbar-track-color: #2b2b2b;
+  --scrollbar-thumb-color: #5a5a5a;
+  --scrollbar-thumb-hover-color: #7a7a7a;
+  --scrollbar-corner-color: #2b2b2b;
+}
+
+/* Windows 11 style - rounded scrollbars */
+@supports (scrollbar-color: auto) {
+  .platform-windows {
+    --scrollbar-radius: 4px;
+  }
+}
+
+/* ========================
+   Linux Scrollbars
+   ======================== */
+
+/* GTK/GNOME style */
+.platform-linux {
+  --scrollbar-width: 10px;
+  --scrollbar-track-color: transparent;
+  --scrollbar-thumb-color: rgba(0, 0, 0, 0.25);
+  --scrollbar-thumb-hover-color: rgba(0, 0, 0, 0.4);
+  --scrollbar-radius: 5px;
+  --scrollbar-thumb-border: 2px solid transparent;
+}
+
+/* GTK overlay scrollbar behavior */
+.platform-linux:not(:hover) ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Dark mode */
+.platform-linux.dark {
+  --scrollbar-thumb-color: rgba(255, 255, 255, 0.25);
+  --scrollbar-thumb-hover-color: rgba(255, 255, 255, 0.4);
+}
+
+.platform-linux.dark:not(:hover) ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ========================
+   Firefox Scrollbar Support
+   ======================== */
+
+/* Firefox uses scrollbar-width and scrollbar-color */
+@supports (scrollbar-width: thin) {
+  .platform-macos * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-color) transparent;
+  }
+
+  .platform-windows * {
+    scrollbar-width: auto;
+    scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+  }
+
+  .platform-linux * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-color) transparent;
+  }
+}
+
+/* ========================
+   Scrollbar Utilities
+   ======================== */
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Always show scrollbar */
+.scrollbar-always {
+  overflow-y: scroll !important;
+}
+
+/* Thin scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Gutter stable - prevents layout shift */
+.scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
+/* Both edges gutter */
+.scrollbar-gutter-both {
+  scrollbar-gutter: stable both-edges;
+}
+
+/* ========================
+   Custom Scroll Containers
+   ======================== */
+
+/* PDF viewer scrollable area */
+.pdf-scroll-container {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+/* Thumbnail sidebar */
+.thumbnail-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* macOS overlay for thumbnails */
+.platform-macos .thumbnail-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* ========================
+   High Contrast Mode
+   ======================== */
+
+.high-contrast ::-webkit-scrollbar-thumb {
+  background: ButtonText !important;
+}
+
+.high-contrast ::-webkit-scrollbar-track {
+  background: Canvas !important;
+}
+
+@media (forced-colors: active) {
+  ::-webkit-scrollbar-thumb {
+    background: ButtonText;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: Canvas;
+  }
+}

@@ -1,115 +1,354 @@
+# electron-builder configuration
+# Comprehensive configuration for Windows, macOS, and Linux builds
+
 appId: com.paperflow.app
 productName: PaperFlow
-copyright: Copyright (c) 2024 PaperFlow
+copyright: Copyright (C) 2026 PaperFlow
 
+# Build output
 directories:
   output: release
   buildResources: build
 
+# Common settings
+artifactName: "${productName}-${version}-${os}-${arch}.${ext}"
+compression: maximum
+removePackageScripts: true
+
+# Include additional files
 files:
-  - dist/**/*
-  - dist-electron/**/*
-  - package.json
+  - "dist/**/*"
+  - "dist-electron/**/*"
+  - "package.json"
+  - "!node_modules/**/*"
+  - "node_modules/electron-log/**/*"
+  - "node_modules/electron-updater/**/*"
 
 extraMetadata:
   main: dist-electron/main/index.js
 
-# Windows configuration
-win:
-  icon: build/icon.ico
-  target:
-    - target: nsis
-      arch:
-        - x64
-        - ia32
-    - target: portable
-      arch:
-        - x64
-  # Code signing configuration (set via environment variables)
-  # CSC_LINK: path to .pfx certificate
-  # CSC_KEY_PASSWORD: certificate password
-  signingHashAlgorithms:
-    - sha256
-  signDlls: true
+# Extra resources to include
+extraResources:
+  - from: "public/pdf.worker.min.js"
+    to: "pdf.worker.min.js"
 
-nsis:
-  oneClick: false
-  perMachine: false
-  allowToChangeInstallationDirectory: true
-  deleteAppDataOnUninstall: false
-  createDesktopShortcut: true
-  createStartMenuShortcut: true
-  shortcutName: PaperFlow
-  # Differential updates for NSIS
-  differentialPackage: true
+# Auto-update configuration
+publish:
+  - provider: github
+    owner: paperflow
+    repo: paperflow
+    releaseType: release
+  - provider: generic
+    url: "https://releases.paperflow.app"
+    channel: latest
 
-# macOS configuration
-mac:
-  icon: build/icon.icns
-  category: public.app-category.productivity
-  hardenedRuntime: true
-  gatekeeperAssess: false
-  entitlements: build/entitlements.mac.plist
-  entitlementsInherit: build/entitlements.mac.plist
-  target:
-    - target: dmg
-      arch:
-        - x64
-        - arm64
-    - target: zip
-      arch:
-        - x64
-        - arm64
-  # Code signing configuration (set via environment variables)
-  # APPLE_ID: Apple ID email
-  # APPLE_APP_SPECIFIC_PASSWORD: App-specific password
-  # APPLE_TEAM_ID: Team ID for notarization
-  notarize: true
-
-dmg:
-  contents:
-    - x: 130
-      y: 220
-    - x: 410
-      y: 220
-      type: link
-      path: /Applications
-
-# Linux configuration
-linux:
-  icon: build/icons
-  category: Office
-  target:
-    - target: AppImage
-      arch:
-        - x64
-    - target: deb
-      arch:
-        - x64
-    - target: rpm
-      arch:
-        - x64
-
-# File associations for PDF files
+# File associations
 fileAssociations:
   - ext: pdf
     name: PDF Document
     description: Portable Document Format
     mimeType: application/pdf
     role: Editor
+    icon: build/file-icon
 
-# Auto-updater configuration
-publish:
-  provider: github
-  owner: paperflow
-  repo: paperflow
-  releaseType: release
-  # For pre-release channels
-  # Set to 'prerelease' for beta releases
+# Protocol handler
+protocols:
+  - name: PaperFlow
+    schemes:
+      - paperflow
+
+# After sign hook for notarization
+afterSign: scripts/notarize.js
 
 # Build optimization
 asar: true
-compression: maximum
 
 # Generate delta updates to minimize download size
 generateUpdatesFilesForAllChannels: true
+
+# ========================
+# Windows Configuration
+# ========================
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+    - target: msi
+      arch:
+        - x64
+    - target: appx
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+  icon: build/icon.ico
+  publisherName: PaperFlow
+  legalTrademarks: PaperFlow
+
+  # Code signing (set via environment variables)
+  # CSC_LINK: path to .pfx certificate
+  # CSC_KEY_PASSWORD: certificate password
+  signingHashAlgorithms:
+    - sha256
+  signDlls: true
+
+  # Request admin elevation for file associations
+  requestedExecutionLevel: asInvoker
+
+# NSIS installer configuration
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  allowElevation: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: PaperFlow
+  installerIcon: build/installerIcon.ico
+  uninstallerIcon: build/uninstallerIcon.ico
+  installerHeaderIcon: build/icon.ico
+  license: LICENSE
+  deleteAppDataOnUninstall: false
+  runAfterFinish: true
+
+  # Custom NSIS script
+  include: build/installer.nsh
+
+  # Differential updates
+  differentialPackage: true
+
+  # Uninstall display name
+  uninstallDisplayName: "${productName}"
+
+  # MUI configuration
+  unicode: true
+  warningsAsErrors: false
+
+# MSI installer configuration
+msi:
+  runAfterFinish: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  perMachine: true
+  upgradeCode: "A9B8C7D6-E5F4-3210-9ABC-DEF012345678"
+  warningsAsErrors: false
+
+# MSIX/AppX configuration for Microsoft Store
+appx:
+  applicationId: PaperFlow
+  identityName: PaperFlow.PaperFlow
+  publisher: "CN=PaperFlow, O=PaperFlow, L=San Francisco, S=California, C=US"
+  publisherDisplayName: PaperFlow
+  displayName: PaperFlow
+  languages:
+    - en-US
+    - de-DE
+    - fr-FR
+    - es-ES
+    - ja-JP
+    - zh-CN
+  backgroundColor: "#1E3A5F"
+  showNameOnTiles: true
+
+# ========================
+# macOS Configuration
+# ========================
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+        - universal
+    - target: pkg
+      arch:
+        - universal
+    - target: zip
+      arch:
+        - x64
+        - arm64
+        - universal
+  icon: build/icon.icns
+  category: public.app-category.productivity
+  darkModeSupport: true
+
+  # Hardened runtime for notarization
+  hardenedRuntime: true
+
+  # Gatekeeper assess
+  gatekeeperAssess: false
+
+  # Entitlements
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.inherit.plist
+
+  # Notarization (requires environment variables)
+  # APPLE_ID: Apple ID email
+  # APPLE_APP_SPECIFIC_PASSWORD: App-specific password
+  # APPLE_TEAM_ID: Team ID for notarization
+  notarize: true
+
+# DMG configuration
+dmg:
+  background: build/dmg-background.png
+  backgroundColor: "#ffffff"
+  icon: build/icon.icns
+  iconSize: 128
+  iconTextSize: 14
+  title: "Install ${productName}"
+
+  # Contents positioning
+  contents:
+    - x: 130
+      y: 220
+      type: file
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+  # Window settings
+  window:
+    x: 400
+    y: 100
+    width: 540
+    height: 380
+
+# PKG configuration for enterprise
+pkg:
+  installLocation: /Applications
+  allowAnywhere: true
+  allowCurrentUserHome: true
+  allowRootDirectory: true
+  isRelocatable: false
+  isVersionChecked: true
+  hasStrictIdentifier: true
+  overwriteAction: upgrade
+
+  # Custom scripts
+  scripts: build/pkg-scripts
+
+  # License
+  license: LICENSE
+
+# Mac App Store configuration
+mas:
+  category: public.app-category.productivity
+  entitlements: build/entitlements.mas.plist
+  entitlementsInherit: build/entitlements.mas.inherit.plist
+  hardenedRuntime: false
+
+# ========================
+# Linux Configuration
+# ========================
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+    - target: deb
+      arch:
+        - x64
+        - arm64
+    - target: rpm
+      arch:
+        - x64
+        - arm64
+    - target: snap
+      arch:
+        - x64
+    - target: pacman
+      arch:
+        - x64
+  icon: build/icons
+  category: Office
+  synopsis: Modern PDF Editor
+  description: |
+    PaperFlow is a modern, privacy-first PDF editor that runs entirely in your browser
+    or as a desktop application. Edit, annotate, sign, and manage PDF documents with
+    powerful features including OCR, form filling, and batch processing.
+
+  # Desktop entry
+  desktop:
+    Name: PaperFlow
+    GenericName: PDF Editor
+    Comment: Modern PDF Editor for viewing, editing, and annotating PDF documents
+    Categories: Office;Viewer;Graphics;2DGraphics;
+    Keywords: pdf;editor;viewer;annotation;signature;forms;
+    MimeType: application/pdf;
+    StartupWMClass: paperflow
+    StartupNotify: true
+
+# AppImage configuration
+appImage:
+  license: LICENSE
+  category: Office
+  artifactName: "${productName}-${version}-${arch}.AppImage"
+
+# Debian package configuration
+deb:
+  depends:
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+    - libuuid1
+    - libsecret-1-0
+  recommends:
+    - libappindicator3-1
+  section: utils
+  priority: optional
+
+  # Custom maintainer scripts
+  afterInstall: build/deb/postinst
+  afterRemove: build/deb/prerm
+
+# RPM package configuration
+rpm:
+  depends:
+    - gtk3
+    - libnotify
+    - nss
+    - libXScrnSaver
+    - libXtst
+    - xdg-utils
+    - at-spi2-core
+    - libuuid
+    - libsecret
+  recommends:
+    - libappindicator-gtk3
+  compression: xz
+
+# Snap package configuration
+snap:
+  confinement: strict
+  grade: stable
+  summary: Modern PDF Editor
+
+  # Plugs for capabilities
+  plugs:
+    - home
+    - removable-media
+    - network
+    - network-bind
+    - cups-control
+    - desktop
+    - desktop-legacy
+    - wayland
+    - x11
+    - unity7
+    - opengl
+    - browser-support
+    - password-manager-service
+
+  # Desktop environments
+  environment:
+    DISABLE_WAYLAND: 0
+    ELECTRON_OZONE_PLATFORM_HINT: auto

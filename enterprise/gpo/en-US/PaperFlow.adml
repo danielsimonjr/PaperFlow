@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PaperFlow ADML Language File (English - US)
+
+  Deploy to: %SystemRoot%\PolicyDefinitions\en-US\
+-->
+<policyDefinitionResources xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions"
+                           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                           revision="1.0"
+                           schemaVersion="1.0">
+  <displayName>PaperFlow Policy Settings</displayName>
+  <description>Policy settings for PaperFlow PDF Editor</description>
+
+  <resources>
+    <stringTable>
+      <!-- Supported On -->
+      <string id="SUPPORTED_Windows10">Windows 10 or Windows 11</string>
+
+      <!-- Categories -->
+      <string id="CAT_PaperFlow">PaperFlow</string>
+      <string id="CAT_Application">Application Settings</string>
+      <string id="CAT_Security">Security Settings</string>
+      <string id="CAT_Features">Feature Toggles</string>
+      <string id="CAT_Updates">Update Settings</string>
+      <string id="CAT_Network">Network Settings</string>
+      <string id="CAT_Performance">Performance Settings</string>
+
+      <!-- Application Settings -->
+      <string id="POL_DefaultZoom">Default Zoom Level</string>
+      <string id="POL_DefaultZoom_Help">Specifies the default zoom level (10-400%) when opening documents.
+
+If you enable this setting, documents will open at the specified zoom level.
+
+If you disable or do not configure this setting, the default zoom level of 100% will be used.</string>
+
+      <string id="POL_DefaultViewMode">Default View Mode</string>
+      <string id="POL_DefaultViewMode_Help">Specifies the default view mode when opening documents.
+
+Options:
+- Single Page: Display one page at a time
+- Continuous: Display pages in a continuous vertical scroll
+- Spread: Display two pages side by side
+
+If you do not configure this setting, Single Page view will be used.</string>
+
+      <string id="ViewMode_Single">Single Page</string>
+      <string id="ViewMode_Continuous">Continuous Scroll</string>
+      <string id="ViewMode_Spread">Two-Page Spread</string>
+
+      <string id="POL_EnableAutoSave">Enable Auto-Save</string>
+      <string id="POL_EnableAutoSave_Help">Enables or disables automatic saving of documents.
+
+If you enable this setting, documents will be automatically saved at regular intervals.
+
+If you disable this setting, auto-save will be turned off and users must save manually.
+
+If you do not configure this setting, users can control this preference.</string>
+
+      <string id="POL_AutoSaveInterval">Auto-Save Interval</string>
+      <string id="POL_AutoSaveInterval_Help">Specifies the interval (in seconds) between auto-saves.
+
+Valid range: 10-300 seconds
+
+If you do not configure this setting, the default interval of 30 seconds will be used.</string>
+
+      <string id="POL_MinimizeToTray">Minimize to System Tray</string>
+      <string id="POL_MinimizeToTray_Help">Controls whether the application minimizes to the system tray instead of the taskbar.
+
+If you enable this setting, clicking minimize will hide the application to the system tray.
+
+If you disable this setting, the application will minimize to the taskbar normally.</string>
+
+      <string id="POL_LaunchOnStartup">Launch on Windows Startup</string>
+      <string id="POL_LaunchOnStartup_Help">Controls whether PaperFlow starts automatically when Windows starts.
+
+If you enable this setting, PaperFlow will start automatically at Windows login.
+
+If you disable this setting, PaperFlow will not start automatically.</string>
+
+      <!-- Security Settings -->
+      <string id="POL_RequireEncryption">Require PDF Encryption</string>
+      <string id="POL_RequireEncryption_Help">Requires all saved PDFs to be encrypted.
+
+If you enable this setting, users must specify a password when saving PDFs.
+
+If you disable this setting, encryption is optional.</string>
+
+      <string id="POL_MinEncryptionLevel">Minimum Encryption Level</string>
+      <string id="POL_MinEncryptionLevel_Help">Specifies the minimum encryption algorithm for PDF documents.
+
+Options:
+- AES-128: 128-bit AES encryption
+- AES-256: 256-bit AES encryption (more secure)
+
+If you do not configure this setting, AES-128 will be the minimum.</string>
+
+      <string id="Encryption_AES128">AES-128 (128-bit)</string>
+      <string id="Encryption_AES256">AES-256 (256-bit)</string>
+
+      <string id="POL_DisableJavaScript">Disable JavaScript in PDFs</string>
+      <string id="POL_DisableJavaScript_Help">Disables JavaScript execution in PDF documents.
+
+If you enable this setting, JavaScript in PDFs will not execute, improving security but potentially breaking interactive forms.
+
+If you disable this setting, JavaScript will be allowed to execute.</string>
+
+      <string id="POL_DisableExternalLinks">Disable External Links</string>
+      <string id="POL_DisableExternalLinks_Help">Prevents PDF documents from opening external URLs.
+
+If you enable this setting, clicking links in PDFs will not open web browsers or external applications.
+
+If you disable this setting, external links will work normally.</string>
+
+      <string id="POL_TrustedLocations">Trusted Locations</string>
+      <string id="POL_TrustedLocations_Help">Specifies a list of trusted folder locations. Documents opened from these locations will have enhanced trust.
+
+Enter full paths, one per line. Use environment variables if needed (e.g., %USERPROFILE%\Documents).</string>
+
+      <!-- Feature Toggles -->
+      <string id="POL_EnableOCR">Enable OCR Feature</string>
+      <string id="POL_EnableOCR_Help">Enables or disables the Optical Character Recognition (OCR) feature.
+
+If you disable this setting, the OCR feature will not be available to users.</string>
+
+      <string id="POL_EnableRedaction">Enable Redaction Feature</string>
+      <string id="POL_EnableRedaction_Help">Enables or disables the redaction (content removal) feature.
+
+If you disable this setting, users cannot redact content from documents.</string>
+
+      <string id="POL_EnableSignatures">Enable Digital Signatures</string>
+      <string id="POL_EnableSignatures_Help">Enables or disables the ability to add signatures to documents.
+
+If you disable this setting, users cannot add signatures.</string>
+
+      <string id="POL_EnablePrinting">Enable Printing</string>
+      <string id="POL_EnablePrinting_Help">Enables or disables the ability to print documents.
+
+If you disable this setting, the print function will be unavailable.</string>
+
+      <string id="POL_EnableExport">Enable Export Features</string>
+      <string id="POL_EnableExport_Help">Enables or disables document export (Save As, Image Export, etc.).
+
+If you disable this setting, users can only save to the original file.</string>
+
+      <string id="POL_EnableCloudStorage">Enable Cloud Storage Integration</string>
+      <string id="POL_EnableCloudStorage_Help">Enables or disables cloud storage integration (Google Drive, Dropbox, OneDrive).
+
+If you disable this setting, cloud storage options will not be available.</string>
+
+      <string id="POL_EnableBatchProcessing">Enable Batch Processing</string>
+      <string id="POL_EnableBatchProcessing_Help">Enables or disables batch processing features.
+
+If you disable this setting, users cannot process multiple documents at once.</string>
+
+      <!-- Update Settings -->
+      <string id="POL_EnableAutoUpdate">Enable Automatic Updates</string>
+      <string id="POL_EnableAutoUpdate_Help">Controls whether PaperFlow automatically checks for and downloads updates.
+
+If you disable this setting, updates must be installed manually.</string>
+
+      <string id="POL_UpdateChannel">Update Channel</string>
+      <string id="POL_UpdateChannel_Help">Specifies which release channel to use for updates.
+
+Options:
+- Stable: Production releases only
+- Beta: Includes beta releases with new features
+- Alpha: Includes early development builds (not recommended for production)</string>
+
+      <string id="Channel_Stable">Stable</string>
+      <string id="Channel_Beta">Beta</string>
+      <string id="Channel_Alpha">Alpha</string>
+
+      <string id="POL_UpdateServerURL">Custom Update Server URL</string>
+      <string id="POL_UpdateServerURL_Help">Specifies a custom URL for the update server. Use this for on-premise update servers.
+
+If left empty, the default PaperFlow update server will be used.
+
+Example: https://updates.company.com/paperflow</string>
+
+      <string id="POL_CheckFrequency">Update Check Frequency</string>
+      <string id="POL_CheckFrequency_Help">Specifies how often to check for updates.
+
+Options:
+- Hourly: Check every hour
+- Daily: Check once per day
+- Weekly: Check once per week
+- Never: Never check automatically</string>
+
+      <string id="Frequency_Hourly">Hourly</string>
+      <string id="Frequency_Daily">Daily</string>
+      <string id="Frequency_Weekly">Weekly</string>
+      <string id="Frequency_Never">Never</string>
+
+      <!-- Network Settings -->
+      <string id="POL_ProxyServer">Proxy Server Address</string>
+      <string id="POL_ProxyServer_Help">Specifies the proxy server hostname or IP address for network connections.
+
+Leave empty to use system proxy settings or direct connection.</string>
+
+      <string id="POL_ProxyPort">Proxy Server Port</string>
+      <string id="POL_ProxyPort_Help">Specifies the proxy server port number.
+
+Valid range: 1-65535</string>
+
+      <string id="POL_ProxyBypass">Proxy Bypass List</string>
+      <string id="POL_ProxyBypass_Help">Specifies addresses that should bypass the proxy server.
+
+Enter hostnames or IP ranges, one per line. Use wildcards for domains (e.g., *.company.com).</string>
+
+      <string id="POL_AllowTelemetry">Allow Telemetry</string>
+      <string id="POL_AllowTelemetry_Help">Controls whether anonymous usage data is sent to improve the product.
+
+If you disable this setting, no telemetry data will be collected.</string>
+
+      <!-- Performance Settings -->
+      <string id="POL_MaxMemoryUsage">Maximum Memory Usage (MB)</string>
+      <string id="POL_MaxMemoryUsage_Help">Specifies the maximum memory PaperFlow can use (in megabytes).
+
+Valid range: 256-8192 MB
+
+Lower values may cause performance issues with large documents.</string>
+
+      <string id="POL_EnableHardwareAcceleration">Enable Hardware Acceleration</string>
+      <string id="POL_EnableHardwareAcceleration_Help">Enables GPU hardware acceleration for rendering.
+
+If you disable this setting, software rendering will be used, which may be slower but more compatible.</string>
+    </stringTable>
+
+    <presentationTable>
+      <presentation id="POL_DefaultZoom">
+        <decimalTextBox refId="DefaultZoomValue" defaultValue="100">Zoom Level (10-400%):</decimalTextBox>
+      </presentation>
+
+      <presentation id="POL_DefaultViewMode">
+        <dropdownList refId="DefaultViewModeValue" defaultItem="0">View Mode:</dropdownList>
+      </presentation>
+
+      <presentation id="POL_AutoSaveInterval">
+        <decimalTextBox refId="AutoSaveIntervalValue" defaultValue="30">Interval (seconds):</decimalTextBox>
+      </presentation>
+
+      <presentation id="POL_MinEncryptionLevel">
+        <dropdownList refId="MinEncryptionLevelValue" defaultItem="0">Minimum Encryption:</dropdownList>
+      </presentation>
+
+      <presentation id="POL_TrustedLocations">
+        <listBox refId="TrustedLocationsList">Trusted Locations:</listBox>
+      </presentation>
+
+      <presentation id="POL_UpdateChannel">
+        <dropdownList refId="UpdateChannelValue" defaultItem="0">Channel:</dropdownList>
+      </presentation>
+
+      <presentation id="POL_UpdateServerURL">
+        <textBox refId="UpdateServerURLValue">
+          <label>Server URL:</label>
+        </textBox>
+      </presentation>
+
+      <presentation id="POL_CheckFrequency">
+        <dropdownList refId="CheckFrequencyValue" defaultItem="1">Frequency:</dropdownList>
+      </presentation>
+
+      <presentation id="POL_ProxyServer">
+        <textBox refId="ProxyServerValue">
+          <label>Proxy Server:</label>
+        </textBox>
+      </presentation>
+
+      <presentation id="POL_ProxyPort">
+        <decimalTextBox refId="ProxyPortValue" defaultValue="8080">Port:</decimalTextBox>
+      </presentation>
+
+      <presentation id="POL_ProxyBypass">
+        <listBox refId="ProxyBypassList">Bypass List:</listBox>
+      </presentation>
+
+      <presentation id="POL_MaxMemoryUsage">
+        <decimalTextBox refId="MaxMemoryUsageValue" defaultValue="1024">Memory (MB):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

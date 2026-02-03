@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  PaperFlow MDM Configuration Profile for macOS
+
+  Deploy via:
+  - Apple MDM (Jamf, Mosyle, Kandji, etc.)
+  - Apple Configurator
+  - Manual installation (double-click)
+
+  This profile configures managed preferences for PaperFlow.
+-->
+<plist version="1.0">
+<dict>
+  <!-- Profile Metadata -->
+  <key>PayloadContent</key>
+  <array>
+    <!-- Application Settings -->
+    <dict>
+      <key>PayloadType</key>
+      <string>com.paperflow.desktop</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.paperflow.desktop.settings</string>
+      <key>PayloadUUID</key>
+      <string>A1B2C3D4-E5F6-4A5B-6C7D-8E9F0A1B2C3D</string>
+      <key>PayloadDisplayName</key>
+      <string>PaperFlow Application Settings</string>
+      <key>PayloadDescription</key>
+      <string>Configures default application settings for PaperFlow</string>
+      <key>PayloadOrganization</key>
+      <string>PaperFlow Inc.</string>
+
+      <!-- Application Settings -->
+      <key>DefaultZoom</key>
+      <integer>100</integer>
+
+      <key>DefaultViewMode</key>
+      <string>single</string>
+
+      <key>EnableAutoSave</key>
+      <true/>
+
+      <key>AutoSaveInterval</key>
+      <integer>30</integer>
+
+      <key>MinimizeToTray</key>
+      <false/>
+
+      <key>LaunchOnStartup</key>
+      <false/>
+
+      <key>SmoothScrolling</key>
+      <true/>
+
+      <key>DefaultHighlightColor</key>
+      <string>#FFEB3B</string>
+
+      <key>DefaultAnnotationOpacity</key>
+      <real>0.5</real>
+    </dict>
+
+    <!-- Security Settings -->
+    <dict>
+      <key>PayloadType</key>
+      <string>com.paperflow.desktop.security</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.paperflow.desktop.security</string>
+      <key>PayloadUUID</key>
+      <string>B2C3D4E5-F6A7-5B6C-7D8E-9F0A1B2C3D4E</string>
+      <key>PayloadDisplayName</key>
+      <string>PaperFlow Security Settings</string>
+      <key>PayloadDescription</key>
+      <string>Configures security policies for PaperFlow</string>
+      <key>PayloadOrganization</key>
+      <string>PaperFlow Inc.</string>
+
+      <!-- Security Settings -->
+      <key>RequireEncryption</key>
+      <false/>
+
+      <key>MinEncryptionLevel</key>
+      <string>AES-128</string>
+
+      <key>DisableJavaScript</key>
+      <false/>
+
+      <key>DisableExternalLinks</key>
+      <false/>
+
+      <key>TrustedLocations</key>
+      <array>
+        <string>~/Documents</string>
+        <string>/Applications</string>
+      </array>
+    </dict>
+
+    <!-- Feature Toggles -->
+    <dict>
+      <key>PayloadType</key>
+      <string>com.paperflow.desktop.features</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.paperflow.desktop.features</string>
+      <key>PayloadUUID</key>
+      <string>C3D4E5F6-A7B8-6C7D-8E9F-0A1B2C3D4E5F</string>
+      <key>PayloadDisplayName</key>
+      <string>PaperFlow Feature Settings</string>
+      <key>PayloadDescription</key>
+      <string>Enables or disables PaperFlow features</string>
+      <key>PayloadOrganization</key>
+      <string>PaperFlow Inc.</string>
+
+      <!-- Feature Toggles -->
+      <key>EnableOCR</key>
+      <true/>
+
+      <key>EnableRedaction</key>
+      <true/>
+
+      <key>EnableSignatures</key>
+      <true/>
+
+      <key>EnablePrinting</key>
+      <true/>
+
+      <key>EnableExport</key>
+      <true/>
+
+      <key>EnableCloudStorage</key>
+      <true/>
+
+      <key>EnableBatchProcessing</key>
+      <true/>
+
+      <key>EnableFormFilling</key>
+      <true/>
+
+      <key>EnableAnnotations</key>
+      <true/>
+
+      <key>EnableComparison</key>
+      <true/>
+    </dict>
+
+    <!-- Update Settings -->
+    <dict>
+      <key>PayloadType</key>
+      <string>com.paperflow.desktop.updates</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.paperflow.desktop.updates</string>
+      <key>PayloadUUID</key>
+      <string>D4E5F6A7-B8C9-7D8E-9F0A-1B2C3D4E5F6A</string>
+      <key>PayloadDisplayName</key>
+      <string>PaperFlow Update Settings</string>
+      <key>PayloadDescription</key>
+      <string>Configures automatic update behavior</string>
+      <key>PayloadOrganization</key>
+      <string>PaperFlow Inc.</string>
+
+      <!-- Update Settings -->
+      <key>EnableAutoUpdate</key>
+      <true/>
+
+      <key>UpdateChannel</key>
+      <string>stable</string>
+
+      <key>UpdateServerURL</key>
+      <string></string>
+
+      <key>CheckFrequency</key>
+      <string>daily</string>
+
+      <key>AllowPrerelease</key>
+      <false/>
+
+      <key>AllowDowngrade</key>
+      <false/>
+    </dict>
+
+    <!-- Network Settings -->
+    <dict>
+      <key>PayloadType</key>
+      <string>com.paperflow.desktop.network</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.paperflow.desktop.network</string>
+      <key>PayloadUUID</key>
+      <string>E5F6A7B8-C9D0-8E9F-0A1B-2C3D4E5F6A7B</string>
+      <key>PayloadDisplayName</key>
+      <string>PaperFlow Network Settings</string>
+      <key>PayloadDescription</key>
+      <string>Configures network and proxy settings</string>
+      <key>PayloadOrganization</key>
+      <string>PaperFlow Inc.</string>
+
+      <!-- Network Settings -->
+      <key>ProxyServer</key>
+      <string></string>
+
+      <key>ProxyPort</key>
+      <integer>8080</integer>
+
+      <key>ProxyBypass</key>
+      <array>
+        <string>localhost</string>
+        <string>127.0.0.1</string>
+      </array>
+
+      <key>AllowTelemetry</key>
+      <true/>
+
+      <key>OfflineMode</key>
+      <false/>
+    </dict>
+
+    <!-- Performance Settings -->
+    <dict>
+      <key>PayloadType</key>
+      <string>com.paperflow.desktop.performance</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.paperflow.desktop.performance</string>
+      <key>PayloadUUID</key>
+      <string>F6A7B8C9-D0E1-9F0A-1B2C-3D4E5F6A7B8C</string>
+      <key>PayloadDisplayName</key>
+      <string>PaperFlow Performance Settings</string>
+      <key>PayloadDescription</key>
+      <string>Configures performance and resource limits</string>
+      <key>PayloadOrganization</key>
+      <string>PaperFlow Inc.</string>
+
+      <!-- Performance Settings -->
+      <key>MaxMemoryUsageMB</key>
+      <integer>1024</integer>
+
+      <key>EnableHardwareAcceleration</key>
+      <true/>
+
+      <key>ThumbnailCacheSize</key>
+      <integer>100</integer>
+
+      <key>MaxConcurrentOperations</key>
+      <integer>4</integer>
+    </dict>
+  </array>
+
+  <!-- Profile Identification -->
+  <key>PayloadDisplayName</key>
+  <string>PaperFlow Configuration</string>
+
+  <key>PayloadIdentifier</key>
+  <string>com.paperflow.desktop.config</string>
+
+  <key>PayloadOrganization</key>
+  <string>PaperFlow Inc.</string>
+
+  <key>PayloadUUID</key>
+  <string>00112233-4455-6677-8899-AABBCCDDEEFF</string>
+
+  <key>PayloadType</key>
+  <string>Configuration</string>
+
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+
+  <key>PayloadDescription</key>
+  <string>Managed configuration profile for PaperFlow PDF Editor. This profile configures application settings, security policies, feature toggles, and update behavior.</string>
+
+  <key>PayloadScope</key>
+  <string>System</string>
+
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+
+  <!-- Consent Text -->
+  <key>ConsentText</key>
+  <dict>
+    <key>default</key>
+    <string>This profile will configure PaperFlow according to your organization's policies.</string>
+  </dict>
+</dict>
+</plist>

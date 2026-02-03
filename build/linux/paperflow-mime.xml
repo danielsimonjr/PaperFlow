@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <!-- PDF MIME type (usually already defined by system, but we include for completeness) -->
+  <mime-type type="application/pdf">
+    <comment>PDF document</comment>
+    <comment xml:lang="de">PDF-Dokument</comment>
+    <comment xml:lang="fr">document PDF</comment>
+    <comment xml:lang="es">documento PDF</comment>
+    <comment xml:lang="ja">PDFドキュメント</comment>
+    <comment xml:lang="zh">PDF 文档</comment>
+    <acronym>PDF</acronym>
+    <expanded-acronym>Portable Document Format</expanded-acronym>
+    <magic priority="50">
+      <match type="string" value="%PDF-" offset="0"/>
+    </magic>
+    <glob pattern="*.pdf"/>
+    <icon name="application-pdf"/>
+  </mime-type>
+
+  <!-- PaperFlow custom protocol -->
+  <mime-type type="x-scheme-handler/paperflow">
+    <comment>PaperFlow Link</comment>
+    <glob pattern="paperflow:*"/>
+  </mime-type>
+</mime-info>

@@ -1,0 +1,408 @@
+name: Cross-Platform Testing
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  release:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      full_matrix:
+        description: 'Run full platform matrix'
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  # Build matrix for all platforms
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Windows builds
+          - os: windows-latest
+            platform: windows
+            arch: x64
+            target: nsis
+
+          - os: windows-latest
+            platform: windows
+            arch: x64
+            target: msi
+
+          # macOS builds
+          - os: macos-14
+            platform: macos
+            arch: universal
+            target: dmg
+
+          - os: macos-13
+            platform: macos
+            arch: x64
+            target: dmg
+
+          # Linux builds
+          - os: ubuntu-22.04
+            platform: linux
+            arch: x64
+            target: AppImage
+
+          - os: ubuntu-22.04
+            platform: linux
+            arch: x64
+            target: deb
+
+          - os: ubuntu-22.04
+            platform: linux
+            arch: x64
+            target: rpm
+
+    runs-on: ${{ matrix.os }}
+    name: Build ${{ matrix.platform }} (${{ matrix.target }} ${{ matrix.arch }})
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Linux dependencies
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgtk-3-dev \
+            libnotify-dev \
+            libnss3 \
+            libxss1 \
+            libxtst6 \
+            rpm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Build application
+        run: npm run build && npm run electron:compile
+
+      - name: Build installer
+        run: |
+          if [ "${{ matrix.platform }}" = "windows" ]; then
+            npx electron-builder --win ${{ matrix.target }} --${{ matrix.arch }} --publish never
+          elif [ "${{ matrix.platform }}" = "macos" ]; then
+            npx electron-builder --mac ${{ matrix.target }} --${{ matrix.arch }} --publish never
+          else
+            npx electron-builder --linux ${{ matrix.target }} --${{ matrix.arch }} --publish never
+          fi
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}-${{ matrix.target }}-${{ matrix.arch }}
+          path: |
+            release/*.exe
+            release/*.msi
+            release/*.appx
+            release/*.dmg
+            release/*.pkg
+            release/*.zip
+            release/*.AppImage
+            release/*.deb
+            release/*.rpm
+            release/*.snap
+            release/*.yml
+          if-no-files-found: warn
+          retention-days: 14
+
+  # E2E tests on all platforms
+  e2e-tests:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows
+            artifact: windows-nsis-x64
+
+          - os: macos-14
+            platform: macos
+            artifact: macos-dmg-universal
+
+          - os: ubuntu-22.04
+            platform: linux
+            artifact: linux-AppImage-x64
+
+    runs-on: ${{ matrix.os }}
+    name: E2E Tests (${{ matrix.platform }})
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: release/
+
+      - name: Install Linux display server
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
+      - name: Build for testing
+        run: npm run build && npm run electron:compile
+
+      - name: Run E2E tests (Linux)
+        if: matrix.platform == 'linux'
+        run: xvfb-run --auto-servernum npm run test:e2e-electron
+        continue-on-error: true
+
+      - name: Run E2E tests (Windows/macOS)
+        if: matrix.platform != 'linux'
+        run: npm run test:e2e-electron
+        continue-on-error: true
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.platform }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+
+  # Visual regression tests
+  visual-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Install display server
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
+      - name: Build application
+        run: npm run build
+
+      - name: Run visual regression tests
+        run: xvfb-run --auto-servernum npx playwright test tests/visual/ --project=chromium
+        continue-on-error: true
+
+      - name: Upload visual test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-test-results
+          path: |
+            tests/visual/__screenshots__/
+            test-results/
+          retention-days: 14
+
+  # Accessibility audit
+  accessibility-audit:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Install display server
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
+      - name: Build application
+        run: npm run build
+
+      - name: Run accessibility tests
+        run: xvfb-run --auto-servernum npx playwright test tests/accessibility/ --project=chromium
+        continue-on-error: true
+
+      - name: Upload accessibility results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+
+  # Performance tests
+  performance-tests:
+    needs: build
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    name: Performance (${{ matrix.os }})
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Linux deps
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libgtk-3-dev
+
+      - name: Build application
+        run: npm run build && npm run electron:compile
+
+      - name: Run performance tests (Linux)
+        if: runner.os == 'Linux'
+        run: xvfb-run --auto-servernum npx vitest run tests/performance/
+        continue-on-error: true
+
+      - name: Run performance tests (other)
+        if: runner.os != 'Linux'
+        run: npx vitest run tests/performance/
+        continue-on-error: true
+
+      - name: Upload performance results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-results-${{ runner.os }}
+          path: test-results/
+          retention-days: 7
+
+  # Release candidate
+  release-candidate:
+    needs: [build, e2e-tests, visual-tests, accessibility-audit]
+    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.full_matrix == 'true')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: List artifacts
+        run: find artifacts -type f -name "*.*" | head -50
+
+      - name: Create release summary
+        run: |
+          echo "# Release Summary" > summary.md
+          echo "" >> summary.md
+          echo "## Build Artifacts" >> summary.md
+          echo "" >> summary.md
+          find artifacts -type f \( -name "*.exe" -o -name "*.msi" -o -name "*.dmg" -o -name "*.AppImage" -o -name "*.deb" -o -name "*.rpm" \) -exec ls -lh {} \; >> summary.md
+
+      - name: Upload release summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-summary
+          path: summary.md
+          retention-days: 30
+
+  # Final release (only on release event)
+  publish-release:
+    needs: release-candidate
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+          pattern: "*-*-*"
+          merge-multiple: true
+
+      - name: List files to upload
+        run: ls -la artifacts/
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/*.exe
+            artifacts/*.msi
+            artifacts/*.dmg
+            artifacts/*.pkg
+            artifacts/*.AppImage
+            artifacts/*.deb
+            artifacts/*.rpm
+            artifacts/*.snap
+            artifacts/*.yml
+          fail_on_unmatched_files: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# PaperFlow Debian Package Postinstall Script
+#
+
+set -e
+
+case "$1" in
+    configure)
+        echo "Configuring PaperFlow..."
+
+        # Update desktop database
+        if command -v update-desktop-database >/dev/null 2>&1; then
+            update-desktop-database -q /usr/share/applications 2>/dev/null || true
+        fi
+
+        # Update MIME database
+        if command -v update-mime-database >/dev/null 2>&1; then
+            update-mime-database /usr/share/mime 2>/dev/null || true
+        fi
+
+        # Update icon cache
+        if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+            for size in 16 32 48 64 128 256 512; do
+                gtk-update-icon-cache -f -t /usr/share/icons/hicolor 2>/dev/null || true
+            done
+        fi
+
+        # Register MIME type for PDF
+        if command -v xdg-mime >/dev/null 2>&1; then
+            # Add PaperFlow to PDF handlers
+            xdg-mime default paperflow.desktop application/pdf 2>/dev/null || true
+        fi
+
+        # Update alternatives for PDF viewer (optional)
+        if command -v update-alternatives >/dev/null 2>&1; then
+            update-alternatives --install /usr/bin/pdf-viewer pdf-viewer /opt/PaperFlow/paperflow 50 2>/dev/null || true
+        fi
+
+        # Fix permissions for chrome-sandbox
+        SANDBOX="/opt/PaperFlow/chrome-sandbox"
+        if [ -f "$SANDBOX" ]; then
+            chown root:root "$SANDBOX"
+            chmod 4755 "$SANDBOX"
+        fi
+
+        # Create symlink for CLI
+        if [ ! -L /usr/local/bin/paperflow ]; then
+            ln -sf /opt/PaperFlow/paperflow /usr/local/bin/paperflow 2>/dev/null || true
+        fi
+
+        echo "PaperFlow installation complete."
+        ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+        ;;
+
+    *)
+        echo "postinst called with unknown argument '$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

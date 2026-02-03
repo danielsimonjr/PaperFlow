@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PaperFlow ADMX Template for Windows Group Policy Management
+
+  Deploy to: %SystemRoot%\PolicyDefinitions\
+  Language files to: %SystemRoot%\PolicyDefinitions\en-US\
+
+  Registry paths:
+    Machine: HKLM\SOFTWARE\Policies\PaperFlow
+    User: HKCU\SOFTWARE\Policies\PaperFlow
+-->
+<policyDefinitions xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions"
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   revision="1.0"
+                   schemaVersion="1.0">
+  <policyNamespaces>
+    <target prefix="paperflow" namespace="PaperFlow.Policies.PaperFlow" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+
+  <resources minRequiredRevision="1.0" />
+
+  <supportedOn>
+    <definitions>
+      <definition name="SUPPORTED_Windows10" displayName="$(string.SUPPORTED_Windows10)">
+        <or>
+          <range ref="products:MicrosoftWindows10" />
+          <range ref="products:MicrosoftWindows11" />
+        </or>
+      </definition>
+    </definitions>
+  </supportedOn>
+
+  <categories>
+    <category name="PaperFlow" displayName="$(string.CAT_PaperFlow)" />
+    <category name="Application" displayName="$(string.CAT_Application)" parentCategory="PaperFlow" />
+    <category name="Security" displayName="$(string.CAT_Security)" parentCategory="PaperFlow" />
+    <category name="Features" displayName="$(string.CAT_Features)" parentCategory="PaperFlow" />
+    <category name="Updates" displayName="$(string.CAT_Updates)" parentCategory="PaperFlow" />
+    <category name="Network" displayName="$(string.CAT_Network)" parentCategory="PaperFlow" />
+    <category name="Performance" displayName="$(string.CAT_Performance)" parentCategory="PaperFlow" />
+  </categories>
+
+  <policies>
+    <!-- Application Settings -->
+    <policy name="DefaultZoom" class="Both" displayName="$(string.POL_DefaultZoom)"
+            explainText="$(string.POL_DefaultZoom_Help)" presentation="$(presentation.POL_DefaultZoom)"
+            key="SOFTWARE\Policies\PaperFlow\Application">
+      <parentCategory ref="Application" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <decimal id="DefaultZoomValue" valueName="DefaultZoom" minValue="10" maxValue="400" />
+      </elements>
+    </policy>
+
+    <policy name="DefaultViewMode" class="Both" displayName="$(string.POL_DefaultViewMode)"
+            explainText="$(string.POL_DefaultViewMode_Help)" presentation="$(presentation.POL_DefaultViewMode)"
+            key="SOFTWARE\Policies\PaperFlow\Application">
+      <parentCategory ref="Application" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <enum id="DefaultViewModeValue" valueName="DefaultViewMode">
+          <item displayName="$(string.ViewMode_Single)"><value><string>single</string></value></item>
+          <item displayName="$(string.ViewMode_Continuous)"><value><string>continuous</string></value></item>
+          <item displayName="$(string.ViewMode_Spread)"><value><string>spread</string></value></item>
+        </enum>
+      </elements>
+    </policy>
+
+    <policy name="EnableAutoSave" class="Both" displayName="$(string.POL_EnableAutoSave)"
+            explainText="$(string.POL_EnableAutoSave_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Application"
+            valueName="EnableAutoSave">
+      <parentCategory ref="Application" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="AutoSaveInterval" class="Both" displayName="$(string.POL_AutoSaveInterval)"
+            explainText="$(string.POL_AutoSaveInterval_Help)" presentation="$(presentation.POL_AutoSaveInterval)"
+            key="SOFTWARE\Policies\PaperFlow\Application">
+      <parentCategory ref="Application" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <decimal id="AutoSaveIntervalValue" valueName="AutoSaveInterval" minValue="10" maxValue="300" />
+      </elements>
+    </policy>
+
+    <policy name="MinimizeToTray" class="Both" displayName="$(string.POL_MinimizeToTray)"
+            explainText="$(string.POL_MinimizeToTray_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Application"
+            valueName="MinimizeToTray">
+      <parentCategory ref="Application" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="LaunchOnStartup" class="Both" displayName="$(string.POL_LaunchOnStartup)"
+            explainText="$(string.POL_LaunchOnStartup_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Application"
+            valueName="LaunchOnStartup">
+      <parentCategory ref="Application" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <!-- Security Settings -->
+    <policy name="RequireEncryption" class="Machine" displayName="$(string.POL_RequireEncryption)"
+            explainText="$(string.POL_RequireEncryption_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Security"
+            valueName="RequireEncryption">
+      <parentCategory ref="Security" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="MinEncryptionLevel" class="Machine" displayName="$(string.POL_MinEncryptionLevel)"
+            explainText="$(string.POL_MinEncryptionLevel_Help)" presentation="$(presentation.POL_MinEncryptionLevel)"
+            key="SOFTWARE\Policies\PaperFlow\Security">
+      <parentCategory ref="Security" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <enum id="MinEncryptionLevelValue" valueName="MinEncryptionLevel">
+          <item displayName="$(string.Encryption_AES128)"><value><string>AES-128</string></value></item>
+          <item displayName="$(string.Encryption_AES256)"><value><string>AES-256</string></value></item>
+        </enum>
+      </elements>
+    </policy>
+
+    <policy name="DisableJavaScript" class="Machine" displayName="$(string.POL_DisableJavaScript)"
+            explainText="$(string.POL_DisableJavaScript_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Security"
+            valueName="DisableJavaScript">
+      <parentCategory ref="Security" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="DisableExternalLinks" class="Machine" displayName="$(string.POL_DisableExternalLinks)"
+            explainText="$(string.POL_DisableExternalLinks_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Security"
+            valueName="DisableExternalLinks">
+      <parentCategory ref="Security" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="TrustedLocations" class="Machine" displayName="$(string.POL_TrustedLocations)"
+            explainText="$(string.POL_TrustedLocations_Help)" presentation="$(presentation.POL_TrustedLocations)"
+            key="SOFTWARE\Policies\PaperFlow\Security">
+      <parentCategory ref="Security" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <list id="TrustedLocationsList" valueName="TrustedLocations" additive="true" />
+      </elements>
+    </policy>
+
+    <!-- Feature Toggles -->
+    <policy name="EnableOCR" class="Both" displayName="$(string.POL_EnableOCR)"
+            explainText="$(string.POL_EnableOCR_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Features"
+            valueName="EnableOCR">
+      <parentCategory ref="Features" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="EnableRedaction" class="Both" displayName="$(string.POL_EnableRedaction)"
+            explainText="$(string.POL_EnableRedaction_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Features"
+            valueName="EnableRedaction">
+      <parentCategory ref="Features" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="EnableSignatures" class="Both" displayName="$(string.POL_EnableSignatures)"
+            explainText="$(string.POL_EnableSignatures_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Features"
+            valueName="EnableSignatures">
+      <parentCategory ref="Features" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="EnablePrinting" class="Both" displayName="$(string.POL_EnablePrinting)"
+            explainText="$(string.POL_EnablePrinting_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Features"
+            valueName="EnablePrinting">
+      <parentCategory ref="Features" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="EnableExport" class="Both" displayName="$(string.POL_EnableExport)"
+            explainText="$(string.POL_EnableExport_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Features"
+            valueName="EnableExport">
+      <parentCategory ref="Features" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="EnableCloudStorage" class="Both" displayName="$(string.POL_EnableCloudStorage)"
+            explainText="$(string.POL_EnableCloudStorage_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Features"
+            valueName="EnableCloudStorage">
+      <parentCategory ref="Features" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="EnableBatchProcessing" class="Both" displayName="$(string.POL_EnableBatchProcessing)"
+            explainText="$(string.POL_EnableBatchProcessing_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Features"
+            valueName="EnableBatchProcessing">
+      <parentCategory ref="Features" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <!-- Update Settings -->
+    <policy name="EnableAutoUpdate" class="Machine" displayName="$(string.POL_EnableAutoUpdate)"
+            explainText="$(string.POL_EnableAutoUpdate_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Updates"
+            valueName="EnableAutoUpdate">
+      <parentCategory ref="Updates" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <policy name="UpdateChannel" class="Machine" displayName="$(string.POL_UpdateChannel)"
+            explainText="$(string.POL_UpdateChannel_Help)" presentation="$(presentation.POL_UpdateChannel)"
+            key="SOFTWARE\Policies\PaperFlow\Updates">
+      <parentCategory ref="Updates" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <enum id="UpdateChannelValue" valueName="UpdateChannel">
+          <item displayName="$(string.Channel_Stable)"><value><string>stable</string></value></item>
+          <item displayName="$(string.Channel_Beta)"><value><string>beta</string></value></item>
+          <item displayName="$(string.Channel_Alpha)"><value><string>alpha</string></value></item>
+        </enum>
+      </elements>
+    </policy>
+
+    <policy name="UpdateServerURL" class="Machine" displayName="$(string.POL_UpdateServerURL)"
+            explainText="$(string.POL_UpdateServerURL_Help)" presentation="$(presentation.POL_UpdateServerURL)"
+            key="SOFTWARE\Policies\PaperFlow\Updates">
+      <parentCategory ref="Updates" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <text id="UpdateServerURLValue" valueName="UpdateServerURL" maxLength="500" />
+      </elements>
+    </policy>
+
+    <policy name="CheckFrequency" class="Machine" displayName="$(string.POL_CheckFrequency)"
+            explainText="$(string.POL_CheckFrequency_Help)" presentation="$(presentation.POL_CheckFrequency)"
+            key="SOFTWARE\Policies\PaperFlow\Updates">
+      <parentCategory ref="Updates" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <enum id="CheckFrequencyValue" valueName="CheckFrequency">
+          <item displayName="$(string.Frequency_Hourly)"><value><string>hourly</string></value></item>
+          <item displayName="$(string.Frequency_Daily)"><value><string>daily</string></value></item>
+          <item displayName="$(string.Frequency_Weekly)"><value><string>weekly</string></value></item>
+          <item displayName="$(string.Frequency_Never)"><value><string>never</string></value></item>
+        </enum>
+      </elements>
+    </policy>
+
+    <!-- Network Settings -->
+    <policy name="ProxyServer" class="Machine" displayName="$(string.POL_ProxyServer)"
+            explainText="$(string.POL_ProxyServer_Help)" presentation="$(presentation.POL_ProxyServer)"
+            key="SOFTWARE\Policies\PaperFlow\Network">
+      <parentCategory ref="Network" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <text id="ProxyServerValue" valueName="ProxyServer" maxLength="200" />
+      </elements>
+    </policy>
+
+    <policy name="ProxyPort" class="Machine" displayName="$(string.POL_ProxyPort)"
+            explainText="$(string.POL_ProxyPort_Help)" presentation="$(presentation.POL_ProxyPort)"
+            key="SOFTWARE\Policies\PaperFlow\Network">
+      <parentCategory ref="Network" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <decimal id="ProxyPortValue" valueName="ProxyPort" minValue="1" maxValue="65535" />
+      </elements>
+    </policy>
+
+    <policy name="ProxyBypass" class="Machine" displayName="$(string.POL_ProxyBypass)"
+            explainText="$(string.POL_ProxyBypass_Help)" presentation="$(presentation.POL_ProxyBypass)"
+            key="SOFTWARE\Policies\PaperFlow\Network">
+      <parentCategory ref="Network" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <list id="ProxyBypassList" valueName="ProxyBypass" additive="true" />
+      </elements>
+    </policy>
+
+    <policy name="AllowTelemetry" class="Machine" displayName="$(string.POL_AllowTelemetry)"
+            explainText="$(string.POL_AllowTelemetry_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Network"
+            valueName="AllowTelemetry">
+      <parentCategory ref="Network" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+
+    <!-- Performance Settings -->
+    <policy name="MaxMemoryUsage" class="Machine" displayName="$(string.POL_MaxMemoryUsage)"
+            explainText="$(string.POL_MaxMemoryUsage_Help)" presentation="$(presentation.POL_MaxMemoryUsage)"
+            key="SOFTWARE\Policies\PaperFlow\Performance">
+      <parentCategory ref="Performance" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <elements>
+        <decimal id="MaxMemoryUsageValue" valueName="MaxMemoryUsageMB" minValue="256" maxValue="8192" />
+      </elements>
+    </policy>
+
+    <policy name="EnableHardwareAcceleration" class="Both" displayName="$(string.POL_EnableHardwareAcceleration)"
+            explainText="$(string.POL_EnableHardwareAcceleration_Help)"
+            key="SOFTWARE\Policies\PaperFlow\Performance"
+            valueName="EnableHardwareAcceleration">
+      <parentCategory ref="Performance" />
+      <supportedOn ref="SUPPORTED_Windows10" />
+      <enabledValue><decimal value="1" /></enabledValue>
+      <disabledValue><decimal value="0" /></disabledValue>
+    </policy>
+  </policies>
+</policyDefinitions>

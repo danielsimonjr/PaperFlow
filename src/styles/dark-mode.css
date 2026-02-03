@@ -1,0 +1,335 @@
+/**
+ * Dark Mode Styles
+ *
+ * Comprehensive dark mode support with smooth transitions
+ * and platform-specific adaptations.
+ */
+
+/* ========================
+   CSS Variables
+   ======================== */
+
+/* Light mode (default) */
+:root {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-tertiary: #f3f4f6;
+  --color-bg-elevated: #ffffff;
+
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-tertiary: #9ca3af;
+  --color-text-inverse: #ffffff;
+
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --color-border-focus: #3b82f6;
+
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a5f;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+/* Dark mode */
+.dark,
+[data-theme="dark"] {
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-bg-elevated: #1e293b;
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-tertiary: #64748b;
+  --color-text-inverse: #0f172a;
+
+  --color-border: #334155;
+  --color-border-light: #1e293b;
+  --color-border-focus: #60a5fa;
+
+  --color-primary-50: #1e293b;
+  --color-primary-100: #334155;
+  --color-primary-200: #475569;
+  --color-primary-300: #64748b;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a5f;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+}
+
+/* ========================
+   Base Styles
+   ======================== */
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ========================
+   Theme Transitions
+   ======================== */
+
+/* Smooth transitions for theme changes */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+/* Disable transitions during initial load */
+.no-transitions *,
+.no-transitions *::before,
+.no-transitions *::after {
+  transition: none !important;
+}
+
+/* ========================
+   Component Overrides
+   ======================== */
+
+/* Buttons */
+.dark .btn-primary {
+  background-color: var(--color-primary-500);
+  color: var(--color-text-inverse);
+}
+
+.dark .btn-secondary {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+/* Inputs */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: var(--color-border-focus);
+  outline-color: var(--color-border-focus);
+}
+
+/* Cards and panels */
+.dark .card {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+/* Dialogs */
+.dark .dialog,
+.dark [role="dialog"] {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border);
+}
+
+/* Dropdowns */
+.dark .dropdown,
+.dark [role="menu"] {
+  background-color: var(--color-bg-elevated);
+  border-color: var(--color-border);
+}
+
+/* Tooltips */
+.dark .tooltip {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+/* ========================
+   PDF Viewer Dark Mode
+   ======================== */
+
+.dark .pdf-viewer {
+  background-color: var(--color-bg-tertiary);
+}
+
+.dark .pdf-page {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Optional: Invert PDF pages for dark mode */
+.dark .pdf-page-invert canvas {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* ========================
+   Annotation Colors
+   ======================== */
+
+/* Highlight colors in dark mode */
+.dark .highlight-yellow { background-color: rgba(255, 235, 59, 0.4); }
+.dark .highlight-green { background-color: rgba(76, 175, 80, 0.4); }
+.dark .highlight-blue { background-color: rgba(33, 150, 243, 0.4); }
+.dark .highlight-pink { background-color: rgba(233, 30, 99, 0.4); }
+.dark .highlight-orange { background-color: rgba(255, 152, 0, 0.4); }
+
+/* ========================
+   Sidebar Dark Mode
+   ======================== */
+
+.dark .sidebar {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+.dark .thumbnail {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-border);
+}
+
+.dark .thumbnail:hover {
+  border-color: var(--color-primary-400);
+}
+
+.dark .thumbnail.active {
+  border-color: var(--color-primary-500);
+}
+
+/* ========================
+   Toolbar Dark Mode
+   ======================== */
+
+.dark .toolbar {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+.dark .toolbar-button {
+  color: var(--color-text-primary);
+}
+
+.dark .toolbar-button:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.dark .toolbar-button.active {
+  background-color: var(--color-primary-900);
+  color: var(--color-primary-300);
+}
+
+/* ========================
+   Status Bar
+   ======================== */
+
+.dark .status-bar {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+/* ========================
+   Code and Pre
+   ======================== */
+
+.dark code {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-primary-300);
+}
+
+.dark pre {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+/* ========================
+   Tables
+   ======================== */
+
+.dark table {
+  border-color: var(--color-border);
+}
+
+.dark th {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+.dark td {
+  border-color: var(--color-border);
+}
+
+.dark tr:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+/* ========================
+   Links
+   ======================== */
+
+.dark a {
+  color: var(--color-primary-400);
+}
+
+.dark a:hover {
+  color: var(--color-primary-300);
+}
+
+/* ========================
+   System Dark Mode
+   ======================== */
+
+/* Auto-detect system preference */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg-primary: #0f172a;
+    --color-bg-secondary: #1e293b;
+    --color-bg-tertiary: #334155;
+    --color-bg-elevated: #1e293b;
+
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #94a3b8;
+    --color-text-tertiary: #64748b;
+    --color-text-inverse: #0f172a;
+
+    --color-border: #334155;
+    --color-border-light: #1e293b;
+    --color-border-focus: #60a5fa;
+  }
+}
+
+/* ========================
+   High Contrast Dark Mode
+   ======================== */
+
+.high-contrast.dark {
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #111111;
+  --color-text-primary: #ffffff;
+  --color-border: #ffffff;
+}

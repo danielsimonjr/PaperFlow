@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  PaperFlow macOS Installer Distribution XML
+
+  This file defines the installer UI, system requirements,
+  and installation behavior for MDM deployment.
+-->
+<installer-gui-script minSpecVersion="1">
+    <!-- Product identification -->
+    <title>PaperFlow</title>
+    <organization>com.paperflow</organization>
+
+    <!-- Background image (optional) -->
+    <background file="background.png" alignment="bottomleft" scaling="none"/>
+    <background-darkAqua file="background-dark.png" alignment="bottomleft" scaling="none"/>
+
+    <!-- Welcome, license, and readme -->
+    <welcome file="welcome.html"/>
+    <license file="license.html"/>
+    <readme file="readme.html"/>
+
+    <!-- Conclusion message -->
+    <conclusion file="conclusion.html"/>
+
+    <!-- System requirements -->
+    <os-version-requires>
+        <allowed-os-versions>
+            <os-version min="10.13"/>
+        </allowed-os-versions>
+    </os-version-requires>
+
+    <!-- Volume check - only allow installation on boot volume -->
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="10.13"/>
+        </allowed-os-versions>
+    </volume-check>
+
+    <!-- Require admin authentication -->
+    <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>
+
+    <!-- Installation options -->
+    <options
+        customize="never"
+        require-scripts="true"
+        hostArchitectures="x86_64,arm64"
+        rootVolumeOnly="true"/>
+
+    <!-- Package references -->
+    <pkg-ref id="com.paperflow.desktop"/>
+
+    <!-- Installation choices -->
+    <choices-outline>
+        <line choice="default">
+            <line choice="com.paperflow.desktop"/>
+        </line>
+    </choices-outline>
+
+    <!-- Choice definitions -->
+    <choice
+        id="default"
+        title="PaperFlow"
+        description="Install PaperFlow PDF Editor"/>
+
+    <choice
+        id="com.paperflow.desktop"
+        visible="true"
+        enabled="true"
+        selected="true"
+        title="PaperFlow"
+        description="PaperFlow PDF Editor application">
+        <pkg-ref id="com.paperflow.desktop"/>
+    </choice>
+
+    <!-- Package reference details -->
+    <pkg-ref
+        id="com.paperflow.desktop"
+        version="4.5.0"
+        onConclusion="none">
+        #PaperFlow-component.pkg
+    </pkg-ref>
+
+    <!-- Installation check script -->
+    <installation-check script="installationCheck()">
+        <![CDATA[
+        function installationCheck() {
+            // Check for minimum macOS version
+            if (system.compareVersions(system.version.ProductVersion, '10.13') < 0) {
+                my.result.title = 'macOS Version Too Old';
+                my.result.message = 'PaperFlow requires macOS 10.13 (High Sierra) or later.';
+                my.result.type = 'Fatal';
+                return false;
+            }
+
+            // Check for sufficient disk space (500 MB)
+            var requiredSpace = 500 * 1024 * 1024;
+            if (system.files.freeSpaceOnVolume('/') < requiredSpace) {
+                my.result.title = 'Insufficient Disk Space';
+                my.result.message = 'PaperFlow requires at least 500 MB of free disk space.';
+                my.result.type = 'Fatal';
+                return false;
+            }
+
+            return true;
+        }
+        ]]>
+    </installation-check>
+
+    <!-- Volume check script -->
+    <volume-check script="volumeCheck()">
+        <![CDATA[
+        function volumeCheck() {
+            // Only allow installation on system volume
+            if (my.target.systemVersion) {
+                return true;
+            }
+            my.result.title = 'Invalid Volume';
+            my.result.message = 'PaperFlow must be installed on the system volume.';
+            my.result.type = 'Fatal';
+            return false;
+        }
+        ]]>
+    </volume-check>
+</installer-gui-script>

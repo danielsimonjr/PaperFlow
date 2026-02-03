@@ -1,0 +1,256 @@
+/**
+ * Platform-Specific Font Configuration
+ *
+ * System font stacks optimized for Windows, macOS, and Linux
+ */
+
+/* ========================
+   Font Face Definitions
+   ======================== */
+
+/* Use system fonts - no need to load external fonts */
+
+/* ========================
+   CSS Custom Properties
+   ======================== */
+
+:root {
+  /* Default system font stack */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* Monospace font stack */
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Font sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.8125rem;    /* 13px */
+  --text-base: 0.875rem;   /* 14px - smaller for density */
+  --text-lg: 1rem;         /* 16px */
+  --text-xl: 1.125rem;     /* 18px */
+  --text-2xl: 1.25rem;     /* 20px */
+  --text-3xl: 1.5rem;      /* 24px */
+
+  /* Line heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* Font weights */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+}
+
+/* ========================
+   macOS Typography
+   ======================== */
+
+.platform-macos {
+  /* San Francisco font family */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace;
+
+  /* macOS uses slightly larger base size */
+  --text-base: 0.9375rem;  /* 15px */
+
+  /* macOS font smoothing */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* SF Pro Display for larger text */
+.platform-macos h1,
+.platform-macos h2,
+.platform-macos h3 {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* ========================
+   Windows Typography
+   ======================== */
+
+.platform-windows {
+  /* Segoe UI Variable for Windows 11, fallback to Segoe UI */
+  --font-sans: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "Cascadia Code", "Cascadia Mono", Consolas, "Courier New", monospace;
+
+  /* Windows uses standard ClearType rendering */
+  -webkit-font-smoothing: auto;
+}
+
+/* Segoe UI Variable sizes */
+@supports (font-variation-settings: normal) {
+  .platform-windows {
+    font-optical-sizing: auto;
+  }
+}
+
+/* Windows: Semibold for emphasis */
+.platform-windows strong,
+.platform-windows b {
+  font-weight: 600;
+}
+
+/* ========================
+   Linux Typography
+   ======================== */
+
+.platform-linux {
+  /* Ubuntu and common Linux fonts */
+  --font-sans: system-ui, "Ubuntu", "Cantarell", "Noto Sans", "Liberation Sans", -apple-system, sans-serif;
+  --font-mono: "Ubuntu Mono", "Liberation Mono", "DejaVu Sans Mono", "Cascadia Mono", ui-monospace, monospace;
+
+  /* Linux may use subpixel rendering */
+  -webkit-font-smoothing: auto;
+}
+
+/* GNOME/GTK style */
+.platform-linux[data-desktop="gnome"] {
+  --font-sans: "Cantarell", system-ui, sans-serif;
+}
+
+/* KDE/Qt style */
+.platform-linux[data-desktop="kde"] {
+  --font-sans: "Noto Sans", system-ui, sans-serif;
+}
+
+/* ========================
+   Typography Classes
+   ======================== */
+
+/* Headings */
+h1, .text-3xl {
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+  font-weight: var(--font-bold);
+}
+
+h2, .text-2xl {
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+  font-weight: var(--font-semibold);
+}
+
+h3, .text-xl {
+  font-size: var(--text-xl);
+  line-height: var(--leading-tight);
+  font-weight: var(--font-semibold);
+}
+
+h4, .text-lg {
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
+  font-weight: var(--font-medium);
+}
+
+/* Body text */
+body, .text-base {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  font-weight: var(--font-normal);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.text-xs {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+}
+
+/* Monospace */
+code, pre, kbd, .font-mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* Labels and captions */
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  letter-spacing: 0.01em;
+}
+
+.caption {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary, #6b7280);
+}
+
+/* ========================
+   Number Formatting
+   ======================== */
+
+/* Tabular numbers for alignment */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Proportional numbers (default) */
+.proportional-nums {
+  font-variant-numeric: proportional-nums;
+}
+
+/* Oldstyle figures */
+.oldstyle-nums {
+  font-variant-numeric: oldstyle-nums;
+}
+
+/* ========================
+   Keyboard Shortcut Display
+   ======================== */
+
+kbd {
+  display: inline-block;
+  padding: 0.125em 0.375em;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-weight: var(--font-medium);
+  line-height: 1;
+  background-color: var(--color-bg-secondary, #f3f4f6);
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 0.25rem;
+  box-shadow: inset 0 -1px 0 var(--color-border, #d1d5db);
+}
+
+/* macOS keyboard symbols */
+.platform-macos kbd {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ========================
+   High Contrast Support
+   ======================== */
+
+.high-contrast {
+  font-weight: calc(var(--font-normal) + 100);
+}
+
+@media (forced-colors: active) {
+  body {
+    font-weight: normal;
+  }
+}
+
+/* ========================
+   Print Typography
+   ======================== */
+
+@media print {
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  code, pre {
+    font-family: "Courier New", Courier, monospace;
+  }
+}

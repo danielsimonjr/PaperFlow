@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Mac App Store entitlements -->
+
+    <!-- App Sandbox - Required for MAS -->
+    <key>com.apple.security.app-sandbox</key>
+    <true/>
+
+    <!-- Network access -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+
+    <!-- File access - user selected files -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+
+    <!-- File access - downloads folder -->
+    <key>com.apple.security.files.downloads.read-write</key>
+    <true/>
+
+    <!-- Printing -->
+    <key>com.apple.security.print</key>
+    <true/>
+
+    <!-- USB devices (for scanners/printers) -->
+    <key>com.apple.security.device.usb</key>
+    <true/>
+
+    <!-- Accessibility (for OCR) -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+
+    <!-- Team ID for app groups -->
+    <key>com.apple.security.application-groups</key>
+    <array>
+        <string>$(TeamIdentifierPrefix)com.paperflow.app</string>
+    </array>
+</dict>
+</plist>

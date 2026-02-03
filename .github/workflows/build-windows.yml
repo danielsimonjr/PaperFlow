@@ -1,0 +1,155 @@
+name: Build Windows
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      sign:
+        description: 'Sign the builds'
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        target: [nsis, msi, appx]
+        arch: [x64]
+        include:
+          - target: nsis
+            arch: ia32
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run type checking
+        run: npm run typecheck
+
+      - name: Run tests
+        run: npm run test:unit
+
+      - name: Build application
+        run: npm run build
+
+      - name: Compile Electron
+        run: npm run electron:compile
+
+      - name: Build Windows installer (${{ matrix.target }} ${{ matrix.arch }})
+        run: npx electron-builder --win ${{ matrix.target }} --${{ matrix.arch }} --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Code signing (requires EV certificate)
+          CSC_LINK: ${{ secrets.WIN_CERTIFICATE_FILE }}
+          CSC_KEY_PASSWORD: ${{ secrets.WIN_CERTIFICATE_PASSWORD }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CERTIFICATE_FILE }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERTIFICATE_PASSWORD }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-${{ matrix.target }}-${{ matrix.arch }}
+          path: |
+            release/*.exe
+            release/*.msi
+            release/*.appx
+            release/*.msix
+            release/*.blockmap
+            release/*.yml
+          if-no-files-found: warn
+          retention-days: 14
+
+  test-windows-installers:
+    needs: build-windows
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        target: [nsis, msi]
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-${{ matrix.target }}-x64
+          path: installers/
+
+      - name: Test NSIS installer
+        if: matrix.target == 'nsis'
+        shell: powershell
+        run: |
+          $installer = Get-ChildItem -Path installers -Filter "*.exe" | Select-Object -First 1
+          if ($installer) {
+            Write-Host "Testing installer: $($installer.Name)"
+            # Silent install
+            Start-Process -FilePath $installer.FullName -ArgumentList "/S" -Wait
+            # Verify installation
+            if (Test-Path "C:\Program Files\PaperFlow\PaperFlow.exe") {
+              Write-Host "Installation successful"
+            } else {
+              Write-Error "Installation failed - executable not found"
+              exit 1
+            }
+            # Silent uninstall
+            $uninstaller = "C:\Program Files\PaperFlow\Uninstall PaperFlow.exe"
+            if (Test-Path $uninstaller) {
+              Start-Process -FilePath $uninstaller -ArgumentList "/S" -Wait
+            }
+          }
+
+      - name: Test MSI installer
+        if: matrix.target == 'msi'
+        shell: powershell
+        run: |
+          $installer = Get-ChildItem -Path installers -Filter "*.msi" | Select-Object -First 1
+          if ($installer) {
+            Write-Host "Testing MSI: $($installer.Name)"
+            # Silent install
+            Start-Process -FilePath "msiexec.exe" -ArgumentList "/i", $installer.FullName, "/quiet", "/norestart" -Wait
+            # Verify installation
+            Start-Sleep -Seconds 5
+            if (Test-Path "C:\Program Files\PaperFlow\PaperFlow.exe") {
+              Write-Host "MSI installation successful"
+            }
+            # Silent uninstall
+            Start-Process -FilePath "msiexec.exe" -ArgumentList "/x", $installer.FullName, "/quiet", "/norestart" -Wait
+          }
+
+  publish-windows:
+    needs: [build-windows, test-windows-installers]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all Windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: windows-*
+          path: release/
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            release/*.exe
+            release/*.msi
+            release/*.appx
+            release/*.yml
+          draft: true
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
