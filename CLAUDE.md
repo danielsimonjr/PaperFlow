@@ -458,6 +458,13 @@ Use barrel exports for cleaner imports:
 - `import { useFileSystem, useAutoSave } from '@hooks'`
 - `import { cn, getPlatformInfo } from '@utils'`
 
+## Build Notes
+
+Expected warnings (not errors):
+- CSS `@import` order warnings from PostCSS
+- Chunk size warnings for pdf-engine (~797KB)
+- Full test suite: ~5 minutes, 2,400+ tests
+
 ## Testing Tips
 
 - Prefer `npx vitest run` over `npm run test:unit` for more reliable test discovery

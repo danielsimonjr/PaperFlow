@@ -34,6 +34,7 @@ test-results/
 # OS files
 .DS_Store
 Thumbs.db
+*.lnk
 
 # TypeScript cache
 *.tsbuildinfo
