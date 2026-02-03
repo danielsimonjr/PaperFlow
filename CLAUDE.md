@@ -437,6 +437,15 @@ Options:
 - `--exclude`: Glob patterns to exclude
 - `--depth`: Maximum dependency depth to traverse
 
+Outputs to `docs/architecture/DEPENDENCY_GRAPH.md`, `dependency-graph.json`, `unused-analysis.md`.
+
+## Import Patterns
+
+Use barrel exports for cleaner imports:
+- `import { useDocumentStore, useAnnotationStore } from '@stores'`
+- `import { useFileSystem, useAutoSave } from '@hooks'`
+- `import { cn, getPlatformInfo } from '@utils'`
+
 ## Testing Tips
 
 - Prefer `npx vitest run` over `npm run test:unit` for more reliable test discovery
@@ -448,6 +457,7 @@ Options:
 - Limit parallel subagents to 3 to avoid cascading failures
 - Subagents may fail at completion but still write files - check file existence before retrying
 - For documentation tasks, verify files were created with `Glob` before spawning retry agents
+- Use `gh issue create --repo <repo> --title "<title>" --body "<body>"` to file bug reports
 
 ## Windows Development Notes
 
