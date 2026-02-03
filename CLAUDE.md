@@ -365,3 +365,22 @@ Release artifacts output to `release/` directory.
 - [IPC Patterns](docs/architecture/ipc-patterns.md)
 - [Offline-First Architecture](docs/architecture/offline-first.md)
 - [Enterprise Features](docs/architecture/enterprise-features.md)
+
+## Testing Tips
+
+- Prefer `npx vitest run` over `npm run test:unit` for more reliable test discovery
+- Run specific test: `npx vitest run tests/unit/path/to/test.ts`
+- Check sprint status: `grep '"status"' docs/planning/sprints/PHASE_*_SPRINT_*_TODO.json`
+
+## Windows Development Notes
+
+- Avoid creating files named `NUL`, `CON`, `PRN`, `AUX` (Windows reserved device names cause git issues)
+- If `git add` fails with "unable to index file 'NUL'", delete the file: `rm -f NUL`
+
+## Sprint Planning Files
+
+Sprint TODOs are in `docs/planning/sprints/PHASE_X_SPRINT_Y_TODO.json`:
+- `status`: "pending", "complete", or "completed"
+- `completedAt`: ISO date when marked complete
+- `blockedBy`: Array of sprint numbers that must complete first
+- `canParallelWith`: Array of sprints that can run concurrently
