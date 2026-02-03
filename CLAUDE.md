@@ -371,6 +371,72 @@ Release artifacts output to `release/` directory.
 - [Data Flow](docs/architecture/DATAFLOW.md)
 - [Component Reference](docs/architecture/COMPONENTS.md)
 
+## Development Tools
+
+The `tools/` directory contains CLI utilities for development workflows:
+
+### Context Compressor (`tools/compress-for-context/`)
+
+Compresses files for LLM context windows using format-specific strategies. Supports JSON, YAML, Markdown, CSV, TypeScript/JavaScript, and more.
+
+```bash
+# Basic usage
+npx tsx tools/compress-for-context/compress-for-context.ts <input> [options]
+
+# Examples
+npx tsx tools/compress-for-context/compress-for-context.ts src/stores/documentStore.ts
+npx tsx tools/compress-for-context/compress-for-context.ts package.json --format json
+npx tsx tools/compress-for-context/compress-for-context.ts . --recursive --output context.txt
+```
+
+Options:
+- `--format`: Force specific format (json, yaml, markdown, csv, typescript, etc.)
+- `--output, -o`: Output file path (default: stdout)
+- `--recursive, -r`: Process directories recursively
+- `--max-depth`: Maximum recursion depth
+- `--exclude`: Glob patterns to exclude
+
+### File Chunker (`tools/chunking-for-files/`)
+
+Splits large files into manageable chunks for editing, then merges them back. Useful for editing large files that exceed context limits.
+
+```bash
+# Split a large file into chunks
+npx tsx tools/chunking-for-files/chunking-for-files.ts split <file> [options]
+
+# Merge chunks back together
+npx tsx tools/chunking-for-files/chunking-for-files.ts merge <file>
+
+# Check chunk status
+npx tsx tools/chunking-for-files/chunking-for-files.ts status <file>
+```
+
+Options:
+- `--chunk-size, -s`: Target chunk size in lines (default: 500)
+- `--output-dir, -o`: Directory for chunk files
+- `--format`: File format hint (markdown, json, typescript)
+
+### Dependency Graph Generator (`tools/create-dependency-graph/`)
+
+Analyzes codebase dependencies and generates visual dependency graphs.
+
+```bash
+# Generate dependency graph for the project
+npx tsx tools/create-dependency-graph/create-dependency-graph.ts [options]
+```
+
+Outputs:
+- `DEPENDENCY_GRAPH.md`: Markdown documentation with Mermaid diagrams
+- `dependency-graph.json`: Machine-readable JSON format
+- `dependency-graph.yaml`: YAML format for configuration tools
+
+Options:
+- `--entry`: Entry point file(s) to analyze
+- `--output-dir, -o`: Output directory for generated files
+- `--include`: Glob patterns to include
+- `--exclude`: Glob patterns to exclude
+- `--depth`: Maximum dependency depth to traverse
+
 ## Testing Tips
 
 - Prefer `npx vitest run` over `npm run test:unit` for more reliable test discovery
