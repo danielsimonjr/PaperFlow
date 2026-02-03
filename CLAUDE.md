@@ -332,6 +332,16 @@ All variables are optional (Phase 2+ features):
 - Memory (100-page PDF): < 500 MB
 - Native file save: < 500 ms
 
+### Electron Build Troubleshooting
+- `npm run electron:build -- --win --x64` - Windows x64 only
+- `npx electron-builder --win --x64` - Skip web build if already done
+- Portable build output: `release/PaperFlow-{version}-win-x64.exe`
+- **"Readable is not exported"** - Add `ssr: true` to vite.electron.config.ts
+- **Missing icons error** - Create PNGs in build/icons/ (16x16 through 512x512)
+- **NSIS script errors** - Comment out `nsis.include` in electron-builder.yml, use portable target
+- **electron-builder v26.7.0** - Removed: win.publisherName, signDlls, deb.section, rpm.recommends
+- **linux.desktop config** - Properties must be under `entry:` subobject, not directly under `desktop:`
+
 ## Color Theme
 
 ```css
