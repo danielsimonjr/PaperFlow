@@ -279,6 +279,10 @@ fix(annotations): correct highlight position
 docs(readme): update installation steps
 ```
 
+## Changelog
+
+Always update `CHANGELOG.md` when making codebase changes. Follow [Keep a Changelog](https://keepachangelog.com/) format under `[Unreleased]` section.
+
 ## Environment Setup
 
 Copy `.env.example` to `.env.local` for local development:

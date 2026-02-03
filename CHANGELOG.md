@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+#### Architecture Documentation
+- Comprehensive architecture docs: ARCHITECTURE.md, OVERVIEW.md, API.md, DATAFLOW.md, COMPONENTS.md
+- Dependency graph analysis with DEPENDENCY_GRAPH.md (264 files, 0 circular dependencies)
+- Unused code analysis report in unused-analysis.md
+
+#### Module Organization
+- Barrel exports for stores (`src/stores/index.ts`) - 26 Zustand stores
+- Barrel exports for hooks (`src/hooks/index.ts`) - 26 React hooks
+- Barrel exports for utils (`src/utils/index.ts`) - coordinate, platform, cn utilities
+
+#### Development Tools Documentation
+- Document compress-for-context tool for LLM context compression
+- Document chunking-for-files tool for large file editing
+- Document create-dependency-graph tool for codebase analysis
+
 ### Fixed
 
 #### Code Review Fixes (Phase 3 Q4 - Sprints 19-24)
