@@ -5,7 +5,7 @@
  */
 
 import { BrowserWindow, ipcMain, session } from 'electron';
-import { IPC_CHANNELS } from '../ipc/channels';
+import { IPC_CHANNELS } from '../../ipc/channels';
 
 /**
  * WebAuthn bridge configuration

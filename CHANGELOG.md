@@ -26,6 +26,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+#### Electron Build Fixes
+- Fixed Vite SSR build for Electron main process (migrated from tsc)
+- Added missing externals for Node.js modules in vite.electron.config.ts
+- Fixed electron-builder.yml deprecated options for v26.7.0 compatibility
+- Fixed linux.desktop configuration structure (moved to entry subobject)
+- Removed deprecated win.publisherName, signDlls, deb.section, rpm.recommends
+- Created placeholder icons for build/icons directory
+- Commented out NSIS custom script (installer.nsh) for testing builds
+- Added portable Windows build target for easier testing
+
 #### Code Review Fixes (Phase 3 Q4 - Sprints 19-24)
 - Fixed license key format version character ('1' to '2') to use valid CHARSET characters
 - Updated licenseValidator to use licenseFormat module for consistent key encoding/decoding

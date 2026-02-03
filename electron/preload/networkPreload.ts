@@ -96,5 +96,3 @@ declare global {
     electronNetwork?: NetworkAPI;
   }
 }
-
-export { NetworkAPI };

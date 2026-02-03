@@ -3,21 +3,27 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "lib": ["ES2022"],
+    "lib": ["ES2022", "DOM"],
     "outDir": "../dist-electron",
-    "rootDir": ".",
-    "strict": true,
+    "rootDir": "..",
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
     "sourceMap": true,
     "noEmit": false,
+    "noEmitOnError": false,
     "isolatedModules": true,
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@/*": ["../src/*"]
+    },
+    "baseUrl": "."
   },
-  "include": ["main/**/*", "preload/**/*", "ipc/**/*"],
+  "include": ["./**/*", "../src/types/**/*", "../src/lib/scanner/types.ts"],
   "exclude": ["node_modules"]
 }

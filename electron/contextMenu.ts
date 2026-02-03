@@ -430,7 +430,3 @@ export function setupContextMenuHandlers(ipc: IpcMain): void {
   );
 }
 
-/**
- * Export types
- */
-export type { DocumentContextOptions, AnnotationContextOptions };

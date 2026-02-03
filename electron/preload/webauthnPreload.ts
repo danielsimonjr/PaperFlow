@@ -5,7 +5,7 @@
  */
 
 import { contextBridge, ipcRenderer } from 'electron';
-import { IPC_CHANNELS } from '../main/ipc/channels';
+import { IPC_CHANNELS } from '../ipc/channels';
 
 /**
  * WebAuthn API exposed to renderer

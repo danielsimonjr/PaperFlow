@@ -12,6 +12,7 @@ export default defineConfig({
   build: {
     outDir: 'dist-electron',
     emptyOutDir: true,
+    ssr: true,
     lib: {
       entry: {
         'main/index': path.resolve(__dirname, 'electron/main/index.ts'),
@@ -22,6 +23,9 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'electron',
+        'electron-updater',
+        'electron-log',
+        /^node:/,
         'path',
         'fs',
         'fs/promises',
@@ -38,6 +42,9 @@ export default defineConfig({
         'net',
         'tls',
         'zlib',
+        'constants',
+        'buffer',
+        'worker_threads',
       ],
       output: {
         entryFileNames: '[name].js',

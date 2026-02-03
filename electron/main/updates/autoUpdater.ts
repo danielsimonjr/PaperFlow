@@ -8,7 +8,7 @@
 import { autoUpdater, UpdateInfo } from 'electron-updater';
 import { BrowserWindow, ipcMain, app } from 'electron';
 import { EventEmitter } from 'events';
-import { IPC_CHANNELS } from '../ipc/channels';
+import { IPC_CHANNELS } from '../../ipc/channels';
 
 /**
  * Update state

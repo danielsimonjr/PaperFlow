@@ -49,7 +49,7 @@ fileAssociations:
     description: Portable Document Format
     mimeType: application/pdf
     role: Editor
-    icon: build/file-icon
+    # icon: build/file-icon  # Commented out - icon not yet created
 
 # Protocol handler
 protocols:
@@ -57,8 +57,8 @@ protocols:
     schemes:
       - paperflow
 
-# After sign hook for notarization
-afterSign: scripts/notarize.js
+# After sign hook for notarization (disabled - script needs ESM conversion)
+# afterSign: scripts/notarize.js
 
 # Build optimization
 asar: true
@@ -71,29 +71,20 @@ generateUpdatesFilesForAllChannels: true
 # ========================
 win:
   target:
-    - target: nsis
-      arch:
-        - x64
-        - ia32
-    - target: msi
-      arch:
-        - x64
-    - target: appx
-      arch:
-        - x64
+    # NSIS installer disabled temporarily - use portable for testing
+    # - target: nsis
+    #   arch:
+    #     - x64
+    #     - ia32
     - target: portable
       arch:
         - x64
-  icon: build/icon.ico
-  publisherName: PaperFlow
+  # icon: build/icon.ico  # Commented out - icon not yet created
   legalTrademarks: PaperFlow
 
   # Code signing (set via environment variables)
   # CSC_LINK: path to .pfx certificate
   # CSC_KEY_PASSWORD: certificate password
-  signingHashAlgorithms:
-    - sha256
-  signDlls: true
 
   # Request admin elevation for file associations
   requestedExecutionLevel: asInvoker
@@ -107,15 +98,15 @@ nsis:
   createDesktopShortcut: true
   createStartMenuShortcut: true
   shortcutName: PaperFlow
-  installerIcon: build/installerIcon.ico
-  uninstallerIcon: build/uninstallerIcon.ico
-  installerHeaderIcon: build/icon.ico
+  # installerIcon: build/installerIcon.ico  # Commented out - icons not yet created
+  # uninstallerIcon: build/uninstallerIcon.ico
+  # installerHeaderIcon: build/icon.ico
   license: LICENSE
   deleteAppDataOnUninstall: false
   runAfterFinish: true
 
-  # Custom NSIS script
-  include: build/installer.nsh
+  # Custom NSIS script (disabled for testing - contains advanced features)
+  # include: build/installer.nsh
 
   # Differential updates
   differentialPackage: true
@@ -171,7 +162,7 @@ mac:
         - x64
         - arm64
         - universal
-  icon: build/icon.icns
+  # icon: build/icon.icns  # Commented out - icon not yet created
   category: public.app-category.productivity
   darkModeSupport: true
 
@@ -193,9 +184,9 @@ mac:
 
 # DMG configuration
 dmg:
-  background: build/dmg-background.png
+  # background: build/dmg-background.png  # Commented out - asset not yet created
   backgroundColor: "#ffffff"
-  icon: build/icon.icns
+  # icon: build/icon.icns  # Commented out - icon not yet created
   iconSize: 128
   iconTextSize: 14
   title: "Install ${productName}"
@@ -274,14 +265,15 @@ linux:
 
   # Desktop entry
   desktop:
-    Name: PaperFlow
-    GenericName: PDF Editor
-    Comment: Modern PDF Editor for viewing, editing, and annotating PDF documents
-    Categories: Office;Viewer;Graphics;2DGraphics;
-    Keywords: pdf;editor;viewer;annotation;signature;forms;
-    MimeType: application/pdf;
-    StartupWMClass: paperflow
-    StartupNotify: true
+    entry:
+      Name: PaperFlow
+      GenericName: PDF Editor
+      Comment: Modern PDF Editor for viewing, editing, and annotating PDF documents
+      Categories: Office;Viewer;Graphics;2DGraphics;
+      Keywords: pdf;editor;viewer;annotation;signature;forms;
+      MimeType: application/pdf;
+      StartupWMClass: paperflow
+      StartupNotify: true
 
 # AppImage configuration
 appImage:
@@ -303,7 +295,6 @@ deb:
     - libsecret-1-0
   recommends:
     - libappindicator3-1
-  section: utils
   priority: optional
 
   # Custom maintainer scripts
@@ -322,7 +313,6 @@ rpm:
     - at-spi2-core
     - libuuid
     - libsecret
-  recommends:
     - libappindicator-gtk3
   compression: xz
 

@@ -5,6 +5,14 @@ node_modules/
 dist/
 dist-ssr/
 dist-node/
+dist-electron/
+release/
+
+# Generated TypeScript files (shouldn't be emitted)
+*.d.ts.map
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
 
 # Local env files
 .env

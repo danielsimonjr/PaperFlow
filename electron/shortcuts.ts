@@ -676,7 +676,3 @@ export function isGlobalShortcutRegistered(accelerator: string): boolean {
   return globalShortcut.isRegistered(platformAccelerator);
 }
 
-/**
- * Export types
- */
-export type { ShortcutDefinition };
