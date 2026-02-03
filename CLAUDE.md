@@ -365,12 +365,23 @@ Release artifacts output to `release/` directory.
 - [IPC Patterns](docs/architecture/ipc-patterns.md)
 - [Offline-First Architecture](docs/architecture/offline-first.md)
 - [Enterprise Features](docs/architecture/enterprise-features.md)
+- [System Architecture](docs/architecture/ARCHITECTURE.md)
+- [Project Overview](docs/architecture/OVERVIEW.md)
+- [API Reference](docs/architecture/API.md)
+- [Data Flow](docs/architecture/DATAFLOW.md)
+- [Component Reference](docs/architecture/COMPONENTS.md)
 
 ## Testing Tips
 
 - Prefer `npx vitest run` over `npm run test:unit` for more reliable test discovery
 - Run specific test: `npx vitest run tests/unit/path/to/test.ts`
 - Check sprint status: `grep '"status"' docs/planning/sprints/PHASE_*_SPRINT_*_TODO.json`
+
+## Subagent Tips
+
+- Limit parallel subagents to 3 to avoid cascading failures
+- Subagents may fail at completion but still write files - check file existence before retrying
+- For documentation tasks, verify files were created with `Glob` before spawning retry agents
 
 ## Windows Development Notes
 
