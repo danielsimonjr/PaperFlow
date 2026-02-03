@@ -19,7 +19,7 @@
     "typecheck": "tsc --noEmit",
     "electron:dev": "node scripts/dev-electron.js",
     "electron:build": "npm run build && npm run electron:compile && electron-builder",
-    "electron:compile": "tsc -p electron/tsconfig.json",
+    "electron:compile": "vite build --config vite.electron.config.ts",
     "electron:preview": "npm run build && npm run electron:compile && electron .",
     "electron:pack": "npm run electron:build -- --dir",
     "electron:dist": "npm run electron:build"
