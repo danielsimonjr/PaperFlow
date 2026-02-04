@@ -16,20 +16,20 @@ compression: maximum
 removePackageScripts: true
 
 # Include additional files
+# Let electron-builder handle node_modules automatically (prunes devDependencies)
 files:
   - "dist/**/*"
   - "dist-electron/**/*"
   - "package.json"
-  - "!node_modules/**/*"
-  - "node_modules/electron-log/**/*"
-  - "node_modules/electron-updater/**/*"
-  - "node_modules/chokidar/**/*"
-  - "node_modules/readdirp/**/*"
-  - "node_modules/picomatch/**/*"
-  - "node_modules/braces/**/*"
-  - "node_modules/fill-range/**/*"
-  - "node_modules/to-regex-range/**/*"
-  - "node_modules/is-number/**/*"
+  - "node_modules/**/*"
+  - "!node_modules/**/*.md"
+  - "!node_modules/**/*.ts"
+  - "!node_modules/**/*.map"
+  - "!node_modules/**/test/**"
+  - "!node_modules/**/tests/**"
+  - "!node_modules/**/__tests__/**"
+  - "!node_modules/**/docs/**"
+  - "!node_modules/**/.github/**"
 
 extraMetadata:
   main: dist-electron/main/index.js
