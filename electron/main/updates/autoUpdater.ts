@@ -5,7 +5,9 @@
  * and update notifications.
  */
 
-import { autoUpdater, UpdateInfo } from 'electron-updater';
+import electronUpdater from 'electron-updater';
+const { autoUpdater } = electronUpdater;
+import type { UpdateInfo } from 'electron-updater';
 import { BrowserWindow, ipcMain, app } from 'electron';
 import { EventEmitter } from 'events';
 import { IPC_CHANNELS } from '../../ipc/channels';

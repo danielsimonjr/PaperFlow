@@ -6,7 +6,9 @@
  */
 
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { autoUpdater, UpdateInfo, ProgressInfo, UpdateDownloadedEvent } from 'electron-updater';
+import electronUpdater from 'electron-updater';
+const { autoUpdater } = electronUpdater;
+import type { UpdateInfo, ProgressInfo, UpdateDownloadedEvent } from 'electron-updater';
 import log from 'electron-log';
 import { IPC_CHANNELS, IPC_EVENTS } from '../ipc/channels';
 

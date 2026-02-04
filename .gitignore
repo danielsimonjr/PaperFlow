@@ -7,6 +7,12 @@ dist-ssr/
 dist-node/
 dist-electron/
 release/
+release2/
+
+# Playwright test artifacts
+playwright-report/
+playwright-report-electron/
+test-results/
 
 # Generated TypeScript files (shouldn't be emitted)
 *.d.ts.map

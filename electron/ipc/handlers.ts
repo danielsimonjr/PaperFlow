@@ -5,7 +5,7 @@
  * All handlers are registered in the main process and invoked from the preload script.
  */
 
-import { IpcMain, dialog, shell, clipboard, nativeImage, BrowserWindow, Notification, app } from 'electron';
+import { IpcMain, dialog, BrowserWindow, Notification, app } from 'electron';
 import { IPC_CHANNELS } from './channels';
 import type {
   MessageDialogOptions,
@@ -118,54 +118,8 @@ export function setupIpcHandlers(ipcMain: IpcMain): void {
     }
   });
 
-  // Shell operations
-  ipcMain.handle(IPC_CHANNELS.SHELL_OPEN_EXTERNAL, async (_event, url: string) => {
-    // Validate URL before opening
-    try {
-      const parsed = new URL(url);
-      if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'mailto:') {
-        await shell.openExternal(url);
-      } else {
-        throw new Error('Invalid URL protocol');
-      }
-    } catch (error) {
-      throw new Error(`Failed to open URL: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
-  });
-
-  ipcMain.handle(IPC_CHANNELS.SHELL_OPEN_PATH, async (_event, filePath: string) => {
-    return shell.openPath(filePath);
-  });
-
-  ipcMain.handle(IPC_CHANNELS.SHELL_SHOW_ITEM_IN_FOLDER, (_event, filePath: string) => {
-    shell.showItemInFolder(filePath);
-  });
-
-  ipcMain.handle(IPC_CHANNELS.SHELL_TRASH_ITEM, async (_event, filePath: string) => {
-    await shell.trashItem(filePath);
-  });
-
-  // Clipboard operations
-  ipcMain.handle(IPC_CHANNELS.CLIPBOARD_READ_TEXT, () => {
-    return clipboard.readText();
-  });
-
-  ipcMain.handle(IPC_CHANNELS.CLIPBOARD_WRITE_TEXT, (_event, text: string) => {
-    clipboard.writeText(text);
-  });
-
-  ipcMain.handle(IPC_CHANNELS.CLIPBOARD_READ_IMAGE, () => {
-    const image = clipboard.readImage();
-    if (image.isEmpty()) {
-      return null;
-    }
-    return image.toDataURL();
-  });
-
-  ipcMain.handle(IPC_CHANNELS.CLIPBOARD_WRITE_IMAGE, (_event, dataUrl: string) => {
-    const image = nativeImage.createFromDataURL(dataUrl);
-    clipboard.writeImage(image);
-  });
+  // Note: Shell operations moved to shellHandlers.ts
+  // Note: Clipboard operations moved to clipboardHandlers.ts
 
   // Notification
   ipcMain.handle(IPC_CHANNELS.NOTIFICATION_SHOW, (_event, options: NotificationOptions) => {
