@@ -23,6 +23,13 @@ files:
   - "!node_modules/**/*"
   - "node_modules/electron-log/**/*"
   - "node_modules/electron-updater/**/*"
+  - "node_modules/chokidar/**/*"
+  - "node_modules/readdirp/**/*"
+  - "node_modules/picomatch/**/*"
+  - "node_modules/braces/**/*"
+  - "node_modules/fill-range/**/*"
+  - "node_modules/to-regex-range/**/*"
+  - "node_modules/is-number/**/*"
 
 extraMetadata:
   main: dist-electron/main/index.js
