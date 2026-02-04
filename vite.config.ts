@@ -3,7 +3,12 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
+// Use relative paths for Electron builds (file:// protocol requires ./)
+const isElectron = process.env.ELECTRON === 'true' || process.env.npm_lifecycle_event?.includes('electron');
+
 export default defineConfig({
+  // Use relative paths for Electron, absolute for web
+  base: isElectron ? './' : '/',
   plugins: [
     react(),
     VitePWA({

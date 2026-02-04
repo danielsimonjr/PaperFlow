@@ -36,6 +36,11 @@ async function launchApp(): Promise<void> {
 
   page = await electronApp.firstWindow();
   await page.waitForLoadState('domcontentloaded');
+  // Wait for the app to fully load (loading spinner to disappear)
+  await page.waitForFunction(() => {
+    const loading = document.body.textContent?.includes('Loading...');
+    return !loading;
+  }, { timeout: 30000 });
 }
 
 // Helper to close the app
