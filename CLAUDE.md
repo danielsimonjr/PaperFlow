@@ -341,6 +341,24 @@ All variables are optional (Phase 2+ features):
 - **NSIS script errors** - Comment out `nsis.include` in electron-builder.yml, use portable target
 - **electron-builder v26.7.0** - Removed: win.publisherName, signDlls, deb.section, rpm.recommends
 - **linux.desktop config** - Properties must be under `entry:` subobject, not directly under `desktop:`
+- **"Cannot find module 'chokidar'"** (or fs-extra, etc.) - electron-builder.yml must include all node_modules
+- **rcedit "Unable to commit changes"** - File locked by Dropbox or running process; stop PaperFlow.exe first
+- **Blank page in Electron** - vite.config.ts must use `base: './'` for Electron (relative paths for file://)
+- **404 errors in Electron** - App uses HashRouter not BrowserRouter (see src/main.tsx)
+
+### Electron Build in Dropbox Folders
+Build to temp directory to avoid Dropbox sync file locking:
+```bash
+# Build to temp directory
+npx electron-builder --win portable --config.directories.output="C:/Temp/paperflow-build"
+# Copy result to release/
+cp "C:/Temp/paperflow-build/PaperFlow-*.exe" release/
+```
+
+Before rebuilding, stop running instances:
+```powershell
+Stop-Process -Name "PaperFlow" -Force -ErrorAction SilentlyContinue
+```
 
 ## Color Theme
 
