@@ -89,22 +89,7 @@ npx vitest run -t "should load PDF"
 - `comparisonStore`: Document comparison state
 - `batchStore`: Batch processing queue (web)
 
-**Desktop Stores (Phase 3)**
-- `recentFilesStore`: Recently opened files tracking
-- `updateStore`: Auto-update state and settings
-- `shortcutsStore`: Custom keyboard shortcuts
-- `fileWatchStore`: File watcher state and events
-- `offlineStore`: Offline sync status and queue
-- `nativeBatchStore`: Native batch processing with worker threads
-- `printStore`: Native print job management
-- `scannerStore`: Scanner device state and scan history
-- `securityStore`: Hardware key authentication state
-
-**Enterprise Stores (Phase 3 Q4)**
-- `enterprisePolicyStore`: MDM/GPO policy state
-- `licenseStore`: License validation and feature gating
-- `lanStore`: LAN peer discovery and sync
-- `kioskStore`: Kiosk mode configuration and session
+- **Desktop/Enterprise**: See `docs/architecture/` for Phase 3+ store plans
 
 ### Key Data Flow
 ```
@@ -162,51 +147,17 @@ UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → Indexed
 - `components/home/`: Home page components (FileDropZone)
 - `components/lazy/`: Lazy-loaded component definitions for code splitting
 
-**Desktop Components (Phase 3)**
-- `components/offline/`: Offline indicators (OfflineIndicator, OfflineBanner, SyncStatusPanel, ConflictDialog)
-- `components/update/`: Auto-update UI (UpdateNotification, UpdateSettings, UpdateProgress, ReleaseNotes)
-- `components/scanner/`: Scanner UI (ScannerSelectDialog, ScanSettingsPanel, ScanPreview, BatchScanWorkflow)
-- `components/security/`: Hardware key UI (HardwareKeyEnrollment, HardwareKeyAuth, KeyManagement)
-- `components/batch/`: Batch processing (BatchWizard, BatchDashboard, BatchSummary, TemplateManager)
-- `components/fileWatch/`: File watching UI (AutoReloadSettings, WatchStatusIndicator)
-
-**Enterprise Components (Phase 3 Q4)**
-- `components/enterprise/`: Enterprise config (PolicyStatusIndicator, ConfigurationViewer, LockedSettingBadge)
-- `components/kiosk/`: Kiosk mode (KioskShell, KioskToolbar, KioskHeader)
+- **Desktop/Enterprise**: See `docs/architecture/` for Phase 3+ components
 
 ### Electron Directory Structure
 
 ```
 electron/
-├── main/                  # Main process modules
-│   ├── index.ts           # Entry point, app lifecycle
-│   ├── windowManager.ts   # BrowserWindow management
-│   ├── windowState.ts     # Window state persistence
-│   ├── lifecycle.ts       # App lifecycle handlers
-│   ├── security.ts        # CSP and security setup
-│   ├── updater.ts         # Auto-update integration
-│   ├── print/             # Native print integration
-│   ├── scanner/           # Scanner bridge (TWAIN/WIA/SANE)
-│   ├── security/          # WebAuthn bridge
-│   └── updates/           # Auto-updater and differential updates
-├── preload/               # Preload scripts
-│   ├── index.ts           # Main preload with electronAPI
-│   ├── networkPreload.ts  # Network status detection
-│   └── webauthnPreload.ts # WebAuthn API bridge
-├── ipc/                   # IPC handlers and types
-│   ├── channels.ts        # Channel name constants
-│   ├── types.ts           # TypeScript type definitions
-│   ├── handlers.ts        # Core IPC handlers
-│   ├── fileHandlers.ts    # File operation handlers
-│   ├── printHandlers.ts   # Print IPC handlers
-│   └── ...                # Other handler modules
-├── workers/               # Worker threads for heavy operations
-│   ├── workerPool.ts      # Worker thread pool manager
-│   ├── workerManager.ts   # Worker lifecycle management
-│   └── pdfWorker.ts       # PDF processing worker
-├── touchbar/              # macOS Touch Bar
-│   └── touchBarManager.ts # Context-aware Touch Bar
-└── *.ts                   # Feature modules (tray, menu, shortcuts, etc.)
+├── main/           # Main process (index.ts, windowManager, lifecycle, security, updater)
+├── preload/        # Preload scripts (index.ts, networkPreload, webauthnPreload)
+├── ipc/            # IPC handlers and types (channels, handlers, fileHandlers)
+├── workers/        # Worker threads (workerPool, pdfWorker)
+└── *.ts            # Feature modules (tray, menu, shortcuts, etc.)
 ```
 
 ### Core Library Modules (lib/)
@@ -233,18 +184,7 @@ electron/
 - `lib/batch/`: Watermarks, headers/footers, Bates numbering, PDF flattening, job queue
 - `lib/accessibility/`: PDF/UA checker, WCAG compliance, contrast calculation
 
-**Desktop Modules (Phase 3)**
-- `lib/electron/`: Platform detection, IPC wrappers, file system API, notifications, print, dialogs
-- `lib/offline/`: Service worker config, offline storage, sync engine, delta sync, conflict resolution
-- `lib/fileWatch/`: Change detection, smart reload with state preservation
-- `lib/scanner/`: Scanner providers (TWAIN, WIA, SANE), document detection, image processing
-- `lib/security/`: WebAuthn client, attestation verification, hardware encryption
-
-**Enterprise Modules (Phase 3 Q4)**
-- `lib/enterprise/`: GPO reader, MDM reader, config parser, config discovery, policy merging
-- `lib/license/`: License format, validator, signature verifier, hardware fingerprint, feature gating
-- `lib/lan/`: mDNS discovery, peer manager, sync protocol
-- `lib/kiosk/`: Kiosk config, feature lockdown, session management
+- **Desktop/Enterprise**: See `docs/architecture/` for Phase 3+ modules
 
 ### PDF Coordinate System
 Annotations and form fields use PDF coordinates (origin at bottom-left). The annotation layer handles conversion between PDF coordinates and screen coordinates for rendering.
@@ -255,18 +195,7 @@ Coordinate conversion utilities are in `src/utils/coordinates.ts`:
 - `normalizeRects()`: Merge adjacent rectangles on same line
 
 ### Annotation System
-Components in `components/annotations/`:
-- `AnnotationLayer`: SVG overlay for rendering annotations
-- `Highlight`, `Underline`, `Strikethrough`: Text markup components
-- `StickyNote`, `NoteTool`, `NoteReplies`: Note annotations
-- `SelectionPopup`: Context menu for text selection
-- `ExportImportDialog`: Import/export annotations as JSON
-
-Key hooks:
-- `useAnnotationShortcuts`: Keyboard shortcuts (H, U, S, N, V)
-- `useTextSelection`: Text selection handling
-
-Annotation serialization in `lib/annotations/serializer.ts`.
+Components in `components/annotations/`: `AnnotationLayer` (SVG overlay), `Highlight`/`Underline`/`Strikethrough` (text markup), `StickyNote`/`NoteTool`/`NoteReplies` (notes), `SelectionPopup` (context menu), `ExportImportDialog`. Key hooks: `useAnnotationShortcuts` (H, U, S, N, V), `useTextSelection`. Serialization in `lib/annotations/serializer.ts`.
 
 ### Tool State Architecture
 
@@ -300,14 +229,7 @@ When tracking drag state in pointer event handlers, use a ref for synchronous st
 
 ## Commit Message Format
 
-```
-type(scope): description
-
-feat(viewer): add continuous scroll mode
-feat(electron): implement native file dialogs
-fix(annotations): correct highlight position
-docs(readme): update installation steps
-```
+`type(scope): description` -- e.g. `feat(viewer): add continuous scroll mode`, `fix(annotations): correct highlight position`
 
 ## Changelog
 
@@ -323,17 +245,7 @@ Only commit if all checks pass.
 
 ## Environment Setup
 
-Copy `.env.example` to `.env.local` for local development:
-
-```bash
-cp .env.example .env.local
-```
-
-All variables are optional (Phase 2+ features):
-- `VITE_ANALYTICS_ID`: Analytics tracking
-- `VITE_GOOGLE_CLIENT_ID`: Google Drive integration
-- `VITE_DROPBOX_APP_KEY`: Dropbox integration
-- `VITE_ONEDRIVE_CLIENT_ID`: OneDrive integration
+Copy `.env.example` to `.env.local`. All variables are optional (Phase 2+): `VITE_ANALYTICS_ID`, `VITE_GOOGLE_CLIENT_ID`, `VITE_DROPBOX_APP_KEY`, `VITE_ONEDRIVE_CLIENT_ID`.
 
 ## Important Technical Notes
 
@@ -356,79 +268,28 @@ All variables are optional (Phase 2+ features):
 - Build output: `dist-electron/` for main process code
 
 ### Performance Targets (Desktop)
-- Cold start: < 3 seconds
-- Warm start: < 1 second
-- Memory (idle): < 150 MB
-- Memory (100-page PDF): < 500 MB
-- Native file save: < 500 ms
+Cold start < 3s, warm start < 1s, memory idle < 150 MB, 100-page PDF < 500 MB, native save < 500 ms.
 
 ### Electron Build Troubleshooting
-- `npm run electron:build -- --win --x64` - Windows x64 only
-- `npx electron-builder --win --x64` - Skip web build if already done
-- Portable build output: `release/PaperFlow-{version}-win-x64.exe`
-- **"Readable is not exported"** - Add `ssr: true` to vite.electron.config.ts
-- **Missing icons error** - Create PNGs in build/icons/ (16x16 through 512x512)
-- **NSIS script errors** - Comment out `nsis.include` in electron-builder.yml, use portable target
-- **electron-builder v26.7.0** - Removed: win.publisherName, signDlls, deb.section, rpm.recommends
-- **linux.desktop config** - Properties must be under `entry:` subobject, not directly under `desktop:`
-- **"Cannot find module 'chokidar'"** (or fs-extra, etc.) - electron-builder.yml must include all node_modules
+- `npm run electron:build -- --win --x64` (Windows x64 only); portable output: `release/PaperFlow-{version}-win-x64.exe`
+- **Blank page** - `base: './'` in vite.config.ts (relative paths for file://); app uses HashRouter not BrowserRouter
+- **PDF.js worker path** - Must use relative path (`./pdf.worker.min.js`); absolute resolves to drive root
 - **rcedit "Unable to commit changes"** - File locked by Dropbox or running process; stop PaperFlow.exe first
-- **Blank page in Electron** - vite.config.ts must use `base: './'` for Electron (relative paths for file://)
-- **404 errors in Electron** - App uses HashRouter not BrowserRouter (see src/main.tsx)
-- **PDF.js worker path** - Must use relative path (`./pdf.worker.min.js`) for Electron; absolute paths resolve to drive root (see `src/lib/pdf/renderer.ts`)
+- **"Cannot find module"** errors - electron-builder.yml must include all needed node_modules
+- **NSIS script errors** - Comment out `nsis.include`, use portable target
+- **Missing icons** - Create PNGs in build/icons/ (16x16 through 512x512)
 
 ### Electron Build in Dropbox Folders
-Build to temp directory to avoid Dropbox sync file locking:
-```bash
-# Build to temp directory
-npx electron-builder --win portable --config.directories.output="C:/Temp/paperflow-build"
-# Copy result to release/
-cp "C:/Temp/paperflow-build/PaperFlow-*.exe" release/
-```
-
-Before rebuilding, stop running instances:
-```powershell
-Stop-Process -Name "PaperFlow" -Force -ErrorAction SilentlyContinue
-```
+Build to temp to avoid Dropbox file locking: `npx electron-builder --win portable --config.directories.output="C:/Temp/paperflow-build"` then copy to `release/`. Before rebuilding: `Stop-Process -Name "PaperFlow" -Force -ErrorAction SilentlyContinue`.
 
 ## Color Theme
 
-```css
-/* Primary brand colors */
---primary-900: #1E3A5F;
---primary-500: #3B82F6;
-
-/* Annotation highlight colors */
---highlight-yellow: #FFEB3B;
---highlight-green: #4CAF50;
---highlight-blue: #2196F3;
---highlight-pink: #E91E63;
---highlight-orange: #FF9800;
-```
+Primary brand: `#1E3A5F` (900), `#3B82F6` (500). Highlight colors: yellow `#FFEB3B`, green `#4CAF50`, blue `#2196F3`, pink `#E91E63`, orange `#FF9800`.
 
 ## Deployment
 
-### Web (PWA)
-Deployed to Cloudflare Pages. Configuration in `wrangler.toml`.
-
-```bash
-npm run build      # Build production bundle to dist/
-# Automatic deployment on push to main branch
-```
-
-Custom headers configured in `public/_headers` (security headers, caching).
-
-### Desktop
-Built with electron-builder. Configuration in `electron-builder.config.js`.
-
-```bash
-npm run electron:build          # Build for current platform
-npm run electron:build -- --win # Windows (NSIS, MSI)
-npm run electron:build -- --mac # macOS (DMG, universal binary)
-npm run electron:build -- --linux # Linux (AppImage, deb, rpm)
-```
-
-Release artifacts output to `release/` directory.
+- **Web (PWA)**: Cloudflare Pages (`wrangler.toml`). Auto-deploys on push to main. Headers in `public/_headers`.
+- **Desktop**: electron-builder (`electron-builder.config.js`). `npm run electron:build -- --win/--mac/--linux`. Output: `release/`.
 
 ## Architecture Documentation
 
@@ -446,69 +307,14 @@ Release artifacts output to `release/` directory.
 
 The `tools/` directory contains CLI utilities for development workflows:
 
-### Context Compressor (`tools/compress-for-context/`)
+- **Context Compressor**: Compresses files for LLM context windows (`--format`, `--recursive`, `--output`)
+  `npx tsx tools/compress-for-context/compress-for-context.ts <input> [options]`
 
-Compresses files for LLM context windows using format-specific strategies. Supports JSON, YAML, Markdown, CSV, TypeScript/JavaScript, and more.
+- **File Chunker**: Splits large files into chunks for editing, then merges back
+  `npx tsx tools/chunking-for-files/chunking-for-files.ts split|merge|status <file>`
 
-```bash
-# Basic usage
-npx tsx tools/compress-for-context/compress-for-context.ts <input> [options]
-
-# Examples
-npx tsx tools/compress-for-context/compress-for-context.ts src/stores/documentStore.ts
-npx tsx tools/compress-for-context/compress-for-context.ts package.json --format json
-npx tsx tools/compress-for-context/compress-for-context.ts . --recursive --output context.txt
-```
-
-Options:
-- `--format`: Force specific format (json, yaml, markdown, csv, typescript, etc.)
-- `--output, -o`: Output file path (default: stdout)
-- `--recursive, -r`: Process directories recursively
-- `--max-depth`: Maximum recursion depth
-- `--exclude`: Glob patterns to exclude
-
-### File Chunker (`tools/chunking-for-files/`)
-
-Splits large files into manageable chunks for editing, then merges them back. Useful for editing large files that exceed context limits.
-
-```bash
-# Split a large file into chunks
-npx tsx tools/chunking-for-files/chunking-for-files.ts split <file> [options]
-
-# Merge chunks back together
-npx tsx tools/chunking-for-files/chunking-for-files.ts merge <file>
-
-# Check chunk status
-npx tsx tools/chunking-for-files/chunking-for-files.ts status <file>
-```
-
-Options:
-- `--chunk-size, -s`: Target chunk size in lines (default: 500)
-- `--output-dir, -o`: Directory for chunk files
-- `--format`: File format hint (markdown, json, typescript)
-
-### Dependency Graph Generator (`tools/create-dependency-graph/`)
-
-Analyzes codebase dependencies and generates visual dependency graphs.
-
-```bash
-# Generate dependency graph for the project
-npx tsx tools/create-dependency-graph/create-dependency-graph.ts [options]
-```
-
-Outputs:
-- `DEPENDENCY_GRAPH.md`: Markdown documentation with Mermaid diagrams
-- `dependency-graph.json`: Machine-readable JSON format
-- `dependency-graph.yaml`: YAML format for configuration tools
-
-Options:
-- `--entry`: Entry point file(s) to analyze
-- `--output-dir, -o`: Output directory for generated files
-- `--include`: Glob patterns to include
-- `--exclude`: Glob patterns to exclude
-- `--depth`: Maximum dependency depth to traverse
-
-Outputs to `docs/architecture/DEPENDENCY_GRAPH.md`, `dependency-graph.json`, `unused-analysis.md`.
+- **Dependency Graph**: Analyzes imports and generates dependency graphs to `docs/architecture/`
+  `npx tsx tools/create-dependency-graph/create-dependency-graph.ts [options]`
 
 ## Import Patterns
 
