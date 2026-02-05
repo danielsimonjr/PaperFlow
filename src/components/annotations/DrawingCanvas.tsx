@@ -1,25 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAnnotationStore } from '@stores/annotationStore';
-import { usePointerInput, type PointerPoint } from '@hooks/usePointerInput';
 
 interface DrawingCanvasProps {
-  /** Page index (0-based) */
   pageIndex: number;
-  /** Canvas width in pixels */
   width: number;
-  /** Canvas height in pixels */
   height: number;
-  /** Current zoom scale */
   scale: number;
-  /** Whether drawing mode is active */
   isActive: boolean;
-  /** Callback when stroke is completed */
-  onStrokeComplete?: (points: PointerPoint[]) => void;
+}
+
+interface Point {
+  x: number;
+  y: number;
 }
 
 /**
- * Canvas overlay for freehand drawing with smooth bezier curves.
- * Supports touch, mouse, and stylus input with pressure sensitivity.
+ * Canvas overlay for freehand drawing.
+ * Handles pointer events with proper high-DPI support.
  */
 export function DrawingCanvas({
   pageIndex,
@@ -27,194 +24,259 @@ export function DrawingCanvas({
   height,
   scale,
   isActive,
-  onStrokeComplete,
 }: DrawingCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const offscreenCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [devicePixelRatio] = useState(() => window.devicePixelRatio || 1);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const isDrawingRef = useRef(false);
+  const pointsRef = useRef<Point[]>([]);
+  const lastPosRef = useRef<Point | null>(null);
+  const dprRef = useRef(1);
+  const [debugInfo, setDebugInfo] = useState('Initializing...');
 
   const activeColor = useAnnotationStore((state) => state.activeColor);
   const activeStrokeWidth = useAnnotationStore((state) => state.activeStrokeWidth ?? 2);
   const addAnnotation = useAnnotationStore((state) => state.addAnnotation);
 
-  const {
-    points,
-    isDrawing,
-    handlePointerDown,
-    handlePointerMove,
-    handlePointerUp,
-    handlePointerCancel,
-    clearPoints,
-  } = usePointerInput({
-    minDistance: 2,
-    pressureSensitivity: true,
-    palmRejectionSize: 50,
-  });
-
-  // Initialize offscreen canvas for persistent strokes
+  // Setup canvas with proper DPI scaling
   useEffect(() => {
-    if (!offscreenCanvasRef.current) {
-      offscreenCanvasRef.current = document.createElement('canvas');
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      setDebugInfo('ERROR: No canvas ref');
+      return;
     }
-    const offscreen = offscreenCanvasRef.current;
-    offscreen.width = width * devicePixelRatio;
-    offscreen.height = height * devicePixelRatio;
 
-    const ctx = offscreen.getContext('2d');
-    if (ctx) {
-      ctx.scale(devicePixelRatio, devicePixelRatio);
+    if (!isActive) {
+      setDebugInfo('Inactive');
+      return;
     }
-  }, [width, height, devicePixelRatio]);
 
-  // Setup main canvas
-  useEffect(() => {
+    // Get device pixel ratio for high-DPI support
+    const dpr = window.devicePixelRatio || 1;
+    dprRef.current = dpr;
+
+    // Set canvas internal resolution (scaled for DPI)
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+
+    // Get 2D context
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      setDebugInfo('ERROR: No 2D context');
+      return;
+    }
+
+    // Store context in ref for use in event handlers
+    ctxRef.current = ctx;
+
+    // Scale context to match DPI
+    ctx.scale(dpr, dpr);
+
+    // Draw a large, obvious test pattern
+    ctx.fillStyle = '#FF0000';
+    ctx.fillRect(10, 10, 80, 40);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 14px Arial';
+    ctx.fillText('DRAW HERE', 15, 35);
+
+    // Draw corner markers
+    ctx.fillStyle = '#00FF00';
+    ctx.fillRect(0, 0, 20, 20);
+    ctx.fillRect(width - 20, 0, 20, 20);
+    ctx.fillRect(0, height - 20, 20, 20);
+    ctx.fillRect(width - 20, height - 20, 20, 20);
+
+    setDebugInfo(`Ready: ${width}x${height} @${dpr}x DPI`);
+
+    // Log to console for debugging
+    console.log('[DrawingCanvas] Setup complete:', {
+      width,
+      height,
+      dpr,
+      canvasWidth: canvas.width,
+      canvasHeight: canvas.height,
+      hasContext: !!ctx,
+    });
+  }, [width, height, isActive]);
+
+  // Get coordinates from pointer event
+  const getCoords = useCallback((e: React.PointerEvent<HTMLCanvasElement>): Point => {
+    const canvas = canvasRef.current;
+    if (!canvas) return { x: 0, y: 0 };
+
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    return { x, y };
+  }, []);
+
+  // Draw a dot at the given position
+  const drawDot = useCallback((pos: Point) => {
+    const ctx = ctxRef.current;
+    if (!ctx) {
+      console.log('[DrawingCanvas] drawDot: No context');
+      return;
+    }
+
+    const radius = Math.max(activeStrokeWidth * 2, 8);
+
+    ctx.fillStyle = activeColor;
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    console.log('[DrawingCanvas] Drew dot at', pos, 'color:', activeColor, 'radius:', radius);
+  }, [activeColor, activeStrokeWidth]);
+
+  // Draw a line between two points
+  const drawLine = useCallback((from: Point, to: Point) => {
+    const ctx = ctxRef.current;
+    if (!ctx) return;
+
+    ctx.strokeStyle = activeColor;
+    ctx.lineWidth = Math.max(activeStrokeWidth, 4);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(from.x, from.y);
+    ctx.lineTo(to.x, to.y);
+    ctx.stroke();
+  }, [activeColor, activeStrokeWidth]);
+
+  // Pointer event handlers
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Set canvas size for high-DPI displays
-    canvas.width = width * devicePixelRatio;
-    canvas.height = height * devicePixelRatio;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
+    // Capture pointer for reliable tracking
+    canvas.setPointerCapture(e.pointerId);
 
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.scale(devicePixelRatio, devicePixelRatio);
+    const pos = getCoords(e);
+    isDrawingRef.current = true;
+    pointsRef.current = [pos];
+    lastPosRef.current = pos;
+
+    // Draw initial dot
+    drawDot(pos);
+
+    setDebugInfo(`Down: ${Math.round(pos.x)},${Math.round(pos.y)} [${e.pointerType}]`);
+    console.log('[DrawingCanvas] Pointer down:', pos, 'type:', e.pointerType);
+  }, [getCoords, drawDot]);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!isDrawingRef.current) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const pos = getCoords(e);
+
+    if (lastPosRef.current) {
+      drawLine(lastPosRef.current, pos);
     }
-  }, [width, height, devicePixelRatio]);
 
-  // Draw smooth bezier curve through points
-  const drawSmoothLine = useCallback(
-    (ctx: CanvasRenderingContext2D, pointsArray: PointerPoint[]) => {
-      if (pointsArray.length < 2) return;
+    pointsRef.current.push(pos);
+    lastPosRef.current = pos;
 
-      ctx.strokeStyle = activeColor;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
+    setDebugInfo(`Move: ${Math.round(pos.x)},${Math.round(pos.y)} pts:${pointsRef.current.length}`);
+  }, [getCoords, drawLine]);
 
-      // Use quadratic curves for smooth lines
-      ctx.beginPath();
-      const firstPoint = pointsArray[0]!;
-      ctx.moveTo(firstPoint.x, firstPoint.y);
+  const handlePointerUp = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!isDrawingRef.current) return;
 
-      for (let i = 1; i < pointsArray.length - 1; i++) {
-        const p1 = pointsArray[i]!;
-        const p2 = pointsArray[i + 1]!;
-
-        // Calculate control point for smooth curve
-        const midX = (p1.x + p2.x) / 2;
-        const midY = (p1.y + p2.y) / 2;
-
-        // Variable stroke width based on pressure
-        const pressure = p1.pressure || 0.5;
-        ctx.lineWidth = activeStrokeWidth * (0.5 + pressure);
-
-        ctx.quadraticCurveTo(p1.x, p1.y, midX, midY);
-      }
-
-      // Draw last segment
-      if (pointsArray.length > 1) {
-        const lastPoint = pointsArray[pointsArray.length - 1]!;
-        ctx.lineTo(lastPoint.x, lastPoint.y);
-      }
-
-      ctx.stroke();
-    },
-    [activeColor, activeStrokeWidth]
-  );
-
-  // Render current stroke in real-time
-  useEffect(() => {
     const canvas = canvasRef.current;
-    const offscreen = offscreenCanvasRef.current;
-    if (!canvas || !offscreen) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Clear and redraw
-    ctx.clearRect(0, 0, width, height);
-
-    // Draw offscreen canvas (completed strokes)
-    ctx.drawImage(offscreen, 0, 0, width, height);
-
-    // Draw current stroke
-    if (isDrawing && points.length > 0) {
-      drawSmoothLine(ctx, points);
+    if (canvas) {
+      canvas.releasePointerCapture(e.pointerId);
     }
-  }, [points, isDrawing, width, height, drawSmoothLine]);
 
-  // Handle stroke completion
-  const handleStrokeEnd = useCallback(
-    (e: React.PointerEvent) => {
-      handlePointerUp(e);
+    const pointCount = pointsRef.current.length;
+    setDebugInfo(`Done: ${pointCount} points saved`);
+    console.log('[DrawingCanvas] Pointer up, saving', pointCount, 'points');
 
-      if (points.length >= 2) {
-        // Save stroke to offscreen canvas
-        const offscreen = offscreenCanvasRef.current;
-        if (offscreen) {
-          const ctx = offscreen.getContext('2d');
-          if (ctx) {
-            drawSmoothLine(ctx, points);
-          }
-        }
-
-        // Create annotation
-        const drawingPaths = [{
-          points: points.map((p) => ({
-            x: p.x / scale, // Store in PDF coordinates
+    if (pointCount >= 1) {
+      addAnnotation({
+        type: 'drawing',
+        pageIndex,
+        rects: [],
+        color: activeColor,
+        opacity: 1,
+        paths: [{
+          points: pointsRef.current.map((p) => ({
+            x: p.x / scale,
             y: p.y / scale,
-            pressure: p.pressure,
+            pressure: 0.5,
           })),
-        }];
+        }],
+        strokeWidth: activeStrokeWidth,
+      });
+    }
 
-        addAnnotation({
-          type: 'drawing',
-          pageIndex,
-          rects: [], // Drawings don't use rects
-          color: activeColor,
-          opacity: 1,
-          paths: drawingPaths,
-          strokeWidth: activeStrokeWidth,
-        });
+    isDrawingRef.current = false;
+    pointsRef.current = [];
+    lastPosRef.current = null;
+  }, [addAnnotation, pageIndex, activeColor, activeStrokeWidth, scale]);
 
-        onStrokeComplete?.(points);
-      }
+  const handlePointerCancel = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.releasePointerCapture(e.pointerId);
+    }
 
-      clearPoints();
-    },
-    [
-      points,
-      handlePointerUp,
-      clearPoints,
-      drawSmoothLine,
-      addAnnotation,
-      pageIndex,
-      activeColor,
-      activeStrokeWidth,
-      scale,
-      onStrokeComplete,
-    ]
-  );
+    isDrawingRef.current = false;
+    pointsRef.current = [];
+    lastPosRef.current = null;
+    setDebugInfo('Cancelled');
+  }, []);
 
   if (!isActive) {
     return null;
   }
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute left-0 top-0 cursor-crosshair touch-none"
+    <div
       style={{
-        width,
-        height,
-        pointerEvents: isActive ? 'auto' : 'none',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        zIndex: 1000,  // Very high z-index
+        pointerEvents: 'auto',
       }}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handleStrokeEnd}
-      onPointerLeave={handlePointerCancel}
-      onPointerCancel={handlePointerCancel}
-    />
+    >
+      <canvas
+        ref={canvasRef}
+        style={{
+          width,
+          height,
+          cursor: 'crosshair',
+          touchAction: 'none',
+          backgroundColor: 'rgba(255, 200, 0, 0.1)', // Light orange tint
+          display: 'block',
+        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
+        onPointerCancel={handlePointerCancel}
+      />
+      {/* Debug overlay */}
+      <div style={{
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        background: 'rgba(0,0,0,0.9)',
+        color: '#0f0',
+        padding: '6px 10px',
+        fontSize: '12px',
+        pointerEvents: 'none',
+        fontFamily: 'monospace',
+        borderRadius: '4px',
+        whiteSpace: 'pre',
+      }}>
+        {debugInfo}
+      </div>
+    </div>
   );
 }

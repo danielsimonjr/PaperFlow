@@ -48,6 +48,8 @@ export function usePointerInput(
 
   const [points, setPoints] = useState<PointerPoint[]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
+  // Use a ref to track drawing state synchronously (React state is async)
+  const isDrawingRef = useRef(false);
   const lastPointRef = useRef<PointerPoint | null>(null);
   const pointerIdRef = useRef<number | null>(null);
 
@@ -99,6 +101,8 @@ export function usePointerInput(
       pointerIdRef.current = e.pointerId;
       const point = getPointFromEvent(e);
 
+      // Update ref synchronously so move events work immediately
+      isDrawingRef.current = true;
       setIsDrawing(true);
       setPoints([point]);
       lastPointRef.current = point;
@@ -111,7 +115,8 @@ export function usePointerInput(
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
-      if (!isDrawing || e.pointerId !== pointerIdRef.current) return;
+      // Use ref for synchronous check (React state is async)
+      if (!isDrawingRef.current || e.pointerId !== pointerIdRef.current) return;
       if (shouldRejectTouch(e)) return;
 
       const point = getPointFromEvent(e);
@@ -121,7 +126,7 @@ export function usePointerInput(
         lastPointRef.current = point;
       }
     },
-    [isDrawing, getPointFromEvent, shouldRejectTouch, isMinDistanceMet]
+    [getPointFromEvent, shouldRejectTouch, isMinDistanceMet]
   );
 
   const handlePointerUp = useCallback(
@@ -135,6 +140,7 @@ export function usePointerInput(
         // Ignore if already released
       }
 
+      isDrawingRef.current = false;
       setIsDrawing(false);
       pointerIdRef.current = null;
       lastPointRef.current = null;
@@ -143,6 +149,7 @@ export function usePointerInput(
   );
 
   const handlePointerCancel = useCallback(() => {
+    isDrawingRef.current = false;
     setIsDrawing(false);
     setPoints([]);
     pointerIdRef.current = null;

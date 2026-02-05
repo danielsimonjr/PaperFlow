@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+export type EditorTool = 'select' | 'hand' | 'text' | 'draw' | 'shape';
+
 interface UIState {
   // Sidebar
   sidebarOpen: boolean;
@@ -12,6 +14,9 @@ interface UIState {
   // Theme
   darkMode: boolean;
 
+  // Active editor tool (non-annotation tools)
+  activeTool: EditorTool;
+
   // Actions
   toggleSidebar: () => void;
   setSidebarWidth: (width: number) => void;
@@ -19,6 +24,7 @@ interface UIState {
   closeDialog: () => void;
   toggleDarkMode: () => void;
   setDarkMode: (dark: boolean) => void;
+  setActiveTool: (tool: EditorTool) => void;
 }
 
 export const useUIStore = create<UIState>()(
@@ -28,6 +34,7 @@ export const useUIStore = create<UIState>()(
       sidebarWidth: 256,
       activeDialog: null,
       darkMode: false,
+      activeTool: 'select' as EditorTool,
 
       toggleSidebar: () => {
         set((state) => ({ sidebarOpen: !state.sidebarOpen }));
@@ -64,6 +71,10 @@ export const useUIStore = create<UIState>()(
           document.documentElement.classList.remove('dark');
         }
         set({ darkMode: dark });
+      },
+
+      setActiveTool: (tool) => {
+        set({ activeTool: tool });
       },
     }),
     {

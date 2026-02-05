@@ -7,6 +7,9 @@ import {
   Hand,
   MousePointer,
   Square,
+  Circle,
+  ArrowRight,
+  Minus,
   Underline,
   Strikethrough,
   FileDown,
@@ -15,39 +18,42 @@ import { ViewModeToggle } from '@components/toolbar/ViewModeToggle';
 import { PageNavigation } from '@components/viewer/PageNavigation';
 import { ZoomControls } from '@components/viewer/ZoomControls';
 import { ExportImportDialog } from '@components/annotations/ExportImportDialog';
-import { useAnnotationStore } from '@stores/annotationStore';
+import { useAnnotationStore, type ShapeType } from '@stores/annotationStore';
+import { useUIStore, type EditorTool } from '@stores/uiStore';
 import { useAnnotationShortcuts } from '@hooks/useAnnotationShortcuts';
 import { cn } from '@utils/cn';
 import type { AnnotationType } from '@/types';
 
-type Tool = 'select' | 'hand' | 'text' | 'draw' | 'shape' | AnnotationType;
+type Tool = EditorTool | AnnotationType;
 
 export function Toolbar() {
   const [showExportImport, setShowExportImport] = useState(false);
 
   // Use annotation store for annotation tools
-  const activeTool = useAnnotationStore((state) => state.activeTool);
-  const setActiveTool = useAnnotationStore((state) => state.setActiveTool);
+  const annotationTool = useAnnotationStore((state) => state.activeTool);
+  const setAnnotationTool = useAnnotationStore((state) => state.setActiveTool);
   const activeColor = useAnnotationStore((state) => state.activeColor);
+  const activeShapeType = useAnnotationStore((state) => state.activeShapeType);
+  const setActiveShapeType = useAnnotationStore((state) => state.setActiveShapeType);
+
+  // Use UI store for editor tools (select, hand, text, draw, shape)
+  const editorTool = useUIStore((state) => state.activeTool);
+  const setEditorTool = useUIStore((state) => state.setActiveTool);
 
   // Set up keyboard shortcuts
   useAnnotationShortcuts({ enabled: true });
 
-  // Local state for non-annotation tools
-  const [localTool, setLocalTool] = useState<'select' | 'hand' | 'text' | 'draw' | 'shape'>('select');
-
-  // Combined active tool
-  const currentTool = activeTool || localTool;
+  // Combined active tool - annotation tools take precedence
+  const currentTool = annotationTool || editorTool;
 
   const handleToolClick = (tool: Tool) => {
     if (['highlight', 'underline', 'strikethrough', 'note'].includes(tool)) {
       // Annotation tools
-      setActiveTool(tool === activeTool ? null : (tool as AnnotationType));
-      setLocalTool('select');
+      setAnnotationTool(tool === annotationTool ? null : (tool as AnnotationType));
     } else {
-      // Non-annotation tools
-      setActiveTool(null);
-      setLocalTool(tool as 'select' | 'hand' | 'text' | 'draw' | 'shape');
+      // Non-annotation tools (editor tools)
+      setAnnotationTool(null);
+      setEditorTool(tool as EditorTool);
     }
   };
 
@@ -120,6 +126,32 @@ export function Toolbar() {
           <ZoomControls />
         </div>
       </div>
+
+      {/* Shape Type Selector - shown when shape tool is active */}
+      {editorTool === 'shape' && (
+        <div className="flex h-10 items-center gap-1 border-b border-gray-200 bg-gray-50 px-4 dark:border-gray-800 dark:bg-gray-900">
+          <span className="mr-2 text-xs text-gray-500 dark:text-gray-400">Shape:</span>
+          {([
+            { type: 'rectangle' as ShapeType, icon: Square, label: 'Rectangle' },
+            { type: 'ellipse' as ShapeType, icon: Circle, label: 'Ellipse' },
+            { type: 'arrow' as ShapeType, icon: ArrowRight, label: 'Arrow' },
+            { type: 'line' as ShapeType, icon: Minus, label: 'Line' },
+          ]).map(({ type, icon: Icon, label }) => (
+            <button
+              key={type}
+              onClick={() => setActiveShapeType(type)}
+              className={cn(
+                'rounded-md p-1.5 text-gray-600 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700',
+                activeShapeType === type &&
+                  'bg-primary-100 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400'
+              )}
+              title={label}
+            >
+              <Icon className="h-4 w-4" />
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Export/Import Dialog */}
       <ExportImportDialog

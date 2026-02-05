@@ -5,7 +5,13 @@ import { FormLayer } from '@components/forms/FormLayer';
 import { TextLayer, type TextSelection } from './TextLayer';
 import { SelectionPopup } from '@components/annotations/SelectionPopup';
 import { NoteTool } from '@components/annotations/NoteTool';
+import { DrawingCanvas } from '@components/annotations/DrawingCanvas';
+import { RectangleTool } from '@components/annotations/RectangleTool';
+import { EllipseTool } from '@components/annotations/EllipseTool';
+import { ArrowTool } from '@components/annotations/ArrowTool';
+import { LineTool } from '@components/annotations/LineTool';
 import { useAnnotationStore } from '@stores/annotationStore';
+import { useUIStore } from '@stores/uiStore';
 import { useFormStore } from '@stores/formStore';
 
 interface PageCanvasProps {
@@ -29,6 +35,8 @@ export function PageCanvas({
   const [textSelection, setTextSelection] = useState<TextSelection | null>(null);
 
   const activeTool = useAnnotationStore((state) => state.activeTool);
+  const activeShapeType = useAnnotationStore((state) => state.activeShapeType);
+  const editorTool = useUIStore((state) => state.activeTool);
   const formFields = useFormStore((state) => state.getFieldsForPage(pageNumber - 1));
 
   const renderPage = useCallback(async () => {
@@ -65,10 +73,40 @@ export function PageCanvas({
     };
   }, [renderPage, renderer, pageNumber]);
 
+  // Get annotation store actions
+  const addAnnotation = useAnnotationStore((state) => state.addAnnotation);
+  const activeColor = useAnnotationStore((state) => state.activeColor);
+  const activeOpacity = useAnnotationStore((state) => state.activeOpacity);
+
   // Handle text selection from text layer
   const handleTextSelection = useCallback((selection: TextSelection | null) => {
+    // If an annotation tool is active and we have a selection, auto-create the annotation
+    if (selection && activeTool && ['highlight', 'underline', 'strikethrough'].includes(activeTool)) {
+      const scaleValue = scale / 100;
+      const pdfRects = selection.rects.map((rect) => ({
+        x: rect.x / scaleValue,
+        y: pageHeight - (rect.y + rect.height) / scaleValue,
+        width: rect.width / scaleValue,
+        height: rect.height / scaleValue,
+      }));
+
+      addAnnotation({
+        type: activeTool,
+        pageIndex: pageNumber - 1,
+        rects: pdfRects,
+        color: activeColor,
+        opacity: activeOpacity,
+        content: selection.text,
+      });
+
+      // Clear the native selection
+      window.getSelection()?.removeAllRanges();
+      setTextSelection(null);
+      return;
+    }
+
     setTextSelection(selection);
-  }, []);
+  }, [activeTool, activeColor, scale, pageHeight, pageNumber, addAnnotation]);
 
   // Clear selection popup
   const clearSelection = useCallback(() => {
@@ -107,38 +145,44 @@ export function PageCanvas({
         style={{ background: 'white' }}
       />
 
-      {/* Text Layer for selection */}
+      {/* Text Layer for selection - disable when drawing tools are active */}
       {dimensions.width > 0 && (
-        <TextLayer
-          renderer={renderer}
-          pageNumber={pageNumber}
-          scale={scale}
-          width={dimensions.width}
-          height={dimensions.height}
-          onTextSelected={handleTextSelection}
-        />
+        <div style={{ pointerEvents: (editorTool === 'draw' || editorTool === 'shape') ? 'none' : 'auto' }}>
+          <TextLayer
+            renderer={renderer}
+            pageNumber={pageNumber}
+            scale={scale}
+            width={dimensions.width}
+            height={dimensions.height}
+            onTextSelected={handleTextSelection}
+          />
+        </div>
       )}
 
-      {/* Annotation Layer */}
+      {/* Annotation Layer - disable when drawing tools are active */}
       {dimensions.width > 0 && pageHeight > 0 && (
-        <AnnotationLayer
-          pageIndex={pageNumber - 1}
-          width={dimensions.width}
-          height={dimensions.height}
-          scale={scaleValue}
-          pageHeight={pageHeight}
-        />
+        <div style={{ pointerEvents: (editorTool === 'draw' || editorTool === 'shape') ? 'none' : 'auto' }}>
+          <AnnotationLayer
+            pageIndex={pageNumber - 1}
+            width={dimensions.width}
+            height={dimensions.height}
+            scale={scaleValue}
+            pageHeight={pageHeight}
+          />
+        </div>
       )}
 
-      {/* Form Layer */}
+      {/* Form Layer - disable when drawing tools are active */}
       {dimensions.width > 0 && pageHeight > 0 && formFields.length > 0 && (
-        <FormLayer
-          pageIndex={pageNumber - 1}
-          width={dimensions.width}
-          height={dimensions.height}
-          scale={scaleValue}
-          pageHeight={pageHeight}
-        />
+        <div style={{ pointerEvents: (editorTool === 'draw' || editorTool === 'shape') ? 'none' : 'auto' }}>
+          <FormLayer
+            pageIndex={pageNumber - 1}
+            width={dimensions.width}
+            height={dimensions.height}
+            scale={scaleValue}
+            pageHeight={pageHeight}
+          />
+        </div>
       )}
 
       {/* Note Tool Overlay */}
@@ -149,6 +193,55 @@ export function PageCanvas({
           pageHeight={pageHeight}
           onNoteCreated={clearSelection}
         />
+      )}
+
+      {/* Drawing Canvas Overlay */}
+      {dimensions.width > 0 && (
+        <DrawingCanvas
+          pageIndex={pageNumber - 1}
+          width={dimensions.width}
+          height={dimensions.height}
+          scale={scaleValue}
+          isActive={editorTool === 'draw'}
+        />
+      )}
+
+      {/* Shape Tools */}
+      {dimensions.width > 0 && editorTool === 'shape' && (
+        <>
+          <RectangleTool
+            pageIndex={pageNumber - 1}
+            width={dimensions.width}
+            height={dimensions.height}
+            scale={scaleValue}
+            pageHeight={pageHeight}
+            isActive={activeShapeType === 'rectangle'}
+          />
+          <EllipseTool
+            pageIndex={pageNumber - 1}
+            width={dimensions.width}
+            height={dimensions.height}
+            scale={scaleValue}
+            pageHeight={pageHeight}
+            isActive={activeShapeType === 'ellipse'}
+          />
+          <ArrowTool
+            pageIndex={pageNumber - 1}
+            width={dimensions.width}
+            height={dimensions.height}
+            scale={scaleValue}
+            pageHeight={pageHeight}
+            isActive={activeShapeType === 'arrow'}
+          />
+          <LineTool
+            pageIndex={pageNumber - 1}
+            width={dimensions.width}
+            height={dimensions.height}
+            scale={scaleValue}
+            pageHeight={pageHeight}
+            isActive={activeShapeType === 'line'}
+          />
+        </>
       )}
 
       {/* Selection Popup */}

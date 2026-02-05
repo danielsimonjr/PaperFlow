@@ -66,13 +66,15 @@ export function LineTool({
     []
   );
 
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent) => {
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent) => {
       if (!isActive) return;
 
       const rect = (e.target as HTMLElement).getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
+
+      (e.target as HTMLElement).setPointerCapture(e.pointerId);
 
       setIsDragging(true);
       setDragState({
@@ -86,8 +88,8 @@ export function LineTool({
     [isActive]
   );
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
       if (!isDragging || !dragState) return;
 
       const rect = (e.target as HTMLElement).getBoundingClientRect();
@@ -102,8 +104,8 @@ export function LineTool({
     [isDragging, dragState]
   );
 
-  const handleMouseUp = useCallback(
-    (e: React.MouseEvent) => {
+  const handlePointerUp = useCallback(
+    (e: React.PointerEvent) => {
       if (!isDragging || !dragState) return;
 
       const { endX, endY } = calculateEndpoint(dragState, e.shiftKey);
@@ -174,13 +176,15 @@ export function LineTool({
 
   return (
     <svg
-      className="absolute left-0 top-0 cursor-crosshair"
+      className="absolute left-0 top-0 cursor-crosshair touch-none"
+      style={{ zIndex: 20 }}
       width={width}
       height={height}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
+      onPointerCancel={handlePointerUp}
       tabIndex={0}
     >
       {/* Preview line while dragging */}
