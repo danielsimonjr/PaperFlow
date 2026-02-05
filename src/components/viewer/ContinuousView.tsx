@@ -2,6 +2,8 @@ import { useRef, useCallback, useState, useEffect } from 'react';
 import { PageCanvas } from './PageCanvas';
 import { PDFRenderer } from '@lib/pdf/renderer';
 import { useDynamicVirtualization } from '@hooks/useVirtualization';
+import { useUIStore } from '@stores/uiStore';
+import { cn } from '@utils/cn';
 
 interface ContinuousViewProps {
   renderer: PDFRenderer;
@@ -27,6 +29,11 @@ export function ContinuousView({
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(600);
   const [pageHeights, setPageHeights] = useState<Map<number, number>>(new Map());
+  const activeTool = useUIStore((state) => state.activeTool);
+
+  // Pan state for hand tool
+  const [isPanning, setIsPanning] = useState(false);
+  const [panStart, setPanStart] = useState({ x: 0, y: 0 });
 
   // Update container height on resize
   useEffect(() => {
@@ -108,12 +115,53 @@ export function ContinuousView({
     []
   );
 
+  // Hand tool panning handlers
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (activeTool === 'hand' && containerRef.current) {
+        setIsPanning(true);
+        setPanStart({
+          x: e.clientX + containerRef.current.scrollLeft,
+          y: e.clientY + containerRef.current.scrollTop,
+        });
+        e.preventDefault();
+      }
+    },
+    [activeTool]
+  );
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (isPanning && containerRef.current) {
+        containerRef.current.scrollLeft = panStart.x - e.clientX;
+        containerRef.current.scrollTop = panStart.y - e.clientY;
+      }
+    },
+    [isPanning, panStart]
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setIsPanning(false);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsPanning(false);
+  }, []);
+
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-auto bg-gray-200 dark:bg-gray-800"
+      className={cn(
+        "h-full overflow-auto bg-gray-200 dark:bg-gray-800",
+        activeTool === 'hand' && "cursor-grab",
+        activeTool === 'hand' && isPanning && "cursor-grabbing"
+      )}
       onScroll={handleScroll}
       onWheel={onWheel}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Spacer for total scroll height */}
       <div

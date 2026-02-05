@@ -196,12 +196,13 @@ export function PageCanvas({
       )}
 
       {/* Drawing Canvas Overlay */}
-      {dimensions.width > 0 && (
+      {dimensions.width > 0 && pageHeight > 0 && (
         <DrawingCanvas
           pageIndex={pageNumber - 1}
           width={dimensions.width}
           height={dimensions.height}
           scale={scaleValue}
+          pageHeight={pageHeight}
           isActive={editorTool === 'draw'}
         />
       )}

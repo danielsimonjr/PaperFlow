@@ -4,6 +4,8 @@ import { Highlight } from './Highlight';
 import { Underline } from './Underline';
 import { Strikethrough } from './Strikethrough';
 import { StickyNote } from './StickyNote';
+import { DrawingAnnotation } from './DrawingAnnotation';
+import { ShapeAnnotation } from './ShapeAnnotation';
 import type { Annotation } from '@/types';
 
 interface AnnotationLayerProps {
@@ -121,6 +123,32 @@ export function AnnotationLayer({
               onSelect={() => handleSelect(annotation.id)}
               onDelete={() => handleDelete(annotation.id)}
               onUpdate={(updates) => handleUpdate(annotation.id, updates)}
+            />
+          );
+
+        case 'drawing':
+          return (
+            <DrawingAnnotation
+              key={annotation.id}
+              annotation={annotation}
+              isSelected={isSelected}
+              scale={scale}
+              pageHeight={pageHeight}
+              onSelect={() => handleSelect(annotation.id)}
+              onDelete={() => handleDelete(annotation.id)}
+            />
+          );
+
+        case 'shape':
+          return (
+            <ShapeAnnotation
+              key={annotation.id}
+              annotation={annotation}
+              isSelected={isSelected}
+              scale={scale}
+              pageHeight={pageHeight}
+              onSelect={() => handleSelect(annotation.id)}
+              onDelete={() => handleDelete(annotation.id)}
             />
           );
 

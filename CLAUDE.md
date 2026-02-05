@@ -6,11 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm install
-npm run dev          # http://localhost:5173 (web)
-npm run electron:dev # Desktop app with hot reload
-npm run build        # Production build to dist/
-npm run preview      # Preview production build
+npm run dev              # Web: http://localhost:5173
+npm run electron:dev     # Desktop with hot reload
 ```
+
+See [Build & Development Commands](#build--development-commands) for full reference.
 
 ## Project Overview
 
@@ -66,6 +66,11 @@ npx vitest run -t "should load PDF"
 - **Workbox/vite-plugin-pwa**: Service worker and offline support
 
 ### State Management (Zustand Stores)
+
+**Essential Stores** (start here when debugging):
+- `documentStore`: PDF state - most common debugging target
+- `annotationStore`: Annotation state and active tool
+- `uiStore`: UI state including editor tools (select, hand, etc.)
 
 **Core Stores (Phase 1)**
 - `documentStore`: PDF state (renderer, pages, zoom, view mode)
@@ -125,6 +130,13 @@ UI Components → Zustand Stores → Core Libraries (PDF.js/pdf-lib) → Indexed
 - `src/pages/`: Route components (Home, Viewer, Settings)
 - `electron/main/index.ts`: Electron main process entry point
 - `electron/preload/index.ts`: Preload script exposing APIs to renderer
+
+### Key Files for Debugging
+- `src/lib/pdf/renderer.ts`: PDF.js worker configuration and rendering
+- `src/components/viewer/PageCanvas.tsx`: PDF page rendering with annotation layers
+- `src/stores/documentStore.ts`: Core PDF document state
+- `vite.config.ts`: Web build configuration (check `base` for Electron)
+- `electron-builder.yml`: Desktop build configuration
 
 ### Constants (`src/constants/`)
 - `config.ts`: App configuration (zoom limits, performance thresholds)
@@ -256,6 +268,24 @@ Key hooks:
 
 Annotation serialization in `lib/annotations/serializer.ts`.
 
+### Tool State Architecture
+
+- **Annotation tools** (highlight, underline, strikethrough, note): Stored in `annotationStore.activeTool`
+- **Editor tools** (select, hand, text, draw, shape): Stored in `uiStore.activeTool`
+- When adding new tool behavior, ensure view components (SinglePageView, ContinuousView) consume the tool state from the global store
+- Auto-annotation: When annotation tool is active, text selection auto-creates annotations (see `PageCanvas.tsx`)
+
+### Drawing/Annotation Tool Layering
+
+The PDF text layer (`.textLayer`) has `z-index: 2` in `src/index.css`. Drawing and shape tools must use `z-index: 20` or higher to receive pointer events above the text layer. When adding new drawing/annotation overlay tools, always set explicit z-index.
+
+### Pointer Event Handlers and React State
+
+When tracking drag state in pointer event handlers, use a ref for synchronous state alongside React state:
+- React state (`setIsDrawing(true)`) is async - move events may fire before re-render
+- Use `isDrawingRef.current = true` before the state setter for immediate availability in `handlePointerMove`
+- See `src/hooks/usePointerInput.ts` for the pattern
+
 ## Naming Conventions
 
 | Type       | Convention              | Example            |
@@ -345,6 +375,7 @@ All variables are optional (Phase 2+ features):
 - **rcedit "Unable to commit changes"** - File locked by Dropbox or running process; stop PaperFlow.exe first
 - **Blank page in Electron** - vite.config.ts must use `base: './'` for Electron (relative paths for file://)
 - **404 errors in Electron** - App uses HashRouter not BrowserRouter (see src/main.tsx)
+- **PDF.js worker path** - Must use relative path (`./pdf.worker.min.js`) for Electron; absolute paths resolve to drive root (see `src/lib/pdf/renderer.ts`)
 
 ### Electron Build in Dropbox Folders
 Build to temp directory to avoid Dropbox sync file locking:

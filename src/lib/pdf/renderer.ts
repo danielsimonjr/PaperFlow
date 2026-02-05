@@ -2,7 +2,11 @@ import * as pdfjsLib from 'pdfjs-dist';
 import type { PDFDocumentInfo, PDFPageInfo, PDFOutlineItem } from '@/types/pdf';
 
 // Configure worker - must be set before loading any documents
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+// Use relative path for Electron (file:// protocol) since absolute paths resolve to drive root
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isElectron = typeof (window as any).electron !== 'undefined' ||
+  (typeof window !== 'undefined' && window.location?.protocol === 'file:');
+pdfjsLib.GlobalWorkerOptions.workerSrc = isElectron ? './pdf.worker.min.js' : '/pdf.worker.min.js';
 
 export interface RenderResult {
   width: number;

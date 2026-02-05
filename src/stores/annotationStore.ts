@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
 import type { Annotation, AnnotationType, AnnotationReply } from '@/types';
+import { useHistoryStore } from './historyStore';
 
 // Extended annotation type for Sprint 4 drawing/shape/stamp features
 export type ShapeType = 'rectangle' | 'ellipse' | 'arrow' | 'line';
@@ -66,6 +67,21 @@ export const useAnnotationStore = create<AnnotationState>((set, get) => ({
       annotations: [...state.annotations, annotation],
     }));
 
+    // Push to history for undo/redo
+    useHistoryStore.getState().push({
+      action: `Add ${annotation.type}`,
+      undo: () => {
+        set((state) => ({
+          annotations: state.annotations.filter((a) => a.id !== id),
+        }));
+      },
+      redo: () => {
+        set((state) => ({
+          annotations: [...state.annotations, annotation],
+        }));
+      },
+    });
+
     return id;
   },
 
@@ -78,10 +94,29 @@ export const useAnnotationStore = create<AnnotationState>((set, get) => ({
   },
 
   deleteAnnotation: (id) => {
+    const annotation = get().annotations.find((a) => a.id === id);
+
     set((state) => ({
       annotations: state.annotations.filter((a) => a.id !== id),
       selectedId: state.selectedId === id ? null : state.selectedId,
     }));
+
+    // Push to history for undo/redo
+    if (annotation) {
+      useHistoryStore.getState().push({
+        action: `Delete ${annotation.type}`,
+        undo: () => {
+          set((state) => ({
+            annotations: [...state.annotations, annotation],
+          }));
+        },
+        redo: () => {
+          set((state) => ({
+            annotations: state.annotations.filter((a) => a.id !== id),
+          }));
+        },
+      });
+    }
   },
 
   selectAnnotation: (id) => {

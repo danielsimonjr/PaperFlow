@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useAnnotationStore } from '@stores/annotationStore';
 
 interface DrawingCanvasProps {
@@ -6,6 +6,7 @@ interface DrawingCanvasProps {
   width: number;
   height: number;
   scale: number;
+  pageHeight: number;
   isActive: boolean;
 }
 
@@ -23,6 +24,7 @@ export function DrawingCanvas({
   width,
   height,
   scale,
+  pageHeight,
   isActive,
 }: DrawingCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -31,7 +33,6 @@ export function DrawingCanvas({
   const pointsRef = useRef<Point[]>([]);
   const lastPosRef = useRef<Point | null>(null);
   const dprRef = useRef(1);
-  const [debugInfo, setDebugInfo] = useState('Initializing...');
 
   const activeColor = useAnnotationStore((state) => state.activeColor);
   const activeStrokeWidth = useAnnotationStore((state) => state.activeStrokeWidth ?? 2);
@@ -40,15 +41,7 @@ export function DrawingCanvas({
   // Setup canvas with proper DPI scaling
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) {
-      setDebugInfo('ERROR: No canvas ref');
-      return;
-    }
-
-    if (!isActive) {
-      setDebugInfo('Inactive');
-      return;
-    }
+    if (!canvas || !isActive) return;
 
     // Get device pixel ratio for high-DPI support
     const dpr = window.devicePixelRatio || 1;
@@ -60,42 +53,13 @@ export function DrawingCanvas({
 
     // Get 2D context
     const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      setDebugInfo('ERROR: No 2D context');
-      return;
-    }
+    if (!ctx) return;
 
     // Store context in ref for use in event handlers
     ctxRef.current = ctx;
 
     // Scale context to match DPI
     ctx.scale(dpr, dpr);
-
-    // Draw a large, obvious test pattern
-    ctx.fillStyle = '#FF0000';
-    ctx.fillRect(10, 10, 80, 40);
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 14px Arial';
-    ctx.fillText('DRAW HERE', 15, 35);
-
-    // Draw corner markers
-    ctx.fillStyle = '#00FF00';
-    ctx.fillRect(0, 0, 20, 20);
-    ctx.fillRect(width - 20, 0, 20, 20);
-    ctx.fillRect(0, height - 20, 20, 20);
-    ctx.fillRect(width - 20, height - 20, 20, 20);
-
-    setDebugInfo(`Ready: ${width}x${height} @${dpr}x DPI`);
-
-    // Log to console for debugging
-    console.log('[DrawingCanvas] Setup complete:', {
-      width,
-      height,
-      dpr,
-      canvasWidth: canvas.width,
-      canvasHeight: canvas.height,
-      hasContext: !!ctx,
-    });
   }, [width, height, isActive]);
 
   // Get coordinates from pointer event
@@ -104,28 +68,23 @@ export function DrawingCanvas({
     if (!canvas) return { x: 0, y: 0 };
 
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    return { x, y };
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
   }, []);
 
   // Draw a dot at the given position
   const drawDot = useCallback((pos: Point) => {
     const ctx = ctxRef.current;
-    if (!ctx) {
-      console.log('[DrawingCanvas] drawDot: No context');
-      return;
-    }
+    if (!ctx) return;
 
-    const radius = Math.max(activeStrokeWidth * 2, 8);
+    const radius = Math.max(activeStrokeWidth, 2);
 
     ctx.fillStyle = activeColor;
     ctx.beginPath();
     ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
     ctx.fill();
-
-    console.log('[DrawingCanvas] Drew dot at', pos, 'color:', activeColor, 'radius:', radius);
   }, [activeColor, activeStrokeWidth]);
 
   // Draw a line between two points
@@ -134,7 +93,7 @@ export function DrawingCanvas({
     if (!ctx) return;
 
     ctx.strokeStyle = activeColor;
-    ctx.lineWidth = Math.max(activeStrokeWidth, 4);
+    ctx.lineWidth = activeStrokeWidth;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.beginPath();
@@ -161,9 +120,6 @@ export function DrawingCanvas({
 
     // Draw initial dot
     drawDot(pos);
-
-    setDebugInfo(`Down: ${Math.round(pos.x)},${Math.round(pos.y)} [${e.pointerType}]`);
-    console.log('[DrawingCanvas] Pointer down:', pos, 'type:', e.pointerType);
   }, [getCoords, drawDot]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -180,8 +136,6 @@ export function DrawingCanvas({
 
     pointsRef.current.push(pos);
     lastPosRef.current = pos;
-
-    setDebugInfo(`Move: ${Math.round(pos.x)},${Math.round(pos.y)} pts:${pointsRef.current.length}`);
   }, [getCoords, drawLine]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -193,8 +147,6 @@ export function DrawingCanvas({
     }
 
     const pointCount = pointsRef.current.length;
-    setDebugInfo(`Done: ${pointCount} points saved`);
-    console.log('[DrawingCanvas] Pointer up, saving', pointCount, 'points');
 
     if (pointCount >= 1) {
       addAnnotation({
@@ -205,8 +157,10 @@ export function DrawingCanvas({
         opacity: 1,
         paths: [{
           points: pointsRef.current.map((p) => ({
+            // Convert screen coordinates to PDF coordinates
+            // PDF has origin at bottom-left, screen has origin at top-left
             x: p.x / scale,
-            y: p.y / scale,
+            y: pageHeight - p.y / scale,
             pressure: 0.5,
           })),
         }],
@@ -217,7 +171,7 @@ export function DrawingCanvas({
     isDrawingRef.current = false;
     pointsRef.current = [];
     lastPosRef.current = null;
-  }, [addAnnotation, pageIndex, activeColor, activeStrokeWidth, scale]);
+  }, [addAnnotation, pageIndex, activeColor, activeStrokeWidth, scale, pageHeight]);
 
   const handlePointerCancel = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -228,7 +182,6 @@ export function DrawingCanvas({
     isDrawingRef.current = false;
     pointsRef.current = [];
     lastPosRef.current = null;
-    setDebugInfo('Cancelled');
   }, []);
 
   if (!isActive) {
@@ -241,7 +194,7 @@ export function DrawingCanvas({
         position: 'absolute',
         left: 0,
         top: 0,
-        zIndex: 1000,  // Very high z-index
+        zIndex: 50,
         pointerEvents: 'auto',
       }}
     >
@@ -252,7 +205,6 @@ export function DrawingCanvas({
           height,
           cursor: 'crosshair',
           touchAction: 'none',
-          backgroundColor: 'rgba(255, 200, 0, 0.1)', // Light orange tint
           display: 'block',
         }}
         onPointerDown={handlePointerDown}
@@ -261,22 +213,6 @@ export function DrawingCanvas({
         onPointerLeave={handlePointerUp}
         onPointerCancel={handlePointerCancel}
       />
-      {/* Debug overlay */}
-      <div style={{
-        position: 'absolute',
-        top: 5,
-        right: 5,
-        background: 'rgba(0,0,0,0.9)',
-        color: '#0f0',
-        padding: '6px 10px',
-        fontSize: '12px',
-        pointerEvents: 'none',
-        fontFamily: 'monospace',
-        borderRadius: '4px',
-        whiteSpace: 'pre',
-      }}>
-        {debugInfo}
-      </div>
     </div>
   );
 }
