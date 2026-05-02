@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Hardened production Content Security Policy: confirmed `'unsafe-inline'` and `'unsafe-eval'` are absent from `script-src`. `'unsafe-inline'` is retained on `style-src` only because the renderer uses React inline `style={{...}}` props; switching to a nonce/hash strategy is tracked separately.
 - Certificate verification gating now uses `app.isPackaged === false` instead of `process.env.NODE_ENV === 'development'`. NODE_ENV could be spoofed by a hostile launcher to weaken cert validation in shipped builds; `app.isPackaged` cannot.
+- SSRF hardening on `RemoteConfigLoader` (enterprise remote config). The loader now refuses non-`https://` URLs and any hostname whose DNS resolution lands in private (RFC1918), loopback, or link-local space (incl. the cloud-metadata `169.254.169.254`). The `validateSSL: false` flag is now also refused on public URLs. New `src/lib/enterprise/ssrfGuard.ts` module provides reusable `isPrivateOrLoopbackIP` and `assertSafeURL` helpers.
 
 ### Added
 

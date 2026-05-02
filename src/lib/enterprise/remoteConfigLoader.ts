@@ -2,11 +2,21 @@
  * Remote Configuration Loader (Sprint 20)
  *
  * Fetches configuration from remote HTTP/HTTPS endpoints.
+ *
+ * SSRF hardening (security finding 2026-05-01 #4):
+ * - Only `https:` URLs are accepted (configurable opt-out for tests).
+ * - The hostname is resolved via DNS and any private/loopback/link-local
+ *   address space is rejected before issuing the request. This blocks the
+ *   common SSRF patterns where a remote-config URL points at internal
+ *   services (cloud metadata 169.254.169.254, RFC1918 ranges, IPv6 loopback).
  */
 
 import { loadJsonString } from './jsonConfigLoader';
 import { loadYamlString, isYamlContent } from './yamlConfigLoader';
+import { assertSafeURL, isPrivateOrLoopbackIP } from './ssrfGuard';
 import type { EnterpriseConfig } from '@/types/enterpriseConfig';
+
+export { isPrivateOrLoopbackIP };
 
 /**
  * Remote config options
@@ -33,9 +43,16 @@ export interface RemoteConfigOptions {
   retryDelay?: number;
   /** Custom headers */
   headers?: Record<string, string>;
-  /** Validate SSL certificates */
+  /** Validate SSL certificates (default true; rejects self-signed/invalid certs) */
   validateSSL?: boolean;
+  /**
+   * Allow `http:` URLs and private IPs (default false). Intended for unit
+   * tests that mock fetch and run against `localhost`. Production callers
+   * MUST leave this false. Setting it to true bypasses SSRF protections.
+   */
+  allowInsecureURL?: boolean;
 }
+
 
 /**
  * Remote config result
@@ -168,6 +185,11 @@ export class RemoteConfigLoader {
    * Perform the actual fetch
    */
   private async fetch(): Promise<RemoteConfigResult> {
+    await assertSafeURL(this.options.url, {
+      allowInsecureURL: this.options.allowInsecureURL,
+      validateSSL: this.options.validateSSL,
+    });
+
     const headers: Record<string, string> = {
       Accept: 'application/json, application/yaml, text/yaml',
       ...this.options.headers,
