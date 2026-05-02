@@ -38,6 +38,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+#### Annotation Test Failures (Pre-existing)
+- `DrawingCanvas`: migrate static `cursor: 'crosshair'` and `touchAction: 'none'` inline styles to Tailwind classes (`cursor-crosshair`, `touch-none`), aligning with Wave 1 of the style-src nonce migration. Restores `tests/unit/components/annotations/DrawingCanvas.test.tsx` (2 assertions).
+
 #### Electron Build Fixes
 - Fixed Vite SSR build for Electron main process (migrated from tsc)
 - Added missing externals for Node.js modules in vite.electron.config.ts
