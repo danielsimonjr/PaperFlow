@@ -5,22 +5,28 @@
  * for the Electron application.
  */
 
-import { BrowserWindow, session } from 'electron';
+import { app, BrowserWindow, session } from 'electron';
 
 /**
  * Content Security Policy for production
  *
- * This policy:
- * - Allows scripts from 'self' (local files)
- * - Allows inline scripts needed for Vite/React (unsafe-inline for development)
+ * Strict policy: no 'unsafe-inline' or 'unsafe-eval' for scripts. We deliberately
+ * keep 'unsafe-inline' for styles only because Tailwind/React inline a small
+ * amount of style content; scripts and eval are blocked outright.
+ *
+ * - Allows scripts only from 'self' and blob: (PDF.js worker bootstrap)
  * - Allows blob: URLs for PDF.js worker
  * - Allows data: URLs for fonts and images
  * - Blocks remote code execution
  */
 const PRODUCTION_CSP = [
   "default-src 'self'",
+  // Script: no 'unsafe-inline' / 'unsafe-eval'. blob: needed for PDF.js worker.
   "script-src 'self' blob:",
   "worker-src 'self' blob:",
+  // Style: 'unsafe-inline' is retained because the renderer uses React inline
+  // style={{...}} props (annotation positions, dynamic colors). Removing it
+  // breaks the viewer; switching to a nonce/hash strategy is tracked separately.
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
@@ -120,15 +126,17 @@ export function applySecurityDefaults(): void {
   });
 
   // Set certificate error handler (reject invalid certificates in production)
-  defaultSession.setCertificateVerifyProc((request, callback) => {
-    // In development, allow self-signed certificates
-    if (process.env['NODE_ENV'] === 'development') {
-      callback(0); // Accept all
+  defaultSession.setCertificateVerifyProc((_request, callback) => {
+    // Only allow self-signed certificates in unpackaged dev builds.
+    // Gating on app.isPackaged prevents NODE_ENV being spoofed by a hostile
+    // launcher to weaken cert verification in shipped builds.
+    if (app.isPackaged === false) {
+      callback(0); // Accept all (dev only)
       return;
     }
 
-    // In production, use default verification
-    callback(-2); // Use Chromium's default verification
+    // In packaged production builds, defer to Chromium's default verification
+    callback(-2);
   });
 }
 
