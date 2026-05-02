@@ -95,7 +95,7 @@ export function SignatureRotation({ signature, scale }: SignatureRotationProps) 
   return (
     <>
       {/* Line from center to handle */}
-      <svg className="pointer-events-none absolute left-0 top-0 z-30 h-full w-full overflow-visible" style={{ position: 'absolute' }}>
+      <svg className="pointer-events-none absolute left-0 top-0 z-30 h-full w-full overflow-visible">
         <line x1={centerX} y1={centerY} x2={rotatedHandleX} y2={rotatedHandleY} stroke="#3B82F6" strokeWidth="1" strokeDasharray="4 2" />
       </svg>
 

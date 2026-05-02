@@ -156,8 +156,7 @@ export function AdvancedPrintSettings({ className }: AdvancedPrintSettingsProps)
                   <div className="w-full h-1/3 bg-gray-300 rounded-t-sm" />
                 </div>
                 <div
-                  className="absolute inset-0 bg-gray-200 opacity-70"
-                  style={{ transform: 'translate(4px, 4px)' }}
+                  className="absolute inset-0 bg-gray-200 opacity-70 [transform:translate(4px,4px)]"
                 >
                   <div className="w-full h-1/3 bg-gray-400 rounded-t-sm" />
                 </div>
@@ -194,8 +193,7 @@ export function AdvancedPrintSettings({ className }: AdvancedPrintSettingsProps)
                   <div className="w-full h-1/3 bg-gray-300 rounded-t-sm" />
                 </div>
                 <div
-                  className="absolute inset-0 bg-gray-200 opacity-70"
-                  style={{ transform: 'translate(0, 4px) scaleY(-1)' }}
+                  className="absolute inset-0 bg-gray-200 opacity-70 [transform:translate(0,4px)_scaleY(-1)]"
                 >
                   <div className="w-full h-1/3 bg-gray-400 rounded-t-sm" />
                 </div>
