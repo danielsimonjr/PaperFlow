@@ -181,26 +181,22 @@ export function MarginEditor({ className }: MarginEditorProps) {
 
           {/* Margin indicators */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 text-xs text-gray-500"
-            style={{ top: '4px' }}
+            className="absolute left-1/2 top-1 -translate-x-1/2 text-xs text-gray-500"
           >
             {formatValue(displayMargins.top)}
           </div>
           <div
-            className="absolute left-1/2 -translate-x-1/2 text-xs text-gray-500"
-            style={{ bottom: '4px' }}
+            className="absolute bottom-1 left-1/2 -translate-x-1/2 text-xs text-gray-500"
           >
             {formatValue(displayMargins.bottom)}
           </div>
           <div
-            className="absolute top-1/2 -translate-y-1/2 text-xs text-gray-500"
-            style={{ left: '4px' }}
+            className="absolute left-1 top-1/2 -translate-y-1/2 text-xs text-gray-500"
           >
             {formatValue(displayMargins.left)}
           </div>
           <div
-            className="absolute top-1/2 -translate-y-1/2 text-xs text-gray-500"
-            style={{ right: '4px' }}
+            className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-gray-500"
           >
             {formatValue(displayMargins.right)}
           </div>

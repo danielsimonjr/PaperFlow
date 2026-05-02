@@ -172,8 +172,7 @@ export function EllipseTool({
 
   return (
     <svg
-      className="absolute left-0 top-0 cursor-crosshair touch-none"
-      style={{ zIndex: 20 }}
+      className="absolute left-0 top-0 z-20 cursor-crosshair touch-none"
       width={width}
       height={height}
       onPointerDown={handlePointerDown}

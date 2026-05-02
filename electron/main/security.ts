@@ -19,7 +19,7 @@ import { app, BrowserWindow, session } from 'electron';
  * - Allows data: URLs for fonts and images
  * - Blocks remote code execution
  */
-const PRODUCTION_CSP = [
+export const PRODUCTION_CSP = [
   "default-src 'self'",
   // Script: no 'unsafe-inline' / 'unsafe-eval'. blob: needed for PDF.js worker.
   "script-src 'self' blob:",
@@ -45,7 +45,7 @@ const PRODUCTION_CSP = [
  * - DevTools
  * - Inline scripts and eval (needed for Vite)
  */
-const DEVELOPMENT_CSP = [
+export const DEVELOPMENT_CSP = [
   "default-src 'self' http://localhost:* ws://localhost:*",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:* blob:",
   "worker-src 'self' blob:",
