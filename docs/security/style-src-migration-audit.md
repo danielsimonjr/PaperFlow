@@ -128,3 +128,103 @@ branch — doing so without finishing the dynamic sites would break the app.
   hash workaround for the text-layer stylesheet, or use `style-src-attr`
   vs `style-src-elem` to distinguish (modern Chromium supports this).
   Investigate before final tightening.
+
+## Wave 2 progress (branch `security/style-src-wave-2`)
+
+**Status:** PARTIAL — `'unsafe-inline'` NOT yet dropped. See "Why Wave 2
+stopped short" below.
+
+**Commits on this branch:**
+
+1. `182c7b6` — Kiosk module → external stylesheet `src/styles/kiosk.css`.
+   Replaces all inline `style={{...}}` props and embedded `<style>` JSX
+   blocks in `KioskShell.tsx`, `KioskHeader.tsx`, `KioskToolbar.tsx`. Touch
+   vs non-touch sizing quantized into `.kiosk-touch` / `.kiosk-compact`
+   modifier classes. **21 sites eliminated.**
+
+2. `135ebdc` — `WebkitAppRegion` → `data-app-region` attribute pattern.
+   `TitleBar.tsx` no longer emits inline styles for the Electron drag
+   region; CSS rules in `src/styles/platform.css` translate the attribute
+   to `-webkit-app-region`. Side effect: `platform.css` was orphaned (not
+   imported anywhere in `src/index.css`); now wired in. **4 sites
+   eliminated.**
+
+(Plus 4 sites removed in a parallel `9a30729` DrawingCanvas/ShapeTool
+fix on the same branch from another agent.)
+
+**Net change on this branch:** 157 → 111 inline-style sites
+(`grep -rn 'style={{' src/` excluding the audit doc itself).
+
+## Why Wave 2 stopped short of dropping `'unsafe-inline'`
+
+Of the ~111 remaining sites, the overwhelming majority are **continuous
+dynamic values** that cannot be expressed as a finite class enumeration:
+
+- **Continuous percentages / pixels** — progress bar widths
+  (`${pct}%`), ink-level heights, key-challenge timer countdowns,
+  page positioning (`marginBottom: PAGE_GAP`), thumbnail dimensions,
+  `width × height` from arbitrary PDF page sizes.
+- **User-supplied colors** — annotation/text/stamp/swatch colors
+  (`backgroundColor: color.value`) where `value` is any HTML hex/rgb,
+  not a finite palette.
+- **Computed transforms** — signature rotation handles
+  (`transform: rotate(${deg}deg)`), text box transforms, scanner
+  crop-tool corner positioning.
+- **Form-field absolute positioning** — `screenX`/`screenY` per field,
+  recomputed on every zoom and pan.
+- **Per-text-run viewer positioning** — `TextLayer.tsx` sets `width`,
+  `height`, and `transform` for each run.
+
+The CSS-variable-in-inline pattern (`style={{ '--x': '12px' }}`) does
+**not** sidestep `style-src 'self'` — the directive blocks the
+`style` *attribute* itself, regardless of contents.
+
+The viable strategies that remain are:
+
+1. **Nonce-wired runtime stylesheets.** Generate a per-load nonce in
+   `electron/main/index.ts`, inject it into the renderer HTML
+   (`<meta name="csp-nonce">`), and have each component that needs
+   dynamic styles render `<style nonce={nonce}>` rules with stable
+   class names instead of `style={{}}` props. Touches all 111 sites
+   plus main-process header injection plus a React `NonceContext`.
+   Architecturally the right answer; large migration.
+
+2. **Constructable stylesheets.** Use `new CSSStyleSheet()` +
+   `document.adoptedStyleSheets` to inject rules at runtime keyed by
+   stable class names. Avoids inline styles entirely; works under
+   `style-src 'self'` because it's adopted via the CSSOM rather than
+   parsed from an HTML `style=` attribute. Browser support is fine in
+   Electron (Chromium ≥ 99). Lower-touch than nonces, but each
+   component still needs a refactor to allocate/dispose rules.
+
+3. **Quantization where safe.** Progress bars can use 5-percent
+   buckets (`.w-pct-0`, `.w-pct-5`, …, `.w-pct-100`) — 21 classes — at
+   the cost of choppy animation. Probably acceptable for the 5-6
+   progress-bar sites if Daniel approves the visual change.
+
+4. **`style-src-attr` vs `style-src-elem` split.** Chromium supports
+   directive-level distinction. We could keep `style-src-attr
+   'unsafe-inline'` (allow inline `style=""` attributes) while
+   tightening `style-src-elem 'self'` (block `<style>` elements). This
+   does **not** improve the inline-style situation, but it does
+   prevent the more dangerous `<style>foo{}</style>` injection vector
+   that was previously possible. Worth doing regardless of waves.
+
+**Recommendation for Daniel:** Pick 1 (nonce wiring) for production
+correctness, optionally adopt 4 (split directive) as an immediate
+incremental tightening that doesn't require code-side migration.
+
+## Manual smoke checklist (post-merge)
+
+After merging this branch into `main`, exercise the following in a
+packaged build to confirm no visual regressions from the kiosk and
+TitleBar refactors:
+
+- Kiosk mode: enable kiosk in Settings, confirm header banner, page
+  navigation, zoom controls, search button, exit-PIN dialog, and
+  inactivity warning all render with correct sizing. Toggle touch
+  mode via config — buttons should grow from 44 px to 56 px.
+- TitleBar (Electron): on Windows, drag the window by the title strip
+  (drag region must work); click minimize/maximize/close on the right
+  (no-drag region must respond). On macOS, drag by the title bar and
+  click traffic-light buttons on the left. On Linux, same as Windows.
