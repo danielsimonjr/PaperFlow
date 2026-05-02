@@ -1,18 +1,19 @@
 import { useCallback } from 'react';
 import { useAnnotationStore } from '@stores/annotationStore';
-import { useHistoryStore } from '@stores/historyStore';
 import type { AnnotationRect, Annotation } from '@/types';
 
 /**
  * Hook for using highlight tool functionality programmatically.
- * Creates highlight annotations with undo/redo support.
+ *
+ * `addAnnotation` already pushes to the history store with action
+ * `'add_highlight'` — see `annotationStore.addAnnotation`. We deliberately do
+ * NOT push a second history entry here, because that would duplicate every
+ * highlight in the undo stack (one user action would require two undos).
  */
 export function useHighlightTool() {
   const addAnnotation = useAnnotationStore((state) => state.addAnnotation);
-  const deleteAnnotation = useAnnotationStore((state) => state.deleteAnnotation);
   const activeColor = useAnnotationStore((state) => state.activeColor);
   const activeOpacity = useAnnotationStore((state) => state.activeOpacity);
-  const pushHistory = useHistoryStore((state) => state.push);
 
   const createHighlight = useCallback(
     (
@@ -37,17 +38,9 @@ export function useHighlightTool() {
         content: options?.text,
       };
 
-      const id = addAnnotation(annotationData);
-
-      pushHistory({
-        action: 'add_highlight',
-        undo: () => deleteAnnotation(id),
-        redo: () => addAnnotation(annotationData),
-      });
-
-      return id;
+      return addAnnotation(annotationData);
     },
-    [activeColor, activeOpacity, addAnnotation, deleteAnnotation, pushHistory]
+    [activeColor, activeOpacity, addAnnotation]
   );
 
   return { createHighlight };
