@@ -6,6 +6,7 @@
 @import './styles/mobile.css';
 @import './styles/high-contrast.css';
 @import './styles/kiosk.css';
+@import './styles/platform.css';
 
 :root {
   --primary-900: #1E3A5F;
