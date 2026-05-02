@@ -105,9 +105,9 @@ describe('Shape Tools', () => {
       });
 
       // Simulate drag
-      fireEvent.mouseDown(svg, { clientX: 100, clientY: 100 });
-      fireEvent.mouseMove(svg, { clientX: 200, clientY: 200 });
-      fireEvent.mouseUp(svg, { clientX: 200, clientY: 200 });
+      fireEvent.pointerDown(svg, { clientX: 100, clientY: 100, pointerId: 1 });
+      fireEvent.pointerMove(svg, { clientX: 200, clientY: 200, pointerId: 1 });
+      fireEvent.pointerUp(svg, { clientX: 200, clientY: 200, pointerId: 1 });
 
       expect(mockAddAnnotation).toHaveBeenCalledTimes(1);
       expect(mockAddAnnotation).toHaveBeenCalledWith(
@@ -162,9 +162,9 @@ describe('Shape Tools', () => {
         toJSON: () => {},
       });
 
-      fireEvent.mouseDown(svg, { clientX: 100, clientY: 100 });
-      fireEvent.mouseMove(svg, { clientX: 200, clientY: 200 });
-      fireEvent.mouseUp(svg, { clientX: 200, clientY: 200 });
+      fireEvent.pointerDown(svg, { clientX: 100, clientY: 100, pointerId: 1 });
+      fireEvent.pointerMove(svg, { clientX: 200, clientY: 200, pointerId: 1 });
+      fireEvent.pointerUp(svg, { clientX: 200, clientY: 200, pointerId: 1 });
 
       expect(mockAddAnnotation).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -217,9 +217,9 @@ describe('Shape Tools', () => {
         toJSON: () => {},
       });
 
-      fireEvent.mouseDown(svg, { clientX: 100, clientY: 100 });
-      fireEvent.mouseMove(svg, { clientX: 200, clientY: 200 });
-      fireEvent.mouseUp(svg, { clientX: 200, clientY: 200 });
+      fireEvent.pointerDown(svg, { clientX: 100, clientY: 100, pointerId: 1 });
+      fireEvent.pointerMove(svg, { clientX: 200, clientY: 200, pointerId: 1 });
+      fireEvent.pointerUp(svg, { clientX: 200, clientY: 200, pointerId: 1 });
 
       expect(mockAddAnnotation).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -272,9 +272,9 @@ describe('Shape Tools', () => {
         toJSON: () => {},
       });
 
-      fireEvent.mouseDown(svg, { clientX: 100, clientY: 100 });
-      fireEvent.mouseMove(svg, { clientX: 200, clientY: 200 });
-      fireEvent.mouseUp(svg, { clientX: 200, clientY: 200 });
+      fireEvent.pointerDown(svg, { clientX: 100, clientY: 100, pointerId: 1 });
+      fireEvent.pointerMove(svg, { clientX: 200, clientY: 200, pointerId: 1 });
+      fireEvent.pointerUp(svg, { clientX: 200, clientY: 200, pointerId: 1 });
 
       expect(mockAddAnnotation).toHaveBeenCalledWith(
         expect.objectContaining({

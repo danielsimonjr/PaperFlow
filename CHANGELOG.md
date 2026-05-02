@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Annotation Test Failures (Pre-existing)
 - `DrawingCanvas`: migrate static `cursor: 'crosshair'` and `touchAction: 'none'` inline styles to Tailwind classes (`cursor-crosshair`, `touch-none`), aligning with Wave 1 of the style-src nonce migration. Restores `tests/unit/components/annotations/DrawingCanvas.test.tsx` (2 assertions).
+- `ShapeTool` test (`RectangleTool`/`EllipseTool`/`ArrowTool`/`LineTool`): switch drag simulation from `fireEvent.mouseDown/mouseMove/mouseUp` to `fireEvent.pointerDown/pointerMove/pointerUp` so React dispatches to the components' `onPointerDown/Move/Up` handlers. Mouse events were not invoking pointer handlers in jsdom, so `addAnnotation` was never called. Add `setPointerCapture`/`releasePointerCapture`/`hasPointerCapture` no-op stubs to `tests/setup.ts` for jsdom (jsdom#2527 gap). Restores 4 assertions.
 
 #### Electron Build Fixes
 - Fixed Vite SSR build for Electron main process (migrated from tsc)

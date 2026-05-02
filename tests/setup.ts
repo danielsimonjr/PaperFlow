@@ -61,3 +61,25 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   unobserve: vi.fn(),
   disconnect: vi.fn(),
 }));
+
+// jsdom does not implement Pointer Capture APIs (https://github.com/jsdom/jsdom/issues/2527).
+// Annotation tools (DrawingCanvas, RectangleTool, EllipseTool, ArrowTool, LineTool) call
+// setPointerCapture / releasePointerCapture during pointer events. Provide no-op stubs so
+// component tests that fire pointer events can exercise the full handler path.
+if (typeof window !== 'undefined' && typeof Element !== 'undefined') {
+  if (!Element.prototype.setPointerCapture) {
+    Element.prototype.setPointerCapture = function () {
+      /* noop in jsdom */
+    };
+  }
+  if (!Element.prototype.releasePointerCapture) {
+    Element.prototype.releasePointerCapture = function () {
+      /* noop in jsdom */
+    };
+  }
+  if (!Element.prototype.hasPointerCapture) {
+    Element.prototype.hasPointerCapture = function () {
+      return false;
+    };
+  }
+}
