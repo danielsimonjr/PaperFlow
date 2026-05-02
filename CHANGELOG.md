@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- Begin migration off `style-src 'unsafe-inline'` in production CSP (branch `security/style-src-nonce-migration`). Wave 1: 16 of 157 inline-style call sites converted to Tailwind utility classes (annotation tools `Highlight`/`RectangleTool`/`EllipseTool`/`ArrowTool`/`LineTool`/`AnnotationLayer`/`ShapeOverlay`/`StickyNote`/`StampTransform`/`CustomStampDialog`, plus `SignatureRotation`, `AdvancedPrintSettings`, `MarginEditor`).
+- Add CSP regression test `tests/electron/csp.test.ts` pinning `PRODUCTION_CSP` shape and tracking the `style-src 'unsafe-inline'` removal goal as `it.todo`. `PRODUCTION_CSP` and `DEVELOPMENT_CSP` are now exported from `electron/main/security.ts`.
+- Document deferred call sites and recommended Wave 2 sequencing in `docs/security/style-src-migration-audit.md`. **Note:** `'unsafe-inline'` is intentionally NOT yet removed — ~141 dynamic inline styles (form-field positioning, color swatches, progress bars, kiosk layout, signature handles, scanner crop tool, viewer page positioning) still require migration to CSS variables or shared utility classes before the directive can be dropped.
+
 ### Added
 
 #### Architecture Documentation
