@@ -7,7 +7,6 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { useAnnotationStore } from '@stores/annotationStore';
-import { useHistoryStore } from '@stores/historyStore';
 import type { AnnotationRect, AnnotationType, Annotation } from '@/types';
 
 // Highlight color presets
@@ -54,8 +53,6 @@ export function SelectionPopup({
   const activeColor = useAnnotationStore((state) => state.activeColor);
   const activeOpacity = useAnnotationStore((state) => state.activeOpacity);
   const setActiveColor = useAnnotationStore((state) => state.setActiveColor);
-  const deleteAnnotation = useAnnotationStore((state) => state.deleteAnnotation);
-  const pushHistory = useHistoryStore((state) => state.push);
 
   // Close when clicking outside
   useEffect(() => {
@@ -93,14 +90,11 @@ export function SelectionPopup({
         content: text,
       };
 
-      const id = addAnnotation(annotationData);
-
-      // Add to history
-      pushHistory({
-        action: `add_${type}`,
-        undo: () => deleteAnnotation(id),
-        redo: () => addAnnotation(annotationData),
-      });
+      // annotationStore.addAnnotation is the single source of truth for
+      // history — it pushes its own `add_${type}` entry. Adding another
+      // one here doubled the undo stack and forced two Ctrl+Z presses
+      // to remove a single popup-triggered annotation.
+      addAnnotation(annotationData);
 
       onAnnotationCreated?.();
       onClose();
@@ -112,8 +106,6 @@ export function SelectionPopup({
       activeColor,
       activeOpacity,
       addAnnotation,
-      deleteAnnotation,
-      pushHistory,
       onAnnotationCreated,
       onClose,
     ]

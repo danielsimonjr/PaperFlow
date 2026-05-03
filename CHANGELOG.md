@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Note + popup-triggered annotations no longer require two Ctrl+Z to undo** (`NoteTool.tsx`, `SelectionPopup.tsx`). The same double-push pattern as the highlight bug fixed in 152ffa3 was still present in the note-placement tool and the text-selection popup: `annotationStore.addAnnotation` already pushes a history entry, but the wrappers pushed a second one on top, so each new sticky note or popup-triggered highlight/underline/strikethrough produced two history entries. Removed the redundant `pushHistory` calls so the store remains the sole source of truth for annotation undo. Regression coverage: `tests/unit/components/annotations/{NoteTool,SelectionPopup}.test.tsx` (6 tests, all asserting `historyStore.past.length === 1` per action).
+
 ### Security
 
 - Hardened production Content Security Policy: confirmed `'unsafe-inline'` and `'unsafe-eval'` are absent from `script-src`. `'unsafe-inline'` is retained on `style-src` only because the renderer uses React inline `style={{...}}` props; switching to a nonce/hash strategy is tracked separately.
@@ -17,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Begin migration off `style-src 'unsafe-inline'` in production CSP (branch `security/style-src-nonce-migration`). Wave 1: 16 of 157 inline-style call sites converted to Tailwind utility classes (annotation tools `Highlight`/`RectangleTool`/`EllipseTool`/`ArrowTool`/`LineTool`/`AnnotationLayer`/`ShapeOverlay`/`StickyNote`/`StampTransform`/`CustomStampDialog`, plus `SignatureRotation`, `AdvancedPrintSettings`, `MarginEditor`).
 - Add CSP regression test `tests/electron/csp.test.ts` pinning `PRODUCTION_CSP` shape and tracking the `style-src 'unsafe-inline'` removal goal as `it.todo`. `PRODUCTION_CSP` and `DEVELOPMENT_CSP` are now exported from `electron/main/security.ts`.
 - Document deferred call sites and recommended Wave 2 sequencing in `docs/security/style-src-migration-audit.md`. **Note:** `'unsafe-inline'` is intentionally NOT yet removed — ~141 dynamic inline styles (form-field positioning, color swatches, progress bars, kiosk layout, signature handles, scanner crop tool, viewer page positioning) still require migration to CSS variables or shared utility classes before the directive can be dropped.
+- Wave 2 (`security/style-src-wave-2`) — kiosk module migrated from inline `style={{...}}` props and embedded `<style>` JSX blocks to a single external stylesheet (`src/styles/kiosk.css`). Touch vs non-touch sizing is now expressed via `kiosk-touch` / `kiosk-compact` modifier classes rather than computed inline values. 21 inline-style call sites eliminated across `KioskShell.tsx`, `KioskHeader.tsx`, and `KioskToolbar.tsx`. Remaining count: 119 (was 140 at branch start; 157 at Wave 1 start).
+- Wave 2 — `WebkitAppRegion` inline styles in `TitleBar.tsx` migrated to a `data-app-region="drag|no-drag"` attribute pattern. CSS rules in `src/styles/platform.css` map the attribute to the `-webkit-app-region` property, removing the last `style={{...}}` site in the layout module. `platform.css` is now also imported into `index.css` (it was orphaned previously). 4 sites eliminated.
+- Wave 2 status: `'unsafe-inline'` is **NOT yet dropped** from `style-src` in `electron/main/security.ts`. After kiosk + WebkitAppRegion migrations and a parallel DrawingCanvas/ShapeTool fix, ~111 inline-style sites remain — all of them set continuous dynamic values (per-pixel positions, user-supplied colors, computed transforms, percentage widths). The CSS-variable-in-inline-style pattern does **not** sidestep `style-src 'self'` because the directive blocks the inline `style` attribute itself. `docs/security/style-src-migration-audit.md` now documents the four viable next-step strategies (nonce-wired runtime stylesheets, constructable stylesheets via `document.adoptedStyleSheets`, value quantization, and `style-src-attr`/`style-src-elem` directive split). Daniel's call which to pick.
 
 ### Added
 
@@ -36,6 +43,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Document create-dependency-graph tool for codebase analysis
 
 ### Fixed
+
+#### Annotation Test Failures (Pre-existing)
+- `DrawingCanvas`: migrate static `cursor: 'crosshair'` and `touchAction: 'none'` inline styles to Tailwind classes (`cursor-crosshair`, `touch-none`), aligning with Wave 1 of the style-src nonce migration. Restores `tests/unit/components/annotations/DrawingCanvas.test.tsx` (2 assertions).
+- `ShapeTool` test (`RectangleTool`/`EllipseTool`/`ArrowTool`/`LineTool`): switch drag simulation from `fireEvent.mouseDown/mouseMove/mouseUp` to `fireEvent.pointerDown/pointerMove/pointerUp` so React dispatches to the components' `onPointerDown/Move/Up` handlers. Mouse events were not invoking pointer handlers in jsdom, so `addAnnotation` was never called. Add `setPointerCapture`/`releasePointerCapture`/`hasPointerCapture` no-op stubs to `tests/setup.ts` for jsdom (jsdom#2527 gap). Restores 4 assertions.
+- Highlight history was being pushed twice per highlight: once by `annotationStore.addAnnotation` and again by `useHighlightTool.createHighlight` / `HighlightTool.createHighlight`. Net effect: a single user action took two undos to back out, and the history `past` length was 2x the annotation count. Removed the duplicate `pushHistory` call in both wrappers — `addAnnotation` is now the sole source of truth for highlight history. Renamed `annotationStore` history actions from `'Add <type>'` / `'Delete <type>'` to `'add_<type>'` / `'delete_<type>'` so the action labels are consistent with what the wrappers were emitting. Restores `HighlightTool.test.tsx > should push to history for undo support` and `highlights.test.tsx > should track multiple highlight operations in history` (2 assertions). **Note:** the same double-push pattern exists in `NoteTool.tsx` and `SelectionPopup.tsx`; not addressed in this commit because no failing tests cover them — flagged for follow-up.
 
 #### Electron Build Fixes
 - Fixed Vite SSR build for Electron main process (migrated from tsc)

@@ -170,6 +170,26 @@ code, pre, kbd {
 }
 
 /* ========================
+   App-Region attribute selectors
+
+   These let components opt into Electron's `-webkit-app-region: drag|no-drag`
+   without an inline `style` attribute (which is blocked by `style-src 'self'`
+   in production once `'unsafe-inline'` is dropped). Set
+   `data-app-region="drag"` on a draggable surface or
+   `data-app-region="no-drag"` on an interactive island inside it.
+   ======================== */
+
+[data-app-region="drag"] {
+  -webkit-app-region: drag;
+  /* Match TitleBar default text selection behaviour for drag region */
+  user-select: none;
+}
+
+[data-app-region="no-drag"] {
+  -webkit-app-region: no-drag;
+}
+
+/* ========================
    Focus Styles
    ======================== */
 
