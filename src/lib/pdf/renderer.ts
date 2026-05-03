@@ -26,10 +26,17 @@ export class PDFRenderer {
       this.destroy();
     }
 
+    // Security-driven defaults:
+    //   isEvalSupported: false  — blocks PDF.js eval-based exploit paths
+    //                             (mitigates CVE-2024-4367 class issues).
+    //   disableAutoFetch: true   — no speculative network fetches that could
+    //                             leak document fragments before user intent.
     const loadingTask = pdfjsLib.getDocument({
       data: source instanceof ArrayBuffer ? source : undefined,
       url: typeof source === 'string' ? source : undefined,
       password,
+      isEvalSupported: false,
+      disableAutoFetch: true,
     });
 
     this.document = await loadingTask.promise;
