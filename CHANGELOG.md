@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- License validation no longer claims cryptographic verification it doesn't perform. Renamed `verifySignature` → `verifyChecksum` in `src/lib/license/licenseValidator.ts` and dropped the placeholder PEM constants. The unused Web-Crypto verifier in `src/lib/license/signatureVerifier.ts` (which referenced a different placeholder PEM and was never imported) has been replaced with a single throwing stub so future callers fail loudly. New ADR `docs/architecture/license-anti-piracy-only.md` documents the scope: this client license is anti-CASUAL-piracy only; cryptographic verification needs a license server which is intentionally deferred; paid features must be gated server-side when they exist.
+
 ### Fixed
 
 - **Note + popup-triggered annotations no longer require two Ctrl+Z to undo** (`NoteTool.tsx`, `SelectionPopup.tsx`). The same double-push pattern as the highlight bug fixed in 152ffa3 was still present in the note-placement tool and the text-selection popup: `annotationStore.addAnnotation` already pushes a history entry, but the wrappers pushed a second one on top, so each new sticky note or popup-triggered highlight/underline/strikethrough produced two history entries. Removed the redundant `pushHistory` calls so the store remains the sole source of truth for annotation undo. Regression coverage: `tests/unit/components/annotations/{NoteTool,SelectionPopup}.test.tsx` (6 tests, all asserting `historyStore.past.length === 1` per action).
