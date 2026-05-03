@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Note + popup-triggered annotations no longer require two Ctrl+Z to undo** (`NoteTool.tsx`, `SelectionPopup.tsx`). The same double-push pattern as the highlight bug fixed in 152ffa3 was still present in the note-placement tool and the text-selection popup: `annotationStore.addAnnotation` already pushes a history entry, but the wrappers pushed a second one on top, so each new sticky note or popup-triggered highlight/underline/strikethrough produced two history entries. Removed the redundant `pushHistory` calls so the store remains the sole source of truth for annotation undo. Regression coverage: `tests/unit/components/annotations/{NoteTool,SelectionPopup}.test.tsx` (6 tests, all asserting `historyStore.past.length === 1` per action).
+
 ### Security
 
 - Hardened production Content Security Policy: confirmed `'unsafe-inline'` and `'unsafe-eval'` are absent from `script-src`. `'unsafe-inline'` is retained on `style-src` only because the renderer uses React inline `style={{...}}` props; switching to a nonce/hash strategy is tracked separately.
