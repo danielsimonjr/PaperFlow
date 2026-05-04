@@ -2,15 +2,18 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useDocumentStore } from '@stores/documentStore';
 
 // Mock PDFRenderer
+// vitest 4: mockImplementation must use `function` keyword (not arrow) for `new` support
 vi.mock('@lib/pdf/renderer', () => ({
-  PDFRenderer: vi.fn().mockImplementation(() => ({
-    loadDocument: vi.fn().mockResolvedValue({
-      numPages: 5,
-      title: 'Test Document',
-    }),
-    renderPage: vi.fn().mockResolvedValue({ width: 612, height: 792 }),
-    destroy: vi.fn(),
-  })),
+  PDFRenderer: vi.fn().mockImplementation(function (this: unknown) {
+    return {
+      loadDocument: vi.fn().mockResolvedValue({
+        numPages: 5,
+        title: 'Test Document',
+      }),
+      renderPage: vi.fn().mockResolvedValue({ width: 612, height: 792 }),
+      destroy: vi.fn(),
+    };
+  }),
 }));
 
 describe('documentStore', () => {
