@@ -578,10 +578,22 @@ export interface ElectronAPI {
 }
 
 /**
+ * Renderer-facing surface for Electron's `safeStorage` (DPAPI / Keychain /
+ * Secret Service). Sync, matching the main-process API. Wired in
+ * `electron/preload/index.ts`; the bridge translates each call to a
+ * synchronous IPC round-trip.
+ */
+export interface SafeStorageAPI {
+  isEncryptionAvailable: () => boolean;
+  encryptString: (plain: string) => Uint8Array;
+  decryptString: (cipher: Uint8Array) => string;
+}
+
+/**
  * Augment the Window interface to include Electron API
  */
 declare global {
   interface Window {
-    electron?: ElectronAPI;
+    electron?: ElectronAPI & { safeStorage?: SafeStorageAPI };
   }
 }
