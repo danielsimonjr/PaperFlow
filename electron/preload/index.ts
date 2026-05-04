@@ -55,6 +55,44 @@ function invoke<T>(channel: string, ...args: unknown[]): Promise<T> {
 }
 
 /**
+ * SafeStorage bridge (DPAPI on Windows / Keychain on macOS / Secret Service on Linux).
+ *
+ * The renderer-side consumer (`src/lib/license/licenseStorage.ts`) calls these
+ * methods synchronously — matching Electron's main-process `safeStorage` API.
+ * That forces `ipcRenderer.sendSync` here. License operations are infrequent
+ * (save on activation, load on app start), so the brief renderer-thread block
+ * is acceptable. Across the IPC wire, ciphertext is base64-encoded; we decode
+ * to a `Uint8Array` here so the consumer's existing duck-typed buffer handling
+ * keeps working unchanged.
+ */
+const safeStorageBridge = {
+  isEncryptionAvailable(): boolean {
+    return Boolean(ipcRenderer.sendSync(IPC_CHANNELS.SAFE_STORAGE_IS_AVAILABLE));
+  },
+  encryptString(plain: string): Uint8Array {
+    if (typeof plain !== 'string') {
+      throw new TypeError('safeStorage.encryptString expects a string');
+    }
+    const b64: string = ipcRenderer.sendSync(IPC_CHANNELS.SAFE_STORAGE_ENCRYPT, plain);
+    // Decode base64 back to bytes; the consumer expects a buffer-like return.
+    const bin = atob(b64);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  },
+  decryptString(cipher: Uint8Array): string {
+    if (!cipher || typeof (cipher as { length?: unknown }).length !== 'number') {
+      throw new TypeError('safeStorage.decryptString expects a Uint8Array');
+    }
+    // Re-encode bytes as base64 for the IPC hop.
+    let bin = '';
+    for (let i = 0; i < cipher.length; i++) bin += String.fromCharCode(cipher[i] ?? 0);
+    const b64 = btoa(bin);
+    return ipcRenderer.sendSync(IPC_CHANNELS.SAFE_STORAGE_DECRYPT, b64);
+  },
+};
+
+/**
  * Create an event listener that returns an unsubscribe function
  */
 function createListener(channel: string, callback: (...args: unknown[]) => void): () => void {
@@ -409,8 +447,14 @@ const electronAPI: ElectronAPI = {
   onWindowShown: (callback: () => void) => createListener(IPC_EVENTS.WINDOW_SHOWN, callback),
 };
 
-// Expose the API to the renderer process
-contextBridge.exposeInMainWorld('electron', electronAPI);
+// Expose the API to the renderer process. The `safeStorage` sub-object is
+// merged in alongside the rest of the surface so renderer code can read
+// `window.electron.safeStorage.{isEncryptionAvailable,encryptString,decryptString}`
+// — matching the shim already implemented in `src/lib/license/licenseStorage.ts`.
+contextBridge.exposeInMainWorld('electron', {
+  ...electronAPI,
+  safeStorage: safeStorageBridge,
+});
 
 // Log that preload script has loaded (development only)
 if (process.env['NODE_ENV'] === 'development') {
