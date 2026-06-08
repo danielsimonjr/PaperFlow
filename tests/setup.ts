@@ -118,7 +118,12 @@ import { Buffer as NodeBuffer } from 'node:buffer';
 // "navigator is not defined".
 if (typeof (globalThis as { navigator?: unknown }).navigator === 'undefined') {
   Object.defineProperty(globalThis, 'navigator', {
-    value: { storage: undefined } as Navigator,
+    // Provide a working StorageManager.estimate so the getStorageStats path
+    // (`'storage' in navigator && 'estimate' in navigator.storage`) resolves
+    // rather than throwing. Returning zeros keeps the stats deterministic.
+    value: {
+      storage: { estimate: async () => ({ quota: 0, usage: 0 }) },
+    } as unknown as Navigator,
     configurable: true,
     writable: true,
   });
