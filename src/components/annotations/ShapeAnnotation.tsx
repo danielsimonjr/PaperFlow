@@ -99,7 +99,7 @@ export function ShapeAnnotation({
           </>
         );
 
-      case 'ellipse':
+      case 'ellipse': {
         if (!screenBounds) return null;
         const cx = screenBounds.x + screenBounds.width / 2;
         const cy = screenBounds.y + screenBounds.height / 2;
@@ -132,6 +132,7 @@ export function ShapeAnnotation({
             />
           </>
         );
+      }
 
       case 'line':
         if (!screenPoints) return null;
