@@ -5,7 +5,10 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage'] },
+  // `tools/` holds vendored dev CLIs (run via `npx tsx`); they have their own
+  // tsconfig/package and are excluded from the app build (tsconfig include: src),
+  // so they shouldn't be gated by the app's lint config.
+  { ignores: ['dist', 'coverage', 'tools'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

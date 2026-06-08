@@ -106,7 +106,7 @@ export function PageCanvas({
     }
 
     setTextSelection(selection);
-  }, [activeTool, activeColor, scale, pageHeight, pageNumber, addAnnotation]);
+  }, [activeTool, activeColor, activeOpacity, scale, pageHeight, pageNumber, addAnnotation]);
 
   // Clear selection popup
   const clearSelection = useCallback(() => {
