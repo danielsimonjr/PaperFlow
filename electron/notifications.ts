@@ -374,6 +374,14 @@ export class NotificationManager {
       notification.close();
     }
     this.activeNotifications.clear();
+
+    // Cancel any pending grouped-notification timers so a deferred group does
+    // not surface a Notification after the caller asked to close everything.
+    for (const timer of this.groupTimers.values()) {
+      clearTimeout(timer);
+    }
+    this.groupTimers.clear();
+    this.groupedNotifications.clear();
   }
 
   /**
