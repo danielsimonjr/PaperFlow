@@ -631,4 +631,18 @@ export interface ElectronAPI {
   onWindowShown: (callback: () => void) => () => void;
 }
 
+/**
+ * Renderer-facing surface for Electron's `safeStorage` (DPAPI / Keychain /
+ * Secret Service). Synchronous to match the main-process API, exposed to the
+ * renderer via `window.electron.safeStorage` from the preload bridge.
+ */
+export interface SafeStorageAPI {
+  /** True iff OS-level encryption (DPAPI / Keychain / Secret Service) is available. */
+  isEncryptionAvailable: () => boolean;
+  /** Encrypt a UTF-8 string. Returns the raw ciphertext as a Uint8Array. */
+  encryptString: (plain: string) => Uint8Array;
+  /** Decrypt ciphertext produced by `encryptString`. Throws on tamper / wrong key. */
+  decryptString: (cipher: Uint8Array) => string;
+}
+
 // Note: Window interface augmentation is in src/types/electronTypes.ts
