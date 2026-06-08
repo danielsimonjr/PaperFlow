@@ -3,8 +3,9 @@ name: Build Desktop
 on:
   push:
     branches: [main, develop]
-  pull_request:
-    branches: [main]
+  # Not run on PRs: Electron packaging needs code-signing/notarization secrets
+  # that PR runs don't have, so it always failed there. Validated post-merge
+  # (push to main/develop), on release tags, and via manual dispatch instead.
   workflow_dispatch:
 
 env:
