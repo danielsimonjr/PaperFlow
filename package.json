@@ -43,7 +43,7 @@
     "pdfjs-dist": "4.10.38",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.0",
+    "react-router-dom": "^7.17.0",
     "tailwind-merge": "^2.6.0",
     "tesseract.js": "^7.0.0",
     "uuid": "^11.0.0",
