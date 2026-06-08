@@ -2,6 +2,10 @@
  * Kiosk Shell Component (Sprint 24)
  *
  * Main UI shell for kiosk mode with restricted interface.
+ *
+ * Styling lives in `src/styles/kiosk.css` — class-based rules only, no inline
+ * `style` attribute and no `<style>` JSX block. This is what allows the
+ * `'unsafe-inline'` directive to be dropped from `style-src` (Wave 2 CSP).
  */
 
 import React, { useEffect, useCallback } from 'react';
@@ -116,6 +120,11 @@ export function KioskShell({ children, className = '' }: KioskShellProps): React
 
   /**
    * Handle text selection (disable if configured)
+   *
+   * NOTE: This still uses an imperative DOM mutation rather than a class
+   * toggle. It does not violate `style-src` because it sets the `style.*`
+   * property via the CSSOM (which runs after parse-time and is not the
+   * inline `style` attribute the directive guards). Leaving as-is.
    */
   useEffect(() => {
     if (!isActive || !config?.restrictions.disableTextSelection) return;
@@ -150,17 +159,7 @@ export function KioskShell({ children, className = '' }: KioskShellProps): React
   }
 
   return (
-    <div
-      className={`kiosk-shell ${className}`}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: 'var(--bg-primary, white)',
-        zIndex: 9999,
-      }}
-    >
+    <div className={`kiosk-shell ${className}`.trim()}>
       {/* Header */}
       {config?.ui.showToolbar && (
         <KioskHeader
@@ -170,16 +169,7 @@ export function KioskShell({ children, className = '' }: KioskShellProps): React
       )}
 
       {/* Main content */}
-      <div
-        className="kiosk-content"
-        style={{
-          flex: 1,
-          overflow: 'hidden',
-          position: 'relative',
-        }}
-      >
-        {children}
-      </div>
+      <div className="kiosk-content">{children}</div>
 
       {/* Toolbar */}
       {config?.ui.showToolbar && (
@@ -239,86 +229,6 @@ export function KioskShell({ children, className = '' }: KioskShellProps): React
           </div>
         </div>
       )}
-
-      <style>{`
-        .kiosk-shell {
-          font-family: var(--font-family, system-ui);
-        }
-
-        .kiosk-warning-overlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.7);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 10000;
-        }
-
-        .kiosk-warning-dialog {
-          background: white;
-          padding: 2rem;
-          border-radius: 8px;
-          text-align: center;
-          max-width: 400px;
-        }
-
-        .kiosk-warning-dialog h2 {
-          margin: 0 0 1rem 0;
-        }
-
-        .kiosk-warning-dialog p {
-          margin: 0 0 1.5rem 0;
-          color: #666;
-        }
-
-        .kiosk-warning-dialog input {
-          width: 100%;
-          padding: 0.75rem;
-          font-size: 1.25rem;
-          text-align: center;
-          border: 2px solid #ddd;
-          border-radius: 4px;
-          margin-bottom: 1rem;
-        }
-
-        .kiosk-dialog-buttons {
-          display: flex;
-          gap: 1rem;
-          justify-content: center;
-        }
-
-        .kiosk-button {
-          padding: 0.75rem 2rem;
-          font-size: 1rem;
-          border-radius: 4px;
-          cursor: pointer;
-          border: 1px solid #ddd;
-          background: white;
-        }
-
-        .kiosk-button.primary {
-          background: var(--primary, #3B82F6);
-          color: white;
-          border: none;
-        }
-
-        .kiosk-button:hover {
-          opacity: 0.9;
-        }
-
-        .kiosk-error {
-          position: fixed;
-          bottom: 80px;
-          left: 50%;
-          transform: translateX(-50%);
-          background: #f44336;
-          color: white;
-          padding: 0.75rem 1.5rem;
-          border-radius: 4px;
-          z-index: 10001;
-        }
-      `}</style>
     </div>
   );
 }

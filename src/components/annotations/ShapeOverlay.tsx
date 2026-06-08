@@ -289,10 +289,9 @@ export function ShapeOverlay({
 
   return (
     <svg
-      className="pointer-events-none absolute left-0 top-0"
+      className="pointer-events-none absolute left-0 top-0 overflow-visible"
       width={width}
       height={height}
-      style={{ overflow: 'visible' }}
       onClick={handleBackgroundClick}
     >
       <g className="pointer-events-auto">{shapeAnnotations.map(renderShape)}</g>

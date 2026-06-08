@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import { useAnnotationStore } from '@stores/annotationStore';
-import { useHistoryStore } from '@stores/historyStore';
 import type { AnnotationRect, Annotation } from '@/types';
 
 // Highlight color presets (same as SelectionPopup)
@@ -41,13 +40,15 @@ export function HighlightTool({
   onClearSelection,
 }: HighlightToolProps) {
   const addAnnotation = useAnnotationStore((state) => state.addAnnotation);
-  const deleteAnnotation = useAnnotationStore((state) => state.deleteAnnotation);
   const activeColor = useAnnotationStore((state) => state.activeColor);
   const activeOpacity = useAnnotationStore((state) => state.activeOpacity);
-  const pushHistory = useHistoryStore((state) => state.push);
 
   /**
-   * Create a highlight annotation from the current selection
+   * Create a highlight annotation from the current selection.
+   *
+   * `addAnnotation` already pushes a history entry (`action: 'add_highlight'`).
+   * We deliberately do NOT push a second one here — duplicating the entry would
+   * force the user to undo twice to back out a single highlight.
    */
   const createHighlight = useCallback(
     (color?: string, opacity?: number) => {
@@ -66,13 +67,6 @@ export function HighlightTool({
 
       const id = addAnnotation(annotationData);
 
-      // Add to history for undo support
-      pushHistory({
-        action: 'add_highlight',
-        undo: () => deleteAnnotation(id),
-        redo: () => addAnnotation(annotationData),
-      });
-
       onHighlightCreated?.(id);
       onClearSelection?.();
 
@@ -85,8 +79,6 @@ export function HighlightTool({
       activeColor,
       activeOpacity,
       addAnnotation,
-      deleteAnnotation,
-      pushHistory,
       onHighlightCreated,
       onClearSelection,
     ]

@@ -69,7 +69,7 @@ export const useAnnotationStore = create<AnnotationState>((set, get) => ({
 
     // Push to history for undo/redo
     useHistoryStore.getState().push({
-      action: `Add ${annotation.type}`,
+      action: `add_${annotation.type}`,
       undo: () => {
         set((state) => ({
           annotations: state.annotations.filter((a) => a.id !== id),
@@ -104,7 +104,7 @@ export const useAnnotationStore = create<AnnotationState>((set, get) => ({
     // Push to history for undo/redo
     if (annotation) {
       useHistoryStore.getState().push({
-        action: `Delete ${annotation.type}`,
+        action: `delete_${annotation.type}`,
         undo: () => {
           set((state) => ({
             annotations: [...state.annotations, annotation],

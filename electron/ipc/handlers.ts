@@ -16,6 +16,7 @@ import { setupFileHandlers } from './fileHandlers';
 import { setupMenuHandlers } from './menuHandlers';
 import { setupContextMenuHandlers } from '../contextMenu';
 import { setupShortcutHandlers } from '../shortcuts';
+import { registerSafeStorageHandlers } from './safeStorageHandlers';
 
 /**
  * Set up all IPC handlers
@@ -39,6 +40,9 @@ export function setupIpcHandlers(ipcMain: IpcMain): void {
 
   // Set up shortcut handlers
   setupShortcutHandlers(ipcMain);
+
+  // Set up safeStorage bridge (DPAPI / Keychain / Secret Service)
+  registerSafeStorageHandlers(ipcMain);
 
   // Message dialog (kept here for non-file-related dialogs)
   ipcMain.handle(

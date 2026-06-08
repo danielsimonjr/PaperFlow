@@ -1,0 +1,242 @@
+/**
+ * Kiosk module styles
+ *
+ * Migrated from inline `style={{...}}` props in KioskShell, KioskHeader and
+ * KioskToolbar as part of the `style-src` Wave 2 CSP migration. All visual
+ * state lives here so the components only emit class names — no inline style
+ * attribute is required, which lets us drop `'unsafe-inline'` from the
+ * production `style-src` once the rest of the renderer is migrated.
+ *
+ * Touch vs non-touch sizing is quantized into modifier classes
+ * (`.kiosk-touch` / `.kiosk-compact`) on the toolbar root.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Shell
+ * ------------------------------------------------------------------------ */
+
+.kiosk-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary, white);
+  z-index: 9999;
+  font-family: var(--font-family, system-ui);
+}
+
+.kiosk-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.kiosk-warning-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.kiosk-warning-dialog {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 400px;
+}
+
+.kiosk-warning-dialog h2 {
+  margin: 0 0 1rem 0;
+}
+
+.kiosk-warning-dialog p {
+  margin: 0 0 1.5rem 0;
+  color: #666;
+}
+
+.kiosk-warning-dialog input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.25rem;
+  text-align: center;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.kiosk-dialog-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.kiosk-button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background: white;
+}
+
+.kiosk-button.primary {
+  background: var(--primary, #3B82F6);
+  color: white;
+  border: none;
+}
+
+.kiosk-button:hover {
+  opacity: 0.9;
+}
+
+.kiosk-error {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f44336;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  z-index: 10001;
+}
+
+/* ---------------------------------------------------------------------------
+ * Header
+ * ------------------------------------------------------------------------ */
+
+.kiosk-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--bg-header, #1E3A5F);
+  color: white;
+}
+
+.kiosk-branding {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.kiosk-branding-logo {
+  height: 40px;
+  object-fit: contain;
+}
+
+.kiosk-branding-text {
+  font-size: 1.25rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.kiosk-welcome {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.kiosk-header-spacer {
+  width: 120px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Toolbar
+ * ------------------------------------------------------------------------ */
+
+.kiosk-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-toolbar, #f5f5f5);
+  border-top: 1px solid var(--border-color, #ddd);
+}
+
+.kiosk-toolbar.kiosk-touch {
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.kiosk-toolbar.kiosk-compact {
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.kiosk-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.kiosk-toolbar-divider {
+  width: 1px;
+  height: 32px;
+  background-color: #ddd;
+}
+
+.kiosk-toolbar-button {
+  border: none;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kiosk-touch .kiosk-toolbar-button {
+  width: 56px;
+  height: 56px;
+  font-size: 1.5rem;
+}
+
+.kiosk-compact .kiosk-toolbar-button {
+  width: 44px;
+  height: 44px;
+  font-size: 1.25rem;
+}
+
+.kiosk-toolbar-button:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+.kiosk-toolbar-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.kiosk-toolbar-button:active {
+  transform: scale(0.95);
+}
+
+.kiosk-toolbar-page-indicator {
+  text-align: center;
+}
+
+.kiosk-toolbar-page-indicator.kiosk-touch {
+  min-width: 80px;
+  font-size: 1rem;
+}
+
+.kiosk-toolbar-page-indicator.kiosk-compact {
+  min-width: 80px;
+  font-size: 0.875rem;
+}
+
+.kiosk-toolbar-zoom-indicator {
+  text-align: center;
+}
+
+.kiosk-toolbar-zoom-indicator.kiosk-touch {
+  min-width: 60px;
+  font-size: 1rem;
+}
+
+.kiosk-toolbar-zoom-indicator.kiosk-compact {
+  min-width: 60px;
+  font-size: 0.875rem;
+}

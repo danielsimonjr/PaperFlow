@@ -1,0 +1,58 @@
+# Git internals — keeps Dropbox out of .git so git operations don't get blocked
+.git/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+dist-node/
+dist-electron/
+release/
+release2/
+
+# Playwright test artifacts
+playwright-report/
+playwright-report-electron/
+test-results/
+
+# Generated TypeScript files (shouldn't be emitted)
+*.d.ts.map
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.lnk
+
+# TypeScript cache
+*.tsbuildinfo
+

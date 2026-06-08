@@ -136,10 +136,9 @@ export function StampTransform({
           <span className="text-xs text-gray-500">°</span>
 
           <button
-            className="rounded-md p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+            className="rounded-md p-2 text-gray-700 [transform:scaleX(-1)] hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
             onClick={handleRotateRight}
             title="Rotate 45° right"
-            style={{ transform: 'scaleX(-1)' }}
           >
             <RotateCcw size={16} />
           </button>

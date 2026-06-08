@@ -2,6 +2,10 @@
  * Kiosk Header Component (Sprint 24)
  *
  * Header for kiosk mode with branding and welcome message.
+ *
+ * Styling lives in `src/styles/kiosk.css` — all visual rules are class-based
+ * so the renderer emits no inline `style` attribute, which is what allows
+ * `'unsafe-inline'` to be dropped from `style-src` (Wave 2 CSP migration).
  */
 
 import React from 'react';
@@ -27,53 +31,21 @@ export function KioskHeader({
   className = '',
 }: KioskHeaderProps): React.ReactElement {
   return (
-    <header
-      className={`kiosk-header ${className}`}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0.75rem 1.5rem',
-        backgroundColor: 'var(--bg-header, #1E3A5F)',
-        color: 'white',
-      }}
-    >
+    <header className={`kiosk-header ${className}`.trim()}>
       {/* Logo/Branding */}
-      <div className="kiosk-branding" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div className="kiosk-branding">
         {brandingLogo ? (
-          <img
-            src={brandingLogo}
-            alt="Logo"
-            style={{ height: '40px', objectFit: 'contain' }}
-          />
+          <img src={brandingLogo} alt="Logo" className="kiosk-branding-logo" />
         ) : (
-          <span
-            style={{
-              fontSize: '1.25rem',
-              fontWeight: 'bold',
-              letterSpacing: '0.05em',
-            }}
-          >
-            PaperFlow
-          </span>
+          <span className="kiosk-branding-text">PaperFlow</span>
         )}
       </div>
 
       {/* Welcome message */}
-      {welcomeMessage && (
-        <div
-          className="kiosk-welcome"
-          style={{
-            fontSize: '1rem',
-            opacity: 0.9,
-          }}
-        >
-          {welcomeMessage}
-        </div>
-      )}
+      {welcomeMessage && <div className="kiosk-welcome">{welcomeMessage}</div>}
 
       {/* Placeholder for right side */}
-      <div style={{ width: '120px' }} />
+      <div className="kiosk-header-spacer" />
     </header>
   );
 }

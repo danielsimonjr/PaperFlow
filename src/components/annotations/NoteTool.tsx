@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import { useAnnotationStore } from '@stores/annotationStore';
-import { useHistoryStore } from '@stores/historyStore';
 import { NOTE_COLORS } from './StickyNote';
 import type { Annotation } from '@/types';
 
@@ -25,8 +24,6 @@ export function NoteTool({
   const addAnnotation = useAnnotationStore((state) => state.addAnnotation);
   const activeColor = useAnnotationStore((state) => state.activeColor);
   const setActiveTool = useAnnotationStore((state) => state.setActiveTool);
-  const pushHistory = useHistoryStore((state) => state.push);
-  const deleteAnnotation = useAnnotationStore((state) => state.deleteAnnotation);
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -52,14 +49,11 @@ export function NoteTool({
         replies: [],
       };
 
-      const noteId = addAnnotation(noteData);
-
-      // Add to history for undo
-      pushHistory({
-        action: 'add_note',
-        undo: () => deleteAnnotation(noteId),
-        redo: () => addAnnotation(noteData),
-      });
+      // annotationStore.addAnnotation is the single source of truth for
+      // history — it pushes its own `add_note` entry. Adding another one
+      // here doubled the undo stack and forced two Ctrl+Z presses to
+      // remove a single note.
+      addAnnotation(noteData);
 
       // Reset tool
       setActiveTool(null);
@@ -73,8 +67,6 @@ export function NoteTool({
       pageIndex,
       activeColor,
       addAnnotation,
-      pushHistory,
-      deleteAnnotation,
       setActiveTool,
       onNoteCreated,
     ]

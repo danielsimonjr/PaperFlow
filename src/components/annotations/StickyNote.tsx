@@ -121,7 +121,7 @@ export function StickyNote({
       y={screenY}
       width={isExpanded ? 280 : iconSize}
       height={isExpanded ? 'auto' : iconSize}
-      style={{ overflow: 'visible' }}
+      className="overflow-visible"
     >
       <div
         ref={noteRef}

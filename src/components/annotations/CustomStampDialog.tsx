@@ -132,12 +132,11 @@ export function CustomStampDialog({
               />
               <button
                 type="button"
-                className={`h-8 w-8 rounded-full bg-white transition-transform hover:scale-110 ${
+                className={`h-8 w-8 rounded-full border border-gray-300 bg-white transition-transform hover:scale-110 ${
                   textColor === '#FFFFFF'
                     ? 'ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-800'
                     : ''
                 }`}
-                style={{ border: '1px solid #D1D5DB' }}
                 onClick={() => setTextColor('#FFFFFF')}
                 title="White"
               />

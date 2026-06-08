@@ -3,6 +3,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
+import * as licenseValidator from '@lib/license/licenseValidator';
 import {
   validateLicenseKey,
   isFeatureAvailable,
@@ -189,6 +190,16 @@ describe('License Format', () => {
       // Characters not in charset (O, I, L, 0, 1) should fail checksum
       expect(isValidFormat('OOOOO-OOOOO-OOOOO-OOOOO-OOOOO')).toBe(false);
     });
+  });
+});
+
+describe('License Validator API surface (anti-piracy honesty)', () => {
+  it('exposes verifyChecksum (the honest name) on the module', () => {
+    expect(typeof (licenseValidator as Record<string, unknown>).verifyChecksum).toBe('function');
+  });
+
+  it('does not expose verifySignature (which would falsely claim crypto verification)', () => {
+    expect((licenseValidator as Record<string, unknown>).verifySignature).toBeUndefined();
   });
 });
 

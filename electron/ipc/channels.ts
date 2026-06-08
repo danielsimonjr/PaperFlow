@@ -164,6 +164,13 @@ export const IPC_CHANNELS = {
   // Update operations (extended)
   UPDATE_CHECK: 'update-check',
   UPDATE_INSTALL: 'update-install',
+
+  // safeStorage bridge (DPAPI on Windows / Keychain on macOS / Secret Service on Linux)
+  // Synchronous channels — invoked via ipcRenderer.sendSync from the preload to
+  // satisfy the renderer-side licenseStorage shim, which expects a sync API.
+  SAFE_STORAGE_IS_AVAILABLE: 'safe-storage-is-available',
+  SAFE_STORAGE_ENCRYPT: 'safe-storage-encrypt',
+  SAFE_STORAGE_DECRYPT: 'safe-storage-decrypt',
 } as const;
 
 /**

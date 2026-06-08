@@ -135,14 +135,11 @@ export function TitleBar({
         'border-b border-gray-200 dark:border-gray-800',
         className
       )}
-      style={{ WebkitAppRegion: 'drag' } as React.CSSProperties}
+      data-app-region="drag"
     >
       {/* macOS: Traffic lights on left */}
       {isMacOS && (
-        <div
-          className="flex items-center gap-2 px-3"
-          style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
-        >
+        <div className="flex items-center gap-2 px-3" data-app-region="no-drag">
           <WindowButton type="close" onClick={handleClose} />
           <WindowButton type="minimize" onClick={handleMinimize} />
           <WindowButton type="maximize" onClick={handleMaximize} isMaximized={isMaximized} />
@@ -160,18 +157,11 @@ export function TitleBar({
       </div>
 
       {/* Optional children (toolbar items) */}
-      {children && (
-        <div style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
-          {children}
-        </div>
-      )}
+      {children && <div data-app-region="no-drag">{children}</div>}
 
       {/* Windows/Linux: Window buttons on right */}
       {(isWindows || isLinux) && (
-        <div
-          className="flex items-center"
-          style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
-        >
+        <div className="flex items-center" data-app-region="no-drag">
           <WindowButton type="minimize" onClick={handleMinimize} />
           <WindowButton type="maximize" onClick={handleMaximize} isMaximized={isMaximized} />
           <WindowButton type="close" onClick={handleClose} />

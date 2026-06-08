@@ -189,24 +189,11 @@ export function DrawingCanvas({
   }
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        zIndex: 50,
-        pointerEvents: 'auto',
-      }}
-    >
+    <div className="absolute left-0 top-0 z-50 pointer-events-auto">
       <canvas
         ref={canvasRef}
-        style={{
-          width,
-          height,
-          cursor: 'crosshair',
-          touchAction: 'none',
-          display: 'block',
-        }}
+        className="block cursor-crosshair touch-none"
+        style={{ width, height }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

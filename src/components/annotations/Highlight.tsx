@@ -61,8 +61,7 @@ export function Highlight({
           height={rect.height}
           fill={annotation.color}
           fillOpacity={annotation.opacity}
-          style={{ mixBlendMode: 'multiply' }}
-          className={`transition-all duration-150 ${
+          className={`mix-blend-multiply transition-all duration-150 ${
             isSelected
               ? 'stroke-primary-500 stroke-2'
               : 'hover:stroke-gray-400 hover:stroke-1'

@@ -3,8 +3,10 @@ name: Cross-Platform Testing
 on:
   push:
     branches: [main, develop]
-  pull_request:
-    branches: [main]
+  # Not run on PRs: the cross-platform build/E2E matrix needs signing secrets
+  # and a live server, so it always failed on PRs. Runs post-merge (push),
+  # on release, and via manual dispatch. PR validation is handled by ci.yml
+  # (lint/type/unit/build), which is env-independent.
   release:
     types: [created]
   workflow_dispatch:

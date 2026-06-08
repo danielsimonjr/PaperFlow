@@ -1,7 +1,20 @@
 /**
  * License Validator Module (Sprint 21)
  *
- * Validates license keys offline using embedded public key.
+ * Validates license keys offline.
+ *
+ * IMPORTANT — anti-piracy honesty:
+ * This module performs FORMAT validation and a CRC-style INTEGRITY HASH only.
+ * It does NOT perform cryptographic signature verification, even though earlier
+ * iterations of this code claimed to. There is no embedded public key, no real
+ * signature pipeline, and no license server.
+ *
+ * The intent is anti-CASUAL-piracy only: catch typos and accidental corruption
+ * of license keys. Anyone who wants to forge a license can — that's a known
+ * limitation. Any feature that warrants real protection MUST be gated
+ * server-side when a license server is added.
+ *
+ * See: docs/architecture/license-anti-piracy-only.md
  */
 
 import type {
@@ -15,19 +28,8 @@ import {
   isValidFormat,
 } from './licenseFormat';
 
-/**
- * Embedded public key for signature verification
- * In production, this would be the actual RSA public key
- */
-const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu1SU1LfVLPHCozMxH2Mo
-4lgOEePzNm0tRgeLezV6ffAt0gunVTLw7onLRnrq0/IzW7yWR7QkrmBL7jTKEn5u
-+qKhbwKfBstIs+bMY2Zkp18gnTxKLxoS2tFczGkPLPgizskuemMghRniWaoLcyeh
-kd3qqGElvW/VDL5AaWTg0nLVkjRo9z+40RQzuVaE8AkAFmxZzow3x+VJYKdjykkJ
-0iT9wCS0DRTXu269V264Vf/3jvredZiKRkgwlL9xNAwxXFg0x/XFw005UWVRIkdg
-cKWTjpBP2dPwVZ4WWC+9aGVd+Gyn1o0CLelf4rEjGoXbAAEgAqeGUxrcIlbjXfbc
-mwIDAQAB
------END PUBLIC KEY-----`;
+// Removed: was a placeholder PEM. No real signature pipeline exists — see ADR
+// docs/architecture/license-anti-piracy-only.md for context.
 
 /**
  * Validate a license key format
@@ -75,19 +77,20 @@ export function decodeLicenseKey(key: string): LicenseKeyData | null {
 }
 
 /**
- * Verify license signature using public key
+ * Verify a license-key checksum.
+ *
+ * NOTE: This is NOT a cryptographic signature check — it's a CRC-style
+ * integrity hash that detects accidental corruption (typos, transcription
+ * errors), not malicious tampering. An attacker who understands the format
+ * can trivially forge checksums. Paid features must be gated server-side.
  */
-export async function verifySignature(
+export async function verifyChecksum(
   key: string,
-  signature: string
+  checksum: string
 ): Promise<boolean> {
   try {
-    // In a real implementation, this would use Web Crypto API
-    // to verify the RSA signature against the public key
-
-    // For now, simulate signature verification
-    const expectedSignature = calculateChecksum(key + PUBLIC_KEY.slice(0, 50));
-    return signature === expectedSignature;
+    const expectedChecksum = calculateChecksum(key);
+    return checksum === expectedChecksum;
   } catch {
     return false;
   }
@@ -309,7 +312,7 @@ export function getExpiryWarning(license: LicenseInfo | null): {
 export default {
   isValidKeyFormat,
   decodeLicenseKey,
-  verifySignature,
+  verifyChecksum,
   validateLicenseKey,
   isFeatureAvailable,
   getExpiryWarning,
