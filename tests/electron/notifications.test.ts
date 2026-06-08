@@ -17,12 +17,26 @@ import {
   showBatchOperationNotification,
 } from '../../electron/notifications';
 
+// Several tests install partial per-test Notification mocks (e.g. without a
+// `close` handler) via mockImplementationOnce / mockImplementation. Restoring
+// the complete default factory between tests guarantees that any deferred
+// grouped-notification timer firing later always receives a fully-stubbed
+// notification and never throws an uncaught TypeError.
+function restoreDefaultNotificationMock(): void {
+  mockNotification.mockImplementation(() => ({
+    show: vi.fn(),
+    on: vi.fn(),
+    close: vi.fn(),
+  }));
+}
+
 describe('NotificationManager', () => {
   let notificationManager: NotificationManager;
 
   beforeEach(() => {
     resetMocks();
     vi.clearAllMocks();
+    restoreDefaultNotificationMock();
     notificationManager = new NotificationManager();
 
     // Mock BrowserWindow.getAllWindows to return a focused window
@@ -36,6 +50,16 @@ describe('NotificationManager', () => {
         focus: vi.fn(),
       },
     ]);
+  });
+
+  afterEach(() => {
+    // Dispose the manager so any pending grouped-notification timer is
+    // cancelled (closeAll now clears groupTimers). A leaked 500ms grouping
+    // timer would otherwise fire after the test ends and call methods on a
+    // Notification created from a partial per-test mock, throwing an uncaught
+    // "notification.on/close is not a function" that flakes unrelated files.
+    notificationManager?.closeAll();
+    restoreDefaultNotificationMock();
   });
 
   describe('static methods', () => {
@@ -308,6 +332,7 @@ describe('NotificationManager', () => {
 
       mockNotification.mockImplementationOnce(() => ({
         show: vi.fn(),
+        close: vi.fn(),
         on: vi.fn((event: string, handler: () => void) => {
           if (event === 'click') {
             clickHandler = handler;
@@ -329,6 +354,7 @@ describe('NotificationManager', () => {
 
       mockNotification.mockImplementationOnce(() => ({
         show: vi.fn(),
+        close: vi.fn(),
         on: vi.fn((event: string, handler: () => void) => {
           if (event === 'close') {
             closeHandler = handler;
@@ -350,11 +376,19 @@ describe('Notification helper functions', () => {
   beforeEach(() => {
     resetMocks();
     vi.clearAllMocks();
+    restoreDefaultNotificationMock();
     initializeNotifications();
 
     mockBrowserWindow.getAllWindows.mockReturnValue([
       { isFocused: vi.fn(() => false) },
     ]);
+  });
+
+  afterEach(() => {
+    // The helper functions act on the module-level singleton manager; close it
+    // so its grouped-notification timers are cleared between tests.
+    getNotificationManager().closeAll();
+    restoreDefaultNotificationMock();
   });
 
   describe('showNotification', () => {
