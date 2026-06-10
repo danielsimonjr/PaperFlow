@@ -185,11 +185,13 @@ if (typeof window !== 'undefined') {
 }
 
 // Mock ResizeObserver
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
+global.ResizeObserver = vi.fn().mockImplementation(function () {
+  return {
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  };
+});
 
 // jsdom does not implement Pointer Capture APIs (https://github.com/jsdom/jsdom/issues/2527).
 // Annotation tools (DrawingCanvas, RectangleTool, EllipseTool, ArrowTool, LineTool) call
