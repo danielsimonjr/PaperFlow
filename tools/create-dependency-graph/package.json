@@ -12,8 +12,12 @@
     "create-dependency-graph": "./dist/create-dependency-graph.js"
   },
   "pkg": {
-    "scripts": ["dist/**/*.js"],
-    "targets": ["node22-win-x64"]
+    "scripts": [
+      "dist/**/*.js"
+    ],
+    "targets": [
+      "node22-win-x64"
+    ]
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
@@ -26,5 +30,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "overrides": {
+    "picomatch": "^4.0.4"
   }
 }
