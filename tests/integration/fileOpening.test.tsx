@@ -4,17 +4,19 @@ import { useDocumentStore } from '@stores/documentStore';
 
 // Mock components that use file opening
 vi.mock('@lib/pdf/renderer', () => ({
-  PDFRenderer: vi.fn().mockImplementation(() => ({
-    loadDocument: vi.fn().mockResolvedValue({
-      numPages: 5,
-      title: 'Test PDF',
-    }),
-    renderPage: vi.fn().mockResolvedValue({ width: 612, height: 792 }),
-    getPage: vi.fn().mockResolvedValue({
-      getViewport: vi.fn().mockReturnValue({ width: 612, height: 792 }),
-    }),
-    destroy: vi.fn(),
-  })),
+  PDFRenderer: vi.fn().mockImplementation(function () {
+    return {
+      loadDocument: vi.fn().mockResolvedValue({
+        numPages: 5,
+        title: 'Test PDF',
+      }),
+      renderPage: vi.fn().mockResolvedValue({ width: 612, height: 792 }),
+      getPage: vi.fn().mockResolvedValue({
+        getViewport: vi.fn().mockReturnValue({ width: 612, height: 792 }),
+      }),
+      destroy: vi.fn(),
+    };
+  }),
 }));
 
 // Mock file reader
@@ -25,7 +27,9 @@ const mockFileReader = {
   result: new ArrayBuffer(100),
 };
 
-global.FileReader = vi.fn().mockImplementation(() => mockFileReader) as unknown as typeof FileReader;
+global.FileReader = vi.fn().mockImplementation(function () {
+  return mockFileReader;
+}) as unknown as typeof FileReader;
 
 // Simple test component for file opening
 function FileOpeningTestComponent() {
@@ -188,16 +192,18 @@ describe('File Opening Integration', () => {
     it('should show loading indicator while loading', async () => {
       // Make loadDocument take some time
       const { PDFRenderer } = await import('@lib/pdf/renderer');
-      vi.mocked(PDFRenderer).mockImplementationOnce(() => ({
-        loadDocument: vi.fn().mockImplementation(() =>
-          new Promise((resolve) => setTimeout(() => resolve({ numPages: 5 }), 100))
-        ),
-        renderPage: vi.fn().mockResolvedValue({ width: 612, height: 792 }),
-        getPage: vi.fn().mockResolvedValue({
-          getViewport: vi.fn().mockReturnValue({ width: 612, height: 792 }),
-        }),
-        destroy: vi.fn(),
-      }));
+      vi.mocked(PDFRenderer).mockImplementationOnce(function () {
+        return {
+          loadDocument: vi.fn().mockImplementation(() =>
+            new Promise((resolve) => setTimeout(() => resolve({ numPages: 5 }), 100))
+          ),
+          renderPage: vi.fn().mockResolvedValue({ width: 612, height: 792 }),
+          getPage: vi.fn().mockResolvedValue({
+            getViewport: vi.fn().mockReturnValue({ width: 612, height: 792 }),
+          }),
+          destroy: vi.fn(),
+        };
+      });
 
       render(<FileOpeningTestComponent />);
 

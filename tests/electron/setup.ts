@@ -18,7 +18,8 @@ export const mockApp = {
   whenReady: vi.fn(() => Promise.resolve()),
 };
 
-export const mockBrowserWindow = vi.fn().mockImplementation(() => ({
+export const mockBrowserWindow = vi.fn().mockImplementation(function () {
+  return {
   loadURL: vi.fn(() => Promise.resolve()),
   loadFile: vi.fn(() => Promise.resolve()),
   on: vi.fn(),
@@ -51,7 +52,8 @@ export const mockBrowserWindow = vi.fn().mockImplementation(() => ({
   show: vi.fn(),
   setTitle: vi.fn(),
   isDestroyed: vi.fn(() => false),
-}));
+  };
+});
 
 mockBrowserWindow.getAllWindows = vi.fn(() => []);
 mockBrowserWindow.getFocusedWindow = vi.fn(() => null);
@@ -128,23 +130,27 @@ export const mockNativeImage = {
   })),
 };
 
-export const mockNotification = vi.fn().mockImplementation(() => ({
-  show: vi.fn(),
-  on: vi.fn(),
-  close: vi.fn(),
-}));
+export const mockNotification = vi.fn().mockImplementation(function () {
+  return {
+    show: vi.fn(),
+    on: vi.fn(),
+    close: vi.fn(),
+  };
+});
 
 mockNotification.isSupported = vi.fn(() => true);
 
-export const mockTray = vi.fn().mockImplementation(() => ({
-  setToolTip: vi.fn(),
-  setImage: vi.fn(),
-  setContextMenu: vi.fn(),
-  popUpContextMenu: vi.fn(),
-  on: vi.fn(),
-  destroy: vi.fn(),
-  getBounds: vi.fn(() => ({ x: 0, y: 0, width: 22, height: 22 })),
-}));
+export const mockTray = vi.fn().mockImplementation(function () {
+  return {
+    setToolTip: vi.fn(),
+    setImage: vi.fn(),
+    setContextMenu: vi.fn(),
+    popUpContextMenu: vi.fn(),
+    on: vi.fn(),
+    destroy: vi.fn(),
+    getBounds: vi.fn(() => ({ x: 0, y: 0, width: 22, height: 22 })),
+  };
+});
 
 export const mockMenu = {
   buildFromTemplate: vi.fn(() => ({
@@ -155,7 +161,9 @@ export const mockMenu = {
   setApplicationMenu: vi.fn(),
 };
 
-export const mockMenuItem = vi.fn().mockImplementation((options) => options);
+export const mockMenuItem = vi.fn().mockImplementation(function (options) {
+  return options;
+});
 
 export const mockSession = {
   defaultSession: {

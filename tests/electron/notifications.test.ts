@@ -23,11 +23,13 @@ import {
 // grouped-notification timer firing later always receives a fully-stubbed
 // notification and never throws an uncaught TypeError.
 function restoreDefaultNotificationMock(): void {
-  mockNotification.mockImplementation(() => ({
-    show: vi.fn(),
-    on: vi.fn(),
-    close: vi.fn(),
-  }));
+  mockNotification.mockImplementation(function () {
+    return {
+      show: vi.fn(),
+      on: vi.fn(),
+      close: vi.fn(),
+    };
+  });
 }
 
 describe('NotificationManager', () => {
@@ -228,11 +230,13 @@ describe('NotificationManager', () => {
   describe('close notification', () => {
     it('should close a notification by ID', () => {
       const mockClose = vi.fn();
-      mockNotification.mockImplementationOnce(() => ({
-        show: vi.fn(),
-        close: mockClose,
-        on: vi.fn(),
-      }));
+      mockNotification.mockImplementationOnce(function () {
+        return {
+          show: vi.fn(),
+          close: mockClose,
+          on: vi.fn(),
+        };
+      });
 
       const id = notificationManager.show({ title: 'Test', body: 'Body' });
       if (id) {
@@ -244,11 +248,13 @@ describe('NotificationManager', () => {
 
     it('should close all notifications', () => {
       const mockClose = vi.fn();
-      mockNotification.mockImplementation(() => ({
-        show: vi.fn(),
-        close: mockClose,
-        on: vi.fn(),
-      }));
+      mockNotification.mockImplementation(function () {
+        return {
+          show: vi.fn(),
+          close: mockClose,
+          on: vi.fn(),
+        };
+      });
 
       notificationManager.show({ title: 'Test 1', body: 'Body 1' });
       notificationManager.show({ title: 'Test 2', body: 'Body 2' });
@@ -330,15 +336,17 @@ describe('NotificationManager', () => {
       const callback = vi.fn();
       let clickHandler: (() => void) | undefined;
 
-      mockNotification.mockImplementationOnce(() => ({
-        show: vi.fn(),
-        close: vi.fn(),
-        on: vi.fn((event: string, handler: () => void) => {
-          if (event === 'click') {
-            clickHandler = handler;
-          }
-        }),
-      }));
+      mockNotification.mockImplementationOnce(function () {
+        return {
+          show: vi.fn(),
+          close: vi.fn(),
+          on: vi.fn((event: string, handler: () => void) => {
+            if (event === 'click') {
+              clickHandler = handler;
+            }
+          }),
+        };
+      });
 
       notificationManager.show({ title: 'Test', body: 'Body' }, callback);
 
@@ -352,15 +360,17 @@ describe('NotificationManager', () => {
       const callback = vi.fn();
       let closeHandler: (() => void) | undefined;
 
-      mockNotification.mockImplementationOnce(() => ({
-        show: vi.fn(),
-        close: vi.fn(),
-        on: vi.fn((event: string, handler: () => void) => {
-          if (event === 'close') {
-            closeHandler = handler;
-          }
-        }),
-      }));
+      mockNotification.mockImplementationOnce(function () {
+        return {
+          show: vi.fn(),
+          close: vi.fn(),
+          on: vi.fn((event: string, handler: () => void) => {
+            if (event === 'close') {
+              closeHandler = handler;
+            }
+          }),
+        };
+      });
 
       notificationManager.show({ title: 'Test', body: 'Body' }, callback);
 
