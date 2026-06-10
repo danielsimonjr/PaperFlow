@@ -89,6 +89,7 @@
   "overrides": {
     "serialize-javascript": "^7.0.5",
     "@rollup/plugin-terser": "^1.0.0",
-    "brace-expansion": "^2.0.2"
+    "brace-expansion": "^2.0.2",
+    "shell-quote": "^1.8.4"
   }
 }
