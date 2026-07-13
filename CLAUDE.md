@@ -332,7 +332,7 @@ Expected warnings (not errors):
 
 ## Testing Tips
 
-- Prefer `npx vitest run` over `npm run test:unit` for more reliable test discovery
+- `npm run test:unit` / `npm run test:integration` reliably discover all tests (fixed in PR #40 — the scripts now use a path filter, `vitest run tests/unit`, instead of the old `--dir tests/unit` which re-rooted discovery and matched zero tests)
 - Run specific test: `npx vitest run tests/unit/path/to/test.ts`
 - Check sprint status: `grep '"status"' docs/planning/sprints/PHASE_*_SPRINT_*_TODO.json`
 
