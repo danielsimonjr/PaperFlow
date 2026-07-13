@@ -218,6 +218,28 @@ describe('File Opening Integration', () => {
           mockFileReader.onload({ target: { result: new ArrayBuffer(100) } } as ProgressEvent<FileReader>);
         }
       });
+
+      // Loading indicator should appear while the artificially slow (100ms)
+      // document load is in flight.
+      await waitFor(() => {
+        expect(screen.getByTestId('loading')).toBeInTheDocument();
+      });
+
+      // Drain the in-flight load before the test ends. useDocumentStore is a
+      // module-level singleton shared by every test in this file; if the
+      // 100ms setTimeout backing this mock is still pending when the test
+      // returns, it fires later — during a *subsequent* test — and its
+      // `set({ fileName: 'test.pdf', isLoading: false, ... })` call clobbers
+      // whatever that later test just set. That's what made
+      // "should update store with document info" flake under full-suite load
+      // (more wall-clock time elapses between tests, shifting the 100ms
+      // timer's firing into the next fileName-asserting test's window).
+      await waitFor(
+        () => {
+          expect(useDocumentStore.getState().isLoading).toBe(false);
+        },
+        { timeout: 1000 }
+      );
     });
 
     it('should display document info after loading', async () => {
