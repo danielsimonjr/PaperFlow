@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+### Fixed
+
+- **The desktop app has never built in CI.** `Build Desktop` failed on *every* run (`build-linux` and `build-macos`) with `⨯ Error: Please specify author 'email' in the application package.json` — electron-builder requires `author.email` to write the maintainer field of Linux packages (deb/AppImage). `package.json` had **no `author` field at all** (nor `repository`). Both added; the GitHub noreply address is used, matching the email the project's commits already use.
 ### Added
 
 - **Windows CI leg for the test suite** (`.github/workflows/ci.yml`). CI was Linux-only, so Windows-specific failures were invisible even though Daniel develops on Windows. The `test` job's `runs-on: ubuntu-latest` is now a `strategy.matrix` over `os: [ubuntu-latest, windows-latest]` (job renamed `Unit & Integration Tests (${{ matrix.os }})`; confirmed no branch-protection required-check was pinned to the old name, so the rename is safe), `fail-fast: false` so one OS failing doesn't cancel the other. Both legs run the same `npm run test:coverage`.
