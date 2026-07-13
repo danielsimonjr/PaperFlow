@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **The unit and integration test suites had not run in CI since 2026-06-27** — 2,217 tests (1,919 unit + 298 integration) were silently skipped, and CI had been red the whole time. `test:unit` / `test:integration` invoked vitest as `vitest run --dir tests/unit`, which re-roots test discovery at that directory; combined with the repo-root-relative `include` globs in `vitest.config.ts` (`tests/unit/**/*.test.ts`, …), the pattern resolved to `tests/unit/tests/unit/**` and matched nothing, so vitest exited 1 with `No test files found`. The `--dir` semantics changed with the Vite/vitest toolchain upgrade below. Both scripts now pass the directory as a **path filter** (`vitest run tests/unit`), which composes correctly with the config's `include`. Verified locally: 113 files / 1,919 passed (unit) and 23 files / 298 passed (integration), exit 0.
+
 ### Changed
 
 - Upgraded the Vite toolchain to the latest **stable** line (resolving Dependabot PRs #33/#39): `vite` 6 → 7.3.6, `@vitejs/plugin-react` 4 → 5.2.0, `vite-plugin-pwa` 0.21 → 1.3.0. The PRs proposed Vite 8, but Vite 8 ships the experimental **rolldown** bundler, which breaks our `manualChunks` config and the PWA build — Vite 7 is the correct stable target, so those PRs are closed in favor of this.
