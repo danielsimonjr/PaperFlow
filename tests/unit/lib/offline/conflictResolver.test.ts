@@ -382,21 +382,29 @@ describe('conflictResolver', () => {
 
   describe('createConflict', () => {
     it('should create conflict object with correct type', () => {
+      // The two edits must be CONCURRENT for this to be a conflict at all.
+      // detectConflict() treats "all remote changes happened after all local
+      // changes" as a fast-forward (hasConflict: false, conflictType undefined),
+      // so a fixed shared instant is required — two separate `new Date()` calls
+      // only produced a conflict when both happened to land in the same
+      // millisecond, which made this test pass on fast clocks and fail on CI.
+      const editedAt = new Date('2026-01-01T00:00:00.000Z');
+
       const localVersion: DocumentVersion = {
         version: 1,
-        modifiedAt: new Date(),
+        modifiedAt: editedAt,
         checksum: 'local',
         changes: [
-          { id: '1', timestamp: new Date(), type: 'annotation', action: 'add', payload: {} },
+          { id: '1', timestamp: editedAt, type: 'annotation', action: 'add', payload: {} },
         ],
       };
 
       const remoteVersion: DocumentVersion = {
         version: 1,
-        modifiedAt: new Date(),
+        modifiedAt: editedAt,
         checksum: 'remote',
         changes: [
-          { id: '2', timestamp: new Date(), type: 'annotation', action: 'update', payload: {} },
+          { id: '2', timestamp: editedAt, type: 'annotation', action: 'update', payload: {} },
         ],
       };
 
