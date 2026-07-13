@@ -108,6 +108,18 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      # electron-builder shells out to fpm for the deb/rpm/pacman targets, and fpm
+      # needs the corresponding system packagers — which ubuntu-latest does NOT ship:
+      #   pacman -> bsdtar   (libarchive-tools)
+      #   rpm    -> rpmbuild (rpm)
+      # Without them fpm dies with an EMPTY stderr and a bare "fpm process failed 1",
+      # which is why this was so opaque. AppImage/deb happen to work without them,
+      # so the build got most of the way through before dying on the pacman target.
+      - name: Install Linux packaging tools (fpm backends)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libarchive-tools rpm
+
       - name: Install dependencies
         run: npm ci
 

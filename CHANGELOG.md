@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+
+- **The Linux and macOS desktop builds have never succeeded.** With the `author.email` blocker cleared (above), `build-windows` went green and two deeper failures surfaced underneath:
+  - **Linux:** `fpm process failed 1` with an *empty* stderr — the classic signature of a missing system packager. electron-builder shells out to `fpm` for the deb/rpm/pacman targets, but `ubuntu-latest` ships neither `bsdtar` (needed for `pacman`) nor `rpmbuild` (needed for `rpm`), and the workflow installed **no** packaging tools at all. AppImage and deb happen not to need them, which is why the build got most of the way through before dying on `pacman`. `build-desktop.yml` now installs `libarchive-tools` + `rpm`.
+  - **macOS:** the `universal` slice failed to merge — `Detected file "…/@napi-rs/canvas-darwin-arm64/skia.darwin-arm64.node" that's the same in both x64 and arm64 builds and not covered by the x64ArchFiles rule`. A universal app is built by merging an x64 app with an arm64 app, and electron-builder refuses to merge a byte-identical file it cannot attribute to an arch. `@napi-rs/canvas` ships prebuilt per-arch `.node` binaries which npm resolves into both slices. Added `mac.x64ArchFiles: '**/node_modules/@napi-rs/**'`.
+  Neither target was removed — both are now built properly rather than deleted to force a green pipeline.
 - **The desktop app has never built in CI.** `Build Desktop` failed on *every* run (`build-linux` and `build-macos`) with `⨯ Error: Please specify author 'email' in the application package.json` — electron-builder requires `author.email` to write the maintainer field of Linux packages (deb/AppImage). `package.json` had **no `author` field at all** (nor `repository`). Both added; the GitHub noreply address is used, matching the email the project's commits already use.
 ### Added
 

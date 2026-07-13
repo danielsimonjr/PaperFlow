@@ -169,6 +169,19 @@ mac:
         - x64
         - arm64
         - universal
+
+  # Universal (x64+arm64) builds are produced by MERGING an x64 app and an arm64 app.
+  # electron-builder refuses to merge when it finds a file that is byte-identical in
+  # both slices but is not declared arch-specific — it cannot know which copy is right:
+  #
+  #   ⨯ Detected file "…/@napi-rs/canvas-darwin-arm64/skia.darwin-arm64.node" that's the
+  #     same in both x64 and arm64 builds and not covered by the x64ArchFiles rule
+  #
+  # @napi-rs/canvas ships prebuilt .node binaries per platform+arch, and npm on an
+  # arm64 macOS runner resolves the same optional package into both slices. x64ArchFiles
+  # tells electron-builder to take these from the x64 slice, which unblocks the merge.
+  x64ArchFiles: '**/node_modules/@napi-rs/**'
+
   # icon: build/icon.icns  # Commented out - icon not yet created
   category: public.app-category.productivity
   darkModeSupport: true
