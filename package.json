@@ -2,6 +2,14 @@
   "name": "paperflow",
   "private": true,
   "version": "3.0.0-alpha.1",
+  "author": {
+    "name": "danielsimonjr",
+    "email": "1813231+danielsimonjr@users.noreply.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielsimonjr/PaperFlow.git"
+  },
   "type": "module",
   "main": "dist-electron/main/index.js",
   "scripts": {
