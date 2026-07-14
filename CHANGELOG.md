@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- **The duplicate, always-broken Electron E2E job in `build-desktop.yml`.** It was a copy of
+  `cross-platform.yml`'s `e2e-tests` — same specs, same three platforms — but strictly worse:
+  it ran on `push` only (i.e. **after** merge, so it gated nothing), it was **not** a required
+  check, and its **ubuntu leg had no `xvfb`**, so Electron could not open a window and **all 43
+  tests failed on every single run**. That was invisible while `continue-on-error: true` was set;
+  removing that flag is what turned `Build Desktop` red. `cross-platform.yml`'s `e2e-tests` is the
+  real gate — it runs on `pull_request`, installs xvfb, and its three checks are required on
+  `main`. Repairing the copy would have meant paying for a second full E2E matrix on every push
+  while still gating nothing. Nothing consumes this workflow's artifacts, and the job was not a
+  required check, so its removal orphans nothing.
+
 ### Changed
 
 - **The Electron E2E suite now runs on pull requests, not only post-merge.**
