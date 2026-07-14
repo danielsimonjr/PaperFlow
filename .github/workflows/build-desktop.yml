@@ -172,7 +172,15 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Build app for testing
-        run: npm run build && npm run electron:compile
+        # MUST be electron:build-web, NOT build. `build` runs plain `vite build`,
+        # and vite.config.ts sets `base: isElectron ? './' : '/'` where isElectron is
+        # driven by ELECTRON=true / an "electron" npm lifecycle event. So `npm run build`
+        # emits ABSOLUTE asset paths (/assets/...), which under Electron's file://
+        # protocol resolve to the DRIVE ROOT -> ERR_FILE_NOT_FOUND -> the renderer never
+        # mounts -> a completely BLANK window. `electron:build-web` sets ELECTRON=true,
+        # giving relative './' paths. Verified: with `build` the window is empty and has
+        # 0 buttons; with `electron:build-web` it renders and has the Open File button.
+        run: npm run electron:build-web && npm run electron:compile
 
       # NOTE: this step used to carry `continue-on-error: true`, which made it a
       # DECORATIVE gate — the Electron E2E suite could fail and the job would still
