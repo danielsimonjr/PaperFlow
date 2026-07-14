@@ -220,10 +220,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # `continue-on-error: true` was set on BOTH steps, which made this job report success no
+      # matter what — a check that cannot fail asserts nothing (CI anti-pattern #1). Removed only
+      # after verifying the gate passes TODAY: `npm audit --audit-level=high` exits 0 with
+      # 0 vulnerabilities. Turning a gate on without checking first just trades a fake-green
+      # pipeline for a permanently-red one.
+      #
+      # This job is deliberately NOT a required check, so a new advisory shows up as an honest red
+      # signal without blocking every merge — which is what you want when the fix isn't available yet.
       - name: Run npm audit
         run: npm audit --audit-level=high
-        continue-on-error: true
 
       - name: Check for known vulnerabilities
         run: npx better-npm-audit audit --level high
-        continue-on-error: true
