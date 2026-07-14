@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`deploy.yml` was REJECTED by GitHub as an invalid workflow file — it has never run a single
+  job.** It calls `uses: ./.github/workflows/ci.yml`, but `ci.yml` never declared
+  `on: workflow_call:`. A reusable-workflow call to a callee that doesn't declare `workflow_call`
+  is invalid, and GitHub rejects the **entire calling file** — so every run of `deploy.yml`
+  produced **zero jobs** and reported only *"This run likely failed because of a workflow file
+  issue"*, with no job list and no logs.
+  **This means the long-standing "deploy is blocked on a missing Cloudflare secret" diagnosis was
+  wrong**: the workflow never reached the deploy step at all. `ci.yml` now declares
+  `workflow_call`. The tell for this class of failure is **`jobs == 0`** on the run — a run with
+  no jobs never started, and `--log-failed` returns nothing to read.
+
 - **`deploy.yml` no longer fails on every push to `main`.** `CLOUDFLARE_API_TOKEN` /
   `CLOUDFLARE_ACCOUNT_ID` have never been set on this repository, so `cloudflare/pages-action`
   failed on **every single push** — a permanently-red check. That is not a signal; it is noise
