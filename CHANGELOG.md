@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Web-only CI no longer downloads a ~100 MB Electron binary it never uses.** Electron's
+  postinstall fetches its binary from GitHub releases on every `npm ci`. **Nothing** in `ci.yml`,
+  `staging.yml` or `deploy.yml` needs it — lint is eslint, typecheck is `tsc --noEmit`, test is
+  vitest, build is the web vite build, and even `ci.yml`'s `e2e` job drives Playwright **chromium**,
+  not Electron. Downloading it in every job was pure waste *and* a permanent transient-failure
+  surface: on 2026-07-14 `npm ci` died mid-download with `TypeError: fetch failed` and took
+  `Type Check` red on `main`. These three workflows now set `ELECTRON_SKIP_BINARY_DOWNLOAD: '1'`.
+  `cross-platform.yml` and `build-desktop.yml` deliberately do **not** — they genuinely launch
+  Electron and package installers.
+
 - **`deploy.yml` was REJECTED by GitHub as an invalid workflow file — it has never run a single
   job.** It calls `uses: ./.github/workflows/ci.yml`, but `ci.yml` never declared
   `on: workflow_call:`. A reusable-workflow call to a callee that doesn't declare `workflow_call`
