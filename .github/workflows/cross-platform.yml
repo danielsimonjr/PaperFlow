@@ -61,7 +61,14 @@ jobs:
             arch: universal
             target: dmg
 
-          - os: macos-13
+          # macos-13 has been RETIRED by GitHub. This job requested it and therefore
+          # sat QUEUED FOREVER — and because every downstream job (`e2e-tests`,
+          # `visual-tests`, `accessibility-audit`, `performance-tests`) declares
+          # `needs: build`, the entire workflow could never complete and none of them
+          # ever ran. Three runs were stacked up queued for hours on this one job while
+          # the macos-14 leg beside it finished fine.
+          # macos-latest is arm64; electron-builder cross-builds the x64 dmg from it.
+          - os: macos-latest
             platform: macos
             arch: x64
             target: dmg
