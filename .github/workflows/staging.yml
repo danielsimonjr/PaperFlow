@@ -43,6 +43,14 @@ jobs:
     environment:
       name: staging
       url: ${{ steps.deploy.outputs.url }}
+    outputs:
+      # These were NEVER declared, yet e2e-staging consumes
+      # `needs.deploy-preview.outputs.url` as its BASE_URL — so BASE_URL was always the
+      # empty string and the staging E2E could not have worked even on a successful deploy.
+      # It only ever *looked* fine because this job failed first (missing Cloudflare creds),
+      # which skipped e2e-staging entirely.
+      url: ${{ steps.deploy.outputs.url }}
+      deployed: ${{ steps.cf.outputs.configured }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -61,8 +69,25 @@ jobs:
         env:
           VITE_APP_VERSION: ${{ github.sha }}
 
+      # Same story as deploy.yml: CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID have never been
+      # set on this repo, so `Deploy Preview` failed on EVERY run. A permanently-red check is
+      # noise, not a signal — it trains people to skim past red, which is how this repo's real
+      # failures went unnoticed. Skip loudly instead of failing; the build above still gates.
+      # Resumes automatically once the secrets exist.
+      # (Secrets are unavailable in a job-level `if:`, hence the step-output guard.)
+      - name: Check Cloudflare credentials
+        id: cf
+        run: |
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] && [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Cloudflare preview deploy SKIPPED::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set on this repository, so the preview deploy was skipped. The build itself succeeded."
+          fi
+
       - name: Deploy to Cloudflare Pages (Preview)
         id: deploy
+        if: steps.cf.outputs.configured == 'true'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -73,7 +98,10 @@ jobs:
           branch: ${{ github.head_ref || github.ref_name }}
 
       - name: Comment on PR
-        if: github.event_name == 'pull_request'
+        # NOTE: this step already had an `if:`. Both conditions must be ANDed into ONE key —
+        # a duplicate `if:` is accepted silently by PyYAML (last wins) but REJECTED by GitHub
+        # with a bare "This run likely failed because of a workflow file issue."
+        if: github.event_name == 'pull_request' && steps.cf.outputs.configured == 'true'
         uses: actions/github-script@v7
         with:
           script: |
@@ -94,6 +122,10 @@ jobs:
     name: E2E Tests (Staging)
     runs-on: ubuntu-latest
     needs: deploy-preview
+    # Only run when a preview was ACTUALLY deployed. Without the Cloudflare creds the
+    # deploy is skipped, so there is no URL to test — running anyway just fails on an empty
+    # BASE_URL, which is noise, not a signal.
+    if: needs.deploy-preview.outputs.deployed == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
