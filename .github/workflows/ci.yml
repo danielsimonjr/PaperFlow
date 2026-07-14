@@ -6,6 +6,15 @@ on:
   pull_request:
     branches: [main, develop]
   workflow_dispatch:
+  # REQUIRED: deploy.yml calls this workflow with `uses: ./.github/workflows/ci.yml`.
+  # A reusable-workflow call is INVALID unless the callee declares `workflow_call`, and
+  # GitHub rejects the *entire calling file* when it isn't — so deploy.yml produced
+  # ZERO JOBS on every run since it was written, reporting only:
+  #     "This run likely failed because of a workflow file issue."
+  # No job list, no logs. It never reached the Cloudflare deploy step at all; the long-
+  # standing "deploy is blocked on a missing Cloudflare secret" diagnosis was wrong.
+  # The tell for this class of failure is `jobs == 0` on the run.
+  workflow_call:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
