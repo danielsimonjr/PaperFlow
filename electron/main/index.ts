@@ -43,7 +43,9 @@ const __dirname = path.dirname(__filename);
 
 // Paths
 const DIST_PATH = path.join(__dirname, '../../dist');
-const PRELOAD_PATH = path.join(__dirname, '../preload/index.js');
+// .cjs, not .js: package.json declares "type": "module", so a .js preload would be
+// loaded as ESM — and Electron requires CommonJS for the preload when sandbox: true.
+const PRELOAD_PATH = path.join(__dirname, '../preload/index.cjs');
 
 // Environment flags
 const isDev = !app.isPackaged;
