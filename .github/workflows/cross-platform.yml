@@ -170,7 +170,10 @@ jobs:
         include:
           - os: windows-latest
             platform: windows
-            artifact: windows-nsis-x64
+            # The nsis build job was removed (it failed on every run and shipped
+            # nothing — see #46), so `windows-nsis-x64` no longer exists. msi is the
+            # Windows artifact this workflow actually produces.
+            artifact: windows-msi-x64
 
           - os: macos-14
             platform: macos
@@ -264,7 +267,6 @@ jobs:
 
       - name: Run visual regression tests
         run: xvfb-run --auto-servernum npx playwright test tests/visual/ --project=chromium
-        continue-on-error: true
 
       - name: Upload visual test results
         uses: actions/upload-artifact@v4
@@ -306,7 +308,6 @@ jobs:
 
       - name: Run accessibility tests
         run: xvfb-run --auto-servernum npx playwright test tests/accessibility/ --project=chromium
-        continue-on-error: true
 
       - name: Upload accessibility results
         uses: actions/upload-artifact@v4
@@ -352,12 +353,10 @@ jobs:
       - name: Run performance tests (Linux)
         if: runner.os == 'Linux'
         run: xvfb-run --auto-servernum npx vitest run tests/performance/
-        continue-on-error: true
 
       - name: Run performance tests (other)
         if: runner.os != 'Linux'
         run: npx vitest run tests/performance/
-        continue-on-error: true
 
       - name: Upload performance results
         uses: actions/upload-artifact@v4
