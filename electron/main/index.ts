@@ -181,6 +181,20 @@ async function initialize(): Promise<void> {
   // Set up IPC handlers
   setupIpc();
 
+  // Initialize the auto-updater HERE — before any window exists.
+  //
+  // initializeUpdater() registers the update-* IPC handlers (and gates only the
+  // network-touching update checks on app.isPackaged internally). It must run BEFORE
+  // createMainWindow(), because createMainWindow() awaits loadFile()/loadURL(): the
+  // moment it returns, the renderer is executing and can invoke any channel the preload
+  // exposes. Registering handlers after that point leaves a window (~1.5s in practice)
+  // where window.electron.getUpdateState() exists but has no handler behind it, and
+  // rejects with "No handler registered for 'update-get-state'".
+  //
+  // RULE: every ipcMain.handle() registration must complete before the first window is
+  // created. See tests/e2e-electron/ipcContract.spec.ts, which enforces this.
+  initializeUpdater();
+
   // Set up notification and tray IPC handlers
   setupAllNotificationHandlers(ipcMain);
 
@@ -219,10 +233,6 @@ async function initialize(): Promise<void> {
   // Initialize auto-save recovery system
   await initializeAutoSave();
 
-  // Initialize auto-updater (only in production)
-  if (app.isPackaged) {
-    initializeUpdater();
-  }
 
   // On macOS, re-create window when dock icon is clicked
   app.on('activate', async () => {

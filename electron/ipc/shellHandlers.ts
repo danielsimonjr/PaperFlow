@@ -5,6 +5,7 @@
  */
 
 import { IpcMain } from 'electron';
+import { IPC_CHANNELS } from './channels';
 import {
   showItemInFolder,
   openWithDefaultApp,
@@ -27,7 +28,6 @@ import {
  */
 export const SHELL_CHANNELS = {
   SHELL_SHOW_IN_FOLDER: 'shell-show-in-folder',
-  SHELL_OPEN_DEFAULT: 'shell-open-default',
   SHELL_OPEN_EXTERNAL: 'shell-open-external',
   SHELL_TRASH_ITEM: 'shell-trash-item',
   SHELL_BEEP: 'shell-beep',
@@ -53,13 +53,18 @@ export function setupShellHandlers(ipcMain: IpcMain): void {
   });
 
   // Open with default app
-  ipcMain.handle(SHELL_CHANNELS.SHELL_OPEN_DEFAULT, async (_event, filePath: string) => {
-    const error = await openWithDefaultApp(filePath);
-    return {
-      success: !error,
-      error: error || undefined,
-    };
-  });
+  // Registered under the CANONICAL channel from channels.ts ('shell-open-path'), which is
+  // what preload's `openPath` invokes. It was previously registered under this file's own
+  // SHELL_CHANNELS.SHELL_OPEN_DEFAULT ('shell-open-default') — a name nothing calls — so
+  // window.electron.openPath() reached no handler and always rejected.
+  //
+  // Returns the raw string (empty = success, otherwise the error message), matching
+  // Electron's shell.openPath contract and the `Promise<string>` declared by preload,
+  // electron/ipc/types.ts and src/types/electronTypes.ts. The old handler also wrapped it
+  // in { success, error }, so its shape did not match the declared type either.
+  ipcMain.handle(IPC_CHANNELS.SHELL_OPEN_PATH, (_event, filePath: string) =>
+    openWithDefaultApp(filePath)
+  );
 
   // Open external URL
   ipcMain.handle(SHELL_CHANNELS.SHELL_OPEN_EXTERNAL, async (_event, url: string) => {
