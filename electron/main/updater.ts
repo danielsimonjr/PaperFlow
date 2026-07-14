@@ -359,16 +359,28 @@ export function initializeUpdater(savedSettings?: Partial<UpdateSettings>): void
   // Set up event handlers
   setupEventHandlers();
 
-  // Set up IPC handlers
+  // IPC handlers are registered ALWAYS — including when the app is not packaged.
+  //
+  // The renderer must be able to QUERY update state even when we never check for
+  // updates. Previously this whole function was gated on `app.isPackaged` in
+  // main/index.ts, so in a dev/unpackaged app NO `update-*` handler existed at all and
+  // any renderer call threw:
+  //
+  //   Error invoking remote method 'update-get-state':
+  //     Error: No handler registered for 'update-get-state'
+  //
+  // (That was invisible until the preload was fixed: with a dead preload the IPC call
+  // never even reached the main process, so nothing could report the missing handler.)
   setupIpcHandlers();
 
-  // Set up periodic checks
-  setupPeriodicCheck();
-
-  // Check on startup
-  checkOnStartup();
-
-  log.info('Auto-updater initialized');
+  // Only the NETWORK-touching work is production-gated. We never auto-update in dev.
+  if (app.isPackaged) {
+    setupPeriodicCheck();
+    checkOnStartup();
+    log.info('Auto-updater initialized (update checks enabled)');
+  } else {
+    log.info('Auto-updater IPC registered; update checks disabled (app is not packaged)');
+  }
 }
 
 /**

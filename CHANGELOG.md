@@ -7,8 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **E2E contract test guarding the preload/main IPC boundary**
+  (`tests/e2e-electron/ipcContract.spec.ts`). Boots the app and asserts that every
+  channel the preload invokes has a handler registered in the main process, and that all
+  handlers are registered *before* the first window is created. The three IPC bugs fixed
+  below were all invisible to unit tests — they exist only in a booted app — and nothing
+  was checking that the contextBridge API the renderer sees is actually backed by
+  anything.
 
 ### Fixed
+
+- **All nine `update-*` IPC handlers were never registered outside a packaged build.**
+  `initializeUpdater()` — the only thing that calls `ipcMain.handle` for the update
+  channels — was invoked from `electron/main/index.ts` behind `if (app.isPackaged)`. In
+  dev and in E2E the app runs unpackaged, so `window.electron.getUpdateState()` was
+  exposed but rejected with `No handler registered for 'update-get-state'`. The IPC
+  handlers are now registered unconditionally; only the network-touching work (startup
+  check, periodic check) remains gated on `app.isPackaged`, so dev builds still never
+  auto-update.
+
+- **Updater handlers were registered ~1.5s after the window could already call them.**
+  Even once registration was unconditional, `initializeUpdater()` ran *after*
+  `createMainWindow()`. `createMainWindow()` awaits `loadFile()`, so the renderer is
+  already executing when it returns — leaving a window in which the update API existed
+  with no handler behind it. Moved above `createMainWindow()`, alongside `setupIpc()`.
+
+- **`window.electron.openPath()` had never worked.** `electron/ipc/shellHandlers.ts` kept
+  a private copy of the channel names which had drifted from the canonical
+  `electron/ipc/channels.ts`: it registered `'shell-open-default'`, a name nothing calls,
+  while the preload invoked `'shell-open-path'`. It now registers the canonical channel
+  (imported from `channels.ts`) and returns the raw `string` that `shell.openPath`
+  produces — matching the `Promise<string>` already declared by the preload,
+  `electron/ipc/types.ts` and `src/types/electronTypes.ts`. The old handler additionally
+  wrapped the result in `{ success, error }`, so its shape did not match the declared
+  type either.
 
 
 
