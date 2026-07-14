@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The Electron E2E suite now runs on pull requests, not only post-merge.**
+  `cross-platform.yml` triggered on `push: [main, develop]` only, which is exactly how a
+  broken app reached `main` twice: the dead preload (#50) and the nine IPC channels with no
+  handler behind them (#51) were **both** caught only by the post-merge run, after they had
+  already landed.
+
+  The stated reason for excluding PRs — "needs signing secrets and a live server" — was true
+  of the **installer builds** and never true of the **E2E job**. E2E only inherited that
+  constraint through two false dependencies: it declared `needs: build` and downloaded the
+  installer artifact into `release/`, but **nothing in the suite ever reads `release/`** —
+  every spec launches `dist-electron/main/index.js`, which the job builds from source itself.
+  Both removed. The installer matrix stays post-merge/release-only
+  (`if: github.event_name != 'pull_request'`), so no secrets are needed on PRs.
+
+  Side benefit: on push and release, E2E no longer waits for six installer builds to finish.
+
 ### Removed
 
 - **`electron/main/updates/autoUpdater.ts` — a dead duplicate that had become a startup-crash

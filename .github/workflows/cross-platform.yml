@@ -1,12 +1,10 @@
 name: Cross-Platform Testing
 
 on:
+  pull_request:
+    branches: [main, develop]
   push:
     branches: [main, develop]
-  # Not run on PRs: the cross-platform build/E2E matrix needs signing secrets
-  # and a live server, so it always failed on PRs. Runs post-merge (push),
-  # on release, and via manual dispatch. PR validation is handled by ci.yml
-  # (lint/type/unit/build), which is env-independent.
   release:
     types: [created]
   workflow_dispatch:
@@ -22,6 +20,10 @@ env:
 jobs:
   # Build matrix for all platforms
   build:
+    # Installer builds need signing secrets and are not worth spending on every PR, so they
+    # stay post-merge / release-only. NOTE: e2e-tests deliberately does NOT depend on this
+    # job — see the comment there.
+    if: github.event_name != 'pull_request'
     strategy:
       fail-fast: false
       matrix:
@@ -62,11 +64,12 @@ jobs:
             target: dmg
 
           # macos-13 has been RETIRED by GitHub. This job requested it and therefore
-          # sat QUEUED FOREVER — and because every downstream job (`e2e-tests`,
-          # `visual-tests`, `accessibility-audit`, `performance-tests`) declares
+          # sat QUEUED FOREVER — and because every downstream job at the time declared
           # `needs: build`, the entire workflow could never complete and none of them
           # ever ran. Three runs were stacked up queued for hours on this one job while
-          # the macos-14 leg beside it finished fine.
+          # the macos-14 leg beside it finished fine. (e2e-tests no longer declares
+          # `needs: build` — that dependency was false — so it is no longer exposed to
+          # this failure mode. release-candidate still is.)
           # macos-latest is arm64; electron-builder cross-builds the x64 dmg from it.
           - os: macos-latest
             platform: macos
@@ -169,27 +172,34 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-  # E2E tests on all platforms
+  # E2E tests on all platforms.
+  #
+  # Runs on PULL REQUESTS as well as post-merge. It previously did not, and that is exactly how
+  # a broken app reached main twice: the dead preload (#50) and the 9 IPC channels with no
+  # handler behind them (#51) were BOTH caught only by the post-merge run — after they landed.
+  #
+  # It used to declare `needs: build` and download the installer artifact into release/. Both
+  # were FALSE dependencies: every spec launches `dist-electron/main/index.js` (see
+  # tests/e2e-electron/*.spec.ts), which this job builds from source in "Build for testing"
+  # below. Nothing in the suite or in playwright.electron.config.ts ever reads release/. So this
+  # job needs no signing secrets and no artifacts — the constraint it inherited from `build` was
+  # never its own.
+  #
+  # Result: on a PR the `build` matrix is skipped but E2E still runs; on push/release E2E no
+  # longer waits for the installers to finish.
   e2e-tests:
-    needs: build
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: windows-latest
             platform: windows
-            # The nsis build job was removed (it failed on every run and shipped
-            # nothing — see #46), so `windows-nsis-x64` no longer exists. msi is the
-            # Windows artifact this workflow actually produces.
-            artifact: windows-msi-x64
 
           - os: macos-14
             platform: macos
-            artifact: macos-dmg-universal
 
           - os: ubuntu-22.04
             platform: linux
-            artifact: linux-AppImage-x64
 
     runs-on: ${{ matrix.os }}
     name: E2E Tests (${{ matrix.platform }})
@@ -209,12 +219,6 @@ jobs:
 
       - name: Install Playwright
         run: npx playwright install --with-deps
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ matrix.artifact }}
-          path: release/
 
       - name: Install Linux display server
         if: matrix.platform == 'linux'
