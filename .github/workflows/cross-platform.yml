@@ -27,11 +27,29 @@ jobs:
       matrix:
         include:
           # Windows builds
-          - os: windows-latest
-            platform: windows
-            arch: x64
-            target: nsis
-
+          #
+          # NOTE: `nsis` is deliberately NOT built here. electron-builder.yml has the NSIS
+          # target COMMENTED OUT of `win.target` ("NSIS installer disabled temporarily"), so
+          # this workflow was demanding an artifact the project does not ship — and it failed
+          # on every run.
+          #
+          # The failure is inside electron-builder's OWN installer template, not our code.
+          # CI only ever reported the opaque:
+          #     ⨯ makensis.exe process failed ERR_ELECTRON_BUILDER_CANNOT_EXECUTE
+          #     Exit code:            <- empty
+          # Reproducing the same command locally surfaces the actual NSIS compiler error:
+          #     Usage: Call function_name | [:label_name]
+          #     Error in macro MUI_FUNCTION_FINISHPAGE on macroline 264
+          #     Error in macro MUI_PAGEDECLARATION_FINISH on macroline 31
+          #     Error in macro MUI_UNPAGE_FINISH on macroline 6
+          #     !include: error in script: "assistedInstaller.nsh" on line 81
+          # i.e. a `Call` with an empty function name emitted by MUI's *uninstaller* finish
+          # page, from app-builder-lib's own templates/nsis/assistedInstaller.nsh.
+          # (`nsis.runAfterFinish: false` was tested and does NOT fix it.)
+          #
+          # Windows still ships: `msi` (built below, green) and `portable` (win.target).
+          # Re-add an nsis leg here only once NSIS is genuinely re-enabled in
+          # electron-builder.yml and the template error is resolved.
           - os: windows-latest
             platform: windows
             arch: x64
