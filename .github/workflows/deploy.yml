@@ -52,8 +52,32 @@ jobs:
           VITE_ANALYTICS_ENDPOINT: ${{ secrets.ANALYTICS_ENDPOINT }}
           VITE_APP_VERSION: ${{ github.ref_name }}
 
+      # CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID have never been set on this repo, so this
+      # workflow failed on EVERY push to main. A permanently-red check is not a signal — it is
+      # noise that trains everyone to ignore CI, which is precisely how real E2E failures got
+      # waved through here for days. Failing the run does not make the deploy happen; it only
+      # hides the checks that matter.
+      #
+      # So: skip the deploy and say so LOUDLY (a ::warning:: is surfaced in the run summary),
+      # rather than failing. The moment the secrets exist this deploys again with no further
+      # change:
+      #     gh secret set CLOUDFLARE_API_TOKEN  --repo danielsimonjr/PaperFlow
+      #     gh secret set CLOUDFLARE_ACCOUNT_ID --repo danielsimonjr/PaperFlow
+      #
+      # NOTE: secrets are not available in a job-level `if:`, hence the step-output dance.
+      - name: Check Cloudflare credentials
+        id: cf
+        run: |
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] && [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Cloudflare deploy SKIPPED::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set on this repository, so the Pages deploy was skipped. The build itself succeeded. Set them with: gh secret set CLOUDFLARE_API_TOKEN --repo danielsimonjr/PaperFlow"
+          fi
+
       - name: Deploy to Cloudflare Pages
         id: deploy
+        if: steps.cf.outputs.configured == 'true'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -76,7 +100,7 @@ jobs:
           sourcemaps: './dist/assets'
 
       - name: Post deployment notification
-        if: success()
+        if: success() && steps.cf.outputs.configured == 'true'
         run: |
           echo "Deployed to: ${{ steps.deploy.outputs.url }}"
           echo "Environment: ${{ github.event.inputs.environment || 'production' }}"

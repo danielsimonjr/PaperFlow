@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`deploy.yml` no longer fails on every push to `main`.** `CLOUDFLARE_API_TOKEN` /
+  `CLOUDFLARE_ACCOUNT_ID` have never been set on this repository, so `cloudflare/pages-action`
+  failed on **every single push** — a permanently-red check. That is not a signal; it is noise
+  that trains everyone to ignore CI, which is exactly how this repo's real E2E failures went
+  unnoticed for days. Failing the run never made the deploy happen. The deploy step is now
+  **skipped with a loud `::warning::`** when the credentials are absent (the build itself still
+  runs and must pass), and it resumes automatically the moment the secrets exist — no further
+  change needed. Set them with
+  `gh secret set CLOUDFLARE_API_TOKEN --repo danielsimonjr/PaperFlow` (and `CLOUDFLARE_ACCOUNT_ID`).
+
 ### Removed
 
 - **The duplicate, always-broken Electron E2E job in `build-desktop.yml`.** It was a copy of
