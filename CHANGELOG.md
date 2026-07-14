@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- **`electron/main/updates/autoUpdater.ts` — a dead duplicate that had become a startup-crash
+  landmine.** Nothing imported it (only a sprint-planning JSON named the path); the live
+  implementation is `electron/main/updater.ts`, a strict superset (9 IPC channels vs 4). It
+  was inert only because it never ran — but it registers `update-get-state` and
+  `update-download`, which `updater.ts` now registers *unconditionally*. Wiring this module
+  in would make `ipcMain.handle` throw `Attempted to register a second handler for
+  'update-get-state'` and crash startup. `electron/main/updates/differential.ts` is left in
+  place: it is also unreferenced, but it is self-contained, registers no IPC, and carries no
+  such hazard.
+
 ### Added
 
 - **E2E contract test guarding the preload/main IPC boundary**
