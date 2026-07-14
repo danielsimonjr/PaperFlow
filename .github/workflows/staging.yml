@@ -90,8 +90,10 @@ jobs:
           branch: ${{ github.head_ref || github.ref_name }}
 
       - name: Comment on PR
-        if: steps.cf.outputs.configured == 'true'
-        if: github.event_name == 'pull_request'
+        # NOTE: this step already had an `if:`. Both conditions must be ANDed into ONE key —
+        # a duplicate `if:` is accepted silently by PyYAML (last wins) but REJECTED by GitHub
+        # with a bare "This run likely failed because of a workflow file issue."
+        if: github.event_name == 'pull_request' && steps.cf.outputs.configured == 'true'
         uses: actions/github-script@v7
         with:
           script: |
