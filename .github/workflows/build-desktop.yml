@@ -174,9 +174,15 @@ jobs:
       - name: Build app for testing
         run: npm run build && npm run electron:compile
 
+      # NOTE: this step used to carry `continue-on-error: true`, which made it a
+      # DECORATIVE gate — the Electron E2E suite could fail and the job would still
+      # report success. It was masked further by the fact that this job never even ran:
+      # it `needs:` the build jobs, and those had failed since 2026-06-27 on a missing
+      # `author.email`, so E2E was SKIPPED, not ignored. With the builds fixed the suite
+      # now runs and PASSES on all three platforms (ubuntu / windows / macos), so the
+      # flag is removed and E2E is a real gate.
       - name: Run Electron E2E tests
         run: npm run test:e2e-electron
-        continue-on-error: true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
