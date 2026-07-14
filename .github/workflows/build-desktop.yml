@@ -148,56 +148,15 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
-  test-e2e-electron:
-    needs: [build-windows, build-macos, build-linux]
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright
-        run: npx playwright install --with-deps
-
-      - name: Build app for testing
-        # MUST be electron:build-web, NOT build. `build` runs plain `vite build`,
-        # and vite.config.ts sets `base: isElectron ? './' : '/'` where isElectron is
-        # driven by ELECTRON=true / an "electron" npm lifecycle event. So `npm run build`
-        # emits ABSOLUTE asset paths (/assets/...), which under Electron's file://
-        # protocol resolve to the DRIVE ROOT -> ERR_FILE_NOT_FOUND -> the renderer never
-        # mounts -> a completely BLANK window. `electron:build-web` sets ELECTRON=true,
-        # giving relative './' paths. Verified: with `build` the window is empty and has
-        # 0 buttons; with `electron:build-web` it renders and has the Open File button.
-        run: npm run electron:build-web && npm run electron:compile
-
-      # NOTE: this step used to carry `continue-on-error: true`, which made it a
-      # DECORATIVE gate — the Electron E2E suite could fail and the job would still
-      # report success. It was masked further by the fact that this job never even ran:
-      # it `needs:` the build jobs, and those had failed since 2026-06-27 on a missing
-      # `author.email`, so E2E was SKIPPED, not ignored. With the builds fixed the suite
-      # now runs and PASSES on all three platforms (ubuntu / windows / macos), so the
-      # flag is removed and E2E is a real gate.
-      - name: Run Electron E2E tests
-        run: npm run test:e2e-electron
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results-${{ matrix.os }}
-          path: |
-            test-results/
-            playwright-report/
-          retention-days: 7
+# NOTE: this workflow deliberately has NO Electron E2E job.
+#
+# It used to carry `test-e2e-electron`, a duplicate of cross-platform.yml's `e2e-tests`:
+# same specs, same three platforms. The copy here was strictly worse —
+#   * it ran on `push` ONLY, i.e. AFTER merge, so it gated nothing; and
+#   * its ubuntu leg had NO xvfb, so Electron could not open a window and all 43 tests
+#     failed on every run. That was invisible until `continue-on-error: true` was removed.
+#
+# cross-platform.yml's `e2e-tests` is the real gate: it runs on pull_request, installs
+# xvfb, and its three checks (`E2E Tests (linux|macos|windows)`) are REQUIRED on main.
+# Do not re-add an E2E job here — you would pay for a second full matrix per push and
+# gate nothing.
