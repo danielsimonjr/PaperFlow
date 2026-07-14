@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`Security Audit` was a check that could not fail.** Both of its steps (`npm audit --audit-level=high`
+  and `better-npm-audit`) carried `continue-on-error: true`, so the job reported success no matter what
+  it found — it asserted nothing. Flags removed, but **only after verifying the gate passes today**
+  (`npm audit --audit-level=high` exits 0, 0 vulnerabilities): turning a gate on without checking first
+  just trades a fake-green pipeline for a permanently-red one. The job is deliberately **not** a required
+  check, so a future advisory surfaces as an honest red signal without blocking every merge — which is
+  what you want when no fix is available yet.
+
 - **Web-only CI no longer downloads a ~100 MB Electron binary it never uses.** Electron's
   postinstall fetches its binary from GitHub releases on every `npm ci`. **Nothing** in `ci.yml`,
   `staging.yml` or `deploy.yml` needs it — lint is eslint, typecheck is `tsc --noEmit`, test is
