@@ -18,6 +18,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   runs and must pass), and it resumes automatically the moment the secrets exist — no further
   change needed. Set them with
   `gh secret set CLOUDFLARE_API_TOKEN --repo danielsimonjr/PaperFlow` (and `CLOUDFLARE_ACCOUNT_ID`).
+  The same guard is applied to `staging.yml`'s `Deploy Preview`, which had the identical failure.
+
+- **`staging.yml`'s `deploy-preview` job never declared any `outputs`** — yet `e2e-staging`
+  consumes `needs.deploy-preview.outputs.url` as its `BASE_URL`. That URL was therefore **always
+  the empty string**, so the staging E2E suite could not have worked even on a successful deploy.
+  It only ever *looked* fine because `deploy-preview` failed first (missing Cloudflare creds),
+  which skipped `e2e-staging` entirely — the failure was hiding behind another failure. The job
+  now declares `url` and `deployed`, and `e2e-staging` runs only when a preview was actually
+  deployed.
 
 ### Removed
 
