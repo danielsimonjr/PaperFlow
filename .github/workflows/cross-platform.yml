@@ -127,7 +127,15 @@ jobs:
         run: npm run test:unit
 
       - name: Build application
-        run: npm run build && npm run electron:compile
+        # MUST be electron:build-web, NOT build. vite.config.ts sets
+        # `base: isElectron ? './' : '/'`, where isElectron comes from ELECTRON=true.
+        # `npm run build` therefore emits ABSOLUTE asset paths (/assets/...), which under
+        # Electron's file:// protocol resolve to the DRIVE ROOT -> ERR_FILE_NOT_FOUND ->
+        # the renderer never mounts -> the packaged app is a BLANK WINDOW.
+        # electron-builder packages dist/ as-is, so this shipped broken installers.
+        # (build-desktop.yml got this right via `npm run electron:build`, which calls
+        # electron:build-web internally — hence one pipeline worked and these did not.)
+        run: npm run electron:build-web && npm run electron:compile
 
       - name: Build installer
         run: |
@@ -215,17 +223,23 @@ jobs:
           sudo apt-get install -y xvfb
 
       - name: Build for testing
-        run: npm run build && npm run electron:compile
+        # MUST be electron:build-web, NOT build. `build` runs plain `vite build`,
+        # and vite.config.ts sets `base: isElectron ? './' : '/'` where isElectron is
+        # driven by ELECTRON=true / an "electron" npm lifecycle event. So `npm run build`
+        # emits ABSOLUTE asset paths (/assets/...), which under Electron's file://
+        # protocol resolve to the DRIVE ROOT -> ERR_FILE_NOT_FOUND -> the renderer never
+        # mounts -> a completely BLANK window. `electron:build-web` sets ELECTRON=true,
+        # giving relative './' paths. Verified: with `build` the window is empty and has
+        # 0 buttons; with `electron:build-web` it renders and has the Open File button.
+        run: npm run electron:build-web && npm run electron:compile
 
       - name: Run E2E tests (Linux)
         if: matrix.platform == 'linux'
         run: xvfb-run --auto-servernum npm run test:e2e-electron
-        continue-on-error: true
 
       - name: Run E2E tests (Windows/macOS)
         if: matrix.platform != 'linux'
         run: npm run test:e2e-electron
-        continue-on-error: true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

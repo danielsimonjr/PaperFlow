@@ -98,7 +98,15 @@ jobs:
         run: npm version ${{ needs.prepare.outputs.version }} --no-git-tag-version
 
       - name: Build application
-        run: npm run build && npm run electron:compile
+        # MUST be electron:build-web, NOT build. vite.config.ts sets
+        # `base: isElectron ? './' : '/'`, where isElectron comes from ELECTRON=true.
+        # `npm run build` therefore emits ABSOLUTE asset paths (/assets/...), which under
+        # Electron's file:// protocol resolve to the DRIVE ROOT -> ERR_FILE_NOT_FOUND ->
+        # the renderer never mounts -> the packaged app is a BLANK WINDOW.
+        # electron-builder packages dist/ as-is, so this shipped broken installers.
+        # (build-desktop.yml got this right via `npm run electron:build`, which calls
+        # electron:build-web internally — hence one pipeline worked and these did not.)
+        run: npm run electron:build-web && npm run electron:compile
 
       - name: Build installers (Windows)
         if: matrix.platform == 'windows'
