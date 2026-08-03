@@ -101,6 +101,30 @@
     "shell-quote": "^1.8.4",
     "minimatch@^10": {
       "brace-expansion": "5.0.8"
+    },
+    "@electron/asar": {
+      "brace-expansion": "2.1.4"
+    },
+    "@electron/universal": {
+      "brace-expansion": "2.1.4"
+    },
+    "@eslint/config-array": {
+      "brace-expansion": "2.1.4"
+    },
+    "@eslint/eslintrc": {
+      "brace-expansion": "2.1.4"
+    },
+    "dir-compare": {
+      "brace-expansion": "2.1.4"
+    },
+    "eslint": {
+      "brace-expansion": "2.1.4"
+    },
+    "filelist": {
+      "brace-expansion": "2.1.4"
+    },
+    "glob": {
+      "brace-expansion": "2.1.4"
     }
   }
 }
