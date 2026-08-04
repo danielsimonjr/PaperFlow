@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FileUp, Save, Download, Settings, Printer, Image, Minimize2, Mail, Link as LinkIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Button } from '@components/ui/Button';
 import { ThemeToggle } from '@components/ui/ThemeToggle';
 import { useDocumentStore } from '@stores/documentStore';

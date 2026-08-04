@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ArrowLeft, Shield, Eye, Lock, Database, Trash2 } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 

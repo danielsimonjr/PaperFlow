@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
 import Privacy from '@/pages/Privacy';
 
 const renderWithRouter = (component: React.ReactNode) => {

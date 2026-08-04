@@ -101,7 +101,6 @@ test.describe('Touch Interactions', () => {
 });
 
 test.describe('Touch Form Interactions', () => {
-  test.use({ ...devices['iPhone 12'] });
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -130,7 +129,6 @@ test.describe('Touch Form Interactions', () => {
 });
 
 test.describe('Touch Annotation', () => {
-  test.use({ ...devices['iPhone 12'] });
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/');

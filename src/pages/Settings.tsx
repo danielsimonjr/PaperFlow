@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ArrowLeft, RotateCcw } from 'lucide-react';
 import { ThemeSelector } from '@components/ui/ThemeToggle';
 import { Button } from '@components/ui/Button';

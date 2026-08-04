@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { Header } from '@components/layout/Header';
 import { Sidebar } from '@components/layout/Sidebar';
 import { Toolbar } from '@components/layout/Toolbar';

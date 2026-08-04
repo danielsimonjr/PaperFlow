@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router';
 import { LoadingIndicator } from '@components/ui/LoadingIndicator';
 
 // Lazy-loaded route components for code splitting

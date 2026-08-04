@@ -141,7 +141,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           'pdf-engine': ['pdfjs-dist', 'pdf-lib'],
-          'ui-framework': ['react', 'react-dom', 'react-router-dom'],
+          'ui-framework': ['react', 'react-dom', 'react-router'],
           'ui-components': [
             '@radix-ui/react-dialog',
             '@radix-ui/react-dropdown-menu',

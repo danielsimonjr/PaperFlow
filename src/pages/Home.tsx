@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { FileUp, FolderOpen } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 import { DropZone } from '@components/viewer/DropZone';

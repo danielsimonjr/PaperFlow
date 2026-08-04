@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — react-router 7 -> 8 (BREAKING dependency major) (2026-08-03)
+
+Resolves the repo's last open Dependabot alert, **GHSA-qwww-vcr4-c8h2** (high),
+which affects `react-router >= 7.12.0, < 8.3.0`. There is no fix inside the 7.x
+line — 8.3.0 is the first patched release.
+
+- `react-router-dom` `^7.17.0` -> **removed**. The package line stops at 7.18.2;
+  there is no `react-router-dom@8`. All exports now come from `react-router`.
+- `react-router` **^8.3.0** added.
+- `react` / `react-dom` `^19.0.0` -> `^19.2.7`. react-router 8 declares
+  `peerDependencies: { react: ">=19.2.7", react-dom: ">=19.2.7" }`. Both were
+  already resolving to 19.2.7, so nothing moved — the range was widened only so
+  it cannot silently resolve below the floor.
+- Import source rewritten `react-router-dom` -> `react-router` in 13 files
+  (10 source, 2 unit tests, and the `ui-framework` manual chunk in
+  `vite.config.ts`).
+
+No API changes were needed. The app uses only the declarative surface —
+`BrowserRouter`, `HashRouter`, `Routes`, `Route`, `Link`, `useNavigate`,
+`useSearchParams` — none of which changed signature across v7 -> v8.
+
+**Verification.** Baseline captured before the change and matched after:
+typecheck clean, **1919 unit + 298 integration tests passing**, production build
+clean, lint clean. Because unit tests render components in isolation and stay
+green even when the app shell fails to mount (the failure mode that once shipped
+a blank PaperFlow), the built bundle was additionally driven in headless Chromium:
+all six routes render real content, the `*` catch-all resolves to NotFound,
+client-side navigation re-renders, and the console is clean.
+
+### Fixed — e2e suite could not collect tests (pre-existing)
+
+`tests/e2e/mobile/touch.spec.ts` called `test.use({ ...devices['iPhone 12'] })`
+inside two `test.describe` blocks. Playwright rejects that outright — device
+presets set `defaultBrowserType`, which forces a new worker — so **the entire
+Playwright run aborted at collection**. The file already had an identical
+top-level `test.use()` on line 4 covering the whole file, so both in-describe
+calls were pure duplication and were removed. No behaviour change.
+
+**The e2e suite is still not runnable**, for two further pre-existing reasons
+found while verifying and deliberately not fixed here (unrelated to routing):
+
+- `tests/e2e/mobile/responsive.spec.ts` has the same in-describe `test.use()`
+  problem at lines 4 and 65, but with *different* device presets per describe
+  (iPhone 12 vs iPad Pro 11). Unlike touch.spec.ts this is not duplication —
+  fixing it means splitting the file per device or declaring projects in
+  `playwright.config.ts`. (The `viewport`-only `test.use()` at line 103 is legal;
+  only the `devices[...]` spreads are rejected.)
+- `tests/e2e/cross-platform/core-features.spec.ts` uses `__dirname`, which is
+  undefined under ESM.
+
+
 ### Fixed
 
 - **`Security Audit` was a check that could not fail.** Both of its steps (`npm audit --audit-level=high`
