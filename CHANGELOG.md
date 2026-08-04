@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security — undici, fast-uri, brace-expansion (2026-08-03)
+
+Nine alerts that GitHub surfaced on the rescan triggered by the react-router
+commit. All are **newly disclosed advisories against packages that were already
+present** — the lockfile entries for `undici` (6.27.0, 7.28.0) and `fast-uri`
+(3.1.4) are byte-identical before and after that commit, so the migration did
+not introduce them.
+
+- `undici` 6.27.0 -> 6.28.0 and 7.28.0 -> 7.29.0 (1 high + 7 medium), via
+  `@electron/get` and `node-gyp`
+- `fast-uri` 3.1.4 -> 3.1.5 (high), via `ajv`
+- `brace-expansion` 5.0.8 -> 5.0.9 (high, GHSA-rgw5-rvv9-x895)
+
+The brace-expansion one is worth noting: it did not move under `npm update`
+because **this repo's own overrides pinned it to exactly `5.0.8`** — both the
+top-level `"brace-expansion": "^5.0.8"` and the `minimatch@^10` scoped
+`"brace-expansion": "5.0.8"`. An exact-version override silently becomes a
+liability the moment that version gets an advisory, since it defeats the very
+updates meant to fix it. Both are now `5.0.9` / `^5.0.9`.
+
+`npm audit` reports 0 vulnerabilities. Verified with typecheck, 1919 unit +
+298 integration tests, build and lint.
+
 ### Changed — react-router 7 -> 8 (BREAKING dependency major) (2026-08-03)
 
 Resolves the repo's last open Dependabot alert, **GHSA-qwww-vcr4-c8h2** (high),
