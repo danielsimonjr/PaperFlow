@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- Cleared all three high-severity advisories; `npm audit` now reports 0. Dependabot PR #66
+  bumped only `electron`, which is why its Security Audit gate still failed — the repo had
+  **three** highs, not one:
+  - `electron` ^40.1.0 -> ^41.10.3 (devDependency; major, but build tooling only)
+  - `js-yaml` -> 4.3.1
+  - `nanoid` -> >= 3.3.17
+- typecheck, lint and test all green.
+
+
 ### Security — undici, fast-uri, brace-expansion (2026-08-03)
 
 Nine alerts that GitHub surfaced on the rescan triggered by the react-router
