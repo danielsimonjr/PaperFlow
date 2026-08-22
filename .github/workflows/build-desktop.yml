@@ -22,7 +22,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
 
 
       - name: Setup Bun
@@ -66,7 +65,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -111,7 +109,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
 
       # electron-builder shells out to fpm for the deb/rpm/pacman targets, and fpm
       # needs the corresponding system packagers — which ubuntu-latest does NOT ship:
