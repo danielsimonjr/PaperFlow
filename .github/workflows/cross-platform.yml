@@ -105,6 +105,11 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: '1.4.0'
       - name: Install Linux dependencies
         if: matrix.platform == 'linux'
         run: |
@@ -118,27 +123,27 @@ jobs:
             rpm
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Type check
-        run: npm run typecheck
+        run: bun run typecheck
 
       - name: Lint
-        run: npm run lint
+        run: bun run lint
 
       - name: Unit tests
-        run: npm run test:unit
+        run: bun run test:unit
 
       - name: Build application
         # MUST be electron:build-web, NOT build. vite.config.ts sets
         # `base: isElectron ? './' : '/'`, where isElectron comes from ELECTRON=true.
-        # `npm run build` therefore emits ABSOLUTE asset paths (/assets/...), which under
+        # `bun run build` therefore emits ABSOLUTE asset paths (/assets/...), which under
         # Electron's file:// protocol resolve to the DRIVE ROOT -> ERR_FILE_NOT_FOUND ->
         # the renderer never mounts -> the packaged app is a BLANK WINDOW.
         # electron-builder packages dist/ as-is, so this shipped broken installers.
-        # (build-desktop.yml got this right via `npm run electron:build`, which calls
+        # (build-desktop.yml got this right via `bun run electron:build`, which calls
         # electron:build-web internally — hence one pipeline worked and these did not.)
-        run: npm run electron:build-web && npm run electron:compile
+        run: bun run electron:build-web && bun run electron:compile
 
       - name: Build installer
         run: |
@@ -215,7 +220,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Install Playwright
         run: npx playwright install --with-deps
@@ -229,21 +234,21 @@ jobs:
       - name: Build for testing
         # MUST be electron:build-web, NOT build. `build` runs plain `vite build`,
         # and vite.config.ts sets `base: isElectron ? './' : '/'` where isElectron is
-        # driven by ELECTRON=true / an "electron" npm lifecycle event. So `npm run build`
+        # driven by ELECTRON=true / an "electron" npm lifecycle event. So `bun run build`
         # emits ABSOLUTE asset paths (/assets/...), which under Electron's file://
         # protocol resolve to the DRIVE ROOT -> ERR_FILE_NOT_FOUND -> the renderer never
         # mounts -> a completely BLANK window. `electron:build-web` sets ELECTRON=true,
         # giving relative './' paths. Verified: with `build` the window is empty and has
         # 0 buttons; with `electron:build-web` it renders and has the Open File button.
-        run: npm run electron:build-web && npm run electron:compile
+        run: bun run electron:build-web && bun run electron:compile
 
       - name: Run E2E tests (Linux)
         if: matrix.platform == 'linux'
-        run: xvfb-run --auto-servernum npm run test:e2e-electron
+        run: xvfb-run --auto-servernum bun run test:e2e-electron
 
       - name: Run E2E tests (Windows/macOS)
         if: matrix.platform != 'linux'
-        run: npm run test:e2e-electron
+        run: bun run test:e2e-electron
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

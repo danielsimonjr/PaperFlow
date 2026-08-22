@@ -13,7 +13,7 @@ concurrency:
 # Electron's postinstall downloads a ~100 MB binary from GitHub releases. NOTHING in this
 # workflow uses it — lint is eslint, typecheck is `tsc --noEmit`, test is vitest, build is the
 # web vite build, and the e2e job drives Playwright CHROMIUM, not Electron. Downloading it in
-# every job was pure waste AND a permanent transient-failure surface: on 2026-07-14 `npm ci`
+# every job was pure waste AND a permanent transient-failure surface: on 2026-07-14 `bun install --frozen-lockfile
 # died with `TypeError: fetch failed` mid-download and took Type Check red on main with it.
 #
 # Do NOT set this in cross-platform.yml / build-desktop.yml — those genuinely launch Electron
@@ -35,17 +35,22 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: '1.4.0'
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Lint
-        run: npm run lint
+        run: bun run lint
 
       - name: Type check
         run: npx tsc --noEmit
 
       - name: Run tests
-        run: npm test
+        run: bun run test
 
   deploy-preview:
     name: Deploy Preview
@@ -73,10 +78,10 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: bun run build
         env:
           VITE_APP_VERSION: ${{ github.sha }}
 
@@ -148,12 +153,12 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Install Playwright
         run: npx playwright install --with-deps chromium
 
       - name: Run E2E tests against staging
-        run: npm run test:e2e
+        run: bun run test:e2e
         env:
           BASE_URL: ${{ needs.deploy-preview.outputs.url }}
