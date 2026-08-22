@@ -250,8 +250,21 @@ jobs:
       #
       # This job is deliberately NOT a required check, so a new advisory shows up as an honest red
       # signal without blocking every merge — which is what you want when the fix isn't available yet.
+      # ONE audit step, not two. `npx better-npm-audit` wrapped `npm audit`, which
+      # requires a package-lock.json the Bun migration deleted -- it failed with
+      # `npm error code ENOLOCK` on every run, which is a permanently-red check, not a
+      # security signal. bun audit covers the same advisory database.
+      #
+      # The .nsprc allowlist better-npm-audit read is carried here as --ignore, so the
+      # exception stays effective instead of becoming dead config in a file nothing
+      # reads. GHSA-qwww-vcr4-c8h2 (react-router RSC-mode CSRF bypass) is NOT REACHABLE:
+      # it needs a server-side RSC request handler executing router actions, and this is
+      # a local Electron app with zero RSC entrypoints (no react-router/rsc import, no
+      # matchRSCServerRequest / routeRSCServerRequest / createCallServer) that imports
+      # only client APIs from react-router-dom. No server executes router actions and
+      # there is no cross-site origin, so the CSRF precondition cannot be met. npm's
+      # remediation is a DOWNGRADE to react-router-dom@7.11.0 from 7.18.1 -- a net
+      # regression. RE-REVIEW when moving to react-router 8.x, or IMMEDIATELY if RSC
+      # mode is ever adopted.
       - name: Run bun audit
-        run: bun audit --audit-level=high
-
-      - name: Check for known vulnerabilities
-        run: npx better-npm-audit audit --level high
+        run: bun audit --audit-level=high --ignore=GHSA-qwww-vcr4-c8h2

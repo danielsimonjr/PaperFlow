@@ -1,7 +1,0 @@
-{
-  "1124282": {
-    "active": true,
-    "notes": "GHSA-qwww-vcr4-c8h2 (react-router RSC-mode CSRF bypass) is NOT REACHABLE here. The advisory requires React Router RSC mode -- a server-side RSC request handler executing router actions. PaperFlow uses ZERO RSC entrypoints (no react-router/rsc import, no matchRSCServerRequest / routeRSCServerRequest / createCallServer in src/ or electron/); it imports only client APIs from react-router-dom. It is a LOCAL ELECTRON app: no server executes router actions and there is no cross-site origin, so the CSRF precondition cannot be met. npm's remediation is a DOWNGRADE to react-router-dom@7.11.0 from the installed 7.18.1 (7 minor versions of fixes lost, landing below the advisory range) -- a net regression. The genuine forward fix is 8.3.0, a major migration unjustified by an unreachable advisory. RE-REVIEW when upgrading to react-router 8.x, or IMMEDIATELY if RSC mode is ever adopted.",
-    "expiry": "2026-10-27"
-  }
-}
