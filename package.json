@@ -126,5 +126,9 @@
     "glob": {
       "brace-expansion": "2.1.4"
     }
+  },
+  "packageManager": "bun@1.4.2",
+  "engines": {
+    "bun": ">=1.4.2"
   }
 }

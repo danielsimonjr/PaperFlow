@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Bun pinned to 1.4.2** in `packageManager`, `engines.bun` and all TEN CI workflows
+  that install it (ci, deploy, staging, cross-platform, release-candidate and the five
+  desktop/platform builds). Missing one would leave a job on a different toolchain
+  from the one the manifest declares.
+
+- **`tsconfig.json` modernised for TypeScript 7 ahead of the bump.** TS 7 REMOVED
+  `baseUrl` (TS5102) and no longer accepts non-relative `paths` targets (TS5090). The
+  mapping is now relative and means exactly what `baseUrl: "."` meant, so behaviour is
+  unchanged -- verified by all four gates passing on the CURRENT TypeScript. One less
+  thing to do when the bump becomes possible.
+
+- **TypeScript stays at `^5.7.0`: TypeScript 7 is BLOCKED here by `typescript-eslint`,**
+  which fails with `Cannot read properties of undefined (reading 'Cjs')` -- upstream
+  issue #12518, closed as not planned. TS 7.0 shipped without the stable programmatic
+  Compiler API its parser needs; that is expected in 7.1.
+
 ### Security
 
 - Cleared all three high-severity advisories; `npm audit` now reports 0. Dependabot PR #66
