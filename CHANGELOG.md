@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **Cleared 7 advisories (6 high, 1 moderate) that had CI red since 2026-08-22.**
+  All were transitive and all resolved WITHIN existing ranges -- `fast-uri`
+  3.1.5 -> 3.1.6 (host confusion via percent-encoded scheme normalization,
+  GHSA-jqff-g426-hqxp), `@xmldom/xmldom` 0.8.13 -> 0.8.15 and `browserslist`
+  4.28.4 -> 4.28.7 -- so no manifest range changed and nothing needed a major bump.
+  `bun audit` now reports zero across 886 packages, and typecheck, lint, test and
+  build all still pass.
+
 ### Changed
 
 - **Bun pinned to 1.4.2** in `packageManager`, `engines.bun` and all TEN CI workflows
