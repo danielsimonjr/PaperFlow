@@ -1,0 +1,28 @@
+{
+  "plugins": [
+    "typescript",
+    "react",
+    "oxc"
+  ],
+  "env": {
+    "browser": true,
+    "es2022": true
+  },
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    "dist/",
+    "coverage/",
+    "tools/",
+    "node_modules/"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/set-state-in-effect": "warn",
+    "react/refs": "warn",
+    "react/static-components": "warn",
+    "react/immutability": "warn"
+  }
+}

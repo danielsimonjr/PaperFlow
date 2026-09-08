@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **TypeScript raised to `^7.0.2`, unblocked by replacing ESLint with `oxlint`.**
+  `typescript-eslint` cannot run on TS 7 -- it needs the programmatic Compiler API
+  that TS 7.0 does not ship. oxlint parses TypeScript itself. `react-hooks`
+  `rules-of-hooks` (error) and `exhaustive-deps` (warn) carry over; the port was
+  control-tested with a conditionally-called hook, which it correctly rejects.
+
+  **One rule is lost: `react-refresh/only-export-components` (a warning),** which
+  oxlint 1.82 does not implement. Established with a probe carrying a control that
+  must report MISSING.
+
+### Added
+
+- **29 new warnings from oxlint's React correctness rules, deliberately NOT promoted
+  to errors.** `set-state-in-effect` (19), `refs` (5), `static-components` (4) and
+  `immutability` (1) are rules the previous ESLint config never enabled. They look
+  like real signal -- `set-state-in-effect` flags cascading renders -- but turning a
+  version migration into a 29-site refactor is scope creep, and silencing them would
+  waste the finding. They are visible as warnings and filed for triage.
+
 ### Security
 
 - **Cleared 7 advisories (6 high, 1 moderate) that had CI red since 2026-08-22.**
