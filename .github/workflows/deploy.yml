@@ -17,7 +17,7 @@ on:
           - staging
 
 # Electron's postinstall downloads a ~100 MB binary from GitHub releases. NOTHING in this
-# workflow uses it — lint is eslint, typecheck is `tsc --noEmit`, test is vitest, build is the
+# workflow uses it — lint is oxlint, typecheck is `tsc --noEmit`, test is vitest, build is the
 # web vite build, and the e2e job drives Playwright CHROMIUM, not Electron. Downloading it in
 # every job was pure waste AND a permanent transient-failure surface: on 2026-07-14 `bun install --frozen-lockfile
 # died with `TypeError: fetch failed` mid-download and took Type Check red on main with it.
