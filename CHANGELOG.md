@@ -26,6 +26,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     together, because an unresolved `${{ }}` expression renders as an empty string rather than an
     error -- a half-done rename produces a blank deployment URL that still reads as success.
 
+  **The branch name is now validated before it reaches the command.** Moving `branch` from an
+  action input into a Wrangler argument moved it across a trust boundary: `command` is shell text,
+  and `github.head_ref` is the PR author's branch name, which an outside contributor controls on a
+  fork PR. A new step takes the raw value as an ENVIRONMENT VARIABLE, so it can never reach the
+  script as code, checks it against the allowlist `[A-Za-z0-9._/-]` while also rejecting an empty
+  value, a leading `-` and any `..`, and fails the job rather than sanitising quietly. Only the
+  validated output is interpolated into the Wrangler command. The allowlist was exercised against
+  19 cases -- 6 real branch names accepted, 13 injection and metacharacter payloads rejected.
+
   **Not verified against a real deploy.** This repository has no `CLOUDFLARE_API_TOKEN` or
   `CLOUDFLARE_ACCOUNT_ID` at repository or environment scope, so both deploy steps skip via their
   own guard and emit a warning. Nothing was deploying before this change and nothing deploys after
