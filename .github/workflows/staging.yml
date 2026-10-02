@@ -57,14 +57,14 @@ jobs:
     needs: lint-and-test
     environment:
       name: staging
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.deploy.outputs.deployment-url }}
     outputs:
       # These were NEVER declared, yet e2e-staging consumes
       # `needs.deploy-preview.outputs.url` as its BASE_URL — so BASE_URL was always the
       # empty string and the staging E2E could not have worked even on a successful deploy.
       # It only ever *looked* fine because this job failed first (missing Cloudflare creds),
       # which skipped e2e-staging entirely.
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.deploy.outputs.deployment-url }}
       deployed: ${{ steps.cf.outputs.configured }}
     steps:
       - name: Setup Bun
@@ -103,17 +103,33 @@ jobs:
             echo "::warning title=Cloudflare preview deploy SKIPPED::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set on this repository, so the preview deploy was skipped. The build itself succeeded."
           fi
 
+      # cloudflare/pages-action@v1 WAS HERE AND THE UPSTREAM ACTION HAS BEEN DELETED --
+      # `gh api repos/cloudflare/pages-action` returns 404. That failed this job at SETUP on
+      # 2026-10-02, because GitHub resolves every `uses:` BEFORE any step `if:` is evaluated, so
+      # the credential guard above could not prevent it. A step-level guard cannot protect a bad
+      # `uses:`.
+      #
+      # The replacement takes the project name, output directory and branch as WRANGLER ARGUMENTS
+      # rather than as action inputs, and renames its outputs: `url` became `deployment-url`.
+      # Every consumer in this file was renamed with it -- an unresolved `${{ }}` expression
+      # renders as an EMPTY STRING, never an error, so a half-done rename would have produced a
+      # blank deployment URL that still looked like a success.
+      #
+      # NOT VERIFIED AGAINST A REAL DEPLOY: this repository has no CLOUDFLARE_API_TOKEN or
+      # CLOUDFLARE_ACCOUNT_ID at any scope, so the guard above is false and this step skips. It is
+      # written to be correct for the day those secrets exist.
       - name: Deploy to Cloudflare Pages (Preview)
         id: deploy
         if: steps.cf.outputs.configured == 'true'
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: paperflow
-          directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref || github.ref_name }}
+          packageManager: bun
+          command: >-
+            pages deploy dist --project-name=paperflow
+            --branch=${{ github.head_ref || github.ref_name }}
 
       - name: Comment on PR
         # NOTE: this step already had an `if:`. Both conditions must be ANDed into ONE key —
@@ -131,7 +147,7 @@ jobs:
 
               Your changes have been deployed to a preview environment:
 
-              **URL:** ${{ steps.deploy.outputs.url }}
+              **URL:** ${{ steps.deploy.outputs.deployment-url }}
 
               This preview will be automatically updated with new commits to this PR.`
             })
