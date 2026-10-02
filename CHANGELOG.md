@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+- **The CI audit gate no longer carries `--ignore=GHSA-qwww-vcr4-c8h2`.** That exception came
+  from the `.nsprc` allowlist `better-npm-audit` used to read, and its own comment set its expiry:
+  "RE-REVIEW when moving to react-router 8.x". The dependency is now `react-router` `^8.3.0` and
+  the advisory appears at no level, so the flag had become dead config whose only remaining effect
+  would be to hide a future advisory that reused the ID. `bun audit --audit-level=high` in
+  `ci.yml` now asserts the real state of the tree.
+
 - **Every high advisory is cleared, and the `bun audit` gate passes with no `--ignore` flag.**
   Measured on a clean install of this manifest and lockfile, with no `node_modules` carried over:
   `bun audit --audit-level=high` reports `No vulnerabilities found (checked 863 packages)` and
@@ -71,6 +78,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Verified by `bun why`: all four names now report "No packages matching ... found in lockfile".
 
 ### Changed
+
+- **The "lint is eslint" header comment is corrected to "lint is oxlint" in `ci.yml`,
+  `deploy.yml` and `staging.yml`.** All three were copies of one block, and all three described a
+  linter this repository stopped using. A comment that names the wrong tool is read as fact by the
+  next person who skims it.
 
 - **TypeScript raised to `^7.0.2`, unblocked by replacing ESLint with `oxlint`.**
   `typescript-eslint` cannot run on TS 7 -- it needs the programmatic Compiler API

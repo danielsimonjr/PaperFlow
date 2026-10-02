@@ -17,7 +17,7 @@ on:
   workflow_call:
 
 # Electron's postinstall downloads a ~100 MB binary from GitHub releases. NOTHING in this
-# workflow uses it — lint is eslint, typecheck is `tsc --noEmit`, test is vitest, build is the
+# workflow uses it — lint is oxlint, typecheck is `tsc --noEmit`, test is vitest, build is the
 # web vite build, and the e2e job drives Playwright CHROMIUM, not Electron. Downloading it in
 # every job was pure waste AND a permanent transient-failure surface: on 2026-07-14 `bun install --frozen-lockfile
 # died with `TypeError: fetch failed` mid-download and took Type Check red on main with it.
@@ -255,16 +255,16 @@ jobs:
       # `npm error code ENOLOCK` on every run, which is a permanently-red check, not a
       # security signal. bun audit covers the same advisory database.
       #
-      # The .nsprc allowlist better-npm-audit read is carried here as --ignore, so the
-      # exception stays effective instead of becoming dead config in a file nothing
-      # reads. GHSA-qwww-vcr4-c8h2 (react-router RSC-mode CSRF bypass) is NOT REACHABLE:
-      # it needs a server-side RSC request handler executing router actions, and this is
-      # a local Electron app with zero RSC entrypoints (no react-router/rsc import, no
-      # matchRSCServerRequest / routeRSCServerRequest / createCallServer) that imports
-      # only client APIs from react-router-dom. No server executes router actions and
-      # there is no cross-site origin, so the CSRF precondition cannot be met. npm's
-      # remediation is a DOWNGRADE to react-router-dom@7.11.0 from 7.18.1 -- a net
-      # regression. RE-REVIEW when moving to react-router 8.x, or IMMEDIATELY if RSC
-      # mode is ever adopted.
+      # NO --ignore FLAG. The gate asserts the real state of the tree.
+      #
+      # This step used to carry --ignore=GHSA-qwww-vcr4-c8h2, the react-router RSC-mode
+      # CSRF bypass inherited from the .nsprc allowlist better-npm-audit read. That
+      # comment set its own expiry -- "RE-REVIEW when moving to react-router 8.x" -- and
+      # the condition has fired: the dependency is react-router ^8.3.0 and the advisory
+      # no longer appears at ANY level, so the exception had become dead config whose
+      # only remaining effect was to hide a future advisory that happened to share the ID.
+      # An exception outlives its premise silently; this one is removed rather than
+      # re-justified. Restore an --ignore only with a reachability argument written at
+      # the time, not inherited.
       - name: Run bun audit
-        run: bun audit --audit-level=high --ignore=GHSA-qwww-vcr4-c8h2
+        run: bun audit --audit-level=high
