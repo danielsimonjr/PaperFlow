@@ -7,14 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **Every high advisory is cleared, and the `bun audit` gate passes with no `--ignore` flag.**
+  Measured on a clean install of this manifest and lockfile, with no `node_modules` carried over:
+  `bun audit --audit-level=high` reports `No vulnerabilities found (checked 863 packages)` and
+  exits 0. The same measurement on the previous lockfile reports **20 high**. Across all levels the
+  count falls from **43** (20 high, 17 moderate, 6 low) to **2** (2 moderate).
+
+- **All ten `brace-expansion` overrides are removed, not re-pinned.** Each one forced a patched
+  version on a parent that shipped a vulnerable one. Every parent now resolves a patched version
+  from its OWN declared range, so each override had stopped being the fix and become the thing that
+  held the version still. Three went with `eslint-config-prettier` in the previous commit; the
+  remaining seven go here. Three unrelated overrides stay.
+
+  | removed entry                                     | why it is obsolete                                                                                                                                           |
+  | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | `brace-expansion: ^5.0.9` (unscoped)              | An unscoped override forces 5.x on every consumer, including those on the 1.x and 2.x lines. Removing it is what lets each line reach its own patched floor. |
+  | `minimatch@^10: { brace-expansion: 5.0.9 }`       | `minimatch@10.2.5` declares `^5.0.5` and resolves **5.0.12**.                                                                                                |
+  | `glob: { brace-expansion: 2.1.4 }`                | `glob@11.1.0` reaches `minimatch@10.2.5` (**5.0.12**); `glob@7.2.3` reaches `minimatch@3.1.5`, which declares `^1.1.7` and resolves **1.1.21**.              |
+  | `@electron/asar: { brace-expansion: 2.1.4 }`      | reaches `minimatch@3.1.5` (`^1.1.7`), which resolves **1.1.21**.                                                                                             |
+  | `dir-compare: { brace-expansion: 2.1.4 }`         | reaches `minimatch@3.1.5` (`^1.1.7`), which resolves **1.1.21**.                                                                                             |
+  | `@electron/universal: { brace-expansion: 2.1.4 }` | reaches `brace-expansion` only through `@electron/asar` and `dir-compare`, both of which now resolve **1.1.21**. It never had a path of its own.             |
+  | `filelist: { brace-expansion: 2.1.4 }`            | reaches `minimatch@5.1.9` (`^2.0.1`), which resolves **2.1.7**.                                                                                              |
+
+  `bun why brace-expansion` now reports exactly three resolutions -- **5.0.12**, **1.1.21** and
+  **2.1.7** -- and all three are at or above their line's patched floor. The floors are 1.1.20 for
+  1.x, 2.1.6 for 2.x, 3.0.8 for 3.x and 5.0.11 for 5.x. One advisory carries one range per
+  maintenance line, so a single version comparison is not an audit.
+
+- **Dependency updates, each inside the range its manifest already declared:** `axios`
+  1.18.1 -> 1.20.0, `joi` 18.2.3 -> 18.2.9, `fast-uri` 3.1.6 -> 3.1.8, `undici` 7.29.0 -> 7.30.0
+  and 6.28.0 -> 6.29.0, `electron` 41.10.4 -> 41.10.7.
+
+- **`electron`'s declared range is raised from `^41.10.3` to `^41.10.7`.** This is the one manifest
+  range this change moves. It records the patched floor, so a later resolution cannot fall back
+  below it.
+
+- **Two moderate advisories remain, both in `vitest` (GHSA-82fw-gwwq-j7x9).** The fix is 4.1.11,
+  which is inside the declared `^4.1.8`, so it arrives at the next resolution without a manifest
+  change. They are below the gate's `--audit-level=high` threshold.
+
+- **Test evidence.** The suite is unchanged by this work: 153 files, 2517 passed, 9 skipped, 1 todo
+  (2527 total) both before and after, with identical coverage (59.71% statements, 53.09% branches,
+  65.07% functions, 60.23% lines). `bun install --frozen-lockfile`, `bun run lint`, `tsc --noEmit`
+  and `bun run build` all exit 0.
+
 ### Removed
 
 - **`eslint-config-prettier`, dead weight since ESLint was replaced by `oxlint`.** `lint` is
   `oxlint src` and the repository has NO ESLint configuration file of any kind, so nothing could
   read that package. It was still pulling the whole ESLint tree into the dependency graph:
   `eslint` -> `@eslint/eslintrc` -> `ajv`/`fast-uri`, `js-yaml`, and `minimatch`/`brace-expansion`.
-  Removing it deletes 158 lines of `bun.lock` and takes **3 of the 21 high advisories** with it,
-  by deleting the code rather than upgrading it.
+  Removing it deletes 158 lines of `bun.lock` and takes **2 of the 20 high advisories** with it,
+  by deleting the code rather than upgrading it. That path --
+  `eslint-config-prettier > eslint > @eslint/eslintrc > minimatch > brace-expansion` -- was the
+  only route to `brace-expansion@2.1.4`, so the two 2.x-line advisories left the tree with the
+  package. (An earlier draft of this entry said 3 of 21. That reading came from a `node_modules`
+  that had drifted from the lockfile; both figures are corrected against a clean install.)
 - The three ESLint-scoped `brace-expansion` overrides (`eslint`, `@eslint/eslintrc`,
   `@eslint/config-array`) went with it. An override whose parent no longer exists is config that
   cannot do anything, and leaving it would have implied a dependency the tree does not have.
