@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- **`eslint-config-prettier`, dead weight since ESLint was replaced by `oxlint`.** `lint` is
+  `oxlint src` and the repository has NO ESLint configuration file of any kind, so nothing could
+  read that package. It was still pulling the whole ESLint tree into the dependency graph:
+  `eslint` -> `@eslint/eslintrc` -> `ajv`/`fast-uri`, `js-yaml`, and `minimatch`/`brace-expansion`.
+  Removing it deletes 158 lines of `bun.lock` and takes **3 of the 21 high advisories** with it,
+  by deleting the code rather than upgrading it.
+- The three ESLint-scoped `brace-expansion` overrides (`eslint`, `@eslint/eslintrc`,
+  `@eslint/config-array`) went with it. An override whose parent no longer exists is config that
+  cannot do anything, and leaving it would have implied a dependency the tree does not have.
+  Verified by `bun why`: all four names now report "No packages matching ... found in lockfile".
+
 ### Changed
 
 - **TypeScript raised to `^7.0.2`, unblocked by replacing ESLint with `oxlint`.**

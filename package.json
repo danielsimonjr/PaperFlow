@@ -75,7 +75,6 @@
     "electron": "^41.10.3",
     "electron-builder": "^26.7.0",
     "electron-devtools-installer": "^4.0.0",
-    "eslint-config-prettier": "^9.1.0",
     "fake-indexeddb": "^6.2.5",
     "jsdom": "^27.4.0",
     "oxlint": "^1.82.0",
@@ -103,16 +102,7 @@
     "@electron/universal": {
       "brace-expansion": "2.1.4"
     },
-    "@eslint/config-array": {
-      "brace-expansion": "2.1.4"
-    },
-    "@eslint/eslintrc": {
-      "brace-expansion": "2.1.4"
-    },
     "dir-compare": {
-      "brace-expansion": "2.1.4"
-    },
-    "eslint": {
       "brace-expansion": "2.1.4"
     },
     "filelist": {
