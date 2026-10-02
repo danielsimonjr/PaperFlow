@@ -42,7 +42,7 @@ jobs:
     needs: ci
     environment:
       name: ${{ github.event.inputs.environment || 'production' }}
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.deploy.outputs.deployment-url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -90,17 +90,56 @@ jobs:
             echo "::warning title=Cloudflare deploy SKIPPED::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set on this repository, so the Pages deploy was skipped. The build itself succeeded. Set them with: gh secret set CLOUDFLARE_API_TOKEN --repo danielsimonjr/PaperFlow"
           fi
 
+      # The branch name reaches a SHELL COMMAND here, which it did not under the previous
+      # action: `cloudflare/pages-action` took `branch:` as a structured input, while
+      # `wrangler-action` takes a `command:` string. So `${ github.head_ref }` -- the PR
+      # author's branch name, and attacker-controlled on a fork PR -- would be interpolated
+      # into shell text. A branch called `x";curl ...|sh;"` is a command injection.
+      #
+      # Two defences, not one. The raw value arrives as an ENVIRONMENT VARIABLE, so it cannot
+      # reach this script as code whatever it contains; and it is then checked against an
+      # ALLOWLIST, so the value that does get interpolated below is proven to hold only
+      # characters that are inert in a shell. The check FAILS THE JOB rather than sanitising
+      # quietly: a deploy to a silently-renamed branch is its own bug.
+      - name: Resolve and validate the deploy branch
+        id: branch
+        if: steps.cf.outputs.configured == 'true'
+        env:
+          RAW_BRANCH: ${{ github.ref_name }}
+        run: |
+          case "$RAW_BRANCH" in
+            "" | -* | *..* | *[!A-Za-z0-9._/-]*)
+              echo "::error title=Refusing to deploy::Branch name is empty, starts with '-', contains '..', or holds a character outside [A-Za-z0-9._/-]. Refusing rather than sanitising." >&2
+              exit 1
+              ;;
+          esac
+          printf 'name=%s\n' "$RAW_BRANCH" >> "$GITHUB_OUTPUT"
+
+      # cloudflare/pages-action@v1 WAS HERE AND THE UPSTREAM ACTION HAS BEEN DELETED --
+      # `gh api repos/cloudflare/pages-action` returns 404. That failed this job at SETUP on
+      # 2026-10-02, because GitHub resolves every `uses:` BEFORE any step `if:` is evaluated, so
+      # the credential guard above could not prevent it. A step-level guard cannot protect a bad
+      # `uses:`.
+      #
+      # The replacement takes the project name, output directory and branch as WRANGLER ARGUMENTS
+      # rather than as action inputs, and renames its outputs: `url` became `deployment-url`.
+      # Every consumer in this file was renamed with it -- an unresolved `${{ }}` expression
+      # renders as an EMPTY STRING, never an error, so a half-done rename would have produced a
+      # blank deployment URL that still looked like a success.
+      #
+      # NOT VERIFIED AGAINST A REAL DEPLOY: this repository has no CLOUDFLARE_API_TOKEN or
+      # CLOUDFLARE_ACCOUNT_ID at any scope, so the guard above is false and this step skips. It is
+      # written to be correct for the day those secrets exist.
       - name: Deploy to Cloudflare Pages
         id: deploy
         if: steps.cf.outputs.configured == 'true'
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: paperflow
-          directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref_name }}
+          packageManager: bun
+          command: pages deploy dist --project-name=paperflow --branch=${{ steps.branch.outputs.name }}
 
       - name: Create Sentry release
         if: startsWith(github.ref, 'refs/tags/v')
@@ -117,7 +156,7 @@ jobs:
       - name: Post deployment notification
         if: success() && steps.cf.outputs.configured == 'true'
         run: |
-          echo "Deployed to: ${{ steps.deploy.outputs.url }}"
+          echo "Deployed to: ${{ steps.deploy.outputs.deployment-url }}"
           echo "Environment: ${{ github.event.inputs.environment || 'production' }}"
           echo "Version: ${{ github.ref_name }}"
 

@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Both Cloudflare Pages deploy steps referenced a DELETED action and failed at job setup.**
+  `cloudflare/pages-action@v1` no longer exists -- `gh api repos/cloudflare/pages-action` returns
+  404 -- so `Deploy to Production` and `Deploy Preview` both errored with
+  `Unable to resolve action` before running a single step. Replaced with
+  `cloudflare/wrangler-action` (SHA-pinned to v4.1.3), which takes the project name, output
+  directory and branch as Wrangler arguments instead of action inputs.
+
+  Two things this exposed are worth keeping:
+
+  - **A step-level `if:` cannot protect a bad `uses:`.** The deploy step is guarded by
+    `if: steps.cf.outputs.configured == 'true'` and that guard is false here, yet the job still
+    failed: GitHub resolves every action reference at job setup, before any condition runs.
+  - **The output contract changed, and a missed rename would have been silent.** `url` became
+    `deployment-url`. All five consumers across `deploy.yml` and `staging.yml` were renamed
+    together, because an unresolved `${{ }}` expression renders as an empty string rather than an
+    error -- a half-done rename produces a blank deployment URL that still reads as success.
+
+  **The branch name is now validated before it reaches the command.** Moving `branch` from an
+  action input into a Wrangler argument moved it across a trust boundary: `command` is shell text,
+  and `github.head_ref` is the PR author's branch name, which an outside contributor controls on a
+  fork PR. A new step takes the raw value as an ENVIRONMENT VARIABLE, so it can never reach the
+  script as code, checks it against the allowlist `[A-Za-z0-9._/-]` while also rejecting an empty
+  value, a leading `-` and any `..`, and fails the job rather than sanitising quietly. Only the
+  validated output is interpolated into the Wrangler command. The allowlist was exercised against
+  19 cases -- 6 real branch names accepted, 13 injection and metacharacter payloads rejected.
+
+  **Not verified against a real deploy.** This repository has no `CLOUDFLARE_API_TOKEN` or
+  `CLOUDFLARE_ACCOUNT_ID` at repository or environment scope, so both deploy steps skip via their
+  own guard and emit a warning. Nothing was deploying before this change and nothing deploys after
+  it; what changes is that the workflow no longer fails. The step is written to be correct for the
+  day those secrets exist.
+
 ### Security
 
 - **The CI audit gate no longer carries `--ignore=GHSA-qwww-vcr4-c8h2`.** That exception came
@@ -95,6 +129,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   must report MISSING.
 
 ### Added
+
+- **`TODO.md`, recording this repository's open work** -- the web E2E harness that collects zero
+  tests, the `e2e-staging` job that has never run, the absent Cloudflare credentials, the two
+  remaining `vitest` moderates, and the Prettier drift in this file. Completed work stays in this
+  changelog; sprint planning stays in `docs/planning/sprints/`.
 
 - **29 new warnings from oxlint's React correctness rules, deliberately NOT promoted
   to errors.** `set-state-in-effect` (19), `refs` (5), `static-components` (4) and
