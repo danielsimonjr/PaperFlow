@@ -162,6 +162,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`platform-integration.spec.ts` moved from `tests/e2e` to
+  `tests/e2e-electron/platformIntegration.spec.ts`.** The spec calls `electron.launch`, which the web
+  suite (`playwright.config.ts`, a Vite dev server and a browser) cannot satisfy. The web suite now
+  collects 140 tests per project (it had 155) and the Electron suite collects 72 (it had 57); the
+  spec has 15 tests, 7 of which skip on any one platform by design.
+
+  `cross-platform.yml` runs `test:e2e-electron` on pull requests for Windows, macOS and Linux, so
+  this spec now runs in that gate. It passes on Windows (8 pass, 7 platform-skipped). It was not run
+  on macOS or Linux.
+
 - **The "lint is eslint" header comment is corrected to "lint is oxlint" in `ci.yml`,
   `deploy.yml` and `staging.yml`.** All three were copies of one block, and all three described a
   linter this repository stopped using. A comment that names the wrong tool is read as fact by the
