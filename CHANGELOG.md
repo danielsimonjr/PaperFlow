@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Running the web E2E suite no longer changes tracked files.** `browser-test`,
+  `full-feature-test` and `pdf-editor-test` wrote screenshots into the tracked
+  `tests/e2e/screenshots/`. They now write to each test's output directory
+  (`testInfo.outputPath`), which is under the ignored `test-results/`. The PNGs already in
+  `tests/e2e/screenshots/` are not read by any spec (no spec compares screenshots) and stay in place.
+
 - **Three E2E specs read a PDF from an absolute path on a developer machine, and failed with
   ENOENT anywhere else (20 tests).** `browser-test`, `full-feature-test` and `pdf-editor-test` now
   read `tests/fixtures/sample.pdf` through a path relative to the spec. The fixture is a ten-page

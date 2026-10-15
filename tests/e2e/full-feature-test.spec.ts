@@ -23,7 +23,7 @@ async function waitForPdfLoad(page: Page) {
 
 // Helper to take a labeled screenshot
 async function screenshot(page: Page, name: string) {
-  await page.screenshot({ path: `tests/e2e/screenshots/full-test-${name}.png`, fullPage: true });
+  await page.screenshot({ path: test.info().outputPath(`full-test-${name}.png`), fullPage: true });
 }
 
 test.describe('PaperFlow Full Feature Test', () => {
@@ -591,7 +591,7 @@ test.describe('PaperFlow Full Feature Test', () => {
     console.log('\n' + '='.repeat(60));
     console.log('📊 FULL FEATURE TEST COMPLETE');
     console.log('='.repeat(60));
-    console.log('\nScreenshots saved to: tests/e2e/screenshots/full-test-*.png');
+    console.log('\nScreenshots saved to the test output directory: full-test-*.png');
     console.log('\n✅ All feature tests executed!');
     console.log('='.repeat(60) + '\n');
 
