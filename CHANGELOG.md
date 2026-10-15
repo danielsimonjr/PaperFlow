@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **A window whose saved state is maximized is shown after its first paint, not before.**
+  `createWindow` called `maximize()` right after the `BrowserWindow` was constructed. On Windows,
+  `maximize()` of a window that is not shown also shows it, so a maximized-state window was on
+  screen within a few milliseconds of launch, before `ready-to-show` and so before its first
+  paint, and the `show()` that followed was a second show. The maximize now runs inside the
+  `ready-to-show` handler, just before `show()`. The window is still created with its restored
+  bounds, so un-maximize returns to them.
+
+  Measured with a profile whose saved state was maximized, in the real Electron app: before the
+  change the window was visible after 3 to 6 ms and a minimize requested at that moment was undone
+  in 3 of 3 runs; after it the window was visible after 57 to 253 ms, still maximized, and the
+  minimize held in 3 of 3 runs. A profile with no saved state held in 2 of 2. Five unit tests in
+  `tests/electron/windowManager.test.ts` cover the order (no maximize at construction; maximize,
+  then show, on `ready-to-show`; the restored bounds; the non-maximized case); two of them fail on
+  the old code. The spec comment in `platformIntegration.spec.ts` that described this defect is
+  reworded: the private profile stays, for isolation.
+
 - **E2E specs that need a document now open one, and use routes that exist.**
   `cross-platform/editing` went to `/viewer`, which has no route (the editor is `/editor`), and
   `cross-platform/core-features` expected the viewer on `/`, which is the home page. Both now open

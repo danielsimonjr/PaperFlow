@@ -68,11 +68,6 @@ export class WindowManager {
 
     const window = new BrowserWindow(windowOptions);
 
-    // Restore maximized state after creation
-    if (state.isMaximized) {
-      window.maximize();
-    }
-
     // Track the window
     const managedWindow: ManagedWindow = {
       window,
@@ -91,8 +86,13 @@ export class WindowManager {
     // Set up event handlers
     this.setupWindowEvents(managedWindow);
 
-    // Show window when ready
+    // Show window when ready. A persisted maximized state is restored here and not at construction:
+    // on Windows, maximize() of a window that is not yet shown also shows it, so doing it at
+    // construction put the window on screen before its first paint and ahead of this event.
     window.once('ready-to-show', () => {
+      if (state.isMaximized) {
+        window.maximize();
+      }
       window.show();
     });
 
