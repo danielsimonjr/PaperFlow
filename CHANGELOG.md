@@ -9,6 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **The web E2E suite collected zero tests; it now collects all 775 (155 per project, 5 projects).**
+  `playwright test` aborted at collection, so none of the 11 spec files ran. Three causes, all fixed:
+
+  - `__dirname` is undefined in an ES module (`"type": "module"`).
+    `cross-platform/core-features.spec.ts` and `platform-integration.spec.ts` now derive it from
+    `fileURLToPath(import.meta.url)`.
+  - Playwright refuses `test.use({ defaultBrowserType })` inside a describe group.
+    `mobile/responsive.spec.ts` spread `devices['iPhone 12']` and `devices['iPad Pro 11']` into two
+    groups. A shared helper, `tests/e2e/helpers/withoutBrowserType.ts`, drops that key and keeps the
+    viewport, user agent and touch flags.
+  - `mobile/touch.spec.ts` used the same descriptor at file level. Playwright allows that, but the key
+    overrides the project's browser: under the chromium project all 15 of its tests tried to launch
+    webkit and failed. It uses the same helper now, and the whole `mobile/` directory passes (33 of 33)
+    under chromium.
+
+  The manual `E2E Tests` job in `ci.yml` installs only chromium. It now runs `--project=chromium`; it
+  asked for all five projects with one browser installed. Its comment no longer claims suite-level
+  collection failures.
+
+  **Collection is restored; the suite is not green.** A local chromium run (Windows, 4 workers,
+  3.2 minutes) gave 53 passed, 52 failed and 50 skipped. The 52 failures are test rot that stayed
+  invisible while nothing ran, and they are recorded in `TODO.md`: 8 specs select on `data-testid`
+  values and `src/` renders none; three specs read a PDF from an absolute path on a developer machine
+  that the repository does not hold. The `E2E Tests` job stays `workflow_dispatch`-only.
+
 - **Both Cloudflare Pages deploy steps referenced a DELETED action and failed at job setup.**
   `cloudflare/pages-action@v1` no longer exists -- `gh api repos/cloudflare/pages-action` returns
   404 -- so `Deploy to Production` and `Deploy Preview` both errored with

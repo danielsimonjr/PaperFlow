@@ -1,7 +1,8 @@
 import { test, expect, devices } from '@playwright/test';
+import { withoutBrowserType } from '../helpers/withoutBrowserType';
 
 test.describe('Responsive Layout - Mobile', () => {
-  test.use({ ...devices['iPhone 12'] });
+  test.use(withoutBrowserType(devices['iPhone 12']));
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -62,7 +63,7 @@ test.describe('Responsive Layout - Mobile', () => {
 });
 
 test.describe('Responsive Layout - Tablet', () => {
-  test.use({ ...devices['iPad Pro 11'] });
+  test.use(withoutBrowserType(devices['iPad Pro 11']));
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/');

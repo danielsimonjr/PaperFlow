@@ -8,6 +8,10 @@
 import { test, expect, ElectronApplication, Page } from '@playwright/test';
 import { _electron as electron } from 'playwright';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+// The package is ESM, so __dirname does not exist; derive it from the module URL.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let electronApp: ElectronApplication;
 // Page is assigned but used in afterAll for cleanup

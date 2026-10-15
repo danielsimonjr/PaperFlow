@@ -5,17 +5,23 @@ Sprint-level planning lives in `docs/planning/sprints/PHASE_X_SPRINT_Y_TODO.json
 
 ## Open
 
-- [ ] **The web E2E suite collects zero tests.** `bun run test:e2e` (`playwright.config.ts`,
-  `tests/e2e`, 11 spec files) aborts before running anything:
-  - `__dirname is not defined in ES module scope` in `tests/e2e/cross-platform/core-features.spec.ts`
-    and `tests/e2e/platform-integration.spec.ts`. The package is `"type": "module"`; the fix is
-    `fileURLToPath(import.meta.url)`.
-  - `Cannot use({ defaultBrowserType }) in a describe group` in `tests/e2e/mobile/responsive.spec.ts`
-    and `tests/e2e/mobile/touch.spec.ts`. `test.use({ ...devices[...] })` must be top-level in the
-    file, or become a Playwright project.
+- [ ] **The web E2E suite collects (775 tests) but is red: 52 of 155 chromium tests fail, 50 skip.**
+  Measured with `npx playwright test --project=chromium` (`playwright.config.ts`, `tests/e2e`). The
+  causes, by weight:
+  - **`src/` renders no `data-testid`.** 8 specs select on `data-testid` values (`pdf-viewer`,
+    `next-page-btn`, `zoom-level`, ...) and `src/` has none (0 matches in 480 files). This is 29
+    failures in `cross-platform/core-features` and `cross-platform/editing`, plus the drop-zone check
+    in `workflows/open-edit-save`. The fix is a decision: add the attributes to the components, or
+    rewrite the selectors to roles and labels.
+  - **A developer-machine path.** `browser-test`, `full-feature-test` and `pdf-editor-test` read a PDF
+    from an absolute path under a developer's home directory (20 failures, ENOENT). No PDF is tracked
+    in the repository. The fix needs a small committed fixture and a relative path.
+  - **`platform-integration` launches Electron** from the web suite (`electron.launch: Target page,
+    context or browser has been closed`). It belongs with `tests/e2e-electron`.
+  - **Running the suite dirties the tree.** `full-feature-test` writes screenshots into the tracked
+    `tests/e2e/screenshots/`.
 
-  The `E2E Tests` job in `ci.yml` is gated on `workflow_dispatch` for exactly these two reasons, so
-  the breakage is contained but the coverage is absent. The Electron suite
+  The `E2E Tests` job in `ci.yml` stays `workflow_dispatch`-only. The Electron suite
   (`test:e2e-electron`, `tests/e2e-electron`) is separate and does run in CI -- 57 tests. Do not
   read its green checks as this suite's health.
 
