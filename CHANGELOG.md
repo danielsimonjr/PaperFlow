@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Three E2E specs read a PDF from an absolute path on a developer machine, and failed with
+  ENOENT anywhere else (20 tests).** `browser-test`, `full-feature-test` and `pdf-editor-test` now
+  read `tests/fixtures/sample.pdf` through a path relative to the spec. The fixture is a ten-page
+  text PDF of about 9 KB. `scripts/generate-sample-pdf.mjs` writes it with fixed dates and a fixed
+  producer, so every run produces the same bytes, and `--check` compares the committed file with
+  the generator. `.gitattributes` marks `*.pdf` as binary so that line-ending conversion cannot
+  change the fixture.
+
 - **The web E2E suite collected zero tests; it now collects all 775 (155 per project, 5 projects).**
   `playwright test` aborted at collection, so none of the 11 spec files ran. Three causes, all fixed:
 

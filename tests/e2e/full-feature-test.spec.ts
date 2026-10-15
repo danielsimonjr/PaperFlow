@@ -4,8 +4,15 @@
  */
 
 import { test, expect, Page } from '@playwright/test';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const PDF_PATH = 'C:\\Users\\danie\\Dropbox\\Misc\\ Large Language Models - A Survey.pdf';
+// The package is ESM, so __dirname does not exist; derive it from the module URL.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Generated fixture: `node scripts/generate-sample-pdf.mjs`
+const PDF_PATH = path.join(__dirname, '../fixtures/sample.pdf');
+const PDF_NAME = path.basename(PDF_PATH);
 const BASE_URL = 'http://localhost:5173';
 
 // Helper to wait for PDF to load
@@ -44,7 +51,7 @@ test.describe('PaperFlow Full Feature Test', () => {
     await expect(header).toBeVisible();
 
     // Check filename is displayed
-    const fileName = page.getByText('Large Language Models - A Survey.pdf');
+    const fileName = page.getByText(PDF_NAME);
     await expect(fileName).toBeVisible();
     console.log('   ✅ PDF loaded and filename displayed');
 
