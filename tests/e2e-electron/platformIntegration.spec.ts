@@ -7,6 +7,8 @@
 
 import { test, expect, ElectronApplication, Page } from '@playwright/test';
 import { _electron as electron } from 'playwright';
+import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -14,6 +16,12 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let electronApp: ElectronApplication;
+// A private profile for this run. The app persists its window state in the
+// user-data directory, and the maximize test leaves that state toggled. With
+// the shared default profile, every second run started maximized, and a
+// window that starts maximized is shown before `ready-to-show`, so the late
+// show undid the minimize.
+let userDataDir: string;
 // Page is assigned but used in afterAll for cleanup
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let page: Page;
@@ -47,17 +55,22 @@ const expectWindow = (state: WindowState, expected: boolean): Promise<void> =>
 
 test.describe('Platform Integration', () => {
   test.beforeAll(async () => {
+    userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'paperflow-e2e-'));
+
     // Launch Electron app
     electronApp = await electron.launch({
-      args: [path.join(__dirname, '../../dist-electron/main/index.js')],
+      args: [
+        `--user-data-dir=${userDataDir}`,
+        path.join(__dirname, '../../dist-electron/main/index.js'),
+      ],
     });
 
     // Get the first window
     page = await electronApp.firstWindow();
 
-    // The window is created hidden and shown on `ready-to-show`. A state
-    // change made before that is overwritten by the show, so the window-state
-    // tests start from a visible window.
+    // The window is created hidden and, on a fresh profile, shown on
+    // `ready-to-show`. A state change made before that is overwritten by the
+    // show, so the window-state tests start from a visible window.
     await expect
       .poll(() => firstWindowIs('visible'), { timeout: 30_000 })
       .toBe(true);
@@ -65,6 +78,12 @@ test.describe('Platform Integration', () => {
 
   test.afterAll(async () => {
     await electronApp.close();
+    fs.rmSync(userDataDir, {
+      recursive: true,
+      force: true,
+      maxRetries: 5,
+      retryDelay: 200,
+    });
   });
 
   test.describe('Common Features', () => {

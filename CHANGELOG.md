@@ -202,6 +202,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   never honored there (the window was visible and the state stayed unchanged for 10 s), so those
   two checks skip when no desktop session names itself and run on a Linux desktop.
 
+  The spec also launches the app with a private `--user-data-dir`. The app persists its window
+  state in the user-data directory, and the maximize test leaves that state toggled. A window
+  restored as maximized is shown at once, before `ready-to-show`, so the visible-window wait
+  passed early and the late show undid the minimize. With the shared default profile every
+  second local run failed that check: 3 of 3 runs that started maximized failed and 3 of 3 that
+  started unmaximized passed. With the private profile, 4 of 4 runs passed from a profile that
+  was seeded maximized. The CI runners start from a fresh profile and never met this.
+
 - **The "lint is eslint" header comment is corrected to "lint is oxlint" in `ci.yml`,
   `deploy.yml` and `staging.yml`.** All three were copies of one block, and all three described a
   linter this repository stopped using. A comment that names the wrong tool is read as fact by the
