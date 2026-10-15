@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# PDFs are byte-exact fixtures (tests/fixtures/sample.pdf is checked against its generator).
+*.pdf binary

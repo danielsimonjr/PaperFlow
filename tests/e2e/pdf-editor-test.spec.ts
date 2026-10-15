@@ -4,8 +4,14 @@
  */
 
 import { test } from '@playwright/test';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const PDF_PATH = 'C:\\Users\\danie\\Dropbox\\Misc\\ Large Language Models - A Survey.pdf';
+// The package is ESM, so __dirname does not exist; derive it from the module URL.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Generated fixture: `node scripts/generate-sample-pdf.mjs`
+const PDF_PATH = path.join(__dirname, '../fixtures/sample.pdf');
 const BASE_URL = 'http://localhost:5173';
 
 test.describe('PDF Editor Deep Test', () => {
@@ -43,7 +49,10 @@ test.describe('PDF Editor Deep Test', () => {
 
     if (fileInputCount === 0) {
       console.log('   ❌ No file input found!');
-      await page.screenshot({ path: 'tests/e2e/screenshots/debug-no-input.png', fullPage: true });
+      await page.screenshot({
+        path: test.info().outputPath('debug-no-input.png'),
+        fullPage: true,
+      });
       return;
     }
 
@@ -67,7 +76,10 @@ test.describe('PDF Editor Deep Test', () => {
     console.log(`   Current URL: ${currentUrl}`);
 
     // Take screenshot of current state
-    await page.screenshot({ path: 'tests/e2e/screenshots/debug-after-upload.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('debug-after-upload.png'),
+      fullPage: true,
+    });
 
     // Step 5: Check editor page content
     console.log('\nStep 5: Checking editor page content...');
@@ -91,7 +103,10 @@ test.describe('PDF Editor Deep Test', () => {
     console.log('\nStep 6: Waiting 5 more seconds for PDF render...');
     await page.waitForTimeout(5000);
 
-    await page.screenshot({ path: 'tests/e2e/screenshots/debug-after-wait.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('debug-after-wait.png'),
+      fullPage: true,
+    });
 
     // Check again
     const canvasesAfter = await page.locator('canvas').count();
@@ -122,8 +137,13 @@ test.describe('PDF Editor Deep Test', () => {
     consoleLogs.slice(-10).forEach(log => console.log(`      ${log}`));
 
     // Final screenshot
-    await page.screenshot({ path: 'tests/e2e/screenshots/debug-final.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('debug-final.png'),
+      fullPage: true,
+    });
 
-    console.log('\n📊 Test complete. Check screenshots in tests/e2e/screenshots/');
+    console.log(
+      `\n📊 Test complete. Check screenshots in ${test.info().outputDir}`
+    );
   });
 });

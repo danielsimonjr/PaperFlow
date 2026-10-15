@@ -158,6 +158,7 @@ export function Dropdown({
           <input
             ref={inputRef}
             type="text"
+            data-testid="form-dropdown"
             value={customValue || field.value}
             onChange={handleCustomInputChange}
             onFocus={() => {
@@ -238,6 +239,7 @@ export function Dropdown({
     <div className="absolute" style={style}>
       <select
         ref={selectRef}
+        data-testid="form-dropdown"
         value={field.value}
         onChange={handleSelectChange}
         onFocus={handleFocus}

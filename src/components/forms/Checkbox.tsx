@@ -92,6 +92,7 @@ export function Checkbox({
         ref={checkboxRef}
         type="button"
         role="checkbox"
+        data-testid="form-checkbox"
         aria-checked={field.value}
         aria-label={field.name || 'Checkbox'}
         aria-required={field.required}

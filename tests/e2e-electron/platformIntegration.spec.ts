@@ -7,6 +7,8 @@
 
 import { test, expect, ElectronApplication, Page } from '@playwright/test';
 import { _electron as electron } from 'playwright';
+import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -14,23 +16,74 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let electronApp: ElectronApplication;
+// A private profile for this run. The app persists its window state in the
+// user-data directory, and the maximize test leaves that state toggled. With
+// the shared default profile, every second run started maximized, and a
+// window that starts maximized is shown before `ready-to-show`, so the late
+// show undid the minimize.
+let userDataDir: string;
 // Page is assigned but used in afterAll for cleanup
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let page: Page;
 
+type WindowState = 'visible' | 'minimized' | 'maximized';
+
+/** Read one state flag of the first window. */
+const firstWindowIs = (state: WindowState): Promise<boolean> =>
+  electronApp.evaluate(({ BrowserWindow }, flag) => {
+    const win = BrowserWindow.getAllWindows()[0];
+    if (!win) return false;
+    if (flag === 'visible') return win.isVisible();
+    if (flag === 'minimized') return win.isMinimized();
+    return win.isMaximized();
+  }, state);
+
+/**
+ * Minimize and maximize are requests to a window manager. The Linux job runs
+ * under `xvfb-run` with no window manager, so the request is never honored.
+ * A Linux desktop session names itself in one of these two variables.
+ */
+const noWindowManager =
+  process.platform === 'linux' &&
+  !process.env.XDG_CURRENT_DESKTOP &&
+  !process.env.DESKTOP_SESSION;
+
+/** Poll until the first window reports `expected` for `state`. The platform
+ * applies a state change after the call returns. */
+const expectWindow = (state: WindowState, expected: boolean): Promise<void> =>
+  expect.poll(() => firstWindowIs(state), { timeout: 10_000 }).toBe(expected);
+
 test.describe('Platform Integration', () => {
   test.beforeAll(async () => {
+    userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'paperflow-e2e-'));
+
     // Launch Electron app
     electronApp = await electron.launch({
-      args: [path.join(__dirname, '../../dist-electron/main/index.js')],
+      args: [
+        `--user-data-dir=${userDataDir}`,
+        path.join(__dirname, '../../dist-electron/main/index.js'),
+      ],
     });
 
     // Get the first window
     page = await electronApp.firstWindow();
+
+    // The window is created hidden and, on a fresh profile, shown on
+    // `ready-to-show`. A state change made before that is overwritten by the
+    // show, so the window-state tests start from a visible window.
+    await expect
+      .poll(() => firstWindowIs('visible'), { timeout: 30_000 })
+      .toBe(true);
   });
 
   test.afterAll(async () => {
     await electronApp.close();
+    fs.rmSync(userDataDir, {
+      recursive: true,
+      force: true,
+      maxRetries: 5,
+      retryDelay: 200,
+    });
   });
 
   test.describe('Common Features', () => {
@@ -46,26 +99,26 @@ test.describe('Platform Integration', () => {
     });
 
     test('should handle window minimize', async () => {
+      test.skip(noWindowManager, 'no window manager on this display');
+
       await electronApp.evaluate(({ BrowserWindow }) => {
         BrowserWindow.getAllWindows()[0]?.minimize();
       });
 
-      const isMinimized = await electronApp.evaluate(({ BrowserWindow }) => {
-        return BrowserWindow.getAllWindows()[0]?.isMinimized();
-      });
-
-      expect(isMinimized).toBe(true);
+      await expectWindow('minimized', true);
 
       // Restore
       await electronApp.evaluate(({ BrowserWindow }) => {
         BrowserWindow.getAllWindows()[0]?.restore();
       });
+
+      await expectWindow('minimized', false);
     });
 
     test('should handle window maximize', async () => {
-      const wasMaximized = await electronApp.evaluate(({ BrowserWindow }) => {
-        return BrowserWindow.getAllWindows()[0]?.isMaximized();
-      });
+      test.skip(noWindowManager, 'no window manager on this display');
+
+      const wasMaximized = await firstWindowIs('maximized');
 
       await electronApp.evaluate(({ BrowserWindow }) => {
         const win = BrowserWindow.getAllWindows()[0];
@@ -76,11 +129,7 @@ test.describe('Platform Integration', () => {
         }
       });
 
-      const isMaximized = await electronApp.evaluate(({ BrowserWindow }) => {
-        return BrowserWindow.getAllWindows()[0]?.isMaximized();
-      });
-
-      expect(isMaximized).toBe(!wasMaximized);
+      await expectWindow('maximized', !wasMaximized);
     });
 
     test('should flash frame for attention', async () => {

@@ -4,8 +4,15 @@
  */
 
 import { test, expect, Page } from '@playwright/test';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const PDF_PATH = 'C:\\Users\\danie\\Dropbox\\Misc\\ Large Language Models - A Survey.pdf';
+// The package is ESM, so __dirname does not exist; derive it from the module URL.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Generated fixture: `node scripts/generate-sample-pdf.mjs`
+const PDF_PATH = path.join(__dirname, '../fixtures/sample.pdf');
+const PDF_NAME = path.basename(PDF_PATH);
 const BASE_URL = 'http://localhost:5173';
 
 // Helper to wait for PDF to load
@@ -16,7 +23,10 @@ async function waitForPdfLoad(page: Page) {
 
 // Helper to take a labeled screenshot
 async function screenshot(page: Page, name: string) {
-  await page.screenshot({ path: `tests/e2e/screenshots/full-test-${name}.png`, fullPage: true });
+  await page.screenshot({
+    path: test.info().outputPath(`full-test-${name}.png`),
+    fullPage: true,
+  });
 }
 
 test.describe('PaperFlow Full Feature Test', () => {
@@ -44,7 +54,7 @@ test.describe('PaperFlow Full Feature Test', () => {
     await expect(header).toBeVisible();
 
     // Check filename is displayed
-    const fileName = page.getByText('Large Language Models - A Survey.pdf');
+    const fileName = page.getByText(PDF_NAME);
     await expect(fileName).toBeVisible();
     console.log('   ✅ PDF loaded and filename displayed');
 
@@ -584,7 +594,9 @@ test.describe('PaperFlow Full Feature Test', () => {
     console.log('\n' + '='.repeat(60));
     console.log('📊 FULL FEATURE TEST COMPLETE');
     console.log('='.repeat(60));
-    console.log('\nScreenshots saved to: tests/e2e/screenshots/full-test-*.png');
+    console.log(
+      '\nScreenshots saved to the test output directory: full-test-*.png'
+    );
     console.log('\n✅ All feature tests executed!');
     console.log('='.repeat(60) + '\n');
 

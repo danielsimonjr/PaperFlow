@@ -121,6 +121,7 @@ export function TextField({
       <div className="absolute" style={{ left: screenX, top: screenY }}>
         <textarea
           ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+          data-testid="form-text-field"
           value={localValue}
           onChange={handleChange}
           onFocus={handleFocus}
@@ -165,6 +166,7 @@ export function TextField({
     <div className="absolute" style={{ left: screenX, top: screenY }}>
       <input
         ref={inputRef as React.RefObject<HTMLInputElement>}
+        data-testid="form-text-field"
         type="text"
         value={localValue}
         onChange={handleChange}

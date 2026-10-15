@@ -74,6 +74,8 @@ export function SpreadView({
   return (
     <div
       ref={containerRef}
+      data-testid="view-mode"
+      data-mode="spread"
       className="flex h-full items-start justify-center gap-4 overflow-auto bg-gray-200 p-8 dark:bg-gray-800"
       onWheel={onWheel}
     >

@@ -71,6 +71,7 @@ export function PageNavigation({ className }: PageNavigationProps) {
         onClick={handlePrevPage}
         disabled={currentPage <= 1}
         aria-label="Previous page"
+        data-testid="prev-page-btn"
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
@@ -87,6 +88,7 @@ export function PageNavigation({ className }: PageNavigationProps) {
           max={pageCount}
           className="w-12 rounded border border-gray-300 px-1 py-0.5 text-center text-sm dark:border-gray-600 dark:bg-gray-800"
           aria-label="Page number"
+          data-testid="page-input"
         />
       ) : (
         <button
@@ -94,7 +96,15 @@ export function PageNavigation({ className }: PageNavigationProps) {
           className="min-w-[80px] text-center text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
           aria-label={`Page ${currentPage} of ${pageCount}. Click to jump to page.`}
         >
-          {pageCount > 0 ? `${currentPage} / ${pageCount}` : '-'}
+          {pageCount > 0 ? (
+            <>
+              <span data-testid="current-page">{currentPage}</span>
+              {' / '}
+              <span data-testid="page-count">{pageCount}</span>
+            </>
+          ) : (
+            '-'
+          )}
         </button>
       )}
 
@@ -104,6 +114,7 @@ export function PageNavigation({ className }: PageNavigationProps) {
         onClick={handleNextPage}
         disabled={currentPage >= pageCount}
         aria-label="Next page"
+        data-testid="next-page-btn"
       >
         <ChevronRight className="h-4 w-4" />
       </Button>

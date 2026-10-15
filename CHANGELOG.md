@@ -9,6 +9,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **E2E specs that need a document now open one, and use routes that exist.**
+  `cross-platform/editing` went to `/viewer`, which has no route (the editor is `/editor`), and
+  `cross-platform/core-features` expected the viewer on `/`, which is the home page. Both now open
+  the fixture the way a user does, through `helpers/openSampleDocument.ts`. `core-features` also
+  dropped a `/?file=<path>` navigation (the app has no such parameter and the fixture is already
+  open), and it clicks the page number before filling the page input (the page number is a button
+  that swaps in the input).
+
+  `workflows/open-edit-save` "should open file chooser on click" clicked the visually hidden file
+  input. The drop zone covers that input, so Playwright refused the click ("intercepts pointer
+  events"). The test now clicks the drop zone, which is the path a user takes and which opens the
+  chooser. No assertion was loosened and no test was skipped.
+
+- **Running the web E2E suite no longer changes tracked files.** `browser-test`,
+  `full-feature-test` and `pdf-editor-test` wrote screenshots into the tracked
+  `tests/e2e/screenshots/`. They now write to each test's output directory
+  (`testInfo.outputPath`), which is under the ignored `test-results/`. The PNGs already in
+  `tests/e2e/screenshots/` are not read by any spec (no spec compares screenshots) and stay in place.
+
+- **Three E2E specs read a PDF from an absolute path on a developer machine, and failed with
+  ENOENT anywhere else (20 tests).** `browser-test`, `full-feature-test` and `pdf-editor-test` now
+  read `tests/fixtures/sample.pdf` through a path relative to the spec. The fixture is a ten-page
+  text PDF of about 9 KB. `scripts/generate-sample-pdf.mjs` writes it with fixed dates and a fixed
+  producer, so every run produces the same bytes, and `--check` compares the committed file with
+  the generator. `.gitattributes` marks `*.pdf` as binary so that line-ending conversion cannot
+  change the fixture.
+
 - **The web E2E suite collected zero tests; it now collects all 775 (155 per project, 5 projects).**
   `playwright test` aborted at collection, so none of the 11 spec files ran. Three causes, all fixed:
 
@@ -154,6 +181,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Lines added for the E2E repair are wrapped to the Prettier width (formatting only).** The
+  `data-testid` attributes, the screenshot and file-chooser calls in the specs, and
+  `scripts/generate-sample-pdf.mjs` now fit `printWidth: 80`. No behaviour changed, and
+  `tests/fixtures/sample.pdf` is byte-identical.
+
+- **`platform-integration.spec.ts` moved from `tests/e2e` to
+  `tests/e2e-electron/platformIntegration.spec.ts`.** The spec calls `electron.launch`, which the web
+  suite (`playwright.config.ts`, a Vite dev server and a browser) cannot satisfy. The web suite now
+  collects 140 tests per project (it had 155) and the Electron suite collects 72 (it had 57); the
+  spec has 15 tests, 7 of which skip on any one platform by design.
+
+  `cross-platform.yml` runs `test:e2e-electron` on pull requests for Windows, macOS and Linux, so
+  this spec now runs in that gate. Its window-state checks read `isMinimized()` and `isMaximized()`
+  straight after the call, and the app creates the window hidden and shows it on `ready-to-show`.
+  The first gate run read `false` on the Windows runner (minimize) and on the Linux runner
+  (minimize and maximize), and passed on macOS. The checks now wait for a visible window and poll
+  the state, as the platform applies it after the call returns. That is enough on Windows. The
+  Linux job runs under `xvfb-run` with no window manager, and a minimize or maximize request is
+  never honored there (the window was visible and the state stayed unchanged for 10 s), so those
+  two checks skip when no desktop session names itself and run on a Linux desktop.
+
+  The spec also launches the app with a private `--user-data-dir`. The app persists its window
+  state in the user-data directory, and the maximize test leaves that state toggled. A window
+  restored as maximized is shown at once, before `ready-to-show`, so the visible-window wait
+  passed early and the late show undid the minimize. With the shared default profile every
+  second local run failed that check: 3 of 3 runs that started maximized failed and 3 of 3 that
+  started unmaximized passed. With the private profile, 4 of 4 runs passed from a profile that
+  was seeded maximized. The CI runners start from a fresh profile and never met this.
+
 - **The "lint is eslint" header comment is corrected to "lint is oxlint" in `ci.yml`,
   `deploy.yml` and `staging.yml`.** All three were copies of one block, and all three described a
   linter this repository stopped using. A comment that names the wrong tool is read as fact by the
@@ -170,6 +226,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   must report MISSING.
 
 ### Added
+
+- **`data-testid` hooks on the editor UI, for the web E2E specs.** Eight specs in `tests/e2e`
+  select 46 ids and `src/` rendered none. Each id now sits on the element that renders the matching
+  UI: the viewer region (`pdf-viewer`), page navigation (`prev-page-btn`, `next-page-btn`,
+  `current-page`, `page-count`, `page-input`), zoom (`zoom-in-btn`, `zoom-out-btn`, `zoom-level`,
+  `fit-width-btn`, `zoom-controls`), the view modes (`view-single-btn`, `view-continuous-btn`,
+  `view-spread-btn`, and `view-mode` with a `data-mode` attribute on whichever view is active), the
+  toolbar and four of its tools, the sidebar, the thumbnails, the search bar, the header actions, the
+  drop zone, the annotation elements and the form fields.
+
+  Only ids that a spec selects were added. Specs also select ids for UI that the product does not
+  have, and no placeholder element was added for them: `zoom-mode`, `note-save-btn`, the signature
+  ids (`SignatureModal` is hosted only by `AnnotationToolbar`, which no route renders), `undo`,
+  `share`, `export`, `export-pdf`, `flatten`, `mobile-toolbar`, `menu-button`, `more-tools`,
+  `reset-form`, `export-form` and `skip-nav`. `TODO.md` lists the specs that depend on them.
 
 - **`TODO.md`, recording this repository's open work** -- the web E2E harness that collects zero
   tests, the `e2e-staging` job that has never run, the absent Cloudflare credentials, the two

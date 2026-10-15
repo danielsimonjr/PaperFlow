@@ -32,7 +32,10 @@ export function ZoomControls({ className }: ZoomControlsProps) {
   };
 
   return (
-    <div className={`flex items-center gap-1 ${className || ''}`}>
+    <div
+      className={`flex items-center gap-1 ${className || ''}`}
+      data-testid="zoom-controls"
+    >
       <Button
         variant="ghost"
         size="sm"
@@ -40,6 +43,7 @@ export function ZoomControls({ className }: ZoomControlsProps) {
         disabled={zoom <= 10}
         aria-label="Zoom out"
         title="Zoom out (decreases by 25%)"
+        data-testid="zoom-out-btn"
       >
         <ZoomOut className="h-4 w-4" />
       </Button>
@@ -49,6 +53,7 @@ export function ZoomControls({ className }: ZoomControlsProps) {
         className="min-w-[50px] text-center text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
         title="Reset to 100%"
         aria-label={`Current zoom: ${zoom}%. Click to reset to 100%.`}
+        data-testid="zoom-level"
       >
         {zoom}%
       </button>
@@ -60,6 +65,7 @@ export function ZoomControls({ className }: ZoomControlsProps) {
         disabled={zoom >= 400}
         aria-label="Zoom in"
         title="Zoom in (increases by 25%)"
+        data-testid="zoom-in-btn"
       >
         <ZoomIn className="h-4 w-4" />
       </Button>
@@ -72,6 +78,7 @@ export function ZoomControls({ className }: ZoomControlsProps) {
         onClick={handleFitWidth}
         aria-label="Fit to width"
         title="Fit to width"
+        data-testid="fit-width-btn"
       >
         <Maximize2 className="h-4 w-4" />
       </Button>

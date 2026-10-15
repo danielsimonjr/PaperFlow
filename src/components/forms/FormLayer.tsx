@@ -53,7 +53,11 @@ export function FormLayer({
       {/* Form fields layer - enable pointer events for fields */}
       <div className="absolute inset-0">
         {fields.map((field) => (
-          <div key={field.id} className="pointer-events-auto">
+          <div
+            key={field.id}
+            className="pointer-events-auto"
+            data-testid="form-field"
+          >
             <FormFieldRenderer
               field={field}
               scale={scale}

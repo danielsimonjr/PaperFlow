@@ -12,6 +12,7 @@ export function Sidebar() {
 
   return (
     <aside
+      data-testid="sidebar"
       className={cn(
         'flex flex-col border-r border-gray-200 bg-white transition-all dark:border-gray-800 dark:bg-gray-950',
         isCollapsed ? 'w-12' : 'w-64'
@@ -27,6 +28,7 @@ export function Sidebar() {
                 activeTab === 'thumbnails' && 'bg-gray-100 dark:bg-gray-800'
               )}
               title="Page Thumbnails"
+              data-testid="toggle-thumbnails-btn"
             >
               <Layers className="h-4 w-4" />
             </button>

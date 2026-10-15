@@ -137,6 +137,7 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
 
   return (
     <div
+      data-testid="search-dialog"
       className={cn(
         'flex items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg dark:border-gray-700 dark:bg-gray-800',
         className
@@ -152,6 +153,7 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
           placeholder="Search in document..."
+          data-testid="search-input"
           className="w-full rounded-md border-0 bg-transparent py-1.5 pl-8 pr-2 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 dark:text-white dark:placeholder-gray-400"
         />
       </div>
@@ -186,7 +188,10 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
 
       {/* Match count and navigation */}
       <div className="flex items-center gap-1 border-l border-gray-200 pl-2 dark:border-gray-700">
-        <span className="min-w-[60px] text-center text-xs text-gray-500 dark:text-gray-400">
+        <span
+          className="min-w-[60px] text-center text-xs text-gray-500 dark:text-gray-400"
+          data-testid="search-results-count"
+        >
           {isSearching ? (
             'Searching...'
           ) : totalMatches > 0 ? (

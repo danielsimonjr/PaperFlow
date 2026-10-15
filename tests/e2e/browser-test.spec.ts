@@ -5,8 +5,13 @@
 
 import { test } from '@playwright/test';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const PDF_PATH = 'C:\\Users\\danie\\Dropbox\\Misc\\ Large Language Models - A Survey.pdf';
+// The package is ESM, so __dirname does not exist; derive it from the module URL.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Generated fixture: `node scripts/generate-sample-pdf.mjs`
+const PDF_PATH = path.join(__dirname, '../fixtures/sample.pdf');
 const BASE_URL = 'http://localhost:5173';
 
 test.describe('PaperFlow Browser Testing', () => {
@@ -21,7 +26,10 @@ test.describe('PaperFlow Browser Testing', () => {
     await page.waitForLoadState('networkidle');
 
     // Take screenshot of home page
-    await page.screenshot({ path: 'tests/e2e/screenshots/01-home.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('01-home.png'),
+      fullPage: true,
+    });
     console.log('   ✅ Home page loaded');
 
     // Check for drop zone
@@ -43,7 +51,10 @@ test.describe('PaperFlow Browser Testing', () => {
     await page.waitForTimeout(3000); // Give time for PDF to process
 
     // Take screenshot after upload
-    await page.screenshot({ path: 'tests/e2e/screenshots/02-pdf-loaded.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('02-pdf-loaded.png'),
+      fullPage: true,
+    });
 
     // Check if we're on the editor page or if PDF rendered
     const currentUrl = page.url();
@@ -85,7 +96,10 @@ test.describe('PaperFlow Browser Testing', () => {
       console.log('   ✅ Zoom out clicked');
     }
 
-    await page.screenshot({ path: 'tests/e2e/screenshots/03-zoomed.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('03-zoomed.png'),
+      fullPage: true,
+    });
 
     // 5. Test Keyboard Shortcuts
     console.log('\n📄 Step 5: Testing Keyboard Shortcuts...');
@@ -105,13 +119,19 @@ test.describe('PaperFlow Browser Testing', () => {
     await page.waitForTimeout(300);
     console.log('   ⌨️ Pressed V (select tool)');
 
-    await page.screenshot({ path: 'tests/e2e/screenshots/04-tools.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('04-tools.png'),
+      fullPage: true,
+    });
 
     // 6. Test Settings Page
     console.log('\n📄 Step 6: Testing Settings Page...');
     await page.goto(`${BASE_URL}/settings`);
     await page.waitForLoadState('networkidle');
-    await page.screenshot({ path: 'tests/e2e/screenshots/05-settings.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('05-settings.png'),
+      fullPage: true,
+    });
 
     const settingsTitle = page.locator('h1, h2').first();
     const settingsText = await settingsTitle.textContent().catch(() => '');
@@ -121,21 +141,30 @@ test.describe('PaperFlow Browser Testing', () => {
     console.log('\n📄 Step 7: Testing Privacy Page...');
     await page.goto(`${BASE_URL}/privacy`);
     await page.waitForLoadState('networkidle');
-    await page.screenshot({ path: 'tests/e2e/screenshots/06-privacy.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('06-privacy.png'),
+      fullPage: true,
+    });
     console.log('   ✅ Privacy page loaded');
 
     // 8. Test Terms Page
     console.log('\n📄 Step 8: Testing Terms Page...');
     await page.goto(`${BASE_URL}/terms`);
     await page.waitForLoadState('networkidle');
-    await page.screenshot({ path: 'tests/e2e/screenshots/07-terms.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('07-terms.png'),
+      fullPage: true,
+    });
     console.log('   ✅ Terms page loaded');
 
     // 9. Test 404 Page
     console.log('\n📄 Step 9: Testing 404 Page...');
     await page.goto(`${BASE_URL}/nonexistent-page`);
     await page.waitForLoadState('networkidle');
-    await page.screenshot({ path: 'tests/e2e/screenshots/08-404.png', fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('08-404.png'),
+      fullPage: true,
+    });
     console.log('   ✅ 404 page loaded');
 
     // 10. Go back to editor and take final screenshot
@@ -156,7 +185,7 @@ test.describe('PaperFlow Browser Testing', () => {
     console.log('\n' + '='.repeat(50));
     console.log('📊 TEST SUMMARY');
     console.log('='.repeat(50));
-    console.log(`   Screenshots saved to: tests/e2e/screenshots/`);
+    console.log(`   Screenshots saved to: ${test.info().outputDir}`);
     console.log(`   Console errors: ${consoleErrors.length}`);
     if (consoleErrors.length > 0) {
       consoleErrors.slice(0, 5).forEach(err => console.log(`      ❌ ${err}`));

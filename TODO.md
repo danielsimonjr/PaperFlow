@@ -5,24 +5,40 @@ Sprint-level planning lives in `docs/planning/sprints/PHASE_X_SPRINT_Y_TODO.json
 
 ## Open
 
-- [ ] **The web E2E suite collects (775 tests) but is red: 52 of 155 chromium tests fail, 50 skip.**
-  Measured with `npx playwright test --project=chromium` (`playwright.config.ts`, `tests/e2e`). The
-  causes, by weight:
-  - **`src/` renders no `data-testid`.** 8 specs select on `data-testid` values (`pdf-viewer`,
-    `next-page-btn`, `zoom-level`, ...) and `src/` has none (0 matches in 480 files). This is 29
-    failures in `cross-platform/core-features` and `cross-platform/editing`, plus the drop-zone check
-    in `workflows/open-edit-save`. The fix is a decision: add the attributes to the components, or
-    rewrite the selectors to roles and labels.
-  - **A developer-machine path.** `browser-test`, `full-feature-test` and `pdf-editor-test` read a PDF
-    from an absolute path under a developer's home directory (20 failures, ENOENT). No PDF is tracked
-    in the repository. The fix needs a small committed fixture and a relative path.
-  - **`platform-integration` launches Electron** from the web suite (`electron.launch: Target page,
-    context or browser has been closed`). It belongs with `tests/e2e-electron`.
-  - **Running the suite dirties the tree.** `full-feature-test` writes screenshots into the tracked
-    `tests/e2e/screenshots/`.
+- [ ] **The web E2E suite is not green: 11 of 140 chromium tests fail and 43 skip.**
+  Measured with `npx playwright test --project=chromium` (`playwright.config.ts`, `tests/e2e`):
+  86 pass. A full run takes about five minutes, because one failing test waits for its 300 s
+  timeout. The 11 failures, by cause:
+  - **Product defect: the note tool places no note** (4 tests in `cross-platform/editing`: add,
+    delete, undo and redo a sticky note). `NoteTool` (`src/components/annotations/NoteTool.tsx`)
+    has no z-index, and `.textLayer` has `z-index: 2` (`src/index.css`), so the click lands on the
+    text layer. The specs also expect a `note-editor` dialog and a `note-save-btn`; the product
+    edits a note inline and has no save button.
+  - **Product defect: three dialogs sit under the text layer** (`full-feature-test`, "8. Header
+    Actions - Image Export"). `ImageExportDialog`, `CompressDialog` and `PrintDialog` set `fixed`
+    but no z-index (the other dialogs use `z-50`), so `.textLayer` intercepts pointer events and
+    the click on Cancel waits until the test times out.
+  - **Spec geometry** (`cross-platform/editing`, "should add highlight annotation" and "should
+    draw freehand annotation"). The specs offset from `pdf-viewer` (the `<main>` region, which
+    starts left of the page) and then move the mouse in viewport coordinates, so the drag never
+    reaches the page. The product handles both gestures when the drag is aimed at the page.
+  - **UI that no route mounts** (3 signature tests in `cross-platform/editing`). `SignatureModal`
+    is hosted only by `AnnotationToolbar`, and no route renders `AnnotationToolbar`. The
+    `tool-signature`, `signature-modal`, `signature-pad`, `apply-signature-btn` and
+    `signature-annotation` hooks have no element.
+  - **No such feature** (`cross-platform/core-features`, "should fit to width"). The spec expects
+    a `zoom-mode` element. "Fit width" only sets the zoom to 100.
+
+  The 43 skips are explicit `test.skip` placeholders in `workflows/` (`annotate-share` 22,
+  `form-fill` 14, `open-edit-save` 7). A sample document exists (`tests/fixtures/sample.pdf`),
+  so they can be enabled one at a time. Their hooks `undo`, `share`, `export`, `export-pdf`,
+  `flatten`, `reset-form`, `export-form` and `skip-nav` have no element yet (`FormActions` and
+  `SkipNav` exist, but no route mounts them). Most of the 33 `mobile/` tests pass without testing
+  anything: they assert `count >= 0` or swallow a failed expectation with `.catch`. Their hooks
+  `mobile-toolbar`, `menu-button` and `more-tools` have no element (`MobileToolbar` is unmounted).
 
   The `E2E Tests` job in `ci.yml` stays `workflow_dispatch`-only. The Electron suite
-  (`test:e2e-electron`, `tests/e2e-electron`) is separate and does run in CI -- 57 tests. Do not
+  (`test:e2e-electron`, `tests/e2e-electron`) is separate and does run in CI -- 72 tests. Do not
   read its green checks as this suite's health.
 
 - [ ] **`e2e-staging` has never actually run.** It consumes `needs.deploy-preview.outputs.url` as

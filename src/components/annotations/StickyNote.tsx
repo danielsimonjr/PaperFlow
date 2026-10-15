@@ -125,6 +125,7 @@ export function StickyNote({
     >
       <div
         ref={noteRef}
+        data-testid="sticky-note"
         className={`relative ${isDragging ? 'cursor-grabbing' : ''}`}
         onClick={(e) => {
           e.stopPropagation();
@@ -161,6 +162,7 @@ export function StickyNote({
         {isExpanded && (
           <div
             className="rounded-lg shadow-lg"
+            data-testid="note-editor"
             style={{
               backgroundColor: annotation.color || NOTE_COLORS.yellow,
               width: 280,
@@ -195,6 +197,7 @@ export function StickyNote({
                 ref={textareaRef}
                 className="min-h-[80px] w-full resize-none bg-transparent text-sm text-gray-800 placeholder-gray-500 focus:outline-none"
                 placeholder="Type your note here..."
+                data-testid="note-content"
                 value={content}
                 onChange={(e) => handleContentChange(e.target.value)}
                 onKeyDown={(e) => {
