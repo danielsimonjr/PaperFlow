@@ -68,6 +68,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+- **Four advisories published after the last green run were cleared from the lockfile.**
+  `bun audit --audit-level=high` reported 4 vulnerabilities (1 critical, 3 high) against a lockfile
+  that had not changed, so the `Security Audit` job went red with no code change. `bun audit fix`
+  upgraded within the declared ranges: `shell-quote` 1.9.0 to 1.11.0 (critical, command injection
+  through `concurrently`), `http-cache-semantics` 4.2.0 to 4.3.0 (high, through Electron's download
+  chain) and `source-map-js` 1.2.1 to 1.2.2 (high). It also upgraded `vitest` with its `@vitest/*`
+  packages, 4.1.9 to 4.1.11, and listed `vitest` among the packages it fixed. Only `bun.lock`
+  changed; `package.json` did not.
+
+  **One high advisory remains, and no published version fixes it.** `braces` 3.0.3
+  (GHSA-vfj7-8cjw-p6xm, stack exhaustion on deeply nested patterns) is the latest release, reached
+  through `chokidar` and `tailwindcss > fast-glob > micromatch`. The gate stays red on it rather than
+  gaining an `--ignore` flag, because the gate's own comment requires a written reachability argument
+  and that is a decision for the owner. `sprintf-js` 1.1.3 (GHSA-hp3w-g68c-fv3c) also has no fix, but
+  sits below the `high` threshold.
+
 - **The CI audit gate no longer carries `--ignore=GHSA-qwww-vcr4-c8h2`.** That exception came
   from the `.nsprc` allowlist `better-npm-audit` used to read, and its own comment set its expiry:
   "RE-REVIEW when moving to react-router 8.x". The dependency is now `react-router` `^8.3.0` and
