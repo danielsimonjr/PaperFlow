@@ -18,6 +18,23 @@ let electronApp: ElectronApplication;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let page: Page;
 
+type WindowState = 'visible' | 'minimized' | 'maximized';
+
+/** Read one state flag of the first window. */
+const firstWindowIs = (state: WindowState): Promise<boolean> =>
+  electronApp.evaluate(({ BrowserWindow }, flag) => {
+    const win = BrowserWindow.getAllWindows()[0];
+    if (!win) return false;
+    if (flag === 'visible') return win.isVisible();
+    if (flag === 'minimized') return win.isMinimized();
+    return win.isMaximized();
+  }, state);
+
+/** Poll until the first window reports `expected` for `state`. The platform
+ * applies a state change after the call returns. */
+const expectWindow = (state: WindowState, expected: boolean): Promise<void> =>
+  expect.poll(() => firstWindowIs(state), { timeout: 10_000 }).toBe(expected);
+
 test.describe('Platform Integration', () => {
   test.beforeAll(async () => {
     // Launch Electron app
@@ -27,6 +44,13 @@ test.describe('Platform Integration', () => {
 
     // Get the first window
     page = await electronApp.firstWindow();
+
+    // The window is created hidden and shown on `ready-to-show`. A state
+    // change made before that is overwritten by the show, so the window-state
+    // tests start from a visible window.
+    await expect
+      .poll(() => firstWindowIs('visible'), { timeout: 30_000 })
+      .toBe(true);
   });
 
   test.afterAll(async () => {
@@ -50,22 +74,18 @@ test.describe('Platform Integration', () => {
         BrowserWindow.getAllWindows()[0]?.minimize();
       });
 
-      const isMinimized = await electronApp.evaluate(({ BrowserWindow }) => {
-        return BrowserWindow.getAllWindows()[0]?.isMinimized();
-      });
-
-      expect(isMinimized).toBe(true);
+      await expectWindow('minimized', true);
 
       // Restore
       await electronApp.evaluate(({ BrowserWindow }) => {
         BrowserWindow.getAllWindows()[0]?.restore();
       });
+
+      await expectWindow('minimized', false);
     });
 
     test('should handle window maximize', async () => {
-      const wasMaximized = await electronApp.evaluate(({ BrowserWindow }) => {
-        return BrowserWindow.getAllWindows()[0]?.isMaximized();
-      });
+      const wasMaximized = await firstWindowIs('maximized');
 
       await electronApp.evaluate(({ BrowserWindow }) => {
         const win = BrowserWindow.getAllWindows()[0];
@@ -76,11 +96,7 @@ test.describe('Platform Integration', () => {
         }
       });
 
-      const isMaximized = await electronApp.evaluate(({ BrowserWindow }) => {
-        return BrowserWindow.getAllWindows()[0]?.isMaximized();
-      });
-
-      expect(isMaximized).toBe(!wasMaximized);
+      await expectWindow('maximized', !wasMaximized);
     });
 
     test('should flash frame for attention', async () => {

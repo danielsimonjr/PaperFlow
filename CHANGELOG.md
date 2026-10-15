@@ -193,8 +193,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   spec has 15 tests, 7 of which skip on any one platform by design.
 
   `cross-platform.yml` runs `test:e2e-electron` on pull requests for Windows, macOS and Linux, so
-  this spec now runs in that gate. It passes on Windows (8 pass, 7 platform-skipped). It was not run
-  on macOS or Linux.
+  this spec now runs in that gate. Its window-state checks read `isMinimized()` and `isMaximized()`
+  straight after the call, and the app creates the window hidden and shows it on `ready-to-show`.
+  The first gate run read `false` on the Windows runner (minimize) and on the Linux runner
+  (minimize and maximize), and passed on macOS. The checks now wait for a visible window and poll
+  the state, as the platform applies it after the call returns.
 
 - **The "lint is eslint" header comment is corrected to "lint is oxlint" in `ci.yml`,
   `deploy.yml` and `staging.yml`.** All three were copies of one block, and all three described a
