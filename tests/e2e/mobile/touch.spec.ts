@@ -1,7 +1,8 @@
 import { test, expect, devices } from '@playwright/test';
+import { withoutBrowserType } from '../helpers/withoutBrowserType';
 
-// Use mobile device configuration
-test.use({ ...devices['iPhone 12'] });
+// Use mobile device configuration (viewport, user agent, touch); the browser comes from the project
+test.use(withoutBrowserType(devices['iPhone 12']));
 
 test.describe('Touch Interactions', () => {
   test.beforeEach(async ({ page }) => {

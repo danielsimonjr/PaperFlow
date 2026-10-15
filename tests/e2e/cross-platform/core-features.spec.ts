@@ -6,6 +6,10 @@
 
 import { test, expect } from '@playwright/test';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+// The package is ESM, so __dirname does not exist; derive it from the module URL.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Test fixtures
 const TEST_PDF = path.join(__dirname, '../../fixtures/sample.pdf');

@@ -142,12 +142,11 @@ jobs:
     name: E2E Tests
     runs-on: ubuntu-latest
     needs: build
-    # E2E needs a live preview server + Playwright browsers and currently has
-    # suite-level failures (ESM __dirname, defaultBrowserType-in-describe) that
-    # are unrelated to application correctness. Run it only on demand via
-    # manual workflow_dispatch so it neither gates PRs nor reds the main-branch
-    # CI, while remaining runnable when someone wants the coverage. (Not a
-    # security gate; the Security Audit job is unchanged.)
+    # E2E needs a live dev server and a Playwright browser. Run it only on
+    # demand via manual workflow_dispatch so it neither gates PRs nor reds the
+    # main-branch CI, while remaining runnable when someone wants the coverage.
+    # Only chromium is installed below, so the run is limited to that project.
+    # (Not a security gate; the Security Audit job is unchanged.)
     if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Setup Bun
@@ -175,7 +174,7 @@ jobs:
           path: dist
 
       - name: Run E2E tests
-        run: bun run test:e2e
+        run: bun run test:e2e --project=chromium
 
       - name: Upload test results
         if: failure()
