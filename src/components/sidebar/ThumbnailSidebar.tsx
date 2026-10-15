@@ -404,7 +404,10 @@ export function ThumbnailSidebar({ className }: ThumbnailSidebarProps) {
 
   if (!fileName || pageCount === 0) {
     return (
-      <div className={cn('p-4 text-sm text-gray-500 dark:text-gray-400', className)}>
+      <div
+        className={cn('p-4 text-sm text-gray-500 dark:text-gray-400', className)}
+        data-testid="thumbnail-sidebar"
+      >
         No document loaded
       </div>
     );
@@ -415,7 +418,7 @@ export function ThumbnailSidebar({ className }: ThumbnailSidebarProps) {
   const height = Math.round(width * aspectRatio);
 
   return (
-    <div className={cn('flex flex-col', className)}>
+    <div className={cn('flex flex-col', className)} data-testid="thumbnail-sidebar">
       {/* Toolbar */}
       <div className="flex items-center justify-between border-b border-gray-200 px-3 py-2 dark:border-gray-700">
         <span className="text-xs text-gray-500 dark:text-gray-400">

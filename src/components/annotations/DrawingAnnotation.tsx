@@ -72,6 +72,7 @@ export function DrawingAnnotation({
       tabIndex={0}
       role="button"
       aria-label="Drawing annotation"
+      data-testid="drawing-annotation"
     >
       {/* Selection highlight */}
       {isSelected && pathData.map((d, i) => (

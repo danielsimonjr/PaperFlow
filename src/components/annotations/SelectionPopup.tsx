@@ -169,7 +169,7 @@ export function SelectionPopup({
     >
       {showColorPicker ? (
         // Color picker view
-        <div className="p-2">
+        <div className="p-2" data-testid="color-picker">
           <div className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400">
             Choose color
           </div>

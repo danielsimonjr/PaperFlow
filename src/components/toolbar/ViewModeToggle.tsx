@@ -32,6 +32,7 @@ export function ViewModeToggle({ className }: ViewModeToggleProps) {
           title={label}
           aria-label={label}
           aria-pressed={viewMode === id}
+          data-testid={`view-${id}-btn`}
         >
           <Icon className="h-4 w-4" />
         </button>

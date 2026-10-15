@@ -171,6 +171,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **`data-testid` hooks on the editor UI, for the web E2E specs.** Eight specs in `tests/e2e`
+  select 46 ids and `src/` rendered none. Each id now sits on the element that renders the matching
+  UI: the viewer region (`pdf-viewer`), page navigation (`prev-page-btn`, `next-page-btn`,
+  `current-page`, `page-count`, `page-input`), zoom (`zoom-in-btn`, `zoom-out-btn`, `zoom-level`,
+  `fit-width-btn`, `zoom-controls`), the view modes (`view-single-btn`, `view-continuous-btn`,
+  `view-spread-btn`, and `view-mode` with a `data-mode` attribute on whichever view is active), the
+  toolbar and four of its tools, the sidebar, the thumbnails, the search bar, the header actions, the
+  drop zone, the annotation elements and the form fields.
+
+  Only ids that a spec selects were added. Specs also select ids for UI that the product does not
+  have, and no placeholder element was added for them: `zoom-mode`, `note-save-btn`, the signature
+  ids (`SignatureModal` is hosted only by `AnnotationToolbar`, which no route renders), `undo`,
+  `share`, `export`, `export-pdf`, `flatten`, `mobile-toolbar`, `menu-button`, `more-tools`,
+  `reset-form`, `export-form` and `skip-nav`. `TODO.md` lists the specs that depend on them.
+
 - **`TODO.md`, recording this repository's open work** -- the web E2E harness that collects zero
   tests, the `e2e-staging` job that has never run, the absent Cloudflare credentials, the two
   remaining `vitest` moderates, and the Prettier drift in this file. Completed work stays in this

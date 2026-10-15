@@ -26,6 +26,14 @@ import type { AnnotationType } from '@/types';
 
 type Tool = EditorTool | AnnotationType;
 
+// End-to-end hooks. Only the tools that a spec selects carry an id.
+const TOOL_TEST_IDS: Partial<Record<Tool, string>> = {
+  highlight: 'tool-highlight',
+  note: 'tool-note',
+  draw: 'tool-draw',
+  shape: 'shape-tool',
+};
+
 export function Toolbar() {
   const [showExportImport, setShowExportImport] = useState(false);
 
@@ -71,7 +79,10 @@ export function Toolbar() {
 
   return (
     <>
-      <div className="flex h-12 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-950">
+      <div
+        className="flex h-12 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-950"
+        data-testid="toolbar"
+      >
         {/* Tools */}
         <div className="flex items-center gap-1">
           {tools.map(({ id, icon: Icon, label, shortcut }) => {
@@ -88,6 +99,7 @@ export function Toolbar() {
                     'bg-primary-100 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400'
                 )}
                 title={shortcut ? `${label} (${shortcut})` : label}
+                data-testid={TOOL_TEST_IDS[id]}
               >
                 <Icon
                   className="h-4 w-4"

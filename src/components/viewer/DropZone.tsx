@@ -40,6 +40,7 @@ export const DropZone = forwardRef<HTMLDivElement, DropZoneProps>(
         {/* Main content area with drag handling */}
         <div
           {...rootProps}
+          data-testid="drop-zone"
           onClick={() => !disabled && open()}
           className={cn(
             'relative flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-8 text-center transition-all duration-200',

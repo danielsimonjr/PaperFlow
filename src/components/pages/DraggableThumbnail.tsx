@@ -53,6 +53,7 @@ export const DraggableThumbnail = memo(
 
           <div
             ref={ref}
+            data-testid={`thumbnail-${pageNumber}`}
             onClick={onClick}
             onContextMenu={onContextMenu}
             {...dragProps}

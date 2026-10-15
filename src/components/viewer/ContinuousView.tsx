@@ -151,6 +151,8 @@ export function ContinuousView({
   return (
     <div
       ref={containerRef}
+      data-testid="view-mode"
+      data-mode="continuous"
       className={cn(
         "h-full overflow-auto bg-gray-200 dark:bg-gray-800",
         activeTool === 'hand' && "cursor-grab",

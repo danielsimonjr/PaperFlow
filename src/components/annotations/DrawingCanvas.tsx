@@ -192,6 +192,7 @@ export function DrawingCanvas({
     <div className="absolute left-0 top-0 z-50 pointer-events-auto">
       <canvas
         ref={canvasRef}
+        data-testid="drawing-canvas"
         className="block cursor-crosshair touch-none"
         style={{ width, height }}
         onPointerDown={handlePointerDown}

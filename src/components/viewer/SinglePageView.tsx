@@ -78,6 +78,8 @@ export function SinglePageView({
   return (
     <div
       ref={containerRef}
+      data-testid="view-mode"
+      data-mode="single"
       className={cn(
         "flex h-full items-center justify-center overflow-auto bg-gray-200 p-8 dark:bg-gray-800",
         activeTool === 'hand' && "cursor-grab",

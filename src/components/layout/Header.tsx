@@ -61,7 +61,7 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" title="Save">
+          <Button variant="ghost" size="sm" title="Save" data-testid="save-button">
             <Save className="h-4 w-4" />
           </Button>
           <Button variant="ghost" size="sm" title="Download">
@@ -71,19 +71,37 @@ export function Header() {
           {/* Sprint 9: Export, Print, Share */}
           <div className="mx-1 h-6 w-px bg-gray-200 dark:bg-gray-700" />
 
-          <Button variant="ghost" size="sm" title="Export as Image" onClick={() => setShowImageExport(true)}>
+          <Button
+            variant="ghost"
+            size="sm"
+            title="Export as Image"
+            onClick={() => setShowImageExport(true)}
+            data-testid="export-image"
+          >
             <Image className="h-4 w-4" />
           </Button>
           <Button variant="ghost" size="sm" title="Compress PDF" onClick={() => setShowCompress(true)}>
             <Minimize2 className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" title="Print" onClick={() => setShowPrint(true)}>
+          <Button
+            variant="ghost"
+            size="sm"
+            title="Print"
+            onClick={() => setShowPrint(true)}
+            data-testid="print"
+          >
             <Printer className="h-4 w-4" />
           </Button>
 
           <div className="mx-1 h-6 w-px bg-gray-200 dark:bg-gray-700" />
 
-          <Button variant="ghost" size="sm" title="Email Document" onClick={handleEmail}>
+          <Button
+            variant="ghost"
+            size="sm"
+            title="Email Document"
+            onClick={handleEmail}
+            data-testid="email"
+          >
             <Mail className="h-4 w-4" />
           </Button>
           <Button
@@ -91,6 +109,7 @@ export function Header() {
             size="sm"
             title={copySuccess ? 'Copied!' : 'Copy Link'}
             onClick={handleCopyLink}
+            data-testid="copy-link"
           >
             <LinkIcon className="h-4 w-4" />
           </Button>

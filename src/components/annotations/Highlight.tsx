@@ -44,6 +44,7 @@ export function Highlight({
     <g
       role="button"
       tabIndex={0}
+      data-testid="highlight-annotation"
       onClick={(e) => {
         e.stopPropagation();
         onSelect();
