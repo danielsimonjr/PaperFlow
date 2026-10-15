@@ -5,11 +5,12 @@
  */
 
 import { test, expect } from '@playwright/test';
+import { openSampleDocument } from '../helpers/openSampleDocument';
 
 test.describe('Cross-Platform Editing', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/viewer');
-    // Wait for PDF to load
+    // The editor lives at /editor and needs an open document.
+    await openSampleDocument(page);
     await page.waitForSelector('[data-testid="pdf-viewer"]', { timeout: 10000 });
   });
 

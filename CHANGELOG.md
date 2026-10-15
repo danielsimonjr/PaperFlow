@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **E2E specs that need a document now open one, and use routes that exist.**
+  `cross-platform/editing` went to `/viewer`, which has no route (the editor is `/editor`), and
+  `cross-platform/core-features` expected the viewer on `/`, which is the home page. Both now open
+  the fixture the way a user does, through `helpers/openSampleDocument.ts`. `core-features` also
+  dropped a `/?file=<path>` navigation (the app has no such parameter and the fixture is already
+  open), and it clicks the page number before filling the page input (the page number is a button
+  that swaps in the input).
+
+  `workflows/open-edit-save` "should open file chooser on click" clicked the visually hidden file
+  input. The drop zone covers that input, so Playwright refused the click ("intercepts pointer
+  events"). The test now clicks the drop zone, which is the path a user takes and which opens the
+  chooser. No assertion was loosened and no test was skipped.
+
 - **Running the web E2E suite no longer changes tracked files.** `browser-test`,
   `full-feature-test` and `pdf-editor-test` wrote screenshots into the tracked
   `tests/e2e/screenshots/`. They now write to each test's output directory

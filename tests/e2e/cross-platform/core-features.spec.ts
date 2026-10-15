@@ -5,18 +5,12 @@
  */
 
 import { test, expect } from '@playwright/test';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// The package is ESM, so __dirname does not exist; derive it from the module URL.
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// Test fixtures
-const TEST_PDF = path.join(__dirname, '../../fixtures/sample.pdf');
+import { openSampleDocument } from '../helpers/openSampleDocument';
 
 test.describe('Cross-Platform Core Features', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    // Every test starts with the fixture open in the editor.
+    await openSampleDocument(page);
   });
 
   test.describe('PDF Loading', () => {
@@ -29,10 +23,7 @@ test.describe('Cross-Platform Core Features', () => {
     });
 
     test('should display correct page count', async ({ page }) => {
-      // Load a test PDF via URL if supported
-      await page.goto('/?file=' + encodeURIComponent(TEST_PDF));
-
-      // Wait for PDF to load
+      // The fixture is already open (beforeEach). Wait for the page count to render.
       await page.waitForSelector('[data-testid="page-count"]', { timeout: 10000 });
 
       // Verify page count is displayed
@@ -64,6 +55,8 @@ test.describe('Cross-Platform Core Features', () => {
     });
 
     test('should navigate via page input', async ({ page }) => {
+      // The page number is a button; clicking it swaps in the input.
+      await page.click('[data-testid="current-page"]');
       const pageInput = page.locator('[data-testid="page-input"]');
       await pageInput.fill('5');
       await pageInput.press('Enter');
