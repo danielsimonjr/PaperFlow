@@ -171,7 +171,7 @@ export function AnnotationLayer({
 
   return (
     <svg
-      className="pointer-events-none absolute left-0 top-0 overflow-visible"
+      className="pointer-events-none absolute left-0 top-0 z-10 overflow-visible"
       width={width}
       height={height}
       onClick={handleBackgroundClick}
