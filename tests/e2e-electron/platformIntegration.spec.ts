@@ -30,6 +30,16 @@ const firstWindowIs = (state: WindowState): Promise<boolean> =>
     return win.isMaximized();
   }, state);
 
+/**
+ * Minimize and maximize are requests to a window manager. The Linux job runs
+ * under `xvfb-run` with no window manager, so the request is never honored.
+ * A Linux desktop session names itself in one of these two variables.
+ */
+const noWindowManager =
+  process.platform === 'linux' &&
+  !process.env.XDG_CURRENT_DESKTOP &&
+  !process.env.DESKTOP_SESSION;
+
 /** Poll until the first window reports `expected` for `state`. The platform
  * applies a state change after the call returns. */
 const expectWindow = (state: WindowState, expected: boolean): Promise<void> =>
@@ -70,6 +80,8 @@ test.describe('Platform Integration', () => {
     });
 
     test('should handle window minimize', async () => {
+      test.skip(noWindowManager, 'no window manager on this display');
+
       await electronApp.evaluate(({ BrowserWindow }) => {
         BrowserWindow.getAllWindows()[0]?.minimize();
       });
@@ -85,6 +97,8 @@ test.describe('Platform Integration', () => {
     });
 
     test('should handle window maximize', async () => {
+      test.skip(noWindowManager, 'no window manager on this display');
+
       const wasMaximized = await firstWindowIs('maximized');
 
       await electronApp.evaluate(({ BrowserWindow }) => {

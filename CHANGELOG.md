@@ -197,7 +197,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   straight after the call, and the app creates the window hidden and shows it on `ready-to-show`.
   The first gate run read `false` on the Windows runner (minimize) and on the Linux runner
   (minimize and maximize), and passed on macOS. The checks now wait for a visible window and poll
-  the state, as the platform applies it after the call returns.
+  the state, as the platform applies it after the call returns. That is enough on Windows. The
+  Linux job runs under `xvfb-run` with no window manager, and a minimize or maximize request is
+  never honored there (the window was visible and the state stayed unchanged for 10 s), so those
+  two checks skip when no desktop session names itself and run on a Linux desktop.
 
 - **The "lint is eslint" header comment is corrected to "lint is oxlint" in `ci.yml`,
   `deploy.yml` and `staging.yml`.** All three were copies of one block, and all three described a
