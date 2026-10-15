@@ -17,10 +17,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let electronApp: ElectronApplication;
 // A private profile for this run. The app persists its window state in the
-// user-data directory, and the maximize test leaves that state toggled. With
-// the shared default profile, every second run started maximized, and a
-// window that starts maximized is shown before `ready-to-show`, so the late
-// show undid the minimize.
+// user-data directory, and the maximize test leaves that state toggled. A
+// private profile starts every run from the same state and leaves the default
+// profile alone.
 let userDataDir: string;
 // Page is assigned but used in afterAll for cleanup
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

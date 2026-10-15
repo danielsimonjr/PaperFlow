@@ -5,6 +5,16 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { resetMocks, mockBrowserWindow } from './setup';
 
+// The persisted state a test wants the manager to find on disk.
+const { loadWindowStateMock } = vi.hoisted(() => ({
+  loadWindowStateMock: vi.fn(),
+}));
+vi.mock('../../electron/main/windowState', async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import('../../electron/main/windowState')>();
+  return { ...actual, loadWindowState: loadWindowStateMock };
+});
+
 // Import after mocks are set up
 import { WindowManager } from '../../electron/main/windowManager';
 
@@ -13,6 +23,8 @@ describe('WindowManager', () => {
 
   beforeEach(() => {
     resetMocks();
+    loadWindowStateMock.mockReset();
+    loadWindowStateMock.mockReturnValue(null);
     windowManager = new WindowManager();
   });
 
@@ -62,6 +74,104 @@ describe('WindowManager', () => {
       const mainWindow = windowManager.getMainWindow();
 
       expect(mainWindow).toBe(window);
+    });
+  });
+
+  describe('a window whose persisted state is maximized', () => {
+    const persistedMaximized = {
+      x: 50,
+      y: 60,
+      width: 1000,
+      height: 700,
+      isMaximized: true,
+      isMinimized: false,
+    };
+
+    /** The handler the manager registered for ready-to-show on a window. */
+    function readyToShow(
+      window: ReturnType<WindowManager['createWindow']>
+    ): () => void {
+      const call = vi
+        .mocked(window.once)
+        .mock.calls.find((c) => c[0] === 'ready-to-show');
+      expect(call, 'no ready-to-show handler was registered').toBeDefined();
+      return call![1] as () => void;
+    }
+
+    it('is not maximized at construction: maximize() on a hidden window shows it at once', () => {
+      // On Windows, maximize() of a window that is not shown also SHOWS it, before ready-to-show. Anything
+      // that waits for the window to be visible then runs against a page that has not painted, and the
+      // later show() undoes what it did (a minimize from the spec's visible wait was undone 120 ms later).
+      loadWindowStateMock.mockReturnValue(persistedMaximized);
+
+      const window = windowManager.createWindow();
+
+      expect(window.maximize).not.toHaveBeenCalled();
+      expect(window.show).not.toHaveBeenCalled();
+    });
+
+    it('is created with the restored bounds, so un-maximize returns to them', () => {
+      loadWindowStateMock.mockReturnValue(persistedMaximized);
+
+      windowManager.createWindow();
+
+      expect(mockBrowserWindow.mock.calls[0]?.[0]).toMatchObject({
+        x: 50,
+        y: 60,
+        width: 1000,
+        height: 700,
+        show: false,
+      });
+    });
+
+    it('is maximized, then shown, once ready-to-show fires', () => {
+      loadWindowStateMock.mockReturnValue(persistedMaximized);
+      const window = windowManager.createWindow();
+      expect(window.maximize).not.toHaveBeenCalled();
+
+      readyToShow(window)();
+
+      expect(window.maximize).toHaveBeenCalledTimes(1);
+      expect(window.show).toHaveBeenCalledTimes(1);
+      const maximizeOrder =
+        vi.mocked(window.maximize).mock.invocationCallOrder[0] ?? 0;
+      const showOrder = vi.mocked(window.show).mock.invocationCallOrder[0] ?? 0;
+      expect(maximizeOrder).toBeLessThan(showOrder);
+    });
+  });
+
+  describe('a window whose persisted state is not maximized', () => {
+    it('is shown, and never maximized, once ready-to-show fires', () => {
+      loadWindowStateMock.mockReturnValue({
+        x: 10,
+        y: 20,
+        width: 900,
+        height: 600,
+        isMaximized: false,
+        isMinimized: false,
+      });
+      const window = windowManager.createWindow();
+      const call = vi
+        .mocked(window.once)
+        .mock.calls.find((c) => c[0] === 'ready-to-show');
+      expect(window.show).not.toHaveBeenCalled();
+
+      (call![1] as () => void)();
+
+      expect(window.show).toHaveBeenCalledTimes(1);
+      expect(window.maximize).not.toHaveBeenCalled();
+    });
+
+    it('with no persisted state at all is shown, and never maximized', () => {
+      const window = windowManager.createWindow();
+      const call = vi
+        .mocked(window.once)
+        .mock.calls.find((c) => c[0] === 'ready-to-show');
+
+      (call![1] as () => void)();
+
+      expect(window.show).toHaveBeenCalledTimes(1);
+      expect(window.maximize).not.toHaveBeenCalled();
     });
   });
 
