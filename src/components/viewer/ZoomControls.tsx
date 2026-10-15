@@ -32,7 +32,10 @@ export function ZoomControls({ className }: ZoomControlsProps) {
   };
 
   return (
-    <div className={`flex items-center gap-1 ${className || ''}`} data-testid="zoom-controls">
+    <div
+      className={`flex items-center gap-1 ${className || ''}`}
+      data-testid="zoom-controls"
+    >
       <Button
         variant="ghost"
         size="sm"

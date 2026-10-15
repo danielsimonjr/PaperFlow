@@ -27,7 +27,9 @@ test.describe('Open, Edit, Save Workflow', () => {
     // The file input is visually hidden and sits under the drop zone, so a pointer click lands on the
     // drop zone. The drop zone opens the chooser. Click its corner to stay clear of the Open File button.
     const fileChooserPromise = page.waitForEvent('filechooser');
-    await page.locator('[data-testid="drop-zone"]').click({ position: { x: 20, y: 20 } });
+    await page
+      .locator('[data-testid="drop-zone"]')
+      .click({ position: { x: 20, y: 20 } });
     const fileChooser = await fileChooserPromise;
     expect(fileChooser).toBeTruthy();
   });

@@ -181,6 +181,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Lines added for the E2E repair are wrapped to the Prettier width (formatting only).** The
+  `data-testid` attributes, the screenshot and file-chooser calls in the specs, and
+  `scripts/generate-sample-pdf.mjs` now fit `printWidth: 80`. No behaviour changed, and
+  `tests/fixtures/sample.pdf` is byte-identical.
+
 - **`platform-integration.spec.ts` moved from `tests/e2e` to
   `tests/e2e-electron/platformIntegration.spec.ts`.** The spec calls `electron.launch`, which the web
   suite (`playwright.config.ts`, a Vite dev server and a browser) cannot satisfy. The web suite now

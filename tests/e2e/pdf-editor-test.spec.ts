@@ -49,7 +49,10 @@ test.describe('PDF Editor Deep Test', () => {
 
     if (fileInputCount === 0) {
       console.log('   ❌ No file input found!');
-      await page.screenshot({ path: test.info().outputPath('debug-no-input.png'), fullPage: true });
+      await page.screenshot({
+        path: test.info().outputPath('debug-no-input.png'),
+        fullPage: true,
+      });
       return;
     }
 
@@ -73,7 +76,10 @@ test.describe('PDF Editor Deep Test', () => {
     console.log(`   Current URL: ${currentUrl}`);
 
     // Take screenshot of current state
-    await page.screenshot({ path: test.info().outputPath('debug-after-upload.png'), fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('debug-after-upload.png'),
+      fullPage: true,
+    });
 
     // Step 5: Check editor page content
     console.log('\nStep 5: Checking editor page content...');
@@ -97,7 +103,10 @@ test.describe('PDF Editor Deep Test', () => {
     console.log('\nStep 6: Waiting 5 more seconds for PDF render...');
     await page.waitForTimeout(5000);
 
-    await page.screenshot({ path: test.info().outputPath('debug-after-wait.png'), fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('debug-after-wait.png'),
+      fullPage: true,
+    });
 
     // Check again
     const canvasesAfter = await page.locator('canvas').count();
@@ -128,8 +137,13 @@ test.describe('PDF Editor Deep Test', () => {
     consoleLogs.slice(-10).forEach(log => console.log(`      ${log}`));
 
     // Final screenshot
-    await page.screenshot({ path: test.info().outputPath('debug-final.png'), fullPage: true });
+    await page.screenshot({
+      path: test.info().outputPath('debug-final.png'),
+      fullPage: true,
+    });
 
-    console.log(`\n📊 Test complete. Check screenshots in ${test.info().outputDir}`);
+    console.log(
+      `\n📊 Test complete. Check screenshots in ${test.info().outputDir}`
+    );
   });
 });

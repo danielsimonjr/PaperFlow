@@ -66,7 +66,13 @@ export async function buildSamplePdf() {
 
     y -= 36;
     for (const line of BODY_LINES) {
-      page.drawText(line, { x: LEFT_MARGIN, y, size: 12, font: body, color: rgb(0, 0, 0) });
+      page.drawText(line, {
+        x: LEFT_MARGIN,
+        y,
+        size: 12,
+        font: body,
+        color: rgb(0, 0, 0),
+      });
       y -= 20;
     }
   }
@@ -80,19 +86,28 @@ async function main() {
   if (process.argv.includes('--check')) {
     const committed = await readFile(OUTPUT).catch(() => null);
     if (committed && Buffer.compare(Buffer.from(bytes), committed) === 0) {
-      console.log(`OK: ${path.relative(process.cwd(), OUTPUT)} matches the generator (${bytes.length} bytes).`);
+      console.log(
+        `OK: ${path.relative(process.cwd(), OUTPUT)} matches the generator (${bytes.length} bytes).`
+      );
       return;
     }
-    console.error(`DIFFERS: ${path.relative(process.cwd(), OUTPUT)} does not match the generator output.`);
+    console.error(
+      `DIFFERS: ${path.relative(process.cwd(), OUTPUT)} does not match the generator output.`
+    );
     process.exitCode = 1;
     return;
   }
 
   await mkdir(path.dirname(OUTPUT), { recursive: true });
   await writeFile(OUTPUT, bytes);
-  console.log(`Wrote ${path.relative(process.cwd(), OUTPUT)} (${bytes.length} bytes, ${PAGE_COUNT} pages).`);
+  console.log(
+    `Wrote ${path.relative(process.cwd(), OUTPUT)} (${bytes.length} bytes, ${PAGE_COUNT} pages).`
+  );
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
   await main();
 }
