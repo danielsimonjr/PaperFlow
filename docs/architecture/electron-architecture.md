@@ -1,593 +1,287 @@
 # Electron Architecture
 
-This document describes the architecture of the PaperFlow desktop application built with Electron.
+<!-- repo-map:no-verification -->
 
-## Overview
-
-PaperFlow Desktop is an Electron-based application that wraps the existing React PWA while adding native desktop capabilities. The architecture follows Electron best practices with strict security measures, clean process separation, and comprehensive IPC communication.
+This document describes the Electron desktop application of PaperFlow. The desktop application loads the React application from `src/` in a window. Native features run in the main process. The preload script connects the main process and the renderer process.
 
 ## Process Model
 
-```
-+------------------------------------------------------------------+
-|                       Main Process                                 |
-|  +------------------------------------------------------------+  |
-|  |  Window Management (windowManager.ts)                       |  |
-|  |  - BrowserWindow creation and lifecycle                     |  |
-|  |  - Window state persistence (position, size, maximized)     |  |
-|  |  - Multi-window support                                     |  |
-|  +------------------------------------------------------------+  |
-|  |  App Lifecycle (lifecycle.ts)                               |  |
-|  |  - App ready, activate, quit handlers                       |  |
-|  |  - Single instance lock                                     |  |
-|  |  - Startup and shutdown coordination                        |  |
-|  +------------------------------------------------------------+  |
-|  |  IPC Handlers (ipc/*.ts)                                    |  |
-|  |  - File operations                                          |  |
-|  |  - Dialog operations                                        |  |
-|  |  - System tray and notifications                            |  |
-|  |  - Print, clipboard, shell operations                       |  |
-|  +------------------------------------------------------------+  |
-|  |  Native Modules                                             |  |
-|  |  - Auto-updater (electron-updater)                          |  |
-|  |  - File watcher (chokidar)                                  |  |
-|  |  - Scanner bridge (TWAIN/WIA/SANE)                          |  |
-|  |  - WebAuthn bridge (FIDO2)                                  |  |
-|  +------------------------------------------------------------+  |
-+------------------------------------------------------------------+
-                              | IPC (contextBridge)
-                              v
-+------------------------------------------------------------------+
-|                     Renderer Process                               |
-|  +------------------------------------------------------------+  |
-|  |  Preload Script (preload/index.ts)                          |  |
-|  |  - Exposes electronAPI via contextBridge                    |  |
-|  |  - Type-safe IPC wrappers                                   |  |
-|  |  - Event listener management                                |  |
-|  +------------------------------------------------------------+  |
-|  |  React Application                                          |  |
-|  |  - Same codebase as PWA                                     |  |
-|  |  - Desktop-aware components                                 |  |
-|  |  - Platform context for conditional rendering               |  |
-|  +------------------------------------------------------------+  |
-|  |  Zustand Stores                                             |  |
-|  |  - Desktop-specific: updateStore, printStore, scannerStore  |  |
-|  |  - Enterprise: enterprisePolicyStore, licenseStore          |  |
-|  |  - Offline: offlineStore, fileWatchStore                    |  |
-|  +------------------------------------------------------------+  |
-+------------------------------------------------------------------+
-                              | Worker Messages
-                              v
-+------------------------------------------------------------------+
-|                     Worker Threads                                 |
-|  +------------------------------------------------------------+  |
-|  |  PDF Worker (workers/pdfWorker.ts)                          |  |
-|  |  - Parallel PDF processing                                  |  |
-|  |  - Batch operations (compress, merge, split, watermark)     |  |
-|  +------------------------------------------------------------+  |
-|  |  Worker Pool Manager (workers/workerManager.ts)             |  |
-|  |  - Worker lifecycle management                              |  |
-|  |  - Task queue and distribution                              |  |
-|  +------------------------------------------------------------+  |
-+------------------------------------------------------------------+
-```
+### Main Process
+
+The main process starts at `electron/main/index.ts`. The entry point does these steps:
+
+- It sets security headers for all sessions.
+- It calls `setupIpc`. This function calls `setupIpcHandlers` in `electron/ipc/handlers.ts`.
+- It calls `initializeUpdater` in `electron/main/updater.ts` before it creates the main window.
+- It creates the main window with `createMainWindow`. This function sets the Content Security Policy for the window.
+- It starts the tray, the application menu, the shortcuts, the notifications, the protocol handler, the startup settings, and auto-save.
+
+At shutdown, the entry point stops the power save blockers and the file watchers.
+
+### Renderer Process
+
+The renderer process loads the React application from `src/`. The web application and the desktop application use this folder.
+
+The preload script `electron/preload/index.ts` builds to `electron/preload/index.cjs`. The main window loads the built file as its preload script. The preload script exposes the API object `window.electron`. See [IPC Patterns](ipc-patterns.md).
+
+The desktop stores in `src/stores/` include `updateStore.ts`, `printStore.ts`, and `scannerStore.ts`. The enterprise stores are `enterprisePolicyStore.ts` and `licenseStore.ts`. The offline stores are `offlineStore.ts` and `fileWatchStore.ts`.
+
+Platform detection uses these files:
+
+- The hook `usePlatform` in `src/hooks/usePlatform.ts` returns `isElectron`, `isBrowser`, `isWindows`, `isMacOS`, `isLinux`, `platformInfo`, `appVersion`, `isLoading`, `hasFeature`, `commandKey`, `altKey`, and `formatShortcut`.
+- `src/contexts/PlatformContext.tsx` defines a React context.
+- `src/components/layout/TitleBar.tsx` renders minimize, maximize, and close buttons.
+
+### Worker Threads
+
+The worker script `electron/workers/pdfWorker.ts` runs the operations `compress`, `merge`, `split`, and `watermark`.
+
+The class `WorkerPool` in `electron/workers/workerPool.ts` creates workers. It keeps a task queue. The queue sorts tasks by priority.
+
+The class `WorkerManager` in `electron/workers/workerManager.ts` creates the pool. No file calls `initializeWorkerManager`. The main process does not create a worker pool.
 
 ## Directory Structure
+
+The tree lists the files under `electron/`. A note marks each file that no file imports. Each name after a file is an exported name that the file defines.
 
 ```
 electron/
 ├── main/
-│   ├── index.ts               # Main process entry point
-│   ├── windowManager.ts       # BrowserWindow management
-│   ├── windowState.ts         # Window state persistence
-│   ├── lifecycle.ts           # App lifecycle handlers
-│   ├── security.ts            # CSP and security setup
-│   ├── updater.ts             # Auto-update integration
-│   ├── fileLock.ts            # File locking utilities
-│   ├── folderWatcher.ts       # Folder watching service
-│   ├── watcherService.ts      # File watcher coordination
-│   ├── watcherOptimizations.ts # Watcher performance tuning
-│   ├── networkStatus.ts       # Network connectivity detection
+│   ├── index.ts                   Entry point (no exports)
+│   ├── lifecycle.ts               requestSingleInstanceLock, setupLifecycle
+│   ├── security.ts                PRODUCTION_CSP, DEVELOPMENT_CSP, setupContentSecurityPolicy
+│   ├── windowManager.ts           WindowManager
+│   ├── windowState.ts             loadWindowState, saveWindowState, clearWindowState
+│   ├── updater.ts                 initializeUpdater, cleanupUpdater
+│   ├── fileLock.ts                isFileLocked, canWriteFile, startLockMonitoring
+│   ├── folderWatcher.ts           watchFolder, unwatchFolder
+│   ├── watcherService.ts          WatcherService (used only by ipc/fileWatchIPC.ts and watcherOptimizations.ts)
+│   ├── watcherOptimizations.ts    Watcher tuning (imported only by ipc/fileWatchIPC.ts)
+│   ├── networkStatus.ts           (no import)
 │   ├── print/
-│   │   ├── printDialog.ts     # Native print dialog
-│   │   ├── silentPrint.ts     # Silent printing
-│   │   ├── printerDiscovery.ts # Printer enumeration
-│   │   ├── printerCapabilities.ts
-│   │   ├── printerManager.ts
-│   │   ├── printerMonitor.ts
-│   │   ├── spoolerIntegration.ts
-│   │   └── types.ts
+│   │   ├── printDialog.ts         PrintDialog (no import)
+│   │   ├── printerCapabilities.ts PrinterCapabilitiesHelper (no import)
+│   │   ├── printerDiscovery.ts    PrinterDiscovery (no import)
+│   │   ├── printerManager.ts      PrinterManager
+│   │   ├── printerMonitor.ts      PrinterMonitor (no import)
+│   │   ├── silentPrint.ts         SilentPrint (imported only by print/printDialog.ts)
+│   │   ├── spoolerIntegration.ts  SpoolerIntegration (no import)
+│   │   └── types.ts               PrintMargins, PageRange, DuplexMode, PrintDPI
 │   ├── scanner/
-│   │   └── scannerBridge.ts   # Scanner driver bridge
+│   │   └── scannerBridge.ts       ScannerBridge, setupScannerBridge (no import)
 │   ├── security/
-│   │   └── webauthnBridge.ts  # WebAuthn/FIDO2 bridge
+│   │   └── webauthnBridge.ts      WebAuthnBridge (no import)
 │   └── updates/
-│       ├── autoUpdater.ts     # Update lifecycle
-│       └── differential.ts    # Delta update support
+│       └── differential.ts        DifferentialUpdater (no import)
 ├── preload/
-│   ├── index.ts               # Main preload script
-│   ├── networkPreload.ts      # Network status preload
-│   └── webauthnPreload.ts     # WebAuthn preload
+│   ├── index.ts                   Main preload, built to index.cjs
+│   ├── networkPreload.ts          NetworkAPI (no import)
+│   └── webauthnPreload.ts         webauthnAPI, exposeWebAuthnAPI (no import)
 ├── ipc/
-│   ├── channels.ts            # IPC channel definitions
-│   ├── types.ts               # IPC type definitions
-│   ├── handlers.ts            # Core IPC handlers
-│   ├── fileHandlers.ts        # File operation handlers
-│   ├── fileWatchIPC.ts        # File watcher IPC
-│   ├── menuHandlers.ts        # Menu IPC handlers
-│   ├── printHandlers.ts       # Print IPC handlers
-│   ├── dialogHandlers.ts      # Dialog IPC handlers
-│   ├── clipboardHandlers.ts   # Clipboard IPC handlers
-│   ├── storageHandlers.ts     # Secure storage IPC
-│   ├── shellHandlers.ts       # Shell operation IPC
-│   └── notificationHandlers.ts # Notification IPC
+│   ├── channels.ts                IPC_CHANNELS, IPC_EVENTS
+│   ├── types.ts                   Payload types and ElectronAPI
+│   ├── handlers.ts                setupIpcHandlers
+│   ├── fileHandlers.ts            setupFileHandlers
+│   ├── fileWatchIPC.ts            setupFileWatchHandlers (no caller)
+│   ├── menuHandlers.ts            setupMenuHandlers
+│   ├── printHandlers.ts           setupPrintHandlers
+│   ├── dialogHandlers.ts          setupDialogHandlers
+│   ├── clipboardHandlers.ts       setupClipboardHandlers
+│   ├── storageHandlers.ts         setupStorageHandlers
+│   ├── shellHandlers.ts           setupShellHandlers
+│   ├── notificationHandlers.ts    setupNotificationHandlers, setupTrayHandlers,
+│   │                              setupDockHandlers, setupAllNotificationHandlers
+│   ├── safeStorageHandlers.ts     registerSafeStorageHandlers
+│   └── pathSandbox.ts             approvePath, isPathAllowed, assertPathAllowed
 ├── workers/
-│   ├── workerPool.ts          # Worker thread pool
-│   ├── workerManager.ts       # Worker lifecycle management
-│   └── pdfWorker.ts           # PDF processing worker
-├── *.ts                       # Feature modules
-│   ├── autoSave.ts            # Auto-save functionality
-│   ├── backup.ts              # Backup management
-│   ├── fileAssociation.ts     # File association handling
-│   ├── fileWatcher.ts         # File change detection
-│   ├── recentFiles.ts         # Recent files tracking
-│   ├── tray.ts                # System tray
-│   ├── trayMenu.ts            # Tray context menu
-│   ├── menu.ts                # Application menu
-│   ├── menuTemplate.ts        # Menu templates
-│   ├── contextMenu.ts         # Context menus
-│   ├── shortcuts.ts           # Keyboard shortcuts
-│   ├── notifications.ts       # Notification manager
-│   ├── dock.ts                # macOS dock integration
-│   ├── jumpList.ts            # Windows jump list
-│   ├── taskbarProgress.ts     # Windows taskbar progress
-│   ├── taskbarOverlay.ts      # Windows taskbar overlay
-│   ├── thumbnailToolbar.ts    # Windows thumbnail toolbar
-│   ├── linuxLauncher.ts       # Linux launcher integration
-│   ├── touchbar/
-│   │   └── touchBarManager.ts # macOS Touch Bar
-│   ├── print.ts               # Print utilities
-│   ├── protocol.ts            # Custom protocol handler
-│   ├── startup.ts             # Startup configuration
-│   ├── powerSave.ts           # Power save blocker
-│   ├── clipboard.ts           # Clipboard operations
-│   ├── dialogs.ts             # Native dialogs
-│   ├── shell.ts               # Shell operations
-│   ├── secureStorage.ts       # Encrypted storage
-│   ├── crashReporter.ts       # Crash reporting
-│   ├── windowsCrashReporter.ts # Windows-specific crash
-│   └── attention.ts           # Window attention utilities
-└── resources/
-    └── icons/                 # Platform-specific icons
+│   ├── pdfWorker.ts               Worker script for compress, merge, split, watermark
+│   ├── workerPool.ts              WorkerPool
+│   └── workerManager.ts           WorkerManager (no caller)
+├── touchbar/
+│   └── touchBarManager.ts         TouchBarManager, initializeTouchBar (no import)
+├── native/                        Source and build files for scanner and image capture wrappers
+│   ├── twain/                     TWAIN wrapper
+│   ├── wia/                       WIA wrapper
+│   ├── sane/                      SANE wrapper
+│   └── imagecapture/              macOS image capture wrapper
+├── tsconfig.json
+├── attention.ts                   AttentionManager, requestAttention (no import)
+├── autoSave.ts                    enableAutoSave, disableAutoSave, saveRecoveryData
+├── backup.ts                      createBackup, listBackups, restoreBackup, deleteBackup
+├── clipboard.ts                   getClipboardInfo and related clipboard functions
+├── contextMenu.ts                 createDocumentContextMenu, createAnnotationContextMenu
+├── crashReporter.ts               Crash reporter settings (no import)
+├── dialogs.ts                     Message and error dialog functions
+├── dock.ts                        DockManager, setDockBadge, clearDockBadge, bounceDock
+├── fileAssociation.ts             openFile, getPendingFile, clearPendingFile
+├── fileWatcher.ts                 watchFile, unwatchFile, unwatchAll
+├── jumpList.ts                    JumpListManager, initializeJumpList (no import)
+├── linuxLauncher.ts               LinuxLauncherManager, initializeLinuxLauncher (no import)
+├── menu.ts                        buildApplicationMenu, updateMenuState, getMenuState
+├── menuTemplate.ts                createMacAppMenu, createFileMenu, createEditMenu,
+│                                  createViewMenu, createDocumentMenu
+├── notifications.ts               Notification manager functions
+├── powerSave.ts                   startPowerSaveBlocker, stopPowerSaveBlocker
+├── print.ts                       Print functions and PrintOptions
+├── protocol.ts                    initializeProtocol, setupProtocolHandlers
+├── recentFiles.ts                 loadRecentFiles, saveRecentFiles, addRecentFile
+├── secureStorage.ts               setSecret, getSecret
+├── shell.ts                       openExternalUrl, showItemInFolder, openWithDefaultApp
+├── shortcuts.ts                   Shortcut definitions and loaders
+├── startup.ts                     initializeStartup, setStartupSettings
+├── taskbarOverlay.ts              TaskbarOverlayManager, initializeTaskbarOverlay (no import)
+├── taskbarProgress.ts             TaskbarProgressManager, initializeTaskbarProgress (no import)
+├── thumbnailToolbar.ts            ThumbnailToolbarManager, initializeThumbnailToolbar (no import)
+├── tray.ts                        TrayManager, initializeTray, destroyTray
+├── trayMenu.ts                    createTrayMenu, TrayMenuManager
+└── windowsCrashReporter.ts        initializeWindowsCrashReporter (no import)
 ```
 
 ## Security Model
 
-PaperFlow follows Electron security best practices:
+### Window Settings
 
-### Context Isolation
+The main window uses these web preferences. Lines 66 to 73 of `electron/main/index.ts` show the settings:
 
 ```typescript
-// main/index.ts
-const mainWindow = new BrowserWindow({
-  webPreferences: {
-    contextIsolation: true,    // Isolate preload from renderer
-    nodeIntegration: false,    // No Node.js in renderer
-    sandbox: true,             // Chromium sandbox enabled
-    preload: PRELOAD_PATH,     // Only communication via preload
-  },
-});
+  const mainWindow = windowManager.createWindow({
+    webPreferences: {
+      preload: PRELOAD_PATH,
+      contextIsolation: true,
+      nodeIntegration: false,
+      sandbox: true,
+    },
+  });
 ```
+
+The default window options in `electron/main/windowManager.ts` use the same values for `contextIsolation`, `nodeIntegration`, and `sandbox`.
 
 ### Content Security Policy
 
-```typescript
-// main/security.ts
-export function setupContentSecurityPolicy(
-  window: BrowserWindow,
-  isDev: boolean
-): void {
-  const csp = isDev
-    ? "default-src 'self' 'unsafe-inline' 'unsafe-eval'; ..."
-    : "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; ...";
+`electron/main/security.ts` defines two policies. `setupContentSecurityPolicy(window, isDev)` uses `DEVELOPMENT_CSP` when `isDev` is true. In all other cases, it uses `PRODUCTION_CSP`. The function adds the policy to the response headers of each request for the window.
 
-  window.webContents.session.webRequest.onHeadersReceived(
-    (details, callback) => {
-      callback({
-        responseHeaders: {
-          ...details.responseHeaders,
-          'Content-Security-Policy': [csp],
-        },
-      });
-    }
-  );
-}
-```
-
-### Secure IPC Communication
-
-All renderer-to-main communication goes through the preload script:
+The production policy is this array, from lines 22 to 38:
 
 ```typescript
-// preload/index.ts
-contextBridge.exposeInMainWorld('electron', {
-  // Typed, validated API exposed to renderer
-  openFile: () => ipcRenderer.invoke('dialog:openFile'),
-  saveFile: (data: Uint8Array) => ipcRenderer.invoke('file:save', data),
-  // ... other methods
-});
+export const PRODUCTION_CSP = [
+  "default-src 'self'",
+  // Script: no 'unsafe-inline' / 'unsafe-eval'. blob: needed for PDF.js worker.
+  "script-src 'self' blob:",
+  "worker-src 'self' blob:",
+  // Style: 'unsafe-inline' is retained because the renderer uses React inline
+  // style={{...}} props (annotation positions, dynamic colors). Removing it
+  // breaks the viewer; switching to a nonce/hash strategy is tracked separately.
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  "frame-src 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join('; ');
 ```
 
 ### Security Headers
 
+The entry point sets these headers for all sessions. Lines 169 to 179 of `electron/main/index.ts` show the code:
+
 ```typescript
-// main/index.ts
-session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-  callback({
-    responseHeaders: {
-      ...details.responseHeaders,
-      'X-Content-Type-Options': ['nosniff'],
-      'X-Frame-Options': ['DENY'],
-      'X-XSS-Protection': ['1; mode=block'],
-    },
+  // Set up security headers for all sessions
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'X-Content-Type-Options': ['nosniff'],
+        'X-Frame-Options': ['DENY'],
+        'X-XSS-Protection': ['1; mode=block'],
+      },
+    });
   });
-});
 ```
+
+### Other Controls
+
+- The source does not import `@electron/remote`.
+- `openExternalUrl` in `electron/shell.ts` opens only URLs with the protocols `http:`, `https:`, `mailto:`, and `tel:`.
+- `electron/ipc/pathSandbox.ts` limits file access to approved paths. See [IPC Patterns](ipc-patterns.md).
+- `electron-builder.yml` enables the hardened runtime and notarization for macOS builds.
+
+### Security Functions Without Callers
+
+`electron/main/security.ts` exports `applySecurityDefaults`, `validateWebContentsConfig`, `preventNewWindows`, and `preventUntrustedNavigation`. No file in `electron/` or `src/` calls these functions.
 
 ## IPC Communication
 
-### Channel Definitions
+The IPC channels and the handler patterns are described in [IPC Patterns](ipc-patterns.md).
 
-```typescript
-// ipc/channels.ts
-export const IPC_CHANNELS = {
-  // File operations
-  FILE_READ: 'file:read',
-  FILE_WRITE: 'file:write',
-  FILE_SAVE: 'file:save',
-  FILE_EXISTS: 'file:exists',
-  FILE_DELETE: 'file:delete',
+These functions register the handlers:
 
-  // Dialog operations
-  DIALOG_OPEN_FILE: 'dialog:openFile',
-  DIALOG_SAVE_FILE: 'dialog:saveFile',
-  DIALOG_MESSAGE: 'dialog:message',
-
-  // Window operations
-  WINDOW_MINIMIZE: 'window:minimize',
-  WINDOW_MAXIMIZE: 'window:maximize',
-  WINDOW_CLOSE: 'window:close',
-
-  // ... many more channels
-} as const;
-
-export const IPC_EVENTS = {
-  FILE_OPENED: 'file:opened',
-  FILE_CHANGED: 'file:changed',
-  FILE_DELETED: 'file:deleted',
-  MENU_FILE_NEW: 'menu:file:new',
-  UPDATE_AVAILABLE: 'update:available',
-  // ... events from main to renderer
-} as const;
-```
-
-### Type-Safe IPC
-
-```typescript
-// ipc/types.ts
-export interface FileDialogResult {
-  canceled: boolean;
-  filePaths: string[];
-  data?: ArrayBuffer;
-}
-
-export interface ElectronAPI {
-  // Platform info
-  getPlatformInfo: () => Promise<PlatformInfo>;
-  getAppPath: () => Promise<AppPathInfo>;
-
-  // File operations
-  openFile: () => Promise<FileDialogResult>;
-  saveFile: (data: Uint8Array, defaultPath?: string) => Promise<SaveDialogResult>;
-  readFile: (filePath: string, options?: FileReadOptions) => Promise<FileReadResult>;
-
-  // Event listeners (return unsubscribe function)
-  onFileOpened: (callback: (filePath: string) => void) => () => void;
-  onMenuFileNew: (callback: () => void) => () => void;
-
-  // ... complete API definition
-}
-```
+- `setupIpcHandlers` in `electron/ipc/handlers.ts` registers the file, menu, context menu, shortcut, and safe storage handlers. It also registers the message dialog handler.
+- The entry point also calls `setupPrintHandlers`, `setupShellHandlers`, `setupDialogHandlers`, `setupClipboardHandlers`, `setupStorageHandlers`, and `setupAllNotificationHandlers`.
+- `setupFileWatchHandlers` in `electron/ipc/fileWatchIPC.ts` has no caller.
 
 ## Feature Modules
 
 ### Auto-Updater
 
-```typescript
-// main/updater.ts
-export function initializeUpdater(): void {
-  autoUpdater.autoDownload = false;
-  autoUpdater.autoInstallOnAppQuit = true;
+`initializeUpdater` in `electron/main/updater.ts` does these steps:
 
-  autoUpdater.on('update-available', (info) => {
-    notifyRenderer('update:available', info.version);
-  });
+- It sets the update settings from its `savedSettings` argument, when the argument is given.
+- It configures `autoUpdater` from `electron-updater`. The properties `autoDownload` and `autoInstallOnAppQuit` take the value of the `autoUpdate` setting.
+- It registers the handlers for the events `update-available`, `update-not-available`, `download-progress`, and `update-downloaded`.
+- `initializeUpdater` registers the update IPC handlers in all cases.
+- `initializeUpdater` checks for updates at startup and on a timer, only when `app.isPackaged` is true.
 
-  autoUpdater.on('download-progress', (progress) => {
-    notifyRenderer('update:progress', progress);
-  });
-
-  autoUpdater.checkForUpdates();
-}
-```
+The function `broadcastUpdateState` sends `IPC_EVENTS.UPDATE_STATE_CHANGED` with the current update state to each window that is not destroyed.
 
 ### File Watching
 
-```typescript
-// fileWatcher.ts
-import chokidar from 'chokidar';
+`watchFile` in `electron/fileWatcher.ts` returns `false` when the file does not exist. Otherwise, `watchFile` creates a chokidar watcher. The watcher sets `ignoreInitial` to `true`. The watcher sets `awaitWriteFinish` with `stabilityThreshold` 300 and `pollInterval` 100.
 
-export function watchFile(filePath: string, callback: WatchCallback): () => void {
-  const watcher = chokidar.watch(filePath, {
-    persistent: true,
-    ignoreInitial: true,
-    awaitWriteFinish: {
-      stabilityThreshold: 500,
-      pollInterval: 100,
-    },
-  });
-
-  watcher.on('change', (path) => callback('change', path));
-  watcher.on('unlink', (path) => callback('delete', path));
-
-  return () => watcher.close();
-}
-```
+The module sends `IPC_EVENTS.FILE_CHANGED` to each window. The module `electron/main/folderWatcher.ts` watches folders with `watchFolder`.
 
 ### System Tray
 
-```typescript
-// tray.ts
-export async function initializeTray(options: TrayOptions): Promise<TrayManager> {
-  const icon = nativeImage.createFromPath(getTrayIconPath());
-  const tray = new Tray(icon);
+`TrayManager` in `electron/tray.ts` manages the tray icon. `initializeTray` creates the manager with an optional configuration. `destroyTray` removes the tray icon. The entry point calls `initializeTray` in `initializeTraySystem`.
 
-  tray.setToolTip('PaperFlow');
+The tray listens for the `click`, `double-click`, and `right-click` events.
 
-  tray.on('click', options.onTrayClick);
-  tray.on('double-click', options.onTrayDoubleClick);
-  tray.on('right-click', options.onTrayRightClick);
+### Application Menu
 
-  return new TrayManager(tray);
-}
-```
+`buildApplicationMenu` in `electron/menu.ts` builds the application menu. The template functions in `electron/menuTemplate.ts` return the menu items for each menu. `updateMenuState` and `getMenuState` in `electron/menu.ts` change and read the menu state.
 
-### Native Menus
+### Platform Features
 
-```typescript
-// menuTemplate.ts
-export function createApplicationMenu(): MenuItemConstructorOptions[] {
-  const isMac = process.platform === 'darwin';
+- macOS dock: `electron/dock.ts` exports `setDockBadge`, `clearDockBadge`, and `bounceDock`. The dock IPC handlers are in `electron/ipc/notificationHandlers.ts`.
+- Windows jump list, taskbar progress, taskbar overlay, and thumbnail toolbar: the files `electron/jumpList.ts`, `electron/taskbarProgress.ts`, `electron/taskbarOverlay.ts`, and `electron/thumbnailToolbar.ts` define these features. No file imports them.
+- macOS Touch Bar: `electron/touchbar/touchBarManager.ts` defines `initializeTouchBar`. No file imports it.
+- Linux launcher: `electron/linuxLauncher.ts` defines `LinuxLauncherManager`. No file imports it.
 
-  return [
-    // macOS app menu
-    ...(isMac ? [{
-      label: app.name,
-      submenu: [
-        { role: 'about' },
-        { type: 'separator' },
-        { label: 'Preferences...', accelerator: 'Cmd+,' },
-        { type: 'separator' },
-        { role: 'services' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
-        { type: 'separator' },
-        { role: 'quit' },
-      ],
-    }] : []),
+## Scanner and WebAuthn Bridges
 
-    // File menu
-    {
-      label: 'File',
-      submenu: [
-        { label: 'New Window', accelerator: 'CmdOrCtrl+N' },
-        { label: 'Open...', accelerator: 'CmdOrCtrl+O' },
-        { label: 'Open Recent', submenu: [] },
-        { type: 'separator' },
-        { label: 'Save', accelerator: 'CmdOrCtrl+S' },
-        { label: 'Save As...', accelerator: 'CmdOrCtrl+Shift+S' },
-        // ...
-      ],
-    },
-    // ... Edit, View, Document, Window, Help menus
-  ];
-}
-```
-
-## Platform-Specific Features
-
-### Windows
-
-- **Jump Lists**: Recent files in taskbar context menu
-- **Taskbar Progress**: Show operation progress
-- **Taskbar Overlays**: Status icons on app icon
-- **Thumbnail Toolbar**: Quick actions on hover
-
-```typescript
-// jumpList.ts
-export function updateJumpList(recentFiles: RecentFile[]): void {
-  app.setJumpList([
-    {
-      type: 'custom',
-      name: 'Recent Files',
-      items: recentFiles.map(file => ({
-        type: 'file',
-        path: file.path,
-      })),
-    },
-    {
-      type: 'custom',
-      name: 'Tasks',
-      items: [
-        { type: 'task', title: 'New Window', program: process.execPath, args: '--new-window' },
-      ],
-    },
-  ]);
-}
-```
-
-### macOS
-
-- **Touch Bar**: Context-aware controls
-- **Dock Badge**: Notification count
-- **Dock Bounce**: Attention requests
-- **Native Title Bar**: Traffic light buttons
-
-```typescript
-// touchbar/touchBarManager.ts
-export function createViewerTouchBar(window: BrowserWindow): TouchBar {
-  return new TouchBar({
-    items: [
-      new TouchBarSlider({ label: 'Zoom', value: 100, minValue: 10, maxValue: 400 }),
-      new TouchBarSegmentedControl({
-        segments: [{ label: 'Prev' }, { label: 'Next' }],
-      }),
-    ],
-  });
-}
-```
-
-### Linux
-
-- **Unity Launcher**: Quicklists and progress
-- **Desktop Integration**: XDG compliance
-- **GNOME/KDE**: Native theming
-
-## Worker Threads
-
-For CPU-intensive operations, PaperFlow uses worker threads:
-
-```typescript
-// workers/workerManager.ts
-export class WorkerPoolManager {
-  private workers: Map<string, Worker> = new Map();
-  private taskQueue: Task[] = [];
-
-  async processTask(task: Task): Promise<TaskResult> {
-    const worker = await this.getAvailableWorker();
-    return new Promise((resolve, reject) => {
-      worker.postMessage(task);
-      worker.once('message', resolve);
-      worker.once('error', reject);
-    });
-  }
-}
-```
-
-## Renderer Integration
-
-### Platform Detection Hook
-
-```typescript
-// src/hooks/usePlatform.ts
-export function usePlatform() {
-  const [platform, setPlatform] = useState<PlatformInfo | null>(null);
-
-  useEffect(() => {
-    if (window.electron) {
-      window.electron.getPlatformInfo().then(setPlatform);
-    } else {
-      setPlatform({ platform: 'web', isElectron: false });
-    }
-  }, []);
-
-  return {
-    isElectron: platform?.isElectron ?? false,
-    isWindows: platform?.platform === 'win32',
-    isMac: platform?.platform === 'darwin',
-    isLinux: platform?.platform === 'linux',
-    platform,
-  };
-}
-```
-
-### Desktop-Aware Components
-
-```typescript
-// src/components/layout/Header.tsx
-export function Header() {
-  const { isElectron, isMac } = usePlatform();
-
-  return (
-    <header className={cn(
-      'h-12 flex items-center',
-      isElectron && isMac && 'pl-20' // Space for traffic lights
-    )}>
-      {isElectron && !isMac && <WindowControls />}
-      {/* ... */}
-    </header>
-  );
-}
-```
+`electron/main/scanner/scannerBridge.ts` and `electron/main/security/webauthnBridge.ts` define the scanner and WebAuthn bridges. No file imports them. The WebAuthn preload script `electron/preload/webauthnPreload.ts` also has no import.
 
 ## Build Configuration
 
-### electron-builder.config.js
+`electron-builder.yml` at the repository root configures electron-builder. The scripts in `package.json` run the build:
 
-```javascript
-module.exports = {
-  appId: 'com.paperflow.app',
-  productName: 'PaperFlow',
+- `electron:compile` builds the main process code and the preload code with Vite.
+- `electron:build` runs the TypeScript build, the web build, the compile step, and `electron-builder`.
+- `electron:dev` runs `scripts/dev-electron.js`.
 
-  directories: {
-    output: 'release',
-    buildResources: 'electron/resources',
-  },
+The configuration sets these values:
 
-  files: [
-    'dist/**/*',
-    'dist-electron/**/*',
-  ],
-
-  win: {
-    target: ['nsis', 'msi'],
-    icon: 'electron/resources/icons/icon.ico',
-  },
-
-  mac: {
-    target: [{ target: 'dmg', arch: 'universal' }],
-    icon: 'electron/resources/icons/icon.icns',
-    hardenedRuntime: true,
-    notarize: true,
-  },
-
-  linux: {
-    target: ['AppImage', 'deb', 'rpm'],
-    icon: 'electron/resources/icons',
-    category: 'Office',
-  },
-};
-```
+- The application identifier is `com.paperflow.app`. The product name is `PaperFlow`.
+- The output folder is `release`. The build resources folder is `build`. The icons are in `build/icons/`.
+- The application files are `dist/`, `dist-electron/`, `package.json`, and `node_modules/`. The `node_modules/` entries exclude some test, documentation, and source map files. The application uses `asar`.
+- The extra resource `public/pdf.worker.min.js` is copied to the application.
+- The publish targets are a GitHub provider and a generic provider.
+- The Windows target list contains only the portable target for x64. The NSIS target is commented out.
+- The macOS targets are DMG (x64, arm64, and universal), PKG (universal), and ZIP (x64 and arm64). The hardened runtime and notarization are enabled. The `afterSign` hook is commented out.
+- The Linux targets are AppImage, deb, and rpm (x64 and arm64), and snap and pacman (x64).
+- The configuration reads code signing and notarization credentials from environment variables. The variables are `CSC_LINK`, `CSC_KEY_PASSWORD`, `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, and `APPLE_TEAM_ID`. The comments in the file name these variables.
 
 ## Performance Targets
 
-| Metric | Target |
-|--------|--------|
-| Cold Start | < 3 seconds |
-| Warm Start | < 1 second |
-| Memory (Idle) | < 150 MB |
-| Memory (100-page PDF) | < 500 MB |
-| Native File Save | < 500 ms |
-| IPC Round Trip | < 10 ms |
-
-## Security Considerations
-
-1. **No Remote Module**: Deprecated and disabled
-2. **No shell.openExternal with untrusted URLs**: Validate all URLs
-3. **No nodeIntegration in webviews**: Use preload scripts
-4. **Validate all IPC inputs**: Type check and sanitize
-5. **Use allowlist for file paths**: Prevent directory traversal
-6. **Sign all releases**: Code signing for Windows and macOS
-7. **Notarize macOS builds**: Required for Gatekeeper
+The performance targets for the desktop application are in [OVERVIEW.md](OVERVIEW.md).

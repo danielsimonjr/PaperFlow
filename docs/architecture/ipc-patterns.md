@@ -1,10 +1,14 @@
 # IPC Communication Patterns
 
-This document describes the Inter-Process Communication (IPC) patterns used in PaperFlow's Electron desktop application.
+<!-- repo-map:no-verification -->
+
+This document describes the inter-process communication (IPC) patterns of the PaperFlow desktop application.
 
 ## Overview
 
-PaperFlow uses Electron's IPC system to enable communication between the main process (Node.js) and renderer process (React app). All communication is type-safe and goes through the preload script using `contextBridge`.
+The desktop application uses the Electron IPC system. The main process runs Node.js code. The renderer process runs the React application.
+
+The preload script connects the two processes. The preload script calls `contextBridge.exposeInMainWorld` to expose one API object, `window.electron`. The renderer calls the functions of this object for desktop features.
 
 ## Architecture
 
@@ -29,544 +33,168 @@ PaperFlow uses Electron's IPC system to enable communication between the main pr
 
 ## Channel Types
 
-### 1. Request-Response (invoke/handle)
+### Request-Response (invoke and handle)
 
-For operations that return a result:
+Use this pattern when the renderer needs a result.
+
+The main process registers a handler with `ipcMain.handle`. The handler for `FILE_READ` is in `electron/ipc/fileHandlers.ts`:
 
 ```typescript
-// Main process (ipc/handlers.ts)
-ipcMain.handle('file:read', async (event, filePath: string) => {
-  const data = await fs.promises.readFile(filePath);
-  return { success: true, data: data.buffer };
-});
-
-// Preload (preload/index.ts)
-contextBridge.exposeInMainWorld('electron', {
-  readFile: (filePath: string) =>
-    ipcRenderer.invoke('file:read', filePath),
-});
-
-// Renderer usage
-const result = await window.electron.readFile('/path/to/file.pdf');
+  ipcMain.handle(IPC_CHANNELS.FILE_READ, async (_event, filePath: string) => {
+    try {
+      assertPathAllowed(filePath);
+      const data = await fs.readFile(filePath);
+      return { success: true, data: new Uint8Array(data) };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to read file',
+      };
+    }
+  });
 ```
 
-### 2. One-Way Events (send/on)
+The handler returns a result object. On success, the `data` field holds the file bytes as a `Uint8Array`. On failure, the handler returns `success: false` and an `error` message.
 
-For notifications from main to renderer:
+The preload script wraps the channel. This entry in `electron/preload/index.ts` exposes the wrapper:
 
 ```typescript
-// Main process
-mainWindow.webContents.send('update:available', version);
-
-// Preload
-contextBridge.exposeInMainWorld('electron', {
-  onUpdateAvailable: (callback: (version: string) => void) => {
-    const listener = (_event: IpcRendererEvent, version: string) => {
-      callback(version);
-    };
-    ipcRenderer.on('update:available', listener);
-    return () => ipcRenderer.removeListener('update:available', listener);
-  },
-});
-
-// Renderer usage
-const unsubscribe = window.electron.onUpdateAvailable((version) => {
-  console.log('Update available:', version);
-});
-// Later: unsubscribe();
+  readFile: (filePath: string, options?: FileReadOptions) =>
+    invoke<FileReadResult>(IPC_CHANNELS.FILE_READ, filePath, options),
 ```
 
-### 3. Bidirectional with Confirmation
+The renderer calls `window.electron.readFile(filePath, options)`.
 
-For operations requiring renderer confirmation:
+### One-Way Events (send and on)
+
+Use this pattern when the main process notifies the renderer. Do not use this pattern to return a result.
+
+The main process sends an event to each window that is not destroyed. The function `sendWatcherEvent` in `electron/fileWatcher.ts` sends `IPC_EVENTS.FILE_CHANGED` this way.
+
+The preload script registers listeners with the `createListener` helper in `electron/preload/index.ts`. The helper returns an unsubscribe function:
 
 ```typescript
-// Main process
-ipcMain.on('close-response', (event, canClose: boolean) => {
-  if (canClose) {
-    mainWindow.destroy();
-  }
-});
+/**
+ * Create an event listener that returns an unsubscribe function
+ */
+function createListener(channel: string, callback: (...args: unknown[]) => void): () => void {
+  const listener = (_event: Electron.IpcRendererEvent, ...args: unknown[]) => {
+    callback(...args);
+  };
+  ipcRenderer.on(channel, listener);
+  return () => {
+    ipcRenderer.removeListener(channel, listener);
+  };
+}
+```
 
-// When closing is requested
-mainWindow.webContents.send('window:closeRequested');
+The preload entries `onFileChanged` and `onFileDeleted` use this helper.
 
-// Preload
-contextBridge.exposeInMainWorld('electron', {
+### Bidirectional with Confirmation
+
+Use this pattern when the renderer must answer a request from the main process before the main process continues.
+
+The preload script exposes `onCloseRequested` in `electron/preload/index.ts`. The callback returns a promise of a boolean. The preload script sends the boolean back on the `close-response` channel:
+
+```typescript
   onCloseRequested: (callback: () => Promise<boolean>) => {
     const listener = async () => {
       const canClose = await callback();
       ipcRenderer.send('close-response', canClose);
     };
-    ipcRenderer.on('window:closeRequested', listener);
-    return () => ipcRenderer.removeListener('window:closeRequested', listener);
+    ipcRenderer.on(IPC_EVENTS.WINDOW_CLOSE_REQUESTED, listener);
+    return () => {
+      ipcRenderer.removeListener(IPC_EVENTS.WINDOW_CLOSE_REQUESTED, listener);
+    };
   },
-});
 ```
+
+No code in `electron/` sends `window-close-requested` to the renderer. No code in `electron/` receives `close-response` in the main process.
 
 ## Channel Naming Convention
 
-Channels follow a `category:action` pattern:
+The channel constants are in `electron/ipc/channels.ts`. The file exports two objects:
+
+- `IPC_CHANNELS` lists the request-response channels.
+- `IPC_EVENTS` lists the events that the main process sends to the renderer.
+
+Each key uses upper snake case. Each value is the key in lower case, with hyphens instead of underscores. For example, the key `FILE_READ` has the value `'file-read'`.
 
 ```typescript
 export const IPC_CHANNELS = {
-  // File operations
-  FILE_READ: 'file:read',
-  FILE_WRITE: 'file:write',
-  FILE_SAVE: 'file:save',
-  FILE_EXISTS: 'file:exists',
-  FILE_DELETE: 'file:delete',
-  FILE_COPY: 'file:copy',
-  FILE_MOVE: 'file:move',
-  FILE_GET_STATS: 'file:getStats',
-  FILE_GET_RECENT: 'file:getRecent',
-  FILE_ADD_RECENT: 'file:addRecent',
-  FILE_REMOVE_RECENT: 'file:removeRecent',
-  FILE_CLEAR_RECENT: 'file:clearRecent',
-
-  // Dialog operations
-  DIALOG_OPEN_FILE: 'dialog:openFile',
-  DIALOG_SAVE_FILE: 'dialog:saveFile',
-  DIALOG_MESSAGE: 'dialog:message',
-
-  // Folder operations
-  FOLDER_PICK: 'folder:pick',
-  FOLDER_LIST: 'folder:list',
-  FOLDER_CREATE: 'folder:create',
-
-  // Window operations
-  WINDOW_MINIMIZE: 'window:minimize',
-  WINDOW_MAXIMIZE: 'window:maximize',
-  WINDOW_CLOSE: 'window:close',
-  WINDOW_IS_MAXIMIZED: 'window:isMaximized',
-  WINDOW_SET_TITLE: 'window:setTitle',
-  WINDOW_GET_BOUNDS: 'window:getBounds',
-  WINDOW_SET_BOUNDS: 'window:setBounds',
-  WINDOW_SET_DOCUMENT_EDITED: 'window:setDocumentEdited',
-
-  // File watcher
-  WATCHER_START: 'watcher:start',
-  WATCHER_STOP: 'watcher:stop',
-  WATCHER_STOP_ALL: 'watcher:stopAll',
-
-  // Auto-save
-  AUTOSAVE_ENABLE: 'autosave:enable',
-  AUTOSAVE_DISABLE: 'autosave:disable',
-  AUTOSAVE_GET_RECOVERY: 'autosave:getRecovery',
-  AUTOSAVE_CLEAR_RECOVERY: 'autosave:clearRecovery',
-
-  // Backup
-  BACKUP_CREATE: 'backup:create',
-  BACKUP_LIST: 'backup:list',
-  BACKUP_RESTORE: 'backup:restore',
-  BACKUP_DELETE: 'backup:delete',
-
-  // Shell operations
-  SHELL_OPEN_EXTERNAL: 'shell:openExternal',
-  SHELL_OPEN_PATH: 'shell:openPath',
-  SHELL_SHOW_ITEM_IN_FOLDER: 'shell:showItemInFolder',
-  SHELL_TRASH_ITEM: 'shell:trashItem',
-
-  // Clipboard
-  CLIPBOARD_READ_TEXT: 'clipboard:readText',
-  CLIPBOARD_WRITE_TEXT: 'clipboard:writeText',
-  CLIPBOARD_READ_IMAGE: 'clipboard:readImage',
-  CLIPBOARD_WRITE_IMAGE: 'clipboard:writeImage',
-
-  // Notifications
-  NOTIFICATION_SHOW: 'notification:show',
-  NOTIFICATION_SHOW_EXTENDED: 'notification:showExtended',
-  NOTIFICATION_SHOW_SIMPLE: 'notification:showSimple',
-  NOTIFICATION_FILE_OPERATION: 'notification:fileOperation',
-  NOTIFICATION_BATCH_OPERATION: 'notification:batchOperation',
-  NOTIFICATION_CLOSE: 'notification:close',
-  NOTIFICATION_CLOSE_ALL: 'notification:closeAll',
-  NOTIFICATION_GET_PREFERENCES: 'notification:getPreferences',
-  NOTIFICATION_SET_PREFERENCES: 'notification:setPreferences',
-  NOTIFICATION_GET_HISTORY: 'notification:getHistory',
-  NOTIFICATION_GET_UNREAD_COUNT: 'notification:getUnreadCount',
-  NOTIFICATION_MARK_READ: 'notification:markRead',
-  NOTIFICATION_MARK_ALL_READ: 'notification:markAllRead',
-  NOTIFICATION_CLEAR_HISTORY: 'notification:clearHistory',
-
-  // System tray
-  TRAY_GET_STATUS: 'tray:getStatus',
-  TRAY_SET_STATUS: 'tray:setStatus',
-  TRAY_SET_PROGRESS: 'tray:setProgress',
-  TRAY_SET_TOOLTIP: 'tray:setTooltip',
-  TRAY_FLASH: 'tray:flash',
-
-  // Dock (macOS)
-  DOCK_SET_BADGE: 'dock:setBadge',
-  DOCK_CLEAR_BADGE: 'dock:clearBadge',
-  DOCK_BOUNCE: 'dock:bounce',
-  DOCK_GET_BADGE: 'dock:getBadge',
-
-  // Menu
-  MENU_UPDATE_STATE: 'menu:updateState',
-  MENU_GET_STATE: 'menu:getState',
-  CONTEXT_MENU_SHOW_DOCUMENT: 'contextMenu:showDocument',
-  CONTEXT_MENU_SHOW_ANNOTATION: 'contextMenu:showAnnotation',
-
-  // Shortcuts
-  SHORTCUTS_GET_CUSTOM: 'shortcuts:getCustom',
-  SHORTCUTS_SET_CUSTOM: 'shortcuts:setCustom',
-  SHORTCUTS_RESET_DEFAULTS: 'shortcuts:resetDefaults',
-
-  // Auto-update
-  UPDATE_GET_STATE: 'update:getState',
-  UPDATE_GET_SETTINGS: 'update:getSettings',
-  UPDATE_SET_SETTINGS: 'update:setSettings',
-  UPDATE_CHECK_FOR_UPDATES: 'update:checkForUpdates',
-  UPDATE_DOWNLOAD: 'update:download',
-  UPDATE_CANCEL_DOWNLOAD: 'update:cancelDownload',
-  UPDATE_INSTALL_AND_RESTART: 'update:installAndRestart',
-  UPDATE_INSTALL_LATER: 'update:installLater',
-  UPDATE_GET_RELEASE_NOTES: 'update:getReleaseNotes',
-
-  // Platform info
-  GET_PLATFORM_INFO: 'platform:getInfo',
-  GET_APP_PATH: 'app:getPath',
-  GET_APP_VERSION: 'app:getVersion',
-
-  // System info
-  SYSTEM_GET_MEMORY_INFO: 'system:getMemoryInfo',
-} as const;
+  // Platform and app info
+  GET_PLATFORM_INFO: 'get-platform-info',
+  GET_APP_PATH: 'get-app-path',
+  GET_APP_VERSION: 'get-app-version',
 ```
 
-## Event Channel Names
+The keys of `IPC_CHANNELS` group by feature. The first groups are file, folder, dialog, window, watcher, autosave, backup, shell, clipboard and notification. The other groups are tray, dock, menu, context menu, shortcuts, update, print, scanner, WebAuthn and safe storage. The keys of `IPC_EVENTS` group by feature in the same way.
 
-Events from main process to renderer:
+Some channels are string literals instead of constants. Examples are `close-response` in `electron/preload/index.ts`, the network channels in `electron/main/networkStatus.ts`, and `menu-fullscreen-changed` in `electron/ipc/menuHandlers.ts`. These names are not in `channels.ts`. Use the constants for new channels.
 
-```typescript
-export const IPC_EVENTS = {
-  // File events
-  FILE_OPENED: 'file:opened',
-  FILE_CHANGED: 'file:changed',
-  FILE_DELETED: 'file:deleted',
-
-  // Window events
-  WINDOW_CLOSE_REQUESTED: 'window:closeRequested',
-  WINDOW_HIDDEN: 'window:hidden',
-  WINDOW_SHOWN: 'window:shown',
-
-  // Auto-save events
-  AUTOSAVE_TRIGGERED: 'autosave:triggered',
-  RECOVERY_AVAILABLE: 'recovery:available',
-
-  // Menu events
-  MENU_FILE_NEW: 'menu:file:new',
-  MENU_FILE_OPEN: 'menu:file:open',
-  MENU_FILE_SAVE: 'menu:file:save',
-  MENU_FILE_SAVE_AS: 'menu:file:saveAs',
-  MENU_FILE_CLOSE: 'menu:file:close',
-  MENU_FILE_PRINT: 'menu:file:print',
-  MENU_EDIT_UNDO: 'menu:edit:undo',
-  MENU_EDIT_REDO: 'menu:edit:redo',
-  MENU_EDIT_FIND: 'menu:edit:find',
-  MENU_VIEW_ZOOM_IN: 'menu:view:zoomIn',
-  MENU_VIEW_ZOOM_OUT: 'menu:view:zoomOut',
-  MENU_VIEW_ZOOM_RESET: 'menu:view:zoomReset',
-  MENU_VIEW_FIT_WIDTH: 'menu:view:fitWidth',
-  MENU_VIEW_FIT_PAGE: 'menu:view:fitPage',
-  MENU_VIEW_MODE: 'menu:view:mode',
-  MENU_VIEW_TOGGLE_SIDEBAR: 'menu:view:toggleSidebar',
-  MENU_VIEW_TOGGLE_TOOLBAR: 'menu:view:toggleToolbar',
-  MENU_DOCUMENT_GO_TO_PAGE: 'menu:document:goToPage',
-  MENU_DOCUMENT_FIRST_PAGE: 'menu:document:firstPage',
-  MENU_DOCUMENT_PREVIOUS_PAGE: 'menu:document:previousPage',
-  MENU_DOCUMENT_NEXT_PAGE: 'menu:document:nextPage',
-  MENU_DOCUMENT_LAST_PAGE: 'menu:document:lastPage',
-  MENU_DOCUMENT_ROTATE_LEFT: 'menu:document:rotateLeft',
-  MENU_DOCUMENT_ROTATE_RIGHT: 'menu:document:rotateRight',
-  MENU_DOCUMENT_PROPERTIES: 'menu:document:properties',
-  MENU_ANNOTATION_HIGHLIGHT: 'menu:annotation:highlight',
-  MENU_ANNOTATION_UNDERLINE: 'menu:annotation:underline',
-  MENU_ANNOTATION_STRIKETHROUGH: 'menu:annotation:strikethrough',
-  MENU_ANNOTATION_NOTE: 'menu:annotation:note',
-  MENU_ANNOTATION_DRAWING: 'menu:annotation:drawing',
-  MENU_HELP_SHORTCUTS: 'menu:help:shortcuts',
-  MENU_HELP_ABOUT: 'menu:help:about',
-  MENU_PREFERENCES: 'menu:preferences',
-
-  // Context menu events
-  CONTEXT_MENU_DOCUMENT: 'contextMenu:document',
-  CONTEXT_MENU_ANNOTATION: 'contextMenu:annotation',
-
-  // Update events
-  UPDATE_STATE_CHANGED: 'update:stateChanged',
-  UPDATE_AVAILABLE: 'update:available',
-  UPDATE_DOWNLOADED: 'update:downloaded',
-  UPDATE_ERROR: 'update:error',
-
-  // Notification events
-  NOTIFICATION_CLICKED: 'notification:clicked',
-  NOTIFICATION_CLOSED: 'notification:closed',
-  NOTIFICATION_ACTION: 'notification:action',
-
-  // Tray events
-  TRAY_CLICKED: 'tray:clicked',
-  TRAY_DOUBLE_CLICKED: 'tray:doubleClicked',
-  TRAY_RIGHT_CLICKED: 'tray:rightClicked',
-
-  // App lifecycle
-  APP_BEFORE_QUIT: 'app:beforeQuit',
-} as const;
-```
+`electron/ipc/channels.ts` exports the types `IpcChannel` and `IpcEvent`. Each type is the union of the values of its object.
 
 ## Type Definitions
 
-All IPC operations use TypeScript types for safety:
+`electron/ipc/types.ts` declares the payload types. `src/types/electronTypes.ts` declares the same type names for the renderer. The names are:
 
-```typescript
-// ipc/types.ts
-
-export interface PlatformInfo {
-  platform: NodeJS.Platform;
-  arch: string;
-  version: string;
-  isPackaged: boolean;
-  electronVersion: string;
-  nodeVersion: string;
-  chromeVersion: string;
-}
-
-export interface AppPathInfo {
-  appPath: string;
-  userData: string;
-  temp: string;
-  documents: string;
-  downloads: string;
-}
-
-export interface FileDialogOptions {
-  title?: string;
-  defaultPath?: string;
-  filters?: Array<{ name: string; extensions: string[] }>;
-  properties?: Array<'openFile' | 'openDirectory' | 'multiSelections'>;
-}
-
-export interface FileDialogResult {
-  canceled: boolean;
-  filePaths: string[];
-  data?: ArrayBuffer;
-}
-
-export interface SaveDialogOptions {
-  title?: string;
-  defaultPath?: string;
-  filters?: Array<{ name: string; extensions: string[] }>;
-}
-
-export interface SaveDialogResult {
-  canceled: boolean;
-  filePath?: string;
-}
-
-export interface FileReadResult {
-  success: boolean;
-  data?: ArrayBuffer;
-  error?: string;
-}
-
-export interface FileWriteResult {
-  success: boolean;
-  error?: string;
-}
-
-export interface FileStats {
-  size: number;
-  created: number;
-  modified: number;
-  accessed: number;
-  isFile: boolean;
-  isDirectory: boolean;
-}
-
-export interface RecentFile {
-  path: string;
-  name: string;
-  lastOpened: number;
-}
-
-export interface FileWatcherEvent {
-  type: 'change' | 'delete' | 'rename';
-  path: string;
-  newPath?: string;
-}
-
-export interface NotificationOptions {
-  title: string;
-  body: string;
-  icon?: string;
-  silent?: boolean;
-}
-
-export interface ExtendedNotificationOptions extends NotificationOptions {
-  type?: 'info' | 'success' | 'warning' | 'error';
-  actions?: Array<{ id: string; title: string }>;
-  urgency?: 'normal' | 'critical' | 'low';
-  timeout?: number;
-}
-
-export interface UpdateState {
-  status: 'idle' | 'checking' | 'available' | 'downloading' | 'ready' | 'error';
-  version?: string;
-  releaseNotes?: string;
-  progress?: {
-    percent: number;
-    bytesPerSecond: number;
-    transferred: number;
-    total: number;
-  };
-  error?: string;
-}
-
-export interface UpdateSettings {
-  autoCheck: boolean;
-  autoDownload: boolean;
-  checkInterval: 'hourly' | 'daily' | 'weekly';
-  channel: 'stable' | 'beta' | 'alpha';
-}
-
-// Complete API interface
-export interface ElectronAPI {
-  // Platform info
-  getPlatformInfo: () => Promise<PlatformInfo>;
-  getAppPath: () => Promise<AppPathInfo>;
-  getAppVersion: () => Promise<string>;
-
-  // File operations
-  openFile: () => Promise<FileDialogResult>;
-  saveFile: (data: Uint8Array, defaultPath?: string) => Promise<SaveDialogResult>;
-  saveFileAs: (data: Uint8Array, defaultPath?: string) => Promise<SaveDialogResult>;
-  readFile: (filePath: string, options?: FileReadOptions) => Promise<FileReadResult>;
-  writeFile: (filePath: string, data: Uint8Array) => Promise<FileWriteResult>;
-  fileExists: (filePath: string) => Promise<boolean>;
-  getFileStats: (filePath: string) => Promise<FileStats | null>;
-  deleteFile: (filePath: string) => Promise<boolean>;
-  copyFile: (src: string, dest: string) => Promise<boolean>;
-  moveFile: (src: string, dest: string) => Promise<boolean>;
-
-  // Recent files
-  getRecentFiles: () => Promise<RecentFile[]>;
-  addRecentFile: (filePath: string) => Promise<void>;
-  removeRecentFile: (filePath: string) => Promise<void>;
-  clearRecentFiles: () => Promise<void>;
-
-  // Window operations
-  minimizeWindow: () => void;
-  maximizeWindow: () => void;
-  closeWindow: () => void;
-  isWindowMaximized: () => Promise<boolean>;
-  setWindowTitle: (title: string) => void;
-  setDocumentEdited: (edited: boolean) => void;
-
-  // ... many more methods
-
-  // Event listeners (all return unsubscribe function)
-  onFileOpened: (callback: (filePath: string) => void) => () => void;
-  onFileChanged: (callback: (event: FileWatcherEvent) => void) => () => void;
-  onMenuFileNew: (callback: () => void) => () => void;
-  onMenuFileSave: (callback: () => void) => () => void;
-  onUpdateAvailable: (callback: (version: string) => void) => () => void;
-  // ... many more event listeners
-}
-```
+- `PlatformInfo`, `AppPathInfo`
+- `FileDialogOptions`, `FileDialogResult`, `SaveDialogOptions`, `SaveDialogResult`
+- `FileReadOptions`, `FileReadResult`, `FileWriteResult`, `FileStats`, `RecentFile`, `FileWatcherEvent`
+- `NotificationOptions`, `ExtendedNotificationOptions`
+- `UpdateState`, `UpdateSettings`
+- `ElectronAPI`
 
 ## Best Practices
 
-### 1. Always Return Unsubscribe Functions
+### 1. Return an Unsubscribe Function for Each Listener
 
-```typescript
-// In preload
-onSomeEvent: (callback: (data: T) => void) => {
-  const listener = (_event: IpcRendererEvent, data: T) => callback(data);
-  ipcRenderer.on('some:event', listener);
-  return () => ipcRenderer.removeListener('some:event', listener);
-},
+Use the `createListener` helper for each event listener. The helper returns the unsubscribe function.
 
-// In React component
-useEffect(() => {
-  const unsubscribe = window.electron.onSomeEvent(handleEvent);
-  return () => unsubscribe();
-}, []);
-```
+In a React component, return the unsubscribe function from the effect. React calls it when the component unmounts.
 
-### 2. Use Type Guards in Handlers
+### 2. Check the Input Type in Each Handler
 
-```typescript
-ipcMain.handle('file:read', async (event, filePath: unknown) => {
-  if (typeof filePath !== 'string') {
-    return { success: false, error: 'Invalid file path' };
-  }
-  // Process...
-});
-```
+Check the type of each renderer input before the handler uses it. For example, the `FOLDER_LIST` handler returns an empty array when `folderPath` is not a string or the path is not approved. See `electron/ipc/fileHandlers.ts`, lines 254 to 257.
 
-### 3. Validate Paths for Security
+### 3. Check Paths with the Path Sandbox
 
-```typescript
-import path from 'path';
+`electron/ipc/pathSandbox.ts` stores the approved paths.
 
-function isPathAllowed(filePath: string, allowedDirs: string[]): boolean {
-  const normalized = path.normalize(filePath);
-  return allowedDirs.some(dir => normalized.startsWith(dir));
-}
-```
+- `approvePath` and `approvePaths` add approved paths. The file handlers call them after a dialog returns a path, and for each recent file.
+- `isPathAllowed` returns true only when the path lies under an approved root and the input has no `..` segment.
+- `assertPathAllowed` throws an error when `isPathAllowed` returns false.
 
-### 4. Handle Errors Gracefully
+Do not write a new path check with a plain string prefix test. The sandbox checks path segments and resolved paths.
 
-```typescript
-ipcMain.handle('file:read', async (event, filePath: string) => {
-  try {
-    const data = await fs.promises.readFile(filePath);
-    return { success: true, data: data.buffer };
-  } catch (error) {
-    console.error('Failed to read file:', error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    };
-  }
-});
-```
+### 4. Return a Result Object on Failure
 
-### 5. Use Consistent Response Formats
+The `FILE_READ` handler catches errors and returns `{ success: false, error }`. See the example in Request-Response (invoke and handle).
 
-```typescript
-interface IpcResponse<T = unknown> {
-  success: boolean;
-  data?: T;
-  error?: string;
-}
+### 5. Know the Response Shape of Each Handler
 
-// All handlers return same shape
-ipcMain.handle('operation', async () => {
-  try {
-    const result = await doOperation();
-    return { success: true, data: result };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-});
-```
+Handlers do not share one response type.
+
+- File operations return objects with `success` and `error` fields. Examples are `FileReadResult` and `FileWriteResult`.
+- Other handlers return plain values. The `GET_PLATFORM_INFO` handler returns the platform object directly.
 
 ## Debugging IPC
 
-Enable IPC logging in development:
+The function `setupIpc` in `electron/main/index.ts` adds a logger for development builds. A build is a development build when `isDev` is true. The constant `isDev` is `!app.isPackaged`.
+
+The logger replaces `ipcMain.handle`. The logger writes the channel and its arguments to the console before the handler runs:
 
 ```typescript
-// main/index.ts
-if (isDev) {
-  const originalHandle = ipcMain.handle.bind(ipcMain);
-  ipcMain.handle = function (channel: string, listener) {
-    return originalHandle(channel, async (event, ...args) => {
-      console.log(`[IPC] ${channel}`, args);
-      const result = await listener(event, ...args);
-      console.log(`[IPC] ${channel} -> `, result);
-      return result;
-    });
-  };
-}
+  // Log IPC calls in development mode
+  if (isDev) {
+    const originalInvoke = ipcMain.handle.bind(ipcMain);
+    ipcMain.handle = function (channel: string, listener: Parameters<typeof ipcMain.handle>[1]) {
+      return originalInvoke(channel, async (event, ...args) => {
+        console.log(`[IPC] ${channel}`, args);
+        return listener(event, ...args);
+      });
+    };
+  }
 ```
+
+The logger is installed after `setupIpcHandlers(ipcMain)` runs in `setupIpc`. The logger does not record the calls of the handlers that `setupIpcHandlers` registers.

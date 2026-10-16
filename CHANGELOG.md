@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **The hand-written architecture documents pass the drift gate.** `repo-tools check . --docs=docs/architecture`
+  reported ten documents without a `## Verification` section, and it exits 0 now. `ARCHITECTURE.md` holds five
+  verified metrics and `OVERVIEW.md` holds one. The other eight documents state no gate metric, so each carries the
+  explicit no-verification marker. The rewrite removed content that the code does not support (components, hooks and
+  IPC names that do not exist, and claims such as "no network calls" and "all operations work offline") and
+  corrected API facts. The text follows Simplified Technical English: `repo-tools ste docs/architecture` reports no
+  problem in these ten documents.
+
 - **The generated architecture reports are regenerated.** `repo-tools map . --out=docs/architecture` rewrote
   `DEPENDENCY_GRAPH.md`, `unused-analysis.md` and the three dependency JSON and YAML files, which were out of date
   against 746 tracked source files, and added the reports that the canonical set holds and the repository did not:
