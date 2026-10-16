@@ -27,7 +27,8 @@ import type { SyncConflict, ConflictResolutionStrategy } from '@/types/offline';
 /**
  * Props for the `ConflictDialog` component.
  * `ConflictDialog` renders nothing unless `isOpen` is true and `conflict` holds a conflict. `onClose` runs when the
- * user selects Cancel, clicks the close button or clicks the backdrop, and after the user resolves the conflict.
+ * user selects Cancel, clicks the close button, or clicks the backdrop. `onClose` also runs after the user resolves the
+ * conflict.
  */
 export interface ConflictDialogProps {
   isOpen: boolean;

@@ -159,8 +159,8 @@ export interface ElectronMenuEventHandlers {
  * Subscribe to Electron menu events for as long as the component is mounted.
  *
  * Subscriptions exist only in Electron, and only for the handlers given. The hook removes the subscriptions when the
- * component unmounts. The hook makes the subscriptions again whenever the `handlers` argument is a new object, such as
- * an object literal on each render.
+ * component unmounts. The hook makes the subscriptions again whenever the `handlers` argument is a new object. An
+ * object literal in the call creates a new object on each render.
  *
  * @example
  * ```tsx

@@ -174,8 +174,8 @@ interface WithLockCheckProps {
 }
 
 /**
- * The higher-order component disables a control when policy locks the setting. If policy locks the setting, the
- * returned component sets `disabled` on the control and shows a lock badge.
+ * The higher-order component disables a control when policy locks the setting.
+ * If policy locks the setting, the returned component sets `disabled` on the control and shows a lock badge.
  */
 // eslint-disable-next-line react-refresh/only-export-components -- HOC pattern requires function export
 export function withLockCheck<P extends object>(

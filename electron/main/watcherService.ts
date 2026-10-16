@@ -453,7 +453,7 @@ export function watchFile(filePath: string, options?: Partial<WatcherOptions>): 
 /**
  * Stop watching a file through the shared watcher service.
  *
- * Resolve to true when the service stops a watch, and resolve to false when the service does not watch the path.
+ * Resolve to true when the service stops a watch. Resolve to false when the service does not watch the path.
  */
 export function unwatchFile(filePath: string): Promise<boolean> {
   return watcherService.unwatchFile(filePath);

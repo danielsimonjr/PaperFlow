@@ -237,9 +237,9 @@ function ResourceMonitor({
 
 /**
  * The dashboard reads batch jobs from the native batch store.
- * The dashboard shows queue controls, a card per job, queue statistics, and resource usage when the store holds the
- * usage data. Job cards offer pause, resume, retry, and cancel by job status. Pause and resume operations act on the
- * whole queue.
+ * The dashboard shows queue controls, a card per job, and queue statistics. The dashboard also shows resource usage
+ * when the store holds the usage data. Job cards offer pause, resume, retry, and cancel by job status. Pause and resume
+ * operations act on the whole queue.
  */
 export function BatchDashboard({
   activeOnly = false,
