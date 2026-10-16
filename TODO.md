@@ -5,13 +5,9 @@ Sprint-level planning lives in `docs/planning/sprints/PHASE_X_SPRINT_Y_TODO.json
 
 ## Open
 
-- [ ] **The web E2E suite is not green: 6 of 141 chromium tests fail and 43 skip.**
+- [ ] **The web E2E suite is not green: 4 of 141 chromium tests fail and 43 skip.**
   Measured with `npx playwright test --project=chromium` (`playwright.config.ts`, `tests/e2e`):
-  92 pass. A full run takes about a minute. The 6 failures, by cause:
-  - **Spec geometry** (`cross-platform/editing`, "should add highlight annotation" and "should
-    draw freehand annotation"). The specs offset from `pdf-viewer` (the `<main>` region, which
-    starts left of the page) and then move the mouse in viewport coordinates, so the drag never
-    reaches the page. The product handles both gestures when the drag is aimed at the page.
+  94 pass. A full run takes about a minute. The 4 failures, by cause:
   - **UI that no route mounts** (3 signature tests in `cross-platform/editing`). `SignatureModal`
     is hosted only by `AnnotationToolbar`, and no route renders `AnnotationToolbar`. The
     `tool-signature`, `signature-modal`, `signature-pad`, `apply-signature-btn` and
