@@ -7,6 +7,9 @@ import type { OCRResult, BoundingBox } from './types';
 import type { LayoutAnalysis, Table } from './layoutAnalyzer';
 import { tableToCSV } from './layoutAnalyzer';
 
+/**
+ * Options for exporting OCR results. Only the HTML export reads includeConfidence, and only the JSON export reads includeBoundingBoxes.
+ */
 export interface ExportOptions {
   /** Include confidence scores in output */
   includeConfidence: boolean;

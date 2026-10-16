@@ -6,6 +6,9 @@
 import { PDFDocument, rgb, StandardFonts, PDFPage, PDFFont } from 'pdf-lib';
 import type { OCRResult } from './types';
 
+/**
+ * Options for embedding an OCR text layer in a PDF. embedTextLayer reads only invisible; no code reads preserveFormatting.
+ */
 export interface EmbedOptions {
   /** If true, text is invisible (for overlay on scanned images) */
   invisible: boolean;
@@ -13,6 +16,9 @@ export interface EmbedOptions {
   preserveFormatting: boolean;
 }
 
+/**
+ * The result of embedding a text layer: the new PDF bytes, counts and any errors.
+ */
 export interface EmbedResult {
   success: boolean;
   pdfBytes: ArrayBuffer | null;

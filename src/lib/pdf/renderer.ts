@@ -8,11 +8,17 @@ const isElectron = typeof (window as any).electron !== 'undefined' ||
   (typeof window !== 'undefined' && window.location?.protocol === 'file:');
 pdfjsLib.GlobalWorkerOptions.workerSrc = isElectron ? './pdf.worker.min.js' : '/pdf.worker.min.js';
 
+/**
+ * The size of a rendered page, in CSS pixels.
+ */
 export interface RenderResult {
   width: number;
   height: number;
 }
 
+/**
+ * Loads a PDF with PDF.js, then renders its pages, reads their text and outline, and releases it.
+ */
 export class PDFRenderer {
   private document: pdfjsLib.PDFDocumentProxy | null = null;
   private renderTasks: Map<number, pdfjsLib.RenderTask> = new Map();

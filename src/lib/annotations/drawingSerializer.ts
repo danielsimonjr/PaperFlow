@@ -9,10 +9,16 @@ export interface SerializedPoint {
   pressure?: number;
 }
 
+/**
+ * One drawn stroke, stored as an ordered list of points.
+ */
 export interface SerializedDrawingPath {
   points: SerializedPoint[];
 }
 
+/**
+ * A serialized drawing annotation with its strokes, style and timestamps.
+ */
 export interface SerializedDrawing {
   id: string;
   type: 'drawing';

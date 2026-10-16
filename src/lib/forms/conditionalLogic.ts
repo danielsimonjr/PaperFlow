@@ -17,8 +17,15 @@ export type ComparisonOperator =
   | 'greaterThanOrEqual'
   | 'lessThanOrEqual';
 
+/**
+ * How the conditions of one group combine: every condition or any condition.
+ */
 export type LogicalOperator = 'and' | 'or';
 
+/**
+ * An action that a conditional rule names for its target field.
+ * evaluateRule turns each action into a FieldStateChange. It does not apply the change.
+ */
 export type ConditionalAction =
   | 'show'
   | 'hide'
@@ -28,6 +35,9 @@ export type ConditionalAction =
   | 'unrequire'
   | 'setValue';
 
+/**
+ * One comparison of a form field's value with a given value.
+ */
 export interface Condition {
   /** Field ID to check */
   fieldId: string;
@@ -37,6 +47,9 @@ export interface Condition {
   value: string;
 }
 
+/**
+ * A group of conditions, or of nested groups, that combine with one logical operator.
+ */
 export interface ConditionGroup {
   /** Logical operator between conditions */
   logicalOperator: LogicalOperator;
@@ -44,6 +57,10 @@ export interface ConditionGroup {
   conditions: (Condition | ConditionGroup)[];
 }
 
+/**
+ * A rule that names actions for a target field, chosen by whether its condition group holds.
+ * evaluateRule only returns the matching changes. It does not apply them.
+ */
 export interface ConditionalRule {
   /** Unique rule ID */
   id: string;
@@ -59,6 +76,9 @@ export interface ConditionalRule {
   actionsIfFalse?: ActionDefinition[];
 }
 
+/**
+ * One action of a conditional rule, with an optional value for the setValue action.
+ */
 export interface ActionDefinition {
   /** Type of action */
   action: ConditionalAction;
@@ -66,6 +86,9 @@ export interface ActionDefinition {
   value?: string;
 }
 
+/**
+ * The result of evaluating a conditional rule: whether it held and the state changes to apply.
+ */
 export interface ConditionalResult {
   /** Whether the condition evaluated to true */
   conditionMet: boolean;
@@ -75,6 +98,9 @@ export interface ConditionalResult {
   stateChanges: FieldStateChange[];
 }
 
+/**
+ * One change to a property of a form field, such as its visibility or value.
+ */
 export interface FieldStateChange {
   fieldId: string;
   property: 'visible' | 'enabled' | 'required' | 'value';

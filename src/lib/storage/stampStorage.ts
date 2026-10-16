@@ -6,6 +6,9 @@ const DB_NAME = 'paperflow-stamps';
 const DB_VERSION = 1;
 const STORE_NAME = 'custom-stamps';
 
+/**
+ * A custom stamp, with its text, text color, background color and creation time.
+ */
 export interface CustomStamp {
   id: string;
   text: string;

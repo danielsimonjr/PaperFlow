@@ -391,6 +391,9 @@ export const SECRET_KEYS = {
   SYNC_TOKEN: 'sync-token',
 } as const;
 
+/**
+ * One of the well-known secret names.
+ */
 export type SecretKey = (typeof SECRET_KEYS)[keyof typeof SECRET_KEYS];
 
 export default SecretsManager;

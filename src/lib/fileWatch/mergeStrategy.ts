@@ -9,6 +9,9 @@ import type { MergeStrategy, Conflict } from './conflictHandler';
 import type { UnsavedChanges } from './smartReload';
 import type { ChangeSummary } from './changeDetector';
 
+/**
+ * The display details and guidance for one merge strategy, including its risks.
+ */
 export interface MergeStrategyConfig {
   strategy: MergeStrategy;
   label: string;
@@ -19,6 +22,11 @@ export interface MergeStrategyConfig {
   risks: string[];
 }
 
+/**
+ * Options for a merge: the strategy, the conflict pages and the pages to skip.
+ * executeMerge reads skipPages only for merge-prefer-local, and conflictPageNumbers only for merge-prefer-external.
+ * executeMerge never reads preserveAllLocal or preserveAllExternal.
+ */
 export interface MergeOptions {
   strategy: MergeStrategy;
   preserveAllLocal: boolean;
@@ -27,6 +35,9 @@ export interface MergeOptions {
   skipPages: number[];
 }
 
+/**
+ * The outcome of a merge, with the merged data and counts of skipped items.
+ */
 export interface MergeResult {
   success: boolean;
   strategy: MergeStrategy;

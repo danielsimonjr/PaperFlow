@@ -46,6 +46,11 @@ export function isPrivateOrLoopbackIP(address: string): boolean {
   return false;
 }
 
+/**
+ * Options for assertSafeURL, for test and loopback use.
+ * allowInsecureURL skips the https and address checks.
+ * validateSSL set to false makes assertSafeURL throw unless allowInsecureURL is also set.
+ */
 export interface URLValidationOptions {
   /** Allow http:// and private hosts (test/loopback only). Default false. */
   allowInsecureURL?: boolean;

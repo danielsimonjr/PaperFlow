@@ -5,6 +5,9 @@ import type { Annotation } from '@/types';
 import type { FormField } from '@/types/forms';
 import { renderPageForPrint, type PrintRenderOptions } from './printRenderer';
 
+/**
+ * Options for printing: the pages, scale, orientation, copies and what to include.
+ */
 export interface PrintOptions {
   pages: number[];
   scaleType: ScaleType;

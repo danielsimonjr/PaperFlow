@@ -5,6 +5,9 @@
 
 export type CalculationOperator = 'sum' | 'average' | 'min' | 'max' | 'product' | 'custom';
 
+/**
+ * The definition of a calculated form field, with its operator, source fields and display format.
+ */
 export interface CalculationDefinition {
   /** Type of calculation */
   operator: CalculationOperator;
@@ -20,6 +23,9 @@ export interface CalculationDefinition {
   suffix?: string;
 }
 
+/**
+ * The result of executing a calculation: the value, its formatted text and any error.
+ */
 export interface CalculationResult {
   value: number;
   formattedValue: string;

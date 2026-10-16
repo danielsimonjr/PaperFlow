@@ -1,10 +1,16 @@
 import { PDFDocument } from 'pdf-lib';
 
+/**
+ * A PDF file to merge, with its display name and bytes.
+ */
 export interface MergeFile {
   name: string;
   data: ArrayBuffer;
 }
 
+/**
+ * The progress of a merge, with the current file and the percentage complete.
+ */
 export interface MergeProgress {
   currentFile: number;
   totalFiles: number;
@@ -12,6 +18,10 @@ export interface MergeProgress {
   percentComplete: number;
 }
 
+/**
+ * A function that the merge functions call with their progress.
+ * With two or more files, mergePdfs calls it before each file is copied and once more after the last.
+ */
 export type MergeProgressCallback = (progress: MergeProgress) => void;
 
 /**

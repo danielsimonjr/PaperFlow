@@ -474,41 +474,73 @@ export const eventSubscriptions = {
     return window.electron!.onMenuFileNew(callback);
   },
 
+  /**
+   * Subscribe to the file open menu event.
+   * Returns a function that removes the subscription; it does nothing outside Electron.
+   */
   onMenuFileOpen(callback: () => void): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onMenuFileOpen(callback);
   },
 
+  /**
+   * Subscribe to the file save menu event.
+   * Returns a function that removes the subscription; it does nothing outside Electron.
+   */
   onMenuFileSave(callback: () => void): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onMenuFileSave(callback);
   },
 
+  /**
+   * Subscribe to the file save as menu event.
+   * Returns a function that removes the subscription; it does nothing outside Electron.
+   */
   onMenuFileSaveAs(callback: () => void): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onMenuFileSaveAs(callback);
   },
 
+  /**
+   * Subscribe to the undo menu event.
+   * Returns a function that removes the subscription; it does nothing outside Electron.
+   */
   onMenuEditUndo(callback: () => void): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onMenuEditUndo(callback);
   },
 
+  /**
+   * Subscribe to the redo menu event.
+   * Returns a function that removes the subscription; it does nothing outside Electron.
+   */
   onMenuEditRedo(callback: () => void): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onMenuEditRedo(callback);
   },
 
+  /**
+   * Subscribe to the zoom in menu event.
+   * Returns a function that removes the subscription; it does nothing outside Electron.
+   */
   onMenuViewZoomIn(callback: () => void): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onMenuViewZoomIn(callback);
   },
 
+  /**
+   * Subscribe to the zoom out menu event.
+   * Returns a function that removes the subscription; it does nothing outside Electron.
+   */
   onMenuViewZoomOut(callback: () => void): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onMenuViewZoomOut(callback);
   },
 
+  /**
+   * Subscribe to the zoom reset menu event.
+   * Returns a function that removes the subscription; it does nothing outside Electron.
+   */
   onMenuViewZoomReset(callback: () => void): () => void {
     if (!isElectron()) return () => {};
     return window.electron!.onMenuViewZoomReset(callback);

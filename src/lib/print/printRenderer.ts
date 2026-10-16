@@ -2,6 +2,9 @@ import type { PageRenderer } from '@lib/export/imageExport';
 import type { Annotation } from '@/types';
 import type { FormField } from '@/types/forms';
 
+/**
+ * Options for rendering one page for printing, including annotations and form fields.
+ */
 export interface PrintRenderOptions {
   includeAnnotations: boolean;
   includeFormFields: boolean;

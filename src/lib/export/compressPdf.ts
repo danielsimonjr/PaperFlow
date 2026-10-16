@@ -1,11 +1,17 @@
 import { PDFDocument } from 'pdf-lib';
 
+/**
+ * Settings for compressPdf. compressPdf reads only removeMetadata and ignores imageQuality and subsampleImages.
+ */
 export interface CompressOptions {
   imageQuality: number; // 0.1 to 1.0
   removeMetadata: boolean;
   subsampleImages: boolean;
 }
 
+/**
+ * The result of compressPdf, with both sizes in bytes and the percentage saved.
+ */
 export interface CompressionResult {
   originalSize: number;
   compressedSize: number;

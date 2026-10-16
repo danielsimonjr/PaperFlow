@@ -1,5 +1,8 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
 
+/**
+ * A file that the user chose, with its file system handle when the browser gives one.
+ */
 export interface FileHandle {
   handle: FileSystemFileHandle | null;
   fileName: string;
@@ -10,6 +13,10 @@ export interface FileHandle {
 export const isFileSystemAccessSupported = supported;
 
 // Open a PDF file using the file picker
+/**
+ * Show the file picker for PDF files and return the chosen file and its handle.
+ * The handle is missing when the browser does not provide one.
+ */
 export async function openPdfFile(): Promise<{ file: File; handle: FileSystemFileHandle | null }> {
   const file = await fileOpen({
     mimeTypes: ['application/pdf'],
@@ -24,6 +31,11 @@ export async function openPdfFile(): Promise<{ file: File; handle: FileSystemFil
 }
 
 // Save PDF to file
+/**
+ * Save a PDF blob, reusing the given file handle when one is passed.
+ * Returns the saved file handle, or nothing when the user cancels or no handle is returned.
+ * Other errors are rethrown.
+ */
 export async function savePdfFile(
   blob: Blob,
   existingHandle: FileSystemFileHandle | null,
@@ -51,6 +63,9 @@ export async function savePdfFile(
 }
 
 // Save PDF as a new file (always show file picker)
+/**
+ * Save a PDF blob as a new file, without reusing an existing file handle.
+ */
 export async function savePdfFileAs(
   blob: Blob,
   suggestedName: string = 'document.pdf'
@@ -59,6 +74,9 @@ export async function savePdfFileAs(
 }
 
 // Download PDF as fallback when File System Access API is not supported
+/**
+ * Download a PDF blob through a temporary link, as a fallback for browsers without file system access.
+ */
 export function downloadPdf(blob: Blob, fileName: string = 'document.pdf'): void {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
@@ -71,6 +89,12 @@ export function downloadPdf(blob: Blob, fileName: string = 'document.pdf'): void
 }
 
 // Fetch PDF from URL
+/**
+ * Fetch a PDF from a URL and return its bytes.
+ * Throws when the response has an error status or a content type other than PDF or octet-stream.
+ * A response with no content type is not checked.
+ * onProgress receives the bytes loaded so far and the total, when the length is known.
+ */
 export async function fetchPdfFromUrl(
   url: string,
   onProgress?: (loaded: number, total: number) => void
@@ -125,6 +149,9 @@ export async function fetchPdfFromUrl(
 }
 
 // Generate a unique file ID for IndexedDB storage
+/**
+ * Generate an ID for IndexedDB storage from the file name, the current time and a random suffix.
+ */
 export function generateFileId(fileName: string): string {
   const timestamp = Date.now();
   const random = Math.random().toString(36).substring(2, 8);

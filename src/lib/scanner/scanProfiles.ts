@@ -358,6 +358,9 @@ export class ScanProfilesManager {
 // Singleton instance
 let instance: ScanProfilesManager | null = null;
 
+/**
+ * Return the shared scan profiles manager, which is created on the first call.
+ */
 export function getScanProfilesManager(): ScanProfilesManager {
   if (!instance) {
     instance = new ScanProfilesManager();

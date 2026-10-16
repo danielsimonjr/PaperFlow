@@ -1,5 +1,8 @@
 import { PDFDocument } from 'pdf-lib';
 
+/**
+ * One PDF that a split produces, with its name, bytes, page range and page count.
+ */
 export interface SplitResult {
   name: string;
   data: Uint8Array;
@@ -7,12 +10,18 @@ export interface SplitResult {
   pageCount: number;
 }
 
+/**
+ * The progress of a split: the current step, the total steps and the percentage complete.
+ */
 export interface SplitProgress {
   current: number;
   total: number;
   percentComplete: number;
 }
 
+/**
+ * A function that a split calls with its progress as it works.
+ */
 export type SplitProgressCallback = (progress: SplitProgress) => void;
 
 /**

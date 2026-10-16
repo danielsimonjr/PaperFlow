@@ -1,5 +1,8 @@
 import { PDFDocument } from 'pdf-lib';
 
+/**
+ * Options for savePdf. savePdf does not read any of these fields.
+ */
 export interface SaveOptions {
   preserveEditHistory?: boolean;
   flattenAnnotations?: boolean;

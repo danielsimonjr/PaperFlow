@@ -311,6 +311,9 @@ export class ScanOCR {
 // Singleton instance
 let instance: ScanOCR | null = null;
 
+/**
+ * Return the shared scan OCR service, which is created on the first call.
+ */
 export function getScanOCR(): ScanOCR {
   if (!instance) {
     instance = new ScanOCR();

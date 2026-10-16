@@ -343,6 +343,10 @@ export class WebAuthnClient {
 // Singleton instance
 let instance: WebAuthnClient | null = null;
 
+/**
+ * Return the shared WebAuthn client, which is created on the first call.
+ * The config applies only when the instance is first created.
+ */
 export function getWebAuthnClient(
   config?: Partial<WebAuthnClientConfig>
 ): WebAuthnClient {
