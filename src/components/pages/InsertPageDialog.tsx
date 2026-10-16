@@ -7,7 +7,7 @@ import type { PageSize } from '@lib/pages/pageOperations';
 
 /**
  * Props for the `InsertPageDialog` component.
- * The component reads `position` once when the dialog mounts. `onInsert` receives the position and the page size.
+ * The component reads `position` each time the dialog opens. `onInsert` receives the position and the page size.
  */
 export interface InsertPageDialogProps {
   open: boolean;
@@ -39,6 +39,14 @@ export function InsertPageDialog({
 }: InsertPageDialogProps) {
   const [position, setPosition] = useState<'before' | 'after'>(initialPosition);
   const [pageSize, setPageSize] = useState<PageSize>('match');
+  const [wasOpen, setWasOpen] = useState(open);
+
+  // The parent keeps this component mounted and opens it with the `open` prop, so `useState` ran only once. Read the
+  // position again on each change from closed to open, before the first paint of the open dialog.
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    if (open) setPosition(initialPosition);
+  }
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -53,12 +61,10 @@ export function InsertPageDialog({
     (open: boolean) => {
       if (!open) {
         setPageSize('match');
-      } else {
-        setPosition(initialPosition);
       }
       onOpenChange(open);
     },
-    [initialPosition, onOpenChange]
+    [onOpenChange]
   );
 
   return (

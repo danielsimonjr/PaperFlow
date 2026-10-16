@@ -55,6 +55,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **The search bar uses the option that you chose, and Enter steps to the next match. The Insert Page dialog uses the
+  position of each open.** `useSearch.search` read the case and whole-word options from the render that created it, so a
+  click on a toggle searched again with the previous option. `search` now takes the options as a second argument, and the
+  two toggles pass the new options. In the search box, Enter always ran a new search, which moved the view back to the
+  first match, and the window handler for Enter also ran. Enter now goes to the next match, and Shift+Enter to the
+  previous match, when the text did not change since the last search. Enter searches when the text changed. The window
+  handler ignores key events from the box. An empty query that cancelled a running search left `isSearching` true.
+  The flag now resets. `InsertPageDialog` read `position` once, when it mounted, and its parent keeps it mounted, so
+  the dialog opened with the position of its first use. It now reads `position` on each change from closed to open.
+  The new tests are `tests/unit/components/toolbar/SearchBar.test.tsx`,
+  `tests/unit/components/pages/InsertPageDialog.test.tsx` and two cases in `tests/unit/hooks/useSearch.test.ts`.
+  The titles of the two search toggles name the shortcuts Alt+C and Alt+W. No handler for them exists, and this change
+  does not add one.
+
 - **The OCR dialog and results panel use the right page, scale and status.** `documentStore.currentPage` is 1-based
   and the OCR run takes 0-based page indices. The "Current page" option sent the 1-based number, so OCR read the
   next page, and failed on the last page. The option now sends `currentPage - 1`, and its label shows the page number.

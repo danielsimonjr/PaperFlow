@@ -206,6 +206,30 @@ describe('useSearch', () => {
     });
   });
 
+  it('searches with the options that the call passes, not the options of the hook state', async () => {
+    const { result } = renderHook(() =>
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
+    );
+
+    // The state still holds the defaults: any case.
+    expect(result.current.options.caseSensitive).toBe(false);
+
+    await act(async () => {
+      await result.current.search('this', { caseSensitive: true, wholeWord: false });
+    });
+
+    // "this" never appears in lower case, so a case-sensitive search finds nothing.
+    expect(result.current.matches).toEqual([]);
+    expect(result.current.options.caseSensitive).toBe(false);
+
+    await act(async () => {
+      await result.current.search('this');
+    });
+
+    // Without options in the call, the search uses the hook state, which ignores case.
+    expect(result.current.matches.length).toBe(2);
+  });
+
   it('returns no matches for empty query', async () => {
     const { result } = renderHook(() =>
       useSearch({ renderer: mockRenderer, pageCount: 3 })
@@ -217,6 +241,26 @@ describe('useSearch', () => {
 
     expect(result.current.matches).toEqual([]);
     expect(mockGetTextContentAsString).not.toHaveBeenCalled();
+  });
+
+  it('stops reporting a search in progress when an empty query cancels it', async () => {
+    // The first page never answers, so the first search stays in progress.
+    mockGetTextContentAsString.mockImplementation(() => new Promise<string>(() => {}));
+    const { result } = renderHook(() =>
+      useSearch({ renderer: mockRenderer, pageCount: 3 })
+    );
+
+    act(() => {
+      void result.current.search('page');
+    });
+    expect(result.current.isSearching).toBe(true);
+
+    await act(async () => {
+      await result.current.search('');
+    });
+
+    expect(result.current.isSearching).toBe(false);
+    expect(result.current.matches).toEqual([]);
   });
 
   it('returns no matches when renderer is null', async () => {
