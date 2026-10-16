@@ -5,7 +5,7 @@
     "language": "typescript",
     "totalFiles": 746,
     "totalModules": 4,
-    "totalExports": 3406
+    "totalExports": 3405
   },
   "modules": {
     "src": {
@@ -12950,8 +12950,7 @@
           "Annotation",
           "PDFDocument",
           "Signature",
-          "FormField",
-          "HistoryEntry"
+          "FormField"
         ]
       },
       "src/types/kioskConfig.ts": {
@@ -15521,8 +15520,8 @@
     "totalTypeScriptFiles": 746,
     "totalSourceFiles": 746,
     "totalModules": 4,
-    "totalLinesOfCode": 176938,
-    "totalExports": 3406,
+    "totalLinesOfCode": 176919,
+    "totalExports": 3405,
     "entryRoots": 0,
     "reachableFiles": 0,
     "dormantFiles": 546,
@@ -15532,14 +15531,14 @@
     "typeOnlyCircularDeps": 0,
     "totalTypeOnlyImports": 92,
     "noImporterFileCount": 234,
-    "unusedExportsCount": 1278,
+    "unusedExportsCount": 1277,
     "circularDepsTruncated": false,
     "runtimeCyclicComponents": 0,
     "typeOnlyCyclicComponents": 0,
     "runtimeFilesInCycles": 0,
     "typeOnlyFilesInCycles": 0,
     "totalClasses": 69,
-    "totalInterfaces": 686,
+    "totalInterfaces": 685,
     "totalFunctions": 1436,
     "totalTypeGuards": 59,
     "totalEnums": 3,

@@ -2764,14 +2764,14 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 416
+      "loc": 411
     },
     {
       "file": "src/lib/fileWatch/statePreserver.ts",
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 315
+      "loc": 313
     },
     {
       "file": "src/lib/fileWatch/watchQueue.ts",
@@ -3807,7 +3807,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 130
+      "loc": 118
     },
     {
       "file": "src/types/kioskConfig.ts",

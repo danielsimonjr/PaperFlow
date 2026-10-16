@@ -288,6 +288,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `@eslint/config-array`) went with it. An override whose parent no longer exists is config that
   cannot do anything, and leaving it would have implied a dependency the tree does not have.
   Verified by `bun why`: all four names now report "No packages matching ... found in lockfile".
+- **Three options and one type that no code reads are removed.** `ReloadOptions.mergeAnnotations` and
+  `ReloadOptions.promptOnConflict` (`src/lib/fileWatch/smartReload.ts`), `StatePreserverOptions.includeUIState`
+  (`src/lib/fileWatch/statePreserver.ts`) and the exported interface `HistoryEntry` (`src/types/index.ts`) had no reader.
+  No caller sets the three options, and `historyStore` declares its own `HistoryEntry`, so no behavior changes. The
+  generated architecture reports are regenerated with `repo-tools` 2.2.3, and `ARCHITECTURE.md` states the new counts
+  (3405 exports and 685 interfaces). The doc comments that said the options had no reader are updated.
 
 ### Changed
 

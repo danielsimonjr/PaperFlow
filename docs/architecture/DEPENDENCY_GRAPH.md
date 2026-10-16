@@ -8654,7 +8654,7 @@ The codebase is organized into the following modules:
 ### `src/types/index.ts` - Kind of annotation or annotation tool, including the eraser.
 
 **Exports:**
-- Interfaces: `AnnotationRect`, `AnnotationReply`, `DrawingPath`, `Annotation`, `PDFDocument`, `Signature`, `FormField`, `HistoryEntry`
+- Interfaces: `AnnotationRect`, `AnnotationReply`, `DrawingPath`, `Annotation`, `PDFDocument`, `Signature`, `FormField`
 - Types: `AnnotationType`
 
 ---
@@ -9160,11 +9160,11 @@ graph TD
 |----------|-------|
 | Total Source Files | 746 |
 | Subsystems | 20 |
-| Total Lines of Code | 176938 |
-| Total Exports | 3406 |
+| Total Lines of Code | 176919 |
+| Total Exports | 3405 |
 | Total Re-exports | 812 |
 | Total Classes | 69 |
-| Total Interfaces | 686 |
+| Total Interfaces | 685 |
 | Total Functions | 1436 |
 | Total Type Guards | 59 |
 | Total Enums | 3 |
