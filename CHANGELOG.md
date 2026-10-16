@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **The exported symbols carry doc comments, and the code-docs gate passes.** `repo-tools docs check .` reported 404 MUST
   issues on the unmodified tree and reports 0 now, with 2407 of 2414 exported symbols documented. The change adds 411 doc
-  blocks in 212 files, 1698 comment lines, and removes no line. A second reader compared every new comment with the code
+  blocks in 212 files, 1654 comment lines, and removes no line. A second reader compared every new comment with the code
   and corrected 103 comments that were false or overstated. Where the code does not do what its option or control says
   (an option with no reader, a control with no effect), the comment now says so. Those cases are open work, not fixed here. The comments follow Simplified Technical English:
   a passive sentence with no named actor, an ambiguous pronoun and a sentence over 20 words are rewritten.
