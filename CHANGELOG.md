@@ -19,10 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **The exported symbols carry doc comments, and the code-docs gate passes.** `repo-tools docs check .` reported 404 MUST
   issues on the unmodified tree and reports 0 now, with 2407 of 2414 exported symbols documented. The change adds 411 doc
-  blocks in 212 files, 1654 comment lines, and removes no line. A second reader compared every new comment with the code
-  and corrected 103 comments that were false or overstated. Where the code does not do what its option or control says
-  (an option with no reader, a control with no effect), the comment now says so. Those cases are open work, not fixed here. The comments follow Simplified Technical English:
-  a passive sentence with no named actor, an ambiguous pronoun and a sentence over 20 words are rewritten.
+  blocks in 212 files and 1703 comment lines. The code is the same: the esbuild output, which drops comments, is the same
+  for all 212 files. One `@example` of 12 lines moved from an interface to the hook that it calls, and that is the only
+  removal. A second reader compared every new comment with the code and corrected 103 comments that were false or
+  overstated. Where the code does not do what its option or control says (an option with no reader, a control with no
+  effect), the comment now says so. Those cases are open work, not fixed here.
+  A local model rewrote the comments that the style checks flagged: a passive sentence with no named actor, an ambiguous
+  pronoun, a modal, a sentence over 20 words, or more than three sentences. The author read each rewrite. Of the 146
+  flagged comments, 132 changed and 14 kept their original text. The doc scan reports 3214 SHOULD issues, against 3222
+  before the rewrite.
   The generated architecture reports are regenerated for the new source, and `ARCHITECTURE.md` states the export
   and function counts that the drift gate reads from them (3259 exports, 1293 functions).
 
