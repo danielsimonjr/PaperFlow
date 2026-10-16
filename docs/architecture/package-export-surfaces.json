@@ -1,0 +1,19 @@
+{
+  "surfaces": {
+    "cli": [],
+    "components": [],
+    "constants": [],
+    "contexts": [],
+    "electron": [],
+    "hooks": [],
+    "lib": [],
+    "pages": [],
+    "public": [],
+    "root": [],
+    "server": [],
+    "stores": [],
+    "types": [],
+    "utils": [],
+    "workers": []
+  }
+}

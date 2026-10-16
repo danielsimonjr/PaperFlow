@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The generated architecture reports are regenerated.** `repo-tools map . --out=docs/architecture` rewrote
+  `DEPENDENCY_GRAPH.md`, `unused-analysis.md` and the three dependency JSON and YAML files, which were out of date
+  against 746 tracked source files, and added the reports that the canonical set holds and the repository did not:
+  `FILE_INVENTORY.md`, `TEST_COVERAGE.md`, `duplicate-symbols.md` and their JSON data. Each generated report carries
+  the generator's own do-not-edit banner and its no-verification marker, so the drift gate stops listing these
+  files. The ten hand-written documents still lack a `## Verification` section and are the next step.
+
 ### Fixed
 
 - **The highlight and freehand E2E specs aim at the page.** Both offset from `pdf-viewer` (the

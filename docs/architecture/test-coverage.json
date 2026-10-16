@@ -1,0 +1,3482 @@
+{
+  "metadata": {
+    "totalSourceFiles": 545,
+    "totalTestFiles": 178,
+    "testedCount": 14,
+    "untestedCount": 531,
+    "coveragePercent": "2.6",
+    "effectiveCoverage": {
+      "policyLoaded": false,
+      "activeFiles": 545,
+      "testedActive": 14,
+      "activeUntested": 531,
+      "excludedTotal": 0,
+      "percent": "2.6",
+      "breakdown": {
+        "active_untested": 531
+      }
+    }
+  },
+  "untestedFiles": [
+    "cli/config-schema-check.ts",
+    "cli/validate-config.ts",
+    "electron/attention.ts",
+    "electron/autoSave.ts",
+    "electron/backup.ts",
+    "electron/clipboard.ts",
+    "electron/crashReporter.ts",
+    "electron/dialogs.ts",
+    "electron/dock.ts",
+    "electron/fileAssociation.ts",
+    "electron/fileWatcher.ts",
+    "electron/ipc/clipboardHandlers.ts",
+    "electron/ipc/dialogHandlers.ts",
+    "electron/ipc/fileWatchIPC.ts",
+    "electron/ipc/handlers.ts",
+    "electron/ipc/menuHandlers.ts",
+    "electron/ipc/notificationHandlers.ts",
+    "electron/ipc/printHandlers.ts",
+    "electron/ipc/shellHandlers.ts",
+    "electron/ipc/storageHandlers.ts",
+    "electron/jumpList.ts",
+    "electron/linuxLauncher.ts",
+    "electron/main/fileLock.ts",
+    "electron/main/folderWatcher.ts",
+    "electron/main/index.ts",
+    "electron/main/lifecycle.ts",
+    "electron/main/networkStatus.ts",
+    "electron/main/print/printDialog.ts",
+    "electron/main/print/printerCapabilities.ts",
+    "electron/main/print/printerDiscovery.ts",
+    "electron/main/print/printerManager.ts",
+    "electron/main/print/printerMonitor.ts",
+    "electron/main/print/silentPrint.ts",
+    "electron/main/print/spoolerIntegration.ts",
+    "electron/main/print/types.ts",
+    "electron/main/scanner/scannerBridge.ts",
+    "electron/main/security/webauthnBridge.ts",
+    "electron/main/updater.ts",
+    "electron/main/updates/differential.ts",
+    "electron/main/watcherOptimizations.ts",
+    "electron/main/watcherService.ts",
+    "electron/menu.ts",
+    "electron/powerSave.ts",
+    "electron/preload/index.ts",
+    "electron/preload/networkPreload.ts",
+    "electron/preload/webauthnPreload.ts",
+    "electron/print.ts",
+    "electron/protocol.ts",
+    "electron/recentFiles.ts",
+    "electron/secureStorage.ts",
+    "electron/shell.ts",
+    "electron/startup.ts",
+    "electron/taskbarOverlay.ts",
+    "electron/taskbarProgress.ts",
+    "electron/thumbnailToolbar.ts",
+    "electron/touchbar/touchBarManager.ts",
+    "electron/trayMenu.ts",
+    "electron/windowsCrashReporter.ts",
+    "electron/workers/pdfWorker.ts",
+    "electron/workers/workerManager.ts",
+    "electron/workers/workerPool.ts",
+    "public/pdf.worker.min.js",
+    "server/update/types.ts",
+    "src/App.tsx",
+    "src/components/accessibility/AccessibilityPanel.tsx",
+    "src/components/accessibility/AccessibilityReport.tsx",
+    "src/components/accessibility/IssueList.tsx",
+    "src/components/accessibility/index.ts",
+    "src/components/annotations/AnnotationLayer.tsx",
+    "src/components/annotations/AnnotationProperties.tsx",
+    "src/components/annotations/ArrowTool.tsx",
+    "src/components/annotations/CustomStampDialog.tsx",
+    "src/components/annotations/DrawingAnnotation.tsx",
+    "src/components/annotations/DrawingCanvas.tsx",
+    "src/components/annotations/DrawingToolOptions.tsx",
+    "src/components/annotations/EllipseTool.tsx",
+    "src/components/annotations/EraserTool.tsx",
+    "src/components/annotations/ExportImportDialog.tsx",
+    "src/components/annotations/Highlight.tsx",
+    "src/components/annotations/HighlightTool.tsx",
+    "src/components/annotations/LineTool.tsx",
+    "src/components/annotations/NoteReplies.tsx",
+    "src/components/annotations/NoteTool.tsx",
+    "src/components/annotations/OpacitySlider.tsx",
+    "src/components/annotations/RectangleTool.tsx",
+    "src/components/annotations/ResizeHandles.tsx",
+    "src/components/annotations/RotationHandle.tsx",
+    "src/components/annotations/SelectionPopup.tsx",
+    "src/components/annotations/ShapeAnnotation.tsx",
+    "src/components/annotations/ShapeOptions.tsx",
+    "src/components/annotations/ShapeOverlay.tsx",
+    "src/components/annotations/StampPicker.tsx",
+    "src/components/annotations/StampTool.tsx",
+    "src/components/annotations/StampTransform.tsx",
+    "src/components/annotations/StickyNote.tsx",
+    "src/components/annotations/Strikethrough.tsx",
+    "src/components/annotations/Underline.tsx",
+    "src/components/annotations/index.ts",
+    "src/components/batch/BatchDashboard.tsx",
+    "src/components/batch/BatchPanel.tsx",
+    "src/components/batch/BatchSummary.tsx",
+    "src/components/batch/BatchWizard.tsx",
+    "src/components/batch/BatesNumberDialog.tsx",
+    "src/components/batch/FlattenDialog.tsx",
+    "src/components/batch/HeaderFooterDialog.tsx",
+    "src/components/batch/TemplateManager.tsx",
+    "src/components/batch/WatermarkDialog.tsx",
+    "src/components/batch/index.ts",
+    "src/components/comparison/ComparisonDialog.tsx",
+    "src/components/comparison/ComparisonReport.tsx",
+    "src/components/comparison/OverlayView.tsx",
+    "src/components/comparison/SideBySideView.tsx",
+    "src/components/comparison/index.ts",
+    "src/components/editor/AlignmentPicker.tsx",
+    "src/components/editor/FontPicker.tsx",
+    "src/components/editor/FontSizePicker.tsx",
+    "src/components/editor/InlineTextEditor.tsx",
+    "src/components/editor/LineSpacing.tsx",
+    "src/components/editor/RichTextToolbar.tsx",
+    "src/components/editor/TextBoxTool.tsx",
+    "src/components/editor/TextBoxTransform.tsx",
+    "src/components/editor/TextColorPicker.tsx",
+    "src/components/editor/TextProperties.tsx",
+    "src/components/editor/TextSelector.tsx",
+    "src/components/editor/index.ts",
+    "src/components/enterprise/ConfigExportDialog.tsx",
+    "src/components/enterprise/ConfigSourceBadge.tsx",
+    "src/components/enterprise/ConfigurationViewer.tsx",
+    "src/components/enterprise/LockedSettingBadge.tsx",
+    "src/components/enterprise/PolicyStatusIndicator.tsx",
+    "src/components/export/CompressDialog.tsx",
+    "src/components/export/ImageExportDialog.tsx",
+    "src/components/export/index.ts",
+    "src/components/fileWatch/ChangePreview.tsx",
+    "src/components/fileWatch/DocumentCompare.tsx",
+    "src/components/fileWatch/ExternalChangeNotification.tsx",
+    "src/components/fileWatch/FileLockNotification.tsx",
+    "src/components/fileWatch/WatchStatusIndicator.tsx",
+    "src/components/forms/Checkbox.tsx",
+    "src/components/forms/Dropdown.tsx",
+    "src/components/forms/FieldError.tsx",
+    "src/components/forms/FormActions.tsx",
+    "src/components/forms/FormFieldRenderer.tsx",
+    "src/components/forms/FormLayer.tsx",
+    "src/components/forms/RadioButton.tsx",
+    "src/components/forms/TextField.tsx",
+    "src/components/forms/designer/DesignCanvas.tsx",
+    "src/components/forms/designer/DesignerToolbar.tsx",
+    "src/components/forms/designer/FieldPalette.tsx",
+    "src/components/forms/designer/FieldPreview.tsx",
+    "src/components/forms/designer/FieldProperties.tsx",
+    "src/components/forms/designer/FormDesigner.tsx",
+    "src/components/forms/designer/index.ts",
+    "src/components/forms/index.ts",
+    "src/components/help/KeyboardShortcutsDialog.tsx",
+    "src/components/home/RecentFiles.tsx",
+    "src/components/kiosk/KioskHeader.tsx",
+    "src/components/kiosk/KioskShell.tsx",
+    "src/components/kiosk/KioskToolbar.tsx",
+    "src/components/layout/AppLayout.tsx",
+    "src/components/layout/Header.tsx",
+    "src/components/layout/MobileToolbar.tsx",
+    "src/components/layout/Sidebar.tsx",
+    "src/components/layout/TitleBar.tsx",
+    "src/components/layout/Toolbar.tsx",
+    "src/components/lazy/index.ts",
+    "src/components/ocr/BatchOCRProgress.tsx",
+    "src/components/ocr/LanguageSelector.tsx",
+    "src/components/ocr/OCRDialog.tsx",
+    "src/components/ocr/OCRExportDialog.tsx",
+    "src/components/ocr/OCRProgress.tsx",
+    "src/components/ocr/OCRResultsPanel.tsx",
+    "src/components/ocr/PageRangeSelector.tsx",
+    "src/components/ocr/PreprocessingOptions.tsx",
+    "src/components/ocr/index.ts",
+    "src/components/offline/ConflictDialog.tsx",
+    "src/components/offline/OfflineBanner.tsx",
+    "src/components/offline/OfflineIndicator.tsx",
+    "src/components/offline/OfflineSettings.tsx",
+    "src/components/offline/SyncStatusPanel.tsx",
+    "src/components/offline/VersionCompare.tsx",
+    "src/components/pages/DraggableThumbnail.tsx",
+    "src/components/pages/InsertPageDialog.tsx",
+    "src/components/pages/MergeDialog.tsx",
+    "src/components/pages/MoveToDialog.tsx",
+    "src/components/pages/PageContextMenu.tsx",
+    "src/components/pages/RotateMenu.tsx",
+    "src/components/pages/SplitDialog.tsx",
+    "src/components/pages/index.ts",
+    "src/components/print/AccessibilityOptions.tsx",
+    "src/components/print/AdvancedPrintSettings.tsx",
+    "src/components/print/BindingOptions.tsx",
+    "src/components/print/BookletWizard.tsx",
+    "src/components/print/MarginEditor.tsx",
+    "src/components/print/OrientationOptions.tsx",
+    "src/components/print/PageLayout.tsx",
+    "src/components/print/PageRangeSelector.tsx",
+    "src/components/print/PrintDialog.tsx",
+    "src/components/print/PrintPresetsManager.tsx",
+    "src/components/print/PrintPreview.tsx",
+    "src/components/print/PrintPreviewEnhanced.tsx",
+    "src/components/print/PrintQualitySelector.tsx",
+    "src/components/print/PrinterStatus.tsx",
+    "src/components/print/ScaleOptions.tsx",
+    "src/components/print/index.ts",
+    "src/components/redaction/PatternSearchDialog.tsx",
+    "src/components/redaction/RedactionToolbar.tsx",
+    "src/components/redaction/RedactionVerify.tsx",
+    "src/components/redaction/index.ts",
+    "src/components/scanner/BatchScanWorkflow.tsx",
+    "src/components/scanner/ColorModeSelector.tsx",
+    "src/components/scanner/CropTool.tsx",
+    "src/components/scanner/EnhancementTools.tsx",
+    "src/components/scanner/PageOrganizer.tsx",
+    "src/components/scanner/ProfileManager.tsx",
+    "src/components/scanner/ResolutionPicker.tsx",
+    "src/components/scanner/ScanPreview.tsx",
+    "src/components/scanner/ScanSettingsPanel.tsx",
+    "src/components/scanner/ScannerInfo.tsx",
+    "src/components/scanner/ScannerSelectDialog.tsx",
+    "src/components/security/EnrollmentGuide.tsx",
+    "src/components/security/HardwareKeyAuth.tsx",
+    "src/components/security/HardwareKeyEnrollment.tsx",
+    "src/components/security/KeyChallenge.tsx",
+    "src/components/security/KeyManagement.tsx",
+    "src/components/settings/AutoReloadSettings.tsx",
+    "src/components/settings/NotificationSettings.tsx",
+    "src/components/settings/ShortcutSettings.tsx",
+    "src/components/sidebar/OutlinePanel.tsx",
+    "src/components/sidebar/ThumbnailSidebar.tsx",
+    "src/components/signatures/DateStamp.tsx",
+    "src/components/signatures/DrawSignature.tsx",
+    "src/components/signatures/ImageSignature.tsx",
+    "src/components/signatures/InitialsModal.tsx",
+    "src/components/signatures/SignatureList.tsx",
+    "src/components/signatures/SignatureModal.tsx",
+    "src/components/signatures/SignaturePlacer.tsx",
+    "src/components/signatures/SignatureResize.tsx",
+    "src/components/signatures/SignatureRotation.tsx",
+    "src/components/signatures/TypeSignature.tsx",
+    "src/components/signatures/index.ts",
+    "src/components/toolbar/AnnotationToolbar.tsx",
+    "src/components/toolbar/SearchBar.tsx",
+    "src/components/toolbar/ViewModeToggle.tsx",
+    "src/components/ui/AccessibleComponents.tsx",
+    "src/components/ui/Button.tsx",
+    "src/components/ui/Checkbox.tsx",
+    "src/components/ui/Dialog.tsx",
+    "src/components/ui/Input.tsx",
+    "src/components/ui/LoadingIndicator.tsx",
+    "src/components/ui/Progress.tsx",
+    "src/components/ui/Select.tsx",
+    "src/components/ui/Skeleton.tsx",
+    "src/components/ui/ThemeToggle.tsx",
+    "src/components/ui/index.ts",
+    "src/components/update/InstallPrompt.tsx",
+    "src/components/update/ReleaseNotes.tsx",
+    "src/components/update/UpdateNotification.tsx",
+    "src/components/update/UpdateProgress.tsx",
+    "src/components/update/UpdateSettings.tsx",
+    "src/components/update/index.ts",
+    "src/components/updates/UpdateNotification.tsx",
+    "src/components/viewer/ContinuousView.tsx",
+    "src/components/viewer/DropZone.tsx",
+    "src/components/viewer/PDFViewer.tsx",
+    "src/components/viewer/PageCanvas.tsx",
+    "src/components/viewer/PageNavigation.tsx",
+    "src/components/viewer/PageSkeleton.tsx",
+    "src/components/viewer/SinglePageView.tsx",
+    "src/components/viewer/SpreadView.tsx",
+    "src/components/viewer/TextLayer.tsx",
+    "src/components/viewer/VirtualizedViewer.tsx",
+    "src/components/viewer/ZoomControls.tsx",
+    "src/constants/config.ts",
+    "src/constants/shortcuts.ts",
+    "src/constants/stamps.ts",
+    "src/constants/tools.ts",
+    "src/constants/version.ts",
+    "src/contexts/PlatformContext.tsx",
+    "src/hooks/index.ts",
+    "src/hooks/useAnnotationShortcuts.ts",
+    "src/hooks/useAnnounce.ts",
+    "src/hooks/useAutoSave.ts",
+    "src/hooks/useBeforeUnload.ts",
+    "src/hooks/useClipboard.ts",
+    "src/hooks/useConnectionStatus.ts",
+    "src/hooks/useDropZone.ts",
+    "src/hooks/useFileSystem.ts",
+    "src/hooks/useFormFields.ts",
+    "src/hooks/useFormNavigation.ts",
+    "src/hooks/useHighlightTool.ts",
+    "src/hooks/useKeyboardNavigation.ts",
+    "src/hooks/useOfflineData.ts",
+    "src/hooks/useOfflineSync.ts",
+    "src/hooks/usePageDrag.ts",
+    "src/hooks/usePageSelection.ts",
+    "src/hooks/usePlatform.ts",
+    "src/hooks/usePointerInput.ts",
+    "src/hooks/useSearch.ts",
+    "src/hooks/useSignatureInput.ts",
+    "src/hooks/useTextSelection.ts",
+    "src/hooks/useThumbnails.ts",
+    "src/hooks/useTouchGestures.ts",
+    "src/hooks/useUnsavedChanges.ts",
+    "src/hooks/useVirtualization.ts",
+    "src/hooks/useVisiblePages.ts",
+    "src/lib/accessibility/checker.ts",
+    "src/lib/accessibility/index.ts",
+    "src/lib/accessibility/types.ts",
+    "src/lib/annotations/drawingSerializer.ts",
+    "src/lib/annotations/serializer.ts",
+    "src/lib/batch/batchProcessor.ts",
+    "src/lib/batch/batesNumber.ts",
+    "src/lib/batch/errorHandler.ts",
+    "src/lib/batch/errorReporter.ts",
+    "src/lib/batch/flatten.ts",
+    "src/lib/batch/headerFooter.ts",
+    "src/lib/batch/index.ts",
+    "src/lib/batch/jobPersistence.ts",
+    "src/lib/batch/jobQueue.ts",
+    "src/lib/batch/operations/batchCompress.ts",
+    "src/lib/batch/operations/batchMerge.ts",
+    "src/lib/batch/operations/batchOCR.ts",
+    "src/lib/batch/operations/batchSplit.ts",
+    "src/lib/batch/operations/batchWatermark.ts",
+    "src/lib/batch/operations/index.ts",
+    "src/lib/batch/templates.ts",
+    "src/lib/batch/types.ts",
+    "src/lib/batch/watermark.ts",
+    "src/lib/comparison/comparisonEngine.ts",
+    "src/lib/comparison/index.ts",
+    "src/lib/comparison/reportGenerator.ts",
+    "src/lib/comparison/textDiff.ts",
+    "src/lib/comparison/types.ts",
+    "src/lib/dev/hotReload.ts",
+    "src/lib/electron/dialogs.ts",
+    "src/lib/electron/fileSystem.ts",
+    "src/lib/electron/index.ts",
+    "src/lib/electron/ipc.ts",
+    "src/lib/electron/notifications.ts",
+    "src/lib/electron/print.ts",
+    "src/lib/enterprise/configCache.ts",
+    "src/lib/enterprise/configDiscovery.ts",
+    "src/lib/enterprise/configEncryption.ts",
+    "src/lib/enterprise/configMerger.ts",
+    "src/lib/enterprise/configParser.ts",
+    "src/lib/enterprise/configPrecedence.ts",
+    "src/lib/enterprise/configWatcher.ts",
+    "src/lib/enterprise/envExpansion.ts",
+    "src/lib/enterprise/gpoReader.ts",
+    "src/lib/enterprise/jsonConfigLoader.ts",
+    "src/lib/enterprise/macPreferences.ts",
+    "src/lib/enterprise/mdmReader.ts",
+    "src/lib/enterprise/policyMerger.ts",
+    "src/lib/enterprise/registryAccess.ts",
+    "src/lib/enterprise/remoteConfigLoader.ts",
+    "src/lib/enterprise/secretsManager.ts",
+    "src/lib/enterprise/ssrfGuard.ts",
+    "src/lib/enterprise/yamlConfigLoader.ts",
+    "src/lib/export/compressPdf.ts",
+    "src/lib/export/flattenPdf.ts",
+    "src/lib/export/imageExport.ts",
+    "src/lib/export/index.ts",
+    "src/lib/export/pdfExport.ts",
+    "src/lib/fileWatch/changeDetector.ts",
+    "src/lib/fileWatch/conflictHandler.ts",
+    "src/lib/fileWatch/documentDiff.ts",
+    "src/lib/fileWatch/index.ts",
+    "src/lib/fileWatch/mergeStrategy.ts",
+    "src/lib/fileWatch/smartReload.ts",
+    "src/lib/fileWatch/statePreserver.ts",
+    "src/lib/fileWatch/watchQueue.ts",
+    "src/lib/fonts/fontFallback.ts",
+    "src/lib/fonts/fontMatcher.ts",
+    "src/lib/fonts/index.ts",
+    "src/lib/forms/calculations.ts",
+    "src/lib/forms/conditionalLogic.ts",
+    "src/lib/forms/exportImport.ts",
+    "src/lib/forms/fdfExport.ts",
+    "src/lib/forms/formActions.ts",
+    "src/lib/forms/formParser.ts",
+    "src/lib/forms/formSubmit.ts",
+    "src/lib/forms/formatting.ts",
+    "src/lib/forms/importData.ts",
+    "src/lib/forms/index.ts",
+    "src/lib/forms/validation.ts",
+    "src/lib/forms/xfdfExport.ts",
+    "src/lib/kiosk/kioskMode.ts",
+    "src/lib/lan/serviceDiscovery.ts",
+    "src/lib/license/expiryHandler.ts",
+    "src/lib/license/featureGating.ts",
+    "src/lib/license/hardwareFingerprint.ts",
+    "src/lib/license/licenseBinding.ts",
+    "src/lib/license/licenseFormat.ts",
+    "src/lib/license/licenseStorage.ts",
+    "src/lib/license/licenseValidator.ts",
+    "src/lib/license/signatureVerifier.ts",
+    "src/lib/monitoring/analytics.ts",
+    "src/lib/monitoring/index.ts",
+    "src/lib/monitoring/releaseMetrics.ts",
+    "src/lib/monitoring/sentry.ts",
+    "src/lib/ocr/batchOCR.ts",
+    "src/lib/ocr/exportFormats.ts",
+    "src/lib/ocr/imagePreprocessor.ts",
+    "src/lib/ocr/index.ts",
+    "src/lib/ocr/languageLoader.ts",
+    "src/lib/ocr/layoutAnalyzer.ts",
+    "src/lib/ocr/ocrEngine.ts",
+    "src/lib/ocr/textLayerEmbed.ts",
+    "src/lib/ocr/types.ts",
+    "src/lib/offline/backgroundSync.ts",
+    "src/lib/offline/conflictResolver.ts",
+    "src/lib/offline/deltaSync.ts",
+    "src/lib/offline/offlineAvailability.ts",
+    "src/lib/offline/offlineQueue.ts",
+    "src/lib/offline/offlineStorage.ts",
+    "src/lib/offline/patchGenerator.ts",
+    "src/lib/offline/queueProcessor.ts",
+    "src/lib/offline/serviceWorkerConfig.ts",
+    "src/lib/offline/syncEngine.ts",
+    "src/lib/pages/extractPages.ts",
+    "src/lib/pages/index.ts",
+    "src/lib/pages/mergePdf.ts",
+    "src/lib/pages/pageOperations.ts",
+    "src/lib/pages/splitPdf.ts",
+    "src/lib/pdf/renderer.ts",
+    "src/lib/pdf/saver.ts",
+    "src/lib/pdf/signatureEmbed.ts",
+    "src/lib/pdf/textSaver.ts",
+    "src/lib/performance/index.ts",
+    "src/lib/performance/memoryManager.ts",
+    "src/lib/print/accessibility.ts",
+    "src/lib/print/bookletLayout.ts",
+    "src/lib/print/colorManagement.ts",
+    "src/lib/print/executePrint.ts",
+    "src/lib/print/imposition.ts",
+    "src/lib/print/index.ts",
+    "src/lib/print/nupLayout.ts",
+    "src/lib/print/pageRange.ts",
+    "src/lib/print/pdfRenderer.ts",
+    "src/lib/print/presets.ts",
+    "src/lib/print/printQueue.ts",
+    "src/lib/print/printRenderer.ts",
+    "src/lib/print/virtualPrinter.ts",
+    "src/lib/redaction/index.ts",
+    "src/lib/redaction/patternMatcher.ts",
+    "src/lib/redaction/redactionEngine.ts",
+    "src/lib/redaction/redactionVerify.ts",
+    "src/lib/redaction/types.ts",
+    "src/lib/scanner/documentDetection.ts",
+    "src/lib/scanner/imageCompression.ts",
+    "src/lib/scanner/perspectiveCorrection.ts",
+    "src/lib/scanner/scanOcr.ts",
+    "src/lib/scanner/scanProfiles.ts",
+    "src/lib/scanner/scanToPdf.ts",
+    "src/lib/scanner/scannerProvider.ts",
+    "src/lib/scanner/types.ts",
+    "src/lib/security/assertion.ts",
+    "src/lib/security/attestation.ts",
+    "src/lib/security/fido2Server.ts",
+    "src/lib/security/hardwareEncryption.ts",
+    "src/lib/security/keyWrapping.ts",
+    "src/lib/security/webauthn.ts",
+    "src/lib/security/webauthnClient.ts",
+    "src/lib/share/copyLink.ts",
+    "src/lib/share/emailShare.ts",
+    "src/lib/share/index.ts",
+    "src/lib/signatures/dateUtils.ts",
+    "src/lib/signatures/fieldAlignment.ts",
+    "src/lib/signatures/imageProcessor.ts",
+    "src/lib/storage/fileHandler.ts",
+    "src/lib/storage/formStorage.ts",
+    "src/lib/storage/indexeddb.ts",
+    "src/lib/storage/signatureStorage.ts",
+    "src/lib/storage/stampStorage.ts",
+    "src/lib/thumbnails/cache.ts",
+    "src/lib/thumbnails/index.ts",
+    "src/lib/update/updateClient.ts",
+    "src/main.tsx",
+    "src/pages/Editor.tsx",
+    "src/pages/Home.tsx",
+    "src/pages/NotFound.tsx",
+    "src/pages/Privacy.tsx",
+    "src/pages/Settings.tsx",
+    "src/pages/Terms.tsx",
+    "src/stores/annotationStore.ts",
+    "src/stores/batchStore.ts",
+    "src/stores/comparisonStore.ts",
+    "src/stores/documentStore.ts",
+    "src/stores/enterprisePolicyStore.ts",
+    "src/stores/fileWatchStore.ts",
+    "src/stores/formDesignerStore.ts",
+    "src/stores/formStore.ts",
+    "src/stores/historyStore.ts",
+    "src/stores/index.ts",
+    "src/stores/kioskStore.ts",
+    "src/stores/lanStore.ts",
+    "src/stores/licenseStore.ts",
+    "src/stores/nativeBatchStore.ts",
+    "src/stores/ocrStore.ts",
+    "src/stores/offlineStore.ts",
+    "src/stores/printStore.ts",
+    "src/stores/recentFilesStore.ts",
+    "src/stores/redactionStore.ts",
+    "src/stores/scannerStore.ts",
+    "src/stores/securityStore.ts",
+    "src/stores/settingsStore.ts",
+    "src/stores/shortcutsStore.ts",
+    "src/stores/signatureStore.ts",
+    "src/stores/textStore.ts",
+    "src/stores/uiStore.ts",
+    "src/stores/updateStore.ts",
+    "src/sw.ts",
+    "src/types/annotations.ts",
+    "src/types/batch.ts",
+    "src/types/electronTypes.ts",
+    "src/types/enterpriseConfig.ts",
+    "src/types/forms.ts",
+    "src/types/index.ts",
+    "src/types/kioskConfig.ts",
+    "src/types/license.ts",
+    "src/types/offline.ts",
+    "src/types/pdf.ts",
+    "src/types/text.ts",
+    "src/types/webauthn.ts",
+    "src/utils/cn.ts",
+    "src/utils/coordinates.ts",
+    "src/utils/index.ts",
+    "src/utils/platform.ts",
+    "src/workers/thumbnailWorker.ts",
+    "src/workers/thumbnailWorkerScript.ts"
+  ],
+  "testedFiles": [
+    "electron/contextMenu.ts",
+    "electron/ipc/channels.ts",
+    "electron/ipc/fileHandlers.ts",
+    "electron/ipc/pathSandbox.ts",
+    "electron/ipc/safeStorageHandlers.ts",
+    "electron/ipc/types.ts",
+    "electron/main/security.ts",
+    "electron/main/windowManager.ts",
+    "electron/main/windowState.ts",
+    "electron/menuTemplate.ts",
+    "electron/notifications.ts",
+    "electron/shortcuts.ts",
+    "electron/tray.ts",
+    "src/lib/electron/platform.ts"
+  ],
+  "coverageMap": {
+    "cli/config-schema-check.ts": [],
+    "cli/validate-config.ts": [],
+    "electron/attention.ts": [],
+    "electron/autoSave.ts": [],
+    "electron/backup.ts": [],
+    "electron/clipboard.ts": [],
+    "electron/contextMenu.ts": [
+      "tests/electron/contextMenu.test.ts"
+    ],
+    "electron/crashReporter.ts": [],
+    "electron/dialogs.ts": [],
+    "electron/dock.ts": [],
+    "electron/fileAssociation.ts": [],
+    "electron/fileWatcher.ts": [],
+    "electron/ipc/channels.ts": [
+      "tests/electron/ipc.test.ts",
+      "tests/electron/safeStorageBridge.test.ts"
+    ],
+    "electron/ipc/clipboardHandlers.ts": [],
+    "electron/ipc/dialogHandlers.ts": [],
+    "electron/ipc/fileHandlers.ts": [
+      "tests/electron/folderListRecursive.test.ts"
+    ],
+    "electron/ipc/fileWatchIPC.ts": [],
+    "electron/ipc/handlers.ts": [],
+    "electron/ipc/menuHandlers.ts": [],
+    "electron/ipc/notificationHandlers.ts": [],
+    "electron/ipc/pathSandbox.ts": [
+      "tests/electron/pathSandbox.test.ts"
+    ],
+    "electron/ipc/printHandlers.ts": [],
+    "electron/ipc/safeStorageHandlers.ts": [
+      "tests/electron/safeStorageBridge.test.ts"
+    ],
+    "electron/ipc/shellHandlers.ts": [],
+    "electron/ipc/storageHandlers.ts": [],
+    "electron/ipc/types.ts": [
+      "tests/electron/updater.test.ts"
+    ],
+    "electron/jumpList.ts": [],
+    "electron/linuxLauncher.ts": [],
+    "electron/main/fileLock.ts": [],
+    "electron/main/folderWatcher.ts": [],
+    "electron/main/index.ts": [],
+    "electron/main/lifecycle.ts": [],
+    "electron/main/networkStatus.ts": [],
+    "electron/main/print/printDialog.ts": [],
+    "electron/main/print/printerCapabilities.ts": [],
+    "electron/main/print/printerDiscovery.ts": [],
+    "electron/main/print/printerManager.ts": [],
+    "electron/main/print/printerMonitor.ts": [],
+    "electron/main/print/silentPrint.ts": [],
+    "electron/main/print/spoolerIntegration.ts": [],
+    "electron/main/print/types.ts": [],
+    "electron/main/scanner/scannerBridge.ts": [],
+    "electron/main/security/webauthnBridge.ts": [],
+    "electron/main/security.ts": [
+      "tests/electron/csp.test.ts",
+      "tests/electron/security.test.ts"
+    ],
+    "electron/main/updater.ts": [],
+    "electron/main/updates/differential.ts": [],
+    "electron/main/watcherOptimizations.ts": [],
+    "electron/main/watcherService.ts": [],
+    "electron/main/windowManager.ts": [
+      "tests/electron/windowManager.test.ts"
+    ],
+    "electron/main/windowState.ts": [
+      "tests/electron/windowManager.test.ts"
+    ],
+    "electron/menu.ts": [],
+    "electron/menuTemplate.ts": [
+      "tests/electron/menu.test.ts"
+    ],
+    "electron/notifications.ts": [
+      "tests/electron/notifications.test.ts"
+    ],
+    "electron/powerSave.ts": [],
+    "electron/preload/index.ts": [],
+    "electron/preload/networkPreload.ts": [],
+    "electron/preload/webauthnPreload.ts": [],
+    "electron/print.ts": [],
+    "electron/protocol.ts": [],
+    "electron/recentFiles.ts": [],
+    "electron/secureStorage.ts": [],
+    "electron/shell.ts": [],
+    "electron/shortcuts.ts": [
+      "tests/electron/shortcuts.test.ts"
+    ],
+    "electron/startup.ts": [],
+    "electron/taskbarOverlay.ts": [],
+    "electron/taskbarProgress.ts": [],
+    "electron/thumbnailToolbar.ts": [],
+    "electron/touchbar/touchBarManager.ts": [],
+    "electron/tray.ts": [
+      "tests/electron/tray.test.ts"
+    ],
+    "electron/trayMenu.ts": [],
+    "electron/windowsCrashReporter.ts": [],
+    "electron/workers/pdfWorker.ts": [],
+    "electron/workers/workerManager.ts": [],
+    "electron/workers/workerPool.ts": [],
+    "public/pdf.worker.min.js": [],
+    "server/update/types.ts": [],
+    "src/App.tsx": [],
+    "src/components/accessibility/AccessibilityPanel.tsx": [],
+    "src/components/accessibility/AccessibilityReport.tsx": [],
+    "src/components/accessibility/IssueList.tsx": [],
+    "src/components/accessibility/index.ts": [],
+    "src/components/annotations/AnnotationLayer.tsx": [],
+    "src/components/annotations/AnnotationProperties.tsx": [],
+    "src/components/annotations/ArrowTool.tsx": [],
+    "src/components/annotations/CustomStampDialog.tsx": [],
+    "src/components/annotations/DrawingAnnotation.tsx": [],
+    "src/components/annotations/DrawingCanvas.tsx": [],
+    "src/components/annotations/DrawingToolOptions.tsx": [],
+    "src/components/annotations/EllipseTool.tsx": [],
+    "src/components/annotations/EraserTool.tsx": [],
+    "src/components/annotations/ExportImportDialog.tsx": [],
+    "src/components/annotations/Highlight.tsx": [],
+    "src/components/annotations/HighlightTool.tsx": [],
+    "src/components/annotations/LineTool.tsx": [],
+    "src/components/annotations/NoteReplies.tsx": [],
+    "src/components/annotations/NoteTool.tsx": [],
+    "src/components/annotations/OpacitySlider.tsx": [],
+    "src/components/annotations/RectangleTool.tsx": [],
+    "src/components/annotations/ResizeHandles.tsx": [],
+    "src/components/annotations/RotationHandle.tsx": [],
+    "src/components/annotations/SelectionPopup.tsx": [],
+    "src/components/annotations/ShapeAnnotation.tsx": [],
+    "src/components/annotations/ShapeOptions.tsx": [],
+    "src/components/annotations/ShapeOverlay.tsx": [],
+    "src/components/annotations/StampPicker.tsx": [],
+    "src/components/annotations/StampTool.tsx": [],
+    "src/components/annotations/StampTransform.tsx": [],
+    "src/components/annotations/StickyNote.tsx": [],
+    "src/components/annotations/Strikethrough.tsx": [],
+    "src/components/annotations/Underline.tsx": [],
+    "src/components/annotations/index.ts": [],
+    "src/components/batch/BatchDashboard.tsx": [],
+    "src/components/batch/BatchPanel.tsx": [],
+    "src/components/batch/BatchSummary.tsx": [],
+    "src/components/batch/BatchWizard.tsx": [],
+    "src/components/batch/BatesNumberDialog.tsx": [],
+    "src/components/batch/FlattenDialog.tsx": [],
+    "src/components/batch/HeaderFooterDialog.tsx": [],
+    "src/components/batch/TemplateManager.tsx": [],
+    "src/components/batch/WatermarkDialog.tsx": [],
+    "src/components/batch/index.ts": [],
+    "src/components/comparison/ComparisonDialog.tsx": [],
+    "src/components/comparison/ComparisonReport.tsx": [],
+    "src/components/comparison/OverlayView.tsx": [],
+    "src/components/comparison/SideBySideView.tsx": [],
+    "src/components/comparison/index.ts": [],
+    "src/components/editor/AlignmentPicker.tsx": [],
+    "src/components/editor/FontPicker.tsx": [],
+    "src/components/editor/FontSizePicker.tsx": [],
+    "src/components/editor/InlineTextEditor.tsx": [],
+    "src/components/editor/LineSpacing.tsx": [],
+    "src/components/editor/RichTextToolbar.tsx": [],
+    "src/components/editor/TextBoxTool.tsx": [],
+    "src/components/editor/TextBoxTransform.tsx": [],
+    "src/components/editor/TextColorPicker.tsx": [],
+    "src/components/editor/TextProperties.tsx": [],
+    "src/components/editor/TextSelector.tsx": [],
+    "src/components/editor/index.ts": [],
+    "src/components/enterprise/ConfigExportDialog.tsx": [],
+    "src/components/enterprise/ConfigSourceBadge.tsx": [],
+    "src/components/enterprise/ConfigurationViewer.tsx": [],
+    "src/components/enterprise/LockedSettingBadge.tsx": [],
+    "src/components/enterprise/PolicyStatusIndicator.tsx": [],
+    "src/components/export/CompressDialog.tsx": [],
+    "src/components/export/ImageExportDialog.tsx": [],
+    "src/components/export/index.ts": [],
+    "src/components/fileWatch/ChangePreview.tsx": [],
+    "src/components/fileWatch/DocumentCompare.tsx": [],
+    "src/components/fileWatch/ExternalChangeNotification.tsx": [],
+    "src/components/fileWatch/FileLockNotification.tsx": [],
+    "src/components/fileWatch/WatchStatusIndicator.tsx": [],
+    "src/components/forms/Checkbox.tsx": [],
+    "src/components/forms/Dropdown.tsx": [],
+    "src/components/forms/FieldError.tsx": [],
+    "src/components/forms/FormActions.tsx": [],
+    "src/components/forms/FormFieldRenderer.tsx": [],
+    "src/components/forms/FormLayer.tsx": [],
+    "src/components/forms/RadioButton.tsx": [],
+    "src/components/forms/TextField.tsx": [],
+    "src/components/forms/designer/DesignCanvas.tsx": [],
+    "src/components/forms/designer/DesignerToolbar.tsx": [],
+    "src/components/forms/designer/FieldPalette.tsx": [],
+    "src/components/forms/designer/FieldPreview.tsx": [],
+    "src/components/forms/designer/FieldProperties.tsx": [],
+    "src/components/forms/designer/FormDesigner.tsx": [],
+    "src/components/forms/designer/index.ts": [],
+    "src/components/forms/index.ts": [],
+    "src/components/help/KeyboardShortcutsDialog.tsx": [],
+    "src/components/home/RecentFiles.tsx": [],
+    "src/components/kiosk/KioskHeader.tsx": [],
+    "src/components/kiosk/KioskShell.tsx": [],
+    "src/components/kiosk/KioskToolbar.tsx": [],
+    "src/components/layout/AppLayout.tsx": [],
+    "src/components/layout/Header.tsx": [],
+    "src/components/layout/MobileToolbar.tsx": [],
+    "src/components/layout/Sidebar.tsx": [],
+    "src/components/layout/TitleBar.tsx": [],
+    "src/components/layout/Toolbar.tsx": [],
+    "src/components/lazy/index.ts": [],
+    "src/components/ocr/BatchOCRProgress.tsx": [],
+    "src/components/ocr/LanguageSelector.tsx": [],
+    "src/components/ocr/OCRDialog.tsx": [],
+    "src/components/ocr/OCRExportDialog.tsx": [],
+    "src/components/ocr/OCRProgress.tsx": [],
+    "src/components/ocr/OCRResultsPanel.tsx": [],
+    "src/components/ocr/PageRangeSelector.tsx": [],
+    "src/components/ocr/PreprocessingOptions.tsx": [],
+    "src/components/ocr/index.ts": [],
+    "src/components/offline/ConflictDialog.tsx": [],
+    "src/components/offline/OfflineBanner.tsx": [],
+    "src/components/offline/OfflineIndicator.tsx": [],
+    "src/components/offline/OfflineSettings.tsx": [],
+    "src/components/offline/SyncStatusPanel.tsx": [],
+    "src/components/offline/VersionCompare.tsx": [],
+    "src/components/pages/DraggableThumbnail.tsx": [],
+    "src/components/pages/InsertPageDialog.tsx": [],
+    "src/components/pages/MergeDialog.tsx": [],
+    "src/components/pages/MoveToDialog.tsx": [],
+    "src/components/pages/PageContextMenu.tsx": [],
+    "src/components/pages/RotateMenu.tsx": [],
+    "src/components/pages/SplitDialog.tsx": [],
+    "src/components/pages/index.ts": [],
+    "src/components/print/AccessibilityOptions.tsx": [],
+    "src/components/print/AdvancedPrintSettings.tsx": [],
+    "src/components/print/BindingOptions.tsx": [],
+    "src/components/print/BookletWizard.tsx": [],
+    "src/components/print/MarginEditor.tsx": [],
+    "src/components/print/OrientationOptions.tsx": [],
+    "src/components/print/PageLayout.tsx": [],
+    "src/components/print/PageRangeSelector.tsx": [],
+    "src/components/print/PrintDialog.tsx": [],
+    "src/components/print/PrintPresetsManager.tsx": [],
+    "src/components/print/PrintPreview.tsx": [],
+    "src/components/print/PrintPreviewEnhanced.tsx": [],
+    "src/components/print/PrintQualitySelector.tsx": [],
+    "src/components/print/PrinterStatus.tsx": [],
+    "src/components/print/ScaleOptions.tsx": [],
+    "src/components/print/index.ts": [],
+    "src/components/redaction/PatternSearchDialog.tsx": [],
+    "src/components/redaction/RedactionToolbar.tsx": [],
+    "src/components/redaction/RedactionVerify.tsx": [],
+    "src/components/redaction/index.ts": [],
+    "src/components/scanner/BatchScanWorkflow.tsx": [],
+    "src/components/scanner/ColorModeSelector.tsx": [],
+    "src/components/scanner/CropTool.tsx": [],
+    "src/components/scanner/EnhancementTools.tsx": [],
+    "src/components/scanner/PageOrganizer.tsx": [],
+    "src/components/scanner/ProfileManager.tsx": [],
+    "src/components/scanner/ResolutionPicker.tsx": [],
+    "src/components/scanner/ScanPreview.tsx": [],
+    "src/components/scanner/ScanSettingsPanel.tsx": [],
+    "src/components/scanner/ScannerInfo.tsx": [],
+    "src/components/scanner/ScannerSelectDialog.tsx": [],
+    "src/components/security/EnrollmentGuide.tsx": [],
+    "src/components/security/HardwareKeyAuth.tsx": [],
+    "src/components/security/HardwareKeyEnrollment.tsx": [],
+    "src/components/security/KeyChallenge.tsx": [],
+    "src/components/security/KeyManagement.tsx": [],
+    "src/components/settings/AutoReloadSettings.tsx": [],
+    "src/components/settings/NotificationSettings.tsx": [],
+    "src/components/settings/ShortcutSettings.tsx": [],
+    "src/components/sidebar/OutlinePanel.tsx": [],
+    "src/components/sidebar/ThumbnailSidebar.tsx": [],
+    "src/components/signatures/DateStamp.tsx": [],
+    "src/components/signatures/DrawSignature.tsx": [],
+    "src/components/signatures/ImageSignature.tsx": [],
+    "src/components/signatures/InitialsModal.tsx": [],
+    "src/components/signatures/SignatureList.tsx": [],
+    "src/components/signatures/SignatureModal.tsx": [],
+    "src/components/signatures/SignaturePlacer.tsx": [],
+    "src/components/signatures/SignatureResize.tsx": [],
+    "src/components/signatures/SignatureRotation.tsx": [],
+    "src/components/signatures/TypeSignature.tsx": [],
+    "src/components/signatures/index.ts": [],
+    "src/components/toolbar/AnnotationToolbar.tsx": [],
+    "src/components/toolbar/SearchBar.tsx": [],
+    "src/components/toolbar/ViewModeToggle.tsx": [],
+    "src/components/ui/AccessibleComponents.tsx": [],
+    "src/components/ui/Button.tsx": [],
+    "src/components/ui/Checkbox.tsx": [],
+    "src/components/ui/Dialog.tsx": [],
+    "src/components/ui/Input.tsx": [],
+    "src/components/ui/LoadingIndicator.tsx": [],
+    "src/components/ui/Progress.tsx": [],
+    "src/components/ui/Select.tsx": [],
+    "src/components/ui/Skeleton.tsx": [],
+    "src/components/ui/ThemeToggle.tsx": [],
+    "src/components/ui/index.ts": [],
+    "src/components/update/InstallPrompt.tsx": [],
+    "src/components/update/ReleaseNotes.tsx": [],
+    "src/components/update/UpdateNotification.tsx": [],
+    "src/components/update/UpdateProgress.tsx": [],
+    "src/components/update/UpdateSettings.tsx": [],
+    "src/components/update/index.ts": [],
+    "src/components/updates/UpdateNotification.tsx": [],
+    "src/components/viewer/ContinuousView.tsx": [],
+    "src/components/viewer/DropZone.tsx": [],
+    "src/components/viewer/PDFViewer.tsx": [],
+    "src/components/viewer/PageCanvas.tsx": [],
+    "src/components/viewer/PageNavigation.tsx": [],
+    "src/components/viewer/PageSkeleton.tsx": [],
+    "src/components/viewer/SinglePageView.tsx": [],
+    "src/components/viewer/SpreadView.tsx": [],
+    "src/components/viewer/TextLayer.tsx": [],
+    "src/components/viewer/VirtualizedViewer.tsx": [],
+    "src/components/viewer/ZoomControls.tsx": [],
+    "src/constants/config.ts": [],
+    "src/constants/shortcuts.ts": [],
+    "src/constants/stamps.ts": [],
+    "src/constants/tools.ts": [],
+    "src/constants/version.ts": [],
+    "src/contexts/PlatformContext.tsx": [],
+    "src/hooks/index.ts": [],
+    "src/hooks/useAnnotationShortcuts.ts": [],
+    "src/hooks/useAnnounce.ts": [],
+    "src/hooks/useAutoSave.ts": [],
+    "src/hooks/useBeforeUnload.ts": [],
+    "src/hooks/useClipboard.ts": [],
+    "src/hooks/useConnectionStatus.ts": [],
+    "src/hooks/useDropZone.ts": [],
+    "src/hooks/useFileSystem.ts": [],
+    "src/hooks/useFormFields.ts": [],
+    "src/hooks/useFormNavigation.ts": [],
+    "src/hooks/useHighlightTool.ts": [],
+    "src/hooks/useKeyboardNavigation.ts": [],
+    "src/hooks/useOfflineData.ts": [],
+    "src/hooks/useOfflineSync.ts": [],
+    "src/hooks/usePageDrag.ts": [],
+    "src/hooks/usePageSelection.ts": [],
+    "src/hooks/usePlatform.ts": [],
+    "src/hooks/usePointerInput.ts": [],
+    "src/hooks/useSearch.ts": [],
+    "src/hooks/useSignatureInput.ts": [],
+    "src/hooks/useTextSelection.ts": [],
+    "src/hooks/useThumbnails.ts": [],
+    "src/hooks/useTouchGestures.ts": [],
+    "src/hooks/useUnsavedChanges.ts": [],
+    "src/hooks/useVirtualization.ts": [],
+    "src/hooks/useVisiblePages.ts": [],
+    "src/lib/accessibility/checker.ts": [],
+    "src/lib/accessibility/index.ts": [],
+    "src/lib/accessibility/types.ts": [],
+    "src/lib/annotations/drawingSerializer.ts": [],
+    "src/lib/annotations/serializer.ts": [],
+    "src/lib/batch/batchProcessor.ts": [],
+    "src/lib/batch/batesNumber.ts": [],
+    "src/lib/batch/errorHandler.ts": [],
+    "src/lib/batch/errorReporter.ts": [],
+    "src/lib/batch/flatten.ts": [],
+    "src/lib/batch/headerFooter.ts": [],
+    "src/lib/batch/index.ts": [],
+    "src/lib/batch/jobPersistence.ts": [],
+    "src/lib/batch/jobQueue.ts": [],
+    "src/lib/batch/operations/batchCompress.ts": [],
+    "src/lib/batch/operations/batchMerge.ts": [],
+    "src/lib/batch/operations/batchOCR.ts": [],
+    "src/lib/batch/operations/batchSplit.ts": [],
+    "src/lib/batch/operations/batchWatermark.ts": [],
+    "src/lib/batch/operations/index.ts": [],
+    "src/lib/batch/templates.ts": [],
+    "src/lib/batch/types.ts": [],
+    "src/lib/batch/watermark.ts": [],
+    "src/lib/comparison/comparisonEngine.ts": [],
+    "src/lib/comparison/index.ts": [],
+    "src/lib/comparison/reportGenerator.ts": [],
+    "src/lib/comparison/textDiff.ts": [],
+    "src/lib/comparison/types.ts": [],
+    "src/lib/dev/hotReload.ts": [],
+    "src/lib/electron/dialogs.ts": [],
+    "src/lib/electron/fileSystem.ts": [],
+    "src/lib/electron/index.ts": [],
+    "src/lib/electron/ipc.ts": [],
+    "src/lib/electron/notifications.ts": [],
+    "src/lib/electron/platform.ts": [
+      "tests/electron/platform.test.ts"
+    ],
+    "src/lib/electron/print.ts": [],
+    "src/lib/enterprise/configCache.ts": [],
+    "src/lib/enterprise/configDiscovery.ts": [],
+    "src/lib/enterprise/configEncryption.ts": [],
+    "src/lib/enterprise/configMerger.ts": [],
+    "src/lib/enterprise/configParser.ts": [],
+    "src/lib/enterprise/configPrecedence.ts": [],
+    "src/lib/enterprise/configWatcher.ts": [],
+    "src/lib/enterprise/envExpansion.ts": [],
+    "src/lib/enterprise/gpoReader.ts": [],
+    "src/lib/enterprise/jsonConfigLoader.ts": [],
+    "src/lib/enterprise/macPreferences.ts": [],
+    "src/lib/enterprise/mdmReader.ts": [],
+    "src/lib/enterprise/policyMerger.ts": [],
+    "src/lib/enterprise/registryAccess.ts": [],
+    "src/lib/enterprise/remoteConfigLoader.ts": [],
+    "src/lib/enterprise/secretsManager.ts": [],
+    "src/lib/enterprise/ssrfGuard.ts": [],
+    "src/lib/enterprise/yamlConfigLoader.ts": [],
+    "src/lib/export/compressPdf.ts": [],
+    "src/lib/export/flattenPdf.ts": [],
+    "src/lib/export/imageExport.ts": [],
+    "src/lib/export/index.ts": [],
+    "src/lib/export/pdfExport.ts": [],
+    "src/lib/fileWatch/changeDetector.ts": [],
+    "src/lib/fileWatch/conflictHandler.ts": [],
+    "src/lib/fileWatch/documentDiff.ts": [],
+    "src/lib/fileWatch/index.ts": [],
+    "src/lib/fileWatch/mergeStrategy.ts": [],
+    "src/lib/fileWatch/smartReload.ts": [],
+    "src/lib/fileWatch/statePreserver.ts": [],
+    "src/lib/fileWatch/watchQueue.ts": [],
+    "src/lib/fonts/fontFallback.ts": [],
+    "src/lib/fonts/fontMatcher.ts": [],
+    "src/lib/fonts/index.ts": [],
+    "src/lib/forms/calculations.ts": [],
+    "src/lib/forms/conditionalLogic.ts": [],
+    "src/lib/forms/exportImport.ts": [],
+    "src/lib/forms/fdfExport.ts": [],
+    "src/lib/forms/formActions.ts": [],
+    "src/lib/forms/formParser.ts": [],
+    "src/lib/forms/formSubmit.ts": [],
+    "src/lib/forms/formatting.ts": [],
+    "src/lib/forms/importData.ts": [],
+    "src/lib/forms/index.ts": [],
+    "src/lib/forms/validation.ts": [],
+    "src/lib/forms/xfdfExport.ts": [],
+    "src/lib/kiosk/kioskMode.ts": [],
+    "src/lib/lan/serviceDiscovery.ts": [],
+    "src/lib/license/expiryHandler.ts": [],
+    "src/lib/license/featureGating.ts": [],
+    "src/lib/license/hardwareFingerprint.ts": [],
+    "src/lib/license/licenseBinding.ts": [],
+    "src/lib/license/licenseFormat.ts": [],
+    "src/lib/license/licenseStorage.ts": [],
+    "src/lib/license/licenseValidator.ts": [],
+    "src/lib/license/signatureVerifier.ts": [],
+    "src/lib/monitoring/analytics.ts": [],
+    "src/lib/monitoring/index.ts": [],
+    "src/lib/monitoring/releaseMetrics.ts": [],
+    "src/lib/monitoring/sentry.ts": [],
+    "src/lib/ocr/batchOCR.ts": [],
+    "src/lib/ocr/exportFormats.ts": [],
+    "src/lib/ocr/imagePreprocessor.ts": [],
+    "src/lib/ocr/index.ts": [],
+    "src/lib/ocr/languageLoader.ts": [],
+    "src/lib/ocr/layoutAnalyzer.ts": [],
+    "src/lib/ocr/ocrEngine.ts": [],
+    "src/lib/ocr/textLayerEmbed.ts": [],
+    "src/lib/ocr/types.ts": [],
+    "src/lib/offline/backgroundSync.ts": [],
+    "src/lib/offline/conflictResolver.ts": [],
+    "src/lib/offline/deltaSync.ts": [],
+    "src/lib/offline/offlineAvailability.ts": [],
+    "src/lib/offline/offlineQueue.ts": [],
+    "src/lib/offline/offlineStorage.ts": [],
+    "src/lib/offline/patchGenerator.ts": [],
+    "src/lib/offline/queueProcessor.ts": [],
+    "src/lib/offline/serviceWorkerConfig.ts": [],
+    "src/lib/offline/syncEngine.ts": [],
+    "src/lib/pages/extractPages.ts": [],
+    "src/lib/pages/index.ts": [],
+    "src/lib/pages/mergePdf.ts": [],
+    "src/lib/pages/pageOperations.ts": [],
+    "src/lib/pages/splitPdf.ts": [],
+    "src/lib/pdf/renderer.ts": [],
+    "src/lib/pdf/saver.ts": [],
+    "src/lib/pdf/signatureEmbed.ts": [],
+    "src/lib/pdf/textSaver.ts": [],
+    "src/lib/performance/index.ts": [],
+    "src/lib/performance/memoryManager.ts": [],
+    "src/lib/print/accessibility.ts": [],
+    "src/lib/print/bookletLayout.ts": [],
+    "src/lib/print/colorManagement.ts": [],
+    "src/lib/print/executePrint.ts": [],
+    "src/lib/print/imposition.ts": [],
+    "src/lib/print/index.ts": [],
+    "src/lib/print/nupLayout.ts": [],
+    "src/lib/print/pageRange.ts": [],
+    "src/lib/print/pdfRenderer.ts": [],
+    "src/lib/print/presets.ts": [],
+    "src/lib/print/printQueue.ts": [],
+    "src/lib/print/printRenderer.ts": [],
+    "src/lib/print/virtualPrinter.ts": [],
+    "src/lib/redaction/index.ts": [],
+    "src/lib/redaction/patternMatcher.ts": [],
+    "src/lib/redaction/redactionEngine.ts": [],
+    "src/lib/redaction/redactionVerify.ts": [],
+    "src/lib/redaction/types.ts": [],
+    "src/lib/scanner/documentDetection.ts": [],
+    "src/lib/scanner/imageCompression.ts": [],
+    "src/lib/scanner/perspectiveCorrection.ts": [],
+    "src/lib/scanner/scanOcr.ts": [],
+    "src/lib/scanner/scanProfiles.ts": [],
+    "src/lib/scanner/scanToPdf.ts": [],
+    "src/lib/scanner/scannerProvider.ts": [],
+    "src/lib/scanner/types.ts": [],
+    "src/lib/security/assertion.ts": [],
+    "src/lib/security/attestation.ts": [],
+    "src/lib/security/fido2Server.ts": [],
+    "src/lib/security/hardwareEncryption.ts": [],
+    "src/lib/security/keyWrapping.ts": [],
+    "src/lib/security/webauthn.ts": [],
+    "src/lib/security/webauthnClient.ts": [],
+    "src/lib/share/copyLink.ts": [],
+    "src/lib/share/emailShare.ts": [],
+    "src/lib/share/index.ts": [],
+    "src/lib/signatures/dateUtils.ts": [],
+    "src/lib/signatures/fieldAlignment.ts": [],
+    "src/lib/signatures/imageProcessor.ts": [],
+    "src/lib/storage/fileHandler.ts": [],
+    "src/lib/storage/formStorage.ts": [],
+    "src/lib/storage/indexeddb.ts": [],
+    "src/lib/storage/signatureStorage.ts": [],
+    "src/lib/storage/stampStorage.ts": [],
+    "src/lib/thumbnails/cache.ts": [],
+    "src/lib/thumbnails/index.ts": [],
+    "src/lib/update/updateClient.ts": [],
+    "src/main.tsx": [],
+    "src/pages/Editor.tsx": [],
+    "src/pages/Home.tsx": [],
+    "src/pages/NotFound.tsx": [],
+    "src/pages/Privacy.tsx": [],
+    "src/pages/Settings.tsx": [],
+    "src/pages/Terms.tsx": [],
+    "src/stores/annotationStore.ts": [],
+    "src/stores/batchStore.ts": [],
+    "src/stores/comparisonStore.ts": [],
+    "src/stores/documentStore.ts": [],
+    "src/stores/enterprisePolicyStore.ts": [],
+    "src/stores/fileWatchStore.ts": [],
+    "src/stores/formDesignerStore.ts": [],
+    "src/stores/formStore.ts": [],
+    "src/stores/historyStore.ts": [],
+    "src/stores/index.ts": [],
+    "src/stores/kioskStore.ts": [],
+    "src/stores/lanStore.ts": [],
+    "src/stores/licenseStore.ts": [],
+    "src/stores/nativeBatchStore.ts": [],
+    "src/stores/ocrStore.ts": [],
+    "src/stores/offlineStore.ts": [],
+    "src/stores/printStore.ts": [],
+    "src/stores/recentFilesStore.ts": [],
+    "src/stores/redactionStore.ts": [],
+    "src/stores/scannerStore.ts": [],
+    "src/stores/securityStore.ts": [],
+    "src/stores/settingsStore.ts": [],
+    "src/stores/shortcutsStore.ts": [],
+    "src/stores/signatureStore.ts": [],
+    "src/stores/textStore.ts": [],
+    "src/stores/uiStore.ts": [],
+    "src/stores/updateStore.ts": [],
+    "src/sw.ts": [],
+    "src/types/annotations.ts": [],
+    "src/types/batch.ts": [],
+    "src/types/electronTypes.ts": [],
+    "src/types/enterpriseConfig.ts": [],
+    "src/types/forms.ts": [],
+    "src/types/index.ts": [],
+    "src/types/kioskConfig.ts": [],
+    "src/types/license.ts": [],
+    "src/types/offline.ts": [],
+    "src/types/pdf.ts": [],
+    "src/types/text.ts": [],
+    "src/types/webauthn.ts": [],
+    "src/utils/cn.ts": [],
+    "src/utils/coordinates.ts": [],
+    "src/utils/index.ts": [],
+    "src/utils/platform.ts": [],
+    "src/workers/thumbnailWorker.ts": [],
+    "src/workers/thumbnailWorkerScript.ts": []
+  },
+  "testToSourceMap": {
+    "tests/e2e/browser-test.spec.ts": [],
+    "tests/e2e/cross-platform/core-features.spec.ts": [],
+    "tests/e2e/cross-platform/editing.spec.ts": [],
+    "tests/e2e/full-feature-test.spec.ts": [],
+    "tests/e2e/mobile/responsive.spec.ts": [],
+    "tests/e2e/mobile/touch.spec.ts": [],
+    "tests/e2e/pdf-editor-test.spec.ts": [],
+    "tests/e2e/workflows/annotate-share.spec.ts": [],
+    "tests/e2e/workflows/form-fill.spec.ts": [],
+    "tests/e2e/workflows/open-edit-save.spec.ts": [],
+    "tests/e2e-electron/fileOperations.spec.ts": [],
+    "tests/e2e-electron/ipcContract.spec.ts": [],
+    "tests/e2e-electron/menuShortcuts.spec.ts": [],
+    "tests/e2e-electron/platformIntegration.spec.ts": [],
+    "tests/e2e-electron/updates.spec.ts": [],
+    "tests/electron/contextMenu.test.ts": [
+      "electron/contextMenu.ts"
+    ],
+    "tests/electron/csp.test.ts": [
+      "electron/main/security.ts"
+    ],
+    "tests/electron/fileHandlers.test.ts": [],
+    "tests/electron/fileWatcher.test.ts": [],
+    "tests/electron/folderListRecursive.test.ts": [
+      "electron/ipc/fileHandlers.ts"
+    ],
+    "tests/electron/ipc.test.ts": [
+      "electron/ipc/channels.ts"
+    ],
+    "tests/electron/menu.test.ts": [
+      "electron/menuTemplate.ts"
+    ],
+    "tests/electron/notifications.test.ts": [
+      "electron/notifications.ts"
+    ],
+    "tests/electron/pathSandbox.test.ts": [
+      "electron/ipc/pathSandbox.ts"
+    ],
+    "tests/electron/platform.test.ts": [
+      "src/lib/electron/platform.ts"
+    ],
+    "tests/electron/recentFiles.test.ts": [],
+    "tests/electron/safeStorageBridge.test.ts": [
+      "electron/ipc/channels.ts",
+      "electron/ipc/safeStorageHandlers.ts"
+    ],
+    "tests/electron/security.test.ts": [
+      "electron/main/security.ts"
+    ],
+    "tests/electron/shortcuts.test.ts": [
+      "electron/shortcuts.ts"
+    ],
+    "tests/electron/tray.test.ts": [
+      "electron/tray.ts"
+    ],
+    "tests/electron/updater.test.ts": [
+      "electron/ipc/types.ts"
+    ],
+    "tests/electron/windowManager.test.ts": [
+      "electron/main/windowManager.ts",
+      "electron/main/windowState.ts"
+    ],
+    "tests/enterprise/configMerger.test.ts": [],
+    "tests/enterprise/configParser.test.ts": [],
+    "tests/enterprise/gpoReader.test.ts": [],
+    "tests/enterprise/registryAccess.test.ts": [],
+    "tests/enterprise/remoteConfig.test.ts": [],
+    "tests/integration/accessibility/keyboardNavigation.test.tsx": [],
+    "tests/integration/annotations/drawing.test.tsx": [],
+    "tests/integration/annotations/highlights.test.tsx": [],
+    "tests/integration/annotations/notes.test.tsx": [],
+    "tests/integration/annotations/shapes.test.tsx": [],
+    "tests/integration/export/exportFlow.test.tsx": [],
+    "tests/integration/fileOpening.test.tsx": [],
+    "tests/integration/fileWatch/externalChanges.test.ts": [],
+    "tests/integration/forms/formExport.test.tsx": [],
+    "tests/integration/forms/formFilling.test.tsx": [],
+    "tests/integration/offline/offlineWorkflow.test.ts": [],
+    "tests/integration/pages/mergeSplit.test.tsx": [],
+    "tests/integration/pages/pageManagement.test.tsx": [],
+    "tests/integration/pages/pageReorder.test.tsx": [],
+    "tests/integration/performance/lazyLoading.test.tsx": [],
+    "tests/integration/print/printFlow.test.tsx": [],
+    "tests/integration/print/printWorkflow.test.ts": [],
+    "tests/integration/scanner/scanWorkflow.test.ts": [],
+    "tests/integration/security/hardwareAuth.test.ts": [],
+    "tests/integration/signatures/signatureCreation.test.tsx": [],
+    "tests/integration/signatures/signaturePlacement.test.tsx": [],
+    "tests/integration/textEditing/formatting.test.tsx": [],
+    "tests/integration/textEditing/textBox.test.tsx": [],
+    "tests/license/featureGating.test.ts": [],
+    "tests/license/hardwareFingerprint.test.ts": [],
+    "tests/unit/components/annotations/DrawingCanvas.test.tsx": [],
+    "tests/unit/components/annotations/HighlightTool.test.tsx": [],
+    "tests/unit/components/annotations/NoteTool.test.tsx": [],
+    "tests/unit/components/annotations/SelectionPopup.test.tsx": [],
+    "tests/unit/components/annotations/ShapeTool.test.tsx": [],
+    "tests/unit/components/annotations/StampTool.test.tsx": [],
+    "tests/unit/components/annotations/StickyNote.test.tsx": [],
+    "tests/unit/components/editor/TextBoxTransform.test.tsx": [],
+    "tests/unit/components/editor/TextEditor.test.tsx": [],
+    "tests/unit/components/forms/FormActions.test.tsx": [],
+    "tests/unit/components/forms/FormField.test.tsx": [],
+    "tests/unit/components/forms/designer/FieldPalette.test.tsx": [],
+    "tests/unit/components/layerStacking.test.tsx": [],
+    "tests/unit/components/pages/PageThumbnails.test.tsx": [],
+    "tests/unit/components/print/PageRangeSelector.test.tsx": [],
+    "tests/unit/components/signatures/SignatureCanvas.test.tsx": [],
+    "tests/unit/components/signatures/SignaturePlacer.test.tsx": [],
+    "tests/unit/components/ui/AccessibleComponents.test.tsx": [],
+    "tests/unit/components/ui/Skeleton.test.tsx": [],
+    "tests/unit/hooks/useAnnotationShortcuts.test.ts": [],
+    "tests/unit/hooks/useBeforeUnload.test.ts": [],
+    "tests/unit/hooks/useClipboard.test.ts": [],
+    "tests/unit/hooks/useDropZone.test.ts": [],
+    "tests/unit/hooks/useKeyboardNavigation.test.ts": [],
+    "tests/unit/hooks/usePageSelection.test.ts": [],
+    "tests/unit/hooks/usePointerInput.test.ts": [],
+    "tests/unit/hooks/useSearch.test.ts": [],
+    "tests/unit/hooks/useTouchGestures.test.ts": [],
+    "tests/unit/hooks/useVirtualization.test.ts": [],
+    "tests/unit/hooks/useVisiblePages.test.ts": [],
+    "tests/unit/lib/accessibility/checker.test.ts": [],
+    "tests/unit/lib/annotations/drawingSerializer.test.ts": [],
+    "tests/unit/lib/annotations/serializer.test.ts": [],
+    "tests/unit/lib/batch/batchProcessor.test.ts": [],
+    "tests/unit/lib/batch/batesNumber.test.ts": [],
+    "tests/unit/lib/batch/flatten.test.ts": [],
+    "tests/unit/lib/batch/headerFooter.test.ts": [],
+    "tests/unit/lib/batch/jobQueue.test.ts": [],
+    "tests/unit/lib/batch/operations.test.ts": [],
+    "tests/unit/lib/batch/watermark.test.ts": [],
+    "tests/unit/lib/comparison/comparisonEngine.test.ts": [],
+    "tests/unit/lib/comparison/reportGenerator.test.ts": [],
+    "tests/unit/lib/comparison/textDiff.test.ts": [],
+    "tests/unit/lib/enterprise/ssrfGuard.test.ts": [],
+    "tests/unit/lib/export/compressPdf.test.ts": [],
+    "tests/unit/lib/export/flattenPdf.test.ts": [],
+    "tests/unit/lib/export/imageExport.test.ts": [],
+    "tests/unit/lib/export/pdfExport.test.ts": [],
+    "tests/unit/lib/fileWatch/changeDetector.test.ts": [],
+    "tests/unit/lib/fileWatch/smartReload.test.ts": [],
+    "tests/unit/lib/fonts/fontFallback.test.ts": [],
+    "tests/unit/lib/fonts/fontMatcher.test.ts": [],
+    "tests/unit/lib/forms/calculations.test.ts": [],
+    "tests/unit/lib/forms/conditionalLogic.test.ts": [],
+    "tests/unit/lib/forms/formActions.test.ts": [],
+    "tests/unit/lib/forms/formSubmit.test.ts": [],
+    "tests/unit/lib/forms/formatting.test.ts": [],
+    "tests/unit/lib/forms/importData.test.ts": [],
+    "tests/unit/lib/forms/xfdfExport.test.ts": [],
+    "tests/unit/lib/license/licenseStorage.test.ts": [],
+    "tests/unit/lib/license/licenseStorageBridge.test.ts": [],
+    "tests/unit/lib/license/licenseValidator.test.ts": [],
+    "tests/unit/lib/monitoring/analytics.test.ts": [],
+    "tests/unit/lib/monitoring/sentry.test.ts": [],
+    "tests/unit/lib/ocr/batchOCR.test.ts": [],
+    "tests/unit/lib/ocr/exportFormats.test.ts": [],
+    "tests/unit/lib/ocr/imagePreprocessor.test.ts": [],
+    "tests/unit/lib/ocr/languageLoader.test.ts": [],
+    "tests/unit/lib/ocr/layoutAnalyzer.test.ts": [],
+    "tests/unit/lib/ocr/ocrEngine.test.ts": [],
+    "tests/unit/lib/ocr/types.test.ts": [],
+    "tests/unit/lib/offline/conflictResolver.test.ts": [],
+    "tests/unit/lib/offline/offlineStorage.test.ts": [],
+    "tests/unit/lib/offline/syncEngine.test.ts": [],
+    "tests/unit/lib/pages/extractPages.test.ts": [],
+    "tests/unit/lib/pages/mergePdf.test.ts": [],
+    "tests/unit/lib/pages/pageOperations.test.ts": [],
+    "tests/unit/lib/pages/splitPdf.test.ts": [],
+    "tests/unit/lib/pdf/renderer.test.ts": [],
+    "tests/unit/lib/pdf/signatureEmbed.test.ts": [],
+    "tests/unit/lib/pdf/textSaver.test.ts": [],
+    "tests/unit/lib/performance/memoryManager.test.ts": [],
+    "tests/unit/lib/print/executePrint.test.ts": [],
+    "tests/unit/lib/print/imposition.test.ts": [],
+    "tests/unit/lib/print/pdfRenderer.test.ts": [],
+    "tests/unit/lib/print/printRenderer.test.ts": [],
+    "tests/unit/lib/redaction/patternMatcher.test.ts": [],
+    "tests/unit/lib/redaction/redactionEngine.test.ts": [],
+    "tests/unit/lib/scanner/documentDetection.test.ts": [],
+    "tests/unit/lib/scanner/scannerProvider.test.ts": [],
+    "tests/unit/lib/security/fido2Server.test.ts": [],
+    "tests/unit/lib/security/webauthn.test.ts": [],
+    "tests/unit/lib/share/copyLink.test.ts": [],
+    "tests/unit/lib/share/emailShare.test.ts": [],
+    "tests/unit/lib/storage/fileHandler.test.ts": [],
+    "tests/unit/lib/storage/stampStorage.test.ts": [],
+    "tests/unit/lib/thumbnails/cache.test.ts": [],
+    "tests/unit/pages/Privacy.test.tsx": [],
+    "tests/unit/pages/Terms.test.tsx": [],
+    "tests/unit/stores/annotationStore.test.ts": [],
+    "tests/unit/stores/batchStore.test.ts": [],
+    "tests/unit/stores/comparisonStore.test.ts": [],
+    "tests/unit/stores/documentStore.test.ts": [],
+    "tests/unit/stores/formDesignerStore.test.ts": [],
+    "tests/unit/stores/formStore.test.ts": [],
+    "tests/unit/stores/historyStore.test.ts": [],
+    "tests/unit/stores/nativeBatchStore.test.ts": [],
+    "tests/unit/stores/ocrStore.test.ts": [],
+    "tests/unit/stores/redactionStore.test.ts": [],
+    "tests/unit/stores/settingsStore.test.ts": [],
+    "tests/unit/stores/signatureStore.test.ts": [],
+    "tests/unit/stores/textStore.test.ts": [],
+    "tests/unit/stores/uiStore.test.ts": [],
+    "tests/unit/styles/indexCss.test.ts": [],
+    "tests/unit/utils/cn.test.ts": [],
+    "tests/unit/utils/coordinates.test.ts": []
+  },
+  "classifiedUntested": [
+    {
+      "file": "cli/config-schema-check.ts",
+      "category": null
+    },
+    {
+      "file": "cli/validate-config.ts",
+      "category": null
+    },
+    {
+      "file": "electron/attention.ts",
+      "category": null
+    },
+    {
+      "file": "electron/autoSave.ts",
+      "category": null
+    },
+    {
+      "file": "electron/backup.ts",
+      "category": null
+    },
+    {
+      "file": "electron/clipboard.ts",
+      "category": null
+    },
+    {
+      "file": "electron/crashReporter.ts",
+      "category": null
+    },
+    {
+      "file": "electron/dialogs.ts",
+      "category": null
+    },
+    {
+      "file": "electron/dock.ts",
+      "category": null
+    },
+    {
+      "file": "electron/fileAssociation.ts",
+      "category": null
+    },
+    {
+      "file": "electron/fileWatcher.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/clipboardHandlers.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/dialogHandlers.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/fileWatchIPC.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/handlers.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/menuHandlers.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/notificationHandlers.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/printHandlers.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/shellHandlers.ts",
+      "category": null
+    },
+    {
+      "file": "electron/ipc/storageHandlers.ts",
+      "category": null
+    },
+    {
+      "file": "electron/jumpList.ts",
+      "category": null
+    },
+    {
+      "file": "electron/linuxLauncher.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/fileLock.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/folderWatcher.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/index.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/lifecycle.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/networkStatus.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/print/printDialog.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/print/printerCapabilities.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/print/printerDiscovery.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/print/printerManager.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/print/printerMonitor.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/print/silentPrint.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/print/spoolerIntegration.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/print/types.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/scanner/scannerBridge.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/security/webauthnBridge.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/updater.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/updates/differential.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/watcherOptimizations.ts",
+      "category": null
+    },
+    {
+      "file": "electron/main/watcherService.ts",
+      "category": null
+    },
+    {
+      "file": "electron/menu.ts",
+      "category": null
+    },
+    {
+      "file": "electron/powerSave.ts",
+      "category": null
+    },
+    {
+      "file": "electron/preload/index.ts",
+      "category": null
+    },
+    {
+      "file": "electron/preload/networkPreload.ts",
+      "category": null
+    },
+    {
+      "file": "electron/preload/webauthnPreload.ts",
+      "category": null
+    },
+    {
+      "file": "electron/print.ts",
+      "category": null
+    },
+    {
+      "file": "electron/protocol.ts",
+      "category": null
+    },
+    {
+      "file": "electron/recentFiles.ts",
+      "category": null
+    },
+    {
+      "file": "electron/secureStorage.ts",
+      "category": null
+    },
+    {
+      "file": "electron/shell.ts",
+      "category": null
+    },
+    {
+      "file": "electron/startup.ts",
+      "category": null
+    },
+    {
+      "file": "electron/taskbarOverlay.ts",
+      "category": null
+    },
+    {
+      "file": "electron/taskbarProgress.ts",
+      "category": null
+    },
+    {
+      "file": "electron/thumbnailToolbar.ts",
+      "category": null
+    },
+    {
+      "file": "electron/touchbar/touchBarManager.ts",
+      "category": null
+    },
+    {
+      "file": "electron/trayMenu.ts",
+      "category": null
+    },
+    {
+      "file": "electron/windowsCrashReporter.ts",
+      "category": null
+    },
+    {
+      "file": "electron/workers/pdfWorker.ts",
+      "category": null
+    },
+    {
+      "file": "electron/workers/workerManager.ts",
+      "category": null
+    },
+    {
+      "file": "electron/workers/workerPool.ts",
+      "category": null
+    },
+    {
+      "file": "public/pdf.worker.min.js",
+      "category": null
+    },
+    {
+      "file": "server/update/types.ts",
+      "category": null
+    },
+    {
+      "file": "src/App.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/accessibility/AccessibilityPanel.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/accessibility/AccessibilityReport.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/accessibility/IssueList.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/accessibility/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/AnnotationLayer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/AnnotationProperties.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/ArrowTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/CustomStampDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/DrawingAnnotation.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/DrawingCanvas.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/DrawingToolOptions.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/EllipseTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/EraserTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/ExportImportDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/Highlight.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/HighlightTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/LineTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/NoteReplies.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/NoteTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/OpacitySlider.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/RectangleTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/ResizeHandles.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/RotationHandle.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/SelectionPopup.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/ShapeAnnotation.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/ShapeOptions.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/ShapeOverlay.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/StampPicker.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/StampTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/StampTransform.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/StickyNote.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/Strikethrough.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/Underline.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/BatchDashboard.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/BatchPanel.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/BatchSummary.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/BatchWizard.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/BatesNumberDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/FlattenDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/HeaderFooterDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/TemplateManager.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/WatermarkDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/batch/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/comparison/ComparisonDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/comparison/ComparisonReport.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/comparison/OverlayView.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/comparison/SideBySideView.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/comparison/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/AlignmentPicker.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/FontPicker.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/FontSizePicker.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/InlineTextEditor.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/LineSpacing.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/RichTextToolbar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/TextBoxTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/TextBoxTransform.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/TextColorPicker.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/TextProperties.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/TextSelector.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/editor/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/enterprise/ConfigExportDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/enterprise/ConfigSourceBadge.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/enterprise/ConfigurationViewer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/enterprise/LockedSettingBadge.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/enterprise/PolicyStatusIndicator.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/export/CompressDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/export/ImageExportDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/export/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/fileWatch/ChangePreview.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/fileWatch/DocumentCompare.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/fileWatch/ExternalChangeNotification.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/fileWatch/FileLockNotification.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/fileWatch/WatchStatusIndicator.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/Checkbox.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/Dropdown.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/FieldError.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/FormActions.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/FormFieldRenderer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/FormLayer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/RadioButton.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/TextField.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/designer/DesignCanvas.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/designer/DesignerToolbar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/designer/FieldPalette.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/designer/FieldPreview.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/designer/FieldProperties.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/designer/FormDesigner.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/designer/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/forms/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/help/KeyboardShortcutsDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/home/RecentFiles.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/kiosk/KioskHeader.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/kiosk/KioskShell.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/kiosk/KioskToolbar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/layout/AppLayout.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/layout/Header.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/layout/MobileToolbar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/layout/Sidebar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/layout/TitleBar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/layout/Toolbar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/lazy/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/BatchOCRProgress.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/LanguageSelector.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/OCRDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/OCRExportDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/OCRProgress.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/OCRResultsPanel.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/PageRangeSelector.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/PreprocessingOptions.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ocr/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/offline/ConflictDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/offline/OfflineBanner.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/offline/OfflineIndicator.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/offline/OfflineSettings.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/offline/SyncStatusPanel.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/offline/VersionCompare.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/pages/DraggableThumbnail.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/pages/InsertPageDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/pages/MergeDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/pages/MoveToDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/pages/PageContextMenu.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/pages/RotateMenu.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/pages/SplitDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/pages/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/print/AccessibilityOptions.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/AdvancedPrintSettings.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/BindingOptions.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/BookletWizard.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/MarginEditor.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/OrientationOptions.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/PageLayout.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/PageRangeSelector.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/PrintDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/PrintPresetsManager.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/PrintPreview.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/PrintPreviewEnhanced.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/PrintQualitySelector.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/PrinterStatus.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/ScaleOptions.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/print/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/redaction/PatternSearchDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/redaction/RedactionToolbar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/redaction/RedactionVerify.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/redaction/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/BatchScanWorkflow.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/ColorModeSelector.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/CropTool.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/EnhancementTools.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/PageOrganizer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/ProfileManager.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/ResolutionPicker.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/ScanPreview.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/ScanSettingsPanel.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/ScannerInfo.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/scanner/ScannerSelectDialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/security/EnrollmentGuide.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/security/HardwareKeyAuth.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/security/HardwareKeyEnrollment.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/security/KeyChallenge.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/security/KeyManagement.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/settings/AutoReloadSettings.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/settings/NotificationSettings.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/settings/ShortcutSettings.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/sidebar/OutlinePanel.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/sidebar/ThumbnailSidebar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/DateStamp.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/DrawSignature.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/ImageSignature.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/InitialsModal.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/SignatureList.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/SignatureModal.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/SignaturePlacer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/SignatureResize.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/SignatureRotation.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/TypeSignature.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/signatures/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/toolbar/AnnotationToolbar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/toolbar/SearchBar.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/toolbar/ViewModeToggle.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/AccessibleComponents.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/Button.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/Checkbox.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/Dialog.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/Input.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/LoadingIndicator.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/Progress.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/Select.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/Skeleton.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/ThemeToggle.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/ui/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/update/InstallPrompt.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/update/ReleaseNotes.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/update/UpdateNotification.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/update/UpdateProgress.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/update/UpdateSettings.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/update/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/components/updates/UpdateNotification.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/ContinuousView.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/DropZone.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/PDFViewer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/PageCanvas.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/PageNavigation.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/PageSkeleton.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/SinglePageView.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/SpreadView.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/TextLayer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/VirtualizedViewer.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/ZoomControls.tsx",
+      "category": null
+    },
+    {
+      "file": "src/constants/config.ts",
+      "category": null
+    },
+    {
+      "file": "src/constants/shortcuts.ts",
+      "category": null
+    },
+    {
+      "file": "src/constants/stamps.ts",
+      "category": null
+    },
+    {
+      "file": "src/constants/tools.ts",
+      "category": null
+    },
+    {
+      "file": "src/constants/version.ts",
+      "category": null
+    },
+    {
+      "file": "src/contexts/PlatformContext.tsx",
+      "category": null
+    },
+    {
+      "file": "src/hooks/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useAnnotationShortcuts.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useAnnounce.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useAutoSave.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useBeforeUnload.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useClipboard.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useConnectionStatus.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useDropZone.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useFileSystem.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useFormFields.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useFormNavigation.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useHighlightTool.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useKeyboardNavigation.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useOfflineData.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useOfflineSync.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/usePageDrag.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/usePageSelection.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/usePlatform.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/usePointerInput.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useSearch.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useSignatureInput.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useTextSelection.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useThumbnails.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useTouchGestures.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useUnsavedChanges.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useVirtualization.ts",
+      "category": null
+    },
+    {
+      "file": "src/hooks/useVisiblePages.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/accessibility/checker.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/accessibility/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/accessibility/types.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/annotations/drawingSerializer.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/annotations/serializer.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/batchProcessor.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/batesNumber.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/errorHandler.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/errorReporter.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/flatten.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/headerFooter.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/jobPersistence.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/jobQueue.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/operations/batchCompress.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/operations/batchMerge.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/operations/batchOCR.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/operations/batchSplit.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/operations/batchWatermark.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/operations/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/templates.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/types.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/batch/watermark.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/comparison/comparisonEngine.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/comparison/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/comparison/reportGenerator.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/comparison/textDiff.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/comparison/types.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/dev/hotReload.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/electron/dialogs.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/electron/fileSystem.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/electron/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/electron/ipc.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/electron/notifications.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/electron/print.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/configCache.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/configDiscovery.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/configEncryption.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/configMerger.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/configParser.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/configPrecedence.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/configWatcher.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/envExpansion.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/gpoReader.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/jsonConfigLoader.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/macPreferences.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/mdmReader.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/policyMerger.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/registryAccess.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/remoteConfigLoader.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/secretsManager.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/ssrfGuard.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/enterprise/yamlConfigLoader.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/export/compressPdf.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/export/flattenPdf.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/export/imageExport.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/export/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/export/pdfExport.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fileWatch/changeDetector.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fileWatch/conflictHandler.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fileWatch/documentDiff.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fileWatch/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fileWatch/mergeStrategy.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fileWatch/smartReload.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fileWatch/statePreserver.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fileWatch/watchQueue.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fonts/fontFallback.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fonts/fontMatcher.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/fonts/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/calculations.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/conditionalLogic.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/exportImport.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/fdfExport.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/formActions.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/formParser.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/formSubmit.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/formatting.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/importData.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/validation.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/forms/xfdfExport.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/kiosk/kioskMode.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/lan/serviceDiscovery.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/license/expiryHandler.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/license/featureGating.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/license/hardwareFingerprint.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/license/licenseBinding.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/license/licenseFormat.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/license/licenseStorage.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/license/licenseValidator.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/license/signatureVerifier.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/monitoring/analytics.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/monitoring/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/monitoring/releaseMetrics.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/monitoring/sentry.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/batchOCR.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/exportFormats.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/imagePreprocessor.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/languageLoader.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/layoutAnalyzer.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/ocrEngine.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/textLayerEmbed.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/ocr/types.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/backgroundSync.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/conflictResolver.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/deltaSync.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/offlineAvailability.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/offlineQueue.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/offlineStorage.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/patchGenerator.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/queueProcessor.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/serviceWorkerConfig.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/offline/syncEngine.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pages/extractPages.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pages/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pages/mergePdf.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pages/pageOperations.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pages/splitPdf.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pdf/renderer.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pdf/saver.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pdf/signatureEmbed.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/pdf/textSaver.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/performance/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/performance/memoryManager.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/accessibility.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/bookletLayout.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/colorManagement.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/executePrint.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/imposition.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/nupLayout.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/pageRange.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/pdfRenderer.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/presets.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/printQueue.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/printRenderer.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/print/virtualPrinter.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/redaction/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/redaction/patternMatcher.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/redaction/redactionEngine.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/redaction/redactionVerify.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/redaction/types.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/scanner/documentDetection.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/scanner/imageCompression.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/scanner/perspectiveCorrection.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/scanner/scanOcr.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/scanner/scanProfiles.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/scanner/scanToPdf.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/scanner/scannerProvider.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/scanner/types.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/security/assertion.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/security/attestation.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/security/fido2Server.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/security/hardwareEncryption.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/security/keyWrapping.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/security/webauthn.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/security/webauthnClient.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/share/copyLink.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/share/emailShare.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/share/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/signatures/dateUtils.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/signatures/fieldAlignment.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/signatures/imageProcessor.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/storage/fileHandler.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/storage/formStorage.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/storage/indexeddb.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/storage/signatureStorage.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/storage/stampStorage.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/thumbnails/cache.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/thumbnails/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/update/updateClient.ts",
+      "category": null
+    },
+    {
+      "file": "src/main.tsx",
+      "category": null
+    },
+    {
+      "file": "src/pages/Editor.tsx",
+      "category": null
+    },
+    {
+      "file": "src/pages/Home.tsx",
+      "category": null
+    },
+    {
+      "file": "src/pages/NotFound.tsx",
+      "category": null
+    },
+    {
+      "file": "src/pages/Privacy.tsx",
+      "category": null
+    },
+    {
+      "file": "src/pages/Settings.tsx",
+      "category": null
+    },
+    {
+      "file": "src/pages/Terms.tsx",
+      "category": null
+    },
+    {
+      "file": "src/stores/annotationStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/batchStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/comparisonStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/documentStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/enterprisePolicyStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/fileWatchStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/formDesignerStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/formStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/historyStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/kioskStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/lanStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/licenseStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/nativeBatchStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/ocrStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/offlineStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/printStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/recentFilesStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/redactionStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/scannerStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/securityStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/settingsStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/shortcutsStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/signatureStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/textStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/uiStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/stores/updateStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/sw.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/annotations.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/batch.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/electronTypes.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/enterpriseConfig.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/forms.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/kioskConfig.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/license.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/offline.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/pdf.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/text.ts",
+      "category": null
+    },
+    {
+      "file": "src/types/webauthn.ts",
+      "category": null
+    },
+    {
+      "file": "src/utils/cn.ts",
+      "category": null
+    },
+    {
+      "file": "src/utils/coordinates.ts",
+      "category": null
+    },
+    {
+      "file": "src/utils/index.ts",
+      "category": null
+    },
+    {
+      "file": "src/utils/platform.ts",
+      "category": null
+    },
+    {
+      "file": "src/workers/thumbnailWorker.ts",
+      "category": null
+    },
+    {
+      "file": "src/workers/thumbnailWorkerScript.ts",
+      "category": null
+    }
+  ]
+}
