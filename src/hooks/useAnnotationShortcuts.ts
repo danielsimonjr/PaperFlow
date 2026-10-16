@@ -47,9 +47,11 @@ export function useAnnotationShortcuts({
       }
 
       const isModifierKey = e.ctrlKey || e.metaKey;
+      // A keyboard reports the shifted character: Ctrl+Shift+Z arrives as "Z".
+      const lowerKey = e.key.toLowerCase();
 
       // Undo/Redo
-      if (isModifierKey && e.key === 'z') {
+      if (isModifierKey && lowerKey === 'z') {
         e.preventDefault();
         if (e.shiftKey) {
           if (canRedo()) redo();
@@ -59,7 +61,7 @@ export function useAnnotationShortcuts({
         return;
       }
 
-      if (isModifierKey && e.key === 'y') {
+      if (isModifierKey && lowerKey === 'y') {
         e.preventDefault();
         if (canRedo()) redo();
         return;
@@ -76,8 +78,6 @@ export function useAnnotationShortcuts({
         n: 'note',
         v: null,
       };
-
-      const lowerKey = e.key.toLowerCase();
 
       if (Object.prototype.hasOwnProperty.call(toolShortcuts, lowerKey)) {
         e.preventDefault();
