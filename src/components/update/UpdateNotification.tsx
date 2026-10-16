@@ -18,10 +18,10 @@ export interface UpdateNotificationProps {
 }
 
 /**
- * The notice floats in the bottom-right corner for an available or downloaded update. The notice shows only when a
- * notification is visible and the status is available or downloaded. Download Update starts the download and hides the
- * notice. Restart Now installs and restarts. Later calls installLater. Not Now hides the notice. View release notes
- * appears when release notes exist.
+ * The notice floats in the bottom-right corner for an available or downloaded update.
+ * The notice shows only when a notification is visible and the status is available or downloaded. Download Update
+ * starts the download and hides the notice. Restart Now installs and restarts. Later calls installLater. Not Now hides
+ * the notice. View release notes appears when release notes exist.
  */
 export function UpdateNotification({ className = '' }: UpdateNotificationProps): React.ReactElement | null {
   const {

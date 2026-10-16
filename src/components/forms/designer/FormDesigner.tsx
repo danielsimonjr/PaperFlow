@@ -20,9 +20,9 @@ interface FormDesignerProps {
 }
 
 /**
- * The main container of the form designer appears as a full-screen overlay. The container enters design mode on mount,
- * exits design mode on unmount, and renders nothing outside design mode. In design mode, Ctrl+Shift+F outside text
- * inputs calls `onClose`.
+ * The main container of the form designer appears as a full-screen overlay.
+ * The container enters design mode on mount, exits design mode on unmount, and renders nothing outside design mode. In
+ * design mode, Ctrl+Shift+F outside text inputs calls `onClose`.
  */
 export function FormDesigner({
   pageIndex = 0,

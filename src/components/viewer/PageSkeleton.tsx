@@ -58,8 +58,9 @@ export function PageSkeleton({ width = 612, height = 792, className }: PageSkele
 }
 
 /**
- * Placeholder for a page thumbnail while the thumbnail loads. The component adds `className` to the outer column. The
- * outer element has the role `status` and the label `Loading thumbnail`.
+ * Placeholder for a page thumbnail while the thumbnail loads.
+ * The component adds `className` to the outer column. The outer element has the role `status` and the label
+ * `Loading thumbnail`.
  */
 export function ThumbnailSkeleton({ className }: { className?: string }) {
   return (

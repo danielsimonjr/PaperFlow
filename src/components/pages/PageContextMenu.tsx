@@ -41,9 +41,9 @@ const menuItemClass = cn(
 const menuSeparatorClass = 'my-1 h-px bg-gray-200 dark:bg-gray-700';
 
 /**
- * Dropdown menu of page actions: duplicate, rotate, insert, move, extract and delete. Delete Selected replaces Delete
- * Page when this page is in a multi-page selection. The menu disables Delete Page for a one-page document, and disables
- * Delete Selected when every page is selected.
+ * Dropdown menu of page actions: duplicate, rotate, insert, move, extract and delete.
+ * Delete Selected replaces Delete Page when this page is in a multi-page selection. The menu disables Delete Page for a
+ * one-page document, and disables Delete Selected when every page is selected.
  */
 export function PageContextMenu({
   children,

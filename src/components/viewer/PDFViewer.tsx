@@ -5,10 +5,11 @@ import { ContinuousView } from './ContinuousView';
 import { SpreadView } from './SpreadView';
 
 /**
- * The top-level viewer shows the open document in the current view mode. The viewer shows a loading message or an
- * error, and an open-file prompt when no document is open. Left and right arrows, Page Up and Page Down turn pages, by
- * two in spread view. Home and End go to the first and last page. While the user holds Ctrl or Cmd, plus, minus or the
- * mouse wheel changes the zoom. The viewer ignores key shortcuts while the user types in an input or textarea.
+ * The top-level viewer shows the open document in the current view mode.
+ * The viewer shows a loading message or an error, and an open-file prompt when no document is open. Left and right
+ * arrows, Page Up and Page Down turn pages, by two in spread view. Home and End go to the first and last page. While
+ * the user holds Ctrl or Cmd, plus, minus or the mouse wheel changes the zoom. The viewer ignores key shortcuts while
+ * the user types in an input or textarea.
  */
 export function PDFViewer() {
   const fileName = useDocumentStore((state) => state.fileName);

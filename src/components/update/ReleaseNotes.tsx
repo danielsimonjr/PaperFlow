@@ -134,11 +134,11 @@ function parseMarkdown(markdown: string): React.ReactNode[] {
 }
 
 /**
- * The dialog shows release notes while `isReleaseNotesVisible` is set in the update store. The notes come from the
- * store state, or from `window.electron.getReleaseNotes` when the store has none. If the store has no notes and
- * `window.electron` is absent, the dialog keeps its loading spinner. The dialog renders the notes as basic markdown:
- * headers, lists, bold, italic and links. The primary button shows only for the available or downloaded status: Restart
- * Now or Download Update. Download Update starts the download and closes the dialog.
+ * The dialog shows release notes while `isReleaseNotesVisible` is set in the update store.
+ * The notes come from the store state, or from `window.electron.getReleaseNotes` when the store has none. If the store
+ * has no notes and `window.electron` is absent, the dialog keeps its loading spinner. The dialog renders the notes as
+ * basic markdown: headers, lists, bold, italic and links. The primary button shows only for the available or downloaded
+ * status: Restart Now or Download Update. Download Update starts the download and closes the dialog.
  */
 export function ReleaseNotes({ className = '' }: ReleaseNotesProps): React.ReactElement | null {
   const { state, isReleaseNotesVisible, hideReleaseNotes, downloadUpdate, installAndRestart } =

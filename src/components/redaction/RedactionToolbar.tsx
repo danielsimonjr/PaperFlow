@@ -21,8 +21,8 @@ export interface RedactionToolbarProps {
 }
 
 /**
- * The component renders an empty container for the redaction toolbar. The component takes no props. The component
- * offers no redaction tools.
+ * The component renders an empty container for the redaction toolbar.
+ * The component takes no props. The component offers no redaction tools.
  */
 export function RedactionToolbar(): React.ReactElement {
   return (

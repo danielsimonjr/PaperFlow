@@ -41,9 +41,9 @@ const severityColors = {
 };
 
 /**
- * The preview shows the changes found in a document before the document reloads. The preview lists each change with its
- * severity and pages, and counts the changes by severity. The preview recommends a full reload (`requiresFullReload`)
- * for a major change, added or removed pages, or over half the affected pages.
+ * The preview shows the changes found in a document before the document reloads.
+ * The preview lists each change with its severity and pages, and counts the changes by severity. The preview recommends
+ * a full reload (`requiresFullReload`) for a major change, added or removed pages, or over half the affected pages.
  */
 export function ChangePreview({ changeSummary, className = '' }: ChangePreviewProps) {
   if (!changeSummary.hasChanges) {

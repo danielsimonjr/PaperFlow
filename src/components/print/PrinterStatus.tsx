@@ -16,9 +16,10 @@ interface PrinterStatusProps {
 }
 
 /**
- * A printer status card displays the name, state, capabilities and ink levels of a printer. The card uses the `printer`
- * prop when the prop is given. Otherwise, the card shows the selected printer. The `compact` prop shows only a status
- * dot and the name. Ink levels are fixed sample values, not readings from the printer.
+ * A printer status card displays the name, state, capabilities and ink levels of a printer.
+ * The card uses the `printer` prop when the prop is given. Otherwise, the card shows the selected printer. The
+ * `compact` prop shows only a status dot and the name. Ink levels are fixed sample values, not readings from the
+ * printer.
  */
 export function PrinterStatus({
   printer: propPrinter,

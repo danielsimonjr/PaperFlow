@@ -6,8 +6,8 @@ import { cn } from '@utils/cn';
 import type { PageSize } from '@lib/pages/pageOperations';
 
 /**
- * Props for the `InsertPageDialog` component. The component reads `position` once when the dialog mounts. `onInsert`
- * receives the position and the page size.
+ * Props for the `InsertPageDialog` component.
+ * The component reads `position` once when the dialog mounts. `onInsert` receives the position and the page size.
  */
 export interface InsertPageDialogProps {
   open: boolean;

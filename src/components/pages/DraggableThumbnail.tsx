@@ -3,9 +3,9 @@ import { Check, GripVertical } from 'lucide-react';
 import { cn } from '@utils/cn';
 
 /**
- * Props for a page thumbnail that users can click, select and drag. `dragProps` holds the draggable flag and the drag
- * handlers. `dropPosition` sets the edge of the drop indicator. The drop indicator shows only while `isDropTarget` is
- * true.
+ * Props for a page thumbnail that users can click, select and drag.
+ * `dragProps` holds the draggable flag and the drag handlers. `dropPosition` sets the edge of the drop indicator. The
+ * drop indicator shows only while `isDropTarget` is true.
  */
 export interface DraggableThumbnailProps {
   pageNumber: number;

@@ -19,8 +19,9 @@ interface BatchOCRProgressProps {
 }
 
 /**
- * The progress view is for a multi-page OCR batch. The view shows the overall percentage, a state for each page, counts
- * by state, and the elapsed time. Retry Failed appears when a complete batch has page errors and `onRetry` is set.
+ * The progress view is for a multi-page OCR batch.
+ * The view shows the overall percentage, a state for each page, counts by state, and the elapsed time. Retry Failed
+ * appears when a complete batch has page errors and `onRetry` is set.
  */
 export function BatchOCRProgress({
   progress,

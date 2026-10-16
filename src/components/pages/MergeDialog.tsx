@@ -14,8 +14,9 @@ interface FileEntry {
 }
 
 /**
- * Props for the `MergeDialog` component. When `currentDocument` is given and included, the dialog merges that document
- * first. `onMerge` receives the files in their order.
+ * Props for the `MergeDialog` component.
+ * When `currentDocument` is given and included, the dialog merges that document first. `onMerge` receives the files in
+ * their order.
  */
 export interface MergeDialogProps {
   open: boolean;
@@ -25,8 +26,9 @@ export interface MergeDialogProps {
 }
 
 /**
- * The dialog merges PDF files with the current document and files from disk. The dialog checks files as PDFs. Users
- * change the file order by dragging. Merge requires at least two files. The dialog closes after a successful merge.
+ * The dialog merges PDF files with the current document and files from disk.
+ * The dialog checks files as PDFs. Users change the file order by dragging. Merge requires at least two files. The
+ * dialog closes after a successful merge.
  */
 export function MergeDialog({
   open,

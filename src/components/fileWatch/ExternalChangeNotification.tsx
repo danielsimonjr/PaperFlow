@@ -17,9 +17,9 @@ interface ExternalChangeNotificationProps {
 }
 
 /**
- * The component is a notice for one external change to a watched file. The component shows the file name and the time
- * since the change, as a toast or a banner. Reload, Ignore and Dismiss mark the change as dismissed. Deleted files
- * offer no reload.
+ * The component is a notice for one external change to a watched file.
+ * The component shows the file name and the time since the change, as a toast or a banner. Reload, Ignore and Dismiss
+ * mark the change as dismissed. Deleted files offer no reload.
  */
 export function ExternalChangeNotification({
   change,

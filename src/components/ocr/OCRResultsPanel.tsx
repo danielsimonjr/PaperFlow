@@ -12,8 +12,8 @@ import { useDocumentStore } from '@/stores/documentStore';
 import { cn } from '@/utils/cn';
 
 /**
- * The panel shows the recognized words of one page, colored by confidence, with search, copy, export and editing. The
- * panel reads the OCR result at the key `currentPage`, a 1-based page number. The OCR store keys results by 0-based
+ * The panel shows the recognized words of one page, colored by confidence, with search, copy, export and editing.
+ * The panel reads the OCR result at the key `currentPage`, a 1-based page number. The OCR store keys results by 0-based
  * page index, so the panel shows the result of the following page.
  */
 export function OCRResultsPanel() {

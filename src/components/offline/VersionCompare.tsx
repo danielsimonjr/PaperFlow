@@ -10,8 +10,9 @@ import { cn } from '@/utils/cn';
 import type { DocumentVersion, EditHistoryEntry, SyncConflict } from '@/types/offline';
 
 /**
- * Props for the VersionCompare component. The component compares `localVersion` and `remoteVersion`. The component
- * accepts `conflictType` but does not read the value.
+ * Props for the VersionCompare component.
+ * The component compares `localVersion` and `remoteVersion`. The component accepts `conflictType` but does not read the
+ * value.
  */
 export interface VersionCompareProps {
   localVersion: DocumentVersion;

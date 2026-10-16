@@ -20,9 +20,9 @@ interface BatchScanWorkflowProps {
 type WorkflowStep = 'setup' | 'scanning' | 'review' | 'complete';
 
 /**
- * A guided multi-page scan with these steps: set up, scan pages, review and reorder them, then complete. Done Scanning
- * opens the review step. Create PDF passes the pages to `onComplete`, then clears the scan history. Done on the
- * complete step calls `onCancel`. The component keeps the auto-detect checkbox in state only.
+ * A guided multi-page scan with these steps: set up, scan pages, review and reorder them, then complete.
+ * Done Scanning opens the review step. Create PDF passes the pages to `onComplete`, then clears the scan history. Done
+ * on the complete step calls `onCancel`. The component keeps the auto-detect checkbox in state only.
  */
 export function BatchScanWorkflow({
   onComplete,

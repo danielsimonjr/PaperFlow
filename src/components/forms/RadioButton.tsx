@@ -15,9 +15,9 @@ interface RadioButtonProps {
 }
 
 /**
- * A radio button represents one option of a PDF form field and appears at the position of the field. Clicking, pressing
- * Space or pressing Enter selects this option. Users cannot change read-only fields. Pressing Tab calls `onTab`. The
- * component shows the first validation error below the button.
+ * A radio button represents one option of a PDF form field and appears at the position of the field.
+ * Clicking, pressing Space or pressing Enter selects this option. Users cannot change read-only fields. Pressing Tab
+ * calls `onTab`. The component shows the first validation error below the button.
  */
 export function RadioButton({
   field,

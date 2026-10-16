@@ -69,8 +69,8 @@ export interface RadioFormField extends BaseFormField {
 }
 
 /**
- * A dropdown form field includes a value. The field includes a set of options. The field specifies whether a custom
- * value is allowed.
+ * A dropdown form field includes a value.
+ * The field includes a set of options. The field specifies whether a custom value is allowed.
  */
 export interface DropdownFormField extends BaseFormField {
   type: 'dropdown';

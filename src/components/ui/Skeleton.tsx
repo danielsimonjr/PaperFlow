@@ -8,9 +8,9 @@ interface SkeletonProps {
 }
 
 /**
- * The animated placeholder block shows while content loads. `width` and `height` set the size of the block, and a
- * number means pixels. `rounded` gives the block fully rounded corners. The block has the role `status` and the label
- * `Loading`.
+ * The animated placeholder block shows while content loads.
+ * `width` and `height` set the size of the block, and a number means pixels. `rounded` gives the block fully rounded
+ * corners. The block has the role `status` and the label `Loading`.
  */
 export function Skeleton({ className, width, height, rounded = false }: SkeletonProps) {
   return (

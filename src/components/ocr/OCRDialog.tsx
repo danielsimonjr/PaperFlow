@@ -18,9 +18,10 @@ import { OCREngine } from '@/lib/ocr/ocrEngine';
 import { preprocessImage, renderPageToCanvas } from '@/lib/ocr/imagePreprocessor';
 
 /**
- * The dialog runs OCR on the selected pages of the open document. The dialog recognizes one page at a time, stores each
- * result, and skips a page that fails. Closing the dialog during a run terminates the OCR engine at once. The Cancel
- * button in `OCRProgress` only clears the processing flag, so the loop stops after the current page.
+ * The dialog runs OCR on the selected pages of the open document.
+ * The dialog recognizes one page at a time, stores each result, and skips a page that fails. Closing the dialog during
+ * a run terminates the OCR engine at once. The Cancel button in `OCRProgress` only clears the processing flag, so the
+ * loop stops after the current page.
  */
 export function OCRDialog() {
   const activeDialog = useUIStore((s) => s.activeDialog);

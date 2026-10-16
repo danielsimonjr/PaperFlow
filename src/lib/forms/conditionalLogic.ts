@@ -23,8 +23,8 @@ export type ComparisonOperator =
 export type LogicalOperator = 'and' | 'or';
 
 /**
- * An action that a conditional rule names for its target field. `evaluateRule` turns each action into a
- * `FieldStateChange`. `evaluateRule` does not apply the change.
+ * An action that a conditional rule names for its target field.
+ * `evaluateRule` turns each action into a `FieldStateChange`. `evaluateRule` does not apply the change.
  */
 export type ConditionalAction =
   | 'show'
@@ -58,8 +58,9 @@ export interface ConditionGroup {
 }
 
 /**
- * A rule names actions for a target field. The actions that apply depend on whether the condition group of the rule
- * holds. `evaluateRule` only returns the matching changes. `evaluateRule` does not apply the changes.
+ * A rule names actions for a target field.
+ * The actions that apply depend on whether the condition group of the rule holds. `evaluateRule` only returns the
+ * matching changes. `evaluateRule` does not apply the changes.
  */
 export interface ConditionalRule {
   /** Unique rule ID */

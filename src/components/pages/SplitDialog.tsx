@@ -23,8 +23,8 @@ export interface SplitDialogProps {
 }
 
 /**
- * The dialog splits the document by page range, every N pages, or file size. The dialog shows the results with a
- * download for each file, and a ZIP download when there are several.
+ * The dialog splits the document by page range, every N pages, or file size.
+ * The dialog shows the results with a download for each file, and a ZIP download when there are several.
  */
 export function SplitDialog({
   open,

@@ -22,8 +22,9 @@ export interface OfflineIndicatorProps {
 }
 
 /**
- * The status button shows the connection, sync, and pending-change state. The button checks the status in this order:
- * offline, conflicts, syncing, sync error, pending, online. Clicking the button opens the `SyncStatusPanel`.
+ * The status button shows the connection, sync, and pending-change state.
+ * The button checks the status in this order: offline, conflicts, syncing, sync error, pending, online. Clicking the
+ * button opens the `SyncStatusPanel`.
  */
 export function OfflineIndicator({
   className,

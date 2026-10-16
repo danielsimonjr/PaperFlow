@@ -12,9 +12,9 @@ interface CompressDialogProps {
 }
 
 /**
- * The dialog compresses the open PDF and saves the result as a file. The dialog offers a quality slider, a downsampling
- * checkbox and a metadata removal checkbox. `compressPdf` ignores the slider and the downsampling checkbox. Download
- * adds `_compressed` before the `.pdf` extension of the file name.
+ * The dialog compresses the open PDF and saves the result as a file.
+ * The dialog offers a quality slider, a downsampling checkbox and a metadata removal checkbox. `compressPdf` ignores
+ * the slider and the downsampling checkbox. Download adds `_compressed` before the `.pdf` extension of the file name.
  */
 export function CompressDialog({ isOpen, onClose }: CompressDialogProps) {
   const [imageQuality, setImageQuality] = useState(0.7);
