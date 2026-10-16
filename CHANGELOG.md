@@ -43,6 +43,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   fail. A new spec, "should keep the text under a highlight selectable", fails with only the
   highlight change reverted. `tests/unit/components/layerStacking.test.tsx` reads the text
   layer's z-index from the stylesheet and checks the stacking class of each element above.
+- **Five stylesheets reach the web build.** `src/index.css` named `focus.css`, `mobile.css`,
+  `high-contrast.css`, `kiosk.css` and `platform.css` in `@import` statements that sat after the
+  `@tailwind` directives. CSS ignores an `@import` that follows another statement, so the bundler
+  warned and dropped all five (the build notes in `CLAUDE.md` listed the warning as expected). The
+  built CSS held none of their rules: no global focus ring, no kiosk layout, no touch-target sizes,
+  no high-contrast theme, no platform classes. The three directives now live in
+  `src/styles/tailwind.css`, which `index.css` imports first, so the cascade is the order the file
+  always read in: Tailwind layers, the five stylesheets, then the rules of `index.css`. The built
+  CSS grows from 74,189 to 84,925 bytes and the warning is gone. `tests/unit/styles/indexCss.test.ts`
+  (4 tests, 3 red before the change) fails on a late `@import`, a missing file, a wrong order, and a
+  `@tailwind` directive left in the entry. Four more stylesheets (`dark-mode`, `fonts`, `hidpi`,
+  `scrollbars`) are imported by nothing; they are not changed here.
 - **Ctrl+Shift+Z redoes from a real keyboard.** `useAnnotationShortcuts` compared `event.key` to
   the lower-case letter, but a keyboard reports the shifted character: Ctrl+Shift+Z arrives as
   `Z`. Only Ctrl+Y redid. The comparison now lower-cases the key once, so Ctrl or Cmd with Z, Shift+Z

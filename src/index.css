@@ -1,7 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+/* CSS ignores an @import that follows any other statement, so the Tailwind
+   directives live in their own file and load first, in the order listed. */
+@import './styles/tailwind.css';
 @import './styles/focus.css';
 @import './styles/mobile.css';
 @import './styles/high-contrast.css';

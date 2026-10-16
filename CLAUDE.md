@@ -326,7 +326,6 @@ Use barrel exports for cleaner imports:
 ## Build Notes
 
 Expected warnings (not errors):
-- CSS `@import` order warnings from PostCSS
 - Chunk size warnings for pdf-engine (~797KB)
 - Full test suite: ~5 minutes, 2,400+ tests
 
