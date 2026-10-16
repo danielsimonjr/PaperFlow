@@ -13,8 +13,9 @@ import { cn } from '@/utils/cn';
 
 /**
  * The panel shows the recognized words of one page, colored by confidence, with search, copy, export and editing.
- * The panel reads the OCR result at the key `currentPage`, a 1-based page number. The OCR store keys results by 0-based
- * page index, so the panel shows the result of the following page.
+ * The OCR store keys results by 0-based page index. The document store holds `currentPage` as a 1-based number, so the
+ * panel reads the key `currentPage - 1`. A search filters the words. An edit still changes the word that the user
+ * clicked.
  */
 export function OCRResultsPanel() {
   const results = useOCRStore((s) => s.results);
@@ -26,13 +27,16 @@ export function OCRResultsPanel() {
   const [editValue, setEditValue] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
 
-  const pageResult = results.get(currentPage);
+  const pageIndex = currentPage - 1;
+  const pageResult = results.get(pageIndex);
 
+  // Each entry keeps the index of its word in the full result, because a search can hide the words before it.
   const filteredWords = useMemo(() => {
     if (!pageResult) return [];
-    if (!searchQuery) return pageResult.words;
     const lower = searchQuery.toLowerCase();
-    return pageResult.words.filter((w) => w.text.toLowerCase().includes(lower));
+    return pageResult.words
+      .map((word, index) => ({ word, index }))
+      .filter(({ word }) => !searchQuery || word.text.toLowerCase().includes(lower));
   }, [pageResult, searchQuery]);
 
   const handleCopyText = async () => {
@@ -52,7 +56,7 @@ export function OCRResultsPanel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `ocr-page-${currentPage + 1}.txt`;
+    a.download = `ocr-page-${currentPage}.txt`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -70,7 +74,7 @@ export function OCRResultsPanel() {
 
   const handleSaveEdit = (index: number) => {
     if (editValue.trim()) {
-      updateWordText(currentPage, index, editValue.trim());
+      updateWordText(pageIndex, index, editValue.trim());
     }
     setEditingWordIndex(null);
     setEditValue('');
@@ -153,7 +157,7 @@ export function OCRResultsPanel() {
           </div>
         ) : (
           <div className="flex flex-wrap gap-1">
-            {filteredWords.map((word, index) => (
+            {filteredWords.map(({ word, index }) => (
               <span
                 key={index}
                 className={cn(

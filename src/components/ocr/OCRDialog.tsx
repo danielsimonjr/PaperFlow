@@ -20,8 +20,9 @@ import { preprocessImage, renderPageToCanvas } from '@/lib/ocr/imagePreprocessor
 /**
  * The dialog runs OCR on the selected pages of the open document.
  * The dialog recognizes one page at a time, stores each result, and skips a page that fails. Closing the dialog during
- * a run terminates the OCR engine at once. The Cancel button in `OCRProgress` only clears the processing flag, so the
- * loop stops after the current page.
+ * a run terminates the OCR engine at once. The Cancel button in `OCRProgress` clears only the processing flag. The loop
+ * stops after the current page. The progress stays idle. The dialog renders each page at the image scale the user chose.
+ * Preprocessing does not scale the rendered canvas again.
  */
 export function OCRDialog() {
   const activeDialog = useUIStore((s) => s.activeDialog);
@@ -83,14 +84,14 @@ export function OCRDialog() {
           // Get page from PDF.js renderer
           const pdfPage = await renderer.getPage(pageIndex + 1);
 
-          // Render page to canvas
+          // Render page to canvas at the chosen scale
           const canvas = await renderPageToCanvas(
             pdfPage,
             preprocessingOptions.scale ?? 2.0
           );
 
-          // Apply preprocessing
-          const processedCanvas = preprocessImage(canvas, preprocessingOptions);
+          // Apply preprocessing. The canvas already has the chosen scale, so preprocessing keeps its size.
+          const processedCanvas = preprocessImage(canvas, { ...preprocessingOptions, scale: 1 });
 
           // Run OCR
           const result = await engine.recognize(processedCanvas, undefined, pageIndex);
@@ -103,7 +104,10 @@ export function OCRDialog() {
         }
       }
 
-      stopProcessing();
+      // A cancel clears the processing flag, and the progress must stay idle.
+      if (useOCRStore.getState().isProcessing) {
+        stopProcessing();
+      }
     } catch (error) {
       setError(error instanceof Error ? error.message : 'OCR failed');
     } finally {
