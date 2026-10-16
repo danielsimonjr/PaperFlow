@@ -60,8 +60,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   click on a toggle searched again with the previous option. `search` now takes the options as a second argument, and the
   two toggles pass the new options. In the search box, Enter always ran a new search, which moved the view back to the
   first match, and the window handler for Enter also ran. Enter now goes to the next match, and Shift+Enter to the
-  previous match, when the text did not change since the last search. Enter searches when the text changed. The window
-  handler ignores key events from the box. An empty query that cancelled a running search left `isSearching` true.
+  previous match, when the text did not change since the last search. Enter searches when the text changed. A toggle
+  searches the text of the box, and that search counts as the last search. The window handler ignores key events from
+  the box. An empty query that cancelled a running search left `isSearching` true.
   The flag now resets. `InsertPageDialog` read `position` once, when it mounted, and its parent keeps it mounted, so
   the dialog opened with the position of its first use. It now reads `position` on each change from closed to open.
   The new tests are `tests/unit/components/toolbar/SearchBar.test.tsx`,

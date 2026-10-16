@@ -84,6 +84,21 @@ describe('SearchBar', () => {
       expect(count).toHaveTextContent('1 of 1');
     });
 
+    it('step to the next match on Enter after a toggle searched the edited text', async () => {
+      const { input, count } = renderBar();
+      await searchFor(input, count, 'two');
+      expect(count).toHaveTextContent('1 of 1');
+
+      // The text changes without Enter. The toggle searches the new text, so the next Enter steps.
+      fireEvent.change(input, { target: { value: 'page' } });
+      fireEvent.click(screen.getByTitle('Whole word (Alt+W)'));
+      await waitFor(() => expect(count).toHaveTextContent('1 of 3'));
+
+      fireEvent.keyDown(input, { key: 'Enter' });
+      await waitFor(() => expect(count).not.toHaveTextContent('Searching'));
+      expect(count).toHaveTextContent('2 of 3');
+    });
+
     it('move the view to the page of the match that Enter selects', async () => {
       const { input, count } = renderBar();
       await searchFor(input, count, 'page');

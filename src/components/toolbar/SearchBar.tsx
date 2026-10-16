@@ -139,6 +139,7 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
     const newOptions = { ...options, caseSensitive: !options.caseSensitive };
     setOptions(newOptions);
     if (localQuery.trim()) {
+      searchedQueryRef.current = localQuery;
       search(localQuery, newOptions);
     }
   }, [options, setOptions, localQuery, search]);
@@ -147,6 +148,7 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
     const newOptions = { ...options, wholeWord: !options.wholeWord };
     setOptions(newOptions);
     if (localQuery.trim()) {
+      searchedQueryRef.current = localQuery;
       search(localQuery, newOptions);
     }
   }, [options, setOptions, localQuery, search]);
