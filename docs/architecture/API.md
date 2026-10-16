@@ -1,7 +1,5 @@
 # PaperFlow API Reference
 
-> **Version:** 3.0.0
-> **Last Updated:** 2026-02-03
 > **License:** MIT
 
 Complete API documentation for PaperFlow's public interfaces, Zustand stores, core libraries, and Electron IPC channels.
@@ -37,9 +35,13 @@ Complete API documentation for PaperFlow's public interfaces, Zustand stores, co
   - [Update Operations](#update-operations)
 - [Types](#types)
   - [PDFDocument](#pdfdocument)
+  - [PDFDocumentInfo](#pdfdocumentinfo)
   - [Annotation](#annotation)
   - [FormField](#formfield)
   - [Signature](#signature)
+  - [RecentFile](#recentfile)
+  - [UpdateState](#updatestate)
+  - [FileWatcherEvent](#filewatcherevent)
 
 ---
 
@@ -82,7 +84,7 @@ import type { Annotation, PDFDocument, FormField } from '@/types';
 
 ### documentStore
 
-Manages the currently loaded PDF document state, including rendering, navigation, and zoom controls.
+Manages the loaded PDF document state, including rendering, navigation, and zoom controls.
 
 **Import:**
 ```typescript
@@ -164,7 +166,7 @@ setCurrentPage(pageCount);
 ```
 
 **Parameters:**
-- `page` - Page number (1-indexed, clamped to valid range)
+- `page` - Page number (1-indexed). A value outside 1 to `pageCount` is ignored.
 
 ---
 
@@ -303,7 +305,7 @@ import { useAnnotationStore } from '@stores/annotationStore';
 | Property | Type | Description |
 |----------|------|-------------|
 | `annotations` | `Annotation[]` | All annotations |
-| `selectedId` | `string \| null` | Currently selected annotation ID |
+| `selectedId` | `string \| null` | ID of the selected annotation |
 | `activeTool` | `AnnotationType \| null` | Active annotation tool |
 | `activeColor` | `string` | Current annotation color |
 | `activeOpacity` | `number` | Current opacity (0-1) |
@@ -596,7 +598,7 @@ import { useUIStore } from '@stores/uiStore';
 |----------|------|-------------|
 | `sidebarOpen` | `boolean` | Sidebar visibility |
 | `sidebarWidth` | `number` | Sidebar width in pixels (200-400) |
-| `activeDialog` | `string \| null` | Currently open dialog ID |
+| `activeDialog` | `string \| null` | ID of the open dialog |
 | `darkMode` | `boolean` | Dark mode enabled |
 
 #### Methods
@@ -771,7 +773,7 @@ import { useFormStore } from '@stores/formStore';
 |----------|------|-------------|
 | `fields` | `FormField[]` | All form fields |
 | `fieldsByPage` | `Map<number, FormField[]>` | Fields grouped by page |
-| `focusedFieldId` | `string \| null` | Currently focused field |
+| `focusedFieldId` | `string \| null` | ID of the focused field |
 | `validationErrors` | `Map<string, string[]>` | Field validation errors |
 | `isDirty` | `boolean` | Whether form has been modified |
 | `isLoading` | `boolean` | Loading state |
@@ -812,7 +814,7 @@ updateFieldValue('field-country', 'US');
 
 ##### `setFocusedField(fieldId: string | null): void`
 
-Sets the currently focused field.
+Sets the focused field.
 
 ```typescript
 const { setFocusedField } = useFormStore();
@@ -939,7 +941,7 @@ interface PlacedSignature {
 | `placedSignatures` | `PlacedSignature[]` | Signatures placed on document |
 | `selectedPlacedId` | `string \| null` | Selected placed signature |
 | `isModalOpen` | `boolean` | Signature modal state |
-| `isPlacingSignature` | `boolean` | Currently placing a signature |
+| `isPlacingSignature` | `boolean` | `true` during signature placement |
 
 #### Methods
 
@@ -1646,23 +1648,18 @@ import { savePdf, copyPdf, getPdfInfo } from '@lib/pdf/saver';
 
 #### `savePdf(originalPdfBytes: ArrayBuffer, options?: SaveOptions): Promise<Uint8Array>`
 
-Saves a PDF with modifications.
+Loads the PDF with pdf-lib and saves it again. The function applies no modifications. The `options` argument has no effect.
 
 ```typescript
-const modifiedPdf = await savePdf(originalData, {
-  preserveEditHistory: false,
-  flattenAnnotations: true,
-});
+const savedPdf = await savePdf(originalData);
 
 // Download the result
-const blob = new Blob([modifiedPdf], { type: 'application/pdf' });
+const blob = new Blob([savedPdf], { type: 'application/pdf' });
 ```
 
 **Parameters:**
 - `originalPdfBytes` - Original PDF data
-- `options.preserveEditHistory` - Keep edit history
-- `options.flattenAnnotations` - Flatten annotations into content
-- `options.linearize` - Linearize for web viewing
+- `options` - Accepted and not used. `SaveOptions` declares `preserveEditHistory`, `flattenAnnotations` and `linearize`.
 
 ---
 
@@ -1676,9 +1673,9 @@ const copy = await copyPdf(originalData);
 
 ---
 
-#### `getPdfInfo(pdfBytes: ArrayBuffer): Promise<PDFInfo>`
+#### `getPdfInfo(pdfBytes: ArrayBuffer): Promise<{ pageCount: number; title?: string; author?: string; subject?: string; keywords?: string; creator?: string; producer?: string; creationDate?: Date; modificationDate?: Date }>`
 
-Gets PDF metadata.
+Gets the page count and the document properties.
 
 ```typescript
 const info = await getPdfInfo(pdfData);
@@ -1899,7 +1896,7 @@ const url = URL.createObjectURL(blob);
 ```json
 {
   "version": 1,
-  "exportedAt": "2026-02-03T12:00:00.000Z",
+  "exportedAt": "<ISO 8601 timestamp>",
   "documentName": "my-document.pdf",
   "annotations": [...]
 }
@@ -1931,7 +1928,7 @@ const merged = mergeAnnotations(existingAnnotations, importedAnnotations);
 
 ## Electron IPC Channels
 
-IPC channels are defined in `electron/ipc/channels.ts` and typed in `electron/ipc/types.ts`.
+`IPC_CHANNELS` in `electron/ipc/channels.ts` defines the file, dialog and update channels. `electron/ipc/types.ts` declares their payload types. The print and scanner channels use their own constants, described below.
 
 ### File Operations
 
@@ -2000,78 +1997,49 @@ if (!result.canceled) {
 
 ### Print Operations
 
-#### `PRINT_GET_PRINTERS`
+`setupPrintHandlers()` in `electron/ipc/printHandlers.ts` registers the print handlers. `electron/main/index.ts` calls `setupPrintHandlers()`. `PRINT_CHANNELS` in that file holds the channel names. The renderer wrappers in `src/lib/electron/print.ts` keep their own copy of these values.
 
-Lists available printers.
+| Channel | Handler arguments | Renderer wrapper |
+|---|---|---|
+| `print-with-dialog` | `options?: PrintOptions` | `printWithDialog(options)` |
+| `print-silent` | `options?: PrintOptions` | `printSilent(options)` |
+| `print-get-preview` | `options?: PrintOptions` | `getPrintPreview(options)` |
+| `print-save-preview` | `options?: PrintOptions` | `savePrintPreview(options)` |
+| `print-pdf-file` | `pdfPath: string`, `options?: PrintOptions` | `printPDFFile(pdfPath, options)` |
+| `print-pdf-data` | `base64Data: string`, `options?: PrintOptions` | `printPDFData(base64Data, options)` |
+| `print-get-printers` | none | `getPrinters()` |
+| `print-get-default-printer` | none | `getDefaultPrinter()` |
 
-```typescript
-const printers = await window.electron.getPrinters();
-for (const printer of printers) {
-  console.log(printer.name, printer.isDefault);
-}
-```
+`electron/print.ts` declares `PrintOptions`, the type used in this table.
 
----
+Each handler uses the window that sent the request. If no window matches, `print-get-printers` returns `[]`, and `print-get-default-printer` returns `null`. The other handlers return `{ success: false, error: 'No window available' }`.
 
-#### `PRINT_SHOW_DIALOG`
+On success, `print-get-preview` returns the PDF as a base64 string in `data`.
 
-Shows native print dialog.
-
-```typescript
-await window.electron.showPrintDialog({
-  silent: false,
-  printBackground: true,
-  copies: 1,
-});
-```
-
----
-
-#### `PRINT_SILENT`
-
-Prints without showing dialog.
-
-```typescript
-await window.electron.printSilent({
-  printerName: 'HP LaserJet',
-  copies: 2,
-  collate: true,
-});
-```
+The preload script does not expose these channels on `window.electron`. The renderer wrappers call `invokePrint()`, which reads `window.require`. No file in the repository defines `window.require`. When `window.require` is undefined, `invokePrint()` throws `IPC not available`. The wrappers catch the error. `printWithDialog`, `printSilent`, `getPrintPreview`, `savePrintPreview`, `printPDFFile` and `printPDFData` then return `{ success: false, error }`. `getPrinters` returns `[]`. `getDefaultPrinter` returns `null`.
 
 ---
 
 ### Scanner Operations
 
-#### `SCANNER_ENUMERATE`
+`ScannerBridge` in `electron/main/scanner/scannerBridge.ts` defines the channel names in `SCANNER_CHANNELS`. Its `initialize()` method registers the handlers in the table below. `setupScannerBridge()` creates the bridge and calls `initialize()`. No other file in the repository imports `electron/main/scanner/scannerBridge.ts`, so the main process does not register these handlers.
 
-Lists available scanners.
+Every handler calls `MockScanner`, a class that returns virtual scanners. The bridge does not use a scanner driver. `src/lib/scanner/types.ts` declares `ScanSettings`.
 
-```typescript
-const scanners = await window.electron.enumerateScanners();
-for (const scanner of scanners) {
-  console.log(scanner.id, scanner.name, scanner.type);
-}
-```
+The preload script does not expose any scanner method on `window.electron`.
 
----
+| Channel | Handler arguments |
+|---|---|
+| `scanner-enumerate-devices` | none |
+| `scanner-select-device` | `deviceId: string` |
+| `scanner-get-selected-device` | none |
+| `scanner-scan` | `settings: ScanSettings` |
+| `scanner-batch-scan` | `settings: ScanSettings`, `pageCount: number` |
+| `scanner-cancel-scan` | none |
+| `scanner-get-scan-status` | none |
+| `scanner-preview-scan` | none |
 
-#### `SCANNER_SCAN`
-
-Acquires an image from the scanner.
-
-```typescript
-const result = await window.electron.scan({
-  scannerId: 'scanner-123',
-  resolution: 300,
-  colorMode: 'color',
-  format: 'png',
-});
-
-if (result.success) {
-  const imageData = result.data;
-}
-```
+`SCANNER_CHANNELS` also defines `scanner-get-device-capabilities` and five event channels: `scanner-scan-progress`, `scanner-scan-completed`, `scanner-scan-error`, `scanner-device-connected` and `scanner-device-disconnected`. The bridge registers no handler for the capability channel. The bridge sends no message on the event channels.
 
 ---
 
@@ -2083,8 +2051,10 @@ Checks for application updates.
 
 ```typescript
 const result = await window.electron.checkForUpdates();
-if (result.success && result.result) {
-  console.log('Update available');
+if (result.success) {
+  // result.result is null when the updater is disabled. A non-null value holds release information.
+  // It does not show that an update is available.
+  console.log(result.result);
 }
 ```
 
@@ -2194,12 +2164,16 @@ interface Annotation {
   bounds?: AnnotationRect;
   fillColor?: string;
   rotation?: number;
+  startPoint?: { x: number; y: number };
+  endPoint?: { x: number; y: number };
 
   // Stamp properties
   stampType?: 'approved' | 'rejected' | 'confidential' | 'draft' | 'final' | 'for-review' | 'custom';
   position?: { x: number; y: number };
   scale?: number;
   customText?: string;
+  backgroundColor?: string;
+  borderColor?: string;
 }
 ```
 
@@ -2357,6 +2331,4 @@ interface FileWatcherEvent {
 - [Offline-First Architecture](./offline-first.md)
 - [Enterprise Features](./enterprise-features.md)
 
----
-
-*Generated for PaperFlow v3.0.0*
+<!-- repo-map:no-verification -->

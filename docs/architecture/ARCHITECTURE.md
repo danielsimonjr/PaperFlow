@@ -1,8 +1,6 @@
 # PaperFlow Architecture
 
-> Version: 3.0.0 | Last Updated: 2026-02-03
-
-PaperFlow is a comprehensive PDF editing solution delivering professional PDF capabilities through both a Progressive Web Application (PWA) and a native Electron desktop application. This document provides a complete technical overview of the system architecture.
+PaperFlow is a PDF editor. It runs as a Progressive Web Application (PWA) in a browser and as a native Electron desktop application. This document describes the system architecture.
 
 ## Table of Contents
 
@@ -23,37 +21,38 @@ PaperFlow is a comprehensive PDF editing solution delivering professional PDF ca
 
 ### Key Statistics
 
-```
-+---------------------------+---------------------------+
-|  Codebase Metrics         |  Runtime Metrics          |
-+---------------------------+---------------------------+
-|  26 Zustand Stores        |  Cold Start: < 3s         |
-|  50+ React Components     |  Warm Start: < 1s         |
-|  12 Type Definition Files |  Memory (idle): < 150 MB  |
-|  80+ Library Modules      |  100-page PDF: < 500 MB   |
-|  30+ IPC Channels         |  File Save: < 500 ms      |
-+---------------------------+---------------------------+
-```
+| Item | Count |
+|------|-------|
+| TypeScript files (file inventory) | 746 |
+| Exports (dependency graph) | 3258 |
+| Functions (dependency graph) | 1292 |
+| Classes (dependency graph) | 69 |
+| Interfaces (dependency graph) | 686 |
+| Zustand store modules, excluding index.ts | 26 |
+| Files in src/components, including index.ts | 209 |
+| Files in src/lib, including index.ts | 173 |
+| IPC request channels | 113 |
+| IPC event channels | 78 |
 
 ### Module Distribution
 
 ```
 src/
-├── components/     # 50+ React components across 15 categories
-├── stores/         # 26 Zustand stores (4 categories)
-├── lib/            # 80+ library modules (6 categories)
-├── hooks/          # Custom React hooks
-├── types/          # 12 TypeScript type definition files
+├── components/     # 209 files in 31 folders
+├── stores/         # 26 Zustand store modules
+├── lib/            # 173 files in 29 folders
+├── hooks/          # 26 hook modules
+├── types/          # 12 files
 ├── utils/          # Utility functions
 ├── pages/          # Route components
 └── constants/      # Configuration constants
 
 electron/
-├── main/           # Main process modules (20+)
-├── preload/        # Preload scripts (3)
-├── ipc/            # IPC handlers (12)
-├── workers/        # Worker threads (3)
-└── *.ts            # Feature modules (25+)
+├── main/           # Main process modules (22 files)
+├── preload/        # Preload scripts (3 files)
+├── ipc/            # IPC handlers (14 files)
+├── workers/        # Worker threads (3 files)
+└── *.ts            # Feature modules (29 files)
 ```
 
 ### Store Categories
@@ -71,33 +70,33 @@ electron/
 
 ### 1. Platform Agnostic Core
 
-The application core runs identically in browser and Electron environments. Platform-specific features are accessed through abstraction layers that detect the runtime environment.
+The application core runs in the browser and in Electron. Platform-specific features use abstraction layers. These layers detect the runtime environment.
 
 ```typescript
-// Platform detection pattern
-const isElectron = typeof window.electron !== 'undefined';
-const isWeb = !isElectron;
+// src/lib/electron/platform.ts (excerpt)
+export function isElectron(): boolean {
+  return typeof window !== 'undefined' && typeof window.electron !== 'undefined';
+}
 
-// Feature availability
-const hasNativeFileSystem = isElectron || 'showOpenFilePicker' in window;
+// Line 161 of the same file: isElectron() || 'showOpenFilePicker' in window
 ```
 
 ### 2. Privacy-First Processing
 
-All PDF processing occurs client-side by default. Document data never leaves the user's device unless explicitly shared.
+PDF processing runs in the client by default.
 
 ```
 +-------------+     +---------------+     +---------------+
 |   PDF File  | --> | Local Process | --> | Local Storage |
 +-------------+     +---------------+     +---------------+
                            |
-                    (No network calls
-                     for core features)
+                    (Client-side
+                     processing)
 ```
 
 ### 3. Offline-First Design
 
-The application functions fully without network connectivity. Data synchronization occurs opportunistically when online.
+The application stores documents and some changes locally. It processes queued changes when the browser reports a network connection.
 
 ```
 Online Mode:   User --> App --> [Cache + Remote]
@@ -108,8 +107,8 @@ Reconnect:     Queue --> Sync Engine --> Remote
 ### 4. Security by Default
 
 - Electron: Context isolation, disabled Node integration, sandboxed renderer
-- Web: Strict CSP, no inline scripts, HTTPS-only
-- Both: Input validation, path sanitization, signed updates
+- Web: Content Security Policy headers in `public/_headers`
+- Desktop: the file handlers check paths with `assertPathAllowed`
 
 ### 5. Progressive Enhancement
 
@@ -126,6 +125,8 @@ Features scale based on platform capabilities:
 |                  |                  | + Hardware keys  |
 +------------------+------------------+------------------+
 ```
+
+The table lists platform capabilities. Some listed capabilities have no caller in the application. No rendered code path calls the native open or save dialog. No module in `electron/` imports the scanner bridge (`electron/main/scanner/scannerBridge.ts`) or the WebAuthn bridge (`electron/main/security/webauthnBridge.ts`). In `src`, no module outside `src/components/security/` refers to the hardware-key components.
 
 ---
 
@@ -196,6 +197,8 @@ Features scale based on platform capabilities:
                                               +-----------------------+
 ```
 
+No rendered code path calls the native dialogs or the Scanner Bridge. See Progressive Enhancement.
+
 ### Data Flow
 
 ```
@@ -225,35 +228,34 @@ Features scale based on platform capabilities:
 
 ### Layer 1: UI Components
 
-React components organized by feature domain:
+React components are grouped by feature domain. The tree lists some files of each folder:
 
 ```
 components/
 ├── ui/                 # Reusable primitives
 │   ├── Button.tsx
 │   ├── Dialog.tsx
-│   ├── Dropdown.tsx
-│   ├── Tooltip.tsx
+│   ├── Select.tsx
 │   └── Skeleton.tsx
 │
 ├── layout/             # Application shell
+│   ├── AppLayout.tsx
 │   ├── Header.tsx
 │   ├── Sidebar.tsx
 │   ├── Toolbar.tsx
-│   ├── StatusBar.tsx
 │   └── MobileToolbar.tsx
 │
 ├── viewer/             # PDF rendering
 │   ├── PDFViewer.tsx
 │   ├── PageCanvas.tsx
-│   ├── Thumbnails.tsx
-│   └── VirtualizedViewer.tsx
+│   ├── VirtualizedViewer.tsx
+│   └── ZoomControls.tsx
 │
 ├── annotations/        # Markup tools
 │   ├── AnnotationLayer.tsx
 │   ├── Highlight.tsx
 │   ├── StickyNote.tsx
-│   ├── Drawing.tsx
+│   ├── DrawingCanvas.tsx
 │   └── ShapeOverlay.tsx
 │
 ├── forms/              # Form filling
@@ -263,11 +265,11 @@ components/
 │   └── Dropdown.tsx
 │
 ├── pages/              # Page management
-│   ├── PageManager.tsx
+│   ├── DraggableThumbnail.tsx
 │   ├── MergeDialog.tsx
 │   └── SplitDialog.tsx
 │
-├── offline/            # Offline UI (Desktop)
+├── offline/            # Offline UI
 │   ├── OfflineIndicator.tsx
 │   ├── OfflineBanner.tsx
 │   ├── SyncStatusPanel.tsx
@@ -281,28 +283,35 @@ components/
 
 ### Layer 2: State Management (Zustand)
 
-All application state is managed through Zustand stores with clear separation of concerns:
+Application state is held in Zustand stores. Each store holds one area of state:
 
 ```typescript
-// Store Pattern
+// src/stores/documentStore.ts (excerpt)
 interface DocumentState {
   // State
-  pdfDocument: PDFDocumentProxy | null;
+  fileName: string | null;
+  fileData: ArrayBuffer | null;
+  documentInfo: PDFDocumentInfo | null;
+  pageCount: number;
   currentPage: number;
   zoom: number;
-  viewMode: ViewMode;
+  viewMode: 'single' | 'continuous' | 'spread';
+  isModified: boolean;
+  isLoading: boolean;
+  error: string | null;
+  renderer: PDFRenderer | null;
 
   // Actions
-  loadDocument: (file: File | ArrayBuffer) => Promise<void>;
-  setPage: (page: number) => void;
+  loadDocument: (file: File) => Promise<void>;
+  loadDocumentFromArrayBuffer: (data: ArrayBuffer | Uint8Array, fileName: string) => Promise<void>;
+  setCurrentPage: (page: number) => void;
   setZoom: (zoom: number) => void;
-  setViewMode: (mode: ViewMode) => void;
+  setViewMode: (mode: 'single' | 'continuous' | 'spread') => void;
+  setModified: (modified: boolean) => void;
 }
-
-export const useDocumentStore = create<DocumentState>((set, get) => ({
-  // Implementation
-}));
 ```
+
+The store uses the `persist` middleware with the name `paperflow-document`. It persists only `zoom` and `viewMode`.
 
 **Core Stores (8)**
 
@@ -357,8 +366,8 @@ lib/
 ├── pdf/                    # PDF rendering and manipulation
 │   ├── renderer.ts         #   PDF.js wrapper for rendering
 │   ├── saver.ts            #   pdf-lib wrapper for saving
-│   ├── textSaver.ts        #   Text layer extraction
-│   └── signatureEmbed.ts   #   Digital signature embedding
+│   ├── textSaver.ts        #   Saves text boxes into a PDF
+│   └── signatureEmbed.ts   #   Embeds placed signatures into a PDF
 │
 ├── pages/                  # Page operations
 │   ├── mergePdf.ts         #   Merge multiple PDFs
@@ -472,64 +481,71 @@ interface PDFPageInfo {
 ### Annotation Types
 
 ```typescript
-// Base annotation properties
-interface BaseAnnotation {
+// src/types/annotations.ts (excerpt)
+export interface HighlightAnnotation {
   id: string;
-  pageIndex: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Text markup
-interface HighlightAnnotation extends BaseAnnotation {
   type: 'highlight' | 'underline' | 'strikethrough';
+  pageIndex: number;
   rects: AnnotationRect[];
   color: string;
   opacity: number;
   selectedText?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-// Sticky note
-interface NoteAnnotation extends BaseAnnotation {
+export interface NoteAnnotation {
+  id: string;
   type: 'note';
+  pageIndex: number;
   position: { x: number; y: number };
   content: string;
   color: string;
   isCollapsed: boolean;
   author?: string;
+  createdAt: Date;
+  updatedAt: Date;
   replies?: AnnotationReply[];
 }
 
-// Freehand drawing
-interface DrawingAnnotation extends BaseAnnotation {
+export interface DrawingAnnotation {
+  id: string;
   type: 'drawing';
+  pageIndex: number;
   paths: DrawingPath[];
   color: string;
   strokeWidth: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-// Geometric shapes
-interface ShapeAnnotation extends BaseAnnotation {
+export interface ShapeAnnotation {
+  id: string;
   type: 'shape';
+  pageIndex: number;
   shapeType: 'rectangle' | 'circle' | 'arrow' | 'line';
   bounds: AnnotationRect;
   color: string;
   strokeWidth: number;
   fillColor?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-// Stamps
-interface StampAnnotation extends BaseAnnotation {
+export interface StampAnnotation {
+  id: string;
   type: 'stamp';
+  pageIndex: number;
   stampType: 'approved' | 'rejected' | 'confidential' | 'draft' | 'custom';
   position: { x: number; y: number };
   scale: number;
   rotation: number;
   customText?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-// Union type
-type AnyAnnotation =
+export type AnyAnnotation =
   | HighlightAnnotation
   | NoteAnnotation
   | DrawingAnnotation
@@ -540,48 +556,120 @@ type AnyAnnotation =
 ### Form Field Types
 
 ```typescript
-interface FormField {
+// src/types/forms.ts (excerpt)
+export type FormFieldType =
+  | 'text'
+  | 'checkbox'
+  | 'radio'
+  | 'dropdown'
+  | 'signature'
+  | 'date'
+  | 'number';
+
+export interface BaseFormField {
   id: string;
-  name: string;
-  type: 'text' | 'checkbox' | 'radio' | 'dropdown' | 'signature';
   pageIndex: number;
-  rect: { x: number; y: number; width: number; height: number };
-  value: string | boolean | null;
+  name: string;
+  bounds: AnnotationRect;
   required: boolean;
-  readOnly: boolean;
-  options?: string[];           // For dropdown
-  group?: string;               // For radio buttons
-  validation?: ValidationRule;
+  readonly: boolean;
+  tooltip?: string;
 }
 
-interface ValidationRule {
-  type: 'regex' | 'email' | 'phone' | 'number' | 'date' | 'custom';
-  pattern?: string;
-  message?: string;
-  minLength?: number;
+export interface TextFormField extends BaseFormField {
+  type: 'text';
+  value: string;
   maxLength?: number;
+  multiline?: boolean;
+  format?: 'none' | 'email' | 'phone' | 'zip';
+}
+
+export interface NumberFormField extends BaseFormField {
+  type: 'number';
+  value: number | null;
   min?: number;
   max?: number;
+  decimalPlaces?: number;
 }
+
+export interface CheckboxFormField extends BaseFormField {
+  type: 'checkbox';
+  value: boolean;
+  exportValue?: string;
+}
+
+export interface RadioFormField extends BaseFormField {
+  type: 'radio';
+  value: string;
+  groupName: string;
+  options: { label: string; value: string }[];
+}
+
+export interface DropdownFormField extends BaseFormField {
+  type: 'dropdown';
+  value: string;
+  options: string[];
+  allowCustom?: boolean;
+}
+
+export interface SignatureFormField extends BaseFormField {
+  type: 'signature';
+  value: string | null; // base64 signature data
+  signedBy?: string;
+  signedAt?: Date;
+}
+
+export interface DateFormField extends BaseFormField {
+  type: 'date';
+  value: string | null; // ISO date string
+  format: string;
+}
+
+export type FormField =
+  | TextFormField
+  | NumberFormField
+  | CheckboxFormField
+  | RadioFormField
+  | DropdownFormField
+  | SignatureFormField
+  | DateFormField;
 ```
 
 ### Signature Types
 
 ```typescript
-interface SavedSignature {
+// src/types/index.ts
+export interface Signature {
   id: string;
   name: string;
-  imageData: string;       // Base64 PNG
+  type: 'draw' | 'type' | 'image';
+  data: string;
   createdAt: Date;
-  type: 'drawn' | 'typed' | 'uploaded';
+  isDefault?: boolean;
+  isInitials?: boolean;
 }
 
-interface SignaturePlacement {
+// src/stores/signatureStore.ts
+export interface PlacedSignature {
+  id: string;
   signatureId: string;
   pageIndex: number;
   position: { x: number; y: number };
-  scale: number;
+  size: { width: number; height: number };
   rotation: number;
+  signatureData: string;
+  signatureType: 'draw' | 'type' | 'image';
+  createdAt: Date;
+  dateStamp?: {
+    enabled: boolean;
+    format: string;
+    position: 'below' | 'right' | 'left';
+  };
+}
+
+export interface StoredSignature extends Signature {
+  isDefault: boolean;
+  isInitials: boolean;
 }
 ```
 
@@ -599,10 +687,12 @@ PDF Coordinates:          Screen Coordinates:
  (0,0)
 
 // Conversion utilities (src/utils/coordinates.ts)
-pdfToScreen(point, pageHeight, scale): ScreenPoint
-screenToPdf(point, pageHeight, scale): PDFPoint
-pdfRectToScreen(rect, pageHeight, scale): ScreenRect
-screenRectToPdf(rect, pageHeight, scale): PDFRect
+pdfToScreen(point: Point, context: TransformContext): Point
+screenToPdf(point: Point, context: TransformContext): Point
+pdfRectToScreen(rect: Rect, context: TransformContext): Rect
+screenRectToPdf(rect: Rect, context: TransformContext): Rect
+
+// TransformContext: scale, pageHeight, offsetX?, offsetY?
 ```
 
 ---
@@ -644,9 +734,11 @@ screenRectToPdf(rect, pageHeight, scale): PDFRect
 | Resume work after reconnect    | Offline queue with background sync            |
 | Handle concurrent edits        | Conflict detection and resolution UI          |
 | Efficient sync for large PDFs  | Delta sync (transfer only changes)            |
-| Network resilience             | Retry with exponential backoff                |
+| Network resilience            | Retry with delays up to 5 min                 |
 
-**Decision:** Users frequently work with PDFs in environments with unreliable connectivity (travel, restricted networks). Offline-first ensures the application remains fully functional regardless of network status.
+**Decision:** Users frequently work with PDFs in environments with unreliable connectivity (travel, restricted networks). Offline-first keeps document viewing and local editing available without a network connection.
+
+The offline store registers the browser `online` and `offline` listeners (`src/stores/offlineStore.ts:282-283`). No live module imports `backgroundSync`, so its queue processor does not run. The only writer of the offline queue is `useOfflineData`, and no module uses it. `ConflictDialog` and `deltaSync` have no live importer. The autosave writes the loaded bytes, so annotation and form edits are not saved.
 
 ### Why pdf-lib for Editing?
 
@@ -665,78 +757,43 @@ screenRectToPdf(rect, pageHeight, scale): PDFRect
 
 ### IndexedDB Schema
 
-```
-Database: PaperFlowDB (Version: 2)
+The application uses three IndexedDB databases. The table lists their object stores.
 
-+-------------------+-------------------+-------------------+
-|     documents     |    annotations    |     settings      |
-+-------------------+-------------------+-------------------+
-| id (key)          | id (key)          | key (key)         |
-| name              | documentId        | value             |
-| data (Blob)       | pageIndex         | updatedAt         |
-| size              | type              |                   |
-| createdAt         | data (JSON)       |                   |
-| updatedAt         | createdAt         |                   |
-| thumbnail         | updatedAt         |                   |
-+-------------------+-------------------+-------------------+
-
-+-------------------+-------------------+-------------------+
-|    signatures     |      stamps       |     syncQueue     |
-+-------------------+-------------------+-------------------+
-| id (key)          | id (key)          | id (key)          |
-| name              | name              | operation         |
-| imageData         | imageData         | documentId        |
-| type              | category          | payload           |
-| createdAt         | createdAt         | priority          |
-|                   |                   | status            |
-|                   |                   | retries           |
-|                   |                   | createdAt         |
-+-------------------+-------------------+-------------------+
-
-+-------------------+-------------------+
-|    formData       |   editHistory     |
-+-------------------+-------------------+
-| documentId (key)  | id (key)          |
-| values (JSON)     | documentId        |
-| lastFilled        | changes (JSON)    |
-|                   | timestamp         |
-|                   | checksum          |
-+-------------------+-------------------+
-```
+| Database | Source file | Object stores |
+|----------|-------------|---------------|
+| `paperflow` | `src/lib/storage/indexeddb.ts` | `recentFiles` (key `id`, index `lastOpened`), `documents` (key `id`), `signatures` (key `id`), `autoSave` (key `id`, indexes `documentId` and `savedAt`) |
+| `paperflow-offline` | `src/lib/offline/offlineStorage.ts` | `documents` (key `id`), `metadata` (key `id`, indexes `fileName`, `modifiedAt`, `syncedAt`, `priority` and `isAvailableOffline`), `annotations` (key `id`, index `documentId`), `editHistory` (key `id`, indexes `documentId` and `timestamp`), `settings` (key `documentId`) |
+| `paperflow-queue` | `src/lib/offline/offlineQueue.ts` | `queue` (key `id`, indexes `documentId`, `status`, `priority` and `createdAt`) |
 
 ### Storage Limits
 
-| Item                        | Default  | Notes                      |
-|-----------------------------|----------|----------------------------|
-| Max offline documents       | 50       | Configurable per user      |
-| Max document size           | 100 MB   | Per document limit         |
-| Quota warning threshold     | 80%      | Shows warning banner       |
-| Cache expiration (assets)   | 30 days  | Service worker cache       |
-| Cache expiration (PDFs)     | 90 days  | IndexedDB storage          |
-| Max signatures              | 20       | Per user                   |
-| Max stamps                  | 50       | Custom stamps              |
+| Item | Default | Source |
+|------|---------|--------|
+| Max offline documents | 50 | `DEFAULT_MAX_OFFLINE_DOCUMENTS` in `src/lib/offline/offlineAvailability.ts` |
+| Max document size | 100 MB | `MAX_FILE_SIZE` in `src/constants/config.ts` |
+| Quota warning threshold | 80% | `QUOTA_WARNING_THRESHOLD` in `src/lib/offline/offlineAvailability.ts` |
+| Cache expiration (static assets) | 30 days | `runtimeCaching` rules in `vite.config.ts` |
+| Cache expiration (PDF files) | 90 days | `runtimeCaching` rules in `vite.config.ts` |
+| Max saved signatures | 10 | `MAX_SIGNATURES` in `src/stores/signatureStore.ts` |
+| Max saved initials | 10 | `MAX_SIGNATURES` in `src/stores/signatureStore.ts` |
 
 ### File System Access (Desktop)
 
 ```typescript
-// Electron provides direct file system access
-// All operations go through IPC for security
-
-// Read file
+// The renderer calls the preload bridge, window.electron.
+// Every call goes through IPC. The main process checks each path.
 const result = await window.electron.readFile(filePath);
-
-// Write file
 await window.electron.writeFile(filePath, data);
+const watching = await window.electron.watchFile(filePath); // returns a boolean
 
-// File watching
-const unwatch = window.electron.watchFile(filePath, (event) => {
-  if (event.type === 'change') {
-    // Reload document
-  }
+// Subscribe to file change events. The return value is an unsubscribe function.
+const unsubscribe = window.electron.onFileChanged((event) => {
+  // Handle the change, for example by reloading the document
 });
 ```
 
 ### Web File System Access API
+The application opens files with `openPdfFile` in `src/lib/storage/fileHandler.ts`. That function calls `fileOpen` from the browser-fs-access package. The package uses the File System Access API when the browser supports it. The example shows that API.
 
 ```typescript
 // Modern browsers support File System Access API
@@ -760,100 +817,147 @@ if ('showOpenFilePicker' in window) {
 
 ## Performance Considerations
 
-### Benchmarks
+### Benchmark Targets
 
-| Operation                  | Target      | Actual (P95) |
-|----------------------------|-------------|--------------|
-| Cold start (Electron)      | < 3s        | 2.1s         |
-| Warm start (Electron)      | < 1s        | 0.6s         |
-| PDF open (10 pages)        | < 1s        | 0.4s         |
-| PDF open (100 pages)       | < 2s        | 1.2s         |
-| Page navigation            | < 50ms      | 25ms         |
-| Annotation render          | < 16ms      | 8ms          |
-| Save (10 pages)            | < 500ms     | 280ms        |
-| Save (100 pages)           | < 2s        | 1.4s         |
-| OCR per page               | < 3s        | 2.2s         |
-| Memory (idle)              | < 150 MB    | 120 MB       |
-| Memory (100-page PDF)      | < 500 MB    | 380 MB       |
+The file `tests/performance/benchmarks.ts` uses simulated timings. The table lists the targets in the file `tests/performance/benchmarks.ts`. The table does not list measured results.
+
+| Operation | Target |
+|-----------|--------|
+| Load small PDF | 500 ms |
+| Load medium PDF | 1000 ms |
+| Load large PDF | 2000 ms |
+| Render page 100% | 100 ms |
+| Render page 200% | 200 ms |
+| Render thumbnail | 50 ms |
+| Create highlight | 50 ms |
+| Create note | 50 ms |
+| Render annotations | 100 ms |
+| Save document | 1000 ms |
+| Export PDF | 2000 ms |
+| Export image | 500 ms |
+| Navigate next | 100 ms |
+| Jump to page | 200 ms |
+| Zoom change | 100 ms |
+| Detect forms | 500 ms |
+| Update field | 50 ms |
+
+The header comment of the same file states a memory target of less than 500 MB for 100-page documents.
 
 ### Optimization Strategies
 
 **1. Virtualized Rendering**
 
-Only render visible pages plus a small buffer:
+The hook `useVisiblePages` in `src/hooks/useVisiblePages.ts` finds the visible pages with IntersectionObserver. The hook returns the visible pages and the buffered pages (`isBuffered`).
 
 ```typescript
-// VirtualizedViewer.tsx
-const visiblePages = useMemo(() => {
-  const buffer = 2; // pages above/below viewport
-  return pages.slice(
-    Math.max(0, firstVisiblePage - buffer),
-    Math.min(totalPages, lastVisiblePage + buffer + 1)
-  );
-}, [firstVisiblePage, lastVisiblePage, totalPages]);
+// src/components/viewer/VirtualizedViewer.tsx
+const {
+  visiblePages,
+  currentVisiblePage,
+  registerPageElement,
+  containerRef,
+} = useVisiblePages({
+  pageCount,
+  bufferSize: 2,
+});
 ```
 
 **2. Thumbnail Caching**
 
-LRU cache for page thumbnails:
+`ThumbnailCache` in `src/lib/thumbnails/cache.ts` stores thumbnail data URLs. When the cache is full, the `ThumbnailCache` removes the least recently used entry. The cache key has the form `documentId:pageNumber:scale`. The module creates one shared instance with a capacity of 200.
 
 ```typescript
-// lib/thumbnails/cache.ts
-const thumbnailCache = new LRUCache<string, ImageData>({
-  max: 100,           // Max entries
-  maxAge: 1000 * 60 * 30, // 30 minutes
-  updateAgeOnGet: true
-});
+// src/lib/thumbnails/cache.ts (excerpt)
+get(documentId: string, pageNumber: number, scale: number): string | null {
+  const key = this.makeKey(documentId, pageNumber, scale);
+  const value = this.cache.get(key);
+
+  if (value !== undefined) {
+    // Move to end (most recently used)
+    this.cache.delete(key);
+    this.cache.set(key, value);
+    return value;
+  }
+
+  return null;
+}
+
+// Global singleton instance
+export const thumbnailCache = new ThumbnailCache(200);
 ```
 
 **3. Worker Thread Offloading (Desktop)**
 
-Heavy operations run in worker threads:
+The worker in `electron/workers/pdfWorker.ts` runs the compress, merge, split and watermark tasks. It reads and writes the files itself. It sends progress messages and one result message for each task.
 
 ```typescript
-// electron/workers/pdfWorker.ts
-parentPort.on('message', async (task) => {
-  switch (task.type) {
-    case 'compress':
-      const result = await compressPDF(task.data);
-      parentPort.postMessage({ id: task.id, result });
-      break;
-    case 'merge':
-      // ...
+// electron/workers/pdfWorker.ts (message handler, excerpt)
+parentPort?.on('message', async (message: TaskMessage) => {
+  if (message.type !== 'task') return;
+
+  const { task } = message;
+  const { payload } = task;
+
+  try {
+    let result: unknown;
+
+    switch (task.type) {
+      case 'compress':
+        result = await compressPdf(
+          task.id,
+          payload.inputPath,
+          payload.outputPath,
+          payload.options as Parameters<typeof compressPdf>[3]
+        );
+        break;
+      // The merge, split and watermark cases call mergePdfs, splitPdf and addWatermark.
+      default:
+        throw new Error(`Unknown operation type: ${task.type}`);
+    }
+
+    sendResult(task.id, result);
+  } catch (error) {
+    sendResult(
+      task.id,
+      undefined,
+      error instanceof Error ? error.message : String(error)
+    );
   }
 });
 ```
 
 **4. Memory Management**
 
-Proactive cleanup of unused resources:
+The module `src/lib/performance/memoryManager.ts` reads the browser heap figures. The module returns a warning when the heap use is high. The warning levels start at shares of `jsHeapSizeLimit`: low 50%, medium 70%, high 85% and critical 95%. The constant `MEMORY_THRESHOLDS` stores the thresholds. The module does not export `MEMORY_THRESHOLDS`.
 
 ```typescript
-// lib/performance/memoryManager.ts
-export function disposeUnusedCanvases() {
-  const threshold = 50; // MB
-  if (getMemoryUsage() > threshold) {
-    // Dispose canvases for non-visible pages
-    pageCanvasMap.forEach((canvas, pageNum) => {
-      if (!isPageVisible(pageNum)) {
-        canvas.dispose();
-        pageCanvasMap.delete(pageNum);
-      }
-    });
-  }
+// src/lib/performance/memoryManager.ts (exports)
+export function getMemoryInfo(): MemoryInfo | null; // null when performance.memory is not available
+export function getMemoryWarning(): MemoryWarning | null;
+export function formatMemory(bytes: number): string;
+export function estimateDocumentMemory(
+  pageCount: number,
+  avgPageSizeKB?: number
+): { estimated: number; isLargeDocument: boolean; warning: string | null };
+
+export class CanvasDisposer {
+  register(id: string, canvas: HTMLCanvasElement): void;
+  dispose(id: string): void; // sets the canvas width and height to 0
+  disposeAll(): void;
 }
 ```
 
 **5. Lazy Loading**
 
-Components loaded on demand:
+Components load on demand. The file `src/components/lazy/index.ts` exports these lazy components:
 
-```typescript
-// components/lazy/index.ts
-export const OCRPanel = lazy(() => import('@components/ocr/OCRPanel'));
-export const BatchWizard = lazy(() => import('@components/batch/BatchWizard'));
-export const FormDesigner = lazy(() => import('@components/forms/FormDesigner'));
-```
+- `LazySignatureModal`
+- `LazyDrawingCanvas`
+- `LazyImageExportDialog`
+- `LazyCompressDialog`
+- `LazyPrintDialog`
+- `LazyMergeDialog`
+- `LazySplitDialog`
 
 ---
 
@@ -861,27 +965,26 @@ export const FormDesigner = lazy(() => import('@components/forms/FormDesigner'))
 
 ### Content Security Policy
 
+The Electron main process sets the policy in `electron/main/security.ts`. `setupContentSecurityPolicy` uses `DEVELOPMENT_CSP` when `isDev` is true. Otherwise, it uses `PRODUCTION_CSP`.
+
 ```typescript
-// Production CSP (strict)
-const productionCSP = [
+// electron/main/security.ts (PRODUCTION_CSP)
+export const PRODUCTION_CSP = [
   "default-src 'self'",
-  "script-src 'self'",
-  "style-src 'self' 'unsafe-inline'",  // Required for inline styles
-  "img-src 'self' data: blob:",
-  "font-src 'self'",
-  "connect-src 'self'",
+  "script-src 'self' blob:",
   "worker-src 'self' blob:",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "connect-src 'self'",
   "frame-src 'none'",
   "object-src 'none'",
   "base-uri 'self'",
-].join('; ');
-
-// Development CSP (relaxed for HMR)
-const developmentCSP = [
-  "default-src 'self' 'unsafe-inline' 'unsafe-eval'",
-  // ... more permissive for development
+  "form-action 'self'",
 ].join('; ');
 ```
+
+The web build sends its headers from `public/_headers`. The `script-src` directive in that file includes `'unsafe-inline'`. The same file allows connections to `https://*.sentry.io`.
 
 ### Electron Security Model
 
@@ -896,10 +999,10 @@ const developmentCSP = [
                               v
 +------------------------------------------------------------------+
 |                      Preload Script                               |
-|  (Limited API surface, validates all inputs)                     |
+|  (Limited API surface)                                           |
 +------------------------------------------------------------------+
                               |
-                    window.electron (frozen object)
+                    window.electron (API object)
                               |
                               v
 +------------------------------------------------------------------+
@@ -909,140 +1012,126 @@ const developmentCSP = [
 ```
 
 ```typescript
-// electron/main/index.ts
-const mainWindow = new BrowserWindow({
+// electron/main/index.ts (createMainWindow, excerpt)
+const mainWindow = windowManager.createWindow({
   webPreferences: {
-    contextIsolation: true,     // Isolate preload from renderer
-    nodeIntegration: false,     // No Node.js in renderer
-    sandbox: true,              // Chromium sandbox enabled
-    preload: PRELOAD_PATH,      // Only way to communicate
-    webSecurity: true,          // Enforce same-origin
-    allowRunningInsecureContent: false,
+    preload: PRELOAD_PATH,
+    contextIsolation: true,
+    nodeIntegration: false,
+    sandbox: true,
   },
 });
+
+// Set up CSP
+setupContentSecurityPolicy(mainWindow, isDev);
 ```
 
 ### Input Validation
 
-All IPC handlers validate inputs:
+The FILE_READ handler in `electron/ipc/fileHandlers.ts` checks the path before it reads the file. The handler catches errors and returns an object with `success` set to `false`.
 
 ```typescript
-// electron/ipc/fileHandlers.ts
-ipcMain.handle('file:read', async (event, filePath: unknown) => {
-  // Type validation
-  if (typeof filePath !== 'string') {
-    return { success: false, error: 'Invalid file path type' };
-  }
-
-  // Path traversal protection
-  const normalizedPath = path.normalize(filePath);
-  if (normalizedPath.includes('..')) {
-    return { success: false, error: 'Path traversal not allowed' };
-  }
-
-  // Allowlist check (optional, for restricted mode)
-  if (!isPathAllowed(normalizedPath, allowedDirectories)) {
-    return { success: false, error: 'Path not in allowed directories' };
-  }
-
-  // Proceed with validated path
+// electron/ipc/fileHandlers.ts (FILE_READ handler)
+ipcMain.handle(IPC_CHANNELS.FILE_READ, async (_event, filePath: string) => {
   try {
-    const data = await fs.promises.readFile(normalizedPath);
-    return { success: true, data: data.buffer };
+    assertPathAllowed(filePath);
+    const data = await fs.readFile(filePath);
+    return { success: true, data: new Uint8Array(data) };
   } catch (error) {
-    return { success: false, error: error.message };
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to read file',
+    };
   }
 });
 ```
 
+The FILE_WRITE handler calls `assertPathAllowed` and `assertExtensionAllowedForWrite` before it writes.
+
 ### WebAuthn/FIDO2 Integration
 
-Hardware key authentication for document signing:
+The WebAuthn client in `src/lib/security/webauthnClient.ts` creates hardware key credentials. Its default configuration uses the relying party ID `paperflow.app`, the relying party name `PaperFlow`, a timeout of 60000 ms and `preferred` user verification. Registration calls `navigator.credentials.create` in `src/lib/security/webauthn.ts`.
 
 ```typescript
-// Credential creation
-const credential = await navigator.credentials.create({
-  publicKey: {
-    challenge: serverChallenge,
-    rp: { name: 'PaperFlow', id: 'paperflow.app' },
-    user: {
-      id: userId,
-      name: userEmail,
-      displayName: userName,
-    },
-    pubKeyCredParams: [
-      { alg: -7, type: 'public-key' },   // ES256
-      { alg: -257, type: 'public-key' }, // RS256
-    ],
-    authenticatorSelection: {
-      authenticatorAttachment: 'cross-platform', // Hardware key
-      userVerification: 'required',
-    },
+// src/lib/security/webauthnClient.ts (generateRegistrationOptions, excerpt)
+return {
+  // ...
+  rp: {
+    name: this.config.rpName,
+    id: this.config.rpId,
   },
-});
+  // ...
+  pubKeyCredParams: [
+    { type: 'public-key', alg: -7 }, // ES256
+    { type: 'public-key', alg: -257 }, // RS256
+  ],
+  attestation: 'direct',
+  authenticatorSelection: {
+    authenticatorAttachment: 'cross-platform',
+    requireResidentKey: false,
+    residentKey: 'preferred',
+    userVerification: this.config.userVerification,
+  },
+  // ...
+};
+```
 
-// Signature verification
-const assertion = await navigator.credentials.get({
-  publicKey: {
-    challenge: documentHash,
-    allowCredentials: registeredCredentials,
-    userVerification: 'required',
-  },
-});
+Assertion requests call `navigator.credentials.get` in `src/lib/security/webauthn.ts`:
+
+```typescript
+// src/lib/security/webauthn.ts (excerpt)
+const publicKeyOptions: PublicKeyCredentialRequestOptions = {
+  challenge,
+  timeout: options.timeout || 60000,
+  rpId: options.rpId,
+  allowCredentials,
+  userVerification: options.userVerification || 'preferred',
+};
+
+const credential = (await navigator.credentials.get({
+  publicKey: publicKeyOptions,
+})) as PublicKeyCredential;
 ```
 
 ---
 
 ## Testing Strategy
 
-### Test Pyramid
+### Test Layers
 
-```
-                    /\
-                   /  \
-                  / E2E \           ~10% of tests
-                 /  Tests \         Browser automation
-                /----------\
-               /            \
-              / Integration  \      ~20% of tests
-             /    Tests       \     Store + Component
-            /------------------\
-           /                    \
-          /     Unit Tests       \  ~70% of tests
-         /    (Stores, Utils,     \ Pure functions
-        /      Components)         \
-       /----------------------------\
-```
+The table gives the number of test files in each test folder.
+
+| Folder | Files | Runner | Contents |
+|--------|-------|--------|----------|
+| `tests/unit` | 116 | Vitest | Components, hooks, lib, pages, stores, styles and utils |
+| `tests/integration` | 23 | Vitest | Workflows that use several modules |
+| `tests/e2e` | 12 | Playwright | Test directory `./tests/e2e` |
+| `tests/e2e-electron` | 5 | Playwright | Desktop application tests (test directory `./tests/e2e-electron`) |
+| `tests/electron` | 18 | Vitest | Main process and IPC modules |
+
+Other folders are `tests/accessibility`, `tests/enterprise`, `tests/kiosk`, `tests/lan`, `tests/license`, `tests/manual`, `tests/update` and `tests/visual`. The folder `tests/performance` holds the benchmark file. The folder `tests/mocks` holds a Sentry mock. The folder `tests/fixtures` holds a sample PDF file.
 
 ### Test Organization
 
 ```
 tests/
-├── unit/
-│   ├── stores/           # Store logic tests
-│   │   ├── documentStore.test.ts
-│   │   ├── annotationStore.test.ts
-│   │   └── ...
-│   ├── lib/              # Library function tests
-│   │   ├── pdf/
-│   │   ├── forms/
-│   │   └── ...
-│   └── utils/            # Utility function tests
+├── unit/                 # Components, hooks, lib, pages, stores, styles, utils
+│   ├── stores/           # Store tests, for example documentStore.test.ts
+│   └── lib/              # Library tests
 │
-├── integration/
-│   ├── viewer/           # PDF viewing workflows
-│   ├── annotations/      # Annotation workflows
-│   ├── forms/            # Form filling workflows
-│   ├── offline/          # Offline sync workflows
-│   └── fileWatch/        # File watching workflows
+├── integration/          # Workflow tests
+│   ├── annotations/      # Drawing, highlight, note and shape tests
+│   ├── forms/
+│   ├── offline/
+│   ├── fileWatch/
+│   └── fileOpening.test.tsx
 │
-└── e2e/
-    ├── web/              # Playwright web tests
-    │   ├── viewer.spec.ts
-    │   └── forms.spec.ts
-    └── electron/         # Playwright Electron tests
-        ├── fileOps.spec.ts
-        └── updates.spec.ts
+├── e2e/                  # Playwright tests (test directory ./tests/e2e)
+├── e2e-electron/         # Playwright tests for the desktop application
+├── electron/             # Vitest tests for main process and IPC modules
+├── performance/          # benchmarks.ts
+├── mocks/                # sentry.ts
+└── fixtures/             # sample PDF file
 ```
 
 ### Test Commands
@@ -1079,138 +1168,107 @@ npm run test:watch
 ### Example Unit Test
 
 ```typescript
-// tests/unit/stores/documentStore.test.ts
-import { describe, it, expect, beforeEach } from 'vitest';
+// tests/unit/stores/documentStore.test.ts (excerpt)
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useDocumentStore } from '@stores/documentStore';
+
+// Mock PDFRenderer
+vi.mock('@lib/pdf/renderer', () => ({
+  PDFRenderer: vi.fn().mockImplementation(function () {
+    return {
+      loadDocument: vi.fn().mockResolvedValue({
+        numPages: 5,
+        title: 'Test Document',
+      }),
+      renderPage: vi.fn().mockResolvedValue({ width: 612, height: 792 }),
+      destroy: vi.fn(),
+    };
+  }),
+}));
 
 describe('documentStore', () => {
   beforeEach(() => {
-    useDocumentStore.getState().reset();
-  });
-
-  describe('loadDocument', () => {
-    it('should load a PDF file and update state', async () => {
-      const store = useDocumentStore.getState();
-      const pdfFile = new File([pdfBytes], 'test.pdf', { type: 'application/pdf' });
-
-      await store.loadDocument(pdfFile);
-
-      expect(store.pdfDocument).not.toBeNull();
-      expect(store.numPages).toBe(5);
-      expect(store.currentPage).toBe(1);
-    });
-
-    it('should handle invalid files gracefully', async () => {
-      const store = useDocumentStore.getState();
-      const invalidFile = new File(['not a pdf'], 'test.txt');
-
-      await expect(store.loadDocument(invalidFile)).rejects.toThrow();
-      expect(store.pdfDocument).toBeNull();
+    // Reset store state before each test
+    useDocumentStore.setState({
+      fileName: null,
+      fileData: null,
+      documentInfo: null,
+      pageCount: 0,
+      currentPage: 1,
+      zoom: 100,
+      viewMode: 'single',
+      isModified: false,
+      isLoading: false,
+      error: null,
+      renderer: null,
     });
   });
 
-  describe('navigation', () => {
-    it('should navigate to valid pages', () => {
-      const store = useDocumentStore.getState();
-      store.setNumPages(10);
-
-      store.setPage(5);
-      expect(store.currentPage).toBe(5);
-
-      store.setPage(15); // Beyond limit
-      expect(store.currentPage).toBe(10);
-
-      store.setPage(0); // Below limit
-      expect(store.currentPage).toBe(1);
-    });
-  });
+  // ...
 });
 ```
 
 ### Example Integration Test
 
 ```typescript
-// tests/integration/annotations/highlight.test.ts
-import { describe, it, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { PDFViewer } from '@components/viewer/PDFViewer';
+// tests/integration/annotations/highlights.test.tsx (excerpt)
+import { describe, it, expect, beforeEach } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
 import { useAnnotationStore } from '@stores/annotationStore';
+import { useHistoryStore } from '@stores/historyStore';
+import { useHighlightTool } from '@hooks/useHighlightTool';
+import { HIGHLIGHT_COLORS } from '@components/annotations/SelectionPopup';
 
-describe('Highlight Annotation Flow', () => {
-  it('should create highlight from text selection', async () => {
-    render(<PDFViewer file={testPdf} />);
-
-    // Wait for PDF to load
-    await screen.findByTestId('pdf-page-1');
-
-    // Simulate text selection
-    fireEvent.mouseUp(screen.getByTestId('text-layer'), {
-      detail: { selectedText: 'Lorem ipsum' }
+describe('Highlights Integration', () => {
+  beforeEach(() => {
+    // Reset all stores before each test
+    useAnnotationStore.setState({
+      annotations: [],
+      selectedId: null,
+      activeTool: null,
+      activeColor: '#FFEB3B',
+      activeOpacity: 0.5,
     });
-
-    // Click highlight button
-    fireEvent.click(screen.getByRole('button', { name: /highlight/i }));
-
-    // Verify annotation created
-    const annotations = useAnnotationStore.getState().annotations;
-    expect(annotations).toHaveLength(1);
-    expect(annotations[0].type).toBe('highlight');
-    expect(annotations[0].selectedText).toBe('Lorem ipsum');
+    useHistoryStore.setState({
+      past: [],
+      future: [],
+    });
   });
+
+  // ...
 });
 ```
 
 ### Example E2E Test
 
 ```typescript
-// tests/e2e/web/viewer.spec.ts
-import { test, expect } from '@playwright/test';
+// tests/e2e-electron/updates.spec.ts (excerpt)
+import { test, expect, Page, ElectronApplication } from '@playwright/test';
+import { _electron as electron } from 'playwright';
+import path from 'path';
 
-test.describe('PDF Viewer', () => {
-  test('should open and display PDF', async ({ page }) => {
-    await page.goto('/');
+// __dirname is defined earlier in the file
+// Test configuration
+const APP_PATH = path.join(__dirname, '../../dist-electron/main/index.js');
 
-    // Upload PDF
-    const fileInput = page.locator('input[type="file"]');
-    await fileInput.setInputFiles('tests/fixtures/sample.pdf');
+let electronApp: ElectronApplication;
+let page: Page;
 
-    // Wait for viewer to load
-    await expect(page.locator('[data-testid="pdf-viewer"]')).toBeVisible();
-
-    // Verify page count
-    const pageInfo = page.locator('[data-testid="page-info"]');
-    await expect(pageInfo).toHaveText(/Page 1 of 5/);
-
-    // Navigate to next page
-    await page.click('[data-testid="next-page"]');
-    await expect(pageInfo).toHaveText(/Page 2 of 5/);
+// Helper to launch the Electron app
+async function launchApp(): Promise<void> {
+  electronApp = await electron.launch({
+    args: [APP_PATH],
+    // ...
   });
-
-  test('should save annotations', async ({ page }) => {
-    await page.goto('/');
-    await loadTestPdf(page);
-
-    // Add highlight
-    await page.click('[data-testid="highlight-tool"]');
-    await page.locator('[data-testid="text-layer"]').selectText();
-    await page.click('[data-testid="apply-highlight"]');
-
-    // Save document
-    const [download] = await Promise.all([
-      page.waitForEvent('download'),
-      page.click('[data-testid="save-button"]'),
-    ]);
-
-    expect(download.suggestedFilename()).toBe('sample_annotated.pdf');
-  });
-});
+  // ...
+}
 ```
 
 ---
 
 ## Appendix: Path Aliases
 
-Configured in both `vite.config.ts` and `tsconfig.json`:
+Configured in `vite.config.ts`, `vitest.config.ts` and `tsconfig.json`:
 
 | Alias          | Path               |
 |----------------|--------------------|
@@ -1229,9 +1287,9 @@ Configured in both `vite.config.ts` and `tsconfig.json`:
 | Type           | Convention           | Example               |
 |----------------|----------------------|-----------------------|
 | Components     | PascalCase           | `PDFViewer.tsx`       |
-| Hooks          | camelCase with `use` | `usePDF.ts`           |
+| Hooks          | camelCase with `use` | `useFormFields.ts`    |
 | Stores         | camelCase with Store | `documentStore.ts`    |
-| Utils          | camelCase            | `pdfHelpers.ts`       |
+| Utils          | camelCase            | `coordinates.ts`      |
 | Types          | PascalCase           | `Annotation`          |
 | Constants      | SCREAMING_SNAKE      | `MAX_ZOOM`            |
 | IPC Channels   | UPPER_SNAKE          | `FILE_READ`           |
@@ -1247,4 +1305,18 @@ Configured in both `vite.config.ts` and `tsconfig.json`:
 
 ---
 
-*This document is generated and maintained as part of the PaperFlow project. For questions or updates, please open an issue in the project repository.*
+*Report errors in this document as issues in the project repository.*
+
+---
+
+## Verification
+
+Check: `repo-tools check . --docs=docs/architecture`
+
+| Claim | Value | Source |
+|-------|-------|--------|
+| totalFiles | 746 | file-inventory.json |
+| totalExports | 3258 | dependency-graph.json |
+| totalFunctions | 1292 | dependency-graph.json |
+| totalClasses | 69 | dependency-graph.json |
+| totalInterfaces | 686 | dependency-graph.json |
