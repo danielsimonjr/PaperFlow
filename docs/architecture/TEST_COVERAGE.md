@@ -9,7 +9,7 @@
 | Metric | Count |
 |--------|-------|
 | Total Source Files | 545 |
-| Total Test Files | 178 |
+| Total Test Files | 183 |
 | Source Files with Tests | 14 |
 | Source Files without Tests | 531 |
 | Coverage (raw, direct-import) | **2.6%** |
@@ -700,10 +700,15 @@ The following 531 source files are not directly imported by any test file:
 | `forms/FormField.test.tsx` | 0 files |
 | `designer/FieldPalette.test.tsx` | 0 files |
 | `components/layerStacking.test.tsx` | 0 files |
+| `ocr/OCRDialog.test.tsx` | 0 files |
+| `ocr/OCRResultsPanel.test.tsx` | 0 files |
+| `ocr/PageRangeSelector.test.tsx` | 0 files |
+| `pages/InsertPageDialog.test.tsx` | 0 files |
 | `pages/PageThumbnails.test.tsx` | 0 files |
 | `print/PageRangeSelector.test.tsx` | 0 files |
 | `signatures/SignatureCanvas.test.tsx` | 0 files |
 | `signatures/SignaturePlacer.test.tsx` | 0 files |
+| `toolbar/SearchBar.test.tsx` | 0 files |
 | `ui/AccessibleComponents.test.tsx` | 0 files |
 | `ui/Skeleton.test.tsx` | 0 files |
 | `hooks/useAnnotationShortcuts.test.ts` | 0 files |

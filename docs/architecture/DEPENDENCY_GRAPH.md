@@ -9158,9 +9158,9 @@ graph TD
 
 | Category | Count |
 |----------|-------|
-| Total Source Files | 746 |
+| Total Source Files | 751 |
 | Subsystems | 20 |
-| Total Lines of Code | 176919 |
+| Total Lines of Code | 177428 |
 | Total Exports | 3405 |
 | Total Re-exports | 812 |
 | Total Classes | 69 |

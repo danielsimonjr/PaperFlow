@@ -31,7 +31,7 @@ interface UseSearchReturn {
   isSearching: boolean;
   options: SearchOptions;
   setOptions: (options: SearchOptions) => void;
-  search: (query: string) => Promise<void>;
+  search: (query: string, searchOptions?: SearchOptions) => Promise<void>;
   nextMatch: () => void;
   prevMatch: () => void;
   goToMatch: (index: number) => void;
@@ -48,6 +48,8 @@ const DEFAULT_OPTIONS: SearchOptions = {
  * Search the text of the open PDF and move between the matches.
  *
  * The hook caches page text until the renderer changes. A new search cancels any search in progress.
+ * `search` uses the options of the hook state. A caller that changes the options in the same event passes the new
+ * options to `search`. The reason is that each `search` function holds the options of its own render.
  */
 export function useSearch({
   renderer,
@@ -106,7 +108,7 @@ export function useSearch({
   );
 
   const search = useCallback(
-    async (searchQuery: string) => {
+    async (searchQuery: string, searchOptions: SearchOptions = options) => {
       // Cancel any existing search
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
@@ -115,6 +117,8 @@ export function useSearch({
       if (!renderer || !searchQuery.trim()) {
         setMatches([]);
         setCurrentMatchIndex(0);
+        // The cancelled search skips its own reset of this flag.
+        setIsSearching(false);
         return;
       }
 
@@ -125,7 +129,7 @@ export function useSearch({
       const foundMatches: SearchMatch[] = [];
 
       try {
-        const regex = buildSearchRegex(searchQuery, options);
+        const regex = buildSearchRegex(searchQuery, searchOptions);
 
         // Search through all pages
         for (let pageNum = 1; pageNum <= pageCount; pageNum++) {

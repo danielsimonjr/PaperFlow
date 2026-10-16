@@ -2,7 +2,7 @@ metadata:
   name: PaperFlow
   schemaVersion: 2.0.0
   language: typescript
-  totalFiles: 746
+  totalFiles: 751
   totalModules: 4
   totalExports: 3405
 modules:
@@ -11048,6 +11048,45 @@ modules:
         - node:path
       internalDependencies: []
       exports: []
+    tests/unit/components/ocr/OCRDialog.test.tsx:
+      externalDependencies:
+        - '@components/ocr/OCRDialog'
+        - '@stores/documentStore'
+        - '@stores/ocrStore'
+        - '@stores/uiStore'
+        - '@testing-library/react'
+        - vitest
+      nodeDependencies: []
+      internalDependencies: []
+      exports: []
+    tests/unit/components/ocr/OCRResultsPanel.test.tsx:
+      externalDependencies:
+        - '@components/ocr/OCRResultsPanel'
+        - '@stores/documentStore'
+        - '@stores/ocrStore'
+        - '@testing-library/react'
+        - vitest
+      nodeDependencies: []
+      internalDependencies: []
+      exports: []
+    tests/unit/components/ocr/PageRangeSelector.test.tsx:
+      externalDependencies:
+        - '@components/ocr/PageRangeSelector'
+        - '@stores/documentStore'
+        - '@testing-library/react'
+        - vitest
+      nodeDependencies: []
+      internalDependencies: []
+      exports: []
+    tests/unit/components/pages/InsertPageDialog.test.tsx:
+      externalDependencies:
+        - '@components/pages/InsertPageDialog'
+        - '@testing-library/react'
+        - react
+        - vitest
+      nodeDependencies: []
+      internalDependencies: []
+      exports: []
     tests/unit/components/pages/PageThumbnails.test.tsx:
       externalDependencies:
         - '@components/pages/DraggableThumbnail'
@@ -11079,6 +11118,16 @@ modules:
       externalDependencies:
         - '@components/signatures/SignaturePlacer'
         - '@stores/signatureStore'
+        - '@testing-library/react'
+        - vitest
+      nodeDependencies: []
+      internalDependencies: []
+      exports: []
+    tests/unit/components/toolbar/SearchBar.test.tsx:
+      externalDependencies:
+        - '@components/toolbar/SearchBar'
+        - '@lib/pdf/renderer'
+        - '@stores/documentStore'
         - '@testing-library/react'
         - vitest
       nodeDependencies: []
@@ -11769,10 +11818,10 @@ modules:
       internalDependencies: []
       exports: []
 statistics:
-  totalTypeScriptFiles: 746
-  totalSourceFiles: 746
+  totalTypeScriptFiles: 751
+  totalSourceFiles: 751
   totalModules: 4
-  totalLinesOfCode: 176919
+  totalLinesOfCode: 177428
   totalExports: 3405
   entryRoots: 0
   reachableFiles: 0

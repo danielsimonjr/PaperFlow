@@ -19,13 +19,15 @@ interface SearchBarProps {
 
 /**
  * Search bar for the open document, with case and whole-word options and match navigation.
- * Enter in the box runs the search. Enter and Shift+Enter step to the next and previous match.
+ * Enter in the box runs the search when the text changed since the last search. When the text did not change, Enter steps
+ * to the next match and Shift+Enter steps to the previous match.
  * Each match moves the view to its page.
  * Escape closes the bar and keeps the search. The close button closes it and clears the search.
- * Toggling case or whole word re-runs the search with the previous options when the box has text.
+ * Toggling case or whole word re-runs the search with the new option when the box has text.
  */
 export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchedQueryRef = useRef<string | null>(null);
   const [localQuery, setLocalQuery] = useState('');
 
   const renderer = useDocumentStore((state) => state.renderer);
@@ -72,8 +74,8 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
         onClose();
       }
 
-      // Navigate matches with Enter / Shift+Enter
-      if (e.key === 'Enter') {
+      // Navigate matches with Enter / Shift+Enter. The search box handles its own Enter.
+      if (e.key === 'Enter' && e.target !== inputRef.current) {
         e.preventDefault();
         if (e.shiftKey) {
           prevMatch();
@@ -96,6 +98,7 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
 
   const handleSearch = useCallback(() => {
     if (localQuery.trim()) {
+      searchedQueryRef.current = localQuery;
       setQuery(localQuery);
       search(localQuery);
     }
@@ -110,16 +113,24 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
 
   const handleInputKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      if (totalMatches > 0 && localQuery === searchedQueryRef.current) {
+        if (e.shiftKey) {
+          prevMatch();
+        } else {
+          nextMatch();
+        }
+      } else {
         handleSearch();
       }
     },
-    [handleSearch]
+    [handleSearch, localQuery, totalMatches, nextMatch, prevMatch]
   );
 
   const handleClose = useCallback(() => {
     clearSearch();
+    searchedQueryRef.current = null;
     setLocalQuery('');
     onClose();
   }, [clearSearch, onClose]);
@@ -128,7 +139,8 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
     const newOptions = { ...options, caseSensitive: !options.caseSensitive };
     setOptions(newOptions);
     if (localQuery.trim()) {
-      search(localQuery);
+      searchedQueryRef.current = localQuery;
+      search(localQuery, newOptions);
     }
   }, [options, setOptions, localQuery, search]);
 
@@ -136,7 +148,8 @@ export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
     const newOptions = { ...options, wholeWord: !options.wholeWord };
     setOptions(newOptions);
     if (localQuery.trim()) {
-      search(localQuery);
+      searchedQueryRef.current = localQuery;
+      search(localQuery, newOptions);
     }
   }, [options, setOptions, localQuery, search]);
 

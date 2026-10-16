@@ -1,11 +1,11 @@
 {
-  "totalFiles": 746,
+  "totalFiles": 751,
   "byDisposition": {
     "reachable": 0,
     "build-entry": 0,
     "test-only": 18,
     "orphan": 528,
-    "test": 184,
+    "test": 189,
     "tool": 8,
     "config": 8,
     "bench": 0,
@@ -15,10 +15,10 @@
     "src": 546,
     "config": 8,
     "tools": 8,
-    "tests": 184
+    "tests": 189
   },
   "byPackage": {
-    "(root)": 276,
+    "(root)": 281,
     "paperflow": 470
   },
   "files": [
@@ -1350,7 +1350,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 182
+      "loc": 186
     },
     {
       "file": "src/components/ocr/OCRExportDialog.tsx",
@@ -1371,7 +1371,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 233
+      "loc": 237
     },
     {
       "file": "src/components/ocr/PageRangeSelector.tsx",
@@ -1448,7 +1448,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 187
+      "loc": 193
     },
     {
       "file": "src/components/pages/MergeDialog.tsx",
@@ -1868,7 +1868,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 240
+      "loc": 253
     },
     {
       "file": "src/components/toolbar/ViewModeToggle.tsx",
@@ -2260,7 +2260,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 210
+      "loc": 214
     },
     {
       "file": "src/hooks/useSignatureInput.ts",
@@ -4475,6 +4475,34 @@
       "loc": 146
     },
     {
+      "file": "tests/unit/components/ocr/OCRDialog.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 108
+    },
+    {
+      "file": "tests/unit/components/ocr/OCRResultsPanel.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 88
+    },
+    {
+      "file": "tests/unit/components/ocr/PageRangeSelector.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 39
+    },
+    {
+      "file": "tests/unit/components/pages/InsertPageDialog.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 88
+    },
+    {
       "file": "tests/unit/components/pages/PageThumbnails.test.tsx",
       "package": "(root)",
       "area": "tests",
@@ -4501,6 +4529,13 @@
       "area": "tests",
       "disposition": "test",
       "loc": 235
+    },
+    {
+      "file": "tests/unit/components/toolbar/SearchBar.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 111
     },
     {
       "file": "tests/unit/components/ui/AccessibleComponents.test.tsx",
@@ -4570,7 +4605,7 @@
       "package": "(root)",
       "area": "tests",
       "disposition": "test",
-      "loc": 233
+      "loc": 277
     },
     {
       "file": "tests/unit/hooks/useTouchGestures.test.ts",
