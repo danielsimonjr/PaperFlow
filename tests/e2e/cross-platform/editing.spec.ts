@@ -143,7 +143,8 @@ test.describe('Cross-Platform Editing', () => {
       await page.keyboard.press('Control+z');
       await expect(page.locator('[data-testid="sticky-note"]')).toHaveCount(0);
 
-      await page.keyboard.press('Control+Shift+z');
+      // A keyboard reports the shifted character: Ctrl+Shift+Z arrives as key 'Z'.
+      await page.keyboard.press('Control+Shift+Z');
 
       await expect(page.locator('[data-testid="sticky-note"]')).toHaveCount(1);
     });
