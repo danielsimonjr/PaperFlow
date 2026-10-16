@@ -20,8 +20,8 @@ interface PageRangeSelectorProps {
  * Page range picker for OCR, with current page, all pages and custom range options.
  * A custom range accepts page numbers and ranges separated by commas,
  * and an invalid range sends no pages.
- * The all and custom options send 0-based indices,
- * and the current option sends the 1-based currentPage.
+ * All options send 0-based page indices.
+ * The store holds the 1-based `currentPage`, so the current option sends `currentPage - 1`.
  */
 export function PageRangeSelector({ onRangeChange }: PageRangeSelectorProps) {
   const pageCount = useDocumentStore((s) => s.pageCount);
@@ -36,7 +36,7 @@ export function PageRangeSelector({ onRangeChange }: PageRangeSelectorProps) {
     setRangeError(null);
 
     if (rangeType === 'current') {
-      pages = [currentPage];
+      pages = [currentPage - 1];
     } else if (rangeType === 'all') {
       pages = Array.from({ length: pageCount }, (_, i) => i);
     } else if (rangeType === 'custom') {
@@ -67,7 +67,7 @@ export function PageRangeSelector({ onRangeChange }: PageRangeSelectorProps) {
             onChange={() => setRangeType('current')}
             className="h-4 w-4 text-primary-500 focus:ring-primary-500"
           />
-          <span className="text-sm">Current page ({currentPage + 1})</span>
+          <span className="text-sm">Current page ({currentPage})</span>
         </label>
 
         {/* All pages */}

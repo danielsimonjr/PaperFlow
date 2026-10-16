@@ -55,6 +55,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **The OCR dialog and results panel use the right page, scale and status.** `documentStore.currentPage` is 1-based
+  and the OCR run takes 0-based page indices. The "Current page" option sent the 1-based number, so OCR read the
+  next page, and failed on the last page. The option now sends `currentPage - 1`, and its label shows the page number.
+  `OCRResultsPanel` read and edited the result at the 1-based key, so it showed the next page. It now reads the key
+  `currentPage - 1`, and the exported text file carries the page number. While a search filtered the list, an edit
+  changed the word at the filtered position. An edit now changes the word that the user clicked. `OCRDialog`
+  rendered each page at the chosen scale and `preprocessImage` scaled the canvas by the same value again, so the
+  default 2x gave 4x. Preprocessing now keeps the size of the rendered canvas. A cancelled run showed the progress
+  as complete. The progress now stays idle after a cancel. The new tests are in `tests/unit/components/ocr`.
+
 - **The highlight and freehand E2E specs aim at the page.** Both offset from `pdf-viewer` (the
   `<main>` scroll region, which starts left of the page) and then moved the mouse in viewport
   coordinates, so the gesture never reached the page; the product handles both. The highlight
