@@ -36,19 +36,20 @@ test.describe('Cross-Platform Editing', () => {
 
   test.describe('Annotations', () => {
     test('should add highlight annotation', async ({ page }) => {
-      // Select highlight tool
+      // With the highlight tool active, selecting text creates the highlight. Drag across a
+      // text line of the page: the `pdf-viewer` region is the scroll area and starts left of
+      // the page, so a position inside it is not necessarily on the text.
       await page.click('[data-testid="tool-highlight"]');
 
-      // Select text (simulate selection)
-      const viewer = page.locator('[data-testid="pdf-viewer"]');
-      await viewer.click({ position: { x: 100, y: 100 } });
+      const box = await page.locator('.textLayer span').nth(4).boundingBox();
+      if (!box) throw new Error('the text line has no box');
+      const y = box.y + box.height / 2;
+      await page.mouse.move(box.x + 3, y);
       await page.mouse.down();
-      await page.mouse.move(300, 100);
+      await page.mouse.move(box.x + box.width - 3, y, { steps: 6 });
       await page.mouse.up();
 
-      // Verify highlight was created
-      const highlights = await page.locator('[data-testid="highlight-annotation"]').count();
-      expect(highlights).toBeGreaterThan(0);
+      await expect(page.locator('[data-testid="highlight-annotation"]')).not.toHaveCount(0);
     });
 
     test('should add sticky note', async ({ page }) => {
@@ -94,18 +95,26 @@ test.describe('Cross-Platform Editing', () => {
       // Select draw tool
       await page.click('[data-testid="tool-draw"]');
 
-      // Draw on canvas
-      const viewer = page.locator('[data-testid="pdf-viewer"]');
-      await viewer.click({ position: { x: 100, y: 100 } });
+      // Draw on the page's drawing canvas. The canvas starts under the toolbar, so a point at
+      // the top of it lands on the toolbar: take x from the canvas and y from the middle of
+      // the viewport, and check that the canvas is what is under the point.
+      const canvas = await page.locator('[data-testid="drawing-canvas"]').first().boundingBox();
+      if (!canvas) throw new Error('the drawing canvas has no box');
+      const x = Math.round(canvas.x + 60);
+      const y = Math.round((page.viewportSize()?.height ?? 720) / 2);
+      const under = await page.evaluate(
+        ([px, py]) => document.elementFromPoint(px as number, py as number)?.getAttribute('data-testid'),
+        [x, y]
+      );
+      expect(under).toBe('drawing-canvas');
+      await page.mouse.move(x, y);
       await page.mouse.down();
-      await page.mouse.move(150, 150);
-      await page.mouse.move(200, 100);
-      await page.mouse.move(250, 150);
+      await page.mouse.move(x + 50, y + 50, { steps: 4 });
+      await page.mouse.move(x + 100, y, { steps: 4 });
+      await page.mouse.move(x + 150, y + 50, { steps: 4 });
       await page.mouse.up();
 
-      // Verify drawing was created
-      const drawings = await page.locator('[data-testid="drawing-annotation"]').count();
-      expect(drawings).toBeGreaterThan(0);
+      await expect(page.locator('[data-testid="drawing-annotation"]')).not.toHaveCount(0);
     });
 
     test('should delete annotation', async ({ page }) => {

@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **The highlight and freehand E2E specs aim at the page.** Both offset from `pdf-viewer` (the
+  `<main>` scroll region, which starts left of the page) and then moved the mouse in viewport
+  coordinates, so the gesture never reached the page; the product handles both. The highlight
+  spec now drags across a text line of the page, which is what the auto-annotation reacts to.
+  The freehand spec takes `x` from the drawing canvas and `y` from the middle of the viewport,
+  because the canvas starts under the toolbar, and it checks that the canvas is the element at
+  that point. The chromium suite moves from 92 pass / 6 fail / 43 skip to 94 / 4 / 43; the four
+  left are the signature UI that no route mounts and "fit to width", which has no feature.
+
 - **A sticky note can be placed, opened and deleted, and three dialogs take their clicks.**
   `.textLayer` has `z-index: 2` (`src/index.css`). Five components had no z-index of their own
   and sat under it, so it took their pointer events:
