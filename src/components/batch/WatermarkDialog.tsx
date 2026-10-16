@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the WatermarkDialog component: the open state and close callback. The apply callback receives the watermark settings.
+ * The WatermarkDialog function declares no parameters, so it ignores them.
+ */
 export interface WatermarkDialogProps {
   /** Whether the dialog is open */
   isOpen?: boolean;
@@ -39,6 +43,10 @@ interface WatermarkConfig {
   customPages?: string;
 }
 
+/**
+ * Placeholder for the watermark dialog.
+ * Renders an empty container with the watermark-dialog class.
+ */
 export function WatermarkDialog(): React.ReactElement {
   return (
     <div className="watermark-dialog">

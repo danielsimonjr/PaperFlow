@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the SideBySideView component: the two documents, the differences and their selection, the page and the zoom.
+ * The SideBySideView function declares no parameters, so it ignores them.
+ */
 export interface SideBySideViewProps {
   /** First document data */
   document1?: DocumentData;
@@ -46,6 +50,10 @@ interface Difference {
   description: string;
 }
 
+/**
+ * Placeholder for the side-by-side comparison view.
+ * Renders an empty container with the side-by-side-view class.
+ */
 export function SideBySideView(): React.ReactElement {
   return (
     <div className="side-by-side-view">

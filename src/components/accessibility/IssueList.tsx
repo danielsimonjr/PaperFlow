@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the accessibility issue list: the issues, the selection, the fix and ignore actions, and two filters.
+ * The IssueList function declares no parameters, so it ignores them.
+ */
 export interface IssueListProps {
   /** List of accessibility issues to display */
   issues?: AccessibilityIssue[];
@@ -47,6 +51,10 @@ interface AccessibilityIssue {
   isIgnored?: boolean;
 }
 
+/**
+ * Placeholder for the accessibility issue list.
+ * Renders an empty container with the issue-list class.
+ */
 export function IssueList(): React.ReactElement {
   return (
     <div className="issue-list">

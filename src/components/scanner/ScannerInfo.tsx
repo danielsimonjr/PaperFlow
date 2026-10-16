@@ -13,6 +13,11 @@ interface ScannerInfoProps {
   compact?: boolean;
 }
 
+/**
+ * Details of a scanner device: name, status, driver, capabilities and maximum scan area.
+ * The compact prop shows a status dot and the name only.
+ * The maximum scan area is shown in inches.
+ */
 export function ScannerInfo({ device, className, compact = false }: ScannerInfoProps) {
   if (compact) {
     return (

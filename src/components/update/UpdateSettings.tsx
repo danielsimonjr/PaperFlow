@@ -11,10 +11,22 @@ import { useUpdateStore } from '@/stores/updateStore';
 import { Button } from '@/components/ui/Button';
 import type { UpdateChannel, UpdateCheckFrequency } from '../../../electron/ipc/types';
 
+/**
+ * Props for the UpdateSettings component: className is added to the root element.
+ */
 export interface UpdateSettingsProps {
   className?: string;
 }
 
+/**
+ * Settings panel for automatic updates, with the version check, channel and check frequency.
+ * Check for Updates shows a result line for 5 seconds: the available version, or an up-to-date note.
+ * The failure line shows only if checkForUpdates throws. The store action catches its errors,
+ * so a failed check also shows the up-to-date note.
+ * Update channels are stable, beta and alpha. Beta and alpha show a warning.
+ * Check frequency is hourly, daily, weekly or never.
+ * Allow Downgrade sits in the Advanced Settings section, which starts collapsed.
+ */
 export function UpdateSettings({ className = '' }: UpdateSettingsProps): React.ReactElement {
   const {
     state,

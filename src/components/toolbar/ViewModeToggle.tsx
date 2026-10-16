@@ -14,6 +14,10 @@ interface ViewModeToggleProps {
   className?: string;
 }
 
+/**
+ * Three buttons that set the document view mode: single page, continuous scroll or spread.
+ * The current view mode button is highlighted and has aria-pressed set to true.
+ */
 export function ViewModeToggle({ className }: ViewModeToggleProps) {
   const viewMode = useDocumentStore((state) => state.viewMode);
   const setViewMode = useDocumentStore((state) => state.setViewMode);

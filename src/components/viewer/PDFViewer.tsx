@@ -4,6 +4,14 @@ import { SinglePageView } from './SinglePageView';
 import { ContinuousView } from './ContinuousView';
 import { SpreadView } from './SpreadView';
 
+/**
+ * Top-level viewer that shows the open document in the current view mode.
+ * It shows a loading message or an error, and an open-file prompt when no document is open.
+ * Left and right arrows, Page Up and Page Down turn pages, by two in spread view.
+ * Home and End go to the first and last page.
+ * With Ctrl or Cmd held, plus, minus or the mouse wheel changes the zoom.
+ * Key shortcuts are ignored while typing in an input or textarea.
+ */
 export function PDFViewer() {
   const fileName = useDocumentStore((state) => state.fileName);
   const isLoading = useDocumentStore((state) => state.isLoading);

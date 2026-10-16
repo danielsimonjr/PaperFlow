@@ -12,10 +12,21 @@ import { useDocumentStore } from '@/stores/documentStore';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
 
+/**
+ * Props for the InstallPrompt component: className is applied to the dialog content.
+ */
 export interface InstallPromptProps {
   className?: string;
 }
 
+/**
+ * Dialog that offers to restart and install a downloaded update.
+ * It shows only when the update is downloaded and the progress dialog is visible.
+ * Restart Now is disabled while the open document has unsaved changes.
+ * Install Later calls installLater and then hides the dialog.
+ * Restart Now calls installAndRestart.
+ * What's New shows the first 150 characters of the release notes.
+ */
 export function InstallPrompt({ className = '' }: InstallPromptProps): React.ReactElement | null {
   const { state, installAndRestart, installLater, hideProgressDialog, isProgressDialogVisible } =
     useUpdateStore();

@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the ComparisonReport component: the document names, the summary, the differences, and the click and export callbacks.
+ * The ComparisonReport function declares no parameters, so it ignores them.
+ */
 export interface ComparisonReportProps {
   /** First document name */
   document1Name?: string;
@@ -52,6 +56,10 @@ interface DifferenceDetail {
   document2Content?: string;
 }
 
+/**
+ * Placeholder for the comparison report.
+ * Renders an empty container with the comparison-report class.
+ */
 export function ComparisonReport(): React.ReactElement {
   return (
     <div className="comparison-report">

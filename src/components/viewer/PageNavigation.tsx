@@ -7,6 +7,12 @@ interface PageNavigationProps {
   className?: string;
 }
 
+/**
+ * Previous and next buttons, with a page number that can be typed in to jump to a page.
+ * The buttons move two pages at a time in spread view.
+ * Enter or leaving the field jumps to the typed page when it is in range. Escape cancels.
+ * Previous is disabled on the first page, and next on the last page.
+ */
 export function PageNavigation({ className }: PageNavigationProps) {
   const [inputValue, setInputValue] = useState('');
   const [isEditing, setIsEditing] = useState(false);

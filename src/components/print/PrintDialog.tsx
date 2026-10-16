@@ -16,6 +16,12 @@ interface PrintDialogProps {
   onClose: () => void;
 }
 
+/**
+ * Dialog for printing the open document, with page range, scale, orientation and copies.
+ * Print runs executePrint, then closes the dialog.
+ * An error is logged to the console, and the dialog stays open.
+ * Annotations and form field values are included unless their checkboxes are cleared.
+ */
 export function PrintDialog({ isOpen, onClose }: PrintDialogProps) {
   const [pages, setPages] = useState<number[]>([]);
   const [scaleType, setScaleType] = useState<ScaleType>('fit');

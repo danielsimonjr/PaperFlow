@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the RedactionToolbar component: tool choice, apply action and active tool.
+ * The component does not read these props.
+ */
 export interface RedactionToolbarProps {
   /** Callback when redaction tool is selected */
   onToolSelect?: (tool: 'area' | 'text' | 'pattern') => void;
@@ -16,6 +20,10 @@ export interface RedactionToolbarProps {
   activeTool?: 'area' | 'text' | 'pattern' | null;
 }
 
+/**
+ * Renders an empty container for the redaction toolbar.
+ * It takes no props and offers no redaction tools.
+ */
 export function RedactionToolbar(): React.ReactElement {
   return (
     <div className="redaction-toolbar">

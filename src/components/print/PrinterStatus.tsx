@@ -15,6 +15,12 @@ interface PrinterStatusProps {
   compact?: boolean;
 }
 
+/**
+ * Status card for a printer: name, state, capabilities and ink levels.
+ * The printer prop is used when given, otherwise the selected printer is shown.
+ * The compact prop shows a status dot and the name only.
+ * Ink levels are fixed sample values, not readings from the printer.
+ */
 export function PrinterStatus({
   printer: propPrinter,
   className,

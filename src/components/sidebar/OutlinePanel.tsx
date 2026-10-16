@@ -84,6 +84,12 @@ function OutlineItem({ item, level, onNavigate }: OutlineItemProps) {
   );
 }
 
+/**
+ * Bookmark tree for the open document, with expandable entries that jump to pages.
+ * Clicking an entry sets the current page. Entries with children start expanded.
+ * A spinner shows while bookmarks load.
+ * Messages show when no document is open, when there are no bookmarks, or when loading fails.
+ */
 export function OutlinePanel({ className }: OutlinePanelProps) {
   const [outline, setOutline] = useState<PDFOutlineItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);

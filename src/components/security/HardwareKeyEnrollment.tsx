@@ -22,6 +22,12 @@ interface HardwareKeyEnrollmentProps {
 
 type EnrollmentStep = 'intro' | 'naming' | 'insert' | 'touch' | 'success' | 'error';
 
+/**
+ * Multi-step flow that enrolls a hardware security key.
+ * The steps run in order: intro, naming, insert, touch, then success or error.
+ * Register Key needs a non-empty name. A registered key is added to the security store.
+ * Done calls onComplete. Cancel calls onCancel on the intro and error steps.
+ */
 export function HardwareKeyEnrollment({
   userId,
   userName,

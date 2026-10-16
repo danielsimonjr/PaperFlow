@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the accessibility check panel: the check run, its progress, the results and the fix callbacks.
+ * The AccessibilityPanel function declares no parameters, so it ignores them.
+ */
 export interface AccessibilityPanelProps {
   /** Callback when accessibility check is started */
   onRunCheck?: () => void;
@@ -48,6 +52,10 @@ interface AccessibilityIssue {
   canAutoFix: boolean;
 }
 
+/**
+ * Placeholder for the accessibility checker panel.
+ * Renders an empty container with the accessibility-panel class.
+ */
 export function AccessibilityPanel(): React.ReactElement {
   return (
     <div className="accessibility-panel">

@@ -7,6 +7,12 @@ interface SkeletonProps {
   rounded?: boolean;
 }
 
+/**
+ * Animated placeholder block that shows while content loads.
+ * width and height set the size; a number means pixels.
+ * rounded gives fully rounded corners.
+ * The block has role status and the label Loading.
+ */
 export function Skeleton({ className, width, height, rounded = false }: SkeletonProps) {
   return (
     <div
@@ -22,6 +28,11 @@ export function Skeleton({ className, width, height, rounded = false }: Skeleton
   );
 }
 
+/**
+ * Stack of text-line placeholders, with the last line shorter.
+ * lines sets the number of rows, default 3.
+ * The container has role status and the label Loading text.
+ */
 export function SkeletonText({ lines = 3, className }: { lines?: number; className?: string }) {
   return (
     <div className={cn('space-y-2', className)} role="status" aria-label="Loading text">

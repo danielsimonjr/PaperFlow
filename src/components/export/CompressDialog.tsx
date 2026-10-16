@@ -11,6 +11,12 @@ interface CompressDialogProps {
   onClose: () => void;
 }
 
+/**
+ * Dialog that compresses the open PDF and saves the result as a file.
+ * It offers a quality slider and a downsampling checkbox, which compressPdf ignores,
+ * and a metadata removal checkbox.
+ * Download adds _compressed before the .pdf extension of the file name.
+ */
 export function CompressDialog({ isOpen, onClose }: CompressDialogProps) {
   const [imageQuality, setImageQuality] = useState(0.7);
   const [removeMetadata, setRemoveMetadata] = useState(true);

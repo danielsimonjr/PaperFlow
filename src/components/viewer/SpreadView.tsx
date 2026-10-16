@@ -11,6 +11,12 @@ interface SpreadViewProps {
   onWheel?: (e: React.WheelEvent) => void;
 }
 
+/**
+ * Two pages side by side, with a placeholder where a page is missing.
+ * With coverMode set (the default), page 1 is alone on the right.
+ * Without coverMode, page 1 is on the left and page 2 on the right.
+ * The view scrolls to the top when the current page changes.
+ */
 export function SpreadView({
   renderer,
   currentPage,

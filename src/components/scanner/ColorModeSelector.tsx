@@ -67,6 +67,11 @@ const COLOR_MODE_OPTIONS: ColorModeOption[] = [
   },
 ];
 
+/**
+ * Selector for the scan color mode: Color, Grayscale or Black & White.
+ * A mode that is not in availableModes is disabled. Without availableModes, all modes are enabled.
+ * A tip under the choices describes the selected mode.
+ */
 export function ColorModeSelector({
   value,
   onChange,

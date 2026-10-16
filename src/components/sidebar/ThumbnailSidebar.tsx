@@ -39,6 +39,13 @@ interface ThumbnailSidebarProps {
   className?: string;
 }
 
+/**
+ * Thumbnail list for the open document, with selection, drag and drop, and page operations.
+ * Move, delete, duplicate, rotate and insert change the document and add an undo entry.
+ * Merge replaces the open document with merged_ plus the file name, and adds no undo entry.
+ * Extract downloads extracted_pages.pdf.
+ * The file holds the selected pages when the clicked page is selected, else only that page.
+ */
 export function ThumbnailSidebar({ className }: ThumbnailSidebarProps) {
   const [thumbnailSize, setThumbnailSize] = useState<ThumbnailSize>('medium');
   const [moveDialogOpen, setMoveDialogOpen] = useState(false);

@@ -10,10 +10,20 @@ import { useUpdateStore, formatDownloadProgress } from '@/stores/updateStore';
 import { Button } from '@/components/ui/Button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/Dialog';
 
+/**
+ * Props for the UpdateProgress component: className is applied to the dialog content.
+ */
 export interface UpdateProgressProps {
   className?: string;
 }
 
+/**
+ * Dialog that shows download progress with percent, speed and size.
+ * It renders only when isProgressDialogVisible is set and the status is downloading, downloaded or error.
+ * Cancel stops the download. Closing the dialog during a download also cancels it.
+ * Install Later and Restart Now appear once the download finishes.
+ * Close appears after an error.
+ */
 export function UpdateProgress({ className = '' }: UpdateProgressProps): React.ReactElement | null {
   const {
     state,

@@ -6,6 +6,11 @@ import { cn } from '@utils/cn';
 
 type SidebarTab = 'thumbnails' | 'outline' | 'annotations';
 
+/**
+ * Collapsible side panel with page thumbnails, an outline and an annotations tab.
+ * The tab buttons choose the panel. The annotations tab shows a fixed message.
+ * When collapsed, the panel shows only the toggle button.
+ */
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState<SidebarTab>('thumbnails');

@@ -11,6 +11,10 @@ interface DesignerToolbarProps {
   onClose?: () => void;
 }
 
+/**
+ * Toolbar for the form designer, with mode, grid, edit, save and close controls.
+ * Grid and edit controls appear only in edit mode. Clear All asks for confirmation first.
+ */
 export function DesignerToolbar({ onSave, onClose }: DesignerToolbarProps) {
   const {
     isPreviewMode,

@@ -14,6 +14,11 @@ interface RadioButtonProps {
   onValueChange?: () => void;
 }
 
+/**
+ * Radio button for one option of a PDF form field, placed at the field's position.
+ * Click, Space or Enter selects this option. Read-only fields cannot be changed.
+ * Tab calls onTab, and the first validation error is shown below the button.
+ */
 export function RadioButton({
   field,
   optionValue,

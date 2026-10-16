@@ -10,6 +10,11 @@ import { X, WifiOff, CheckCircle, AlertCircle, Info } from 'lucide-react';
 import { useOfflineStore } from '@/stores/offlineStore';
 import { cn } from '@/utils/cn';
 
+/**
+ * Props for the OfflineBanner component.
+ * position sets the rounded corners, for a banner at the top or bottom.
+ * variant picks the full banner or the compact one-line banner.
+ */
 export interface OfflineBannerProps {
   className?: string;
   position?: 'top' | 'bottom';
@@ -36,6 +41,11 @@ const LIMITED_FEATURES = [
   'New document download',
 ];
 
+/**
+ * Dismissible banner that shows when the app is offline.
+ * The full variant has a More info toggle that lists available and limited features.
+ * The compact variant shows only a one-line message, and the banner hides when the app is back online.
+ */
 export function OfflineBanner({
   className,
   position = 'top',

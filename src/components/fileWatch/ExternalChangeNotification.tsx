@@ -16,6 +16,11 @@ interface ExternalChangeNotificationProps {
   className?: string;
 }
 
+/**
+ * Notice for one external change to a watched file.
+ * It shows the file name and the time since the change, as a toast or a banner.
+ * Reload, Ignore and Dismiss mark the change as dismissed. Deleted files offer no reload.
+ */
 export function ExternalChangeNotification({
   change,
   onReload,

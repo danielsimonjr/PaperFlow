@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the BatchPanel component: the queued files, the add, start and cancel callbacks, and the progress state.
+ * The BatchPanel function declares no parameters, so it ignores them.
+ */
 export interface BatchPanelProps {
   /** List of files in the batch queue */
   files?: BatchFile[];
@@ -33,6 +37,10 @@ interface BatchFile {
   error?: string;
 }
 
+/**
+ * Placeholder for the batch processing panel.
+ * Renders an empty container with the batch-panel class.
+ */
 export function BatchPanel(): React.ReactElement {
   return (
     <div className="batch-panel">

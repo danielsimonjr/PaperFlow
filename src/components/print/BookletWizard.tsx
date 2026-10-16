@@ -34,6 +34,11 @@ export interface BookletSettings {
   duplex: boolean;
 }
 
+/**
+ * Steps through binding, layout, options and preview to configure a booklet print.
+ *
+ * Print Booklet on the last step calls `onComplete` with the settings. Cancel calls `onCancel`.
+ */
 export function BookletWizard({ onComplete, onCancel, className }: BookletWizardProps) {
   const { pageCount } = useDocumentStore();
   usePrintStore(); // Use print store for potential future settings

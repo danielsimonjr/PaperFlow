@@ -6,6 +6,12 @@ interface ZoomControlsProps {
   className?: string;
 }
 
+/**
+ * Zoom controls: zoom out, the zoom level, zoom in, fit to width and fit to page.
+ * The zoom level button resets the zoom to 100 percent.
+ * Zoom out is disabled at 10 percent or less, and zoom in at 400 percent or more.
+ * Fit to width and fit to page use fixed values, 100 and 75 percent, not the page size.
+ */
 export function ZoomControls({ className }: ZoomControlsProps) {
   const zoom = useDocumentStore((state) => state.zoom);
   const zoomIn = useDocumentStore((state) => state.zoomIn);

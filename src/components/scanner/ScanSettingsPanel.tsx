@@ -13,6 +13,11 @@ interface ScanSettingsPanelProps {
   className?: string;
 }
 
+/**
+ * Panel of scan settings: profile, resolution, color, paper size, source, duplex and adjustments.
+ * Resolution and color mode options are disabled when the selected device does not support them.
+ * Scan source and duplex options appear only when the device has them.
+ */
 export function ScanSettingsPanel({ className }: ScanSettingsPanelProps) {
   const { settings, updateSettings, selectedDevice, profiles, applyProfile } =
     useScannerStore();

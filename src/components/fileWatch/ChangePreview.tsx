@@ -40,6 +40,12 @@ const severityColors = {
   major: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400',
 };
 
+/**
+ * Shows the changes found in a document before it is reloaded.
+ * It lists each change with its severity and pages, and counts them by severity.
+ * It recommends a full reload (requiresFullReload)
+ * for a major change, added or removed pages, or over half the pages affected.
+ */
 export function ChangePreview({ changeSummary, className = '' }: ChangePreviewProps) {
   if (!changeSummary.hasChanges) {
     return (

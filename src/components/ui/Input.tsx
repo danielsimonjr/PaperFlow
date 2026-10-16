@@ -6,10 +6,18 @@
 import { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
 
+/**
+ * Props for the Input component: the standard input attributes, plus an error flag.
+ * error makes the border and focus ring red.
+ */
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
 }
 
+/**
+ * Text input that forwards its ref to a native input element.
+ * The type defaults to text. The error flag turns the border and focus ring red.
+ */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type = 'text', error, ...props }, ref) => {
     return (

@@ -9,6 +9,11 @@ interface LoadingIndicatorProps {
   className?: string;
 }
 
+/**
+ * Loading indicator with a spinner, a message and an optional cancel button.
+ * With showProgress, a bar shows progress.
+ * With showProgress set and progress above zero, a percentage circle replaces the spinner.
+ */
 export function LoadingIndicator({
   message = 'Loading...',
   progress = 0,
@@ -91,6 +96,10 @@ export function LoadingIndicator({
 }
 
 // Full-screen loading overlay variant
+/**
+ * Full-screen loading overlay with a translucent, blurred backdrop.
+ * It passes its message, progress, showProgress and onCancel props to LoadingIndicator.
+ */
 export function LoadingOverlay({
   message = 'Loading...',
   progress = 0,

@@ -34,6 +34,11 @@ const TOOL_TEST_IDS: Partial<Record<Tool, string>> = {
   shape: 'shape-tool',
 };
 
+/**
+ * Main editing toolbar, with tool buttons, export and import, and view, page and zoom controls.
+ * A click on an annotation tool toggles it, and a click on another tool sets the editor tool.
+ * A row of shape types appears while the editor tool is shape, even after an annotation tool is chosen.
+ */
 export function Toolbar() {
   const [showExportImport, setShowExportImport] = useState(false);
 

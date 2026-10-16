@@ -3,6 +3,10 @@ import { useAnnotationStore } from '@stores/annotationStore';
 import type { AnnotationRect, Annotation } from '@/types';
 
 // Highlight color presets (same as SelectionPopup)
+/**
+ * Highlight color presets, each with a display name and a hex value.
+ * The array type is a read-only tuple, since the declaration uses as const.
+ */
 export const HIGHLIGHT_TOOL_COLORS = [
   { name: 'Yellow', value: '#FFEB3B' },
   { name: 'Green', value: '#4CAF50' },
@@ -11,6 +15,10 @@ export const HIGHLIGHT_TOOL_COLORS = [
   { name: 'Orange', value: '#FF9800' },
 ] as const;
 
+/**
+ * Props for the HighlightTool component.
+ * They give the page index, the active state and the selection, and two callbacks.
+ */
 export interface HighlightToolProps {
   /** Page index (0-based) */
   pageIndex: number;

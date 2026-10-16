@@ -8,6 +8,11 @@ import { Checkbox } from '@/components/ui/Checkbox';
 import { Select } from '@/components/ui/Select';
 import { cn } from '@/utils/cn';
 
+/**
+ * Shows the image preprocessing options for OCR as checkboxes and a select.
+ *
+ * Each change updates the preprocessing options in the OCR store.
+ */
 export function PreprocessingOptions() {
   const { preprocessingOptions, setPreprocessingOptions } = useOCRStore();
 

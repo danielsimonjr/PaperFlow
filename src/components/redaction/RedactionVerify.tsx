@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the RedactionVerify component: redaction counts, a verify action and the result.
+ * The component does not read these props.
+ */
 export interface RedactionVerifyProps {
   /** Number of pending redactions */
   pendingCount?: number;
@@ -27,6 +31,10 @@ interface VerificationResult {
   timestamp: Date;
 }
 
+/**
+ * Renders an empty container for the redaction verification panel.
+ * It takes no props and does not verify any redactions.
+ */
 export function RedactionVerify(): React.ReactElement {
   return (
     <div className="redaction-verify">

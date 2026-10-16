@@ -31,6 +31,12 @@ interface DocumentCompareProps {
 
 type CompareLayout = 'side-by-side' | 'vertical';
 
+/**
+ * Shows the diff statistics and change list for the current and external versions of a document.
+ * It offers a layout toggle, zoom, synchronized scrolling and change navigation.
+ * A pane shows a page label when its document is set,
+ * and no code reads the bytes or highlights differences.
+ */
 export function DocumentCompare({
   currentDocument,
   externalDocument,

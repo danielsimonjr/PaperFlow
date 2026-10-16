@@ -45,6 +45,10 @@ interface MinimalLayoutProps {
   children: ReactNode;
 }
 
+/**
+ * Layout for simple pages, with the header and one scrollable content area.
+ * MinimalLayout has no sidebar or toolbar.
+ */
 export function MinimalLayout({ children }: MinimalLayoutProps) {
   return (
     <div className="grid h-screen grid-rows-[auto_1fr] bg-gray-100 dark:bg-gray-900">

@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the OverlayView component: the two documents, the overlay opacity, colors, page, zoom and document order.
+ * The OverlayView function declares no parameters, so it ignores them.
+ */
 export interface OverlayViewProps {
   /** First document data */
   document1?: DocumentData;
@@ -39,6 +43,10 @@ interface DocumentData {
   pages: string[];
 }
 
+/**
+ * Placeholder for the overlay comparison view.
+ * Renders an empty container with the overlay-view class.
+ */
 export function OverlayView(): React.ReactElement {
   return (
     <div className="overlay-view">

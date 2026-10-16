@@ -12,6 +12,11 @@ interface TextFieldProps {
   onTab?: (shiftKey: boolean) => void;
 }
 
+/**
+ * Text input for a PDF text field, placed at the field's position.
+ * The value is saved to the form store on blur, on Tab, and on Enter in single-line fields.
+ * Input stops at the field's max length and shows the remaining count near the limit.
+ */
 export function TextField({
   field,
   scale,

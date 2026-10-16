@@ -24,6 +24,13 @@ interface AutoReloadSettingsProps {
   className?: string;
 }
 
+/**
+ * Settings panel for file watching: enable switch, auto-reload, notifications and default action.
+ * The merge strategy buttons set only defaultAction: pending for Manual, reload for all others.
+ * The other settings are dimmed and cannot be clicked while file watching is off.
+ * Check interval is in seconds, from 1 to 60, and stored in milliseconds. No other code reads it.
+ * An entry that is empty, zero or not a number becomes 5.
+ */
 export function AutoReloadSettings({ className = '' }: AutoReloadSettingsProps) {
   const { settings, updateSettings, setEnabled } = useFileWatchStore();
 

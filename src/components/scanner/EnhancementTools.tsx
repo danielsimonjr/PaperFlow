@@ -9,6 +9,10 @@ import { useState, useCallback } from 'react';
 import { Button } from '@components/ui/Button';
 import { cn } from '@utils/cn';
 
+/**
+ * Enhancement settings for a scan: four adjustment values, an auto enhance flag and a filter.
+ * Brightness, contrast and saturation sliders run from -100 to 100, and sharpness from 0 to 100.
+ */
 export interface EnhancementSettings {
   brightness: number;
   contrast: number;
@@ -43,6 +47,10 @@ const FILTERS = [
   { value: 'blackwhite' as const, label: 'High Contrast', description: 'B&W threshold' },
 ];
 
+/**
+ * Adjustment and filter controls for scan enhancement, on an Adjust tab and a Filters tab.
+ * Reset restores the default settings and calls onReset. Apply appears only when onApply is given.
+ */
 export function EnhancementTools({
   settings,
   onChange,

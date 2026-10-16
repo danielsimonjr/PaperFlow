@@ -102,6 +102,11 @@ interface LockedSettingWrapperProps {
   className?: string;
 }
 
+/**
+ * Wraps a setting control with its label, description and policy lock state.
+ * A locked setting gets an overlay that blocks pointer clicks and a message that names the policy source.
+ * The wrapper does not disable the control, so keyboard input still reaches it.
+ */
 export function LockedSettingWrapper({
   category,
   settingKey,
@@ -168,6 +173,11 @@ interface WithLockCheckProps {
   disabled?: boolean;
 }
 
+/**
+ * Higher-order component that disables a control while its setting is locked by policy.
+ * When the setting is locked, the returned component sets disabled on the control
+ * and shows a lock badge.
+ */
 // eslint-disable-next-line react-refresh/only-export-components -- HOC pattern requires function export
 export function withLockCheck<P extends object>(
   WrappedComponent: React.ComponentType<P & { disabled?: boolean }>

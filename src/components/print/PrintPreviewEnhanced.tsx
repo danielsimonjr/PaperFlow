@@ -32,6 +32,11 @@ interface PrintPreviewEnhancedProps {
   onPageChange?: (page: number) => void;
 }
 
+/**
+ * Print preview that draws a PDF page at the print paper size, with margins and page navigation.
+ * showMargins draws a dashed margin box, and showGrid draws a grid of one-inch squares.
+ * onPageChange runs when Previous or Next changes the previewed page.
+ */
 export function PrintPreviewEnhanced({
   className,
   showMargins = true,

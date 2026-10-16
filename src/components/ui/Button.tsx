@@ -1,11 +1,20 @@
 import { forwardRef, type ButtonHTMLAttributes } from 'react';
 import { cn } from '@utils/cn';
 
+/**
+ * Props for the Button component: the standard button attributes, plus variant and size.
+ * variant sets the colors (default secondary).
+ * size sets the height and padding, with md as the default; icon makes a square button.
+ */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'outline';
   size?: 'sm' | 'md' | 'lg' | 'icon';
 }
 
+/**
+ * Button control that forwards its ref to a native button element.
+ * The defaults are the secondary variant and the md size.
+ */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'secondary', size = 'md', ...props }, ref) => {
     return (

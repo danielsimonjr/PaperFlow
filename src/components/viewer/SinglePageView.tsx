@@ -11,6 +11,11 @@ interface SinglePageViewProps {
   onWheel?: (e: React.WheelEvent) => void;
 }
 
+/**
+ * Shows the current page only, centered in a scrollable area.
+ * The view scrolls back to the top left when the page changes.
+ * With the hand tool, dragging pans the view.
+ */
 export function SinglePageView({
   renderer,
   currentPage,

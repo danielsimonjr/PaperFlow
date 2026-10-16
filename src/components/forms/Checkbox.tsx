@@ -13,6 +13,11 @@ interface CheckboxProps {
   onValueChange?: () => void;
 }
 
+/**
+ * Checkbox widget for a PDF form field, placed at the field's position on the page.
+ * Click, Space or Enter toggles the value. Read-only fields cannot be changed.
+ * Tab calls onTab, and the first validation error is shown below the box.
+ */
 export function Checkbox({
   field,
   scale,

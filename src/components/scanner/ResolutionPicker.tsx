@@ -53,6 +53,10 @@ const RESOLUTION_OPTIONS: ResolutionOption[] = [
   },
 ];
 
+/**
+ * Picker for the scan resolution: 75, 150, 300 or 600 DPI, with speed and quality dots.
+ * A resolution that is not in availableResolutions is disabled. Without that list, all are enabled.
+ */
 export function ResolutionPicker({
   value,
   onChange,

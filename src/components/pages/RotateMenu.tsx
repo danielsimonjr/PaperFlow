@@ -3,8 +3,15 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { RotateCw, RotateCcw, ChevronDown } from 'lucide-react';
 import { cn } from '@utils/cn';
 
+/**
+ * Rotation choices for RotateMenu: 90 degrees clockwise, 90 counter-clockwise, or 180.
+ */
 export type RotationDirection = 'cw90' | 'ccw90' | '180';
 
+/**
+ * Props for the RotateMenu component.
+ * onRotate receives the chosen direction. disabled turns off the trigger button.
+ */
 export interface RotateMenuProps {
   onRotate: (direction: RotationDirection) => void;
   disabled?: boolean;

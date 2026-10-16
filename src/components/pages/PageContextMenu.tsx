@@ -11,6 +11,10 @@ import {
 } from 'lucide-react';
 import { cn } from '@utils/cn';
 
+/**
+ * Props for the PageContextMenu component.
+ * children is the trigger element. The callbacks run the page actions chosen in the menu.
+ */
 export interface PageContextMenuProps {
   children: React.ReactNode;
   pageCount: number;
@@ -36,6 +40,11 @@ const menuItemClass = cn(
 
 const menuSeparatorClass = 'my-1 h-px bg-gray-200 dark:bg-gray-700';
 
+/**
+ * Dropdown menu of page actions: duplicate, rotate, insert, move, extract and delete.
+ * Delete Selected replaces Delete Page when this page is in a multi-page selection.
+ * Delete Page is disabled for a one-page document, Delete Selected when every page is selected.
+ */
 export function PageContextMenu({
   children,
   pageCount,

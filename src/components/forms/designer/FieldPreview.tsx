@@ -12,6 +12,11 @@ interface FieldPreviewProps {
   onValueChange?: (value: string) => void;
 }
 
+/**
+ * Visual preview of one form field, drawn on the design canvas.
+ * Each field type is drawn as a native control, and signatures as a placeholder box.
+ * Controls accept input only in preview mode. A selected field shows its name while editing.
+ */
 export function FieldPreview({ field, isSelected, isPreviewMode, onValueChange }: FieldPreviewProps) {
   const { appearance, defaultValue } = field;
 

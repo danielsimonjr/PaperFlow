@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the ComparisonDialog component: the open state, the close and compare callbacks, and the loaded document.
+ * The ComparisonDialog function declares no parameters, so it ignores them.
+ */
 export interface ComparisonDialogProps {
   /** Whether the dialog is open */
   isOpen?: boolean;
@@ -37,6 +41,10 @@ interface ComparisonConfig {
   sensitivity: 'low' | 'medium' | 'high';
 }
 
+/**
+ * Placeholder for the document comparison dialog.
+ * Renders an empty container with the comparison-dialog class.
+ */
 export function ComparisonDialog(): React.ReactElement {
   return (
     <div className="comparison-dialog">

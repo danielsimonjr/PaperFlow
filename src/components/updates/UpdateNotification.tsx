@@ -38,6 +38,15 @@ interface UpdateNotificationProps {
   className?: string;
 }
 
+/**
+ * Floating card in the bottom-right corner that shows update state from window.electronUpdates.
+ * UpdateNotification renders nothing without window.electronUpdates, or when idle, checking or dismissed.
+ * The preload scripts expose no electronUpdates object, so the card stays hidden in the app.
+ * UpdateNotification has a card for the available, downloading, downloaded and error states.
+ * The downloading card shows only when the state carries progress data.
+ * Download and Restart Now call download() and install() on window.electronUpdates.
+ * Later and the close buttons hide the card until the next available update arrives.
+ */
 export function UpdateNotification({ className }: UpdateNotificationProps) {
   const [updateState, setUpdateState] = useState<UpdateState>({ status: 'idle' });
   const [dismissed, setDismissed] = useState(false);

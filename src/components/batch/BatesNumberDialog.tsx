@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the BatesNumberDialog component: the open state, the close callback, and the apply callback.
+ * The BatesNumberDialog function declares no parameters, so it ignores them.
+ */
 export interface BatesNumberDialogProps {
   /** Whether the dialog is open */
   isOpen?: boolean;
@@ -39,6 +43,10 @@ interface BatesNumberConfig {
   customPages?: string;
 }
 
+/**
+ * Placeholder for the Bates numbering dialog.
+ * Renders an empty container with the bates-number-dialog class.
+ */
 export function BatesNumberDialog(): React.ReactElement {
   return (
     <div className="bates-number-dialog">

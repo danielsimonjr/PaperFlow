@@ -19,6 +19,11 @@ interface FormDesignerProps {
   onClose?: () => void;
 }
 
+/**
+ * Main container of the form designer, shown as a full-screen overlay.
+ * It enters design mode on mount, exits it on unmount, and renders nothing outside design mode.
+ * Ctrl+Shift+F, outside text inputs, calls onClose while in design mode.
+ */
 export function FormDesigner({
   pageIndex = 0,
   pageWidth,

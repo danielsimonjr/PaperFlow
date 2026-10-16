@@ -26,6 +26,13 @@ interface CropToolProps {
 
 type HandlePosition = 'nw' | 'n' | 'ne' | 'e' | 'se' | 's' | 'sw' | 'w' | 'move';
 
+/**
+ * Interactive crop box over an image, with eight resize handles.
+ * Drag the box to move it, or drag a handle to resize it.
+ * aspectRatio applies when resizing, not when moving.
+ * minSize, in pixels of container width, becomes a percent that limits both crop width and height.
+ * onCropChange runs while dragging, and onCropComplete runs when the drag ends.
+ */
 export function CropTool({
   imageUrl,
   initialCrop,

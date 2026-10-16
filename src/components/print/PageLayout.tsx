@@ -39,6 +39,11 @@ interface PageLayoutProps {
   className?: string;
 }
 
+/**
+ * Page layout settings: orientation, paper size, scale, collation and background printing.
+ * The pages-per-sheet buttons are placeholders. Clicking one changes nothing.
+ * Fit to Page and Shrink to Fit store 'fit' or 'shrink' in place of a percentage.
+ */
 export function PageLayout({ className }: PageLayoutProps) {
   const { settings, updateSettings } = usePrintStore();
 

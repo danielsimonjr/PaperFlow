@@ -4,6 +4,12 @@ import { X } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 import { cn } from '@utils/cn';
 
+/**
+ * Props for the MoveToDialog component.
+ * selectedPages holds zero-based page indexes. Two or more of them change the title and text.
+ * The caller chooses which pages move. The dialog only reports the target.
+ * onMove receives the zero-based index of the target.
+ */
 export interface MoveToDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -13,6 +19,11 @@ export interface MoveToDialogProps {
   onMove: (toIndex: number) => void;
 }
 
+/**
+ * Dialog that asks for the target position of the current page or the selected pages.
+ * The position is a 1-based page number, and invalid numbers show an error.
+ * Moving a single page to its own position is rejected.
+ */
 export function MoveToDialog({
   open,
   onOpenChange,

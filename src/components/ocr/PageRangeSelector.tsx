@@ -7,12 +7,22 @@ import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/Input';
 import { useDocumentStore } from '@/stores/documentStore';
 
+/**
+ * Page range choices for OCR: the current page, all pages, or a custom range.
+ */
 export type PageRangeType = 'current' | 'all' | 'custom';
 
 interface PageRangeSelectorProps {
   onRangeChange: (pages: number[]) => void;
 }
 
+/**
+ * Page range picker for OCR, with current page, all pages and custom range options.
+ * A custom range accepts page numbers and ranges separated by commas,
+ * and an invalid range sends no pages.
+ * The all and custom options send 0-based indices,
+ * and the current option sends the 1-based currentPage.
+ */
 export function PageRangeSelector({ onRangeChange }: PageRangeSelectorProps) {
   const pageCount = useDocumentStore((s) => s.pageCount);
   const currentPage = useDocumentStore((s) => s.currentPage);

@@ -18,6 +18,13 @@ interface ContinuousViewProps {
 const ESTIMATED_PAGE_HEIGHT = 800;
 const PAGE_GAP = 16;
 
+/**
+ * Continuous vertical view of the document, rendering only the pages near the viewport.
+ * On each scroll event, onPageChange receives the page at the viewport center when it differs from currentPage.
+ * The view scrolls to currentPage when currentPage or zoom changes, and each time a page reports its size.
+ * It scrolls only after the container has fired a scroll event.
+ * With the hand tool, dragging pans the view.
+ */
 export function ContinuousView({
   renderer,
   pageCount,

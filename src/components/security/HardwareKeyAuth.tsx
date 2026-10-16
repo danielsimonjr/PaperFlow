@@ -20,6 +20,13 @@ interface HardwareKeyAuthProps {
 
 type AuthStep = 'prompt' | 'waiting' | 'success' | 'error' | 'timeout';
 
+/**
+ * Authentication step that asks for a hardware security key, with a countdown and retry.
+ * With exactly one key enrolled, authentication starts on mount.
+ * On success, onSuccess runs after one second.
+ * timeout sets the countdown in milliseconds, not the WebAuthn request timeout.
+ * allowFallback controls whether the first prompt offers Cancel.
+ */
 export function HardwareKeyAuth({
   onSuccess,
   onCancel,

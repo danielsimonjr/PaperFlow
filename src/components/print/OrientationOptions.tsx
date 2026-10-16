@@ -1,3 +1,6 @@
+/**
+ * Page orientation choices: auto, portrait or landscape.
+ */
 export type Orientation = 'auto' | 'portrait' | 'landscape';
 
 interface OrientationOptionsProps {
@@ -5,6 +8,10 @@ interface OrientationOptionsProps {
   onOrientationChange: (orientation: Orientation) => void;
 }
 
+/**
+ * Buttons that set the page orientation: Auto, Portrait or Landscape.
+ * The button for the current orientation is highlighted.
+ */
 export function OrientationOptions({ orientation, onOrientationChange }: OrientationOptionsProps) {
   return (
     <div className="space-y-2">

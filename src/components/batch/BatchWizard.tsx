@@ -11,6 +11,7 @@ import type {
 import { useNativeBatchStore } from '@/stores/nativeBatchStore';
 import { Button } from '@/components/ui/Button';
 
+/** Props of the batch wizard. */
 export interface BatchWizardProps {
   /** Initial operation type */
   initialType?: BatchOperationType;
@@ -52,6 +53,12 @@ interface FileInfo {
   pageCount?: number;
 }
 
+/**
+ * Walks the user through five steps to configure and queue a batch job.
+ *
+ * The steps are files, operation, settings, output and review. On submit, the wizard adds the job to the
+ * native batch store and calls `onComplete` with the new job id.
+ */
 export function BatchWizard({
   initialType,
   onComplete,

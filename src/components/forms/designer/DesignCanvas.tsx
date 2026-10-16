@@ -30,6 +30,12 @@ interface DragState {
   resizeHandle?: ResizeHandle;
 }
 
+/**
+ * Page canvas of the form designer, where fields are placed, moved, resized and edited.
+ * Dropping a field type adds that field, and preview mode turns editing off.
+ * Keyboard shortcuts nudge, duplicate, copy and cut the primary selected field,
+ * and Delete removes every selected field.
+ */
 export function DesignCanvas({ pageIndex, pageWidth, pageHeight, scale }: DesignCanvasProps) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [dragState, setDragState] = useState<DragState | null>(null);

@@ -53,6 +53,11 @@ const GUIDE_STEPS: GuideStep[] = [
   },
 ];
 
+/**
+ * Step-by-step guide for enrolling a hardware security key, with five steps.
+ * Next marks the step complete and moves on. On the last step, Get Started calls onComplete.
+ * Skip Guide calls onComplete at once. The guide does not register a key itself.
+ */
 export function EnrollmentGuide({ onComplete, className }: EnrollmentGuideProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
