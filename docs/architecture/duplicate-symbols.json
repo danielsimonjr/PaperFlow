@@ -1,0 +1,4355 @@
+{
+  "note": "`duplicates` groups the names OWN-exported by >=2 'src' files, by name only, with no classification. `runtime` and `types` hold depgraph's classified lists of the same kind of names (see classificationNote); only TRUE_DUPLICATE entries there are merge targets.",
+  "classificationNote": "This report groups names by OWN definition, not by call graph, then classifies each flagged name (see DupEntryTag): TRUE_DUPLICATE (the actionable merge targets), DISPATCH_VARIANT (>=2 mathTyped(...) registrations of the same public name \u2014 distinct dispatch surfaces, Bucket C delegation candidates, not copy-paste bodies), ALIAS_DELEGATION (a const-alias forward to an imported symbol, not an independent body \u2014 excluded once fewer than 2 real bodies remain), and ALLOWLISTED (matches duplicate-allowlist.json: hot-path is* guards, AssemblyScript mirrors, per-package VERSION strings). NOT detected: same-file typed-dispatch overload polymorphism for different argument shapes within one registration \u2014 a human still triages TRUE_DUPLICATE entries using the defining files + public flags before merging anything.",
+  "summary": {
+    "duplicateCount": 185,
+    "totalSymbols": 2213,
+    "runtimeDuplicates": 69,
+    "typeDuplicates": 98,
+    "runtimeByTag": {
+      "TRUE_DUPLICATE": 69,
+      "DISPATCH_VARIANT": 0,
+      "ALIAS_DELEGATION": 0,
+      "ALLOWLISTED": 0
+    },
+    "typeByTag": {
+      "TRUE_DUPLICATE": 98,
+      "DISPATCH_VARIANT": 0,
+      "ALIAS_DELEGATION": 0,
+      "ALLOWLISTED": 0
+    }
+  },
+  "duplicates": {
+    "APP_NAME": [
+      "electron/menuTemplate.ts",
+      "src/constants/version.ts"
+    ],
+    "AccessibilityReport": [
+      "src/components/accessibility/AccessibilityReport.tsx",
+      "src/lib/accessibility/types.ts"
+    ],
+    "AppPathInfo": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "AutoSaveOptions": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "BackupInfo": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "BackupOptions": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "BatchOperationStatus": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "BatchOperationType": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "BatchProgress": [
+      "src/lib/batch/types.ts",
+      "src/lib/ocr/batchOCR.ts"
+    ],
+    "BindingEdge": [
+      "src/components/print/BindingOptions.tsx",
+      "src/lib/print/imposition.ts"
+    ],
+    "BindingType": [
+      "src/components/print/BindingOptions.tsx",
+      "src/lib/print/bookletLayout.ts"
+    ],
+    "BookletOptions": [
+      "electron/main/print/types.ts",
+      "src/lib/print/imposition.ts"
+    ],
+    "CacheEntryMetadata": [
+      "src/lib/enterprise/configCache.ts",
+      "src/types/offline.ts"
+    ],
+    "ChangeType": [
+      "src/lib/comparison/types.ts",
+      "src/lib/fileWatch/changeDetector.ts"
+    ],
+    "ComparisonReport": [
+      "src/components/comparison/ComparisonReport.tsx",
+      "src/lib/comparison/types.ts"
+    ],
+    "CompressionResult": [
+      "src/lib/batch/operations/batchCompress.ts",
+      "src/lib/export/compressPdf.ts",
+      "src/lib/scanner/imageCompression.ts"
+    ],
+    "ConfigSource": [
+      "src/lib/enterprise/configDiscovery.ts",
+      "src/types/enterpriseConfig.ts"
+    ],
+    "ConnectionStatus": [
+      "src/stores/lanStore.ts",
+      "src/types/offline.ts"
+    ],
+    "DialogType": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "DiscoveryOptions": [
+      "src/lib/enterprise/configDiscovery.ts",
+      "src/lib/lan/serviceDiscovery.ts"
+    ],
+    "DrawingAnnotation": [
+      "src/components/annotations/DrawingAnnotation.tsx",
+      "src/types/annotations.ts"
+    ],
+    "DrawingPath": [
+      "src/types/annotations.ts",
+      "src/types/index.ts"
+    ],
+    "DuplexMode": [
+      "electron/main/print/types.ts",
+      "src/stores/printStore.ts"
+    ],
+    "ElectronAPI": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "EncryptionOptions": [
+      "src/lib/enterprise/configEncryption.ts",
+      "src/lib/security/hardwareEncryption.ts"
+    ],
+    "ExtendedNotificationOptions": [
+      "electron/ipc/types.ts",
+      "electron/notifications.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FeatureId": [
+      "src/lib/license/featureGating.ts",
+      "src/types/license.ts"
+    ],
+    "FileDialogOptions": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FileDialogResult": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FileReadOptions": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FileReadResult": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FileStats": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FileWatcherEvent": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FileWriteResult": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FlattenOptions": [
+      "src/lib/batch/flatten.ts",
+      "src/lib/export/flattenPdf.ts"
+    ],
+    "FolderDialogOptions": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FolderDialogResult": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FolderEntry": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FolderListOptions": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "FontConfig": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "FormField": [
+      "src/types/forms.ts",
+      "src/types/index.ts"
+    ],
+    "HIGHLIGHT_COLORS": [
+      "src/components/annotations/SelectionPopup.tsx",
+      "src/constants/tools.ts"
+    ],
+    "HeaderFooterOptions": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "HeaderFooterSection": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "ImpositionResult": [
+      "electron/main/print/types.ts",
+      "src/lib/print/imposition.ts"
+    ],
+    "KioskConfig": [
+      "src/types/enterpriseConfig.ts",
+      "src/types/kioskConfig.ts"
+    ],
+    "Margins": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "MemoryInfo": [
+      "electron/ipc/types.ts",
+      "src/lib/performance/memoryManager.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "MergeOptions": [
+      "src/lib/enterprise/configMerger.ts",
+      "src/lib/fileWatch/mergeStrategy.ts"
+    ],
+    "MergeProgressCallback": [
+      "src/lib/batch/operations/batchMerge.ts",
+      "src/lib/pages/mergePdf.ts"
+    ],
+    "MergeResult": [
+      "src/lib/batch/operations/batchMerge.ts",
+      "src/lib/enterprise/configMerger.ts",
+      "src/lib/fileWatch/mergeStrategy.ts",
+      "src/lib/offline/conflictResolver.ts"
+    ],
+    "MessageBoxOptions": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "MessageBoxResult": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "MessageDialogOptions": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "MessageDialogResult": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "NOTE_COLORS": [
+      "src/components/annotations/StickyNote.tsx",
+      "src/constants/tools.ts"
+    ],
+    "NUpOptions": [
+      "electron/main/print/types.ts",
+      "src/lib/print/imposition.ts"
+    ],
+    "NotificationAction": [
+      "electron/ipc/types.ts",
+      "electron/notifications.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "NotificationHistory": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "NotificationOptions": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "NotificationPreferences": [
+      "electron/ipc/types.ts",
+      "electron/notifications.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "NotificationType": [
+      "electron/ipc/types.ts",
+      "electron/notifications.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "OCRLanguage": [
+      "src/lib/ocr/types.ts",
+      "src/lib/scanner/types.ts"
+    ],
+    "OpenDialogOptions": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "OpenDialogResult": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "PDFTextItem": [
+      "src/lib/fonts/fontMatcher.ts",
+      "src/types/pdf.ts"
+    ],
+    "PageNumberFormat": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "PagePosition": [
+      "electron/main/print/types.ts",
+      "src/lib/print/imposition.ts"
+    ],
+    "PageRange": [
+      "electron/main/print/types.ts",
+      "src/lib/batch/types.ts",
+      "src/stores/printStore.ts",
+      "src/types/batch.ts"
+    ],
+    "PageRangeType": [
+      "src/components/ocr/PageRangeSelector.tsx",
+      "src/components/print/PageRangeSelector.tsx"
+    ],
+    "PlatformInfo": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts",
+      "src/utils/platform.ts"
+    ],
+    "Point": [
+      "src/lib/scanner/types.ts",
+      "src/stores/formDesignerStore.ts",
+      "src/utils/coordinates.ts"
+    ],
+    "Position": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "PositionPreset": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "PosterOptions": [
+      "electron/main/print/types.ts",
+      "src/lib/print/imposition.ts"
+    ],
+    "PrintAccessibilityOptions": [
+      "electron/main/print/types.ts",
+      "src/lib/print/accessibility.ts"
+    ],
+    "PrintJob": [
+      "electron/main/print/types.ts",
+      "src/stores/printStore.ts"
+    ],
+    "PrintJobStatus": [
+      "electron/main/print/types.ts",
+      "src/stores/printStore.ts"
+    ],
+    "PrintMargins": [
+      "electron/main/print/types.ts",
+      "src/stores/printStore.ts"
+    ],
+    "PrintOptions": [
+      "electron/main/print/types.ts",
+      "electron/print.ts",
+      "src/lib/electron/print.ts",
+      "src/lib/print/executePrint.ts"
+    ],
+    "PrintPreset": [
+      "electron/main/print/types.ts",
+      "src/stores/printStore.ts"
+    ],
+    "PrintPreviewResult": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "PrintRenderOptions": [
+      "src/lib/print/pdfRenderer.ts",
+      "src/lib/print/printRenderer.ts"
+    ],
+    "PrintResult": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "PrinterInfo": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts",
+      "src/stores/printStore.ts"
+    ],
+    "QueueStatistics": [
+      "src/lib/print/printQueue.ts",
+      "src/types/batch.ts"
+    ],
+    "QuietHoursConfig": [
+      "electron/ipc/types.ts",
+      "electron/notifications.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "RecentFile": [
+      "electron/ipc/types.ts",
+      "src/lib/storage/indexeddb.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "RecoveryFileInfo": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "Rect": [
+      "src/lib/comparison/types.ts",
+      "src/lib/redaction/types.ts",
+      "src/stores/formDesignerStore.ts",
+      "src/utils/coordinates.ts"
+    ],
+    "Release": [
+      "server/update/types.ts",
+      "src/lib/update/updateClient.ts"
+    ],
+    "ReleaseFile": [
+      "server/update/types.ts",
+      "src/lib/update/updateClient.ts"
+    ],
+    "SafeStorageAPI": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "SaveDialogOptions": [
+      "electron/dialogs.ts",
+      "electron/ipc/types.ts",
+      "src/lib/electron/dialogs.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "SaveDialogResult": [
+      "electron/dialogs.ts",
+      "electron/ipc/types.ts",
+      "src/lib/electron/dialogs.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "ShortcutDefinition": [
+      "electron/shortcuts.ts",
+      "src/stores/shortcutsStore.ts"
+    ],
+    "SplitProgressCallback": [
+      "src/lib/batch/operations/batchSplit.ts",
+      "src/lib/pages/splitPdf.ts"
+    ],
+    "SplitResult": [
+      "src/lib/batch/operations/batchSplit.ts",
+      "src/lib/pages/splitPdf.ts"
+    ],
+    "StampType": [
+      "src/constants/stamps.ts",
+      "src/stores/annotationStore.ts"
+    ],
+    "TemplateManager": [
+      "src/components/batch/TemplateManager.tsx",
+      "src/lib/batch/templates.ts"
+    ],
+    "TextProperties": [
+      "src/components/editor/TextProperties.tsx",
+      "src/types/text.ts"
+    ],
+    "TrayStatus": [
+      "electron/ipc/types.ts",
+      "electron/tray.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "TrayStatusInfo": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "UpdateChannel": [
+      "electron/ipc/types.ts",
+      "electron/main/updater.ts",
+      "server/update/types.ts",
+      "src/types/electronTypes.ts",
+      "src/types/enterpriseConfig.ts"
+    ],
+    "UpdateCheckFrequency": [
+      "electron/ipc/types.ts",
+      "electron/main/updater.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "UpdateCheckRequest": [
+      "server/update/types.ts",
+      "src/lib/update/updateClient.ts"
+    ],
+    "UpdateCheckResponse": [
+      "server/update/types.ts",
+      "src/lib/update/updateClient.ts"
+    ],
+    "UpdateCheckResult": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "UpdateDownloadProgress": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "UpdateSettings": [
+      "electron/ipc/types.ts",
+      "electron/main/updater.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "UpdateState": [
+      "electron/ipc/types.ts",
+      "electron/main/updater.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "ViewMode": [
+      "src/types/enterpriseConfig.ts",
+      "src/types/pdf.ts"
+    ],
+    "VirtualPrinterOptions": [
+      "electron/main/print/types.ts",
+      "src/lib/print/virtualPrinter.ts"
+    ],
+    "WatermarkOptions": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "WatermarkPosition": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "WatermarkTemplate": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "WatermarkType": [
+      "src/lib/batch/types.ts",
+      "src/types/batch.ts"
+    ],
+    "WindowBounds": [
+      "electron/ipc/types.ts",
+      "src/types/electronTypes.ts"
+    ],
+    "addRecentFile": [
+      "electron/recentFiles.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "bounceDock": [
+      "electron/dock.ts",
+      "src/lib/electron/notifications.ts"
+    ],
+    "canvasToBlob": [
+      "src/lib/export/imageExport.ts",
+      "src/lib/signatures/imageProcessor.ts"
+    ],
+    "clearDockBadge": [
+      "electron/dock.ts",
+      "src/lib/electron/notifications.ts"
+    ],
+    "clearRecentFiles": [
+      "electron/recentFiles.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "clearRecoveryFile": [
+      "electron/autoSave.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "createBackup": [
+      "electron/backup.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "deleteBackup": [
+      "electron/backup.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "disableAutoSave": [
+      "electron/autoSave.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "downloadReport": [
+      "src/lib/batch/errorReporter.ts",
+      "src/lib/comparison/reportGenerator.ts"
+    ],
+    "enableAutoSave": [
+      "electron/autoSave.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "exportToHTML": [
+      "src/lib/comparison/reportGenerator.ts",
+      "src/lib/ocr/exportFormats.ts"
+    ],
+    "exportToJSON": [
+      "src/lib/comparison/reportGenerator.ts",
+      "src/lib/forms/exportImport.ts",
+      "src/lib/ocr/exportFormats.ts"
+    ],
+    "fileExists": [
+      "electron/shell.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "formatDate": [
+      "src/lib/forms/formatting.ts",
+      "src/lib/signatures/dateUtils.ts"
+    ],
+    "formatShortcut": [
+      "src/lib/electron/platform.ts",
+      "src/utils/platform.ts"
+    ],
+    "generateFileId": [
+      "src/lib/batch/jobQueue.ts",
+      "src/lib/storage/fileHandler.ts"
+    ],
+    "generateReport": [
+      "src/lib/comparison/reportGenerator.ts",
+      "src/lib/redaction/redactionEngine.ts"
+    ],
+    "getAltKey": [
+      "src/lib/electron/platform.ts",
+      "src/utils/platform.ts"
+    ],
+    "getCrashDumpsDirectory": [
+      "electron/crashReporter.ts",
+      "electron/windowsCrashReporter.ts"
+    ],
+    "getDefaultPrinter": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "getLocalCrashDumps": [
+      "electron/crashReporter.ts",
+      "electron/windowsCrashReporter.ts"
+    ],
+    "getPlatformInfo": [
+      "src/lib/electron/platform.ts",
+      "src/utils/platform.ts"
+    ],
+    "getPrinters": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "getRecentFiles": [
+      "electron/recentFiles.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "getRecoveryFiles": [
+      "electron/autoSave.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "getWatchedFiles": [
+      "electron/fileWatcher.ts",
+      "electron/main/watcherService.ts"
+    ],
+    "isElectron": [
+      "src/lib/electron/platform.ts",
+      "src/utils/platform.ts"
+    ],
+    "isFeatureAvailable": [
+      "src/lib/electron/platform.ts",
+      "src/lib/license/featureGating.ts",
+      "src/lib/license/licenseValidator.ts"
+    ],
+    "isLinux": [
+      "electron/menuTemplate.ts",
+      "src/lib/electron/platform.ts"
+    ],
+    "isMacOS": [
+      "src/lib/electron/platform.ts",
+      "src/lib/enterprise/macPreferences.ts"
+    ],
+    "isWatching": [
+      "electron/fileWatcher.ts",
+      "electron/main/watcherService.ts"
+    ],
+    "isWindows": [
+      "electron/menuTemplate.ts",
+      "src/lib/electron/platform.ts",
+      "src/lib/enterprise/registryAccess.ts"
+    ],
+    "listBackups": [
+      "electron/backup.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "mergeAnnotations": [
+      "src/lib/annotations/serializer.ts",
+      "src/lib/fileWatch/statePreserver.ts",
+      "src/lib/offline/conflictResolver.ts"
+    ],
+    "mergePdfs": [
+      "src/lib/batch/operations/batchMerge.ts",
+      "src/lib/pages/mergePdf.ts"
+    ],
+    "openPdfFile": [
+      "src/lib/electron/fileSystem.ts",
+      "src/lib/storage/fileHandler.ts"
+    ],
+    "openWithDefaultApp": [
+      "electron/shell.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "parseJSON": [
+      "src/lib/enterprise/configParser.ts",
+      "src/lib/forms/exportImport.ts"
+    ],
+    "parsePageRange": [
+      "src/lib/pages/splitPdf.ts",
+      "src/lib/print/pageRange.ts"
+    ],
+    "printPDFData": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "printPDFFile": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "printSilent": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "printWithDialog": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "removeRecentFile": [
+      "electron/recentFiles.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "renderPageToCanvas": [
+      "src/lib/export/imageExport.ts",
+      "src/lib/ocr/imagePreprocessor.ts"
+    ],
+    "restoreBackup": [
+      "electron/backup.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "savePdfFile": [
+      "src/lib/electron/fileSystem.ts",
+      "src/lib/storage/fileHandler.ts"
+    ],
+    "savePdfFileAs": [
+      "src/lib/electron/fileSystem.ts",
+      "src/lib/storage/fileHandler.ts"
+    ],
+    "savePrintPreview": [
+      "electron/print.ts",
+      "src/lib/electron/print.ts"
+    ],
+    "setDockBadge": [
+      "electron/dock.ts",
+      "src/lib/electron/notifications.ts"
+    ],
+    "showBatchOperationNotification": [
+      "electron/notifications.ts",
+      "src/lib/electron/notifications.ts"
+    ],
+    "showFileOperationNotification": [
+      "electron/notifications.ts",
+      "src/lib/electron/notifications.ts"
+    ],
+    "showFolderPicker": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "showMessageBox": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "showNotification": [
+      "electron/notifications.ts",
+      "src/lib/electron/notifications.ts"
+    ],
+    "showOpenDialog": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "showSaveDialog": [
+      "electron/dialogs.ts",
+      "src/lib/electron/dialogs.ts"
+    ],
+    "unwatchAll": [
+      "electron/fileWatcher.ts",
+      "electron/main/watcherService.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "unwatchFile": [
+      "electron/fileWatcher.ts",
+      "electron/main/watcherService.ts",
+      "src/lib/electron/fileSystem.ts"
+    ],
+    "updateJobStatus": [
+      "src/lib/batch/jobPersistence.ts",
+      "src/lib/batch/jobQueue.ts"
+    ],
+    "useConnectionStatus": [
+      "src/hooks/useConnectionStatus.ts",
+      "src/stores/lanStore.ts"
+    ],
+    "useFeatureEnabled": [
+      "src/stores/enterprisePolicyStore.ts",
+      "src/stores/licenseStore.ts"
+    ],
+    "useHighlightTool": [
+      "src/components/annotations/index.ts",
+      "src/hooks/useHighlightTool.ts"
+    ],
+    "validateWatermarkOptions": [
+      "src/lib/batch/operations/batchWatermark.ts",
+      "src/lib/batch/watermark.ts"
+    ],
+    "verifyChecksum": [
+      "src/lib/license/licenseFormat.ts",
+      "src/lib/license/licenseValidator.ts"
+    ],
+    "watchFile": [
+      "electron/fileWatcher.ts",
+      "electron/main/watcherService.ts",
+      "src/lib/electron/fileSystem.ts"
+    ]
+  },
+  "runtime": [
+    {
+      "name": "exportToJSON",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/comparison/reportGenerator.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/forms/exportImport.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/ocr/exportFormats.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "isFeatureAvailable",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/license/featureGating.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/license/licenseValidator.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "mergeAnnotations",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/annotations/serializer.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/fileWatch/statePreserver.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/offline/conflictResolver.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "unwatchAll",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/fileWatcher.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/watcherService.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "unwatchFile",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/fileWatcher.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/watcherService.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "watchFile",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/fileWatcher.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/watcherService.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "HIGHLIGHT_COLORS",
+      "category": "constant",
+      "definers": [
+        {
+          "file": "src/components/annotations/SelectionPopup.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/constants/tools.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "NOTE_COLORS",
+      "category": "constant",
+      "definers": [
+        {
+          "file": "src/components/annotations/StickyNote.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/constants/tools.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "TemplateManager",
+      "category": "class+function",
+      "definers": [
+        {
+          "file": "src/components/batch/TemplateManager.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/batch/templates.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "addRecentFile",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/recentFiles.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "bounceDock",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/dock.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "canvasToBlob",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/export/imageExport.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/signatures/imageProcessor.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "clearDockBadge",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/dock.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "clearRecentFiles",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/recentFiles.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "clearRecoveryFile",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/autoSave.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "createBackup",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/backup.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "decodeLicenseKey",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/license/licenseFormat.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/license/licenseValidator.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "deleteBackup",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/backup.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "disableAutoSave",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/autoSave.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "downloadReport",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/batch/errorReporter.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/comparison/reportGenerator.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "enableAutoSave",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/autoSave.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "exportToHTML",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/comparison/reportGenerator.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/ocr/exportFormats.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "fileExists",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/shell.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "formatDate",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/forms/formatting.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/signatures/dateUtils.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "formatShortcut",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/utils/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "generateFileId",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/batch/jobQueue.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/storage/fileHandler.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "generateReport",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/comparison/reportGenerator.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/redaction/redactionEngine.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getAltKey",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/utils/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getCrashDumpsDirectory",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/crashReporter.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/windowsCrashReporter.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getDefaultPrinter",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getLocalCrashDumps",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/crashReporter.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/windowsCrashReporter.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getPlatformInfo",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/utils/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getPrinters",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getRecentFiles",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/recentFiles.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getRecoveryFiles",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/autoSave.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "getWatchedFiles",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/fileWatcher.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/watcherService.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "isElectron",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/utils/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "isMacOS",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/enterprise/macPreferences.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "isWatching",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/fileWatcher.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/watcherService.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "isWindows",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/enterprise/registryAccess.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "listBackups",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/backup.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "mergePdfs",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/batch/operations/batchMerge.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/pages/mergePdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "openPdfFile",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/storage/fileHandler.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "openWithDefaultApp",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/shell.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "parseJSON",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/enterprise/configParser.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/forms/exportImport.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "parsePageRange",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/pages/splitPdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/pageRange.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "printPDFData",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "printPDFFile",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "printSilent",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "printWithDialog",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "removeRecentFile",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/recentFiles.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "renderPageToCanvas",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/export/imageExport.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/ocr/imagePreprocessor.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "restoreBackup",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/backup.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "savePdfFile",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/storage/fileHandler.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "savePdfFileAs",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/electron/fileSystem.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/storage/fileHandler.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "savePrintPreview",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "setDockBadge",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/dock.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "showBatchOperationNotification",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "showFileOperationNotification",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "showFolderPicker",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "showMessageBox",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "showNotification",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "showOpenDialog",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "showSaveDialog",
+      "category": "function",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "updateJobStatus",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/batch/jobPersistence.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/batch/jobQueue.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "useConnectionStatus",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/hooks/useConnectionStatus.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/lanStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "useFeatureEnabled",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/stores/enterprisePolicyStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/licenseStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "validateWatermarkOptions",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/batch/operations/batchWatermark.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/batch/watermark.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "verifyChecksum",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/lib/license/licenseFormat.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/license/licenseValidator.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    }
+  ],
+  "types": [
+    {
+      "name": "UpdateChannel",
+      "category": "type",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/updater.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "server/update/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/enterpriseConfig.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "MergeResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/batch/operations/batchMerge.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/enterprise/configMerger.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/fileWatch/mergeStrategy.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/offline/conflictResolver.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/executePrint.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "Rect",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/comparison/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/redaction/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/formDesignerStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/utils/coordinates.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "SaveDialogOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "SaveDialogResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "CompressionResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/batch/operations/batchCompress.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/export/compressPdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/scanner/imageCompression.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ExtendedNotificationOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "MemoryInfo",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/performance/memoryManager.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "NotificationAction",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "NotificationPreferences",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "NotificationType",
+      "category": "type",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PageRange",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/batch/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/printStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PlatformInfo",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/utils/platform.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "Point",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/scanner/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/formDesignerStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/utils/coordinates.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrinterInfo",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/printStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "QuietHoursConfig",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/notifications.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "RecentFile",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/storage/indexeddb.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "TrayStatus",
+      "category": "type",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/tray.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "UpdateCheckFrequency",
+      "category": "type",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/updater.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "UpdateSettings",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/updater.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "UpdateState",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "electron/main/updater.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "AppPathInfo",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "AutoSaveOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "BackupInfo",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "BackupOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "BatchOperationType",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/lib/batch/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/batch.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "BatchProgress",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/batch/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/ocr/batchOCR.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "BindingEdge",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/components/print/BindingOptions.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/imposition.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "BindingType",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/components/print/BindingOptions.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/bookletLayout.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "BookletOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/imposition.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "CacheEntryMetadata",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/enterprise/configCache.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/offline.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ChangeType",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/lib/comparison/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/fileWatch/changeDetector.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ConfigSource",
+      "category": "interface+type",
+      "definers": [
+        {
+          "file": "src/lib/enterprise/configDiscovery.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/enterpriseConfig.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ConnectionStatus",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/stores/lanStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/offline.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "DialogType",
+      "category": "type",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "DiscoveryOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/enterprise/configDiscovery.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/lan/serviceDiscovery.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "DrawingPath",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/types/annotations.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/index.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "DuplexMode",
+      "category": "type",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/printStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ElectronAPI",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "EncryptionOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/enterprise/configEncryption.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/security/hardwareEncryption.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FeatureId",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/lib/license/featureGating.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/license.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FileDialogOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FileDialogResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FileReadOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FileReadResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FileStats",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FileWatcherEvent",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FileWriteResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FlattenOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/batch/flatten.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/export/flattenPdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FolderDialogOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FolderDialogResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FolderEntry",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FolderListOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "FormField",
+      "category": "interface+type",
+      "definers": [
+        {
+          "file": "src/types/forms.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/index.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ImpositionResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/imposition.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "KioskConfig",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/types/enterpriseConfig.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/kioskConfig.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "MergeOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/enterprise/configMerger.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/fileWatch/mergeStrategy.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "MergeProgressCallback",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/lib/batch/operations/batchMerge.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/pages/mergePdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "MessageBoxOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "MessageBoxResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "MessageDialogOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "MessageDialogResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "NUpOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/imposition.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "NotificationHistory",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "NotificationOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "OCRLanguage",
+      "category": "interface+type",
+      "definers": [
+        {
+          "file": "src/lib/ocr/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/scanner/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "OpenDialogOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "OpenDialogResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/dialogs.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PDFTextItem",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/fonts/fontMatcher.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/pdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PagePosition",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/imposition.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PageRangeType",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/components/ocr/PageRangeSelector.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/components/print/PageRangeSelector.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PosterOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/imposition.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintAccessibilityOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/accessibility.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintJob",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/printStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintJobStatus",
+      "category": "type",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/printStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintMargins",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/printStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintPreset",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/printStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintPreviewResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintRenderOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/print/pdfRenderer.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/printRenderer.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/electron/print.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "QueueStatistics",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/print/printQueue.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/batch.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "RecoveryFileInfo",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "Release",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "server/update/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/update/updateClient.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ReleaseFile",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "server/update/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/update/updateClient.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "SafeStorageAPI",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ShortcutDefinition",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/shortcuts.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/shortcutsStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "SplitProgressCallback",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/lib/batch/operations/batchSplit.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/pages/splitPdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "SplitResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "src/lib/batch/operations/batchSplit.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/pages/splitPdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "StampType",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/constants/stamps.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/stores/annotationStore.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "TrayStatusInfo",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "UpdateCheckRequest",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "server/update/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/update/updateClient.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "UpdateCheckResponse",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "server/update/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/update/updateClient.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "UpdateCheckResult",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "UpdateDownloadProgress",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "ViewMode",
+      "category": "type",
+      "definers": [
+        {
+          "file": "src/types/enterpriseConfig.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/pdf.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "VirtualPrinterOptions",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/main/print/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/virtualPrinter.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "WindowBounds",
+      "category": "interface",
+      "definers": [
+        {
+          "file": "electron/ipc/types.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/types/electronTypes.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    }
+  ]
+}

@@ -1,0 +1,5253 @@
+{
+  "totalFiles": 746,
+  "byDisposition": {
+    "reachable": 0,
+    "build-entry": 0,
+    "test-only": 18,
+    "orphan": 528,
+    "test": 184,
+    "tool": 8,
+    "config": 8,
+    "bench": 0,
+    "example": 0
+  },
+  "byArea": {
+    "src": 546,
+    "config": 8,
+    "tools": 8,
+    "tests": 184
+  },
+  "byPackage": {
+    "(root)": 276,
+    "paperflow": 470
+  },
+  "files": [
+    {
+      "file": "cli/config-schema-check.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 408
+    },
+    {
+      "file": "cli/validate-config.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 287
+    },
+    {
+      "file": "electron/attention.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 231
+    },
+    {
+      "file": "electron/autoSave.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 315
+    },
+    {
+      "file": "electron/backup.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 332
+    },
+    {
+      "file": "electron/clipboard.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 352
+    },
+    {
+      "file": "electron/contextMenu.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 432
+    },
+    {
+      "file": "electron/crashReporter.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 334
+    },
+    {
+      "file": "electron/dialogs.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 489
+    },
+    {
+      "file": "electron/dock.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 193
+    },
+    {
+      "file": "electron/fileAssociation.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 224
+    },
+    {
+      "file": "electron/fileWatcher.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 201
+    },
+    {
+      "file": "electron/ipc/channels.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 295
+    },
+    {
+      "file": "electron/ipc/clipboardHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 219
+    },
+    {
+      "file": "electron/ipc/dialogHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 206
+    },
+    {
+      "file": "electron/ipc/fileHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 465
+    },
+    {
+      "file": "electron/ipc/fileWatchIPC.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 244
+    },
+    {
+      "file": "electron/ipc/handlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 154
+    },
+    {
+      "file": "electron/ipc/menuHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 134
+    },
+    {
+      "file": "electron/ipc/notificationHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 238
+    },
+    {
+      "file": "electron/ipc/pathSandbox.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 146
+    },
+    {
+      "file": "electron/ipc/printHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 142
+    },
+    {
+      "file": "electron/ipc/safeStorageHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 61
+    },
+    {
+      "file": "electron/ipc/shellHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 181
+    },
+    {
+      "file": "electron/ipc/storageHandlers.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 120
+    },
+    {
+      "file": "electron/ipc/types.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 648
+    },
+    {
+      "file": "electron/jumpList.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 329
+    },
+    {
+      "file": "electron/linuxLauncher.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 250
+    },
+    {
+      "file": "electron/main/fileLock.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 301
+    },
+    {
+      "file": "electron/main/folderWatcher.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 308
+    },
+    {
+      "file": "electron/main/index.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 351
+    },
+    {
+      "file": "electron/main/lifecycle.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 173
+    },
+    {
+      "file": "electron/main/networkStatus.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 267
+    },
+    {
+      "file": "electron/main/print/printDialog.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 209
+    },
+    {
+      "file": "electron/main/print/printerCapabilities.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 306
+    },
+    {
+      "file": "electron/main/print/printerDiscovery.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 263
+    },
+    {
+      "file": "electron/main/print/printerManager.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 233
+    },
+    {
+      "file": "electron/main/print/printerMonitor.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 276
+    },
+    {
+      "file": "electron/main/print/silentPrint.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 281
+    },
+    {
+      "file": "electron/main/print/spoolerIntegration.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 249
+    },
+    {
+      "file": "electron/main/print/types.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 311
+    },
+    {
+      "file": "electron/main/scanner/scannerBridge.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 277
+    },
+    {
+      "file": "electron/main/security.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 228
+    },
+    {
+      "file": "electron/main/security/webauthnBridge.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 186
+    },
+    {
+      "file": "electron/main/updater.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 429
+    },
+    {
+      "file": "electron/main/updates/differential.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 186
+    },
+    {
+      "file": "electron/main/watcherOptimizations.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 297
+    },
+    {
+      "file": "electron/main/watcherService.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 453
+    },
+    {
+      "file": "electron/main/windowManager.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 282
+    },
+    {
+      "file": "electron/main/windowState.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 150
+    },
+    {
+      "file": "electron/menu.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 233
+    },
+    {
+      "file": "electron/menuTemplate.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 643
+    },
+    {
+      "file": "electron/notifications.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 619
+    },
+    {
+      "file": "electron/powerSave.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 282
+    },
+    {
+      "file": "electron/preload/index.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 462
+    },
+    {
+      "file": "electron/preload/networkPreload.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 98
+    },
+    {
+      "file": "electron/preload/webauthnPreload.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 53
+    },
+    {
+      "file": "electron/print.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 458
+    },
+    {
+      "file": "electron/protocol.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 306
+    },
+    {
+      "file": "electron/recentFiles.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 261
+    },
+    {
+      "file": "electron/secureStorage.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 305
+    },
+    {
+      "file": "electron/shell.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 314
+    },
+    {
+      "file": "electron/shortcuts.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 678
+    },
+    {
+      "file": "electron/startup.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 215
+    },
+    {
+      "file": "electron/taskbarOverlay.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 198
+    },
+    {
+      "file": "electron/taskbarProgress.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 153
+    },
+    {
+      "file": "electron/thumbnailToolbar.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 239
+    },
+    {
+      "file": "electron/touchbar/touchBarManager.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 518
+    },
+    {
+      "file": "electron/tray.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 425
+    },
+    {
+      "file": "electron/trayMenu.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 307
+    },
+    {
+      "file": "electron/windowsCrashReporter.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 355
+    },
+    {
+      "file": "electron/workers/pdfWorker.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 350
+    },
+    {
+      "file": "electron/workers/workerManager.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 364
+    },
+    {
+      "file": "electron/workers/workerPool.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 430
+    },
+    {
+      "file": "playwright.config.ts",
+      "package": "(root)",
+      "area": "config",
+      "disposition": "config",
+      "loc": 41
+    },
+    {
+      "file": "playwright.electron.config.ts",
+      "package": "(root)",
+      "area": "config",
+      "disposition": "config",
+      "loc": 22
+    },
+    {
+      "file": "postcss.config.js",
+      "package": "(root)",
+      "area": "config",
+      "disposition": "config",
+      "loc": 6
+    },
+    {
+      "file": "public/pdf.worker.min.js",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 21
+    },
+    {
+      "file": "scripts/build-electron.js",
+      "package": "(root)",
+      "area": "tools",
+      "disposition": "tool",
+      "loc": 157
+    },
+    {
+      "file": "scripts/dev-electron.js",
+      "package": "(root)",
+      "area": "tools",
+      "disposition": "tool",
+      "loc": 170
+    },
+    {
+      "file": "scripts/generate-sample-pdf.mjs",
+      "package": "(root)",
+      "area": "tools",
+      "disposition": "tool",
+      "loc": 113
+    },
+    {
+      "file": "scripts/notarize.js",
+      "package": "(root)",
+      "area": "tools",
+      "disposition": "tool",
+      "loc": 104
+    },
+    {
+      "file": "scripts/sign.js",
+      "package": "(root)",
+      "area": "tools",
+      "disposition": "tool",
+      "loc": 183
+    },
+    {
+      "file": "server/update/types.ts",
+      "package": "(root)",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 217
+    },
+    {
+      "file": "src/App.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 36
+    },
+    {
+      "file": "src/components/accessibility/AccessibilityPanel.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 57
+    },
+    {
+      "file": "src/components/accessibility/AccessibilityReport.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 76
+    },
+    {
+      "file": "src/components/accessibility/IssueList.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 56
+    },
+    {
+      "file": "src/components/accessibility/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 3
+    },
+    {
+      "file": "src/components/annotations/AnnotationLayer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 185
+    },
+    {
+      "file": "src/components/annotations/AnnotationProperties.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 171
+    },
+    {
+      "file": "src/components/annotations/ArrowTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 232
+    },
+    {
+      "file": "src/components/annotations/CustomStampDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 209
+    },
+    {
+      "file": "src/components/annotations/DrawingAnnotation.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 106
+    },
+    {
+      "file": "src/components/annotations/DrawingCanvas.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 206
+    },
+    {
+      "file": "src/components/annotations/DrawingToolOptions.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 98
+    },
+    {
+      "file": "src/components/annotations/EllipseTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 203
+    },
+    {
+      "file": "src/components/annotations/EraserTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 153
+    },
+    {
+      "file": "src/components/annotations/ExportImportDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 266
+    },
+    {
+      "file": "src/components/annotations/Highlight.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 74
+    },
+    {
+      "file": "src/components/annotations/HighlightTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 119
+    },
+    {
+      "file": "src/components/annotations/LineTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 204
+    },
+    {
+      "file": "src/components/annotations/NoteReplies.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 127
+    },
+    {
+      "file": "src/components/annotations/NoteTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 100
+    },
+    {
+      "file": "src/components/annotations/OpacitySlider.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 49
+    },
+    {
+      "file": "src/components/annotations/RectangleTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 206
+    },
+    {
+      "file": "src/components/annotations/ResizeHandles.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 214
+    },
+    {
+      "file": "src/components/annotations/RotationHandle.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 134
+    },
+    {
+      "file": "src/components/annotations/SelectionPopup.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 243
+    },
+    {
+      "file": "src/components/annotations/ShapeAnnotation.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 225
+    },
+    {
+      "file": "src/components/annotations/ShapeOptions.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 152
+    },
+    {
+      "file": "src/components/annotations/ShapeOverlay.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 300
+    },
+    {
+      "file": "src/components/annotations/StampPicker.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 124
+    },
+    {
+      "file": "src/components/annotations/StampTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 158
+    },
+    {
+      "file": "src/components/annotations/StampTransform.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 166
+    },
+    {
+      "file": "src/components/annotations/StickyNote.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 235
+    },
+    {
+      "file": "src/components/annotations/Strikethrough.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 95
+    },
+    {
+      "file": "src/components/annotations/Underline.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 95
+    },
+    {
+      "file": "src/components/annotations/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 20
+    },
+    {
+      "file": "src/components/batch/BatchDashboard.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 362
+    },
+    {
+      "file": "src/components/batch/BatchPanel.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 42
+    },
+    {
+      "file": "src/components/batch/BatchSummary.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 269
+    },
+    {
+      "file": "src/components/batch/BatchWizard.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 684
+    },
+    {
+      "file": "src/components/batch/BatesNumberDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 48
+    },
+    {
+      "file": "src/components/batch/FlattenDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 42
+    },
+    {
+      "file": "src/components/batch/HeaderFooterDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 58
+    },
+    {
+      "file": "src/components/batch/TemplateManager.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 351
+    },
+    {
+      "file": "src/components/batch/WatermarkDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 48
+    },
+    {
+      "file": "src/components/batch/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 5
+    },
+    {
+      "file": "src/components/comparison/ComparisonDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 46
+    },
+    {
+      "file": "src/components/comparison/ComparisonReport.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 61
+    },
+    {
+      "file": "src/components/comparison/OverlayView.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 48
+    },
+    {
+      "file": "src/components/comparison/SideBySideView.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 55
+    },
+    {
+      "file": "src/components/comparison/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 4
+    },
+    {
+      "file": "src/components/editor/AlignmentPicker.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 73
+    },
+    {
+      "file": "src/components/editor/FontPicker.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 112
+    },
+    {
+      "file": "src/components/editor/FontSizePicker.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 171
+    },
+    {
+      "file": "src/components/editor/InlineTextEditor.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 255
+    },
+    {
+      "file": "src/components/editor/LineSpacing.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 123
+    },
+    {
+      "file": "src/components/editor/RichTextToolbar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 198
+    },
+    {
+      "file": "src/components/editor/TextBoxTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 276
+    },
+    {
+      "file": "src/components/editor/TextBoxTransform.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 335
+    },
+    {
+      "file": "src/components/editor/TextColorPicker.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 182
+    },
+    {
+      "file": "src/components/editor/TextProperties.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 195
+    },
+    {
+      "file": "src/components/editor/TextSelector.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 315
+    },
+    {
+      "file": "src/components/editor/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 12
+    },
+    {
+      "file": "src/components/enterprise/ConfigExportDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 510
+    },
+    {
+      "file": "src/components/enterprise/ConfigSourceBadge.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 116
+    },
+    {
+      "file": "src/components/enterprise/ConfigurationViewer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 433
+    },
+    {
+      "file": "src/components/enterprise/LockedSettingBadge.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 198
+    },
+    {
+      "file": "src/components/enterprise/PolicyStatusIndicator.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 231
+    },
+    {
+      "file": "src/components/export/CompressDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 157
+    },
+    {
+      "file": "src/components/export/ImageExportDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 182
+    },
+    {
+      "file": "src/components/export/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 2
+    },
+    {
+      "file": "src/components/fileWatch/ChangePreview.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 162
+    },
+    {
+      "file": "src/components/fileWatch/DocumentCompare.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 300
+    },
+    {
+      "file": "src/components/fileWatch/ExternalChangeNotification.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 249
+    },
+    {
+      "file": "src/components/fileWatch/FileLockNotification.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 201
+    },
+    {
+      "file": "src/components/fileWatch/WatchStatusIndicator.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 255
+    },
+    {
+      "file": "src/components/forms/Checkbox.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 145
+    },
+    {
+      "file": "src/components/forms/Dropdown.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 285
+    },
+    {
+      "file": "src/components/forms/FieldError.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 96
+    },
+    {
+      "file": "src/components/forms/FormActions.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 302
+    },
+    {
+      "file": "src/components/forms/FormFieldRenderer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 151
+    },
+    {
+      "file": "src/components/forms/FormLayer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 75
+    },
+    {
+      "file": "src/components/forms/RadioButton.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 202
+    },
+    {
+      "file": "src/components/forms/TextField.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 210
+    },
+    {
+      "file": "src/components/forms/designer/DesignCanvas.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 376
+    },
+    {
+      "file": "src/components/forms/designer/DesignerToolbar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 172
+    },
+    {
+      "file": "src/components/forms/designer/FieldPalette.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 123
+    },
+    {
+      "file": "src/components/forms/designer/FieldPreview.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 182
+    },
+    {
+      "file": "src/components/forms/designer/FieldProperties.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 433
+    },
+    {
+      "file": "src/components/forms/designer/FormDesigner.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 123
+    },
+    {
+      "file": "src/components/forms/designer/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 10
+    },
+    {
+      "file": "src/components/forms/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 8
+    },
+    {
+      "file": "src/components/help/KeyboardShortcutsDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 257
+    },
+    {
+      "file": "src/components/home/RecentFiles.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 183
+    },
+    {
+      "file": "src/components/kiosk/KioskHeader.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 53
+    },
+    {
+      "file": "src/components/kiosk/KioskShell.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 236
+    },
+    {
+      "file": "src/components/kiosk/KioskToolbar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 188
+    },
+    {
+      "file": "src/components/layout/AppLayout.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 55
+    },
+    {
+      "file": "src/components/layout/Header.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 139
+    },
+    {
+      "file": "src/components/layout/MobileToolbar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 178
+    },
+    {
+      "file": "src/components/layout/Sidebar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 88
+    },
+    {
+      "file": "src/components/layout/TitleBar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 188
+    },
+    {
+      "file": "src/components/layout/Toolbar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 175
+    },
+    {
+      "file": "src/components/lazy/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 46
+    },
+    {
+      "file": "src/components/ocr/BatchOCRProgress.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 245
+    },
+    {
+      "file": "src/components/ocr/LanguageSelector.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 121
+    },
+    {
+      "file": "src/components/ocr/OCRDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 176
+    },
+    {
+      "file": "src/components/ocr/OCRExportDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 239
+    },
+    {
+      "file": "src/components/ocr/OCRProgress.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 94
+    },
+    {
+      "file": "src/components/ocr/OCRResultsPanel.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 228
+    },
+    {
+      "file": "src/components/ocr/PageRangeSelector.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 168
+    },
+    {
+      "file": "src/components/ocr/PreprocessingOptions.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 104
+    },
+    {
+      "file": "src/components/ocr/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 12
+    },
+    {
+      "file": "src/components/offline/ConflictDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 257
+    },
+    {
+      "file": "src/components/offline/OfflineBanner.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 192
+    },
+    {
+      "file": "src/components/offline/OfflineIndicator.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 153
+    },
+    {
+      "file": "src/components/offline/OfflineSettings.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 312
+    },
+    {
+      "file": "src/components/offline/SyncStatusPanel.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 279
+    },
+    {
+      "file": "src/components/offline/VersionCompare.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 257
+    },
+    {
+      "file": "src/components/pages/DraggableThumbnail.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 122
+    },
+    {
+      "file": "src/components/pages/InsertPageDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 178
+    },
+    {
+      "file": "src/components/pages/MergeDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 354
+    },
+    {
+      "file": "src/components/pages/MoveToDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 163
+    },
+    {
+      "file": "src/components/pages/PageContextMenu.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 229
+    },
+    {
+      "file": "src/components/pages/RotateMenu.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 86
+    },
+    {
+      "file": "src/components/pages/SplitDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 357
+    },
+    {
+      "file": "src/components/pages/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 7
+    },
+    {
+      "file": "src/components/print/AccessibilityOptions.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 278
+    },
+    {
+      "file": "src/components/print/AdvancedPrintSettings.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 259
+    },
+    {
+      "file": "src/components/print/BindingOptions.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 304
+    },
+    {
+      "file": "src/components/print/BookletWizard.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 481
+    },
+    {
+      "file": "src/components/print/MarginEditor.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 268
+    },
+    {
+      "file": "src/components/print/OrientationOptions.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 35
+    },
+    {
+      "file": "src/components/print/PageLayout.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 221
+    },
+    {
+      "file": "src/components/print/PageRangeSelector.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 88
+    },
+    {
+      "file": "src/components/print/PrintDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 169
+    },
+    {
+      "file": "src/components/print/PrintPresetsManager.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 278
+    },
+    {
+      "file": "src/components/print/PrintPreview.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 54
+    },
+    {
+      "file": "src/components/print/PrintPreviewEnhanced.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 303
+    },
+    {
+      "file": "src/components/print/PrintQualitySelector.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 165
+    },
+    {
+      "file": "src/components/print/PrinterStatus.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 159
+    },
+    {
+      "file": "src/components/print/ScaleOptions.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 70
+    },
+    {
+      "file": "src/components/print/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 5
+    },
+    {
+      "file": "src/components/redaction/PatternSearchDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 34
+    },
+    {
+      "file": "src/components/redaction/RedactionToolbar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 25
+    },
+    {
+      "file": "src/components/redaction/RedactionVerify.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 36
+    },
+    {
+      "file": "src/components/redaction/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 3
+    },
+    {
+      "file": "src/components/scanner/BatchScanWorkflow.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 420
+    },
+    {
+      "file": "src/components/scanner/ColorModeSelector.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 150
+    },
+    {
+      "file": "src/components/scanner/CropTool.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 283
+    },
+    {
+      "file": "src/components/scanner/EnhancementTools.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 204
+    },
+    {
+      "file": "src/components/scanner/PageOrganizer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 356
+    },
+    {
+      "file": "src/components/scanner/ProfileManager.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 374
+    },
+    {
+      "file": "src/components/scanner/ResolutionPicker.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 155
+    },
+    {
+      "file": "src/components/scanner/ScanPreview.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 191
+    },
+    {
+      "file": "src/components/scanner/ScanSettingsPanel.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 256
+    },
+    {
+      "file": "src/components/scanner/ScannerInfo.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 210
+    },
+    {
+      "file": "src/components/scanner/ScannerSelectDialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 259
+    },
+    {
+      "file": "src/components/security/EnrollmentGuide.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 286
+    },
+    {
+      "file": "src/components/security/HardwareKeyAuth.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 334
+    },
+    {
+      "file": "src/components/security/HardwareKeyEnrollment.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 325
+    },
+    {
+      "file": "src/components/security/KeyChallenge.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 213
+    },
+    {
+      "file": "src/components/security/KeyManagement.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 258
+    },
+    {
+      "file": "src/components/settings/AutoReloadSettings.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 251
+    },
+    {
+      "file": "src/components/settings/NotificationSettings.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 296
+    },
+    {
+      "file": "src/components/settings/ShortcutSettings.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 385
+    },
+    {
+      "file": "src/components/sidebar/OutlinePanel.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 173
+    },
+    {
+      "file": "src/components/sidebar/ThumbnailSidebar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 602
+    },
+    {
+      "file": "src/components/signatures/DateStamp.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 36
+    },
+    {
+      "file": "src/components/signatures/DrawSignature.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 275
+    },
+    {
+      "file": "src/components/signatures/ImageSignature.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 323
+    },
+    {
+      "file": "src/components/signatures/InitialsModal.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 16
+    },
+    {
+      "file": "src/components/signatures/SignatureList.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 184
+    },
+    {
+      "file": "src/components/signatures/SignatureModal.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 179
+    },
+    {
+      "file": "src/components/signatures/SignaturePlacer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 117
+    },
+    {
+      "file": "src/components/signatures/SignatureResize.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 213
+    },
+    {
+      "file": "src/components/signatures/SignatureRotation.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 129
+    },
+    {
+      "file": "src/components/signatures/TypeSignature.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 131
+    },
+    {
+      "file": "src/components/signatures/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 17
+    },
+    {
+      "file": "src/components/toolbar/AnnotationToolbar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 408
+    },
+    {
+      "file": "src/components/toolbar/SearchBar.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 233
+    },
+    {
+      "file": "src/components/toolbar/ViewModeToggle.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 42
+    },
+    {
+      "file": "src/components/ui/AccessibleComponents.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 96
+    },
+    {
+      "file": "src/components/ui/Button.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 41
+    },
+    {
+      "file": "src/components/ui/Checkbox.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 65
+    },
+    {
+      "file": "src/components/ui/Dialog.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 108
+    },
+    {
+      "file": "src/components/ui/Input.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 34
+    },
+    {
+      "file": "src/components/ui/LoadingIndicator.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 110
+    },
+    {
+      "file": "src/components/ui/Progress.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 42
+    },
+    {
+      "file": "src/components/ui/Select.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 37
+    },
+    {
+      "file": "src/components/ui/Skeleton.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 37
+    },
+    {
+      "file": "src/components/ui/ThemeToggle.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 88
+    },
+    {
+      "file": "src/components/ui/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 16
+    },
+    {
+      "file": "src/components/update/InstallPrompt.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 117
+    },
+    {
+      "file": "src/components/update/ReleaseNotes.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 233
+    },
+    {
+      "file": "src/components/update/UpdateNotification.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 183
+    },
+    {
+      "file": "src/components/update/UpdateProgress.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 158
+    },
+    {
+      "file": "src/components/update/UpdateSettings.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 261
+    },
+    {
+      "file": "src/components/update/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 11
+    },
+    {
+      "file": "src/components/updates/UpdateNotification.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 275
+    },
+    {
+      "file": "src/components/viewer/ContinuousView.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 198
+    },
+    {
+      "file": "src/components/viewer/DropZone.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 114
+    },
+    {
+      "file": "src/components/viewer/PDFViewer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 188
+    },
+    {
+      "file": "src/components/viewer/PageCanvas.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 272
+    },
+    {
+      "file": "src/components/viewer/PageNavigation.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 123
+    },
+    {
+      "file": "src/components/viewer/PageSkeleton.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 66
+    },
+    {
+      "file": "src/components/viewer/SinglePageView.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 102
+    },
+    {
+      "file": "src/components/viewer/SpreadView.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 123
+    },
+    {
+      "file": "src/components/viewer/TextLayer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 202
+    },
+    {
+      "file": "src/components/viewer/VirtualizedViewer.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 126
+    },
+    {
+      "file": "src/components/viewer/ZoomControls.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 97
+    },
+    {
+      "file": "src/constants/config.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 47
+    },
+    {
+      "file": "src/constants/shortcuts.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 63
+    },
+    {
+      "file": "src/constants/stamps.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 72
+    },
+    {
+      "file": "src/constants/tools.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 52
+    },
+    {
+      "file": "src/constants/version.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 130
+    },
+    {
+      "file": "src/contexts/PlatformContext.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 330
+    },
+    {
+      "file": "src/hooks/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 52
+    },
+    {
+      "file": "src/hooks/useAnnotationShortcuts.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 134
+    },
+    {
+      "file": "src/hooks/useAnnounce.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 34
+    },
+    {
+      "file": "src/hooks/useAutoSave.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 164
+    },
+    {
+      "file": "src/hooks/useBeforeUnload.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 60
+    },
+    {
+      "file": "src/hooks/useClipboard.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 130
+    },
+    {
+      "file": "src/hooks/useConnectionStatus.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 260
+    },
+    {
+      "file": "src/hooks/useDropZone.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 215
+    },
+    {
+      "file": "src/hooks/useFileSystem.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 225
+    },
+    {
+      "file": "src/hooks/useFormFields.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 99
+    },
+    {
+      "file": "src/hooks/useFormNavigation.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 195
+    },
+    {
+      "file": "src/hooks/useHighlightTool.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 47
+    },
+    {
+      "file": "src/hooks/useKeyboardNavigation.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 127
+    },
+    {
+      "file": "src/hooks/useOfflineData.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 296
+    },
+    {
+      "file": "src/hooks/useOfflineSync.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 209
+    },
+    {
+      "file": "src/hooks/usePageDrag.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 207
+    },
+    {
+      "file": "src/hooks/usePageSelection.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 132
+    },
+    {
+      "file": "src/hooks/usePlatform.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 211
+    },
+    {
+      "file": "src/hooks/usePointerInput.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 173
+    },
+    {
+      "file": "src/hooks/useSearch.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 199
+    },
+    {
+      "file": "src/hooks/useSignatureInput.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 207
+    },
+    {
+      "file": "src/hooks/useTextSelection.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 216
+    },
+    {
+      "file": "src/hooks/useThumbnails.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 237
+    },
+    {
+      "file": "src/hooks/useTouchGestures.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 150
+    },
+    {
+      "file": "src/hooks/useUnsavedChanges.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 201
+    },
+    {
+      "file": "src/hooks/useVirtualization.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 255
+    },
+    {
+      "file": "src/hooks/useVisiblePages.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 121
+    },
+    {
+      "file": "src/lib/accessibility/checker.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 652
+    },
+    {
+      "file": "src/lib/accessibility/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 48
+    },
+    {
+      "file": "src/lib/accessibility/types.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 248
+    },
+    {
+      "file": "src/lib/annotations/drawingSerializer.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 216
+    },
+    {
+      "file": "src/lib/annotations/serializer.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 212
+    },
+    {
+      "file": "src/lib/batch/batchProcessor.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 314
+    },
+    {
+      "file": "src/lib/batch/batesNumber.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 386
+    },
+    {
+      "file": "src/lib/batch/errorHandler.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 354
+    },
+    {
+      "file": "src/lib/batch/errorReporter.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 397
+    },
+    {
+      "file": "src/lib/batch/flatten.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 362
+    },
+    {
+      "file": "src/lib/batch/headerFooter.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 386
+    },
+    {
+      "file": "src/lib/batch/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 137
+    },
+    {
+      "file": "src/lib/batch/jobPersistence.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 412
+    },
+    {
+      "file": "src/lib/batch/jobQueue.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 468
+    },
+    {
+      "file": "src/lib/batch/operations/batchCompress.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 275
+    },
+    {
+      "file": "src/lib/batch/operations/batchMerge.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 318
+    },
+    {
+      "file": "src/lib/batch/operations/batchOCR.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 251
+    },
+    {
+      "file": "src/lib/batch/operations/batchSplit.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 470
+    },
+    {
+      "file": "src/lib/batch/operations/batchWatermark.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 413
+    },
+    {
+      "file": "src/lib/batch/operations/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 59
+    },
+    {
+      "file": "src/lib/batch/templates.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 438
+    },
+    {
+      "file": "src/lib/batch/types.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 271
+    },
+    {
+      "file": "src/lib/batch/watermark.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 310
+    },
+    {
+      "file": "src/lib/comparison/comparisonEngine.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 324
+    },
+    {
+      "file": "src/lib/comparison/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 60
+    },
+    {
+      "file": "src/lib/comparison/reportGenerator.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 288
+    },
+    {
+      "file": "src/lib/comparison/textDiff.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 379
+    },
+    {
+      "file": "src/lib/comparison/types.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 162
+    },
+    {
+      "file": "src/lib/dev/hotReload.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 230
+    },
+    {
+      "file": "src/lib/electron/dialogs.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 379
+    },
+    {
+      "file": "src/lib/electron/fileSystem.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 603
+    },
+    {
+      "file": "src/lib/electron/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 10
+    },
+    {
+      "file": "src/lib/electron/ipc.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 524
+    },
+    {
+      "file": "src/lib/electron/notifications.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 437
+    },
+    {
+      "file": "src/lib/electron/platform.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "test-only",
+      "loc": 235
+    },
+    {
+      "file": "src/lib/electron/print.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 285
+    },
+    {
+      "file": "src/lib/enterprise/configCache.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 406
+    },
+    {
+      "file": "src/lib/enterprise/configDiscovery.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 396
+    },
+    {
+      "file": "src/lib/enterprise/configEncryption.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 315
+    },
+    {
+      "file": "src/lib/enterprise/configMerger.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 331
+    },
+    {
+      "file": "src/lib/enterprise/configParser.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 619
+    },
+    {
+      "file": "src/lib/enterprise/configPrecedence.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 260
+    },
+    {
+      "file": "src/lib/enterprise/configWatcher.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 425
+    },
+    {
+      "file": "src/lib/enterprise/envExpansion.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 301
+    },
+    {
+      "file": "src/lib/enterprise/gpoReader.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 526
+    },
+    {
+      "file": "src/lib/enterprise/jsonConfigLoader.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 270
+    },
+    {
+      "file": "src/lib/enterprise/macPreferences.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 291
+    },
+    {
+      "file": "src/lib/enterprise/mdmReader.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 688
+    },
+    {
+      "file": "src/lib/enterprise/policyMerger.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 579
+    },
+    {
+      "file": "src/lib/enterprise/registryAccess.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 325
+    },
+    {
+      "file": "src/lib/enterprise/remoteConfigLoader.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 368
+    },
+    {
+      "file": "src/lib/enterprise/secretsManager.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 396
+    },
+    {
+      "file": "src/lib/enterprise/ssrfGuard.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 127
+    },
+    {
+      "file": "src/lib/enterprise/yamlConfigLoader.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 414
+    },
+    {
+      "file": "src/lib/export/compressPdf.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 80
+    },
+    {
+      "file": "src/lib/export/flattenPdf.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 51
+    },
+    {
+      "file": "src/lib/export/imageExport.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 291
+    },
+    {
+      "file": "src/lib/export/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 20
+    },
+    {
+      "file": "src/lib/export/pdfExport.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 166
+    },
+    {
+      "file": "src/lib/fileWatch/changeDetector.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 320
+    },
+    {
+      "file": "src/lib/fileWatch/conflictHandler.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 401
+    },
+    {
+      "file": "src/lib/fileWatch/documentDiff.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 299
+    },
+    {
+      "file": "src/lib/fileWatch/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 110
+    },
+    {
+      "file": "src/lib/fileWatch/mergeStrategy.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 380
+    },
+    {
+      "file": "src/lib/fileWatch/smartReload.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 402
+    },
+    {
+      "file": "src/lib/fileWatch/statePreserver.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 306
+    },
+    {
+      "file": "src/lib/fileWatch/watchQueue.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 436
+    },
+    {
+      "file": "src/lib/fonts/fontFallback.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 272
+    },
+    {
+      "file": "src/lib/fonts/fontMatcher.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 221
+    },
+    {
+      "file": "src/lib/fonts/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 12
+    },
+    {
+      "file": "src/lib/forms/calculations.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 315
+    },
+    {
+      "file": "src/lib/forms/conditionalLogic.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 395
+    },
+    {
+      "file": "src/lib/forms/exportImport.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 111
+    },
+    {
+      "file": "src/lib/forms/fdfExport.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 238
+    },
+    {
+      "file": "src/lib/forms/formActions.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 492
+    },
+    {
+      "file": "src/lib/forms/formParser.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 462
+    },
+    {
+      "file": "src/lib/forms/formSubmit.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 440
+    },
+    {
+      "file": "src/lib/forms/formatting.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 365
+    },
+    {
+      "file": "src/lib/forms/importData.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 137
+    },
+    {
+      "file": "src/lib/forms/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 172
+    },
+    {
+      "file": "src/lib/forms/validation.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 184
+    },
+    {
+      "file": "src/lib/forms/xfdfExport.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 169
+    },
+    {
+      "file": "src/lib/kiosk/kioskMode.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 479
+    },
+    {
+      "file": "src/lib/lan/serviceDiscovery.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 331
+    },
+    {
+      "file": "src/lib/license/expiryHandler.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 315
+    },
+    {
+      "file": "src/lib/license/featureGating.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 384
+    },
+    {
+      "file": "src/lib/license/hardwareFingerprint.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 284
+    },
+    {
+      "file": "src/lib/license/licenseBinding.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 376
+    },
+    {
+      "file": "src/lib/license/licenseFormat.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 349
+    },
+    {
+      "file": "src/lib/license/licenseStorage.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 506
+    },
+    {
+      "file": "src/lib/license/licenseValidator.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 319
+    },
+    {
+      "file": "src/lib/license/signatureVerifier.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 32
+    },
+    {
+      "file": "src/lib/monitoring/analytics.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 275
+    },
+    {
+      "file": "src/lib/monitoring/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 42
+    },
+    {
+      "file": "src/lib/monitoring/releaseMetrics.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 375
+    },
+    {
+      "file": "src/lib/monitoring/sentry.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 251
+    },
+    {
+      "file": "src/lib/ocr/batchOCR.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 343
+    },
+    {
+      "file": "src/lib/ocr/exportFormats.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 373
+    },
+    {
+      "file": "src/lib/ocr/imagePreprocessor.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 315
+    },
+    {
+      "file": "src/lib/ocr/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 87
+    },
+    {
+      "file": "src/lib/ocr/languageLoader.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 252
+    },
+    {
+      "file": "src/lib/ocr/layoutAnalyzer.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 655
+    },
+    {
+      "file": "src/lib/ocr/ocrEngine.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 465
+    },
+    {
+      "file": "src/lib/ocr/textLayerEmbed.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 200
+    },
+    {
+      "file": "src/lib/ocr/types.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 294
+    },
+    {
+      "file": "src/lib/offline/backgroundSync.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 348
+    },
+    {
+      "file": "src/lib/offline/conflictResolver.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 347
+    },
+    {
+      "file": "src/lib/offline/deltaSync.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 415
+    },
+    {
+      "file": "src/lib/offline/offlineAvailability.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 353
+    },
+    {
+      "file": "src/lib/offline/offlineQueue.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 433
+    },
+    {
+      "file": "src/lib/offline/offlineStorage.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 604
+    },
+    {
+      "file": "src/lib/offline/patchGenerator.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 453
+    },
+    {
+      "file": "src/lib/offline/queueProcessor.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 345
+    },
+    {
+      "file": "src/lib/offline/serviceWorkerConfig.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 302
+    },
+    {
+      "file": "src/lib/offline/syncEngine.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 511
+    },
+    {
+      "file": "src/lib/pages/extractPages.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 214
+    },
+    {
+      "file": "src/lib/pages/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 4
+    },
+    {
+      "file": "src/lib/pages/mergePdf.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 187
+    },
+    {
+      "file": "src/lib/pages/pageOperations.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 380
+    },
+    {
+      "file": "src/lib/pages/splitPdf.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 294
+    },
+    {
+      "file": "src/lib/pdf/renderer.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 226
+    },
+    {
+      "file": "src/lib/pdf/saver.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 72
+    },
+    {
+      "file": "src/lib/pdf/signatureEmbed.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 190
+    },
+    {
+      "file": "src/lib/pdf/textSaver.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 199
+    },
+    {
+      "file": "src/lib/performance/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 10
+    },
+    {
+      "file": "src/lib/performance/memoryManager.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 150
+    },
+    {
+      "file": "src/lib/print/accessibility.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 325
+    },
+    {
+      "file": "src/lib/print/bookletLayout.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 392
+    },
+    {
+      "file": "src/lib/print/colorManagement.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 284
+    },
+    {
+      "file": "src/lib/print/executePrint.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 136
+    },
+    {
+      "file": "src/lib/print/imposition.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 426
+    },
+    {
+      "file": "src/lib/print/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 3
+    },
+    {
+      "file": "src/lib/print/nupLayout.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 355
+    },
+    {
+      "file": "src/lib/print/pageRange.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 28
+    },
+    {
+      "file": "src/lib/print/pdfRenderer.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 267
+    },
+    {
+      "file": "src/lib/print/presets.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 320
+    },
+    {
+      "file": "src/lib/print/printQueue.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 380
+    },
+    {
+      "file": "src/lib/print/printRenderer.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 314
+    },
+    {
+      "file": "src/lib/print/virtualPrinter.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 221
+    },
+    {
+      "file": "src/lib/redaction/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 62
+    },
+    {
+      "file": "src/lib/redaction/patternMatcher.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 346
+    },
+    {
+      "file": "src/lib/redaction/redactionEngine.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 358
+    },
+    {
+      "file": "src/lib/redaction/redactionVerify.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 316
+    },
+    {
+      "file": "src/lib/redaction/types.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 165
+    },
+    {
+      "file": "src/lib/scanner/documentDetection.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 549
+    },
+    {
+      "file": "src/lib/scanner/imageCompression.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 409
+    },
+    {
+      "file": "src/lib/scanner/perspectiveCorrection.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 419
+    },
+    {
+      "file": "src/lib/scanner/scanOcr.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 321
+    },
+    {
+      "file": "src/lib/scanner/scanProfiles.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 368
+    },
+    {
+      "file": "src/lib/scanner/scanToPdf.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 206
+    },
+    {
+      "file": "src/lib/scanner/scannerProvider.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 368
+    },
+    {
+      "file": "src/lib/scanner/types.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 290
+    },
+    {
+      "file": "src/lib/security/assertion.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 222
+    },
+    {
+      "file": "src/lib/security/attestation.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 231
+    },
+    {
+      "file": "src/lib/security/fido2Server.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 308
+    },
+    {
+      "file": "src/lib/security/hardwareEncryption.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 336
+    },
+    {
+      "file": "src/lib/security/keyWrapping.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 298
+    },
+    {
+      "file": "src/lib/security/webauthn.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 267
+    },
+    {
+      "file": "src/lib/security/webauthnClient.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 355
+    },
+    {
+      "file": "src/lib/share/copyLink.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 43
+    },
+    {
+      "file": "src/lib/share/emailShare.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 28
+    },
+    {
+      "file": "src/lib/share/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 2
+    },
+    {
+      "file": "src/lib/signatures/dateUtils.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 67
+    },
+    {
+      "file": "src/lib/signatures/fieldAlignment.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 156
+    },
+    {
+      "file": "src/lib/signatures/imageProcessor.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 261
+    },
+    {
+      "file": "src/lib/storage/fileHandler.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 133
+    },
+    {
+      "file": "src/lib/storage/formStorage.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 187
+    },
+    {
+      "file": "src/lib/storage/indexeddb.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 270
+    },
+    {
+      "file": "src/lib/storage/signatureStorage.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 334
+    },
+    {
+      "file": "src/lib/storage/stampStorage.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 208
+    },
+    {
+      "file": "src/lib/thumbnails/cache.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 74
+    },
+    {
+      "file": "src/lib/thumbnails/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 1
+    },
+    {
+      "file": "src/lib/update/updateClient.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 388
+    },
+    {
+      "file": "src/main.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 20
+    },
+    {
+      "file": "src/pages/Editor.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 106
+    },
+    {
+      "file": "src/pages/Home.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 136
+    },
+    {
+      "file": "src/pages/NotFound.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 20
+    },
+    {
+      "file": "src/pages/Privacy.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 232
+    },
+    {
+      "file": "src/pages/Settings.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 206
+    },
+    {
+      "file": "src/pages/Terms.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 217
+    },
+    {
+      "file": "src/stores/annotationStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 195
+    },
+    {
+      "file": "src/stores/batchStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 243
+    },
+    {
+      "file": "src/stores/comparisonStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 219
+    },
+    {
+      "file": "src/stores/documentStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 188
+    },
+    {
+      "file": "src/stores/enterprisePolicyStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 311
+    },
+    {
+      "file": "src/stores/fileWatchStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 389
+    },
+    {
+      "file": "src/stores/formDesignerStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 423
+    },
+    {
+      "file": "src/stores/formStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 297
+    },
+    {
+      "file": "src/stores/historyStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 82
+    },
+    {
+      "file": "src/stores/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 39
+    },
+    {
+      "file": "src/stores/kioskStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 576
+    },
+    {
+      "file": "src/stores/lanStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 575
+    },
+    {
+      "file": "src/stores/licenseStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 310
+    },
+    {
+      "file": "src/stores/nativeBatchStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 488
+    },
+    {
+      "file": "src/stores/ocrStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 154
+    },
+    {
+      "file": "src/stores/offlineStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 301
+    },
+    {
+      "file": "src/stores/printStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 443
+    },
+    {
+      "file": "src/stores/recentFilesStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 143
+    },
+    {
+      "file": "src/stores/redactionStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 317
+    },
+    {
+      "file": "src/stores/scannerStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 334
+    },
+    {
+      "file": "src/stores/securityStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 246
+    },
+    {
+      "file": "src/stores/settingsStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 220
+    },
+    {
+      "file": "src/stores/shortcutsStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 443
+    },
+    {
+      "file": "src/stores/signatureStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 277
+    },
+    {
+      "file": "src/stores/textStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 192
+    },
+    {
+      "file": "src/stores/uiStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 94
+    },
+    {
+      "file": "src/stores/updateStore.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 308
+    },
+    {
+      "file": "src/sw.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 526
+    },
+    {
+      "file": "src/types/annotations.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 75
+    },
+    {
+      "file": "src/types/batch.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 489
+    },
+    {
+      "file": "src/types/electronTypes.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 599
+    },
+    {
+      "file": "src/types/enterpriseConfig.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 314
+    },
+    {
+      "file": "src/types/forms.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 83
+    },
+    {
+      "file": "src/types/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 102
+    },
+    {
+      "file": "src/types/kioskConfig.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 255
+    },
+    {
+      "file": "src/types/license.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 282
+    },
+    {
+      "file": "src/types/offline.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 266
+    },
+    {
+      "file": "src/types/pdf.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 40
+    },
+    {
+      "file": "src/types/text.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 81
+    },
+    {
+      "file": "src/types/webauthn.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 162
+    },
+    {
+      "file": "src/utils/cn.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 6
+    },
+    {
+      "file": "src/utils/coordinates.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 243
+    },
+    {
+      "file": "src/utils/index.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 50
+    },
+    {
+      "file": "src/utils/platform.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 360
+    },
+    {
+      "file": "src/vite-env.d.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 36
+    },
+    {
+      "file": "src/workers/thumbnailWorker.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 120
+    },
+    {
+      "file": "src/workers/thumbnailWorkerScript.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 34
+    },
+    {
+      "file": "tailwind.config.js",
+      "package": "(root)",
+      "area": "config",
+      "disposition": "config",
+      "loc": 39
+    },
+    {
+      "file": "tests/e2e-electron/fileOperations.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 201
+    },
+    {
+      "file": "tests/e2e-electron/ipcContract.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 157
+    },
+    {
+      "file": "tests/e2e-electron/menuShortcuts.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 261
+    },
+    {
+      "file": "tests/e2e-electron/platformIntegration.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 285
+    },
+    {
+      "file": "tests/e2e-electron/updates.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 246
+    },
+    {
+      "file": "tests/e2e/browser-test.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 196
+    },
+    {
+      "file": "tests/e2e/cross-platform/core-features.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 190
+    },
+    {
+      "file": "tests/e2e/cross-platform/editing.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 230
+    },
+    {
+      "file": "tests/e2e/full-feature-test.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 605
+    },
+    {
+      "file": "tests/e2e/helpers/openSampleDocument.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 21
+    },
+    {
+      "file": "tests/e2e/helpers/withoutBrowserType.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 15
+    },
+    {
+      "file": "tests/e2e/mobile/responsive.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 191
+    },
+    {
+      "file": "tests/e2e/mobile/touch.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 155
+    },
+    {
+      "file": "tests/e2e/pdf-editor-test.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 149
+    },
+    {
+      "file": "tests/e2e/workflows/annotate-share.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 206
+    },
+    {
+      "file": "tests/e2e/workflows/form-fill.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 129
+    },
+    {
+      "file": "tests/e2e/workflows/open-edit-save.spec.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 119
+    },
+    {
+      "file": "tests/electron/contextMenu.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 271
+    },
+    {
+      "file": "tests/electron/csp.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 56
+    },
+    {
+      "file": "tests/electron/fileHandlers.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 210
+    },
+    {
+      "file": "tests/electron/fileWatcher.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 197
+    },
+    {
+      "file": "tests/electron/folderListRecursive.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 131
+    },
+    {
+      "file": "tests/electron/ipc.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 106
+    },
+    {
+      "file": "tests/electron/menu.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 425
+    },
+    {
+      "file": "tests/electron/notifications.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 475
+    },
+    {
+      "file": "tests/electron/pathSandbox.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 131
+    },
+    {
+      "file": "tests/electron/platform.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 200
+    },
+    {
+      "file": "tests/electron/recentFiles.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 241
+    },
+    {
+      "file": "tests/electron/safeStorageBridge.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 189
+    },
+    {
+      "file": "tests/electron/security.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 134
+    },
+    {
+      "file": "tests/electron/setup.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 204
+    },
+    {
+      "file": "tests/electron/shortcuts.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 312
+    },
+    {
+      "file": "tests/electron/tray.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 269
+    },
+    {
+      "file": "tests/electron/updater.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 359
+    },
+    {
+      "file": "tests/electron/windowManager.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 267
+    },
+    {
+      "file": "tests/enterprise/configMerger.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 222
+    },
+    {
+      "file": "tests/enterprise/configParser.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 306
+    },
+    {
+      "file": "tests/enterprise/gpoReader.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 357
+    },
+    {
+      "file": "tests/enterprise/registryAccess.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 286
+    },
+    {
+      "file": "tests/enterprise/remoteConfig.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 359
+    },
+    {
+      "file": "tests/integration/accessibility/keyboardNavigation.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 70
+    },
+    {
+      "file": "tests/integration/annotations/drawing.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 294
+    },
+    {
+      "file": "tests/integration/annotations/highlights.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 324
+    },
+    {
+      "file": "tests/integration/annotations/notes.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 426
+    },
+    {
+      "file": "tests/integration/annotations/shapes.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 329
+    },
+    {
+      "file": "tests/integration/export/exportFlow.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 143
+    },
+    {
+      "file": "tests/integration/fileOpening.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 335
+    },
+    {
+      "file": "tests/integration/fileWatch/externalChanges.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 410
+    },
+    {
+      "file": "tests/integration/forms/formExport.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 284
+    },
+    {
+      "file": "tests/integration/forms/formFilling.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 242
+    },
+    {
+      "file": "tests/integration/offline/offlineWorkflow.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 366
+    },
+    {
+      "file": "tests/integration/pages/mergeSplit.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 331
+    },
+    {
+      "file": "tests/integration/pages/pageManagement.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 135
+    },
+    {
+      "file": "tests/integration/pages/pageReorder.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 327
+    },
+    {
+      "file": "tests/integration/performance/lazyLoading.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 33
+    },
+    {
+      "file": "tests/integration/print/printFlow.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 91
+    },
+    {
+      "file": "tests/integration/print/printWorkflow.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 410
+    },
+    {
+      "file": "tests/integration/scanner/scanWorkflow.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 247
+    },
+    {
+      "file": "tests/integration/security/hardwareAuth.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 210
+    },
+    {
+      "file": "tests/integration/signatures/signatureCreation.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 112
+    },
+    {
+      "file": "tests/integration/signatures/signaturePlacement.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 198
+    },
+    {
+      "file": "tests/integration/textEditing/formatting.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 254
+    },
+    {
+      "file": "tests/integration/textEditing/textBox.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 266
+    },
+    {
+      "file": "tests/license/featureGating.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 283
+    },
+    {
+      "file": "tests/license/hardwareFingerprint.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 220
+    },
+    {
+      "file": "tests/mocks/sentry.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 41
+    },
+    {
+      "file": "tests/performance/benchmarks.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 291
+    },
+    {
+      "file": "tests/setup.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 216
+    },
+    {
+      "file": "tests/unit/components/annotations/DrawingCanvas.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 99
+    },
+    {
+      "file": "tests/unit/components/annotations/HighlightTool.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 199
+    },
+    {
+      "file": "tests/unit/components/annotations/NoteTool.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 62
+    },
+    {
+      "file": "tests/unit/components/annotations/SelectionPopup.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 79
+    },
+    {
+      "file": "tests/unit/components/annotations/ShapeTool.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 287
+    },
+    {
+      "file": "tests/unit/components/annotations/StampTool.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 195
+    },
+    {
+      "file": "tests/unit/components/annotations/StickyNote.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 270
+    },
+    {
+      "file": "tests/unit/components/editor/TextBoxTransform.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 435
+    },
+    {
+      "file": "tests/unit/components/editor/TextEditor.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 517
+    },
+    {
+      "file": "tests/unit/components/forms/FormActions.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 157
+    },
+    {
+      "file": "tests/unit/components/forms/FormField.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 389
+    },
+    {
+      "file": "tests/unit/components/forms/designer/FieldPalette.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 106
+    },
+    {
+      "file": "tests/unit/components/layerStacking.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 146
+    },
+    {
+      "file": "tests/unit/components/pages/PageThumbnails.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 261
+    },
+    {
+      "file": "tests/unit/components/print/PageRangeSelector.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 50
+    },
+    {
+      "file": "tests/unit/components/signatures/SignatureCanvas.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 232
+    },
+    {
+      "file": "tests/unit/components/signatures/SignaturePlacer.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 235
+    },
+    {
+      "file": "tests/unit/components/ui/AccessibleComponents.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 86
+    },
+    {
+      "file": "tests/unit/components/ui/Skeleton.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 46
+    },
+    {
+      "file": "tests/unit/hooks/useAnnotationShortcuts.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 106
+    },
+    {
+      "file": "tests/unit/hooks/useBeforeUnload.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 143
+    },
+    {
+      "file": "tests/unit/hooks/useClipboard.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 170
+    },
+    {
+      "file": "tests/unit/hooks/useDropZone.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 185
+    },
+    {
+      "file": "tests/unit/hooks/useKeyboardNavigation.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 73
+    },
+    {
+      "file": "tests/unit/hooks/usePageSelection.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 210
+    },
+    {
+      "file": "tests/unit/hooks/usePointerInput.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 239
+    },
+    {
+      "file": "tests/unit/hooks/useSearch.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 233
+    },
+    {
+      "file": "tests/unit/hooks/useTouchGestures.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 287
+    },
+    {
+      "file": "tests/unit/hooks/useVirtualization.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 163
+    },
+    {
+      "file": "tests/unit/hooks/useVisiblePages.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 72
+    },
+    {
+      "file": "tests/unit/lib/accessibility/checker.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 563
+    },
+    {
+      "file": "tests/unit/lib/annotations/drawingSerializer.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 239
+    },
+    {
+      "file": "tests/unit/lib/annotations/serializer.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 222
+    },
+    {
+      "file": "tests/unit/lib/batch/batchProcessor.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 383
+    },
+    {
+      "file": "tests/unit/lib/batch/batesNumber.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 410
+    },
+    {
+      "file": "tests/unit/lib/batch/flatten.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 427
+    },
+    {
+      "file": "tests/unit/lib/batch/headerFooter.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 323
+    },
+    {
+      "file": "tests/unit/lib/batch/jobQueue.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 400
+    },
+    {
+      "file": "tests/unit/lib/batch/operations.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 383
+    },
+    {
+      "file": "tests/unit/lib/batch/watermark.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 295
+    },
+    {
+      "file": "tests/unit/lib/comparison/comparisonEngine.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 324
+    },
+    {
+      "file": "tests/unit/lib/comparison/reportGenerator.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 211
+    },
+    {
+      "file": "tests/unit/lib/comparison/textDiff.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 204
+    },
+    {
+      "file": "tests/unit/lib/enterprise/ssrfGuard.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 127
+    },
+    {
+      "file": "tests/unit/lib/export/compressPdf.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 112
+    },
+    {
+      "file": "tests/unit/lib/export/flattenPdf.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 80
+    },
+    {
+      "file": "tests/unit/lib/export/imageExport.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 148
+    },
+    {
+      "file": "tests/unit/lib/export/pdfExport.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 146
+    },
+    {
+      "file": "tests/unit/lib/fileWatch/changeDetector.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 274
+    },
+    {
+      "file": "tests/unit/lib/fileWatch/smartReload.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 360
+    },
+    {
+      "file": "tests/unit/lib/fonts/fontFallback.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 110
+    },
+    {
+      "file": "tests/unit/lib/fonts/fontMatcher.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 311
+    },
+    {
+      "file": "tests/unit/lib/forms/calculations.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 237
+    },
+    {
+      "file": "tests/unit/lib/forms/conditionalLogic.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 390
+    },
+    {
+      "file": "tests/unit/lib/forms/formActions.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 470
+    },
+    {
+      "file": "tests/unit/lib/forms/formSubmit.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 590
+    },
+    {
+      "file": "tests/unit/lib/forms/formatting.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 232
+    },
+    {
+      "file": "tests/unit/lib/forms/importData.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 104
+    },
+    {
+      "file": "tests/unit/lib/forms/xfdfExport.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 206
+    },
+    {
+      "file": "tests/unit/lib/license/licenseStorage.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 223
+    },
+    {
+      "file": "tests/unit/lib/license/licenseStorageBridge.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 149
+    },
+    {
+      "file": "tests/unit/lib/license/licenseValidator.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 392
+    },
+    {
+      "file": "tests/unit/lib/monitoring/analytics.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 126
+    },
+    {
+      "file": "tests/unit/lib/monitoring/sentry.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 119
+    },
+    {
+      "file": "tests/unit/lib/ocr/batchOCR.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 124
+    },
+    {
+      "file": "tests/unit/lib/ocr/exportFormats.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 223
+    },
+    {
+      "file": "tests/unit/lib/ocr/imagePreprocessor.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 69
+    },
+    {
+      "file": "tests/unit/lib/ocr/languageLoader.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 109
+    },
+    {
+      "file": "tests/unit/lib/ocr/layoutAnalyzer.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 199
+    },
+    {
+      "file": "tests/unit/lib/ocr/ocrEngine.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 108
+    },
+    {
+      "file": "tests/unit/lib/ocr/types.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 70
+    },
+    {
+      "file": "tests/unit/lib/offline/conflictResolver.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 419
+    },
+    {
+      "file": "tests/unit/lib/offline/offlineStorage.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 451
+    },
+    {
+      "file": "tests/unit/lib/offline/syncEngine.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 122
+    },
+    {
+      "file": "tests/unit/lib/pages/extractPages.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 172
+    },
+    {
+      "file": "tests/unit/lib/pages/mergePdf.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 138
+    },
+    {
+      "file": "tests/unit/lib/pages/pageOperations.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 254
+    },
+    {
+      "file": "tests/unit/lib/pages/splitPdf.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 160
+    },
+    {
+      "file": "tests/unit/lib/pdf/renderer.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 404
+    },
+    {
+      "file": "tests/unit/lib/pdf/signatureEmbed.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 307
+    },
+    {
+      "file": "tests/unit/lib/pdf/textSaver.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 250
+    },
+    {
+      "file": "tests/unit/lib/performance/memoryManager.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 94
+    },
+    {
+      "file": "tests/unit/lib/print/executePrint.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 43
+    },
+    {
+      "file": "tests/unit/lib/print/imposition.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 227
+    },
+    {
+      "file": "tests/unit/lib/print/pdfRenderer.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 153
+    },
+    {
+      "file": "tests/unit/lib/print/printRenderer.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 83
+    },
+    {
+      "file": "tests/unit/lib/redaction/patternMatcher.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 246
+    },
+    {
+      "file": "tests/unit/lib/redaction/redactionEngine.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 289
+    },
+    {
+      "file": "tests/unit/lib/scanner/documentDetection.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 305
+    },
+    {
+      "file": "tests/unit/lib/scanner/scannerProvider.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 243
+    },
+    {
+      "file": "tests/unit/lib/security/fido2Server.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 51
+    },
+    {
+      "file": "tests/unit/lib/security/webauthn.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 55
+    },
+    {
+      "file": "tests/unit/lib/share/copyLink.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 63
+    },
+    {
+      "file": "tests/unit/lib/share/emailShare.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 76
+    },
+    {
+      "file": "tests/unit/lib/storage/fileHandler.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 132
+    },
+    {
+      "file": "tests/unit/lib/storage/stampStorage.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 145
+    },
+    {
+      "file": "tests/unit/lib/thumbnails/cache.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 93
+    },
+    {
+      "file": "tests/unit/pages/Privacy.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 88
+    },
+    {
+      "file": "tests/unit/pages/Terms.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 107
+    },
+    {
+      "file": "tests/unit/stores/annotationStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 308
+    },
+    {
+      "file": "tests/unit/stores/batchStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 381
+    },
+    {
+      "file": "tests/unit/stores/comparisonStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 434
+    },
+    {
+      "file": "tests/unit/stores/documentStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 172
+    },
+    {
+      "file": "tests/unit/stores/formDesignerStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 475
+    },
+    {
+      "file": "tests/unit/stores/formStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 292
+    },
+    {
+      "file": "tests/unit/stores/historyStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 173
+    },
+    {
+      "file": "tests/unit/stores/nativeBatchStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 464
+    },
+    {
+      "file": "tests/unit/stores/ocrStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 399
+    },
+    {
+      "file": "tests/unit/stores/redactionStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 554
+    },
+    {
+      "file": "tests/unit/stores/settingsStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 164
+    },
+    {
+      "file": "tests/unit/stores/signatureStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 314
+    },
+    {
+      "file": "tests/unit/stores/textStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 506
+    },
+    {
+      "file": "tests/unit/stores/uiStore.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 87
+    },
+    {
+      "file": "tests/unit/styles/indexCss.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 68
+    },
+    {
+      "file": "tests/unit/utils/cn.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 38
+    },
+    {
+      "file": "tests/unit/utils/coordinates.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 241
+    },
+    {
+      "file": "tools/chunking-for-files/chunking-for-files.ts",
+      "package": "(root)",
+      "area": "tools",
+      "disposition": "tool",
+      "loc": 1254
+    },
+    {
+      "file": "tools/compress-for-context/compress-for-context.ts",
+      "package": "(root)",
+      "area": "tools",
+      "disposition": "tool",
+      "loc": 1460
+    },
+    {
+      "file": "tools/create-dependency-graph/create-dependency-graph.ts",
+      "package": "(root)",
+      "area": "tools",
+      "disposition": "tool",
+      "loc": 1727
+    },
+    {
+      "file": "vite.config.ts",
+      "package": "(root)",
+      "area": "config",
+      "disposition": "config",
+      "loc": 155
+    },
+    {
+      "file": "vite.electron.config.ts",
+      "package": "(root)",
+      "area": "config",
+      "disposition": "config",
+      "loc": 70
+    },
+    {
+      "file": "vite.preload.config.ts",
+      "package": "(root)",
+      "area": "config",
+      "disposition": "config",
+      "loc": 64
+    },
+    {
+      "file": "vitest.config.ts",
+      "package": "(root)",
+      "area": "config",
+      "disposition": "config",
+      "loc": 50
+    }
+  ],
+  "skippedLinks": [],
+  "warnings": [
+    "package.json entry 'dist-electron/main/index.js' did not resolve to a known source file -- ignored; if no other declared entry resolves either, the entry-point root falls back to a conventional src/index.* file instead",
+    "could not determine any entry-point roots: no package.json main/module/bin/exports resolved to a known source file, and no src/index.* fallback was found -- every 'src' file will show as orphan or test-only rather than build-entry"
+  ]
+}
