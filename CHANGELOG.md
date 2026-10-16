@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **CI runs the two documentation gates.** The `Doc Gates` job in `.github/workflows/ci.yml` installs
+  `@danielsimonjr/repo-tools@2.2.3` and runs `repo-tools check . --docs=docs/architecture` and
+  `repo-tools docs check src`. Both exit 0 on `main`, so a pull request that adds or removes an exported symbol
+  without a doc comment, or that makes a count in `docs/architecture` wrong, now fails the job. The job needs no
+  dependency install. It is not a required check. The version is pinned: a bump of `repo-tools` can change a count,
+  so the bump regenerates `docs/architecture` in the same pull request.
+
 - **The architecture reports count every export of a `.tsx` file.** `repo-tools` 2.2.2 read a `.tsx` file with the
   TypeScript grammar, which cannot read JSX. The parser recovered from the errors, and the recovery depended on the text
   of the file. The same component file gave one export without doc comments and two exports with them. Version 2.2.3

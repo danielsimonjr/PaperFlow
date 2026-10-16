@@ -267,3 +267,30 @@ jobs:
       # the time, not inherited.
       - name: Run bun audit
         run: bun audit --audit-level=high
+
+  doc-gates:
+    name: Doc Gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+
+      # Both gates read the source and the generated reports; neither needs the dependency install.
+      # The version is pinned. A new repo-tools release can change a count (2.2.3 did, by reading .tsx files
+      # with the TSX grammar), so a bump is a deliberate change that regenerates docs/architecture in the same PR.
+      - name: Install repo-tools
+        run: npm install --global @danielsimonjr/repo-tools@2.2.3
+
+      - name: Architecture docs gate
+        run: repo-tools check . --docs=docs/architecture
+
+      - name: Code docs gate
+        run: repo-tools docs check src
