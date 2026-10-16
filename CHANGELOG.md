@@ -34,6 +34,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   fail. A new spec, "should keep the text under a highlight selectable", fails with only the
   highlight change reverted. `tests/unit/components/layerStacking.test.tsx` reads the text
   layer's z-index from the stylesheet and checks the stacking class of each element above.
+- **Ctrl+Shift+Z redoes from a real keyboard.** `useAnnotationShortcuts` compared `event.key` to
+  the lower-case letter, but a keyboard reports the shifted character: Ctrl+Shift+Z arrives as
+  `Z`. Only Ctrl+Y redid. The comparison now lower-cases the key once, so Ctrl or Cmd with Z, Shift+Z
+  or Y works with Shift held or Caps Lock on. Playwright's `Control+Shift+z` sends the unshifted
+  letter, which is why the redo spec passed against the broken code; it now sends `Control+Shift+Z`.
+  `tests/unit/hooks/useAnnotationShortcuts.test.ts` (9 tests, 4 red before the change) covers the
+  keys a real keyboard sends, and a bare `z` or `y` does nothing.
 
 - **A window whose saved state is maximized is shown after its first paint, not before.**
   `createWindow` called `maximize()` right after the `BrowserWindow` was constructed. On Windows,
