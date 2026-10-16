@@ -1684,6 +1684,9 @@ The codebase is organized into the following modules:
 | `react-router` | `Routes, Route` |
 | `@components/ui/LoadingIndicator` | `LoadingIndicator` |
 
+**Exports:**
+- Default: `default`
+
 ---
 
 ### `src/main.tsx` - Use HashRouter for Electron (file:// protocol) since BrowserRouter requires a server
@@ -1791,6 +1794,9 @@ The codebase is organized into the following modules:
 | `./DrawingAnnotation` | `DrawingAnnotation` | Import |
 | `./ShapeAnnotation` | `ShapeAnnotation` | Import |
 
+**Exports:**
+- Functions: `AnnotationLayer`
+
 ---
 
 ### `src/components/annotations/AnnotationProperties.tsx` - Properties panel for editing the selected annotation.
@@ -1808,6 +1814,9 @@ The codebase is organized into the following modules:
 |------|---------|------|
 | `./SelectionPopup` | `HIGHLIGHT_COLORS` | Import |
 | `./OpacitySlider` | `OpacitySlider` | Import |
+
+**Exports:**
+- Functions: `AnnotationProperties`
 
 ---
 
@@ -1880,6 +1889,9 @@ The codebase is organized into the following modules:
 |------|---------|------|
 | `./SelectionPopup` | `HIGHLIGHT_COLORS` | Import |
 
+**Exports:**
+- Functions: `DrawingToolOptions`
+
 ---
 
 ### `src/components/annotations/EllipseTool.tsx` - Ellipse/Circle drawing tool with Shift key constraint for circles.
@@ -1918,6 +1930,9 @@ The codebase is organized into the following modules:
 | `@stores/annotationStore` | `useAnnotationStore` |
 | `@stores/documentStore` | `useDocumentStore` |
 | `@lib/annotations/serializer` | `exportAnnotations, importAnnotations, mergeAnnotations` |
+
+**Exports:**
+- Functions: `ExportImportDialog`
 
 ---
 
@@ -1970,6 +1985,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `Reply, Trash2` |
 | `@stores/annotationStore` | `useAnnotationStore` |
 
+**Exports:**
+- Functions: `NoteReplies`
+
 ---
 
 ### `src/components/annotations/NoteTool.tsx` - Note placement tool overlay.
@@ -1997,6 +2015,9 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `useCallback` |
 
+**Exports:**
+- Functions: `OpacitySlider`
+
 ---
 
 ### `src/components/annotations/RectangleTool.tsx` - Rectangle drawing tool with Shift key constraint for squares.
@@ -2019,6 +2040,9 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `useCallback, useRef, useState` |
 
+**Exports:**
+- Functions: `ResizeHandles`
+
 ---
 
 ### `src/components/annotations/RotationHandle.tsx` - Rotation handle for shape manipulation.
@@ -2027,6 +2051,9 @@ The codebase is organized into the following modules:
 | Package | Import |
 |---------|--------|
 | `react` | `useCallback, useState` |
+
+**Exports:**
+- Functions: `RotationHandle`
 
 ---
 
@@ -2040,6 +2067,7 @@ The codebase is organized into the following modules:
 | `@stores/annotationStore` | `useAnnotationStore` |
 
 **Exports:**
+- Functions: `SelectionPopup`
 - Constants: `HIGHLIGHT_COLORS`
 
 ---
@@ -2050,6 +2078,9 @@ The codebase is organized into the following modules:
 | Package | Import |
 |---------|--------|
 | `react` | `useMemo` |
+
+**Exports:**
+- Functions: `ShapeAnnotation`
 
 ---
 
@@ -2065,6 +2096,9 @@ The codebase is organized into the following modules:
 | File | Imports | Type |
 |------|---------|------|
 | `./SelectionPopup` | `HIGHLIGHT_COLORS` | Import |
+
+**Exports:**
+- Functions: `ShapeOptions`
 
 ---
 
@@ -2082,6 +2116,9 @@ The codebase is organized into the following modules:
 | `./ResizeHandles` | `ResizeHandles` | Import |
 | `./RotationHandle` | `RotationHandle` | Import |
 
+**Exports:**
+- Functions: `ShapeOverlay`
+
 ---
 
 ### `src/components/annotations/StampPicker.tsx` - Stamp picker showing preset and custom stamps.
@@ -2091,6 +2128,9 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `useCallback, useState` |
 | `lucide-react` | `Plus` |
+
+**Exports:**
+- Functions: `StampPicker`
 
 ---
 
@@ -2115,6 +2155,9 @@ The codebase is organized into the following modules:
 | `react` | `useCallback, useState` |
 | `lucide-react` | `RotateCcw` |
 
+**Exports:**
+- Functions: `StampTransform`
+
 ---
 
 ### `src/components/annotations/StickyNote.tsx` - Sticky note annotation component.
@@ -2131,6 +2174,7 @@ The codebase is organized into the following modules:
 | `./NoteReplies` | `NoteReplies` | Import |
 
 **Exports:**
+- Functions: `StickyNote`
 - Constants: `NOTE_COLORS`
 
 ---
@@ -2203,6 +2247,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `BatchDashboardProps`
+- Functions: `BatchDashboard`
 
 ---
 
@@ -2228,6 +2273,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `BatchSummaryProps`
+- Functions: `BatchSummary`
 
 ---
 
@@ -2240,6 +2286,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `BatchWizardProps`
+- Functions: `BatchWizard`
 
 ---
 
@@ -2399,6 +2446,9 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `lucide-react` | `AlignLeft, AlignCenter, AlignRight, AlignJustify` |
 
+**Exports:**
+- Functions: `AlignmentPicker`
+
 ---
 
 ### `src/components/editor/FontPicker.tsx` - Dropdown picker for selecting font family.
@@ -2411,6 +2461,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `ChevronDown, Check` |
 | `@lib/fonts/fontFallback` | `getWebSafeFonts` |
 
+**Exports:**
+- Functions: `FontPicker`
+
 ---
 
 ### `src/components/editor/FontSizePicker.tsx` - Dropdown picker for selecting font size.
@@ -2421,6 +2474,9 @@ The codebase is organized into the following modules:
 | `react` | `useState, useRef, useEffect` |
 | `@utils/cn` | `cn` |
 | `lucide-react` | `ChevronDown` |
+
+**Exports:**
+- Functions: `FontSizePicker`
 
 ---
 
@@ -2448,6 +2504,9 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `lucide-react` | `ChevronDown, Check, AlignVerticalSpaceAround` |
 
+**Exports:**
+- Functions: `LineSpacing`
+
 ---
 
 ### `src/components/editor/RichTextToolbar.tsx` - Toolbar for text formatting controls.
@@ -2469,6 +2528,9 @@ The codebase is organized into the following modules:
 | `./TextColorPicker` | `TextColorPicker` | Import |
 | `./AlignmentPicker` | `AlignmentPicker` | Import |
 | `./LineSpacing` | `LineSpacing` | Import |
+
+**Exports:**
+- Functions: `RichTextToolbar`
 
 ---
 
@@ -2513,6 +2575,9 @@ The codebase is organized into the following modules:
 | `react` | `useState, useRef, useEffect` |
 | `@utils/cn` | `cn` |
 | `lucide-react` | `ChevronDown, Check` |
+
+**Exports:**
+- Functions: `TextColorPicker`
 
 ---
 
@@ -2587,6 +2652,10 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `default, useState, useCallback` |
 
+**Exports:**
+- Functions: `ConfigExportDialog`
+- Default: `default`
+
 ---
 
 ### `src/components/enterprise/ConfigSourceBadge.tsx` - Config Source Badge Component (Sprint 20)
@@ -2598,6 +2667,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Functions: `ConfigSourceBadge`
+- Default: `default`
 
 ---
 
@@ -2616,6 +2686,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Functions: `ConfigurationViewer`
+- Default: `default`
 
 ---
 
@@ -2629,7 +2700,8 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 
 **Exports:**
-- Functions: `LockedSettingBadge`
+- Functions: `LockedSettingBadge`, `LockedSettingWrapper`, `withLockCheck`
+- Default: `default`
 
 ---
 
@@ -2641,6 +2713,10 @@ The codebase is organized into the following modules:
 | `react` | `useState` |
 | `@stores/enterprisePolicyStore` | `useEnterprisePolicyStore, useAdminContact, useIsManaged` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `PolicyStatusIndicator`
+- Default: `default`
 
 ---
 
@@ -2657,6 +2733,9 @@ The codebase is organized into the following modules:
 | `@lib/export/compressPdf` | `compressPdf, analyzePdfSize, formatFileSize, CompressionResult` |
 | `file-saver` | `saveAs` |
 
+**Exports:**
+- Functions: `CompressDialog`
+
 ---
 
 ### `src/components/export/ImageExportDialog.tsx` - The dialog exports the current page or all pages as image files.
@@ -2672,6 +2751,9 @@ The codebase is organized into the following modules:
 | `@stores/annotationStore` | `useAnnotationStore` |
 | `@lib/export/imageExport` | `ImageFormat, ImageDpi` |
 | `@lib/export/imageExport` | `exportSinglePage, exportPagesAsZip` |
+
+**Exports:**
+- Functions: `ImageExportDialog`
 
 ---
 
@@ -2697,6 +2779,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `FileEdit, FilePlus, FileMinus, RotateCw, FileText, FormInput, AlertCircle` |
 | `@lib/fileWatch/changeDetector` | `ChangeSummary, ChangeType` |
 
+**Exports:**
+- Functions: `ChangePreview`, `ChangeCountBadge`
+
 ---
 
 ### `src/components/fileWatch/DocumentCompare.tsx` - Document Compare Component
@@ -2709,6 +2794,9 @@ The codebase is organized into the following modules:
 | `@lib/fileWatch/documentDiff` | `DocumentDiff` |
 | `@lib/fileWatch/documentDiff` | `createChangeNavigationList, getDiffStatistics` |
 
+**Exports:**
+- Functions: `DocumentCompare`
+
 ---
 
 ### `src/components/fileWatch/ExternalChangeNotification.tsx` - External Change Notification Component
@@ -2719,6 +2807,9 @@ The codebase is organized into the following modules:
 | `react` | `useEffect, useState` |
 | `lucide-react` | `AlertTriangle, RefreshCw, X, Eye, FileWarning` |
 | `@stores/fileWatchStore` | `useFileWatchStore, ExternalChange` |
+
+**Exports:**
+- Functions: `ExternalChangeNotification`, `ExternalChangeNotifications`
 
 ---
 
@@ -2731,7 +2822,7 @@ The codebase is organized into the following modules:
 | `lucide-react` | `Lock, RefreshCw, X, CheckCircle` |
 
 **Exports:**
-- Functions: `FileLockNotification`
+- Functions: `FileLockNotification`, `FileLockIndicator`
 
 ---
 
@@ -2745,7 +2836,7 @@ The codebase is organized into the following modules:
 | `@stores/fileWatchStore` | `useFileWatchStore, FileWatchStatus` |
 
 **Exports:**
-- Functions: `WatchStatusIndicator`
+- Functions: `WatchStatusIndicator`, `GlobalWatchStatus`, `WatchToggleButton`
 
 ---
 
@@ -2758,6 +2849,9 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `@stores/formStore` | `useFormStore` |
 
+**Exports:**
+- Functions: `Checkbox`
+
 ---
 
 ### `src/components/forms/Dropdown.tsx` - The dropdown widget is for a PDF form field and sits at the position of the field.
@@ -2769,6 +2863,9 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `@stores/formStore` | `useFormStore` |
 
+**Exports:**
+- Functions: `Dropdown`
+
 ---
 
 ### `src/components/forms/FieldError.tsx` - Component to display field validation errors
@@ -2777,6 +2874,9 @@ The codebase is organized into the following modules:
 | Package | Import |
 |---------|--------|
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `FieldError`, `FieldErrorTooltip`, `RequiredIndicator`
 
 ---
 
@@ -2793,6 +2893,9 @@ The codebase is organized into the following modules:
 | `@lib/forms/xfdfExport` | `downloadFormDataAsXFDF` |
 | `@lib/forms/importData` | `triggerImportDialog` |
 | `@lib/forms/validation` | `validateForm, getValidationSummary` |
+
+**Exports:**
+- Functions: `FormActions`
 
 ---
 
@@ -2825,6 +2928,9 @@ The codebase is organized into the following modules:
 |------|---------|------|
 | `./FormFieldRenderer` | `FormFieldRenderer` | Import |
 
+**Exports:**
+- Functions: `FormLayer`
+
 ---
 
 ### `src/components/forms/RadioButton.tsx` - A radio button represents one option of a PDF form field and appears at the position of the field.
@@ -2836,6 +2942,9 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `@stores/formStore` | `useFormStore` |
 
+**Exports:**
+- Functions: `RadioButton`, `RadioGroup`
+
 ---
 
 ### `src/components/forms/TextField.tsx` - The text input sits at the PDF text field's position.
@@ -2846,6 +2955,9 @@ The codebase is organized into the following modules:
 | `react` | `useState, useRef, useEffect, useCallback` |
 | `@utils/cn` | `cn` |
 | `@stores/formStore` | `useFormStore` |
+
+**Exports:**
+- Functions: `TextField`
 
 ---
 
@@ -2861,9 +2973,15 @@ The codebase is organized into the following modules:
 |------|---------|------|
 | `./FieldPreview` | `FieldPreview` | Import |
 
+**Exports:**
+- Functions: `DesignCanvas`
+
 ---
 
 ### `src/components/forms/designer/DesignerToolbar.tsx` - Designer Toolbar Component
+
+**Exports:**
+- Functions: `DesignerToolbar`
 
 ---
 
@@ -2874,13 +2992,22 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `DragEvent` |
 
+**Exports:**
+- Functions: `FieldPalette`
+
 ---
 
 ### `src/components/forms/designer/FieldPreview.tsx` - Field Preview Component
 
+**Exports:**
+- Functions: `FieldPreview`
+
 ---
 
 ### `src/components/forms/designer/FieldProperties.tsx` - Field Properties Panel
+
+**Exports:**
+- Functions: `FieldProperties`
 
 ---
 
@@ -2898,6 +3025,9 @@ The codebase is organized into the following modules:
 | `./DesignCanvas` | `DesignCanvas` | Import |
 | `./FieldProperties` | `FieldProperties` | Import |
 | `./DesignerToolbar` | `DesignerToolbar` | Import |
+
+**Exports:**
+- Functions: `FormDesigner`
 
 ---
 
@@ -2951,6 +3081,10 @@ The codebase is organized into the following modules:
 | `react` | `useEffect, useState` |
 | `@stores/shortcutsStore` | `useShortcutsStore, formatAccelerator, ShortcutDefinition` |
 
+**Exports:**
+- Functions: `KeyboardShortcutsDialog`
+- Default: `default`
+
 ---
 
 ### `src/components/home/RecentFiles.tsx` - The component lists up to ten recent files, loaded from the IndexedDB storage module.
@@ -2963,6 +3097,9 @@ The codebase is organized into the following modules:
 | `@lib/storage/indexeddb` | `storage, RecentFile` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `RecentFiles`
+
 ---
 
 ### `src/components/kiosk/KioskHeader.tsx` - Kiosk Header Component (Sprint 24)
@@ -2971,6 +3108,10 @@ The codebase is organized into the following modules:
 | Package | Import |
 |---------|--------|
 | `react` | `default` |
+
+**Exports:**
+- Functions: `KioskHeader`
+- Default: `default`
 
 ---
 
@@ -2987,6 +3128,10 @@ The codebase is organized into the following modules:
 | `./KioskToolbar` | `KioskToolbar` | Import |
 | `./KioskHeader` | `KioskHeader` | Import |
 
+**Exports:**
+- Functions: `KioskShell`
+- Default: `default`
+
 ---
 
 ### `src/components/kiosk/KioskToolbar.tsx` - Kiosk Toolbar Component (Sprint 24)
@@ -2995,6 +3140,10 @@ The codebase is organized into the following modules:
 | Package | Import |
 |---------|--------|
 | `react` | `default` |
+
+**Exports:**
+- Functions: `KioskToolbar`
+- Default: `default`
 
 ---
 
@@ -3050,6 +3199,9 @@ The codebase is organized into the following modules:
 | `@stores/annotationStore` | `useAnnotationStore` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `MobileToolbar`
+
 ---
 
 ### `src/components/layout/Sidebar.tsx` - The collapsible side panel contains page thumbnails, an outline, and an annotations tab.
@@ -3063,6 +3215,9 @@ The codebase is organized into the following modules:
 | `@components/sidebar/OutlinePanel` | `OutlinePanel` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `Sidebar`
+
 ---
 
 ### `src/components/layout/TitleBar.tsx` - TitleBar Component
@@ -3075,6 +3230,7 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 
 **Exports:**
+- Functions: `TitleBar`, `TrafficLightsSpacer`
 - Default: `default`
 
 ---
@@ -3094,6 +3250,9 @@ The codebase is organized into the following modules:
 | `@stores/uiStore` | `useUIStore, EditorTool` |
 | `@hooks/useAnnotationShortcuts` | `useAnnotationShortcuts` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `Toolbar`
 
 ---
 
@@ -3117,6 +3276,9 @@ The codebase is organized into the following modules:
 | `react` | `useState, useEffect, useMemo` |
 | `lucide-react` | `Pause, Play, X, Check, AlertCircle, RefreshCw, Clock` |
 
+**Exports:**
+- Functions: `BatchOCRProgress`
+
 ---
 
 ### `src/components/ocr/LanguageSelector.tsx` - Language Selector Component
@@ -3126,6 +3288,9 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `useState, useMemo` |
 | `lucide-react` | `Search` |
+
+**Exports:**
+- Functions: `LanguageSelector`
 
 ---
 
@@ -3145,6 +3310,9 @@ The codebase is organized into the following modules:
 | `./PreprocessingOptions` | `PreprocessingOptions` | Import |
 | `./OCRProgress` | `OCRProgress` | Import |
 
+**Exports:**
+- Functions: `OCRDialog`
+
 ---
 
 ### `src/components/ocr/OCRExportDialog.tsx` - OCR Export Dialog Component
@@ -3155,6 +3323,9 @@ The codebase is organized into the following modules:
 | `react` | `useState` |
 | `lucide-react` | `FileText, FileCode, FileJson, Download` |
 
+**Exports:**
+- Functions: `OCRExportDialog`
+
 ---
 
 ### `src/components/ocr/OCRProgress.tsx` - OCR Progress Component
@@ -3163,6 +3334,9 @@ The codebase is organized into the following modules:
 | Package | Import |
 |---------|--------|
 | `lucide-react` | `Loader2` |
+
+**Exports:**
+- Functions: `OCRProgress`
 
 ---
 
@@ -3173,6 +3347,9 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `useState, useMemo` |
 | `lucide-react` | `Search, Copy, Download, Check, X` |
+
+**Exports:**
+- Functions: `OCRResultsPanel`
 
 ---
 
@@ -3185,10 +3362,14 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Types: `PageRangeType`
+- Functions: `PageRangeSelector`
 
 ---
 
 ### `src/components/ocr/PreprocessingOptions.tsx` - Preprocessing Options Component
+
+**Exports:**
+- Functions: `PreprocessingOptions`
 
 ---
 
@@ -3240,6 +3421,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `OfflineBannerProps`
+- Functions: `OfflineBanner`
 
 ---
 
@@ -3258,6 +3440,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `OfflineIndicatorProps`
+- Functions: `OfflineIndicator`
 
 ---
 
@@ -3271,6 +3454,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `OfflineSettingsProps`
+- Functions: `OfflineSettings`
 
 ---
 
@@ -3284,6 +3468,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `SyncStatusPanelProps`
+- Functions: `SyncStatusPanel`
 
 ---
 
@@ -3297,6 +3482,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `VersionCompareProps`
+- Functions: `VersionCompare`
 
 ---
 
@@ -3311,6 +3497,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `DraggableThumbnailProps`
+- Constants: `DraggableThumbnail`
 
 ---
 
@@ -3328,6 +3515,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `InsertPageDialogProps`
+- Functions: `InsertPageDialog`
 
 ---
 
@@ -3345,6 +3533,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `MergeDialogProps`
+- Functions: `MergeDialog`
 
 ---
 
@@ -3361,6 +3550,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `MoveToDialogProps`
+- Functions: `MoveToDialog`
 
 ---
 
@@ -3376,6 +3566,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `PageContextMenuProps`
+- Functions: `PageContextMenu`
 
 ---
 
@@ -3411,6 +3602,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `SplitDialogProps`
+- Functions: `SplitDialog`
 
 ---
 
@@ -3442,6 +3634,10 @@ The codebase is organized into the following modules:
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `AccessibilityOptions`
+- Default: `default`
+
 ---
 
 ### `src/components/print/AdvancedPrintSettings.tsx` - Advanced Print Settings Panel
@@ -3451,6 +3647,10 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `@stores/printStore` | `usePrintStore, PrintQuality` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `AdvancedPrintSettings`
+- Default: `default`
 
 ---
 
@@ -3465,6 +3665,8 @@ The codebase is organized into the following modules:
 **Exports:**
 - Interfaces: `BindingOptionsValue`
 - Types: `BindingType`, `BindingEdge`
+- Functions: `BindingOptions`
+- Default: `default`
 
 ---
 
@@ -3482,6 +3684,8 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `BookletSettings`
+- Functions: `BookletWizard`
+- Default: `default`
 
 ---
 
@@ -3493,6 +3697,10 @@ The codebase is organized into the following modules:
 | `react` | `useState, useMemo, useCallback` |
 | `@stores/printStore` | `usePrintStore, PrintMargins` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `MarginEditor`
+- Default: `default`
 
 ---
 
@@ -3512,6 +3720,10 @@ The codebase is organized into the following modules:
 | `@stores/printStore` | `usePrintStore` |
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `PageLayout`
+- Default: `default`
 
 ---
 
@@ -3551,6 +3763,9 @@ The codebase is organized into the following modules:
 | `./OrientationOptions` | `OrientationOptions, Orientation` | Import |
 | `./PrintPreview` | `PrintPreview` | Import |
 
+**Exports:**
+- Functions: `PrintDialog`
+
 ---
 
 ### `src/components/print/PrintPresetsManager.tsx` - Print Presets Manager
@@ -3563,6 +3778,10 @@ The codebase is organized into the following modules:
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `PrintPresetsManager`
+- Default: `default`
+
 ---
 
 ### `src/components/print/PrintPreview.tsx` - Print preview placeholder: it shows the page number, not a rendered page.
@@ -3572,6 +3791,9 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `lucide-react` | `ChevronLeft, ChevronRight` |
 | `react` | `useState` |
+
+**Exports:**
+- Functions: `PrintPreview`
 
 ---
 
@@ -3586,6 +3808,10 @@ The codebase is organized into the following modules:
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `PrintPreviewEnhanced`
+- Default: `default`
+
 ---
 
 ### `src/components/print/PrintQualitySelector.tsx` - Print Quality Selector Component
@@ -3595,6 +3821,10 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `@stores/printStore` | `usePrintStore, PrintQuality` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `PrintQualitySelector`
+- Default: `default`
 
 ---
 
@@ -3607,12 +3837,17 @@ The codebase is organized into the following modules:
 | `@stores/printStore` | `usePrintStore, PrinterInfo` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `PrinterStatus`
+- Default: `default`
+
 ---
 
 ### `src/components/print/ScaleOptions.tsx` - Scale choices for printing: fit to page, actual size (100%) or custom.
 
 **Exports:**
 - Types: `ScaleType`
+- Functions: `ScaleOptions`
 
 ---
 
@@ -3696,6 +3931,10 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `@lib/scanner/types` | `ScanResult` |
 
+**Exports:**
+- Functions: `BatchScanWorkflow`
+- Default: `default`
+
 ---
 
 ### `src/components/scanner/ColorModeSelector.tsx` - Color Mode Selector Component
@@ -3706,6 +3945,10 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `@lib/scanner/types` | `ScanColorMode` |
 
+**Exports:**
+- Functions: `ColorModeSelector`
+- Default: `default`
+
 ---
 
 ### `src/components/scanner/CropTool.tsx` - Crop Tool Component
@@ -3715,6 +3958,10 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `useState, useRef, useCallback, useEffect` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `CropTool`
+- Default: `default`
 
 ---
 
@@ -3729,6 +3976,8 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `EnhancementSettings`
+- Functions: `EnhancementTools`
+- Default: `default`
 
 ---
 
@@ -3741,6 +3990,10 @@ The codebase is organized into the following modules:
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
 | `@lib/scanner/types` | `ScanResult` |
+
+**Exports:**
+- Functions: `PageOrganizer`
+- Default: `default`
 
 ---
 
@@ -3755,6 +4008,10 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `@lib/scanner/types` | `ScanProfile` |
 
+**Exports:**
+- Functions: `ProfileManager`
+- Default: `default`
+
 ---
 
 ### `src/components/scanner/ResolutionPicker.tsx` - Resolution Picker Component
@@ -3764,6 +4021,10 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `@utils/cn` | `cn` |
 | `@lib/scanner/types` | `ScanResolution` |
+
+**Exports:**
+- Functions: `ResolutionPicker`
+- Default: `default`
 
 ---
 
@@ -3777,6 +4038,10 @@ The codebase is organized into the following modules:
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `ScanPreview`
+- Default: `default`
+
 ---
 
 ### `src/components/scanner/ScanSettingsPanel.tsx` - Scan Settings Panel
@@ -3788,6 +4053,10 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `@lib/scanner/types` | `ScanColorMode, ScanResolution, ScanPaperSize` |
 
+**Exports:**
+- Functions: `ScanSettingsPanel`
+- Default: `default`
+
 ---
 
 ### `src/components/scanner/ScannerInfo.tsx` - Scanner Info Component
@@ -3797,6 +4066,10 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `@lib/scanner/types` | `ScannerDevice` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `ScannerInfo`
+- Default: `default`
 
 ---
 
@@ -3811,6 +4084,10 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 | `@lib/scanner/types` | `ScannerDevice` |
 
+**Exports:**
+- Functions: `ScannerSelectDialog`
+- Default: `default`
+
 ---
 
 ### `src/components/security/EnrollmentGuide.tsx` - Enrollment Guide Component
@@ -3821,6 +4098,10 @@ The codebase is organized into the following modules:
 | `react` | `useState` |
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `EnrollmentGuide`
+- Default: `default`
 
 ---
 
@@ -3834,6 +4115,10 @@ The codebase is organized into the following modules:
 | `@lib/security/webauthnClient` | `getWebAuthnClient` |
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `HardwareKeyAuth`
+- Default: `default`
 
 ---
 
@@ -3862,6 +4147,10 @@ The codebase is organized into the following modules:
 | `react` | `useState, useEffect` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `KeyChallenge`
+- Default: `default`
+
 ---
 
 ### `src/components/security/KeyManagement.tsx` - Key Management Component
@@ -3873,6 +4162,10 @@ The codebase is organized into the following modules:
 | `@stores/securityStore` | `useSecurityStore` |
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `KeyManagement`
+- Default: `default`
 
 ---
 
@@ -3886,6 +4179,9 @@ The codebase is organized into the following modules:
 | `@stores/fileWatchStore` | `useFileWatchStore, FileWatchSettings` |
 | `@lib/fileWatch/mergeStrategy` | `MERGE_STRATEGIES` |
 
+**Exports:**
+- Functions: `AutoReloadSettings`
+
 ---
 
 ### `src/components/settings/NotificationSettings.tsx` - Notification Settings Component
@@ -3894,6 +4190,10 @@ The codebase is organized into the following modules:
 | Package | Import |
 |---------|--------|
 | `react` | `useCallback` |
+
+**Exports:**
+- Functions: `NotificationSettings`
+- Default: `default`
 
 ---
 
@@ -3904,6 +4204,10 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `useState, useEffect, useRef, useCallback` |
 | `@stores/shortcutsStore` | `useShortcutsStore, formatAccelerator, ShortcutDefinition` |
+
+**Exports:**
+- Functions: `ShortcutSettings`
+- Default: `default`
 
 ---
 
@@ -3916,6 +4220,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `ChevronRight, ChevronDown, FileText` |
 | `@stores/documentStore` | `useDocumentStore` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `OutlinePanel`
 
 ---
 
@@ -3944,6 +4251,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `Merge, Scissors, CheckSquare, XSquare` |
 | `@components/ui/Button` | `Button` |
 
+**Exports:**
+- Functions: `ThumbnailSidebar`
+
 ---
 
 ### `src/components/signatures/DateStamp.tsx` - Date stamp component to display alongside signatures.
@@ -3967,6 +4277,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `Trash2` |
 | `@components/ui/Button` | `Button` |
 
+**Exports:**
+- Functions: `DrawSignature`
+
 ---
 
 ### `src/components/signatures/ImageSignature.tsx` - Component for uploading and processing signature images.
@@ -3977,6 +4290,9 @@ The codebase is organized into the following modules:
 | `react` | `useState, useCallback, useRef` |
 | `lucide-react` | `Upload, X, RefreshCw` |
 | `@components/ui/Button` | `Button` |
+
+**Exports:**
+- Functions: `ImageSignature`
 
 ---
 
@@ -4006,6 +4322,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `Star, Trash2, Edit2, Check, X` |
 | `@stores/signatureStore` | `useSignatureStore, StoredSignature` |
 
+**Exports:**
+- Functions: `SignatureList`
+
 ---
 
 ### `src/components/signatures/SignatureModal.tsx` - Modal for creating and managing signatures.
@@ -4026,6 +4345,9 @@ The codebase is organized into the following modules:
 | `./ImageSignature` | `ImageSignature` | Import |
 | `./SignatureList` | `SignatureList` | Import |
 
+**Exports:**
+- Functions: `SignatureModal`
+
 ---
 
 ### `src/components/signatures/SignaturePlacer.tsx` - Overlay component for placing signatures on a PDF page.
@@ -4035,6 +4357,9 @@ The codebase is organized into the following modules:
 |---------|--------|
 | `react` | `useState, useCallback, useEffect, useRef` |
 | `@stores/signatureStore` | `useSignatureStore` |
+
+**Exports:**
+- Functions: `SignaturePlacer`
 
 ---
 
@@ -4060,6 +4385,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `RotateCw` |
 | `@stores/signatureStore` | `useSignatureStore, PlacedSignature` |
 
+**Exports:**
+- Functions: `SignatureRotation`
+
 ---
 
 ### `src/components/signatures/TypeSignature.tsx` - Component for creating typed signatures with font selection.
@@ -4068,6 +4396,9 @@ The codebase is organized into the following modules:
 | Package | Import |
 |---------|--------|
 | `react` | `useState, useCallback, useRef, useEffect` |
+
+**Exports:**
+- Functions: `TypeSignature`
 
 ---
 
@@ -4114,6 +4445,9 @@ The codebase is organized into the following modules:
 | `@components/annotations/StampPicker` | `StampPicker` |
 | `@components/signatures` | `SignatureModal, InitialsModal` |
 
+**Exports:**
+- Functions: `AnnotationToolbar`
+
 ---
 
 ### `src/components/toolbar/SearchBar.tsx` - Search bar for the open document, with case and whole-word options and match navigation.
@@ -4127,6 +4461,9 @@ The codebase is organized into the following modules:
 | `@hooks/useSearch` | `useSearch` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `SearchBar`
+
 ---
 
 ### `src/components/toolbar/ViewModeToggle.tsx` - Three buttons set the document view mode: single page, continuous scroll or spread.
@@ -4137,6 +4474,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `FileText, Rows, BookOpen` |
 | `@stores/documentStore` | `useDocumentStore` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `ViewModeToggle`
 
 ---
 
@@ -4149,7 +4489,7 @@ The codebase is organized into the following modules:
 | `@utils/cn` | `cn` |
 
 **Exports:**
-- Functions: `SkipNav`, `VisuallyHidden`, `IconButton`
+- Functions: `SkipNav`, `LiveRegion`, `VisuallyHidden`, `IconButton`
 
 ---
 
@@ -4177,6 +4517,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `CheckboxProps`
+- Constants: `Checkbox`
 
 ---
 
@@ -4221,6 +4562,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `X` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `LoadingIndicator`, `LoadingOverlay`
+
 ---
 
 ### `src/components/ui/Progress.tsx` - Progress UI Component
@@ -4232,6 +4576,7 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `ProgressProps`
+- Constants: `Progress`
 
 ---
 
@@ -4270,6 +4615,9 @@ The codebase is organized into the following modules:
 | `@stores/uiStore` | `useUIStore` |
 | `@utils/cn` | `cn` |
 
+**Exports:**
+- Functions: `ThemeToggle`, `ThemeSelector`
+
 ---
 
 ### `src/components/ui/index.ts` - Package entry point for ui (re-exports 20 symbols)
@@ -4307,6 +4655,8 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `InstallPromptProps`
+- Functions: `InstallPrompt`
+- Default: `default`
 
 ---
 
@@ -4320,6 +4670,8 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `ReleaseNotesProps`
+- Functions: `ReleaseNotes`
+- Default: `default`
 
 ---
 
@@ -4333,7 +4685,8 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `UpdateNotificationProps`
-- Functions: `UpdateNotification`
+- Functions: `UpdateNotification`, `UpdateErrorNotification`
+- Default: `default`
 
 ---
 
@@ -4347,6 +4700,8 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `UpdateProgressProps`
+- Functions: `UpdateProgress`, `UpdateProgressIndicator`
+- Default: `default`
 
 ---
 
@@ -4365,6 +4720,8 @@ The codebase is organized into the following modules:
 
 **Exports:**
 - Interfaces: `UpdateSettingsProps`
+- Functions: `UpdateSettings`
+- Default: `default`
 
 ---
 
@@ -4392,6 +4749,10 @@ The codebase is organized into the following modules:
 | `react` | `useState, useEffect` |
 | `@components/ui/Button` | `Button` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Functions: `UpdateNotification`
+- Default: `default`
 
 ---
 
@@ -4425,6 +4786,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `FileUp, AlertCircle` |
 | `@hooks/useDropZone` | `useDropZone` |
 | `@utils/cn` | `cn` |
+
+**Exports:**
+- Constants: `DropZone`
 
 ---
 
@@ -4473,6 +4837,9 @@ The codebase is organized into the following modules:
 |------|---------|------|
 | `./TextLayer` | `TextLayer, TextSelection` | Import |
 
+**Exports:**
+- Functions: `PageCanvas`
+
 ---
 
 ### `src/components/viewer/PageNavigation.tsx` - Previous and next buttons, with a page number field that users can type in to jump to a page.
@@ -4484,6 +4851,9 @@ The codebase is organized into the following modules:
 | `lucide-react` | `ChevronLeft, ChevronRight` |
 | `@components/ui/Button` | `Button` |
 | `@stores/documentStore` | `useDocumentStore` |
+
+**Exports:**
+- Functions: `PageNavigation`
 
 ---
 
@@ -4533,6 +4903,9 @@ The codebase is organized into the following modules:
 |------|---------|------|
 | `./PageCanvas` | `PageCanvas` | Import |
 
+**Exports:**
+- Functions: `SpreadView`
+
 ---
 
 ### `src/components/viewer/TextLayer.tsx` - Text selected on one page: the trimmed text, selection rectangles and page index.
@@ -4564,6 +4937,9 @@ The codebase is organized into the following modules:
 |------|---------|------|
 | `./PageCanvas` | `PageCanvas` | Import |
 | `./PageSkeleton` | `PageSkeleton` | Import |
+
+**Exports:**
+- Functions: `VirtualizedViewer`
 
 ---
 
@@ -7660,6 +8036,9 @@ The codebase is organized into the following modules:
 | `@hooks/useFormFields` | `useFormFields` |
 | `@stores/documentStore` | `useDocumentStore` |
 
+**Exports:**
+- Default: `Editor`
+
 ---
 
 ### `src/pages/Home.tsx` - Render the home page with a drop zone, a file picker and the recent files list.
@@ -7706,6 +8085,10 @@ The codebase is organized into the following modules:
 | `lucide-react` | `ArrowLeft, Shield, Eye, Lock, Database, Trash2` |
 | `@components/ui/Button` | `Button` |
 
+**Exports:**
+- Functions: `Privacy`
+- Default: `default`
+
 ---
 
 ### `src/pages/Settings.tsx` - Render the settings page for the saved user preferences.
@@ -7719,6 +8102,9 @@ The codebase is organized into the following modules:
 | `@components/ui/Button` | `Button` |
 | `@stores/settingsStore` | `useSettingsStore` |
 
+**Exports:**
+- Default: `Settings`
+
 ---
 
 ### `src/pages/Terms.tsx` - Render the terms page, with a link back to the app.
@@ -7729,6 +8115,10 @@ The codebase is organized into the following modules:
 | `react-router` | `Link` |
 | `lucide-react` | `ArrowLeft, FileText, CheckCircle, AlertTriangle, Scale` |
 | `@components/ui/Button` | `Button` |
+
+**Exports:**
+- Functions: `Terms`
+- Default: `default`
 
 ---
 
@@ -8771,11 +9161,11 @@ graph TD
 | Total Source Files | 746 |
 | Subsystems | 20 |
 | Total Lines of Code | 176938 |
-| Total Exports | 3259 |
+| Total Exports | 3406 |
 | Total Re-exports | 812 |
 | Total Classes | 69 |
 | Total Interfaces | 686 |
-| Total Functions | 1293 |
+| Total Functions | 1436 |
 | Total Type Guards | 59 |
 | Total Enums | 3 |
 | Type-only Imports | 92 |

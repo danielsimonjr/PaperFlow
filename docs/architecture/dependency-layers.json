@@ -4139,7 +4139,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "AnnotationLayer"
+        ],
+        "functions": [
+          "AnnotationLayer"
+        ]
       },
       "src/components/annotations/AnnotationProperties.tsx": {
         "description": "Properties panel for editing the selected annotation.",
@@ -4187,7 +4192,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "AnnotationProperties"
+        ],
+        "functions": [
+          "AnnotationProperties"
+        ]
       },
       "src/components/annotations/ArrowTool.tsx": {
         "description": "Arrow drawing tool with Shift key constraint for 45\u00b0 angle increments.",
@@ -4324,7 +4334,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "DrawingToolOptions"
+        ],
+        "functions": [
+          "DrawingToolOptions"
+        ]
       },
       "src/components/annotations/EllipseTool.tsx": {
         "description": "Ellipse/Circle drawing tool with Shift key constraint for circles.",
@@ -4426,7 +4441,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ExportImportDialog"
+        ],
+        "functions": [
+          "ExportImportDialog"
+        ]
       },
       "src/components/annotations/Highlight.tsx": {
         "description": "SVG component for rendering text highlight annotations.",
@@ -4536,7 +4556,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "NoteReplies"
+        ],
+        "functions": [
+          "NoteReplies"
+        ]
       },
       "src/components/annotations/NoteTool.tsx": {
         "description": "Note placement tool overlay.",
@@ -4585,7 +4610,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "OpacitySlider"
+        ],
+        "functions": [
+          "OpacitySlider"
+        ]
       },
       "src/components/annotations/RectangleTool.tsx": {
         "description": "Rectangle drawing tool with Shift key constraint for squares.",
@@ -4629,7 +4659,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ResizeHandles"
+        ],
+        "functions": [
+          "ResizeHandles"
+        ]
       },
       "src/components/annotations/RotationHandle.tsx": {
         "description": "Rotation handle for shape manipulation.",
@@ -4645,7 +4680,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "RotationHandle"
+        ],
+        "functions": [
+          "RotationHandle"
+        ]
       },
       "src/components/annotations/SelectionPopup.tsx": {
         "description": "Popup menu that appears after text selection.",
@@ -4680,7 +4720,11 @@
         "internalDependencies": [],
         "workspaceDependencies": [],
         "exports": [
-          "HIGHLIGHT_COLORS"
+          "HIGHLIGHT_COLORS",
+          "SelectionPopup"
+        ],
+        "functions": [
+          "SelectionPopup"
         ],
         "constants": [
           "HIGHLIGHT_COLORS"
@@ -4699,7 +4743,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ShapeAnnotation"
+        ],
+        "functions": [
+          "ShapeAnnotation"
+        ]
       },
       "src/components/annotations/ShapeOptions.tsx": {
         "description": "Options panel for shape tools: stroke color, fill color, stroke width.",
@@ -4727,7 +4776,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ShapeOptions"
+        ],
+        "functions": [
+          "ShapeOptions"
+        ]
       },
       "src/components/annotations/ShapeOverlay.tsx": {
         "description": "SVG overlay for rendering shape annotations (rectangles, ellipses, arrows, lines).",
@@ -4762,7 +4816,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ShapeOverlay"
+        ],
+        "functions": [
+          "ShapeOverlay"
+        ]
       },
       "src/components/annotations/StampPicker.tsx": {
         "description": "Stamp picker showing preset and custom stamps.",
@@ -4784,7 +4843,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "StampPicker"
+        ],
+        "functions": [
+          "StampPicker"
+        ]
       },
       "src/components/annotations/StampTool.tsx": {
         "description": "Stamp placement tool with preview on hover.",
@@ -4833,7 +4897,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "StampTransform"
+        ],
+        "functions": [
+          "StampTransform"
+        ]
       },
       "src/components/annotations/StickyNote.tsx": {
         "description": "Sticky note annotation component.",
@@ -4867,7 +4936,11 @@
         ],
         "workspaceDependencies": [],
         "exports": [
-          "NOTE_COLORS"
+          "NOTE_COLORS",
+          "StickyNote"
+        ],
+        "functions": [
+          "StickyNote"
         ],
         "constants": [
           "NOTE_COLORS"
@@ -5064,9 +5137,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "BatchDashboard"
+        ],
         "interfaces": [
           "BatchDashboardProps"
+        ],
+        "functions": [
+          "BatchDashboard"
         ]
       },
       "src/components/batch/BatchPanel.tsx": {
@@ -5106,9 +5184,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "BatchSummary"
+        ],
         "interfaces": [
           "BatchSummaryProps"
+        ],
+        "functions": [
+          "BatchSummary"
         ]
       },
       "src/components/batch/BatchWizard.tsx": {
@@ -5126,9 +5209,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "BatchWizard"
+        ],
         "interfaces": [
           "BatchWizardProps"
+        ],
+        "functions": [
+          "BatchWizard"
         ]
       },
       "src/components/batch/BatesNumberDialog.tsx": {
@@ -5467,7 +5555,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "AlignmentPicker"
+        ],
+        "functions": [
+          "AlignmentPicker"
+        ]
       },
       "src/components/editor/FontPicker.tsx": {
         "description": "Dropdown picker for selecting font family.",
@@ -5503,7 +5596,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FontPicker"
+        ],
+        "functions": [
+          "FontPicker"
+        ]
       },
       "src/components/editor/FontSizePicker.tsx": {
         "description": "Dropdown picker for selecting font size.",
@@ -5532,7 +5630,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FontSizePicker"
+        ],
+        "functions": [
+          "FontSizePicker"
+        ]
       },
       "src/components/editor/InlineTextEditor.tsx": {
         "description": "Inline text editor for editing text boxes.",
@@ -5605,7 +5708,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "LineSpacing"
+        ],
+        "functions": [
+          "LineSpacing"
+        ]
       },
       "src/components/editor/RichTextToolbar.tsx": {
         "description": "Toolbar for text formatting controls.",
@@ -5680,7 +5788,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "RichTextToolbar"
+        ],
+        "functions": [
+          "RichTextToolbar"
+        ]
       },
       "src/components/editor/TextBoxTool.tsx": {
         "description": "Tool for creating new text boxes by clicking or dragging.",
@@ -5787,7 +5900,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "TextColorPicker"
+        ],
+        "functions": [
+          "TextColorPicker"
+        ]
       },
       "src/components/editor/TextProperties.tsx": {
         "description": "Panel displaying detected text properties for selected text or text box.",
@@ -6005,7 +6123,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ConfigExportDialog"
+        ],
+        "functions": [
+          "ConfigExportDialog"
+        ]
       },
       "src/components/enterprise/ConfigSourceBadge.tsx": {
         "description": "Config Source Badge Component (Sprint 20)",
@@ -6088,10 +6211,14 @@
         "internalDependencies": [],
         "workspaceDependencies": [],
         "exports": [
-          "LockedSettingBadge"
+          "LockedSettingBadge",
+          "LockedSettingWrapper",
+          "withLockCheck"
         ],
         "functions": [
-          "LockedSettingBadge"
+          "LockedSettingBadge",
+          "LockedSettingWrapper",
+          "withLockCheck"
         ]
       },
       "src/components/enterprise/PolicyStatusIndicator.tsx": {
@@ -6121,7 +6248,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PolicyStatusIndicator"
+        ],
+        "functions": [
+          "PolicyStatusIndicator"
+        ]
       },
       "src/components/export/CompressDialog.tsx": {
         "description": "The dialog compresses the open PDF and saves the result as a file.",
@@ -6177,7 +6309,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "CompressDialog"
+        ],
+        "functions": [
+          "CompressDialog"
+        ]
       },
       "src/components/export/ImageExportDialog.tsx": {
         "description": "The dialog exports the current page or all pages as image files.",
@@ -6238,7 +6375,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ImageExportDialog"
+        ],
+        "functions": [
+          "ImageExportDialog"
+        ]
       },
       "src/components/export/index.ts": {
         "description": "Package entry point for export (re-exports 2 symbols)",
@@ -6302,7 +6444,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ChangePreview",
+          "ChangeCountBadge"
+        ],
+        "functions": [
+          "ChangePreview",
+          "ChangeCountBadge"
+        ]
       },
       "src/components/fileWatch/DocumentCompare.tsx": {
         "description": "Document Compare Component",
@@ -6345,7 +6494,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "DocumentCompare"
+        ],
+        "functions": [
+          "DocumentCompare"
+        ]
       },
       "src/components/fileWatch/ExternalChangeNotification.tsx": {
         "description": "External Change Notification Component",
@@ -6378,7 +6532,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ExternalChangeNotification",
+          "ExternalChangeNotifications"
+        ],
+        "functions": [
+          "ExternalChangeNotification",
+          "ExternalChangeNotifications"
+        ]
       },
       "src/components/fileWatch/FileLockNotification.tsx": {
         "description": "File Lock Notification Component",
@@ -6405,10 +6566,12 @@
         "internalDependencies": [],
         "workspaceDependencies": [],
         "exports": [
-          "FileLockNotification"
+          "FileLockNotification",
+          "FileLockIndicator"
         ],
         "functions": [
-          "FileLockNotification"
+          "FileLockNotification",
+          "FileLockIndicator"
         ]
       },
       "src/components/fileWatch/WatchStatusIndicator.tsx": {
@@ -6444,10 +6607,14 @@
         "internalDependencies": [],
         "workspaceDependencies": [],
         "exports": [
-          "WatchStatusIndicator"
+          "WatchStatusIndicator",
+          "GlobalWatchStatus",
+          "WatchToggleButton"
         ],
         "functions": [
-          "WatchStatusIndicator"
+          "WatchStatusIndicator",
+          "GlobalWatchStatus",
+          "WatchToggleButton"
         ]
       },
       "src/components/forms/Checkbox.tsx": {
@@ -6478,7 +6645,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "Checkbox"
+        ],
+        "functions": [
+          "Checkbox"
+        ]
       },
       "src/components/forms/Dropdown.tsx": {
         "description": "The dropdown widget is for a PDF form field and sits at the position of the field.",
@@ -6508,7 +6680,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "Dropdown"
+        ],
+        "functions": [
+          "Dropdown"
+        ]
       },
       "src/components/forms/FieldError.tsx": {
         "description": "Component to display field validation errors",
@@ -6523,7 +6700,16 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FieldError",
+          "FieldErrorTooltip",
+          "RequiredIndicator"
+        ],
+        "functions": [
+          "FieldError",
+          "FieldErrorTooltip",
+          "RequiredIndicator"
+        ]
       },
       "src/components/forms/FormActions.tsx": {
         "description": "Form actions toolbar component",
@@ -6582,7 +6768,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FormActions"
+        ],
+        "functions": [
+          "FormActions"
+        ]
       },
       "src/components/forms/FormFieldRenderer.tsx": {
         "description": "Renders the appropriate form field component based on field type",
@@ -6654,7 +6845,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FormLayer"
+        ],
+        "functions": [
+          "FormLayer"
+        ]
       },
       "src/components/forms/RadioButton.tsx": {
         "description": "A radio button represents one option of a PDF form field and appears at the position of the field.",
@@ -6684,7 +6880,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "RadioButton",
+          "RadioGroup"
+        ],
+        "functions": [
+          "RadioButton",
+          "RadioGroup"
+        ]
       },
       "src/components/forms/TextField.tsx": {
         "description": "The text input sits at the PDF text field's position.",
@@ -6714,7 +6917,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "TextField"
+        ],
+        "functions": [
+          "TextField"
+        ]
       },
       "src/components/forms/designer/DesignCanvas.tsx": {
         "description": "Design Canvas Component",
@@ -6741,7 +6949,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "DesignCanvas"
+        ],
+        "functions": [
+          "DesignCanvas"
+        ]
       },
       "src/components/forms/designer/DesignerToolbar.tsx": {
         "description": "Designer Toolbar Component",
@@ -6749,7 +6962,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "DesignerToolbar"
+        ],
+        "functions": [
+          "DesignerToolbar"
+        ]
       },
       "src/components/forms/designer/FieldPalette.tsx": {
         "description": "Field Palette Component",
@@ -6764,7 +6982,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FieldPalette"
+        ],
+        "functions": [
+          "FieldPalette"
+        ]
       },
       "src/components/forms/designer/FieldPreview.tsx": {
         "description": "Field Preview Component",
@@ -6772,7 +6995,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FieldPreview"
+        ],
+        "functions": [
+          "FieldPreview"
+        ]
       },
       "src/components/forms/designer/FieldProperties.tsx": {
         "description": "Field Properties Panel",
@@ -6780,7 +7008,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FieldProperties"
+        ],
+        "functions": [
+          "FieldProperties"
+        ]
       },
       "src/components/forms/designer/FormDesigner.tsx": {
         "description": "Form Designer Component",
@@ -6821,7 +7054,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "FormDesigner"
+        ],
+        "functions": [
+          "FormDesigner"
+        ]
       },
       "src/components/forms/designer/index.ts": {
         "description": "Form Designer Components",
@@ -7004,7 +7242,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "KeyboardShortcutsDialog"
+        ],
+        "functions": [
+          "KeyboardShortcutsDialog"
+        ]
       },
       "src/components/home/RecentFiles.tsx": {
         "description": "The component lists up to ten recent files, loaded from the IndexedDB storage module.",
@@ -7043,7 +7286,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "RecentFiles"
+        ],
+        "functions": [
+          "RecentFiles"
+        ]
       },
       "src/components/kiosk/KioskHeader.tsx": {
         "description": "Kiosk Header Component (Sprint 24)",
@@ -7058,7 +7306,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "KioskHeader"
+        ],
+        "functions": [
+          "KioskHeader"
+        ]
       },
       "src/components/kiosk/KioskShell.tsx": {
         "description": "Kiosk Shell Component (Sprint 24)",
@@ -7088,7 +7341,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "KioskShell"
+        ],
+        "functions": [
+          "KioskShell"
+        ]
       },
       "src/components/kiosk/KioskToolbar.tsx": {
         "description": "Kiosk Toolbar Component (Sprint 24)",
@@ -7103,7 +7361,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "KioskToolbar"
+        ],
+        "functions": [
+          "KioskToolbar"
+        ]
       },
       "src/components/layout/AppLayout.tsx": {
         "description": "Main application layout using CSS Grid.",
@@ -7280,7 +7543,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "MobileToolbar"
+        ],
+        "functions": [
+          "MobileToolbar"
+        ]
       },
       "src/components/layout/Sidebar.tsx": {
         "description": "The collapsible side panel contains page thumbnails, an outline, and an annotations tab.",
@@ -7323,7 +7591,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "Sidebar"
+        ],
+        "functions": [
+          "Sidebar"
+        ]
       },
       "src/components/layout/TitleBar.tsx": {
         "description": "TitleBar Component",
@@ -7353,7 +7626,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "TitleBar",
+          "TrafficLightsSpacer"
+        ],
+        "functions": [
+          "TitleBar",
+          "TrafficLightsSpacer"
+        ]
       },
       "src/components/layout/Toolbar.tsx": {
         "description": "The main editing toolbar has tool buttons, export and import, and view, page and zoom controls.",
@@ -7436,7 +7716,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "Toolbar"
+        ],
+        "functions": [
+          "Toolbar"
+        ]
       },
       "src/components/lazy/index.ts": {
         "description": "Lazy-loaded heavy feature components",
@@ -7497,7 +7782,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "BatchOCRProgress"
+        ],
+        "functions": [
+          "BatchOCRProgress"
+        ]
       },
       "src/components/ocr/LanguageSelector.tsx": {
         "description": "Language Selector Component",
@@ -7519,7 +7809,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "LanguageSelector"
+        ],
+        "functions": [
+          "LanguageSelector"
+        ]
       },
       "src/components/ocr/OCRDialog.tsx": {
         "description": "OCR Dialog Component",
@@ -7566,7 +7861,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "OCRDialog"
+        ],
+        "functions": [
+          "OCRDialog"
+        ]
       },
       "src/components/ocr/OCRExportDialog.tsx": {
         "description": "OCR Export Dialog Component",
@@ -7590,7 +7890,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "OCRExportDialog"
+        ],
+        "functions": [
+          "OCRExportDialog"
+        ]
       },
       "src/components/ocr/OCRProgress.tsx": {
         "description": "OCR Progress Component",
@@ -7605,7 +7910,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "OCRProgress"
+        ],
+        "functions": [
+          "OCRProgress"
+        ]
       },
       "src/components/ocr/OCRResultsPanel.tsx": {
         "description": "OCR Results Panel Component",
@@ -7631,7 +7941,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "OCRResultsPanel"
+        ],
+        "functions": [
+          "OCRResultsPanel"
+        ]
       },
       "src/components/ocr/PageRangeSelector.tsx": {
         "description": "Page Range Selector Component for OCR",
@@ -7647,7 +7962,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PageRangeSelector"
+        ],
+        "functions": [
+          "PageRangeSelector"
+        ]
       },
       "src/components/ocr/PreprocessingOptions.tsx": {
         "description": "Preprocessing Options Component",
@@ -7655,7 +7975,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PreprocessingOptions"
+        ],
+        "functions": [
+          "PreprocessingOptions"
+        ]
       },
       "src/components/ocr/index.ts": {
         "description": "OCR Components",
@@ -7808,9 +8133,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "OfflineBanner"
+        ],
         "interfaces": [
           "OfflineBannerProps"
+        ],
+        "functions": [
+          "OfflineBanner"
         ]
       },
       "src/components/offline/OfflineIndicator.tsx": {
@@ -7844,9 +8174,14 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "OfflineIndicator"
+        ],
         "interfaces": [
           "OfflineIndicatorProps"
+        ],
+        "functions": [
+          "OfflineIndicator"
         ]
       },
       "src/components/offline/OfflineSettings.tsx": {
@@ -7874,9 +8209,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "OfflineSettings"
+        ],
         "interfaces": [
           "OfflineSettingsProps"
+        ],
+        "functions": [
+          "OfflineSettings"
         ]
       },
       "src/components/offline/SyncStatusPanel.tsx": {
@@ -7907,9 +8247,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "SyncStatusPanel"
+        ],
         "interfaces": [
           "SyncStatusPanelProps"
+        ],
+        "functions": [
+          "SyncStatusPanel"
         ]
       },
       "src/components/offline/VersionCompare.tsx": {
@@ -7934,9 +8279,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "VersionCompare"
+        ],
         "interfaces": [
           "VersionCompareProps"
+        ],
+        "functions": [
+          "VersionCompare"
         ]
       },
       "src/components/pages/DraggableThumbnail.tsx": {
@@ -7966,9 +8316,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "DraggableThumbnail"
+        ],
         "interfaces": [
           "DraggableThumbnailProps"
+        ],
+        "constants": [
+          "DraggableThumbnail"
         ]
       },
       "src/components/pages/InsertPageDialog.tsx": {
@@ -8015,9 +8370,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "InsertPageDialog"
+        ],
         "interfaces": [
           "InsertPageDialogProps"
+        ],
+        "functions": [
+          "InsertPageDialog"
         ]
       },
       "src/components/pages/MergeDialog.tsx": {
@@ -8071,9 +8431,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "MergeDialog"
+        ],
         "interfaces": [
           "MergeDialogProps"
+        ],
+        "functions": [
+          "MergeDialog"
         ]
       },
       "src/components/pages/MoveToDialog.tsx": {
@@ -8114,9 +8479,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "MoveToDialog"
+        ],
         "interfaces": [
           "MoveToDialogProps"
+        ],
+        "functions": [
+          "MoveToDialog"
         ]
       },
       "src/components/pages/PageContextMenu.tsx": {
@@ -8157,9 +8527,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "PageContextMenu"
+        ],
         "interfaces": [
           "PageContextMenuProps"
+        ],
+        "functions": [
+          "PageContextMenu"
         ]
       },
       "src/components/pages/RotateMenu.tsx": {
@@ -8256,9 +8631,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "SplitDialog"
+        ],
         "interfaces": [
           "SplitDialogProps"
+        ],
+        "functions": [
+          "SplitDialog"
         ]
       },
       "src/components/pages/index.ts": {
@@ -8371,7 +8751,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "AccessibilityOptions"
+        ],
+        "functions": [
+          "AccessibilityOptions"
+        ]
       },
       "src/components/print/AdvancedPrintSettings.tsx": {
         "description": "Advanced Print Settings Panel",
@@ -8393,7 +8778,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "AdvancedPrintSettings"
+        ],
+        "functions": [
+          "AdvancedPrintSettings"
+        ]
       },
       "src/components/print/BindingOptions.tsx": {
         "description": "Binding Options Component",
@@ -8414,9 +8804,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "BindingOptions"
+        ],
         "interfaces": [
           "BindingOptionsValue"
+        ],
+        "functions": [
+          "BindingOptions"
         ]
       },
       "src/components/print/BookletWizard.tsx": {
@@ -8464,9 +8859,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "BookletWizard"
+        ],
         "interfaces": [
           "BookletSettings"
+        ],
+        "functions": [
+          "BookletWizard"
         ]
       },
       "src/components/print/MarginEditor.tsx": {
@@ -8497,7 +8897,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "MarginEditor"
+        ],
+        "functions": [
+          "MarginEditor"
+        ]
       },
       "src/components/print/OrientationOptions.tsx": {
         "description": "Page orientation choices: auto, portrait or landscape.",
@@ -8537,7 +8942,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PageLayout"
+        ],
+        "functions": [
+          "PageLayout"
+        ]
       },
       "src/components/print/PageRangeSelector.tsx": {
         "description": "Page range choices for printing: all pages, the current page, or a custom range.",
@@ -8651,7 +9061,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PrintDialog"
+        ],
+        "functions": [
+          "PrintDialog"
+        ]
       },
       "src/components/print/PrintPresetsManager.tsx": {
         "description": "Print Presets Manager",
@@ -8685,7 +9100,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PrintPresetsManager"
+        ],
+        "functions": [
+          "PrintPresetsManager"
+        ]
       },
       "src/components/print/PrintPreview.tsx": {
         "description": "Print preview placeholder: it shows the page number, not a rendered page.",
@@ -8707,7 +9127,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PrintPreview"
+        ],
+        "functions": [
+          "PrintPreview"
+        ]
       },
       "src/components/print/PrintPreviewEnhanced.tsx": {
         "description": "Enhanced Print Preview Component",
@@ -8750,7 +9175,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PrintPreviewEnhanced"
+        ],
+        "functions": [
+          "PrintPreviewEnhanced"
+        ]
       },
       "src/components/print/PrintQualitySelector.tsx": {
         "description": "Print Quality Selector Component",
@@ -8772,7 +9202,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PrintQualitySelector"
+        ],
+        "functions": [
+          "PrintQualitySelector"
+        ]
       },
       "src/components/print/PrinterStatus.tsx": {
         "description": "Printer Status Component",
@@ -8800,7 +9235,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PrinterStatus"
+        ],
+        "functions": [
+          "PrinterStatus"
+        ]
       },
       "src/components/print/ScaleOptions.tsx": {
         "description": "Scale choices for printing: fit to page, actual size (100%) or custom.",
@@ -8808,7 +9248,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ScaleOptions"
+        ],
+        "functions": [
+          "ScaleOptions"
+        ]
       },
       "src/components/print/index.ts": {
         "description": "Package entry point for print (re-exports 8 symbols)",
@@ -9022,7 +9467,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "BatchScanWorkflow"
+        ],
+        "functions": [
+          "BatchScanWorkflow"
+        ]
       },
       "src/components/scanner/ColorModeSelector.tsx": {
         "description": "Color Mode Selector Component",
@@ -9043,7 +9493,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ColorModeSelector"
+        ],
+        "functions": [
+          "ColorModeSelector"
+        ]
       },
       "src/components/scanner/CropTool.tsx": {
         "description": "Crop Tool Component",
@@ -9067,7 +9522,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "CropTool"
+        ],
+        "functions": [
+          "CropTool"
+        ]
       },
       "src/components/scanner/EnhancementTools.tsx": {
         "description": "Enhancement Tools Component",
@@ -9095,9 +9555,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "EnhancementTools"
+        ],
         "interfaces": [
           "EnhancementSettings"
+        ],
+        "functions": [
+          "EnhancementTools"
         ]
       },
       "src/components/scanner/PageOrganizer.tsx": {
@@ -9132,7 +9597,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PageOrganizer"
+        ],
+        "functions": [
+          "PageOrganizer"
+        ]
       },
       "src/components/scanner/ProfileManager.tsx": {
         "description": "Profile Manager Component",
@@ -9172,7 +9642,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ProfileManager"
+        ],
+        "functions": [
+          "ProfileManager"
+        ]
       },
       "src/components/scanner/ResolutionPicker.tsx": {
         "description": "Resolution Picker Component",
@@ -9193,7 +9668,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ResolutionPicker"
+        ],
+        "functions": [
+          "ResolutionPicker"
+        ]
       },
       "src/components/scanner/ScanPreview.tsx": {
         "description": "Scan Preview Component",
@@ -9228,7 +9708,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ScanPreview"
+        ],
+        "functions": [
+          "ScanPreview"
+        ]
       },
       "src/components/scanner/ScanSettingsPanel.tsx": {
         "description": "Scan Settings Panel",
@@ -9257,7 +9742,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ScanSettingsPanel"
+        ],
+        "functions": [
+          "ScanSettingsPanel"
+        ]
       },
       "src/components/scanner/ScannerInfo.tsx": {
         "description": "Scanner Info Component",
@@ -9278,7 +9768,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ScannerInfo"
+        ],
+        "functions": [
+          "ScannerInfo"
+        ]
       },
       "src/components/scanner/ScannerSelectDialog.tsx": {
         "description": "Scanner Selection Dialog",
@@ -9319,7 +9814,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ScannerSelectDialog"
+        ],
+        "functions": [
+          "ScannerSelectDialog"
+        ]
       },
       "src/components/security/EnrollmentGuide.tsx": {
         "description": "Enrollment Guide Component",
@@ -9346,7 +9846,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "EnrollmentGuide"
+        ],
+        "functions": [
+          "EnrollmentGuide"
+        ]
       },
       "src/components/security/HardwareKeyAuth.tsx": {
         "description": "Hardware Key Authentication Component",
@@ -9387,7 +9892,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "HardwareKeyAuth"
+        ],
+        "functions": [
+          "HardwareKeyAuth"
+        ]
       },
       "src/components/security/HardwareKeyEnrollment.tsx": {
         "description": "Hardware Key Enrollment Component",
@@ -9454,7 +9964,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "KeyChallenge"
+        ],
+        "functions": [
+          "KeyChallenge"
+        ]
       },
       "src/components/security/KeyManagement.tsx": {
         "description": "Key Management Component",
@@ -9488,7 +10003,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "KeyManagement"
+        ],
+        "functions": [
+          "KeyManagement"
+        ]
       },
       "src/components/settings/AutoReloadSettings.tsx": {
         "description": "Auto-Reload Settings Panel",
@@ -9530,7 +10050,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "AutoReloadSettings"
+        ],
+        "functions": [
+          "AutoReloadSettings"
+        ]
       },
       "src/components/settings/NotificationSettings.tsx": {
         "description": "Notification Settings Component",
@@ -9545,7 +10070,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "NotificationSettings"
+        ],
+        "functions": [
+          "NotificationSettings"
+        ]
       },
       "src/components/settings/ShortcutSettings.tsx": {
         "description": "Shortcut Settings Component",
@@ -9571,7 +10101,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ShortcutSettings"
+        ],
+        "functions": [
+          "ShortcutSettings"
+        ]
       },
       "src/components/sidebar/OutlinePanel.tsx": {
         "description": "Bookmark tree for the open document, with expandable entries that jump to pages.",
@@ -9608,7 +10143,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "OutlinePanel"
+        ],
+        "functions": [
+          "OutlinePanel"
+        ]
       },
       "src/components/sidebar/ThumbnailSidebar.tsx": {
         "description": "Thumbnail list for the open document, with selection, drag and drop, and page operations.",
@@ -9747,7 +10287,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ThumbnailSidebar"
+        ],
+        "functions": [
+          "ThumbnailSidebar"
+        ]
       },
       "src/components/signatures/DateStamp.tsx": {
         "description": "Date stamp component to display alongside signatures.",
@@ -9797,7 +10342,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "DrawSignature"
+        ],
+        "functions": [
+          "DrawSignature"
+        ]
       },
       "src/components/signatures/ImageSignature.tsx": {
         "description": "Component for uploading and processing signature images.",
@@ -9828,7 +10378,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ImageSignature"
+        ],
+        "functions": [
+          "ImageSignature"
+        ]
       },
       "src/components/signatures/InitialsModal.tsx": {
         "description": "Modal for creating and managing initials.",
@@ -9888,7 +10443,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "SignatureList"
+        ],
+        "functions": [
+          "SignatureList"
+        ]
       },
       "src/components/signatures/SignatureModal.tsx": {
         "description": "Modal for creating and managing signatures.",
@@ -9954,7 +10514,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "SignatureModal"
+        ],
+        "functions": [
+          "SignatureModal"
+        ]
       },
       "src/components/signatures/SignaturePlacer.tsx": {
         "description": "Overlay component for placing signatures on a PDF page.",
@@ -9978,7 +10543,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "SignaturePlacer"
+        ],
+        "functions": [
+          "SignaturePlacer"
+        ]
       },
       "src/components/signatures/SignatureResize.tsx": {
         "description": "Component for displaying and resizing placed signatures.",
@@ -10039,7 +10609,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "SignatureRotation"
+        ],
+        "functions": [
+          "SignatureRotation"
+        ]
       },
       "src/components/signatures/TypeSignature.tsx": {
         "description": "Component for creating typed signatures with font selection.",
@@ -10057,7 +10632,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "TypeSignature"
+        ],
+        "functions": [
+          "TypeSignature"
+        ]
       },
       "src/components/signatures/index.ts": {
         "description": "Signature creation components",
@@ -10245,7 +10825,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "AnnotationToolbar"
+        ],
+        "functions": [
+          "AnnotationToolbar"
+        ]
       },
       "src/components/toolbar/SearchBar.tsx": {
         "description": "Search bar for the open document, with case and whole-word options and match navigation.",
@@ -10292,7 +10877,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "SearchBar"
+        ],
+        "functions": [
+          "SearchBar"
+        ]
       },
       "src/components/toolbar/ViewModeToggle.tsx": {
         "description": "Three buttons set the document view mode: single page, continuous scroll or spread.",
@@ -10321,7 +10911,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ViewModeToggle"
+        ],
+        "functions": [
+          "ViewModeToggle"
+        ]
       },
       "src/components/ui/AccessibleComponents.tsx": {
         "description": "Skip navigation link for keyboard users.",
@@ -10344,11 +10939,13 @@
         "workspaceDependencies": [],
         "exports": [
           "SkipNav",
+          "LiveRegion",
           "VisuallyHidden",
           "IconButton"
         ],
         "functions": [
           "SkipNav",
+          "LiveRegion",
           "VisuallyHidden",
           "IconButton"
         ]
@@ -10402,9 +10999,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "Checkbox"
+        ],
         "interfaces": [
           "CheckboxProps"
+        ],
+        "constants": [
+          "Checkbox"
         ]
       },
       "src/components/ui/Dialog.tsx": {
@@ -10499,7 +11101,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "LoadingIndicator",
+          "LoadingOverlay"
+        ],
+        "functions": [
+          "LoadingIndicator",
+          "LoadingOverlay"
+        ]
       },
       "src/components/ui/Progress.tsx": {
         "description": "Progress UI Component",
@@ -10514,9 +11123,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "Progress"
+        ],
         "interfaces": [
           "ProgressProps"
+        ],
+        "constants": [
+          "Progress"
         ]
       },
       "src/components/ui/Select.tsx": {
@@ -10596,7 +11210,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "ThemeToggle",
+          "ThemeSelector"
+        ],
+        "functions": [
+          "ThemeToggle",
+          "ThemeSelector"
+        ]
       },
       "src/components/ui/index.ts": {
         "description": "Package entry point for ui (re-exports 20 symbols)",
@@ -10732,9 +11353,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "InstallPrompt"
+        ],
         "interfaces": [
           "InstallPromptProps"
+        ],
+        "functions": [
+          "InstallPrompt"
         ]
       },
       "src/components/update/ReleaseNotes.tsx": {
@@ -10759,9 +11385,14 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "ReleaseNotes"
+        ],
         "interfaces": [
           "ReleaseNotesProps"
+        ],
+        "functions": [
+          "ReleaseNotes"
         ]
       },
       "src/components/update/UpdateNotification.tsx": {
@@ -10788,13 +11419,15 @@
         "internalDependencies": [],
         "workspaceDependencies": [],
         "exports": [
-          "UpdateNotification"
+          "UpdateNotification",
+          "UpdateErrorNotification"
         ],
         "interfaces": [
           "UpdateNotificationProps"
         ],
         "functions": [
-          "UpdateNotification"
+          "UpdateNotification",
+          "UpdateErrorNotification"
         ]
       },
       "src/components/update/UpdateProgress.tsx": {
@@ -10817,9 +11450,16 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "UpdateProgress",
+          "UpdateProgressIndicator"
+        ],
         "interfaces": [
           "UpdateProgressProps"
+        ],
+        "functions": [
+          "UpdateProgress",
+          "UpdateProgressIndicator"
         ]
       },
       "src/components/update/UpdateSettings.tsx": {
@@ -10856,9 +11496,14 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": [],
+        "exports": [
+          "UpdateSettings"
+        ],
         "interfaces": [
           "UpdateSettingsProps"
+        ],
+        "functions": [
+          "UpdateSettings"
         ]
       },
       "src/components/update/index.ts": {
@@ -10950,7 +11595,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "UpdateNotification"
+        ],
+        "functions": [
+          "UpdateNotification"
+        ]
       },
       "src/components/viewer/ContinuousView.tsx": {
         "description": "The view is a continuous vertical view of the document, and renders only the pages near the viewport.",
@@ -11038,7 +11688,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "DropZone"
+        ],
+        "constants": [
+          "DropZone"
+        ]
       },
       "src/components/viewer/PDFViewer.tsx": {
         "description": "The top-level viewer shows the open document in the current view mode.",
@@ -11188,7 +11843,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PageCanvas"
+        ],
+        "functions": [
+          "PageCanvas"
+        ]
       },
       "src/components/viewer/PageNavigation.tsx": {
         "description": "Previous and next buttons, with a page number field that users can type in to jump to a page.",
@@ -11223,7 +11883,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "PageNavigation"
+        ],
+        "functions": [
+          "PageNavigation"
+        ]
       },
       "src/components/viewer/PageSkeleton.tsx": {
         "description": "Placeholder for a page that is loading, with bars for text and an image.",
@@ -11329,7 +11994,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "SpreadView"
+        ],
+        "functions": [
+          "SpreadView"
+        ]
       },
       "src/components/viewer/TextLayer.tsx": {
         "description": "Text selected on one page: the trimmed text, selection rectangles and page index.",
@@ -11408,7 +12078,12 @@
           }
         ],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "VirtualizedViewer"
+        ],
+        "functions": [
+          "VirtualizedViewer"
+        ]
       },
       "src/components/viewer/ZoomControls.tsx": {
         "description": "Zoom controls: zoom out, the zoom level, zoom in, fit to width and fit to page.",
@@ -20623,7 +21298,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "Privacy"
+        ],
+        "functions": [
+          "Privacy"
+        ]
       },
       "src/pages/Settings.tsx": {
         "description": "Render the settings page for the saved user preferences.",
@@ -20694,7 +21374,12 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "workspaceDependencies": [],
-        "exports": []
+        "exports": [
+          "Terms"
+        ],
+        "functions": [
+          "Terms"
+        ]
       }
     },
     "stores": {

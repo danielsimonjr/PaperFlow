@@ -24,8 +24,8 @@ PaperFlow is a PDF editor. It runs as a Progressive Web Application (PWA) in a b
 | Item | Count |
 |------|-------|
 | TypeScript files (file inventory) | 746 |
-| Exports (dependency graph) | 3259 |
-| Functions (dependency graph) | 1293 |
+| Exports (dependency graph) | 3406 |
+| Functions (dependency graph) | 1436 |
 | Classes (dependency graph) | 69 |
 | Interfaces (dependency graph) | 686 |
 | Zustand store modules, excluding index.ts | 26 |
@@ -1316,7 +1316,7 @@ Check: `repo-tools check . --docs=docs/architecture`
 | Claim | Value | Source |
 |-------|-------|--------|
 | totalFiles | 746 | file-inventory.json |
-| totalExports | 3259 | dependency-graph.json |
-| totalFunctions | 1293 | dependency-graph.json |
+| totalExports | 3406 | dependency-graph.json |
+| totalFunctions | 1436 | dependency-graph.json |
 | totalClasses | 69 | dependency-graph.json |
 | totalInterfaces | 686 | dependency-graph.json |

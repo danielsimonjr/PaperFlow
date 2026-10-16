@@ -12,11 +12,11 @@ Names that are OWN-DEFINED (not merely re-exported) by >= 2 distinct files acros
 
 | Category | Count |
 | --- | --: |
-| **TRUE_DUPLICATE** (actionable) | 69 |
+| **TRUE_DUPLICATE** (actionable) | 74 |
 | DISPATCH_VARIANT | 0 |
 | ALIAS_DELEGATION | 0 |
 | ALLOWLISTED | 0 |
-| _Total flagged names_ | 69 |
+| _Total flagged names_ | 74 |
 
 ## Summary — types (interface/type/enum)
 
@@ -40,9 +40,14 @@ Names that are OWN-DEFINED (not merely re-exported) by >= 2 distinct files acros
 | `unwatchAll` | function | `electron/fileWatcher.ts` (unknown, internal, PLAIN)<br>`electron/main/watcherService.ts` (unknown, internal, PLAIN)<br>`src/lib/electron/fileSystem.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `unwatchFile` | function | `electron/fileWatcher.ts` (unknown, internal, PLAIN)<br>`electron/main/watcherService.ts` (unknown, internal, PLAIN)<br>`src/lib/electron/fileSystem.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `watchFile` | function | `electron/fileWatcher.ts` (unknown, internal, PLAIN)<br>`electron/main/watcherService.ts` (unknown, internal, PLAIN)<br>`src/lib/electron/fileSystem.ts` (unknown, internal, PLAIN) | `internal-only` |
+| `Checkbox` | constant+function | `src/components/forms/Checkbox.tsx` (unknown, internal, PLAIN)<br>`src/components/ui/Checkbox.tsx` (unknown, internal, PLAIN) | `internal-only` |
 | `HIGHLIGHT_COLORS` | constant | `src/components/annotations/SelectionPopup.tsx` (unknown, internal, PLAIN)<br>`src/constants/tools.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `NOTE_COLORS` | constant | `src/components/annotations/StickyNote.tsx` (unknown, internal, PLAIN)<br>`src/constants/tools.ts` (unknown, internal, PLAIN) | `internal-only` |
+| `PageRangeSelector` | function | `src/components/ocr/PageRangeSelector.tsx` (unknown, internal, PLAIN)<br>`src/components/print/PageRangeSelector.tsx` (unknown, internal, PLAIN) | `internal-only` |
+| `PrintDialog` | class+function | `electron/main/print/printDialog.ts` (unknown, internal, PLAIN)<br>`src/components/print/PrintDialog.tsx` (unknown, internal, PLAIN) | `internal-only` |
+| `PrintPresetsManager` | class+function | `src/components/print/PrintPresetsManager.tsx` (unknown, internal, PLAIN)<br>`src/lib/print/presets.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `TemplateManager` | class+function | `src/components/batch/TemplateManager.tsx` (unknown, internal, PLAIN)<br>`src/lib/batch/templates.ts` (unknown, internal, PLAIN) | `internal-only` |
+| `UpdateNotification` | function | `src/components/update/UpdateNotification.tsx` (unknown, internal, PLAIN)<br>`src/components/updates/UpdateNotification.tsx` (unknown, internal, PLAIN) | `internal-only` |
 | `addRecentFile` | function | `electron/recentFiles.ts` (unknown, internal, PLAIN)<br>`src/lib/electron/fileSystem.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `bounceDock` | function | `electron/dock.ts` (unknown, internal, PLAIN)<br>`src/lib/electron/notifications.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `canvasToBlob` | function | `src/lib/export/imageExport.ts` (unknown, internal, PLAIN)<br>`src/lib/signatures/imageProcessor.ts` (unknown, internal, PLAIN) | `internal-only` |
