@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **The architecture reports count every export of a `.tsx` file.** `repo-tools` 2.2.2 read a `.tsx` file with the
+  TypeScript grammar, which cannot read JSX. The parser recovered from the errors, and the recovery depended on the text
+  of the file. The same component file gave one export without doc comments and two exports with them. Version 2.2.3
+  reads `.tsx` files with the TSX grammar. `repo-tools map . --out=docs/architecture` ran again with 2.2.3 and rewrote
+  the generated reports that changed. The totals change as follows: exports 3259 to 3406, and functions 1293 to 1436.
+  The classes (69) and the interfaces (686) do not change. `ARCHITECTURE.md` states the new counts, and
+  `repo-tools check . --docs=docs/architecture` exits 0.
+
 - **The hand-written architecture documents pass the drift gate.** `repo-tools check . --docs=docs/architecture`
   reported ten documents without a `## Verification` section, and it exits 0 now. `ARCHITECTURE.md` holds five
   verified metrics and `OVERVIEW.md` holds one. The other eight documents state no gate metric, so each carries the

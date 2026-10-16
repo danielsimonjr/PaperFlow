@@ -4,7 +4,7 @@ metadata:
   language: typescript
   totalFiles: 746
   totalModules: 4
-  totalExports: 3259
+  totalExports: 3406
 modules:
   src:
     cli/config-schema-check.ts:
@@ -1833,7 +1833,8 @@ modules:
           imports:
             - ShapeAnnotation
           typeOnly: false
-      exports: []
+      exports:
+        - AnnotationLayer
     src/components/annotations/AnnotationProperties.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -1850,7 +1851,8 @@ modules:
           imports:
             - OpacitySlider
           typeOnly: false
-      exports: []
+      exports:
+        - AnnotationProperties
     src/components/annotations/ArrowTool.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -1896,7 +1898,8 @@ modules:
           imports:
             - HIGHLIGHT_COLORS
           typeOnly: false
-      exports: []
+      exports:
+        - DrawingToolOptions
     src/components/annotations/EllipseTool.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -1922,7 +1925,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ExportImportDialog
     src/components/annotations/Highlight.tsx:
       externalDependencies:
         - react
@@ -1955,7 +1959,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - NoteReplies
     src/components/annotations/NoteTool.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -1973,7 +1978,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - OpacitySlider
     src/components/annotations/RectangleTool.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -1987,13 +1993,15 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ResizeHandles
     src/components/annotations/RotationHandle.tsx:
       externalDependencies:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - RotationHandle
     src/components/annotations/SelectionPopup.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -2003,12 +2011,14 @@ modules:
       internalDependencies: []
       exports:
         - HIGHLIGHT_COLORS
+        - SelectionPopup
     src/components/annotations/ShapeAnnotation.tsx:
       externalDependencies:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ShapeAnnotation
     src/components/annotations/ShapeOptions.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -2019,7 +2029,8 @@ modules:
           imports:
             - HIGHLIGHT_COLORS
           typeOnly: false
-      exports: []
+      exports:
+        - ShapeOptions
     src/components/annotations/ShapeOverlay.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -2034,14 +2045,16 @@ modules:
           imports:
             - RotationHandle
           typeOnly: false
-      exports: []
+      exports:
+        - ShapeOverlay
     src/components/annotations/StampPicker.tsx:
       externalDependencies:
         - lucide-react
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - StampPicker
     src/components/annotations/StampTool.tsx:
       externalDependencies:
         - '@stores/annotationStore'
@@ -2056,7 +2069,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - StampTransform
     src/components/annotations/StickyNote.tsx:
       externalDependencies:
         - lucide-react
@@ -2069,6 +2083,7 @@ modules:
           typeOnly: false
       exports:
         - NOTE_COLORS
+        - StickyNote
     src/components/annotations/Strikethrough.tsx:
       externalDependencies:
         - react
@@ -2163,6 +2178,7 @@ modules:
       internalDependencies: []
       exports:
         - BatchDashboardProps
+        - BatchDashboard
     src/components/batch/BatchPanel.tsx:
       externalDependencies:
         - react
@@ -2178,6 +2194,7 @@ modules:
       internalDependencies: []
       exports:
         - BatchSummaryProps
+        - BatchSummary
     src/components/batch/BatchWizard.tsx:
       externalDependencies:
         - react
@@ -2185,6 +2202,7 @@ modules:
       internalDependencies: []
       exports:
         - BatchWizardProps
+        - BatchWizard
     src/components/batch/BatesNumberDialog.tsx:
       externalDependencies:
         - react
@@ -2318,7 +2336,8 @@ modules:
         - lucide-react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - AlignmentPicker
     src/components/editor/FontPicker.tsx:
       externalDependencies:
         - '@lib/fonts/fontFallback'
@@ -2327,7 +2346,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - FontPicker
     src/components/editor/FontSizePicker.tsx:
       externalDependencies:
         - '@utils/cn'
@@ -2335,7 +2355,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - FontSizePicker
     src/components/editor/InlineTextEditor.tsx:
       externalDependencies:
         - '@lib/fonts/fontFallback'
@@ -2353,7 +2374,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - LineSpacing
     src/components/editor/RichTextToolbar.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -2383,7 +2405,8 @@ modules:
           imports:
             - LineSpacing
           typeOnly: false
-      exports: []
+      exports:
+        - RichTextToolbar
     src/components/editor/TextBoxTool.tsx:
       externalDependencies:
         - '@stores/textStore'
@@ -2413,7 +2436,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - TextColorPicker
     src/components/editor/TextProperties.tsx:
       externalDependencies:
         - '@utils/cn'
@@ -2505,7 +2529,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ConfigExportDialog
     src/components/enterprise/ConfigSourceBadge.tsx:
       externalDependencies:
         - react
@@ -2537,6 +2562,8 @@ modules:
       internalDependencies: []
       exports:
         - LockedSettingBadge
+        - LockedSettingWrapper
+        - withLockCheck
     src/components/enterprise/PolicyStatusIndicator.tsx:
       externalDependencies:
         - '@stores/enterprisePolicyStore'
@@ -2544,7 +2571,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PolicyStatusIndicator
     src/components/export/CompressDialog.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -2556,7 +2584,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - CompressDialog
     src/components/export/ImageExportDialog.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -2568,7 +2597,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ImageExportDialog
     src/components/export/index.ts:
       externalDependencies: []
       nodeDependencies: []
@@ -2591,7 +2621,9 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ChangePreview
+        - ChangeCountBadge
     src/components/fileWatch/DocumentCompare.tsx:
       externalDependencies:
         - '@lib/fileWatch/documentDiff'
@@ -2599,7 +2631,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - DocumentCompare
     src/components/fileWatch/ExternalChangeNotification.tsx:
       externalDependencies:
         - '@stores/fileWatchStore'
@@ -2607,7 +2640,9 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ExternalChangeNotification
+        - ExternalChangeNotifications
     src/components/fileWatch/FileLockNotification.tsx:
       externalDependencies:
         - lucide-react
@@ -2616,6 +2651,7 @@ modules:
       internalDependencies: []
       exports:
         - FileLockNotification
+        - FileLockIndicator
     src/components/fileWatch/WatchStatusIndicator.tsx:
       externalDependencies:
         - '@stores/fileWatchStore'
@@ -2625,6 +2661,8 @@ modules:
       internalDependencies: []
       exports:
         - WatchStatusIndicator
+        - GlobalWatchStatus
+        - WatchToggleButton
     src/components/forms/Checkbox.tsx:
       externalDependencies:
         - '@stores/formStore'
@@ -2632,7 +2670,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - Checkbox
     src/components/forms/Dropdown.tsx:
       externalDependencies:
         - '@stores/formStore'
@@ -2640,13 +2679,17 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - Dropdown
     src/components/forms/FieldError.tsx:
       externalDependencies:
         - '@utils/cn'
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - FieldError
+        - FieldErrorTooltip
+        - RequiredIndicator
     src/components/forms/FormActions.tsx:
       externalDependencies:
         - '@lib/forms/exportImport'
@@ -2659,7 +2702,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - FormActions
     src/components/forms/FormFieldRenderer.tsx:
       externalDependencies: []
       nodeDependencies: []
@@ -2693,7 +2737,8 @@ modules:
           imports:
             - FormFieldRenderer
           typeOnly: false
-      exports: []
+      exports:
+        - FormLayer
     src/components/forms/RadioButton.tsx:
       externalDependencies:
         - '@stores/formStore'
@@ -2701,7 +2746,9 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - RadioButton
+        - RadioGroup
     src/components/forms/TextField.tsx:
       externalDependencies:
         - '@stores/formStore'
@@ -2709,7 +2756,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - TextField
     src/components/forms/designer/DesignCanvas.tsx:
       externalDependencies:
         - react
@@ -2719,28 +2767,33 @@ modules:
           imports:
             - FieldPreview
           typeOnly: false
-      exports: []
+      exports:
+        - DesignCanvas
     src/components/forms/designer/DesignerToolbar.tsx:
       externalDependencies: []
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - DesignerToolbar
     src/components/forms/designer/FieldPalette.tsx:
       externalDependencies:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - FieldPalette
     src/components/forms/designer/FieldPreview.tsx:
       externalDependencies: []
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - FieldPreview
     src/components/forms/designer/FieldProperties.tsx:
       externalDependencies: []
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - FieldProperties
     src/components/forms/designer/FormDesigner.tsx:
       externalDependencies:
         - react
@@ -2762,7 +2815,8 @@ modules:
           imports:
             - DesignerToolbar
           typeOnly: false
-      exports: []
+      exports:
+        - FormDesigner
     src/components/forms/designer/index.ts:
       externalDependencies: []
       nodeDependencies: []
@@ -2855,7 +2909,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - KeyboardShortcutsDialog
     src/components/home/RecentFiles.tsx:
       externalDependencies:
         - '@lib/storage/indexeddb'
@@ -2864,13 +2919,15 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - RecentFiles
     src/components/kiosk/KioskHeader.tsx:
       externalDependencies:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - KioskHeader
     src/components/kiosk/KioskShell.tsx:
       externalDependencies:
         - react
@@ -2884,13 +2941,15 @@ modules:
           imports:
             - KioskHeader
           typeOnly: false
-      exports: []
+      exports:
+        - KioskShell
     src/components/kiosk/KioskToolbar.tsx:
       externalDependencies:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - KioskToolbar
     src/components/layout/AppLayout.tsx:
       externalDependencies:
         - react
@@ -2937,7 +2996,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - MobileToolbar
     src/components/layout/Sidebar.tsx:
       externalDependencies:
         - '@components/sidebar/OutlinePanel'
@@ -2947,7 +3007,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - Sidebar
     src/components/layout/TitleBar.tsx:
       externalDependencies:
         - '@utils/cn'
@@ -2955,7 +3016,9 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - TitleBar
+        - TrafficLightsSpacer
     src/components/layout/Toolbar.tsx:
       externalDependencies:
         - '@components/annotations/ExportImportDialog'
@@ -2970,7 +3033,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - Toolbar
     src/components/lazy/index.ts:
       externalDependencies:
         - react
@@ -2990,14 +3054,16 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - BatchOCRProgress
     src/components/ocr/LanguageSelector.tsx:
       externalDependencies:
         - lucide-react
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - LanguageSelector
     src/components/ocr/OCRDialog.tsx:
       externalDependencies:
         - lucide-react
@@ -3020,27 +3086,31 @@ modules:
           imports:
             - OCRProgress
           typeOnly: false
-      exports: []
+      exports:
+        - OCRDialog
     src/components/ocr/OCRExportDialog.tsx:
       externalDependencies:
         - lucide-react
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - OCRExportDialog
     src/components/ocr/OCRProgress.tsx:
       externalDependencies:
         - lucide-react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - OCRProgress
     src/components/ocr/OCRResultsPanel.tsx:
       externalDependencies:
         - lucide-react
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - OCRResultsPanel
     src/components/ocr/PageRangeSelector.tsx:
       externalDependencies:
         - react
@@ -3048,11 +3118,13 @@ modules:
       internalDependencies: []
       exports:
         - PageRangeType
+        - PageRangeSelector
     src/components/ocr/PreprocessingOptions.tsx:
       externalDependencies: []
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PreprocessingOptions
     src/components/ocr/index.ts:
       externalDependencies: []
       nodeDependencies: []
@@ -3119,6 +3191,7 @@ modules:
       internalDependencies: []
       exports:
         - OfflineBannerProps
+        - OfflineBanner
     src/components/offline/OfflineIndicator.tsx:
       externalDependencies:
         - lucide-react
@@ -3131,6 +3204,7 @@ modules:
           typeOnly: false
       exports:
         - OfflineIndicatorProps
+        - OfflineIndicator
     src/components/offline/OfflineSettings.tsx:
       externalDependencies:
         - lucide-react
@@ -3139,6 +3213,7 @@ modules:
       internalDependencies: []
       exports:
         - OfflineSettingsProps
+        - OfflineSettings
     src/components/offline/SyncStatusPanel.tsx:
       externalDependencies:
         - lucide-react
@@ -3147,6 +3222,7 @@ modules:
       internalDependencies: []
       exports:
         - SyncStatusPanelProps
+        - SyncStatusPanel
     src/components/offline/VersionCompare.tsx:
       externalDependencies:
         - lucide-react
@@ -3155,6 +3231,7 @@ modules:
       internalDependencies: []
       exports:
         - VersionCompareProps
+        - VersionCompare
     src/components/pages/DraggableThumbnail.tsx:
       externalDependencies:
         - '@utils/cn'
@@ -3164,6 +3241,7 @@ modules:
       internalDependencies: []
       exports:
         - DraggableThumbnailProps
+        - DraggableThumbnail
     src/components/pages/InsertPageDialog.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3176,6 +3254,7 @@ modules:
       internalDependencies: []
       exports:
         - InsertPageDialogProps
+        - InsertPageDialog
     src/components/pages/MergeDialog.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3188,6 +3267,7 @@ modules:
       internalDependencies: []
       exports:
         - MergeDialogProps
+        - MergeDialog
     src/components/pages/MoveToDialog.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3199,6 +3279,7 @@ modules:
       internalDependencies: []
       exports:
         - MoveToDialogProps
+        - MoveToDialog
     src/components/pages/PageContextMenu.tsx:
       externalDependencies:
         - '@radix-ui/react-dropdown-menu'
@@ -3209,6 +3290,7 @@ modules:
       internalDependencies: []
       exports:
         - PageContextMenuProps
+        - PageContextMenu
     src/components/pages/RotateMenu.tsx:
       externalDependencies:
         - '@radix-ui/react-dropdown-menu'
@@ -3234,6 +3316,7 @@ modules:
       internalDependencies: []
       exports:
         - SplitDialogProps
+        - SplitDialog
     src/components/pages/index.ts:
       externalDependencies: []
       nodeDependencies: []
@@ -3282,14 +3365,16 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - AccessibilityOptions
     src/components/print/AdvancedPrintSettings.tsx:
       externalDependencies:
         - '@stores/printStore'
         - '@utils/cn'
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - AdvancedPrintSettings
     src/components/print/BindingOptions.tsx:
       externalDependencies:
         - '@utils/cn'
@@ -3300,6 +3385,7 @@ modules:
         - BindingType
         - BindingEdge
         - BindingOptionsValue
+        - BindingOptions
     src/components/print/BookletWizard.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3312,6 +3398,7 @@ modules:
       internalDependencies: []
       exports:
         - BookletSettings
+        - BookletWizard
     src/components/print/MarginEditor.tsx:
       externalDependencies:
         - '@stores/printStore'
@@ -3319,7 +3406,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - MarginEditor
     src/components/print/OrientationOptions.tsx:
       externalDependencies: []
       nodeDependencies: []
@@ -3334,7 +3422,8 @@ modules:
         - '@utils/cn'
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PageLayout
     src/components/print/PageRangeSelector.tsx:
       externalDependencies:
         - '@lib/print/pageRange'
@@ -3374,7 +3463,8 @@ modules:
           imports:
             - PrintPreview
           typeOnly: false
-      exports: []
+      exports:
+        - PrintDialog
     src/components/print/PrintPresetsManager.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3383,14 +3473,16 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PrintPresetsManager
     src/components/print/PrintPreview.tsx:
       externalDependencies:
         - lucide-react
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PrintPreview
     src/components/print/PrintPreviewEnhanced.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3400,14 +3492,16 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PrintPreviewEnhanced
     src/components/print/PrintQualitySelector.tsx:
       externalDependencies:
         - '@stores/printStore'
         - '@utils/cn'
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PrintQualitySelector
     src/components/print/PrinterStatus.tsx:
       externalDependencies:
         - '@stores/printStore'
@@ -3415,13 +3509,15 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PrinterStatus
     src/components/print/ScaleOptions.tsx:
       externalDependencies: []
       nodeDependencies: []
       internalDependencies: []
       exports:
         - ScaleType
+        - ScaleOptions
     src/components/print/index.ts:
       externalDependencies: []
       nodeDependencies: []
@@ -3511,21 +3607,24 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - BatchScanWorkflow
     src/components/scanner/ColorModeSelector.tsx:
       externalDependencies:
         - '@lib/scanner/types'
         - '@utils/cn'
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ColorModeSelector
     src/components/scanner/CropTool.tsx:
       externalDependencies:
         - '@utils/cn'
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - CropTool
     src/components/scanner/EnhancementTools.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3535,6 +3634,7 @@ modules:
       internalDependencies: []
       exports:
         - EnhancementSettings
+        - EnhancementTools
     src/components/scanner/PageOrganizer.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3543,7 +3643,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PageOrganizer
     src/components/scanner/ProfileManager.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3553,14 +3654,16 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ProfileManager
     src/components/scanner/ResolutionPicker.tsx:
       externalDependencies:
         - '@lib/scanner/types'
         - '@utils/cn'
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ResolutionPicker
     src/components/scanner/ScanPreview.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3569,7 +3672,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ScanPreview
     src/components/scanner/ScanSettingsPanel.tsx:
       externalDependencies:
         - '@lib/scanner/types'
@@ -3577,14 +3681,16 @@ modules:
         - '@utils/cn'
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ScanSettingsPanel
     src/components/scanner/ScannerInfo.tsx:
       externalDependencies:
         - '@lib/scanner/types'
         - '@utils/cn'
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ScannerInfo
     src/components/scanner/ScannerSelectDialog.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3594,7 +3700,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ScannerSelectDialog
     src/components/security/EnrollmentGuide.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3602,7 +3709,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - EnrollmentGuide
     src/components/security/HardwareKeyAuth.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3612,7 +3720,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - HardwareKeyAuth
     src/components/security/HardwareKeyEnrollment.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3630,7 +3739,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - KeyChallenge
     src/components/security/KeyManagement.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3639,7 +3749,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - KeyManagement
     src/components/settings/AutoReloadSettings.tsx:
       externalDependencies:
         - '@lib/fileWatch/mergeStrategy'
@@ -3648,20 +3759,23 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - AutoReloadSettings
     src/components/settings/NotificationSettings.tsx:
       externalDependencies:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - NotificationSettings
     src/components/settings/ShortcutSettings.tsx:
       externalDependencies:
         - '@stores/shortcutsStore'
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ShortcutSettings
     src/components/sidebar/OutlinePanel.tsx:
       externalDependencies:
         - '@stores/documentStore'
@@ -3670,7 +3784,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - OutlinePanel
     src/components/sidebar/ThumbnailSidebar.tsx:
       externalDependencies:
         - '@components/pages/DraggableThumbnail'
@@ -3694,7 +3809,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ThumbnailSidebar
     src/components/signatures/DateStamp.tsx:
       externalDependencies:
         - react
@@ -3709,7 +3825,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - DrawSignature
     src/components/signatures/ImageSignature.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3717,7 +3834,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ImageSignature
     src/components/signatures/InitialsModal.tsx:
       externalDependencies:
         - '@stores/signatureStore'
@@ -3736,7 +3854,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - SignatureList
     src/components/signatures/SignatureModal.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -3761,14 +3880,16 @@ modules:
           imports:
             - SignatureList
           typeOnly: false
-      exports: []
+      exports:
+        - SignatureModal
     src/components/signatures/SignaturePlacer.tsx:
       externalDependencies:
         - '@stores/signatureStore'
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - SignaturePlacer
     src/components/signatures/SignatureResize.tsx:
       externalDependencies:
         - '@stores/signatureStore'
@@ -3784,13 +3905,15 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - SignatureRotation
     src/components/signatures/TypeSignature.tsx:
       externalDependencies:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - TypeSignature
     src/components/signatures/index.ts:
       externalDependencies: []
       nodeDependencies: []
@@ -3860,7 +3983,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - AnnotationToolbar
     src/components/toolbar/SearchBar.tsx:
       externalDependencies:
         - '@hooks/useSearch'
@@ -3870,7 +3994,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - SearchBar
     src/components/toolbar/ViewModeToggle.tsx:
       externalDependencies:
         - '@stores/documentStore'
@@ -3878,7 +4003,8 @@ modules:
         - lucide-react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ViewModeToggle
     src/components/ui/AccessibleComponents.tsx:
       externalDependencies:
         - '@utils/cn'
@@ -3887,6 +4013,7 @@ modules:
       internalDependencies: []
       exports:
         - SkipNav
+        - LiveRegion
         - VisuallyHidden
         - IconButton
     src/components/ui/Button.tsx:
@@ -3906,6 +4033,7 @@ modules:
       internalDependencies: []
       exports:
         - CheckboxProps
+        - Checkbox
     src/components/ui/Dialog.tsx:
       externalDependencies:
         - '@radix-ui/react-dialog'
@@ -3938,7 +4066,9 @@ modules:
         - lucide-react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - LoadingIndicator
+        - LoadingOverlay
     src/components/ui/Progress.tsx:
       externalDependencies:
         - react
@@ -3946,6 +4076,7 @@ modules:
       internalDependencies: []
       exports:
         - ProgressProps
+        - Progress
     src/components/ui/Select.tsx:
       externalDependencies:
         - react
@@ -3970,7 +4101,9 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - ThemeToggle
+        - ThemeSelector
     src/components/ui/index.ts:
       externalDependencies: []
       nodeDependencies: []
@@ -4045,6 +4178,7 @@ modules:
       internalDependencies: []
       exports:
         - InstallPromptProps
+        - InstallPrompt
     src/components/update/ReleaseNotes.tsx:
       externalDependencies:
         - lucide-react
@@ -4053,6 +4187,7 @@ modules:
       internalDependencies: []
       exports:
         - ReleaseNotesProps
+        - ReleaseNotes
     src/components/update/UpdateNotification.tsx:
       externalDependencies:
         - lucide-react
@@ -4062,6 +4197,7 @@ modules:
       exports:
         - UpdateNotificationProps
         - UpdateNotification
+        - UpdateErrorNotification
     src/components/update/UpdateProgress.tsx:
       externalDependencies:
         - lucide-react
@@ -4070,6 +4206,8 @@ modules:
       internalDependencies: []
       exports:
         - UpdateProgressProps
+        - UpdateProgress
+        - UpdateProgressIndicator
     src/components/update/UpdateSettings.tsx:
       externalDependencies:
         - lucide-react
@@ -4083,6 +4221,7 @@ modules:
           typeOnly: true
       exports:
         - UpdateSettingsProps
+        - UpdateSettings
     src/components/update/index.ts:
       externalDependencies: []
       nodeDependencies: []
@@ -4124,7 +4263,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - UpdateNotification
     src/components/viewer/ContinuousView.tsx:
       externalDependencies:
         - '@hooks/useVirtualization'
@@ -4148,7 +4288,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - DropZone
     src/components/viewer/PDFViewer.tsx:
       externalDependencies:
         - '@stores/documentStore'
@@ -4192,7 +4333,8 @@ modules:
             - TextLayer
             - TextSelection
           typeOnly: false
-      exports: []
+      exports:
+        - PageCanvas
     src/components/viewer/PageNavigation.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -4201,7 +4343,8 @@ modules:
         - react
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - PageNavigation
     src/components/viewer/PageSkeleton.tsx:
       externalDependencies:
         - '@components/ui/Skeleton'
@@ -4235,7 +4378,8 @@ modules:
           imports:
             - PageCanvas
           typeOnly: false
-      exports: []
+      exports:
+        - SpreadView
     src/components/viewer/TextLayer.tsx:
       externalDependencies:
         - '@lib/pdf/renderer'
@@ -4261,7 +4405,8 @@ modules:
           imports:
             - PageSkeleton
           typeOnly: false
-      exports: []
+      exports:
+        - VirtualizedViewer
     src/components/viewer/ZoomControls.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -9013,7 +9158,8 @@ modules:
         - react-router
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - Privacy
     src/pages/Settings.tsx:
       externalDependencies:
         - '@components/ui/Button'
@@ -9031,7 +9177,8 @@ modules:
         - react-router
       nodeDependencies: []
       internalDependencies: []
-      exports: []
+      exports:
+        - Terms
     src/stores/annotationStore.ts:
       externalDependencies:
         - uuid
@@ -11627,7 +11774,7 @@ statistics:
   totalSourceFiles: 746
   totalModules: 4
   totalLinesOfCode: 176938
-  totalExports: 3259
+  totalExports: 3406
   entryRoots: 0
   reachableFiles: 0
   dormantFiles: 546
@@ -11637,7 +11784,7 @@ statistics:
   typeOnlyCircularDeps: 0
   totalTypeOnlyImports: 92
   noImporterFileCount: 234
-  unusedExportsCount: 1207
+  unusedExportsCount: 1278
   circularDepsTruncated: false
   runtimeCyclicComponents: 0
   typeOnlyCyclicComponents: 0
@@ -11645,10 +11792,10 @@ statistics:
   typeOnlyFilesInCycles: 0
   totalClasses: 69
   totalInterfaces: 686
-  totalFunctions: 1293
+  totalFunctions: 1436
   totalTypeGuards: 59
   totalEnums: 3
-  totalConstants: 214
+  totalConstants: 218
   totalReExports: 812
 reachability:
   roots: []

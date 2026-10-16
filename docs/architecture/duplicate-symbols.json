@@ -2,12 +2,12 @@
   "note": "`duplicates` groups the names OWN-exported by >=2 'src' files, by name only, with no classification. `runtime` and `types` hold depgraph's classified lists of the same kind of names (see classificationNote); only TRUE_DUPLICATE entries there are merge targets.",
   "classificationNote": "This report groups names by OWN definition, not by call graph, then classifies each flagged name (see DupEntryTag): TRUE_DUPLICATE (the actionable merge targets), DISPATCH_VARIANT (>=2 mathTyped(...) registrations of the same public name \u2014 distinct dispatch surfaces, Bucket C delegation candidates, not copy-paste bodies), ALIAS_DELEGATION (a const-alias forward to an imported symbol, not an independent body \u2014 excluded once fewer than 2 real bodies remain), and ALLOWLISTED (matches duplicate-allowlist.json: hot-path is* guards, AssemblyScript mirrors, per-package VERSION strings). NOT detected: same-file typed-dispatch overload polymorphism for different argument shapes within one registration \u2014 a human still triages TRUE_DUPLICATE entries using the defining files + public flags before merging anything.",
   "summary": {
-    "duplicateCount": 185,
-    "totalSymbols": 2214,
-    "runtimeDuplicates": 69,
+    "duplicateCount": 194,
+    "totalSymbols": 2351,
+    "runtimeDuplicates": 74,
     "typeDuplicates": 98,
     "runtimeByTag": {
-      "TRUE_DUPLICATE": 69,
+      "TRUE_DUPLICATE": 74,
       "DISPATCH_VARIANT": 0,
       "ALIAS_DELEGATION": 0,
       "ALLOWLISTED": 0
@@ -75,6 +75,10 @@
     "ChangeType": [
       "src/lib/comparison/types.ts",
       "src/lib/fileWatch/changeDetector.ts"
+    ],
+    "Checkbox": [
+      "src/components/forms/Checkbox.tsx",
+      "src/components/ui/Checkbox.tsx"
     ],
     "ComparisonReport": [
       "src/components/comparison/ComparisonReport.tsx",
@@ -280,6 +284,10 @@
       "src/lib/ocr/types.ts",
       "src/lib/scanner/types.ts"
     ],
+    "OCRProgress": [
+      "src/components/ocr/OCRProgress.tsx",
+      "src/lib/ocr/types.ts"
+    ],
     "OpenDialogOptions": [
       "electron/dialogs.ts",
       "src/lib/electron/dialogs.ts"
@@ -305,6 +313,10 @@
       "src/lib/batch/types.ts",
       "src/stores/printStore.ts",
       "src/types/batch.ts"
+    ],
+    "PageRangeSelector": [
+      "src/components/ocr/PageRangeSelector.tsx",
+      "src/components/print/PageRangeSelector.tsx"
     ],
     "PageRangeType": [
       "src/components/ocr/PageRangeSelector.tsx",
@@ -332,9 +344,17 @@
       "electron/main/print/types.ts",
       "src/lib/print/imposition.ts"
     ],
+    "PreprocessingOptions": [
+      "src/components/ocr/PreprocessingOptions.tsx",
+      "src/lib/ocr/types.ts"
+    ],
     "PrintAccessibilityOptions": [
       "electron/main/print/types.ts",
       "src/lib/print/accessibility.ts"
+    ],
+    "PrintDialog": [
+      "electron/main/print/printDialog.ts",
+      "src/components/print/PrintDialog.tsx"
     ],
     "PrintJob": [
       "electron/main/print/types.ts",
@@ -358,6 +378,10 @@
       "electron/main/print/types.ts",
       "src/stores/printStore.ts"
     ],
+    "PrintPresetsManager": [
+      "src/components/print/PrintPresetsManager.tsx",
+      "src/lib/print/presets.ts"
+    ],
     "PrintPreviewResult": [
       "electron/print.ts",
       "src/lib/electron/print.ts"
@@ -374,6 +398,10 @@
       "electron/print.ts",
       "src/lib/electron/print.ts",
       "src/stores/printStore.ts"
+    ],
+    "PrinterStatus": [
+      "electron/main/print/types.ts",
+      "src/components/print/PrinterStatus.tsx"
     ],
     "QueueStatistics": [
       "src/lib/print/printQueue.ts",
@@ -422,6 +450,10 @@
       "electron/ipc/types.ts",
       "src/lib/electron/dialogs.ts",
       "src/types/electronTypes.ts"
+    ],
+    "ShapeAnnotation": [
+      "src/components/annotations/ShapeAnnotation.tsx",
+      "src/types/annotations.ts"
     ],
     "ShortcutDefinition": [
       "electron/shortcuts.ts",
@@ -484,9 +516,14 @@
       "electron/ipc/types.ts",
       "src/types/electronTypes.ts"
     ],
+    "UpdateNotification": [
+      "src/components/update/UpdateNotification.tsx",
+      "src/components/updates/UpdateNotification.tsx"
+    ],
     "UpdateSettings": [
       "electron/ipc/types.ts",
       "electron/main/updater.ts",
+      "src/components/update/UpdateSettings.tsx",
       "src/types/electronTypes.ts"
     ],
     "UpdateState": [
@@ -956,6 +993,26 @@
       "tag": "TRUE_DUPLICATE"
     },
     {
+      "name": "Checkbox",
+      "category": "constant+function",
+      "definers": [
+        {
+          "file": "src/components/forms/Checkbox.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/components/ui/Checkbox.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
       "name": "HIGHLIGHT_COLORS",
       "category": "constant",
       "definers": [
@@ -996,6 +1053,66 @@
       "tag": "TRUE_DUPLICATE"
     },
     {
+      "name": "PageRangeSelector",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/components/ocr/PageRangeSelector.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/components/print/PageRangeSelector.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintDialog",
+      "category": "class+function",
+      "definers": [
+        {
+          "file": "electron/main/print/printDialog.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/components/print/PrintDialog.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "PrintPresetsManager",
+      "category": "class+function",
+      "definers": [
+        {
+          "file": "src/components/print/PrintPresetsManager.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/lib/print/presets.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
       "name": "TemplateManager",
       "category": "class+function",
       "definers": [
@@ -1007,6 +1124,26 @@
         },
         {
           "file": "src/lib/batch/templates.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "UpdateNotification",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/components/update/UpdateNotification.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/components/updates/UpdateNotification.tsx",
           "package": "unknown",
           "public": false,
           "tag": "PLAIN"
