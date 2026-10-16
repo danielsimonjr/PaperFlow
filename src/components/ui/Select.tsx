@@ -15,8 +15,8 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 }
 
 /**
- * Select control that forwards its ref to a native select element.
- * The native arrow is hidden, and a chevron SVG is drawn as the background.
+ * Select control that forwards its ref to a native select element. The control hides the native arrow and draws a
+ * chevron SVG as the background.
  */
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, children, error, ...props }, ref) => {

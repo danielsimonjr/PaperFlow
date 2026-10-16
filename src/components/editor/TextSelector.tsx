@@ -4,9 +4,8 @@ import { useClipboard } from '@hooks/useClipboard';
 import { extractFontInfo, type PDFTextItem } from '@lib/fonts/fontMatcher';
 
 /**
- * Text selected on a PDF page, as reported by TextSelector.
- * bounds is the selection box, in PDF coordinates.
- * fontInfo is set only when a text item matches the selected text.
+ * TextSelector reports the text selected on a PDF page. `bounds` is the selection box in PDF coordinates. TextSelector
+ * sets `fontInfo` only when a text item matches the selected text.
  */
 export interface TextSelectorSelection {
   text: string;

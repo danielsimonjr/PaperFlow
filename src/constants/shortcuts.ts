@@ -56,8 +56,8 @@ export const KEYBOARD_SHORTCUTS: KeyboardShortcut[] = [
 /**
  * Return true when a keyboard event matches a shortcut.
  *
- * The key comparison ignores case. Ctrl and Meta both count as the ctrl modifier.
- * Shift and Alt must match exactly. A meta entry in the shortcut's modifiers is not read.
+ * The key comparison ignores case. Ctrl and Meta both count as the `ctrl` modifier. Shift and Alt must match exactly.
+ * The function does not read a meta entry in the shortcut's modifiers.
  */
 export function matchShortcut(
   event: KeyboardEvent,

@@ -13,7 +13,7 @@ export interface RecentFile {
 }
 
 /**
- * An automatic save of a document's data, with the time it was saved.
+ * An automatic save of a document's data, with the time of the save.
  */
 export interface AutoSaveEntry {
   id: string;

@@ -179,10 +179,10 @@ export function getWebAuthnBridge(
 }
 
 /**
- * Get the WebAuthn bridge singleton and set it up for the main window.
+ * Get the WebAuthn bridge singleton, and set up the singleton for the main window.
  *
- * The setup registers three IPC handlers and adds a request hook that allows every request.
- * It also sets a permission handler that grants every permission request.
+ * The setup registers three IPC handlers and adds a request hook that allows every request. The setup also sets a
+ * permission handler that grants every permission request.
  */
 export function initializeWebAuthnBridge(
   mainWindow: BrowserWindow,

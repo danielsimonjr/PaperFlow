@@ -49,10 +49,10 @@ export interface ChangeSummary {
 }
 
 /**
- * A snapshot of a document's pages, annotations, form fields and metadata, used for change detection.
- * A page hash covers only the page width, height and rotation, not the page content.
- * annotationCounts holds 1 for a page that has an Annots entry and 0 for any other page.
- * hasAttachments is always false.
+ * A snapshot holds document pages, annotations, form fields, and metadata. The snapshot supports change detection. A
+ * page hash covers only the page width, height, and rotation. The page hash does not cover page content.
+ * `annotationCounts` holds 1 if a page contains an `Annots` entry. `annotationCounts` holds 0 for all other pages.
+ * `hasAttachments` is always false.
  */
 export interface DocumentSnapshot {
   pageCount: number;

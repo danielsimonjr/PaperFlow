@@ -10,7 +10,8 @@ export interface MemoryInfo {
 }
 
 /**
- * A memory warning, with its severity level and usedPercent, the used JS heap as a fraction (0 to 1) of the heap size limit.
+ * A memory warning, with its severity level and `usedPercent`. `usedPercent` is the used JS heap as a fraction (0 to 1)
+ * of the heap size limit.
  */
 export interface MemoryWarning {
   level: 'low' | 'medium' | 'high' | 'critical';

@@ -103,9 +103,9 @@ const BINDING_TYPES: Record<
 };
 
 /**
- * Binding options for booklet printing: type, edge, gutter width and creep compensation.
- * A binding type is disabled when pageCount is above its page limit.
- * The compact prop shows only the type and edge controls.
+ * The component offers binding options for booklet printing: type, edge, gutter width and creep compensation. The
+ * component disables a binding type when `pageCount` exceeds the page limit of that type. The `compact` prop shows only
+ * the type and edge controls.
  */
 export function BindingOptions({
   value,

@@ -30,8 +30,8 @@ interface PatternMatch {
 }
 
 /**
- * Renders an empty container for the pattern search dialog.
- * It takes no props and does not search for patterns.
+ * The component renders an empty container for the pattern search dialog. The component takes no props. The component
+ * does not search for patterns.
  */
 export function PatternSearchDialog(): React.ReactElement {
   return (

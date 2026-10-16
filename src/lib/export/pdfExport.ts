@@ -3,8 +3,8 @@ import type { Annotation } from '@/types';
 import type { FormField } from '@/types';
 
 /**
- * Options for exportPdf. Annotations and form data are included by default.
- * flatten only adds the note text beside each note icon. exportPdf never reads includeTextEdits.
+ * Options for `exportPdf`. `exportPdf` includes annotations and form data by default. `flatten` only adds the note text
+ * beside each note icon. `exportPdf` never reads `includeTextEdits`.
  */
 export interface PdfExportOptions {
   includeAnnotations?: boolean;
@@ -22,9 +22,9 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } {
 }
 
 /**
- * Draw annotations and form values onto the pages of a PDF, and return the saved PDF bytes.
- * It draws highlight, underline, strikethrough, rectangle and ellipse annotations, and notes with content.
- * It skips the other annotation types, and draws only text field values and checked checkboxes.
+ * Draw annotations and form values onto the pages of a PDF. Return the saved PDF bytes. The function draws highlight,
+ * underline, strikethrough, rectangle, and ellipse annotations. The function also draws notes with content. The
+ * function skips other annotation types. The function draws only text field values and checked checkboxes.
  */
 export async function exportPdf(
   pdfBytes: ArrayBuffer,

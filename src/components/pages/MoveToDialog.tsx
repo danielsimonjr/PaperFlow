@@ -5,10 +5,9 @@ import { Button } from '@components/ui/Button';
 import { cn } from '@utils/cn';
 
 /**
- * Props for the MoveToDialog component.
- * selectedPages holds zero-based page indexes. Two or more of them change the title and text.
- * The caller chooses which pages move. The dialog only reports the target.
- * onMove receives the zero-based index of the target.
+ * Props for the `MoveToDialog` component. `selectedPages` holds zero-based page indexes. Two or more entries in
+ * `selectedPages` change the title and text. The caller chooses which pages move. The dialog only reports the target.
+ * `onMove` receives the zero-based index of the target.
  */
 export interface MoveToDialogProps {
   open: boolean;
@@ -20,9 +19,8 @@ export interface MoveToDialogProps {
 }
 
 /**
- * Dialog that asks for the target position of the current page or the selected pages.
- * The position is a 1-based page number, and invalid numbers show an error.
- * Moving a single page to its own position is rejected.
+ * Dialog that asks for the target position of the current page or the selected pages. The position is a 1-based page
+ * number. Invalid numbers show an error. The dialog rejects a move of a single page to its own position.
  */
 export function MoveToDialog({
   open,

@@ -32,9 +32,8 @@ export async function openPdfFile(): Promise<{ file: File; handle: FileSystemFil
 
 // Save PDF to file
 /**
- * Save a PDF blob, reusing the given file handle when one is passed.
- * Returns the saved file handle, or nothing when the user cancels or no handle is returned.
- * Other errors are rethrown.
+ * Save a PDF blob, reusing the given file handle when the caller passes one. Return the saved file handle, or nothing
+ * when the user cancels or no handle is returned. The function rethrows other errors.
  */
 export async function savePdfFile(
   blob: Blob,
@@ -90,10 +89,9 @@ export function downloadPdf(blob: Blob, fileName: string = 'document.pdf'): void
 
 // Fetch PDF from URL
 /**
- * Fetch a PDF from a URL and return its bytes.
- * Throws when the response has an error status or a content type other than PDF or octet-stream.
- * A response with no content type is not checked.
- * onProgress receives the bytes loaded so far and the total, when the length is known.
+ * Fetch a PDF from a URL and return its bytes. The function throws when the response has an error status or a content
+ * type other than PDF or octet-stream. The function does not check a response with no content type. `onProgress`
+ * receives the bytes loaded so far and the total, when the length is known.
  */
 export async function fetchPdfFromUrl(
   url: string,

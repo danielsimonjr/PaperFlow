@@ -37,10 +37,9 @@ function formatFileSize(bytes: number): string {
 }
 
 /**
- * Summary view for one batch job in the native batch store, or a not-found view for an unknown job ID.
- * It shows success counts, the success rate, size figures and a result row for each file.
- * The output size figure sums the input sizes of the completed files,
- * because a file record holds no output size.
+ * The view summarizes one batch job in the native batch store, or shows a not-found message for an unknown job ID. The
+ * view shows success counts, the success rate, size figures and a result row for each file. The output size figure sums
+ * the input sizes of the completed files, because a file record holds no output size.
  */
 export function BatchSummary({
   jobId,

@@ -344,8 +344,8 @@ export class WebAuthnClient {
 let instance: WebAuthnClient | null = null;
 
 /**
- * Return the shared WebAuthn client, which is created on the first call.
- * The config applies only when the instance is first created.
+ * Return the shared WebAuthn client. The first call creates the client. The config applies only when a call creates the
+ * client.
  */
 export function getWebAuthnClient(
   config?: Partial<WebAuthnClientConfig>

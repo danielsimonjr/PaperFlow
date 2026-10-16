@@ -359,7 +359,7 @@ export class ScanProfilesManager {
 let instance: ScanProfilesManager | null = null;
 
 /**
- * Return the shared scan profiles manager, which is created on the first call.
+ * Return the shared scan profiles manager. The first call creates the manager.
  */
 export function getScanProfilesManager(): ScanProfilesManager {
   if (!instance) {

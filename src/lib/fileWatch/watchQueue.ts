@@ -35,8 +35,8 @@ export interface EventBatch {
 }
 
 /**
- * Settings for the watch queue: its size limit, batching, retry limit and priority boost.
- * Nothing reads retryDelayMs: a failed batch is tried again after batchDelayMs.
+ * The watch queue settings include a size limit, batching, a retry limit and a priority boost. Nothing reads
+ * `retryDelayMs`: the queue tries a failed batch again after `batchDelayMs`.
  */
 export interface QueueConfig {
   maxQueueSize: number;

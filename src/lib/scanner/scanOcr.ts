@@ -312,7 +312,7 @@ export class ScanOCR {
 let instance: ScanOCR | null = null;
 
 /**
- * Return the shared scan OCR service, which is created on the first call.
+ * Return the shared scan OCR service. The getter creates the service on the first call.
  */
 export function getScanOCR(): ScanOCR {
   if (!instance) {

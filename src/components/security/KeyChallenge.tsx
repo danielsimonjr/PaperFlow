@@ -16,10 +16,9 @@ interface KeyChallengeProps {
 }
 
 /**
- * Visual prompt for a hardware key challenge. It renders nothing while isActive is false.
- * keyType picks the key drawing and the instruction text: usb, nfc or internal.
- * timeout sets the countdown in seconds, default 60.
- * onTimeout runs when the countdown reaches zero.
+ * The visual prompt is for a hardware key challenge. The visual prompt renders nothing while `isActive` is false.
+ * `keyType` picks the key drawing and instruction text: `usb`, `nfc`, or `internal`. `timeout` sets the countdown
+ * duration in seconds. The default value for `timeout` is 60. `onTimeout` runs when the countdown reaches zero.
  */
 export function KeyChallenge({
   isActive,

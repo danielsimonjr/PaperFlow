@@ -11,9 +11,9 @@ import { openEmailWithDocument } from '@lib/share/emailShare';
 import { copyLinkToClipboard, isDocumentFromUrl } from '@lib/share/copyLink';
 
 /**
- * Top bar with the PaperFlow home link and the open file name, which gets an asterisk when modified.
- * It opens the image export, compress and print dialogs, opens a mailto link, and copies the page URL.
- * The Save and Download buttons have no click handler.
+ * The top bar has the PaperFlow home link and the open file name. The file name gets an asterisk when the user modifies
+ * the file. The top bar opens the image export, compress and print dialogs. The top bar also opens a mailto link and
+ * copies the page URL. The Save and Download buttons have no click handler.
  */
 export function Header() {
   const fileName = useDocumentStore((state) => state.fileName);

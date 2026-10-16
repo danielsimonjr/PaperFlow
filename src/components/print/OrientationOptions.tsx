@@ -9,8 +9,8 @@ interface OrientationOptionsProps {
 }
 
 /**
- * Buttons that set the page orientation: Auto, Portrait or Landscape.
- * The button for the current orientation is highlighted.
+ * Buttons set the page orientation: Auto, Portrait or Landscape. The component highlights the button for the current
+ * orientation.
  */
 export function OrientationOptions({ orientation, onOrientationChange }: OrientationOptionsProps) {
   return (

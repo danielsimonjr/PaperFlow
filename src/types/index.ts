@@ -33,7 +33,7 @@ export interface AnnotationReply {
 
 // Drawing path for freehand annotations
 /**
- * A freehand stroke, given as points that may carry pressure values.
+ * A freehand stroke consists of points. The points may carry pressure values.
  */
 export interface DrawingPath {
   points: { x: number; y: number; pressure?: number }[];

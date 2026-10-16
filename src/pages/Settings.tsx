@@ -7,7 +7,8 @@ import { useSettingsStore } from '@stores/settingsStore';
 /**
  * Render the settings page for the saved user preferences.
  *
- * The reset button restores the defaults of settingsStore only. It does not change the theme, which uiStore keeps.
+ * The reset button restores the defaults of `settingsStore` only. The reset button does not change the theme. `uiStore`
+ * keeps the theme.
  */
 export default function Settings() {
   const settings = useSettingsStore();

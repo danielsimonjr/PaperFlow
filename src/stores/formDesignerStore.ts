@@ -19,7 +19,8 @@ export type FieldType =
   | 'button';
 
 /**
- * Action that a button field is set to: submit, reset, or print. The designer only stores and shows it; no code runs it.
+ * The action that a button field has: `submit`, `reset` or `print`. The designer only stores and shows the action. No
+ * code runs the action.
  */
 export type ButtonAction = 'submit' | 'reset' | 'print';
 

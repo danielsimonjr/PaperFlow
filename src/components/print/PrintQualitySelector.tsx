@@ -53,8 +53,8 @@ interface PrintQualitySelectorProps {
 }
 
 /**
- * Choice of print quality: Draft, Normal or High, as a radio list or as compact buttons.
- * DPI, speed and ink values are fixed in the component, not measured from the printer.
+ * Users choose print quality: Draft, Normal or High, using a radio list or compact buttons. The component uses fixed
+ * values for DPI, speed and ink. The component does not measure these values from the printer.
  */
 export function PrintQualitySelector({
   className,

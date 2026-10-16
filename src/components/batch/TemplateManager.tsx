@@ -44,9 +44,9 @@ function formatDate(timestamp: number): string {
 }
 
 /**
- * Lists the batch templates in the native batch store, with search and type filters.
- * TemplateManager creates and deletes templates. Import and export use JSON files.
- * Edit opens a notice that editing is not supported.
+ * `TemplateManager` lists the batch templates in the native batch store, with search and type filters.
+ * `TemplateManager` creates and deletes templates. Import and export use JSON files. Edit opens a notice that editing
+ * is not supported.
  */
 export function TemplateManager({
   operationType,

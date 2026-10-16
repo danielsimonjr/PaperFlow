@@ -26,10 +26,9 @@ function getStatusText(status?: string): string {
 }
 
 /**
- * Progress panel that shows while OCR runs, with a cancel button.
- * Its status text follows the engine state, such as loading, recognizing, or an error.
- * It shows the overall progress,
- * and the current page progress and pages still to do only while recognizing.
+ * The panel appears while OCR runs. The panel has a cancel button. The status text follows the engine state, such as
+ * loading, recognizing or an error. The panel shows the overall progress. The panel shows the current page progress and
+ * the pages still to do only while the engine recognizes.
  */
 export function OCRProgress() {
   const { progress, currentPage, totalPages, cancelOCR, error } = useOCRStore();

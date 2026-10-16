@@ -13,9 +13,8 @@ interface ImageExportDialogProps {
 }
 
 /**
- * Dialog that exports the current page, or all pages, as image files.
- * It offers PNG or JPEG output, a resolution, and an option to include annotations.
- * Several pages are saved in one ZIP archive.
+ * The dialog exports the current page or all pages as image files. The dialog offers PNG or JPEG output, a resolution,
+ * and an option to include annotations. The dialog saves several pages in one ZIP archive.
  */
 export function ImageExportDialog({ isOpen, onClose }: ImageExportDialogProps) {
   const [format, setFormat] = useState<ImageFormat>('png');

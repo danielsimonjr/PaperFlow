@@ -48,9 +48,9 @@ export interface NumberFormField extends BaseFormField {
 }
 
 /**
- * A checkbox form field, with its checked value and an optional export value.
+ * A checkbox form field has a checked value and an optional export value.
  *
- * The export value names the checked state when the form is exported.
+ * The export value names the checked state in the exported form.
  */
 export interface CheckboxFormField extends BaseFormField {
   type: 'checkbox';
@@ -69,7 +69,8 @@ export interface RadioFormField extends BaseFormField {
 }
 
 /**
- * A dropdown form field, with its value, its options, and whether a custom value is allowed.
+ * A dropdown form field includes a value. The field includes a set of options. The field specifies whether a custom
+ * value is allowed.
  */
 export interface DropdownFormField extends BaseFormField {
   type: 'dropdown';

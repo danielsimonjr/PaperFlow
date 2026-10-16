@@ -12,7 +12,7 @@ import { useFileSystem } from '@hooks/useFileSystem';
 /**
  * Render the home page with a drop zone, a file picker and the recent files list.
  *
- * A dropped file is loaded, added to the recent files, and opened in the editor.
+ * The page loads a dropped file, adds the file to the recent files, and opens the file in the editor.
  */
 export default function Home() {
   const navigate = useNavigate();

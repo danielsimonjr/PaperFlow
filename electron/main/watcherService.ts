@@ -443,7 +443,8 @@ export const watcherService = WatcherService.getInstance();
 /**
  * Start watching a file through the shared watcher service.
  *
- * Resolve to true once the path is watched, or false when the file does not exist.
+ * The function resolves to `true` once the service watches the path. The function resolves to `false` if the file does
+ * not exist.
  */
 export function watchFile(filePath: string, options?: Partial<WatcherOptions>): Promise<boolean> {
   return watcherService.watchFile(filePath, options);
@@ -452,7 +453,7 @@ export function watchFile(filePath: string, options?: Partial<WatcherOptions>): 
 /**
  * Stop watching a file through the shared watcher service.
  *
- * Resolve to true when a watch was stopped, and false when the path was not watched.
+ * Resolve to true when the service stops a watch, and resolve to false when the service does not watch the path.
  */
 export function unwatchFile(filePath: string): Promise<boolean> {
   return watcherService.unwatchFile(filePath);

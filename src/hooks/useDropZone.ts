@@ -32,9 +32,9 @@ interface UseDropZoneReturn {
 /**
  * Handle dropped and selected files of the accepted types.
  *
- * Only the first valid file reaches onDrop unless multiple is true. Files of other types are ignored.
- * The hook returns drag state, props for the drop target and file input, and an error message.
- * The error is set only when none of the files has an accepted type, and it always names a PDF file.
+ * Only the first valid file reaches `onDrop` unless `multiple` is true. The hook ignores files of other types. The hook
+ * returns drag state, props for the drop target, props for the file input, and an error message. The hook sets the
+ * error only when none of the files has an accepted type, and the error always names a PDF file.
  */
 export function useDropZone({
   onDrop,

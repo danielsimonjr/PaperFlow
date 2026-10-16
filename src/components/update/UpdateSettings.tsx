@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/Button';
 import type { UpdateChannel, UpdateCheckFrequency } from '../../../electron/ipc/types';
 
 /**
- * Props for the UpdateSettings component: className is added to the root element.
+ * Props for the `UpdateSettings` component include `className`. The `className` applies to the root element.
  */
 export interface UpdateSettingsProps {
   className?: string;

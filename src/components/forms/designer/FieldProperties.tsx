@@ -51,9 +51,9 @@ function PropertyRow({ label, children }: PropertyRowProps) {
 }
 
 /**
- * Properties panel for the selected form field, with edits applied to the designer store.
- * It shows general, type-specific, appearance and position sections for the selected field.
- * It shows a placeholder message in preview mode or when no field is selected.
+ * The panel edits the properties of the selected form field. Edits apply to the designer store. The panel shows
+ * general, type-specific, appearance and position sections. In preview mode, or when the user selects no field, the
+ * panel shows a placeholder message.
  */
 export function FieldProperties() {
   const { selectedFieldId, fields, updateField, isPreviewMode } = useFormDesignerStore();

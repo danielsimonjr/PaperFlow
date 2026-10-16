@@ -97,8 +97,8 @@ export function LoadingIndicator({
 
 // Full-screen loading overlay variant
 /**
- * Full-screen loading overlay with a translucent, blurred backdrop.
- * It passes its message, progress, showProgress and onCancel props to LoadingIndicator.
+ * The loading overlay covers the full screen. The loading overlay uses a translucent, blurred backdrop. The loading
+ * overlay passes the `message`, `progress`, `showProgress`, and `onCancel` props to `LoadingIndicator`.
  */
 export function LoadingOverlay({
   message = 'Loading...',

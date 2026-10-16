@@ -24,10 +24,10 @@ interface UseVirtualizationReturn {
 }
 
 /**
- * Return the items to render for a list of fixed-height items.
+ * The function returns items for rendering a list of fixed-height items.
  *
- * The range starts the overscan count of items before the first item in view.
- * It ends at the start index plus the visible count plus twice the overscan, up to the last item.
+ * The range starts with the overscan count of items before the first item in view. The range ends at the start index
+ * plus the visible count plus twice the overscan. The range never goes past the last item.
  */
 export function useVirtualization({
   totalItems,
@@ -125,10 +125,10 @@ interface UseDynamicVirtualizationReturn {
 }
 
 /**
- * Return the items to render for a list whose item heights can vary.
+ * Return the items to render for a list with variable item heights.
  *
- * Heights come from getItemHeight when given, or from measured heights and the estimate.
- * Call measureElement to record the measured height of an item.
+ * The hook takes heights from `getItemHeight` when the caller gives it, or from measured heights and the estimate. Call
+ * `measureElement` to record the measured height of an item.
  */
 export function useDynamicVirtualization({
   totalItems,

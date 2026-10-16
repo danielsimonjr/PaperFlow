@@ -57,9 +57,8 @@ interface MarginEditorProps {
 }
 
 /**
- * Editor for print margins, with a unit selector, presets and one input per side.
- * Margins are stored in points. The unit selector changes only how they are shown.
- * Link all margins applies an edit to all four sides.
+ * The editor for print margins includes a unit selector, presets and one input per side. Margins are stored in points.
+ * The unit selector changes only how the margins appear. Link all margins applies an edit to all four sides.
  */
 export function MarginEditor({ className }: MarginEditorProps) {
   const { settings, updateSettings } = usePrintStore();

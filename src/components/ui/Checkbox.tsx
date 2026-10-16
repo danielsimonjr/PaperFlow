@@ -22,9 +22,8 @@ export interface CheckboxProps {
 }
 
 /**
- * Checkbox control built on a button with the checkbox role.
- * A click, or a Space or Enter key press, calls onCheckedChange unless disabled.
- * A check mark is shown when checked.
+ * The checkbox control uses a button with the checkbox role. A click, or a Space or Enter key press, calls
+ * `onCheckedChange` unless the control is disabled. The control displays a check mark when checked.
  */
 export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
   ({ checked = false, onCheckedChange, disabled = false, id, name, className, 'aria-label': ariaLabel }, ref) => {

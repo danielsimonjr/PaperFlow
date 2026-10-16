@@ -47,7 +47,7 @@ const DEFAULT_OPTIONS: SearchOptions = {
 /**
  * Search the text of the open PDF and move between the matches.
  *
- * Page text is cached until the renderer changes. A new search cancels any search in progress.
+ * The hook caches page text until the renderer changes. A new search cancels any search in progress.
  */
 export function useSearch({
   renderer,

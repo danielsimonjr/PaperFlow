@@ -16,9 +16,9 @@ interface KeyManagementProps {
 }
 
 /**
- * List of enrolled hardware security keys, with rename, remove and add actions.
- * Removing the last key is blocked when hardware key authentication is required.
- * Remove asks for confirmation. Add Key and Add Your First Key call onAddKey.
+ * The list shows the enrolled hardware security keys, with rename, remove and add actions. The list blocks the removal
+ * of the last key when hardware key authentication is required. Remove asks for confirmation. Add Key and Add Your
+ * First Key call `onAddKey`.
  */
 export function KeyManagement({ onAddKey, className }: KeyManagementProps) {
   const { getKeys, removeKey, renameKey, settings } = useSecurityStore();

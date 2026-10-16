@@ -1,7 +1,8 @@
 import { PDFDocument } from 'pdf-lib';
 
 /**
- * The result of extractPages and its wrappers: the extracted pages as one PDF and, when removeFromOriginal is true and pages remain, the remaining pages as another.
+ * The result of `extractPages` and its wrappers. The result holds the extracted pages as one PDF. When
+ * `removeFromOriginal` is true and pages remain, the result also holds the remaining pages as another PDF.
  */
 export interface ExtractResult {
   extractedPdf: Uint8Array;

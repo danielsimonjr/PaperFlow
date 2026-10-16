@@ -13,9 +13,9 @@ interface TextFieldProps {
 }
 
 /**
- * Text input for a PDF text field, placed at the field's position.
- * The value is saved to the form store on blur, on Tab, and on Enter in single-line fields.
- * Input stops at the field's max length and shows the remaining count near the limit.
+ * The text input sits at the PDF text field's position. The input saves the value to the form store on blur, on Tab,
+ * and on Enter for single-line fields. The input stops at the field's max length. The input shows the remaining count
+ * near the limit.
  */
 export function TextField({
   field,

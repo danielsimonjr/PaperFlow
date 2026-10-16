@@ -48,8 +48,8 @@ const FILTERS = [
 ];
 
 /**
- * Adjustment and filter controls for scan enhancement, on an Adjust tab and a Filters tab.
- * Reset restores the default settings and calls onReset. Apply appears only when onApply is given.
+ * The component holds adjustment and filter controls for scan enhancement, on an Adjust tab and a Filters tab. Reset
+ * restores the default settings and calls `onReset`. Apply appears only when the caller gives `onApply`.
  */
 export function EnhancementTools({
   settings,

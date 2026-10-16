@@ -32,8 +32,8 @@ interface VerificationResult {
 }
 
 /**
- * Renders an empty container for the redaction verification panel.
- * It takes no props and does not verify any redactions.
+ * The component renders an empty container for the redaction verification panel. The component takes no props. The
+ * component does not verify any redactions.
  */
 export function RedactionVerify(): React.ReactElement {
   return (

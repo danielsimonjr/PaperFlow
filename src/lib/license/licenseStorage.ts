@@ -339,10 +339,9 @@ function tryReadLegacy(b64: string): LegacyV1Body | null {
 // ---------------------------------------------------------------------------
 
 /**
- * Stores the license record and the license cache in local storage, and the grace period as plain JSON.
- * The license record has an HMAC integrity check.
- * The license record and the license cache are encrypted with the OS safe storage when that is available,
- * and only base64-encoded otherwise.
+ * The module stores the license record and the license cache in local storage, and the grace period as plain JSON. The
+ * license record has an HMAC integrity check. The module encrypts the license record and the license cache with the OS
+ * safe storage when the OS safe storage is available, and only base64-encodes them otherwise.
  */
 export class LicenseStorage {
   /**
@@ -511,7 +510,7 @@ export function createLicenseStorage(): LicenseStorage {
 
 let globalStorage: LicenseStorage | null = null;
 /**
- * Return the shared license storage instance, which is created on the first call.
+ * Return the shared license storage instance. The first call creates the instance.
  */
 export function getGlobalLicenseStorage(): LicenseStorage {
   if (!globalStorage) globalStorage = new LicenseStorage();

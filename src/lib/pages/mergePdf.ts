@@ -19,8 +19,8 @@ export interface MergeProgress {
 }
 
 /**
- * A function that the merge functions call with their progress.
- * With two or more files, mergePdfs calls it before each file is copied and once more after the last.
+ * A function that the merge functions call with their progress. With two or more files, `mergePdfs` calls the function
+ * before it copies each file and once more after the last file.
  */
 export type MergeProgressCallback = (progress: MergeProgress) => void;
 

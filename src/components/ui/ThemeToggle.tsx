@@ -9,9 +9,8 @@ interface ThemeToggleProps {
 }
 
 /**
- * Button that switches between light and dark mode.
- * It shows a sun in dark mode and a moon in light mode.
- * showLabel adds a text label with the mode the button switches to.
+ * The button switches between light and dark mode. The button shows a sun in dark mode. The button shows a moon in
+ * light mode. `showLabel` adds a text label. The text label shows the mode the button switches to.
  */
 export function ThemeToggle({ showLabel = false, className }: ThemeToggleProps) {
   const darkMode = useUIStore((state) => state.darkMode);
@@ -41,10 +40,9 @@ export function ThemeToggle({ showLabel = false, className }: ThemeToggleProps) 
 }
 
 /**
- * Two-button selector for the Light and Dark theme.
- * On mount with no stored UI settings, ThemeSelector applies the system scheme. That call stores
- * the settings, so its system-change listener never applies a later change.
- * The button for the active theme is highlighted.
+ * The selector has two buttons, for the Light and Dark theme. On mount with no stored UI settings, `ThemeSelector`
+ * applies the system scheme. The apply call stores the settings, so the system-change listener of `ThemeSelector` never
+ * applies a later change. The selector highlights the button for the active theme.
  */
 export function ThemeSelector({ className }: { className?: string }) {
   const darkMode = useUIStore((state) => state.darkMode);

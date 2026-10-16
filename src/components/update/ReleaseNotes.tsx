@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/Button';
 
 /**
- * Props for the ReleaseNotes component: className is added to the dialog content.
+ * Props for the ReleaseNotes component: `className` adds a class to the dialog content.
  */
 export interface ReleaseNotesProps {
   className?: string;
@@ -134,12 +134,11 @@ function parseMarkdown(markdown: string): React.ReactNode[] {
 }
 
 /**
- * Dialog that shows release notes while isReleaseNotesVisible is set in the update store.
- * Notes come from the store state, or from window.electron.getReleaseNotes when the store has none.
- * With neither the store notes nor window.electron, the dialog keeps its loading spinner.
- * The notes are rendered as basic markdown: headers, lists, bold, italic and links.
- * The primary button shows only for the available or downloaded status: Restart Now or Download Update.
- * Download Update starts the download and closes the dialog.
+ * The dialog shows release notes while `isReleaseNotesVisible` is set in the update store. The notes come from the
+ * store state, or from `window.electron.getReleaseNotes` when the store has none. If the store has no notes and
+ * `window.electron` is absent, the dialog keeps its loading spinner. The dialog renders the notes as basic markdown:
+ * headers, lists, bold, italic and links. The primary button shows only for the available or downloaded status: Restart
+ * Now or Download Update. Download Update starts the download and closes the dialog.
  */
 export function ReleaseNotes({ className = '' }: ReleaseNotesProps): React.ReactElement | null {
   const { state, isReleaseNotesVisible, hideReleaseNotes, downloadUpdate, installAndRestart } =

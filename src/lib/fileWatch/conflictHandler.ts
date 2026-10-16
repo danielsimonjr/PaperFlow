@@ -51,8 +51,8 @@ export interface Conflict {
 }
 
 /**
- * The outcome of resolving a set of conflicts, with the merged data and any warnings.
- * mergedData holds only annotations, form values and signatures. It has no text edits.
+ * Resolving a set of conflicts produces an outcome. The outcome includes the merged data and any warnings. `mergedData`
+ * holds only annotations, form values and signatures. `mergedData` has no text edits.
  */
 export interface ConflictResolutionResult {
   resolved: boolean;

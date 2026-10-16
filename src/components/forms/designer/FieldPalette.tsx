@@ -65,9 +65,8 @@ const FIELD_TYPES: FieldTypeInfo[] = [
 ];
 
 /**
- * Palette of the field types that can be dragged onto the PDF page.
- * Dragging a type sets the type of the field that is dropped.
- * The palette renders nothing in preview mode.
+ * The palette shows the field types that a user can drag onto the PDF page. Dragging a type sets the type of the field
+ * that the user drops. The palette renders nothing in preview mode.
  */
 export function FieldPalette() {
   const { setDragging, isPreviewMode } = useFormDesignerStore();

@@ -13,8 +13,8 @@ interface AdvancedPrintSettingsProps {
 }
 
 /**
- * Panel of advanced print settings: copies and collation, color, two-sided printing and quality.
- * If the printer lacks support, the Color button and both two-sided flip options are disabled.
+ * The panel shows advanced print settings: copies and collation, color, two-sided printing and quality. If the printer
+ * lacks support, the panel disables the Color button and both two-sided flip options.
  */
 export function AdvancedPrintSettings({ className }: AdvancedPrintSettingsProps) {
   const { settings, updateSettings, selectedPrinter } = usePrintStore();

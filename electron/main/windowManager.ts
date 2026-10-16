@@ -9,10 +9,10 @@ import { BrowserWindow, BrowserWindowConstructorOptions, screen } from 'electron
 import { WindowState, loadWindowState, saveWindowState, getDefaultWindowState } from './windowState';
 
 /**
- * Options for WindowManager.createWindow, on top of the Electron window options.
+ * The options for WindowManager.createWindow add to the Electron window options.
  *
- * The id keys the window in the manager and in its saved state.
- * The saved or default state replaces `x`, `y`, `width` and `height`, and `filePath` is stored but never read.
+ * The `id` keys the window in the manager and in the saved state of the window. The saved or default state replaces
+ * `x`, `y`, `width` and `height`. The manager stores `filePath` but never reads `filePath`.
  */
 export interface WindowOptions extends Partial<BrowserWindowConstructorOptions> {
   id?: string;

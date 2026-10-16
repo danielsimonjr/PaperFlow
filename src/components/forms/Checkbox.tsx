@@ -14,9 +14,9 @@ interface CheckboxProps {
 }
 
 /**
- * Checkbox widget for a PDF form field, placed at the field's position on the page.
- * Click, Space or Enter toggles the value. Read-only fields cannot be changed.
- * Tab calls onTab, and the first validation error is shown below the box.
+ * The checkbox widget appears at the position of the PDF form field on the page. A click, Space or Enter toggles the
+ * value. Users cannot change read-only fields. Tab calls `onTab`. The widget shows the first validation error below the
+ * box.
  */
 export function Checkbox({
   field,
