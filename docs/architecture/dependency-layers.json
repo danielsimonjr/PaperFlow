@@ -5833,7 +5833,7 @@
         ]
       },
       "src/components/editor/TextSelector.tsx": {
-        "description": "TextSelector reports the text selected on a PDF page. `bounds` is the selection box in PDF coordinates. TextSelector",
+        "description": "TextSelector reports the text selected on a PDF page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6124,7 +6124,7 @@
         "exports": []
       },
       "src/components/export/CompressDialog.tsx": {
-        "description": "The dialog compresses the open PDF and saves the result as a file. The dialog offers a quality slider, a downsampling",
+        "description": "The dialog compresses the open PDF and saves the result as a file.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6180,7 +6180,7 @@
         "exports": []
       },
       "src/components/export/ImageExportDialog.tsx": {
-        "description": "The dialog exports the current page or all pages as image files. The dialog offers PNG or JPEG output, a resolution,",
+        "description": "The dialog exports the current page or all pages as image files.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6451,7 +6451,7 @@
         ]
       },
       "src/components/forms/Checkbox.tsx": {
-        "description": "The checkbox widget appears at the position of the PDF form field on the page. A click, Space or Enter toggles the",
+        "description": "The checkbox widget appears at the position of the PDF form field on the page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6481,7 +6481,7 @@
         "exports": []
       },
       "src/components/forms/Dropdown.tsx": {
-        "description": "The dropdown widget is for a PDF form field and sits at the position of the field. The widget shows a select of the",
+        "description": "The dropdown widget is for a PDF form field and sits at the position of the field.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6657,7 +6657,7 @@
         "exports": []
       },
       "src/components/forms/RadioButton.tsx": {
-        "description": "A radio button represents one option of a PDF form field and appears at the position of the field. Clicking, pressing",
+        "description": "A radio button represents one option of a PDF form field and appears at the position of the field.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6687,7 +6687,7 @@
         "exports": []
       },
       "src/components/forms/TextField.tsx": {
-        "description": "The text input sits at the PDF text field's position. The input saves the value to the form store on blur, on Tab,",
+        "description": "The text input sits at the PDF text field's position.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7007,7 +7007,7 @@
         "exports": []
       },
       "src/components/home/RecentFiles.tsx": {
-        "description": "The component lists up to ten recent files, loaded from the IndexedDB storage module. Choosing an entry calls",
+        "description": "The component lists up to ten recent files, loaded from the IndexedDB storage module.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7147,7 +7147,7 @@
         ]
       },
       "src/components/layout/Header.tsx": {
-        "description": "The top bar has the PaperFlow home link and the open file name. The file name gets an asterisk when the user modifies",
+        "description": "The top bar has the PaperFlow home link and the open file name.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7283,7 +7283,7 @@
         "exports": []
       },
       "src/components/layout/Sidebar.tsx": {
-        "description": "The collapsible side panel contains page thumbnails, an outline, and an annotations tab. The tab buttons select the",
+        "description": "The collapsible side panel contains page thumbnails, an outline, and an annotations tab.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7356,7 +7356,7 @@
         "exports": []
       },
       "src/components/layout/Toolbar.tsx": {
-        "description": "The main editing toolbar has tool buttons, export and import, and view, page and zoom controls. A click on an",
+        "description": "The main editing toolbar has tool buttons, export and import, and view, page and zoom controls.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7940,7 +7940,7 @@
         ]
       },
       "src/components/pages/DraggableThumbnail.tsx": {
-        "description": "Props for a page thumbnail that users can click, select and drag. `dragProps` holds the draggable flag and the drag",
+        "description": "Props for a page thumbnail that users can click, select and drag.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7972,7 +7972,7 @@
         ]
       },
       "src/components/pages/InsertPageDialog.tsx": {
-        "description": "Props for the `InsertPageDialog` component. The component reads `position` once when the dialog mounts. `onInsert`",
+        "description": "Props for the `InsertPageDialog` component.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8021,7 +8021,7 @@
         ]
       },
       "src/components/pages/MergeDialog.tsx": {
-        "description": "Props for the `MergeDialog` component. When `currentDocument` is given and included, the dialog merges that document",
+        "description": "Props for the `MergeDialog` component.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8077,7 +8077,7 @@
         ]
       },
       "src/components/pages/MoveToDialog.tsx": {
-        "description": "Props for the `MoveToDialog` component. `selectedPages` holds zero-based page indexes. Two or more entries in",
+        "description": "Props for the `MoveToDialog` component.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8567,7 +8567,7 @@
         ]
       },
       "src/components/print/PrintDialog.tsx": {
-        "description": "The dialog prints the open document and shows page range, scale, orientation and copies. Print runs `executePrint`,",
+        "description": "The dialog prints the open document and shows page range, scale, orientation and copies.",
         "externalDependencies": [
           {
             "package": "react",
@@ -10295,7 +10295,7 @@
         "exports": []
       },
       "src/components/toolbar/ViewModeToggle.tsx": {
-        "description": "Three buttons set the document view mode: single page, continuous scroll or spread. The component highlights the",
+        "description": "Three buttons set the document view mode: single page, continuous scroll or spread.",
         "externalDependencies": [
           {
             "package": "lucide-react",
@@ -10543,7 +10543,7 @@
         ]
       },
       "src/components/ui/Skeleton.tsx": {
-        "description": "The animated placeholder block shows while content loads. `width` and `height` set the size of the block, and a",
+        "description": "The animated placeholder block shows while content loads.",
         "externalDependencies": [
           {
             "package": "@utils/cn",
@@ -10565,7 +10565,7 @@
         ]
       },
       "src/components/ui/ThemeToggle.tsx": {
-        "description": "The button switches between light and dark mode. The button shows a sun in dark mode. The button shows a moon in",
+        "description": "The button switches between light and dark mode.",
         "externalDependencies": [
           {
             "package": "react",
@@ -10953,7 +10953,7 @@
         "exports": []
       },
       "src/components/viewer/ContinuousView.tsx": {
-        "description": "The view is a continuous vertical view of the document, and renders only the pages near the viewport. On each scroll",
+        "description": "The view is a continuous vertical view of the document, and renders only the pages near the viewport.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11041,7 +11041,7 @@
         "exports": []
       },
       "src/components/viewer/PDFViewer.tsx": {
-        "description": "The top-level viewer shows the open document in the current view mode. The viewer shows a loading message or an",
+        "description": "The top-level viewer shows the open document in the current view mode.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11087,7 +11087,7 @@
         ]
       },
       "src/components/viewer/PageCanvas.tsx": {
-        "description": "The component draws one PDF page onto a canvas, with text, annotation, form and drawing layers over the page. The",
+        "description": "The component draws one PDF page onto a canvas, with text, annotation, form and drawing layers over the page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11191,7 +11191,7 @@
         "exports": []
       },
       "src/components/viewer/PageNavigation.tsx": {
-        "description": "Previous and next buttons, with a page number field that users can type in to jump to a page. The buttons move two",
+        "description": "Previous and next buttons, with a page number field that users can type in to jump to a page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11411,7 +11411,7 @@
         "exports": []
       },
       "src/components/viewer/ZoomControls.tsx": {
-        "description": "Zoom controls: zoom out, the zoom level, zoom in, fit to width and fit to page. The zoom level button resets the zoom",
+        "description": "Zoom controls: zoom out, the zoom level, zoom in, fit to width and fit to page.",
         "externalDependencies": [
           {
             "package": "lucide-react",
@@ -12640,7 +12640,7 @@
         ]
       },
       "src/hooks/useVisiblePages.ts": {
-        "description": "One page in the viewport state. `isVisible` is true for a page in view, and `isBuffered` is true for a listed page",
+        "description": "One page in the viewport state.",
         "externalDependencies": [
           {
             "package": "react",
@@ -15684,7 +15684,7 @@
         ]
       },
       "src/lib/export/pdfExport.ts": {
-        "description": "Options for `exportPdf`. `exportPdf` includes annotations and form data by default. `flatten` only adds the note text",
+        "description": "Options for `exportPdf`.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -18603,7 +18603,7 @@
         ]
       },
       "src/lib/pages/extractPages.ts": {
-        "description": "The result of `extractPages` and its wrappers. The result holds the extracted pages as one PDF. When",
+        "description": "The result of `extractPages` and its wrappers.",
         "externalDependencies": [
           {
             "package": "pdf-lib",

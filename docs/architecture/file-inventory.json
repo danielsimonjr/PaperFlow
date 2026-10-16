@@ -860,7 +860,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 371
+      "loc": 372
     },
     {
       "file": "src/components/batch/BatchPanel.tsx",
@@ -874,7 +874,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 279
+      "loc": 280
     },
     {
       "file": "src/components/batch/BatchWizard.tsx",
@@ -1035,7 +1035,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 319
+      "loc": 320
     },
     {
       "file": "src/components/editor/index.ts",
@@ -1091,7 +1091,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 186
+      "loc": 187
     },
     {
       "file": "src/components/export/index.ts",
@@ -1105,7 +1105,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 167
+      "loc": 168
     },
     {
       "file": "src/components/fileWatch/DocumentCompare.tsx",
@@ -1294,7 +1294,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 144
+      "loc": 145
     },
     {
       "file": "src/components/layout/MobileToolbar.tsx",
@@ -1308,7 +1308,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 92
+      "loc": 93
     },
     {
       "file": "src/components/layout/TitleBar.tsx",
@@ -1336,7 +1336,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 249
+      "loc": 250
     },
     {
       "file": "src/components/ocr/LanguageSelector.tsx",
@@ -1350,7 +1350,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 181
+      "loc": 182
     },
     {
       "file": "src/components/ocr/OCRExportDialog.tsx",
@@ -1364,7 +1364,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 99
+      "loc": 100
     },
     {
       "file": "src/components/ocr/OCRResultsPanel.tsx",
@@ -1399,7 +1399,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 267
+      "loc": 269
     },
     {
       "file": "src/components/offline/OfflineBanner.tsx",
@@ -1413,7 +1413,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 161
+      "loc": 162
     },
     {
       "file": "src/components/offline/OfflineSettings.tsx",
@@ -1434,7 +1434,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 265
+      "loc": 266
     },
     {
       "file": "src/components/pages/DraggableThumbnail.tsx",
@@ -1455,14 +1455,14 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 362
+      "loc": 364
     },
     {
       "file": "src/components/pages/MoveToDialog.tsx",
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 172
+      "loc": 174
     },
     {
       "file": "src/components/pages/PageContextMenu.tsx",
@@ -1560,7 +1560,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 283
+      "loc": 284
     },
     {
       "file": "src/components/print/PrintPreview.tsx",
@@ -1588,7 +1588,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 164
+      "loc": 165
     },
     {
       "file": "src/components/print/ScaleOptions.tsx",
@@ -1728,7 +1728,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 330
+      "loc": 331
     },
     {
       "file": "src/components/security/KeyChallenge.tsx",
@@ -1917,7 +1917,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 119
+      "loc": 120
     },
     {
       "file": "src/components/ui/Progress.tsx",
@@ -1945,7 +1945,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 97
+      "loc": 99
     },
     {
       "file": "src/components/ui/index.ts",
@@ -2022,7 +2022,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 194
+      "loc": 195
     },
     {
       "file": "src/components/viewer/PageCanvas.tsx",
@@ -2036,14 +2036,14 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 128
+      "loc": 129
     },
     {
       "file": "src/components/viewer/PageSkeleton.tsx",
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 75
+      "loc": 76
     },
     {
       "file": "src/components/viewer/SinglePageView.tsx",
@@ -2246,7 +2246,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 218
+      "loc": 220
     },
     {
       "file": "src/hooks/usePointerInput.ts",
@@ -2722,7 +2722,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 175
+      "loc": 177
     },
     {
       "file": "src/lib/fileWatch/changeDetector.ts",
@@ -2736,7 +2736,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 415
+      "loc": 416
     },
     {
       "file": "src/lib/fileWatch/documentDiff.ts",
@@ -2813,7 +2813,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 421
+      "loc": 422
     },
     {
       "file": "src/lib/forms/exportImport.ts",
@@ -3121,7 +3121,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 218
+      "loc": 219
     },
     {
       "file": "src/lib/pages/index.ts",
@@ -3135,7 +3135,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 197
+      "loc": 198
     },
     {
       "file": "src/lib/pages/pageOperations.ts",
@@ -3471,7 +3471,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 158
+      "loc": 160
     },
     {
       "file": "src/lib/storage/formStorage.ts",

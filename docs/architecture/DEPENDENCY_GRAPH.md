@@ -2535,7 +2535,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/editor/TextSelector.tsx` - TextSelector reports the text selected on a PDF page. `bounds` is the selection box in PDF coordinates. TextSelector
+### `src/components/editor/TextSelector.tsx` - TextSelector reports the text selected on a PDF page.
 
 **External Dependencies:**
 | Package | Import |
@@ -2644,7 +2644,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/export/CompressDialog.tsx` - The dialog compresses the open PDF and saves the result as a file. The dialog offers a quality slider, a downsampling
+### `src/components/export/CompressDialog.tsx` - The dialog compresses the open PDF and saves the result as a file.
 
 **External Dependencies:**
 | Package | Import |
@@ -2659,7 +2659,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/export/ImageExportDialog.tsx` - The dialog exports the current page or all pages as image files. The dialog offers PNG or JPEG output, a resolution,
+### `src/components/export/ImageExportDialog.tsx` - The dialog exports the current page or all pages as image files.
 
 **External Dependencies:**
 | Package | Import |
@@ -2749,7 +2749,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/forms/Checkbox.tsx` - The checkbox widget appears at the position of the PDF form field on the page. A click, Space or Enter toggles the
+### `src/components/forms/Checkbox.tsx` - The checkbox widget appears at the position of the PDF form field on the page.
 
 **External Dependencies:**
 | Package | Import |
@@ -2760,7 +2760,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/forms/Dropdown.tsx` - The dropdown widget is for a PDF form field and sits at the position of the field. The widget shows a select of the
+### `src/components/forms/Dropdown.tsx` - The dropdown widget is for a PDF form field and sits at the position of the field.
 
 **External Dependencies:**
 | Package | Import |
@@ -2827,7 +2827,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/forms/RadioButton.tsx` - A radio button represents one option of a PDF form field and appears at the position of the field. Clicking, pressing
+### `src/components/forms/RadioButton.tsx` - A radio button represents one option of a PDF form field and appears at the position of the field.
 
 **External Dependencies:**
 | Package | Import |
@@ -2838,7 +2838,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/forms/TextField.tsx` - The text input sits at the PDF text field's position. The input saves the value to the form store on blur, on Tab,
+### `src/components/forms/TextField.tsx` - The text input sits at the PDF text field's position.
 
 **External Dependencies:**
 | Package | Import |
@@ -2953,7 +2953,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/home/RecentFiles.tsx` - The component lists up to ten recent files, loaded from the IndexedDB storage module. Choosing an entry calls
+### `src/components/home/RecentFiles.tsx` - The component lists up to ten recent files, loaded from the IndexedDB storage module.
 
 **External Dependencies:**
 | Package | Import |
@@ -3017,7 +3017,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/layout/Header.tsx` - The top bar has the PaperFlow home link and the open file name. The file name gets an asterisk when the user modifies
+### `src/components/layout/Header.tsx` - The top bar has the PaperFlow home link and the open file name.
 
 **External Dependencies:**
 | Package | Import |
@@ -3052,7 +3052,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/layout/Sidebar.tsx` - The collapsible side panel contains page thumbnails, an outline, and an annotations tab. The tab buttons select the
+### `src/components/layout/Sidebar.tsx` - The collapsible side panel contains page thumbnails, an outline, and an annotations tab.
 
 **External Dependencies:**
 | Package | Import |
@@ -3079,7 +3079,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/layout/Toolbar.tsx` - The main editing toolbar has tool buttons, export and import, and view, page and zoom controls. A click on an
+### `src/components/layout/Toolbar.tsx` - The main editing toolbar has tool buttons, export and import, and view, page and zoom controls.
 
 **External Dependencies:**
 | Package | Import |
@@ -3300,7 +3300,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/pages/DraggableThumbnail.tsx` - Props for a page thumbnail that users can click, select and drag. `dragProps` holds the draggable flag and the drag
+### `src/components/pages/DraggableThumbnail.tsx` - Props for a page thumbnail that users can click, select and drag.
 
 **External Dependencies:**
 | Package | Import |
@@ -3314,7 +3314,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/pages/InsertPageDialog.tsx` - Props for the `InsertPageDialog` component. The component reads `position` once when the dialog mounts. `onInsert`
+### `src/components/pages/InsertPageDialog.tsx` - Props for the `InsertPageDialog` component.
 
 **External Dependencies:**
 | Package | Import |
@@ -3331,7 +3331,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/pages/MergeDialog.tsx` - Props for the `MergeDialog` component. When `currentDocument` is given and included, the dialog merges that document
+### `src/components/pages/MergeDialog.tsx` - Props for the `MergeDialog` component.
 
 **External Dependencies:**
 | Package | Import |
@@ -3348,7 +3348,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/pages/MoveToDialog.tsx` - Props for the `MoveToDialog` component. `selectedPages` holds zero-based page indexes. Two or more entries in
+### `src/components/pages/MoveToDialog.tsx` - Props for the `MoveToDialog` component.
 
 **External Dependencies:**
 | Package | Import |
@@ -3529,7 +3529,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/print/PrintDialog.tsx` - The dialog prints the open document and shows page range, scale, orientation and copies. Print runs `executePrint`,
+### `src/components/print/PrintDialog.tsx` - The dialog prints the open document and shows page range, scale, orientation and copies.
 
 **External Dependencies:**
 | Package | Import |
@@ -4129,7 +4129,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/toolbar/ViewModeToggle.tsx` - Three buttons set the document view mode: single page, continuous scroll or spread. The component highlights the
+### `src/components/toolbar/ViewModeToggle.tsx` - Three buttons set the document view mode: single page, continuous scroll or spread.
 
 **External Dependencies:**
 | Package | Import |
@@ -4248,7 +4248,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/ui/Skeleton.tsx` - The animated placeholder block shows while content loads. `width` and `height` set the size of the block, and a
+### `src/components/ui/Skeleton.tsx` - The animated placeholder block shows while content loads.
 
 **External Dependencies:**
 | Package | Import |
@@ -4260,7 +4260,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/ui/ThemeToggle.tsx` - The button switches between light and dark mode. The button shows a sun in dark mode. The button shows a moon in
+### `src/components/ui/ThemeToggle.tsx` - The button switches between light and dark mode.
 
 **External Dependencies:**
 | Package | Import |
@@ -4395,7 +4395,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/viewer/ContinuousView.tsx` - The view is a continuous vertical view of the document, and renders only the pages near the viewport. On each scroll
+### `src/components/viewer/ContinuousView.tsx` - The view is a continuous vertical view of the document, and renders only the pages near the viewport.
 
 **External Dependencies:**
 | Package | Import |
@@ -4428,7 +4428,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/viewer/PDFViewer.tsx` - The top-level viewer shows the open document in the current view mode. The viewer shows a loading message or an
+### `src/components/viewer/PDFViewer.tsx` - The top-level viewer shows the open document in the current view mode.
 
 **External Dependencies:**
 | Package | Import |
@@ -4448,7 +4448,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/viewer/PageCanvas.tsx` - The component draws one PDF page onto a canvas, with text, annotation, form and drawing layers over the page. The
+### `src/components/viewer/PageCanvas.tsx` - The component draws one PDF page onto a canvas, with text, annotation, form and drawing layers over the page.
 
 **External Dependencies:**
 | Package | Import |
@@ -4475,7 +4475,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/viewer/PageNavigation.tsx` - Previous and next buttons, with a page number field that users can type in to jump to a page. The buttons move two
+### `src/components/viewer/PageNavigation.tsx` - Previous and next buttons, with a page number field that users can type in to jump to a page.
 
 **External Dependencies:**
 | Package | Import |
@@ -4567,7 +4567,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/viewer/ZoomControls.tsx` - Zoom controls: zoom out, the zoom level, zoom in, fit to width and fit to page. The zoom level button resets the zoom
+### `src/components/viewer/ZoomControls.tsx` - Zoom controls: zoom out, the zoom level, zoom in, fit to width and fit to page.
 
 **External Dependencies:**
 | Package | Import |
@@ -5029,7 +5029,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/hooks/useVisiblePages.ts` - One page in the viewport state. `isVisible` is true for a page in view, and `isBuffered` is true for a listed page
+### `src/hooks/useVisiblePages.ts` - One page in the viewport state.
 
 **External Dependencies:**
 | Package | Import |
@@ -6009,7 +6009,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/lib/export/pdfExport.ts` - Options for `exportPdf`. `exportPdf` includes annotations and form data by default. `flatten` only adds the note text
+### `src/lib/export/pdfExport.ts` - Options for `exportPdf`.
 
 **External Dependencies:**
 | Package | Import |
@@ -6869,7 +6869,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/lib/pages/extractPages.ts` - The result of `extractPages` and its wrappers. The result holds the extracted pages as one PDF. When
+### `src/lib/pages/extractPages.ts` - The result of `extractPages` and its wrappers.
 
 **External Dependencies:**
 | Package | Import |
@@ -8770,7 +8770,7 @@ graph TD
 |----------|-------|
 | Total Source Files | 746 |
 | Subsystems | 20 |
-| Total Lines of Code | 176901 |
+| Total Lines of Code | 176938 |
 | Total Exports | 3259 |
 | Total Re-exports | 812 |
 | Total Classes | 69 |
