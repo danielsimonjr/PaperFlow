@@ -2,6 +2,9 @@ import { Link } from 'react-router';
 import { Home } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 
+/**
+ * Render the 404 page, with a link back to the home page.
+ */
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-8 dark:bg-gray-900">

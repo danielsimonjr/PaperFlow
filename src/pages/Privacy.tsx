@@ -2,6 +2,9 @@ import { Link } from 'react-router';
 import { ArrowLeft, Shield, Eye, Lock, Database, Trash2 } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 
+/**
+ * Render the privacy page, with a link back to the app.
+ */
 export function Privacy() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

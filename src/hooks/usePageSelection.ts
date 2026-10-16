@@ -1,10 +1,18 @@
 import { useCallback, useState } from 'react';
 
+/**
+ * Options for usePageSelection.
+ *
+ * The optional selection callback receives the sorted selected page indices.
+ */
 export interface UsePageSelectionOptions {
   pageCount: number;
   onSelectionChange?: (selectedPages: number[]) => void;
 }
 
+/**
+ * Selection state and actions returned by usePageSelection.
+ */
 export interface UsePageSelectionReturn {
   selectedPages: Set<number>;
   isSelected: (pageIndex: number) => boolean;

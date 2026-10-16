@@ -1,3 +1,6 @@
+/**
+ * Kind of annotation or annotation tool, including the eraser.
+ */
 export type AnnotationType =
   | 'highlight'
   | 'underline'
@@ -8,6 +11,9 @@ export type AnnotationType =
   | 'stamp'
   | 'eraser';
 
+/**
+ * A rectangle with an origin and a size, used for annotation bounds.
+ */
 export interface AnnotationRect {
   x: number;
   y: number;
@@ -15,6 +21,9 @@ export interface AnnotationRect {
   height: number;
 }
 
+/**
+ * A reply to an annotation note, with its author and text.
+ */
 export interface AnnotationReply {
   id: string;
   content: string;
@@ -23,10 +32,16 @@ export interface AnnotationReply {
 }
 
 // Drawing path for freehand annotations
+/**
+ * A freehand stroke, given as points that may carry pressure values.
+ */
 export interface DrawingPath {
   points: { x: number; y: number; pressure?: number }[];
 }
 
+/**
+ * A user annotation on one page, with optional fields for each annotation kind.
+ */
 export interface Annotation {
   id: string;
   type: AnnotationType;
@@ -58,6 +73,9 @@ export interface Annotation {
   borderColor?: string;
 }
 
+/**
+ * A PDF document record, with its page count, view state, and modified flag.
+ */
 export interface PDFDocument {
   id: string;
   name: string;
@@ -71,6 +89,9 @@ export interface PDFDocument {
   updatedAt: Date;
 }
 
+/**
+ * A signature, made by drawing, typing, or using an image.
+ */
 export interface Signature {
   id: string;
   name: string;
@@ -81,6 +102,9 @@ export interface Signature {
   isInitials?: boolean;
 }
 
+/**
+ * A simple form field record, with a string or boolean value.
+ */
 export interface FormField {
   id: string;
   pageIndex: number;
@@ -93,6 +117,10 @@ export interface FormField {
   readonly?: boolean;
 }
 
+/**
+ * A record of one action with the state before it and the state after it.
+ * `historyStore` does not use this type: it declares its own `HistoryEntry` with undo and redo functions.
+ */
 export interface HistoryEntry {
   id: string;
   action: string;

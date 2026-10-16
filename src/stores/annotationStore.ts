@@ -4,7 +4,13 @@ import type { Annotation, AnnotationType, AnnotationReply } from '@/types';
 import { useHistoryStore } from './historyStore';
 
 // Extended annotation type for Sprint 4 drawing/shape/stamp features
+/**
+ * Shape kind that the shape tool draws: rectangle, ellipse, arrow or line.
+ */
 export type ShapeType = 'rectangle' | 'ellipse' | 'arrow' | 'line';
+/**
+ * Stamp kind that the stamp tool uses. The store's activeStampType starts as approved.
+ */
 export type StampType = 'approved' | 'rejected' | 'confidential' | 'draft' | 'final' | 'for-review' | 'custom';
 
 interface AnnotationState {

@@ -1,5 +1,8 @@
 import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 
+/**
+ * One page in the viewport state. isVisible is set for a page in view, and isBuffered for a listed page that is not.
+ */
 export interface VisiblePage {
   pageNumber: number;
   isVisible: boolean;

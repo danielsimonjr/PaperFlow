@@ -26,6 +26,12 @@ interface UseFileSystemReturn {
   canSaveToOriginal: boolean;
 }
 
+/**
+ * Open, save and download PDF files for the document store.
+ *
+ * Opening a file navigates to the editor route. Save writes to the open file handle when one exists.
+ * Otherwise, save asks for a new file or downloads the PDF.
+ */
 export function useFileSystem(): UseFileSystemReturn {
   const navigate = useNavigate();
   const [fileHandle, setFileHandle] = useState<FileSystemFileHandle | null>(null);

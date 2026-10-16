@@ -21,6 +21,11 @@ interface UseThumbnailsReturn {
 // Default thumbnail scale (0.2 = 20% of original size)
 const DEFAULT_THUMBNAIL_SCALE = 0.2;
 
+/**
+ * Render page thumbnails from the PDF renderer, with a cache for each page.
+ *
+ * The cache clears when the renderer changes. Thumbnails render at the given scale, which defaults to 20 percent.
+ */
 export function useThumbnails({
   renderer,
   pageCount,
@@ -127,6 +132,11 @@ interface UseLazyThumbnailReturn {
   clearThumbnails: () => void;
 }
 
+/**
+ * Render page thumbnails as their elements come close to the viewport.
+ *
+ * The hook watches each observed element with an IntersectionObserver, using the root margin and threshold.
+ */
 export function useLazyThumbnails({
   renderer,
   scale = DEFAULT_THUMBNAIL_SCALE,

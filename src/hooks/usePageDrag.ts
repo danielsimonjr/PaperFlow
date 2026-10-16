@@ -1,5 +1,8 @@
 import { useCallback, useState, useRef } from 'react';
 
+/**
+ * State of a page drag: the dragged page indices, and the drop target and its side.
+ */
 export interface DragState {
   isDragging: boolean;
   draggedPages: number[];
@@ -7,12 +10,18 @@ export interface DragState {
   dropPosition: 'before' | 'after' | null;
 }
 
+/**
+ * Options for usePageDrag: the page count, the selected pages, and the reorder callback.
+ */
 export interface UsePageDragOptions {
   pageCount: number;
   selectedPages: Set<number>;
   onReorder: (fromIndices: number[], toIndex: number) => void;
 }
 
+/**
+ * Drag state and handlers returned by usePageDrag, plus getDragProps for each page.
+ */
 export interface UsePageDragReturn {
   dragState: DragState;
   handleDragStart: (pageIndex: number, event: React.DragEvent) => void;

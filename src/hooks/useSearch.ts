@@ -1,12 +1,18 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { PDFRenderer } from '@lib/pdf/renderer';
 
+/**
+ * One search match: its page number, its index on that page, and the matched text.
+ */
 export interface SearchMatch {
   pageNumber: number;
   matchIndex: number;
   text: string;
 }
 
+/**
+ * Search options: case sensitivity and whole-word matching.
+ */
 export interface SearchOptions {
   caseSensitive: boolean;
   wholeWord: boolean;
@@ -38,6 +44,11 @@ const DEFAULT_OPTIONS: SearchOptions = {
   wholeWord: false,
 };
 
+/**
+ * Search the text of the open PDF and move between the matches.
+ *
+ * Page text is cached until the renderer changes. A new search cancels any search in progress.
+ */
 export function useSearch({
   renderer,
   pageCount,

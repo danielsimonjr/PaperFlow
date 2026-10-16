@@ -10,10 +10,19 @@ import { persist } from 'zustand/middleware';
 import { isElectron } from '@lib/electron/platform';
 import type { FileWatcherEvent, FileStats } from '@/types/electronTypes';
 
+/**
+ * Status of one watched file: watching, changed, deleted, locked, or error.
+ */
 export type FileWatchStatus = 'watching' | 'changed' | 'deleted' | 'locked' | 'error';
 
+/**
+ * Action for a changed file: reload, ignore, compare, or pending.
+ */
 export type ReloadAction = 'reload' | 'ignore' | 'compare' | 'pending';
 
+/**
+ * State of one watched file, with its status, timestamps, change count, and pending action.
+ */
 export interface WatchedFile {
   path: string;
   status: FileWatchStatus;
@@ -26,6 +35,9 @@ export interface WatchedFile {
   pendingAction: ReloadAction;
 }
 
+/**
+ * A record of one file change event, with its path, time, type and a dismissed flag. The store keeps the last 100.
+ */
 export interface ExternalChange {
   id: string;
   path: string;
@@ -35,6 +47,9 @@ export interface ExternalChange {
   dismissed: boolean;
 }
 
+/**
+ * User settings for file watching. autoReload and defaultAction only choose a file's pendingAction, which no code acts on. Only the settings page reads checkInterval.
+ */
 export interface FileWatchSettings {
   enabled: boolean;
   autoReload: boolean;

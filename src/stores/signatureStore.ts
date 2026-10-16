@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import type { Signature } from '@/types';
 
 // Placed signature on a PDF page
+/**
+ * One signature placed on a PDF page, with its position, size, rotation, and optional date stamp.
+ */
 export interface PlacedSignature {
   id: string;
   signatureId: string;
@@ -22,6 +25,9 @@ export interface PlacedSignature {
 }
 
 // Signature with additional metadata
+/**
+ * A saved signature, with an isInitials flag and an isDefault flag. The store tracks the current default in defaultSignatureId and defaultInitialsId; setDefaultSignature and setDefaultInitials change those ids, not isDefault.
+ */
 export interface StoredSignature extends Signature {
   isDefault: boolean;
   isInitials: boolean;
