@@ -1,7 +1,5 @@
 # PaperFlow Architecture Overview
 
-> **Version 3.0.0** | **Last Updated: 2026-02-03**
-
 ---
 
 ## What Is This?
@@ -12,7 +10,7 @@ All PDF processing happens locally by default - documents never leave the user's
 
 | Metric | Value |
 |--------|-------|
-| Codebase Size | ~920 files |
+| Codebase Size | 746 source files (whole repository: `src/`, `electron/`, `tests/`, tools and configuration; see Verification) |
 | Frontend Framework | React 18 + TypeScript |
 | Desktop Framework | Electron 28+ |
 | Cloud Dependencies | Zero (optional integrations available) |
@@ -57,14 +55,14 @@ All PDF processing happens locally by default - documents never leave the user's
 |                           UI LAYER (React)                              |
 |  +------------------------------------------------------------------+  |
 |  |  Pages: Home, Viewer, Settings                                    |  |
-|  |  Components: ~207 files                                           |  |
+|  |  Components: 209 files                                            |  |
 |  |    - viewer/     PDF rendering (PDFViewer, PageCanvas)            |  |
 |  |    - annotations/ Markup tools (Highlight, StickyNote, Drawing)   |  |
 |  |    - forms/      Form fields (TextField, Checkbox, Dropdown)      |  |
 |  |    - signatures/ Signature handling (SignaturePad, SignatureModal)|  |
 |  |    - batch/      Batch processing UI (BatchWizard, Dashboard)     |  |
 |  |    - offline/    Sync indicators (OfflineBanner, ConflictDialog)  |  |
-|  |  Hooks: ~40 custom hooks (usePDF, useAnnotations, useOfflineSync) |  |
+|  |  Hooks: 26 hook files (usePDF, useAnnotations, useOfflineSync)    |  |
 |  +------------------------------------------------------------------+  |
 +------------------------------------------------------------------------+
                                    |
@@ -349,7 +347,7 @@ interface DateFormField extends BaseFormField {
 ```
 paperflow/
 ├── src/                          # Web application source
-│   ├── components/               # React components (~207 files)
+│   ├── components/               # React components (209 files)
 │   │   ├── ui/                   # Reusable primitives
 │   │   │   ├── Button.tsx        # Button with variants
 │   │   │   ├── Dialog.tsx        # Modal dialog
@@ -397,7 +395,7 @@ paperflow/
 │   │       ├── PolicyStatusIndicator.tsx
 │   │       └── ConfigurationViewer.tsx
 │   │
-│   ├── stores/                   # Zustand state stores (~26 files)
+│   ├── stores/                   # Zustand state stores (27 files)
 │   │   ├── documentStore.ts      # PDF document state
 │   │   ├── annotationStore.ts    # Annotation state
 │   │   ├── historyStore.ts       # Undo/redo
@@ -416,27 +414,27 @@ paperflow/
 │   │   ├── useOfflineSync.ts     # Offline sync
 │   │   └── useConnectionStatus.ts # Network status
 │   │
-│   ├── lib/                      # Core libraries (~172 files)
+│   ├── lib/                      # Core libraries (173 files)
 │   │   ├── pdf/                  # PDF operations
 │   │   │   ├── renderer.ts       # PDF.js wrapper
 │   │   │   ├── saver.ts          # pdf-lib save operations
 │   │   │   └── textSaver.ts      # Text layer extraction
 │   │   ├── pages/                # Page operations
-│   │   │   ├── merge.ts          # PDF merging
-│   │   │   ├── split.ts          # PDF splitting
+│   │   │   ├── mergePdf.ts       # PDF merging
+│   │   │   ├── splitPdf.ts       # PDF splitting
 │   │   │   └── rotate.ts         # Page rotation
 │   │   ├── forms/                # Form handling
-│   │   │   ├── parser.ts         # Form field parsing
+│   │   │   ├── formParser.ts     # Form field parsing
 │   │   │   └── validation.ts     # Field validation
 │   │   ├── storage/              # Data persistence
-│   │   │   ├── indexedDB.ts      # IndexedDB wrapper
-│   │   │   └── fileHandling.ts   # File system access
+│   │   │   ├── indexeddb.ts      # IndexedDB wrapper
+│   │   │   └── fileHandler.ts    # File system access
 │   │   ├── ocr/                  # OCR processing
-│   │   │   ├── engine.ts         # Tesseract.js wrapper
-│   │   │   └── preprocessing.ts  # Image preprocessing
+│   │   │   ├── ocrEngine.ts      # Tesseract.js wrapper
+│   │   │   └── imagePreprocessor.ts # Image preprocessing
 │   │   ├── offline/              # Offline support
 │   │   │   ├── syncEngine.ts     # Sync logic
-│   │   │   └── conflictResolution.ts
+│   │   │   └── conflictResolver.ts
 │   │   └── enterprise/           # Enterprise features
 │   │       ├── gpoReader.ts      # Group Policy reader
 │   │       └── policyMerger.ts   # Policy merging
@@ -465,7 +463,7 @@ paperflow/
 │   ├── App.tsx                   # Router and layout
 │   └── sw.ts                     # Service worker
 │
-├── electron/                     # Desktop application (~88 files)
+├── electron/                     # Desktop application (72 files)
 │   ├── main/                     # Main process
 │   │   ├── index.ts              # Entry point, app lifecycle
 │   │   ├── windowManager.ts      # BrowserWindow management
@@ -503,7 +501,7 @@ paperflow/
 │       ├── menu.ts               # Native menus
 │       └── shortcuts.ts          # Global shortcuts
 │
-├── tests/                        # Test suites (~200 files)
+├── tests/                        # Test suites (184 files)
 │   ├── unit/                     # Unit tests (Vitest)
 │   ├── integration/              # Integration tests
 │   └── e2e/                      # E2E tests (Playwright)
@@ -526,6 +524,8 @@ paperflow/
 ├── dist-electron/                # Electron build output
 └── release/                      # Desktop installers
 ```
+
+The file counts in the tree are path counts from `docs/architecture/file-inventory.json`. They cover the TypeScript and JavaScript files that `repo-tools map` parses. They are not `repo-tools check` metrics, so the gate does not compare them. `stores/` and `hooks/` each count their `index.ts` barrel file. The `dist/`, `dist-electron/` and `release/` folders are build output that git does not track.
 
 ---
 
@@ -879,3 +879,18 @@ const pdfPoint = screenToPdf(screenPoint, pageHeight, scale);
 ---
 
 *This document provides a comprehensive overview of the PaperFlow architecture. For implementation details, refer to the specific architecture documents linked in Related Documentation.*
+
+---
+
+## Verification
+
+The table holds the metrics that `repo-tools check` compares with a fresh parse of the repository. The parse covers the whole repository: `src/`, `electron/`, `tests/`, `tools/`, `scripts/`, `cli/`, `server/`, `public/` and the root configuration files. The parse does not cover `docs/` or Markdown files.
+
+Check: `repo-tools check . --docs=docs/architecture`
+
+| Claim | Value | Source |
+|---|---|---|
+| totalFiles | 746 | repo-tools map (file-inventory.json, whole repository: TypeScript and JavaScript source files) |
+
+The per-folder file counts in the Directory Structure section come from the same `file-inventory.json`. They are not `repo-tools check` metrics.
+

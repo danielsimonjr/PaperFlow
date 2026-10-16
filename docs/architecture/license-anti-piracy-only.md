@@ -1,75 +1,55 @@
 # License System — Anti-Casual-Piracy Only
 
-**Status:** Accepted
-**Date:** 2026-05-01
-**Decision driver:** Stop the codebase from claiming a security guarantee it
-does not deliver.
+The client license layer is anti-casual-piracy only. The layer does not claim a security guarantee that the layer does not deliver.
 
 ## Context
 
-PaperFlow ships with a client-side license module (`src/lib/license/`). Earlier
-revisions of that module exposed a function called `verifySignature()` whose
-documentation suggested it performed an RSA signature check against an
-embedded public key. In reality:
-
-- The "public key" was a placeholder PEM, not the counterpart to any real
-  signing key in our infrastructure.
-- The function called a 32-bit folding hash (`(hash << 5) - hash + char`),
-  truncated to 4 base-36 characters, and compared that to the input.
-- A separate, more-realistic Web Crypto verifier in `signatureVerifier.ts`
-  was wired to a *different* placeholder PEM and was never imported by any
-  production call site.
-
-Net effect: the surface area looked cryptographic. The implementation was a
-typo-detector. Anyone reading the code might reasonably assume paid features
-were protected by a real signature pipeline. They were not.
+The client license layer runs in the copy of the application that the user installs. Anyone with that copy can read the layer's source. The layer contains no key material. A check name that suggests a cryptographic check would overstate what the layer does.
 
 ## Decision
 
-**This client license layer is anti-casual-piracy only.** It exists to:
+The client license layer does three things:
 
-1. Validate license-key *format* (length, character set).
-2. Catch *accidental* corruption — typos, OCR errors, partial copy/paste —
-   via a CRC-style integrity hash.
-3. Surface expiry status, edition, and feature flags to the UI.
+1. It checks the format of a license key. A valid key has 25 characters from the license character set, after dashes and spaces are removed. Source: `isValidFormat()` in `src/lib/license/licenseFormat.ts`.
+2. It detects accidental corruption, such as typing errors, OCR errors and partial copy and paste. It uses a checksum for this. Source: `calculateChecksum()` and `verifyChecksum()` in `src/lib/license/licenseFormat.ts`.
+3. It gives the expiry status, the edition and the feature flags to the UI. Source: `validateLicenseKey()`, `isFeatureAvailable()` and `getExpiryWarning()` in `src/lib/license/licenseValidator.ts`. The store `src/stores/licenseStore.ts` calls these functions.
 
-It does **not** and will **not** in this branch:
+The layer does not do these things:
 
-- Verify cryptographic signatures.
-- Defend against an attacker who reads the source.
-- Bind features to identity in a non-bypassable way.
+- It does not verify cryptographic signatures.
+- It does not protect against an attacker who reads the source.
+- It does not bind features to a user identity in a way that cannot be bypassed.
 
-Real cryptographic verification requires a license server (or an offline
-signing pipeline with a non-placeholder key plus tamper-resistant client
-storage). Both are **intentionally deferred** — see "Server Postponement"
-below.
+Real cryptographic verification needs a license server, or an offline signing pipeline with a real signing key and tamper-resistant client storage. The repository has neither.
+
+## Checksum
+
+The function `calculateChecksum()` in `src/lib/license/licenseFormat.ts` works as follows:
+
+1. It starts with a hash value of 0.
+2. For each UTF-16 code unit, `calculateChecksum()` sets the hash to 31 times the hash plus the code unit. The function keeps the hash to 32 bits.
+3. It takes the absolute value of the hash.
+4. It keeps the low 25 bits of that value. It writes them as 5 characters from the alphabet `ABCDEFGHJKLMNPQRSTUVWXYZ23456789`.
+
+Anyone who knows the algorithm can compute a valid checksum. The checksum finds accidental errors. The checksum does not stop deliberate changes.
+
+## Second Checksum
+
+The file `src/lib/license/licenseValidator.ts` contains a second function named `calculateChecksum()`. `calculateChecksum()` is not exported. `calculateChecksum()` returns 4 base-36 characters. The exported `verifyChecksum()` in `src/lib/license/licenseValidator.ts` uses `calculateChecksum()`. No production code calls `verifyChecksum()`.
+
+Production key validation does not use this second checksum. `validateLicenseKey()` calls `isValidFormat()` in `src/lib/license/licenseFormat.ts`.
 
 ## Consequences
 
-- `verifySignature()` is renamed to `verifyChecksum()` so the name matches
-  what it does (commit: `refactor(license): stop claiming cryptographic
-  verification we don't perform`).
-- `signatureVerifier.ts` retains a single `verifySignature()` stub that
-  throws, so any future caller fails loudly instead of being silently
-  green-lit by placeholder code.
-- The `EMBEDDED_PUBLIC_KEY` and `PUBLIC_KEY` constants are removed.
-- Paid features that warrant real protection MUST be gated server-side when
-  a server exists. Until then, treat all client-visible features as
-  effectively un-gated against a determined attacker.
+- `src/lib/license/signatureVerifier.ts` exports `verifySignature()`. That function throws on every call. A caller fails loudly.
+- The code does not define a public key constant. A search of `src/`, `electron/` and `tests/` finds no `PUBLIC_KEY` and no `EMBEDDED_PUBLIC_KEY`.
+- The test at `tests/unit/lib/license/licenseValidator.test.ts`, lines 197 to 202, checks that `verifyChecksum` exists and that `verifySignature` does not exist on the module.
+- Gate paid features that need real protection on a server. The client layer does not provide that protection. Treat each client-side feature as un-gated against a determined attacker.
 
-## Server Postponement
+## Server Code
 
-A license server is the natural home for:
+The repository does not contain a license server.
 
-- RSA-signed license blobs (server signs, client verifies).
-- Online activation, seat counting, transfer, revocation.
-- Heartbeat / phone-home checks gated by `app.isPackaged`.
+The file `src/lib/license/licenseBinding.ts` contains the class `ActivationManager`. Its method `activateOnline()` sends a request to `/api/v1/activate` on the configured server. Its method `deactivate()` sends a request to `/api/v1/deactivate`. No code outside `licenseBinding.ts` imports this class.
 
-Shipping that server is out of scope for the current security pass. This
-branch deliberately ships **without** server-mode code, server-side gating
-stubs, or "future server" placeholders to avoid accreting half-implemented
-abstractions that are themselves a future security/maintainability liability.
-
-When the server lands, this ADR should be superseded by one describing the
-real verification pipeline and the hand-off between offline checksum and
-online signature checks.
+<!-- repo-map:no-verification -->
