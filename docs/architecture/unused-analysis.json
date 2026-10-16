@@ -7,8 +7,8 @@
     "`unreferencedAnywhereNotes`'s dynamic-import check (`_dynamic_import_referrers`) only sees `import(...)` calls with a LITERAL string specifier. A dynamic import built from a variable or template literal (e.g. `import(`./cmds/${name}.js`)`, a command-dispatcher pattern) is invisible to it -- 'found none' in a note means no LITERAL match was found, NOT that nothing imports the file."
   ],
   "summary": {
-    "unusedExportCount": 1206,
-    "unreferencedAnywhereCount": 504,
+    "unusedExportCount": 1207,
+    "unreferencedAnywhereCount": 505,
     "referencedInModuleCount": 702,
     "unclassifiedExportCount": 0,
     "noImporterFileCount": 234
@@ -316,6 +316,9 @@
       "IconButton",
       "SkipNav",
       "VisuallyHidden"
+    ],
+    "src/components/ui/Skeleton.tsx": [
+      "SkeletonText"
     ],
     "src/components/viewer/PDFViewer.tsx": [
       "PDFViewer"
@@ -1160,6 +1163,9 @@
       "IconButton": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/ui/AccessibleComponents.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'IconButton' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.",
       "SkipNav": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/ui/AccessibleComponents.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'SkipNav' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.",
       "VisuallyHidden": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/ui/AccessibleComponents.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'VisuallyHidden' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting."
+    },
+    "src/components/ui/Skeleton.tsx": {
+      "SkeletonText": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/ui/Skeleton.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'SkeletonText' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting."
     },
     "src/components/viewer/PDFViewer.tsx": {
       "PDFViewer": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/viewer/PDFViewer.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'PDFViewer' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting."

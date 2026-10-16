@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   and corrected 103 comments that were false or overstated. Where the code does not do what its option or control says
   (an option with no reader, a control with no effect), the comment now says so. Those cases are open work, not fixed here. The comments follow Simplified Technical English:
   a passive sentence with no named actor, an ambiguous pronoun and a sentence over 20 words are rewritten.
+  The generated architecture reports are regenerated for the new source, and `ARCHITECTURE.md` states the export
+  and function counts that the drift gate reads from them (3259 exports, 1293 functions).
 
 - **The generated architecture reports are regenerated.** `repo-tools map . --out=docs/architecture` rewrote
   `DEPENDENCY_GRAPH.md`, `unused-analysis.md` and the three dependency JSON and YAML files, which were out of date
