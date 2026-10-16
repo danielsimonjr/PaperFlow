@@ -1,5 +1,8 @@
 import type { AnnotationRect, AnnotationReply } from './index';
 
+/**
+ * A text markup annotation on one page: highlight, underline, or strikethrough.
+ */
 export interface HighlightAnnotation {
   id: string;
   type: 'highlight' | 'underline' | 'strikethrough';
@@ -12,6 +15,9 @@ export interface HighlightAnnotation {
   updatedAt: Date;
 }
 
+/**
+ * A sticky note on one page, with its content, position, and optional replies.
+ */
 export interface NoteAnnotation {
   id: string;
   type: 'note';
@@ -26,6 +32,9 @@ export interface NoteAnnotation {
   replies?: AnnotationReply[];
 }
 
+/**
+ * A freehand drawing on one page, made of one or more paths.
+ */
 export interface DrawingAnnotation {
   id: string;
   type: 'drawing';
@@ -37,10 +46,16 @@ export interface DrawingAnnotation {
   updatedAt: Date;
 }
 
+/**
+ * One stroke of a drawing, as a list of points with optional pressure.
+ */
 export interface DrawingPath {
   points: { x: number; y: number; pressure?: number }[];
 }
 
+/**
+ * A shape on one page: rectangle, circle, arrow, or line, with its bounds.
+ */
 export interface ShapeAnnotation {
   id: string;
   type: 'shape';
@@ -54,6 +69,9 @@ export interface ShapeAnnotation {
   updatedAt: Date;
 }
 
+/**
+ * A stamp on one page, with its kind, position, scale, rotation, and optional custom text.
+ */
 export interface StampAnnotation {
   id: string;
   type: 'stamp';
@@ -67,6 +85,9 @@ export interface StampAnnotation {
   updatedAt: Date;
 }
 
+/**
+ * Any one of the annotation kinds that this file defines.
+ */
 export type AnyAnnotation =
   | HighlightAnnotation
   | NoteAnnotation

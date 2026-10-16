@@ -16,6 +16,11 @@ interface ScanPreviewProps {
   onRescan?: () => void;
 }
 
+/**
+ * The preview shows a scan, with rotate, crop and reset controls, plus Rescan and Accept.
+ * The preview displays the rotation and the crop box but does not apply them. Accept passes the original preview URL to
+ * `onAccept`. A spinner shows while a scan runs, and an empty state shows when there is no preview.
+ */
 export function ScanPreview({ className, onAccept, onRescan }: ScanPreviewProps) {
   const { previewUrl, currentScanResult, isScanning } = useScannerStore();
   const imageRef = useRef<HTMLImageElement>(null);

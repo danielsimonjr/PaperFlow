@@ -7,6 +7,11 @@
 import type { Annotation } from '@/types/index';
 import type { UserState, UnsavedChanges } from './smartReload';
 
+/**
+ * The state of an open document, which `captureDocumentState` keeps in memory for a document reload.
+ * `documentHash` is always an empty string. Every captured annotation has `isNew` set to true. `selectedElements`
+ * always holds the current page and no annotation IDs.
+ */
 export interface DocumentStateSnapshot {
   // User state
   userState: UserState;
@@ -29,6 +34,10 @@ export interface DocumentStateSnapshot {
   capturedAt: number;
 }
 
+/**
+ * Options for which parts of the document state to capture. By default, `captureDocumentState` includes all parts.
+ * `captureDocumentState` does not read `includeUIState`, because the function always captures the UI state.
+ */
 export interface StatePreserverOptions {
   includeAnnotations: boolean;
   includeFormValues: boolean;

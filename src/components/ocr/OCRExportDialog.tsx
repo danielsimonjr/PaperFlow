@@ -26,6 +26,12 @@ interface OCRExportDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
+/**
+ * Dialog that exports the OCR results as plain text, HTML, hOCR or JSON.
+ * Only the HTML export reads the confidence option, and only the JSON export reads the bounding boxes option.
+ * Table CSVs come from layout analysis, which runs on the first result only,
+ * and only with Preserve document layout on.
+ */
 export function OCRExportDialog({ open, onOpenChange }: OCRExportDialogProps) {
   const results = useOCRStore((s) => s.results);
 

@@ -7,6 +7,9 @@
 
 export type EventPriority = 'critical' | 'high' | 'normal' | 'low';
 
+/**
+ * One file watch event waiting in the queue, with its priority and retry count.
+ */
 export interface QueuedEvent {
   id: string;
   path: string;
@@ -20,6 +23,9 @@ export interface QueuedEvent {
   maxRetries: number;
 }
 
+/**
+ * A group of queued events for one path, taken from the queue together.
+ */
 export interface EventBatch {
   id: string;
   events: QueuedEvent[];
@@ -28,6 +34,10 @@ export interface EventBatch {
   processedAt?: number;
 }
 
+/**
+ * The watch queue settings include a size limit, batching, a retry limit and a priority boost.
+ * Nothing reads `retryDelayMs`: the queue tries a failed batch again after `batchDelayMs`.
+ */
 export interface QueueConfig {
   maxQueueSize: number;
   batchDelayMs: number;

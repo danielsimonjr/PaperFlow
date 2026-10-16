@@ -2,6 +2,11 @@ import { forwardRef, memo } from 'react';
 import { Check, GripVertical } from 'lucide-react';
 import { cn } from '@utils/cn';
 
+/**
+ * Props for a page thumbnail that users can click, select and drag.
+ * `dragProps` holds the draggable flag and the drag handlers. `dropPosition` sets the edge of the drop indicator. The
+ * drop indicator shows only while `isDropTarget` is true.
+ */
 export interface DraggableThumbnailProps {
   pageNumber: number;
   pageIndex: number;
@@ -25,6 +30,11 @@ export interface DraggableThumbnailProps {
   };
 }
 
+/**
+ * Page thumbnail that users can click, select and drag. The spinner shows until `thumbnailUrl` has a value, and the
+ * page number always shows. The ref goes to the clickable frame, and the frame also receives `dragProps`. The component
+ * is wrapped in `memo`, so it renders again only when a prop changes.
+ */
 export const DraggableThumbnail = memo(
   forwardRef<HTMLDivElement, DraggableThumbnailProps>(
     (

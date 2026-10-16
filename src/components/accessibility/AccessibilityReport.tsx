@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the accessibility report: the document name, the report data, and the export and print callbacks.
+ * The AccessibilityReport function declares no parameters, so it ignores them.
+ */
 export interface AccessibilityReportProps {
   /** Document name */
   documentName?: string;
@@ -67,6 +71,10 @@ interface ReportIssue {
   status: 'open' | 'fixed' | 'ignored';
 }
 
+/**
+ * Placeholder for the accessibility report.
+ * Renders an empty container with the accessibility-report class.
+ */
 export function AccessibilityReport(): React.ReactElement {
   return (
     <div className="accessibility-report">

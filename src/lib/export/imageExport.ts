@@ -2,9 +2,19 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import type { Annotation } from '@/types';
 
+/**
+ * The file format of an exported page image.
+ */
 export type ImageFormat = 'png' | 'jpeg';
+/**
+ * The resolution, in dots per inch, of an exported page image.
+ */
 export type ImageDpi = 72 | 150 | 300;
 
+/**
+ * Options for exporting pages as images, including the format and resolution.
+ * Page numbers start at 1.
+ */
 export interface ImageExportOptions {
   format: ImageFormat;
   dpi: ImageDpi;

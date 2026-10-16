@@ -8,6 +8,12 @@
 import { BrowserWindow, BrowserWindowConstructorOptions, screen } from 'electron';
 import { WindowState, loadWindowState, saveWindowState, getDefaultWindowState } from './windowState';
 
+/**
+ * The options for WindowManager.createWindow add to the Electron window options.
+ *
+ * The `id` keys the window in the manager and in the saved state of the window. The saved or default state replaces
+ * `x`, `y`, `width` and `height`. The manager stores `filePath` but never reads `filePath`.
+ */
 export interface WindowOptions extends Partial<BrowserWindowConstructorOptions> {
   id?: string;
   filePath?: string;
@@ -38,6 +44,11 @@ const DEFAULT_WINDOW_OPTIONS: BrowserWindowConstructorOptions = {
   },
 };
 
+/**
+ * Creates, tracks and closes the BrowserWindow instances of the app.
+ *
+ * The main window is the last focused window, or the first window created before any focus. When the main window closes, the first remaining window takes its place.
+ */
 export class WindowManager {
   private windows: Map<string, ManagedWindow> = new Map();
   private mainWindowId: string | null = null;

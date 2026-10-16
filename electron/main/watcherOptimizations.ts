@@ -8,6 +8,12 @@
 import { WatcherService } from './watcherService';
 import { getFolderWatcherStats, cleanupStaleWatches } from './folderWatcher';
 
+/**
+ * One sample of the figures that getPerformanceMetrics returns.
+ *
+ * The CPU and memory figures cover the whole main process, not only the watchers.
+ * `pendingEvents` is always 0.
+ */
 export interface WatcherPerformanceMetrics {
   cpuUsagePercent: number;
   memoryUsageMB: number;
@@ -17,6 +23,12 @@ export interface WatcherPerformanceMetrics {
   averageEventLatencyMs: number;
 }
 
+/**
+ * Limits, thresholds and intervals for this module's checks, set by `updateOptimizationSettings`.
+ *
+ * No code reads `maxWatchersPerFolder` or `batchFlushMs`.
+ * No watcher reads `debounceMs`, but `autoOptimize` raises the stored value when CPU is high.
+ */
 export interface OptimizationSettings {
   maxWatchers: number;
   maxWatchersPerFolder: number;

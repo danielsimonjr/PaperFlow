@@ -20,10 +20,18 @@ import { offlineAvailability } from '@/lib/offline/offlineAvailability';
 import { cn } from '@/utils/cn';
 import type { OfflineDocumentMetadata, SyncPriority, OfflineStorageStats } from '@/types/offline';
 
+/**
+ * Props for the OfflineSettings component.
+ * className adds classes to the root element.
+ */
 export interface OfflineSettingsProps {
   className?: string;
 }
 
+/**
+ * Settings view for offline storage, sync switches and the offline document list.
+ * The switches update the offline store. Clear All asks to confirm, then empties offline storage.
+ */
 export function OfflineSettings({ className }: OfflineSettingsProps) {
   const [documents, setDocuments] = useState<OfflineDocumentMetadata[]>([]);
   const [stats, setStats] = useState<OfflineStorageStats | null>(null);

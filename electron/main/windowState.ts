@@ -9,6 +9,11 @@ import { app } from 'electron';
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * Saved position, size and minimized or maximized flags of one window.
+ *
+ * The state file keeps one entry for each window ID.
+ */
 export interface WindowState {
   x?: number;
   y?: number;

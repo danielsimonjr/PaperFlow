@@ -4,6 +4,9 @@
 
 import { getFontFallback, type FontFallbackResult } from './fontFallback';
 
+/**
+ * A text item extracted from a PDF page, with its text, size and font name.
+ */
 export interface PDFTextItem {
   str: string;
   dir: string;
@@ -14,6 +17,9 @@ export interface PDFTextItem {
   hasEOL: boolean;
 }
 
+/**
+ * The web-safe font matched to a PDF font, with its size, style and match confidence.
+ */
 export interface FontInfo {
   /** Original PDF font name */
   pdfFontName: string;

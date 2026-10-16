@@ -1,3 +1,6 @@
+/**
+ * A keyboard shortcut that maps a key and its modifier keys to an action.
+ */
 export interface KeyboardShortcut {
   key: string;
   modifiers: ('ctrl' | 'shift' | 'alt' | 'meta')[];
@@ -50,6 +53,12 @@ export const KEYBOARD_SHORTCUTS: KeyboardShortcut[] = [
   { key: 'Escape', modifiers: [], action: 'view.escape', description: 'Cancel/Deselect' },
 ];
 
+/**
+ * Return true when a keyboard event matches a shortcut.
+ *
+ * The key comparison ignores case. Ctrl and Meta both count as the `ctrl` modifier. Shift and Alt must match exactly.
+ * The function does not read a meta entry in the shortcut's modifiers.
+ */
 export function matchShortcut(
   event: KeyboardEvent,
   shortcut: KeyboardShortcut

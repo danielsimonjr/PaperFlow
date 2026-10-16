@@ -6,6 +6,10 @@
 
 import type { DocumentSnapshot, ChangeSummary } from './changeDetector';
 
+/**
+ * The differences found on one page between two versions of a document.
+ * The content type means that the page hashes in the two snapshots differ.
+ */
 export interface PageDiff {
   pageNumber: number;
   hasChanges: boolean;
@@ -17,6 +21,9 @@ export interface PageDiff {
   annotationDelta?: number;
 }
 
+/**
+ * The differences between two versions of a document, as built by createDocumentDiff.
+ */
 export interface DocumentDiff {
   summary: ChangeSummary;
   pagesAdded: number[];

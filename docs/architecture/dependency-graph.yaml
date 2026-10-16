@@ -4,7 +4,7 @@ metadata:
   language: typescript
   totalFiles: 746
   totalModules: 4
-  totalExports: 3258
+  totalExports: 3259
 modules:
   src:
     cli/config-schema-check.ts:
@@ -3961,6 +3961,7 @@ modules:
       internalDependencies: []
       exports:
         - Skeleton
+        - SkeletonText
     src/components/ui/ThemeToggle.tsx:
       externalDependencies:
         - '@stores/uiStore'
@@ -11625,8 +11626,8 @@ statistics:
   totalTypeScriptFiles: 746
   totalSourceFiles: 746
   totalModules: 4
-  totalLinesOfCode: 175247
-  totalExports: 3258
+  totalLinesOfCode: 176938
+  totalExports: 3259
   entryRoots: 0
   reachableFiles: 0
   dormantFiles: 546
@@ -11636,7 +11637,7 @@ statistics:
   typeOnlyCircularDeps: 0
   totalTypeOnlyImports: 92
   noImporterFileCount: 234
-  unusedExportsCount: 1206
+  unusedExportsCount: 1207
   circularDepsTruncated: false
   runtimeCyclicComponents: 0
   typeOnlyCyclicComponents: 0
@@ -11644,7 +11645,7 @@ statistics:
   typeOnlyFilesInCycles: 0
   totalClasses: 69
   totalInterfaces: 686
-  totalFunctions: 1292
+  totalFunctions: 1293
   totalTypeGuards: 59
   totalEnums: 3
   totalConstants: 214

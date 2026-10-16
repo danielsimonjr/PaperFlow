@@ -13,6 +13,11 @@ interface DropdownProps {
   onValueChange?: () => void;
 }
 
+/**
+ * The dropdown widget is for a PDF form field and sits at the position of the field.
+ * The widget shows a select of the options, or a text box with a filtered list when `allowCustom` is set. Choosing an
+ * option, or typing a value, writes the value to the form store.
+ */
 export function Dropdown({
   field,
   scale,

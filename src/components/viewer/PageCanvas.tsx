@@ -21,6 +21,12 @@ interface PageCanvasProps {
   onPageRendered?: (dimensions: { width: number; height: number }) => void;
 }
 
+/**
+ * The component draws one PDF page onto a canvas, with text, annotation, form and drawing layers over the page.
+ * The component shows a spinner while the page renders, and an error message if rendering fails. Text selected with a
+ * highlight, underline or strikethrough tool makes an annotation. Text selected with no annotation tool active shows a
+ * selection popup. The draw and shape tools turn off pointer events on the text, annotation and form layers.
+ */
 export function PageCanvas({
   renderer,
   pageNumber,

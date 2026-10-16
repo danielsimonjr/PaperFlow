@@ -16,6 +16,10 @@ export const TOOL_IDS = {
   SIGNATURE: 'signature',
 } as const;
 
+/**
+ * Identifier of one tool, which is one of the values of TOOL_IDS.
+ * The stores type their active tool with EditorTool and AnnotationType, not with ToolId.
+ */
 export type ToolId = (typeof TOOL_IDS)[keyof typeof TOOL_IDS];
 
 export const HIGHLIGHT_COLORS = [

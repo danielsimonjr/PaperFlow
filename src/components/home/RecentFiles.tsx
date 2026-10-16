@@ -8,6 +8,11 @@ interface RecentFilesProps {
   className?: string;
 }
 
+/**
+ * The component lists up to ten recent files, loaded from the IndexedDB storage module.
+ * Choosing an entry calls `onFileSelect`. The remove button of an entry deletes that entry. Clear all empties the list.
+ * The component shows a loading skeleton, an error message, or an empty-state message.
+ */
 export function RecentFiles({ onFileSelect, className }: RecentFilesProps) {
   const [recentFiles, setRecentFiles] = useState<RecentFile[]>([]);
   const [isLoading, setIsLoading] = useState(true);

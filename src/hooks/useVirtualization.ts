@@ -23,6 +23,12 @@ interface UseVirtualizationReturn {
   scrollTop: number;
 }
 
+/**
+ * The function returns items for rendering a list of fixed-height items.
+ *
+ * The range starts with the overscan count of items before the first item in view. The range ends at the start index
+ * plus the visible count plus twice the overscan. The range never goes past the last item.
+ */
 export function useVirtualization({
   totalItems,
   itemHeight,
@@ -118,6 +124,12 @@ interface UseDynamicVirtualizationReturn {
   scrollTop: number;
 }
 
+/**
+ * Return the items to render for a list with variable item heights.
+ *
+ * The hook takes heights from `getItemHeight` when the caller gives it, or from measured heights and the estimate. Call
+ * `measureElement` to record the measured height of an item.
+ */
 export function useDynamicVirtualization({
   totalItems,
   estimatedItemHeight,

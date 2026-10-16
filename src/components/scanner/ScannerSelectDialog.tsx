@@ -17,6 +17,12 @@ interface ScannerSelectDialogProps {
   onSelect?: (device: ScannerDevice) => void;
 }
 
+/**
+ * Dialog for choosing a scanner, with device details and a refresh button.
+ * The device list is sample data: each refresh waits one second, then loads two fixed devices.
+ * The list refreshes each time the dialog opens.
+ * Choosing a device selects it, calls onSelect, and closes the dialog.
+ */
 export function ScannerSelectDialog({
   isOpen,
   onClose,

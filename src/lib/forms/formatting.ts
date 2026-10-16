@@ -4,9 +4,18 @@
  */
 
 export type NumberFormat = 'integer' | 'decimal' | 'currency' | 'percentage';
+/**
+ * The date layouts that a date form field can use.
+ */
 export type DateFormat = 'MM/DD/YYYY' | 'DD/MM/YYYY' | 'YYYY-MM-DD' | 'MMMM D, YYYY';
+/**
+ * The letter case that a text form field can apply to its value.
+ */
 export type TextCase = 'upper' | 'lower' | 'title' | 'none';
 
+/**
+ * Options for formatting numeric values in a form field, such as decimal places and currency.
+ */
 export interface NumberFormatOptions {
   format: NumberFormat;
   decimalPlaces?: number;
@@ -17,11 +26,17 @@ export interface NumberFormatOptions {
   negativeFormat?: 'minus' | 'parentheses';
 }
 
+/**
+ * Options for formatting a date in a form field. `formatDate` reads only `format`; it ignores `locale`.
+ */
 export interface DateFormatOptions {
   format: DateFormat;
   locale?: string;
 }
 
+/**
+ * Options for formatting text in a form field: case, trimming, length and mask.
+ */
 export interface TextFormatOptions {
   case?: TextCase;
   trim?: boolean;

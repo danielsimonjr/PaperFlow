@@ -11,6 +11,12 @@ import { BrowserWindow } from 'electron';
 import { IPC_EVENTS } from '../ipc/channels';
 import type { FileWatcherEvent } from '../ipc/types';
 
+/**
+ * State of one folder that the folder watcher monitors.
+ *
+ * The file count is the net number of add and unlink events since the watch began.
+ * The count never goes below zero, and the last activity time updates on each debounced event.
+ */
 export interface WatchedFolder {
   path: string;
   watcher: FSWatcher;
@@ -20,6 +26,11 @@ export interface WatchedFolder {
   lastActivity: number;
 }
 
+/**
+ * Options for watchFolder, where unset fields take the module defaults.
+ *
+ * `extensions`, `maxDepth` and `debounceMs` change the watch. No code reads `maxFilesPerFolder`.
+ */
 export interface FolderWatcherOptions {
   extensions?: string[];
   maxDepth?: number;

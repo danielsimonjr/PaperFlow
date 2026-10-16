@@ -6,6 +6,11 @@ import React, { useMemo } from 'react';
 import { useNativeBatchStore } from '@/stores/nativeBatchStore';
 import { Button } from '@/components/ui/Button';
 
+/**
+ * Props for the BatchSummary component.
+ * jobId picks the job to summarize.
+ * The callbacks close the view, retry failed files, and export a report.
+ */
 export interface BatchSummaryProps {
   /** Job ID to show summary for */
   jobId: string;
@@ -31,6 +36,12 @@ function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+/**
+ * The view summarizes one batch job in the native batch store.
+ * The view shows a not-found message for an unknown job ID. The view shows success counts, the success rate, size
+ * figures and a result row for each file. The output size figure sums the input sizes of the completed files, because a
+ * file record holds no output size.
+ */
 export function BatchSummary({
   jobId,
   onClose,

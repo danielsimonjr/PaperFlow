@@ -52,6 +52,10 @@ interface PrintQualitySelectorProps {
   compact?: boolean;
 }
 
+/**
+ * Users choose print quality: Draft, Normal or High, using a radio list or compact buttons.
+ * The component uses fixed values for DPI, speed and ink. The component does not measure these values from the printer.
+ */
 export function PrintQualitySelector({
   className,
   compact = false,

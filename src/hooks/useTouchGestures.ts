@@ -26,6 +26,11 @@ function getDistance(touch1: Touch, touch2: Touch): number {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
+/**
+ * Attach touch listeners to an element for pinch, pan, swipe and long-press gestures.
+ *
+ * Listeners attach only while enabled, and a horizontal swipe must pass the swipe threshold.
+ */
 export function useTouchGestures(
   elementRef: React.RefObject<HTMLElement | null>,
   options: TouchGestureOptions

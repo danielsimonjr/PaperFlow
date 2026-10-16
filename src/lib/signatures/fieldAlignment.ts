@@ -1,5 +1,8 @@
 import { PDFDocument } from 'pdf-lib';
 
+/**
+ * A form field that detectSignatureFields selects because its name contains "sig", with its page index, bounds (top-left origin) and name.
+ */
 export interface SignatureFieldInfo {
   pageIndex: number;
   bounds: { x: number; y: number; width: number; height: number };

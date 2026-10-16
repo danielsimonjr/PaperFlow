@@ -4,6 +4,12 @@ import { ThemeSelector } from '@components/ui/ThemeToggle';
 import { Button } from '@components/ui/Button';
 import { useSettingsStore } from '@stores/settingsStore';
 
+/**
+ * Render the settings page for the saved user preferences.
+ *
+ * The reset button restores the defaults of `settingsStore` only. The reset button does not change the theme. `uiStore`
+ * keeps the theme.
+ */
 export default function Settings() {
   const settings = useSettingsStore();
 

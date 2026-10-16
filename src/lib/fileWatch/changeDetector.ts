@@ -6,6 +6,11 @@
 
 import { PDFDocument } from 'pdf-lib';
 
+/**
+ * The kind of change in a DocumentChange.
+ * detectChanges produces only pages-added, pages-removed, page-content-changed,
+ * annotations-changed, form-fields-changed and metadata-changed.
+ */
 export type ChangeType =
   | 'pages-added'
   | 'pages-removed'
@@ -18,6 +23,9 @@ export type ChangeType =
   | 'bookmarks-changed'
   | 'security-changed';
 
+/**
+ * One change found between two versions of a document.
+ */
 export interface DocumentChange {
   type: ChangeType;
   pageNumbers?: number[];
@@ -25,6 +33,9 @@ export interface DocumentChange {
   severity: 'minor' | 'moderate' | 'major';
 }
 
+/**
+ * A summary of the changes found in a document, with counts by severity.
+ */
 export interface ChangeSummary {
   hasChanges: boolean;
   changes: DocumentChange[];
@@ -37,6 +48,12 @@ export interface ChangeSummary {
   changeTimestamp: number;
 }
 
+/**
+ * A snapshot holds document pages, annotations, form fields, and metadata.
+ * The snapshot supports change detection. A page hash covers only the page width, height, and rotation. The page hash
+ * does not cover page content. `annotationCounts` holds 1 if a page contains an `Annots` entry. `annotationCounts`
+ * holds 0 for all other pages. `hasAttachments` is always false.
+ */
 export interface DocumentSnapshot {
   pageCount: number;
   pageHashes: string[];

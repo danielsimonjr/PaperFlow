@@ -10,6 +10,11 @@ interface TextLayerProps {
   onTextSelected?: (selection: TextSelection | null) => void;
 }
 
+/**
+ * Text selected on one page: the trimmed text, selection rectangles and page index.
+ * Rectangles are relative to the text layer, in pixels.
+ * pageIndex is zero-based.
+ */
 export interface TextSelection {
   text: string;
   rects: Array<{

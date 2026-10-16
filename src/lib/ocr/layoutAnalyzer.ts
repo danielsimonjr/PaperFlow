@@ -5,6 +5,9 @@
 
 import type { OCRResult, OCRBlock, OCRLine, BoundingBox } from './types';
 
+/**
+ * A text column found on a page, with its bounds and order.
+ */
 export interface Column {
   id: string;
   bounds: BoundingBox;
@@ -12,6 +15,9 @@ export interface Column {
   order: number;
 }
 
+/**
+ * One cell of a detected table, with its row, column, text and spans. Detection always sets both spans to 1.
+ */
 export interface TableCell {
   row: number;
   col: number;
@@ -22,6 +28,9 @@ export interface TableCell {
   confidence: number;
 }
 
+/**
+ * A table detected on a page, with its bounds, size and cells.
+ */
 export interface Table {
   id: string;
   bounds: BoundingBox;
@@ -31,6 +40,9 @@ export interface Table {
   hasHeader: boolean;
 }
 
+/**
+ * A region of recognized text and its role on the page, such as a header.
+ */
 export interface TextRegion {
   id: string;
   bounds: BoundingBox;
@@ -39,12 +51,18 @@ export interface TextRegion {
   confidence: number;
 }
 
+/**
+ * An image region on a page, with an optional caption. analyzeLayout never creates one; its images list is always empty.
+ */
 export interface ImageRegion {
   id: string;
   bounds: BoundingBox;
   caption?: TextRegion;
 }
 
+/**
+ * A region of a page with its type, bounds and position in the reading order.
+ */
 export interface Region {
   id: string;
   type: 'column' | 'table' | 'image' | 'header' | 'footer' | 'paragraph';
@@ -52,6 +70,9 @@ export interface Region {
   order: number;
 }
 
+/**
+ * The layout found on a page: columns, tables, headers, footers and reading order. The images list is always empty.
+ */
 export interface LayoutAnalysis {
   columns: Column[];
   tables: Table[];

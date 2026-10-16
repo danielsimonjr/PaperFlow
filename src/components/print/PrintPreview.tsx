@@ -7,6 +7,10 @@ interface PrintPreviewProps {
   onPreviewIndexChange: (index: number) => void;
 }
 
+/**
+ * Print preview placeholder: it shows the page number, not a rendered page.
+ * Previous and next buttons step through the pages when there is more than one.
+ */
 export function PrintPreview({ pages, currentPreviewIndex, onPreviewIndexChange }: PrintPreviewProps) {
   const [, setLoadError] = useState(false);
   const pageNumber = pages[currentPreviewIndex] ?? 1;

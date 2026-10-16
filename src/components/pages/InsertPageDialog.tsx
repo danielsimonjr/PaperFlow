@@ -5,6 +5,10 @@ import { Button } from '@components/ui/Button';
 import { cn } from '@utils/cn';
 import type { PageSize } from '@lib/pages/pageOperations';
 
+/**
+ * Props for the `InsertPageDialog` component.
+ * The component reads `position` once when the dialog mounts. `onInsert` receives the position and the page size.
+ */
 export interface InsertPageDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -21,6 +25,11 @@ const PAGE_SIZES: { value: PageSize; label: string; description: string }[] = [
   { value: 'legal', label: 'Legal', description: '8.5" x 14"' },
 ];
 
+/**
+ * Dialog for choosing where to insert a blank page, before or after the current page.
+ * Insert Page calls onInsert with the position and a page size: match, letter, A4 or legal.
+ * Cancel, Escape and the close button reset the page size to match.
+ */
 export function InsertPageDialog({
   open,
   onOpenChange,

@@ -3,6 +3,9 @@ import type { Annotation } from '@/types';
 import type { FormField } from '@/types';
 import { exportPdf } from './pdfExport';
 
+/**
+ * Options for flattenPdf. Both flags default to true when omitted.
+ */
 export interface FlattenOptions {
   flattenAnnotations?: boolean;
   flattenFormFields?: boolean;

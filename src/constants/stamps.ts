@@ -65,8 +65,14 @@ export const PRESET_STAMPS: PresetStamp[] = [
 export const DEFAULT_STAMP_WIDTH = 150;
 export const DEFAULT_STAMP_HEIGHT = 50;
 
+/**
+ * Stamp kinds: each preset stamp ID, plus custom for a stamp with custom text.
+ */
 export type StampType = 'approved' | 'rejected' | 'confidential' | 'draft' | 'final' | 'for-review' | 'custom';
 
+/**
+ * Return the preset stamp with the given ID, or undefined when no preset matches.
+ */
 export function getStampById(id: string): PresetStamp | undefined {
   return PRESET_STAMPS.find((stamp) => stamp.id === id);
 }

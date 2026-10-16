@@ -8,6 +8,11 @@ import type { SplitResult } from '@lib/pages/splitPdf';
 
 type SplitMode = 'range' | 'every-n' | 'by-size';
 
+/**
+ * Props for the SplitDialog component.
+ * pageCount is the number of pages in the document.
+ * onSplitByRange, onSplitEveryN and onSplitBySize run the three split modes.
+ */
 export interface SplitDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -17,6 +22,10 @@ export interface SplitDialogProps {
   onSplitBySize: (maxSizeKb: number) => Promise<SplitResult[]>;
 }
 
+/**
+ * The dialog splits the document by page range, every N pages, or file size.
+ * The dialog shows the results with a download for each file, and a ZIP download when there are several.
+ */
 export function SplitDialog({
   open,
   onOpenChange,

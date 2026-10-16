@@ -7,6 +7,10 @@ import { useNativeBatchStore } from '@/stores/nativeBatchStore';
 import type { BatchJob, JobStatus } from '@/types/batch';
 import { Button } from '@/components/ui/Button';
 
+/**
+ * Props for the BatchDashboard component. activeOnly shows only pending, queued, processing and paused jobs.
+ * onJobSelect receives the ID of a job card when the user clicks the card.
+ */
 export interface BatchDashboardProps {
   /** Show only active jobs */
   activeOnly?: boolean;
@@ -231,6 +235,12 @@ function ResourceMonitor({
   );
 }
 
+/**
+ * The dashboard reads batch jobs from the native batch store.
+ * The dashboard shows queue controls, a card per job, and queue statistics. The dashboard also shows resource usage
+ * when the store holds the usage data. Job cards offer pause, resume, retry, and cancel by job status. Pause and resume
+ * operations act on the whole queue.
+ */
 export function BatchDashboard({
   activeOnly = false,
   onJobSelect,

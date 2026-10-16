@@ -41,6 +41,9 @@ export interface TextBox {
   };
 }
 
+/**
+ * Font and paragraph properties of a text box.
+ */
 export interface TextProperties {
   fontFamily: string;
   fontSize: number;
@@ -52,6 +55,9 @@ export interface TextProperties {
   lineSpacing: number;
 }
 
+/**
+ * Information about a text selection: its text, page, screen bounds, and detected font.
+ */
 export interface TextSelectionInfo {
   /** Selected text content */
   text: string;
@@ -72,10 +78,16 @@ export interface TextSelectionInfo {
   };
 }
 
+/**
+ * One change to a text box: an add, an edit, or a delete.
+ */
 export interface TextEditAction {
   type: 'add' | 'edit' | 'delete';
   textBox: TextBox;
   previousContent?: string;
 }
 
+/**
+ * Text tool state: select, textbox, or null.
+ */
 export type TextTool = 'select' | 'textbox' | null;

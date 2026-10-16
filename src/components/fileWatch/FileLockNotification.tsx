@@ -16,6 +16,11 @@ interface FileLockNotificationProps {
   className?: string;
 }
 
+/**
+ * The alert appears for a file that another program has locked, and the alert has retry controls.
+ * Retry Now calls `onRetry`. Auto-retry calls `onRetry` every 5 seconds while the file stays locked. The alert becomes
+ * a success message when a retry succeeds and the file is unlocked.
+ */
 export function FileLockNotification({
   filePath,
   isLocked,

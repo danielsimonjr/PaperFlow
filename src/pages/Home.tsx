@@ -9,6 +9,11 @@ import { storage, RecentFile } from '@lib/storage/indexeddb';
 import { generateFileId } from '@lib/storage/fileHandler';
 import { useFileSystem } from '@hooks/useFileSystem';
 
+/**
+ * Render the home page with a drop zone, a file picker and the recent files list.
+ *
+ * The page loads a dropped file, adds the file to the recent files, and opens the file in the editor.
+ */
 export default function Home() {
   const navigate = useNavigate();
   const loadDocument = useDocumentStore((state) => state.loadDocument);

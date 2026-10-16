@@ -17,6 +17,13 @@ interface SearchBarProps {
   className?: string;
 }
 
+/**
+ * Search bar for the open document, with case and whole-word options and match navigation.
+ * Enter in the box runs the search. Enter and Shift+Enter step to the next and previous match.
+ * Each match moves the view to its page.
+ * Escape closes the bar and keeps the search. The close button closes it and clears the search.
+ * Toggling case or whole word re-runs the search with the previous options when the box has text.
+ */
 export function SearchBar({ isOpen, onClose, className }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [localQuery, setLocalQuery] = useState('');

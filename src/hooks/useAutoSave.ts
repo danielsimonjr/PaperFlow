@@ -17,6 +17,14 @@ interface UseAutoSaveReturn {
   triggerAutoSave: () => Promise<void>;
 }
 
+/**
+ * Save the open document to IndexedDB on an interval while the document has unsaved changes.
+ *
+ * The interval runs only with the enabled option, the auto-save setting, and an open file. The returned save time and
+ * saving state are ref values, so the ref values change only on a re-render. `triggerAutoSave` saves only when the
+ * document has unsaved changes and no save is running. `triggerAutoSave` does not check the enabled option or the
+ * auto-save setting.
+ */
 export function useAutoSave({
   enabled = true,
   intervalMs,

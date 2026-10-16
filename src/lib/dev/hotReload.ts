@@ -10,6 +10,11 @@ import type { UserState, UnsavedChanges } from '@lib/fileWatch/smartReload';
 // Only active in development mode
 const isDevelopment = import.meta.env.DEV;
 
+/**
+ * The state holds the document path, the user state, any unsaved changes and a timestamp.
+ * `saveHotReloadState` writes the state to session storage in development, and `loadHotReloadState` reads the state
+ * back. `loadHotReloadState` discards a state that is more than 30 seconds old.
+ */
 export interface HotReloadState {
   documentPath: string | null;
   userState: UserState | null;

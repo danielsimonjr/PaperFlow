@@ -1,6 +1,9 @@
 const DB_NAME = 'paperflow';
 const DB_VERSION = 2;
 
+/**
+ * A recently opened file, with its name, size, open time and optional thumbnail.
+ */
 export interface RecentFile {
   id: string;
   name: string;
@@ -9,6 +12,9 @@ export interface RecentFile {
   thumbnail?: string;
 }
 
+/**
+ * An automatic save of a document's data, with the time of the save.
+ */
 export interface AutoSaveEntry {
   id: string;
   documentId: string;

@@ -22,6 +22,10 @@ interface AccessibilityOptionsProps {
   className?: string;
 }
 
+/**
+ * Panel of print accessibility options, with quick presets and a reset button.
+ * Changing an option by hand clears the active preset.
+ */
 export function AccessibilityOptions({
   value,
   onChange,

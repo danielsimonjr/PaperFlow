@@ -1,3 +1,6 @@
+/**
+ * Scale choices for printing: fit to page, actual size (100%) or custom.
+ */
 export type ScaleType = 'fit' | 'actual' | 'custom';
 
 interface ScaleOptionsProps {
@@ -7,6 +10,10 @@ interface ScaleOptionsProps {
   onCustomScaleChange: (scale: number) => void;
 }
 
+/**
+ * Radio choices for the print scale: fit to page, actual size (100%) or custom.
+ * A typed custom value is kept between 25 and 400.
+ */
 export function ScaleOptions({
   scaleType,
   customScale,

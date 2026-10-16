@@ -138,19 +138,9 @@ export function usePlatform(): UsePlatformReturn {
 }
 
 /**
- * Hook for subscribing to Electron menu events
+ * The handlers for the Electron menu events that `useElectronMenuEvents` subscribes to.
  *
- * @example
- * ```tsx
- * function EditorComponent() {
- *   const { save } = useFileOperations();
- *
- *   useElectronMenuEvents({
- *     onFileSave: save,
- *     onEditUndo: () => historyStore.undo(),
- *   });
- * }
- * ```
+ * Every handler is optional. The hook subscribes only the handlers that are present.
  */
 export interface ElectronMenuEventHandlers {
   onFileNew?: () => void;
@@ -165,6 +155,25 @@ export interface ElectronMenuEventHandlers {
   onBeforeQuit?: () => Promise<boolean>;
 }
 
+/**
+ * Subscribe to Electron menu events for as long as the component is mounted.
+ *
+ * Subscriptions exist only in Electron, and only for the handlers given. The hook removes the subscriptions when the
+ * component unmounts. The hook makes the subscriptions again whenever the `handlers` argument is a new object. An
+ * object literal in the call creates a new object on each render.
+ *
+ * @example
+ * ```tsx
+ * function EditorComponent() {
+ *   const { save } = useFileOperations();
+ *
+ *   useElectronMenuEvents({
+ *     onFileSave: save,
+ *     onEditUndo: () => historyStore.undo(),
+ *   });
+ * }
+ * ```
+ */
 export function useElectronMenuEvents(handlers: ElectronMenuEventHandlers): void {
   useEffect(() => {
     if (!isElectron() || !window.electron) {

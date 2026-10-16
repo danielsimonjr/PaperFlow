@@ -15,6 +15,12 @@ interface PrintPresetsManagerProps {
   onApply?: (preset: PrintPreset) => void;
 }
 
+/**
+ * The panel manages print presets.
+ * Users can apply a preset, save the current settings, edit a preset's name and description, and delete a preset. For
+ * built-in presets, users can apply them but cannot edit or delete them. Delete asks for confirmation first. `onApply`
+ * runs after a user applies a preset.
+ */
 export function PrintPresetsManager({
   className,
   onApply,

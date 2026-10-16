@@ -23,6 +23,9 @@ export interface SerializedAnnotation {
   replies?: SerializedReply[];
 }
 
+/**
+ * A reply to an annotation, in JSON form with an ISO 8601 creation time.
+ */
 export interface SerializedReply {
   id: string;
   content: string;
@@ -30,6 +33,9 @@ export interface SerializedReply {
   createdAt: string;
 }
 
+/**
+ * The shape of the JSON document that exportAnnotations returns for a set of annotations.
+ */
 export interface AnnotationExport {
   version: number;
   exportedAt: string;

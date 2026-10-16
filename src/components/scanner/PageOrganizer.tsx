@@ -17,6 +17,11 @@ interface PageOrganizerProps {
   className?: string;
 }
 
+/**
+ * Grid of scanned pages with drag and drop, selection, and move, rotate and delete actions.
+ * Drag and drop and the move buttons call onPagesChange with the new order.
+ * The page Delete button calls onDelete, but toolbar Delete calls onPagesChange only.
+ */
 export function PageOrganizer({
   pages,
   onPagesChange,

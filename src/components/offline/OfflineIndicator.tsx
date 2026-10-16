@@ -11,12 +11,21 @@ import { useOfflineStore } from '@/stores/offlineStore';
 import { SyncStatusPanel } from './SyncStatusPanel';
 import { cn } from '@/utils/cn';
 
+/**
+ * Props for the OfflineIndicator component.
+ * showLabel shows the status text, and size picks the small, medium or large layout.
+ */
 export interface OfflineIndicatorProps {
   className?: string;
   showLabel?: boolean;
   size?: 'sm' | 'md' | 'lg';
 }
 
+/**
+ * The status button shows the connection, sync, and pending-change state.
+ * The button checks the status in this order: offline, conflicts, syncing, sync error, pending, online. Clicking the
+ * button opens the `SyncStatusPanel`.
+ */
 export function OfflineIndicator({
   className,
   showLabel = true,

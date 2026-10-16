@@ -10,10 +10,19 @@ import { X, Download, RotateCcw, Info, AlertCircle } from 'lucide-react';
 import { useUpdateStore } from '@/stores/updateStore';
 import { Button } from '@/components/ui/Button';
 
+/**
+ * Props for the UpdateNotification component: `className` adds a class to the notification box.
+ */
 export interface UpdateNotificationProps {
   className?: string;
 }
 
+/**
+ * The notice floats in the bottom-right corner for an available or downloaded update.
+ * The notice shows only when a notification is visible and the status is available or downloaded. Download Update
+ * starts the download and hides the notice. Restart Now installs and restarts. Later calls installLater. Not Now hides
+ * the notice. View release notes appears when release notes exist.
+ */
 export function UpdateNotification({ className = '' }: UpdateNotificationProps): React.ReactElement | null {
   const {
     state,

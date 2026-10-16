@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { parsePageRange } from '@lib/print/pageRange';
 
+/**
+ * Page range choices for printing: all pages, the current page, or a custom range.
+ */
 export type PageRangeType = 'all' | 'current' | 'custom';
 
 interface PageRangeSelectorProps {
@@ -9,6 +12,11 @@ interface PageRangeSelectorProps {
   onRangeChange: (pages: number[]) => void;
 }
 
+/**
+ * Page range picker for printing, with all pages, the current page or a custom range.
+ * A custom range takes page numbers and ranges, such as 1-5, 8, 10-12.
+ * A non-empty custom range with no valid pages shows an error and sends the current page.
+ */
 export function PageRangeSelector({ pageCount, currentPage, onRangeChange }: PageRangeSelectorProps) {
   const [rangeType, setRangeType] = useState<PageRangeType>('all');
   const [customRange, setCustomRange] = useState('');

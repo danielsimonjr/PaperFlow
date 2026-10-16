@@ -9,6 +9,11 @@ import { Plus, Minus, Edit, Clock } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import type { DocumentVersion, EditHistoryEntry, SyncConflict } from '@/types/offline';
 
+/**
+ * Props for the VersionCompare component.
+ * The component compares `localVersion` and `remoteVersion`. The component accepts `conflictType` but does not read the
+ * value.
+ */
 export interface VersionCompareProps {
   localVersion: DocumentVersion;
   remoteVersion: DocumentVersion;
@@ -27,6 +32,10 @@ interface ChangeItem {
   source: 'local' | 'remote' | 'both';
 }
 
+/**
+ * The comparison groups the changes of two document versions by change type. The comparison sorts the changes by time.
+ * Each change has a source label: Local, Cloud or Both.
+ */
 export function VersionCompare({
   localVersion,
   remoteVersion,

@@ -8,8 +8,14 @@ import { OCREngine } from './ocrEngine';
 import { preprocessImage, renderPageToCanvas } from './imagePreprocessor';
 import type { PDFPageProxy } from 'pdfjs-dist';
 
+/**
+ * The state of one page in a batch OCR run.
+ */
 export type BatchPageStatus = 'pending' | 'processing' | 'complete' | 'error' | 'skipped';
 
+/**
+ * The outcome of OCR for one page in a batch, with its status and any error.
+ */
 export interface BatchPageResult {
   pageIndex: number;
   status: BatchPageStatus;
@@ -18,6 +24,9 @@ export interface BatchPageResult {
   processingTime?: number;
 }
 
+/**
+ * The progress of a batch OCR run, with page counts and an estimated time remaining.
+ */
 export interface BatchProgress {
   totalPages: number;
   completedPages: number;
@@ -28,6 +37,9 @@ export interface BatchProgress {
   pageStatuses: Map<number, BatchPageStatus>;
 }
 
+/**
+ * Settings for a batch OCR run, such as parallelism, error handling and language. continueOnError applies only when parallelism is 1.
+ */
 export interface BatchConfig {
   /** Maximum pages to process in parallel */
   parallelism: number;
@@ -54,7 +66,13 @@ const DEFAULT_CONFIG: BatchConfig = {
   language: 'eng',
 };
 
+/**
+ * A function that the batch run calls with the current progress.
+ */
 export type BatchProgressCallback = (progress: BatchProgress) => void;
+/**
+ * A function that the batch run calls with the result of each page. With parallelism above 1, it runs after the whole chunk of pages finishes.
+ */
 export type PageCompleteCallback = (result: BatchPageResult) => void;
 
 /**

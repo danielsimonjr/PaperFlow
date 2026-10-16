@@ -6,10 +6,18 @@
 import { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
 
+/**
+ * Props for the Select component: the standard select attributes, plus an error flag.
+ * error makes the border and focus ring red.
+ */
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   error?: boolean;
 }
 
+/**
+ * Select control that forwards its ref to a native select element. The control hides the native arrow and draws a
+ * chevron SVG as the background.
+ */
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, children, error, ...props }, ref) => {
     return (

@@ -76,6 +76,11 @@ const iconSizes = {
   lg: 'w-5 h-5',
 };
 
+/**
+ * Badge that shows the watch status of one file, with the change count when it is above zero.
+ * With watching off, it shows a Not watching badge, with or without a file path.
+ * With watching on, it renders nothing without a file path and a Not watched badge for an unwatched file.
+ */
 export function WatchStatusIndicator({
   filePath,
   showLabel = true,

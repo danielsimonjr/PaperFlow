@@ -1,6 +1,12 @@
 import { PDFDocument, PageSizes, degrees } from 'pdf-lib';
 
+/**
+ * The size of a blank page added by insertBlankPage, or 'match' for the size of an adjacent page.
+ */
 export type PageSize = 'letter' | 'a4' | 'legal' | 'match';
+/**
+ * A page rotation in degrees, in steps of 90.
+ */
 export type RotationAngle = 0 | 90 | 180 | 270;
 
 const PAGE_SIZE_MAP: Record<Exclude<PageSize, 'match'>, [number, number]> = {

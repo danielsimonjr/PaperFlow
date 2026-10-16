@@ -18,6 +18,12 @@ interface ProfileManagerProps {
 
 type ViewMode = 'list' | 'create' | 'edit';
 
+/**
+ * Panel for scan profiles: list, create, edit, delete, import and export.
+ * New profiles copy the current scan settings. Editing changes only the name and description.
+ * Export saves the custom profiles as JSON.
+ * Import adds each profile in a JSON file that has a name and settings.
+ */
 export function ProfileManager({ onSelect, onClose, className }: ProfileManagerProps) {
   const { profiles, settings, addProfile, updateProfile, deleteProfile } = useScannerStore();
 

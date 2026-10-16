@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the PatternSearchDialog component: open state, close and selection callbacks.
+ * The component does not read these props.
+ */
 export interface PatternSearchDialogProps {
   /** Whether the dialog is open */
   isOpen?: boolean;
@@ -25,6 +29,10 @@ interface PatternMatch {
   rect: { x: number; y: number; width: number; height: number };
 }
 
+/**
+ * The component renders an empty container for the pattern search dialog.
+ * The component takes no props. The component does not search for patterns.
+ */
 export function PatternSearchDialog(): React.ReactElement {
   return (
     <div className="pattern-search-dialog">

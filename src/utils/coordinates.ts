@@ -17,6 +17,9 @@ export interface Point {
   y: number;
 }
 
+/**
+ * A rectangle with an origin and a size, in PDF or screen coordinates.
+ */
 export interface Rect {
   x: number;
   y: number;
@@ -24,6 +27,9 @@ export interface Rect {
   height: number;
 }
 
+/**
+ * Scale, page height, and optional offsets used to convert between the two coordinate systems.
+ */
 export interface TransformContext {
   /** Current zoom level as a decimal (1.0 = 100%) */
   scale: number;

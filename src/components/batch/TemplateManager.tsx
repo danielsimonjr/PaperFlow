@@ -7,6 +7,12 @@ import type { BatchTemplate, BatchOperationType } from '@/types/batch';
 import { useNativeBatchStore } from '@/stores/nativeBatchStore';
 import { Button } from '@/components/ui/Button';
 
+/**
+ * Props for the TemplateManager component.
+ * operationType sets the type filter when the component mounts and hides the type select.
+ * selectionMode hides the editing controls and shows a Use button per template,
+ * and onSelectTemplate receives the template chosen with Use.
+ */
 export interface TemplateManagerProps {
   /** Filter by operation type */
   operationType?: BatchOperationType;
@@ -37,6 +43,11 @@ function formatDate(timestamp: number): string {
   });
 }
 
+/**
+ * `TemplateManager` lists the batch templates in the native batch store, with search and type filters.
+ * `TemplateManager` creates and deletes templates. Import and export use JSON files. Edit opens a notice that editing
+ * is not supported.
+ */
 export function TemplateManager({
   operationType,
   onSelectTemplate,

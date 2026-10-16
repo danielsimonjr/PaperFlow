@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the FlattenDialog component: the open state, the close callback, and the apply callback.
+ * The FlattenDialog function declares no parameters, so it ignores them.
+ */
 export interface FlattenDialogProps {
   /** Whether the dialog is open */
   isOpen?: boolean;
@@ -33,6 +37,10 @@ interface FlattenConfig {
   customPages?: string;
 }
 
+/**
+ * Placeholder for the flatten options dialog.
+ * Renders an empty container with the flatten-dialog class.
+ */
 export function FlattenDialog(): React.ReactElement {
   return (
     <div className="flatten-dialog">

@@ -7,6 +7,11 @@ interface PageSkeletonProps {
   className?: string;
 }
 
+/**
+ * Placeholder for a page that is loading, with bars for text and an image.
+ * width and height default to 612 and 792.
+ * The outer element has role status and the label Loading page.
+ */
 export function PageSkeleton({ width = 612, height = 792, className }: PageSkeletonProps) {
   return (
     <div
@@ -52,6 +57,11 @@ export function PageSkeleton({ width = 612, height = 792, className }: PageSkele
   );
 }
 
+/**
+ * Placeholder for a page thumbnail while the thumbnail loads.
+ * The component adds `className` to the outer column. The outer element has the role `status` and the label
+ * `Loading thumbnail`.
+ */
 export function ThumbnailSkeleton({ className }: { className?: string }) {
   return (
     <div

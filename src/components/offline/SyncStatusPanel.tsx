@@ -25,10 +25,18 @@ import { backgroundSync } from '@/lib/offline/backgroundSync';
 import { cn } from '@/utils/cn';
 import type { OfflineStorageStats } from '@/types/offline';
 
+/**
+ * Props for the `SyncStatusPanel` component. The `onClose` prop runs when a user clicks the close button.
+ */
 export interface SyncStatusPanelProps {
   onClose: () => void;
 }
 
+/**
+ * The panel shows the sync state, the queue and storage figures, and the auto-sync switch. Sync Now requests a sync.
+ * The panel disables the Sync Now button when the app is offline or while a sync runs. Sync errors and unresolved
+ * conflicts appear as messages.
+ */
 export function SyncStatusPanel({ onClose }: SyncStatusPanelProps) {
   const [storageStats, setStorageStats] = useState<OfflineStorageStats | null>(null);
   const [queueStats, setQueueStats] = useState({ pending: 0, failed: 0 });

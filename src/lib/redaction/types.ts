@@ -10,10 +10,19 @@ export interface Rect {
   height: number;
 }
 
+/**
+ * How a redaction mark was made, such as from selected text or from a pattern.
+ */
 export type RedactionType = 'text' | 'area' | 'pattern';
 
+/**
+ * Whether a redaction mark is new ('marked') or flagged by applyRedactions or markAsApplied ('applied'). The flag alone does not change the PDF.
+ */
 export type RedactionStatus = 'marked' | 'applied';
 
+/**
+ * A marked area of a page to redact, with its overlay text, color and status.
+ */
 export interface RedactionMark {
   /** Unique identifier */
   id: string;
@@ -41,6 +50,9 @@ export interface RedactionMark {
   createdBy?: string;
 }
 
+/**
+ * A named regular expression that finds text to redact, with its matching options.
+ */
 export interface RedactionPattern {
   /** Pattern identifier */
   id: string;
@@ -58,6 +70,9 @@ export interface RedactionPattern {
   category: 'pii' | 'financial' | 'contact' | 'date' | 'custom';
 }
 
+/**
+ * One piece of text that a redaction pattern matched on a page.
+ */
 export interface PatternMatch {
   /** The matched text */
   text: string;
@@ -73,6 +88,9 @@ export interface PatternMatch {
   endIndex: number;
 }
 
+/**
+ * Options for new redaction marks. The mark creators read only overlayColor and overlayText; no code reads removeMetadata or preserveMetadataFields.
+ */
 export interface RedactionOptions {
   /** Color of the redaction rectangle */
   overlayColor: string;
@@ -84,6 +102,9 @@ export interface RedactionOptions {
   preserveMetadataFields?: string[];
 }
 
+/**
+ * The result of verifying a redacted document, with any issues that were found.
+ */
 export interface VerificationResult {
   /** Overall pass/fail status */
   passed: boolean;
@@ -95,6 +116,9 @@ export interface VerificationResult {
   verifiedAt: number;
 }
 
+/**
+ * One issue that a verification found, with its severity and a suggested fix.
+ */
 export interface VerificationIssue {
   /** Type of issue */
   type: 'hidden_text' | 'metadata' | 'annotation' | 'incomplete' | 'layer';
@@ -108,6 +132,9 @@ export interface VerificationIssue {
   recommendation: string;
 }
 
+/**
+ * One entry in the audit log of redaction actions, with its action and time.
+ */
 export interface AuditLogEntry {
   /** Action type */
   action: 'mark' | 'unmark' | 'apply' | 'verify';
@@ -125,6 +152,9 @@ export interface AuditLogEntry {
   details?: string;
 }
 
+/**
+ * A report on the redactions of one document, with counts, patterns and the audit log.
+ */
 export interface RedactionReport {
   /** Document name */
   documentName: string;

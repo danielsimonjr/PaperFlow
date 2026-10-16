@@ -1,6 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { AnnotationRect } from '@/types';
 
+/**
+ * Text selected on one page, with its rectangles in screen and PDF coordinates.
+ */
 export interface TextSelectionData {
   /** Selected text content */
   text: string;

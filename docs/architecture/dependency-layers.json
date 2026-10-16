@@ -4449,7 +4449,7 @@
         ]
       },
       "src/components/annotations/HighlightTool.tsx": {
-        "description": "HighlightTool component for creating text highlights.",
+        "description": "Highlight color presets, each with a display name and a hex value.",
         "externalDependencies": [
           {
             "package": "react",
@@ -5833,7 +5833,7 @@
         ]
       },
       "src/components/editor/TextSelector.tsx": {
-        "description": "Component for handling text selection on PDF pages.",
+        "description": "TextSelector reports the text selected on a PDF page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6124,7 +6124,7 @@
         "exports": []
       },
       "src/components/export/CompressDialog.tsx": {
-        "description": "CompressDialog module",
+        "description": "The dialog compresses the open PDF and saves the result as a file.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6180,7 +6180,7 @@
         "exports": []
       },
       "src/components/export/ImageExportDialog.tsx": {
-        "description": "ImageExportDialog module",
+        "description": "The dialog exports the current page or all pages as image files.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6451,7 +6451,7 @@
         ]
       },
       "src/components/forms/Checkbox.tsx": {
-        "description": "Checkbox module",
+        "description": "The checkbox widget appears at the position of the PDF form field on the page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6481,7 +6481,7 @@
         "exports": []
       },
       "src/components/forms/Dropdown.tsx": {
-        "description": "Dropdown module",
+        "description": "The dropdown widget is for a PDF form field and sits at the position of the field.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6657,7 +6657,7 @@
         "exports": []
       },
       "src/components/forms/RadioButton.tsx": {
-        "description": "RadioGroup renders all radio buttons for a radio field group",
+        "description": "A radio button represents one option of a PDF form field and appears at the position of the field.",
         "externalDependencies": [
           {
             "package": "react",
@@ -6687,7 +6687,7 @@
         "exports": []
       },
       "src/components/forms/TextField.tsx": {
-        "description": "TextField module",
+        "description": "The text input sits at the PDF text field's position.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7007,7 +7007,7 @@
         "exports": []
       },
       "src/components/home/RecentFiles.tsx": {
-        "description": "RecentFiles module",
+        "description": "The component lists up to ten recent files, loaded from the IndexedDB storage module.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7147,7 +7147,7 @@
         ]
       },
       "src/components/layout/Header.tsx": {
-        "description": "Header module",
+        "description": "The top bar has the PaperFlow home link and the open file name.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7283,7 +7283,7 @@
         "exports": []
       },
       "src/components/layout/Sidebar.tsx": {
-        "description": "Sidebar module",
+        "description": "The collapsible side panel contains page thumbnails, an outline, and an annotations tab.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7356,7 +7356,7 @@
         "exports": []
       },
       "src/components/layout/Toolbar.tsx": {
-        "description": "End-to-end hooks. Only the tools that a spec selects carry an id.",
+        "description": "The main editing toolbar has tool buttons, export and import, and view, page and zoom controls.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7940,7 +7940,7 @@
         ]
       },
       "src/components/pages/DraggableThumbnail.tsx": {
-        "description": "Type definitions (1 interfaces, 0 type aliases)",
+        "description": "Props for a page thumbnail that users can click, select and drag.",
         "externalDependencies": [
           {
             "package": "react",
@@ -7972,7 +7972,7 @@
         ]
       },
       "src/components/pages/InsertPageDialog.tsx": {
-        "description": "Type definitions (1 interfaces, 0 type aliases)",
+        "description": "Props for the `InsertPageDialog` component.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8021,7 +8021,7 @@
         ]
       },
       "src/components/pages/MergeDialog.tsx": {
-        "description": "Type definitions (1 interfaces, 0 type aliases)",
+        "description": "Props for the `MergeDialog` component.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8077,7 +8077,7 @@
         ]
       },
       "src/components/pages/MoveToDialog.tsx": {
-        "description": "Type definitions (1 interfaces, 0 type aliases)",
+        "description": "Props for the `MoveToDialog` component.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8120,7 +8120,7 @@
         ]
       },
       "src/components/pages/PageContextMenu.tsx": {
-        "description": "Type definitions (1 interfaces, 0 type aliases)",
+        "description": "Props for the PageContextMenu component.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8163,7 +8163,7 @@
         ]
       },
       "src/components/pages/RotateMenu.tsx": {
-        "description": "Dropdown menu component for page rotation options.",
+        "description": "Rotation choices for RotateMenu: 90 degrees clockwise, 90 counter-clockwise, or 180.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8206,7 +8206,7 @@
         ]
       },
       "src/components/pages/SplitDialog.tsx": {
-        "description": "Type definitions (1 interfaces, 0 type aliases)",
+        "description": "Props for the SplitDialog component.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8500,7 +8500,7 @@
         "exports": []
       },
       "src/components/print/OrientationOptions.tsx": {
-        "description": "OrientationOptions module",
+        "description": "Page orientation choices: auto, portrait or landscape.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [],
@@ -8540,7 +8540,7 @@
         "exports": []
       },
       "src/components/print/PageRangeSelector.tsx": {
-        "description": "PageRangeSelector module",
+        "description": "Page range choices for printing: all pages, the current page, or a custom range.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8567,7 +8567,7 @@
         ]
       },
       "src/components/print/PrintDialog.tsx": {
-        "description": "PrintDialog module",
+        "description": "The dialog prints the open document and shows page range, scale, orientation and copies.",
         "externalDependencies": [
           {
             "package": "react",
@@ -8688,7 +8688,7 @@
         "exports": []
       },
       "src/components/print/PrintPreview.tsx": {
-        "description": "PrintPreview module",
+        "description": "Print preview placeholder: it shows the page number, not a rendered page.",
         "externalDependencies": [
           {
             "package": "lucide-react",
@@ -8803,7 +8803,7 @@
         "exports": []
       },
       "src/components/print/ScaleOptions.tsx": {
-        "description": "Type definitions (0 interfaces, 1 type aliases)",
+        "description": "Scale choices for printing: fit to page, actual size (100%) or custom.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [],
@@ -9574,7 +9574,7 @@
         "exports": []
       },
       "src/components/sidebar/OutlinePanel.tsx": {
-        "description": "OutlinePanel module",
+        "description": "Bookmark tree for the open document, with expandable entries that jump to pages.",
         "externalDependencies": [
           {
             "package": "react",
@@ -9611,7 +9611,7 @@
         "exports": []
       },
       "src/components/sidebar/ThumbnailSidebar.tsx": {
-        "description": "ThumbnailSidebar module",
+        "description": "Thumbnail list for the open document, with selection, drag and drop, and page operations.",
         "externalDependencies": [
           {
             "package": "react",
@@ -10248,7 +10248,7 @@
         "exports": []
       },
       "src/components/toolbar/SearchBar.tsx": {
-        "description": "SearchBar module",
+        "description": "Search bar for the open document, with case and whole-word options and match navigation.",
         "externalDependencies": [
           {
             "package": "react",
@@ -10295,7 +10295,7 @@
         "exports": []
       },
       "src/components/toolbar/ViewModeToggle.tsx": {
-        "description": "ViewModeToggle module",
+        "description": "Three buttons set the document view mode: single page, continuous scroll or spread.",
         "externalDependencies": [
           {
             "package": "lucide-react",
@@ -10354,7 +10354,7 @@
         ]
       },
       "src/components/ui/Button.tsx": {
-        "description": "Button module",
+        "description": "Props for the Button component: the standard button attributes, plus variant and size.",
         "externalDependencies": [
           {
             "package": "react",
@@ -10481,7 +10481,7 @@
         ]
       },
       "src/components/ui/LoadingIndicator.tsx": {
-        "description": "Full-screen loading overlay variant",
+        "description": "Loading indicator with a spinner, a message and an optional cancel button.",
         "externalDependencies": [
           {
             "package": "lucide-react",
@@ -10543,7 +10543,7 @@
         ]
       },
       "src/components/ui/Skeleton.tsx": {
-        "description": "Skeleton module",
+        "description": "The animated placeholder block shows while content loads.",
         "externalDependencies": [
           {
             "package": "@utils/cn",
@@ -10556,14 +10556,16 @@
         "internalDependencies": [],
         "workspaceDependencies": [],
         "exports": [
-          "Skeleton"
+          "Skeleton",
+          "SkeletonText"
         ],
         "functions": [
-          "Skeleton"
+          "Skeleton",
+          "SkeletonText"
         ]
       },
       "src/components/ui/ThemeToggle.tsx": {
-        "description": "ThemeToggle module",
+        "description": "The button switches between light and dark mode.",
         "externalDependencies": [
           {
             "package": "react",
@@ -10951,7 +10953,7 @@
         "exports": []
       },
       "src/components/viewer/ContinuousView.tsx": {
-        "description": "Base page height for estimation (will be updated with actual measurements)",
+        "description": "The view is a continuous vertical view of the document, and renders only the pages near the viewport.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11039,7 +11041,7 @@
         "exports": []
       },
       "src/components/viewer/PDFViewer.tsx": {
-        "description": "PDFViewer module",
+        "description": "The top-level viewer shows the open document in the current view mode.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11085,7 +11087,7 @@
         ]
       },
       "src/components/viewer/PageCanvas.tsx": {
-        "description": "PageCanvas module",
+        "description": "The component draws one PDF page onto a canvas, with text, annotation, form and drawing layers over the page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11189,7 +11191,7 @@
         "exports": []
       },
       "src/components/viewer/PageNavigation.tsx": {
-        "description": "PageNavigation module",
+        "description": "Previous and next buttons, with a page number field that users can type in to jump to a page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11224,7 +11226,7 @@
         "exports": []
       },
       "src/components/viewer/PageSkeleton.tsx": {
-        "description": "PageSkeleton module",
+        "description": "Placeholder for a page that is loading, with bars for text and an image.",
         "externalDependencies": [
           {
             "package": "@components/ui/Skeleton",
@@ -11252,7 +11254,7 @@
         ]
       },
       "src/components/viewer/SinglePageView.tsx": {
-        "description": "SinglePageView module",
+        "description": "Shows the current page only, centered in a scrollable area.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11300,7 +11302,7 @@
         ]
       },
       "src/components/viewer/SpreadView.tsx": {
-        "description": "SpreadView module",
+        "description": "Two pages side by side, with a placeholder where a page is missing.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11330,7 +11332,7 @@
         "exports": []
       },
       "src/components/viewer/TextLayer.tsx": {
-        "description": "Text layer component that enables text selection on PDF pages.",
+        "description": "Text selected on one page: the trimmed text, selection rectangles and page index.",
         "externalDependencies": [
           {
             "package": "react",
@@ -11409,7 +11411,7 @@
         "exports": []
       },
       "src/components/viewer/ZoomControls.tsx": {
-        "description": "ZoomControls module",
+        "description": "Zoom controls: zoom out, the zoom level, zoom in, fit to width and fit to page.",
         "externalDependencies": [
           {
             "package": "lucide-react",
@@ -11467,7 +11469,7 @@
         ]
       },
       "src/constants/shortcuts.ts": {
-        "description": "shortcuts module",
+        "description": "A keyboard shortcut that maps a key and its modifier keys to an action.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [],
@@ -11511,7 +11513,7 @@
         ]
       },
       "src/constants/tools.ts": {
-        "description": "tools module",
+        "description": "Identifier of one tool, which is one of the values of TOOL_IDS.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [],
@@ -11940,7 +11942,7 @@
         ]
       },
       "src/hooks/useAutoSave.ts": {
-        "description": "Hook to check for and recover auto-saved documents",
+        "description": "Save the open document to IndexedDB on an interval while the document has unsaved changes.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12062,7 +12064,7 @@
         ]
       },
       "src/hooks/useDropZone.ts": {
-        "description": "useDropZone module",
+        "description": "Handle dropped and selected files of the accepted types.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12085,7 +12087,7 @@
         ]
       },
       "src/hooks/useFileSystem.ts": {
-        "description": "useFileSystem module",
+        "description": "Open, save and download PDF files for the document store.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12320,7 +12322,7 @@
         ]
       },
       "src/hooks/usePageDrag.ts": {
-        "description": "Hook for managing drag-and-drop page reordering",
+        "description": "State of a page drag: the dragged page indices, and the drop target and its side.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12347,7 +12349,7 @@
         ]
       },
       "src/hooks/usePageSelection.ts": {
-        "description": "Hook for managing multi-page selection with support for",
+        "description": "Options for usePageSelection.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12417,7 +12419,7 @@
         ]
       },
       "src/hooks/usePointerInput.ts": {
-        "description": "Hook for unified pointer input handling (mouse, touch, stylus).",
+        "description": "One captured pointer position, with its pressure and event timestamp.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12444,7 +12446,7 @@
         ]
       },
       "src/hooks/useSearch.ts": {
-        "description": "useSearch module",
+        "description": "One search match: its page number, its index on that page, and the matched text.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12499,7 +12501,7 @@
         ]
       },
       "src/hooks/useTextSelection.ts": {
-        "description": "Hook for capturing and managing text selections.",
+        "description": "Text selected on one page, with its rectangles in screen and PDF coordinates.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12524,7 +12526,7 @@
         ]
       },
       "src/hooks/useThumbnails.ts": {
-        "description": "Hook for lazy loading thumbnails using IntersectionObserver",
+        "description": "Render page thumbnails from the PDF renderer, with a cache for each page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12555,7 +12557,7 @@
         ]
       },
       "src/hooks/useTouchGestures.ts": {
-        "description": "useTouchGestures module",
+        "description": "Attach touch listeners to an element for pinch, pan, swipe and long-press gestures.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12613,7 +12615,7 @@
         ]
       },
       "src/hooks/useVirtualization.ts": {
-        "description": "More flexible virtualization hook that supports variable item heights",
+        "description": "The function returns items for rendering a list of fixed-height items.",
         "externalDependencies": [
           {
             "package": "react",
@@ -12638,7 +12640,7 @@
         ]
       },
       "src/hooks/useVisiblePages.ts": {
-        "description": "Track which pages are currently visible in the viewport using IntersectionObserver.",
+        "description": "One page in the viewport state.",
         "externalDependencies": [
           {
             "package": "react",
@@ -15496,7 +15498,7 @@
         ]
       },
       "src/lib/export/compressPdf.ts": {
-        "description": "Analyze a PDF and return its size breakdown.",
+        "description": "Settings for compressPdf. compressPdf reads only removeMetadata and ignores imageQuality and subsampleImages.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -15524,7 +15526,7 @@
         ]
       },
       "src/lib/export/flattenPdf.ts": {
-        "description": "Flatten a PDF by permanently embedding annotations and form field values",
+        "description": "Options for flattenPdf. Both flags default to true when omitted.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -15554,7 +15556,7 @@
         ]
       },
       "src/lib/export/imageExport.ts": {
-        "description": "Calculate the scale factor to achieve the target DPI.",
+        "description": "The file format of an exported page image.",
         "externalDependencies": [
           {
             "package": "jszip",
@@ -15682,7 +15684,7 @@
         ]
       },
       "src/lib/export/pdfExport.ts": {
-        "description": "pdfExport module",
+        "description": "Options for `exportPdf`.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -18601,7 +18603,7 @@
         ]
       },
       "src/lib/pages/extractPages.ts": {
-        "description": "Extract specific pages from a PDF into a new document.",
+        "description": "The result of `extractPages` and its wrappers.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -18675,7 +18677,7 @@
         ]
       },
       "src/lib/pages/mergePdf.ts": {
-        "description": "Merge multiple PDF files into a single document.",
+        "description": "A PDF file to merge, with its display name and bytes.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -18705,7 +18707,7 @@
         ]
       },
       "src/lib/pages/pageOperations.ts": {
-        "description": "Delete a single page from the PDF document.",
+        "description": "The size of a blank page added by insertBlankPage, or 'match' for the size of an adjacent page.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -18745,7 +18747,7 @@
         ]
       },
       "src/lib/pages/splitPdf.ts": {
-        "description": "Parse a page range string into an array of page indices.",
+        "description": "One PDF that a split produces, with its name, bytes, page range and page count.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -18777,7 +18779,7 @@
         ]
       },
       "src/lib/pdf/renderer.ts": {
-        "description": "Configure worker - must be set before loading any documents",
+        "description": "The size of a rendered page, in CSS pixels.",
         "externalDependencies": [
           {
             "package": "pdfjs-dist",
@@ -18800,7 +18802,7 @@
         ]
       },
       "src/lib/pdf/saver.ts": {
-        "description": "Saves the PDF document with any modifications.",
+        "description": "Options for savePdf. savePdf does not read any of these fields.",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -19051,7 +19053,7 @@
         ]
       },
       "src/lib/print/executePrint.ts": {
-        "description": "Calculate the print scale based on scale type.",
+        "description": "Options for printing: the pages, scale, orientation, copies and what to include.",
         "externalDependencies": [
           {
             "package": "@components/print/ScaleOptions",
@@ -19292,7 +19294,7 @@
         ]
       },
       "src/lib/print/printRenderer.ts": {
-        "description": "Render annotations onto a canvas context for printing.",
+        "description": "Options for rendering one page for printing, including annotations and form fields.",
         "externalDependencies": [
           {
             "package": "@lib/export/imageExport",
@@ -20136,7 +20138,7 @@
         ]
       },
       "src/lib/signatures/fieldAlignment.ts": {
-        "description": "Detect signature form fields in a PDF document.",
+        "description": "A form field that detectSignatureFields selects because its name contains \"sig\", with its page index, bounds (top-left o",
         "externalDependencies": [
           {
             "package": "pdf-lib",
@@ -20196,7 +20198,7 @@
         ]
       },
       "src/lib/storage/fileHandler.ts": {
-        "description": "Check if File System Access API is supported",
+        "description": "A file that the user chose, with its file system handle when the browser gives one.",
         "externalDependencies": [
           {
             "package": "browser-fs-access",
@@ -20258,7 +20260,7 @@
         ]
       },
       "src/lib/storage/indexeddb.ts": {
-        "description": "indexeddb module",
+        "description": "A recently opened file, with its name, size, open time and optional thumbnail.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [],
@@ -20405,7 +20407,7 @@
     },
     "pages": {
       "src/pages/Editor.tsx": {
-        "description": "Editor module",
+        "description": "Render the editor page for the open PDF, with the toolbar, sidebar and search of the page.",
         "externalDependencies": [
           {
             "package": "react",
@@ -20494,7 +20496,7 @@
         "exports": []
       },
       "src/pages/Home.tsx": {
-        "description": "Home module",
+        "description": "Render the home page with a drop zone, a file picker and the recent files list.",
         "externalDependencies": [
           {
             "package": "react",
@@ -20565,7 +20567,7 @@
         "exports": []
       },
       "src/pages/NotFound.tsx": {
-        "description": "NotFound module",
+        "description": "Render the 404 page, with a link back to the home page.",
         "externalDependencies": [
           {
             "package": "react-router",
@@ -20592,7 +20594,7 @@
         "exports": []
       },
       "src/pages/Privacy.tsx": {
-        "description": "Privacy module",
+        "description": "Render the privacy page, with a link back to the app.",
         "externalDependencies": [
           {
             "package": "react-router",
@@ -20624,7 +20626,7 @@
         "exports": []
       },
       "src/pages/Settings.tsx": {
-        "description": "Settings module",
+        "description": "Render the settings page for the saved user preferences.",
         "externalDependencies": [
           {
             "package": "react-router",
@@ -20664,7 +20666,7 @@
         "exports": []
       },
       "src/pages/Terms.tsx": {
-        "description": "Terms module",
+        "description": "Render the terms page, with a link back to the app.",
         "externalDependencies": [
           {
             "package": "react-router",
@@ -20697,7 +20699,7 @@
     },
     "stores": {
       "src/stores/annotationStore.ts": {
-        "description": "Extended annotation type for Sprint 4 drawing/shape/stamp features",
+        "description": "Shape kind that the shape tool draws: rectangle, ellipse, arrow or line.",
         "externalDependencies": [
           {
             "package": "zustand",
@@ -21644,7 +21646,7 @@
         ]
       },
       "src/stores/signatureStore.ts": {
-        "description": "Placed signature on a PDF page",
+        "description": "One signature placed on a PDF page, with its position, size, rotation, and optional date stamp.",
         "externalDependencies": [
           {
             "package": "zustand",
@@ -21707,7 +21709,7 @@
         ]
       },
       "src/stores/uiStore.ts": {
-        "description": "uiStore module",
+        "description": "Editor tool that the UI store holds as its active tool: select, hand, text, draw, or shape.",
         "externalDependencies": [
           {
             "package": "zustand",
@@ -21778,7 +21780,7 @@
     },
     "types": {
       "src/types/annotations.ts": {
-        "description": "Type definitions (6 interfaces, 1 type aliases)",
+        "description": "A text markup annotation on one page: highlight, underline, or strikethrough.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [
@@ -21947,7 +21949,7 @@
         ]
       },
       "src/types/forms.ts": {
-        "description": "Type definitions (9 interfaces, 2 type aliases)",
+        "description": "Kind of form field: text, checkbox, radio, dropdown, signature, date, or number.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [
@@ -21974,7 +21976,7 @@
         ]
       },
       "src/types/index.ts": {
-        "description": "Drawing path for freehand annotations",
+        "description": "Kind of annotation or annotation tool, including the eraser.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [],
@@ -22088,7 +22090,7 @@
         ]
       },
       "src/types/pdf.ts": {
-        "description": "Type definitions (5 interfaces, 1 type aliases)",
+        "description": "Document metadata of a PDF: page count, title, author, and similar fields. PDFRenderer.loadDocument never sets creationD",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [],
@@ -22140,7 +22142,7 @@
     },
     "utils": {
       "src/utils/cn.ts": {
-        "description": "cn module",
+        "description": "Join class names, and let later Tailwind classes replace conflicting earlier ones.",
         "externalDependencies": [
           {
             "package": "clsx",

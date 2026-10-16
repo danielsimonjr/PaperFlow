@@ -5,6 +5,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the HeaderFooterDialog component: the open state, the close callback and the apply callback.
+ * The HeaderFooterDialog function declares no parameters, so it ignores them.
+ */
 export interface HeaderFooterDialogProps {
   /** Whether the dialog is open */
   isOpen?: boolean;
@@ -49,6 +53,10 @@ interface HeaderFooterSection {
   right?: string;
 }
 
+/**
+ * Placeholder for the header and footer dialog.
+ * Renders an empty container with the header-footer-dialog class.
+ */
 export function HeaderFooterDialog(): React.ReactElement {
   return (
     <div className="header-footer-dialog">

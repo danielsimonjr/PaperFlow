@@ -12,6 +12,12 @@ import { useAutoSave } from '@hooks/useAutoSave';
 import { useFormFields } from '@hooks/useFormFields';
 import { useDocumentStore } from '@stores/documentStore';
 
+/**
+ * Render the editor page for the open PDF, with the toolbar, sidebar and search of the page.
+ *
+ * The page loads the PDF named by the URL parameter. The page calls `useAutoSave` with `enabled` set, and the auto-save
+ * setting must also be on.
+ */
 export default function Editor() {
   const [searchParams] = useSearchParams();
   const [isSearchOpen, setIsSearchOpen] = useState(false);

@@ -6,12 +6,21 @@
 import { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
 
+/**
+ * Props for the Progress component: the standard div attributes, value, max and aria-label.
+ * value defaults to 0, and max defaults to 100.
+ * The fill is value divided by max, clamped from 0 to 100 percent.
+ */
 export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: number;
   max?: number;
   'aria-label'?: string;
 }
 
+/**
+ * Progress bar that forwards its ref to a div with the progressbar role.
+ * The aria-valuenow attribute is value, and aria-valuemax is max.
+ */
 export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
   ({ value = 0, max = 100, className, 'aria-label': ariaLabel, ...props }, ref) => {
     const percentage = Math.min(Math.max((value / max) * 100, 0), 100);

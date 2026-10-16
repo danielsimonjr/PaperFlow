@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+/**
+ * Editor tool that the UI store holds as its active tool: select, hand, text, draw, or shape.
+ */
 export type EditorTool = 'select' | 'hand' | 'text' | 'draw' | 'shape';
 
 interface UIState {

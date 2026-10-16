@@ -12,6 +12,10 @@ import { cn } from '@/utils/cn';
 
 const POPULAR_LANGUAGE_CODES = ['eng', 'spa', 'fra', 'deu', 'chi_sim', 'jpn', 'kor', 'ara', 'rus', 'por'];
 
+/**
+ * Language picker for OCR, with quick buttons for popular languages and a search box.
+ * Search results appear in a list below the box. Choosing a language sets the OCR language.
+ */
 export function LanguageSelector() {
   const { language, setLanguage } = useOCRStore();
   const [search, setSearch] = useState('');

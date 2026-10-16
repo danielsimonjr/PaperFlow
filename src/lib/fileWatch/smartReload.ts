@@ -8,6 +8,9 @@
 import type { ChangeSummary } from './changeDetector';
 import type { DocumentDiff } from './documentDiff';
 
+/**
+ * The user's view state, such as the current page, scroll position and zoom.
+ */
 export interface UserState {
   currentPage: number;
   scrollPosition: { x: number; y: number };
@@ -19,6 +22,9 @@ export interface UserState {
   sidebarTab?: string;
 }
 
+/**
+ * Edits that the user has made but not yet saved to the file.
+ */
 export interface UnsavedChanges {
   annotations: Array<{
     id: string;
@@ -45,6 +51,10 @@ export interface UnsavedChanges {
   pageRotations: Record<number, number>;
 }
 
+/**
+ * Options that choose which user state a reload keeps.
+ * The reload code reads only the preserve options; mergeAnnotations and promptOnConflict have no reader.
+ */
 export interface ReloadOptions {
   preserveScrollPosition: boolean;
   preserveZoom: boolean;
@@ -55,6 +65,10 @@ export interface ReloadOptions {
   promptOnConflict: boolean;
 }
 
+/**
+ * The outcome of a reload, with the state kept and the warnings from the reload plan.
+ * executeSmartReload leaves conflicts empty and annotationsLost at 0. Conflict notes appear in warnings.
+ */
 export interface ReloadResult {
   success: boolean;
   preservedState: Partial<UserState>;

@@ -9,6 +9,9 @@ import type { ChangeSummary } from './changeDetector';
 import type { DocumentDiff } from './documentDiff';
 import type { UnsavedChanges } from './smartReload';
 
+/**
+ * A strategy for resolving a conflict between local and external changes.
+ */
 export type MergeStrategy =
   | 'keep-local'
   | 'keep-external'
@@ -16,6 +19,10 @@ export type MergeStrategy =
   | 'merge-prefer-external'
   | 'manual';
 
+/**
+ * The kind of conflict found between local and external changes.
+ * detectConflicts never produces annotation-overlap.
+ */
 export type ConflictType =
   | 'annotation-overlap'
   | 'annotation-on-changed-page'
@@ -24,6 +31,9 @@ export type ConflictType =
   | 'text-edit-conflict'
   | 'page-structure-conflict';
 
+/**
+ * One conflict between local and external changes, with its severity and any resolution.
+ */
 export interface Conflict {
   id: string;
   type: ConflictType;
@@ -40,6 +50,11 @@ export interface Conflict {
   };
 }
 
+/**
+ * Resolving a set of conflicts produces an outcome.
+ * The outcome includes the merged data and any warnings. `mergedData` holds only annotations, form values and
+ * signatures. `mergedData` has no text edits.
+ */
 export interface ConflictResolutionResult {
   resolved: boolean;
   conflicts: Conflict[];

@@ -1,5 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 
+/**
+ * One captured pointer position, with its pressure and event timestamp.
+ */
 export interface PointerPoint {
   x: number;
   y: number;
@@ -7,6 +10,9 @@ export interface PointerPoint {
   timestamp: number;
 }
 
+/**
+ * Options for usePointerInput, which set point spacing, pressure use, and palm rejection.
+ */
 export interface UsePointerInputOptions {
   /** Minimum distance between points to register (for performance) */
   minDistance?: number;
@@ -16,6 +22,9 @@ export interface UsePointerInputOptions {
   palmRejectionSize?: number;
 }
 
+/**
+ * Captured points, drawing state, and pointer handlers returned by usePointerInput.
+ */
 export interface UsePointerInputResult {
   /** Current points being captured */
   points: PointerPoint[];

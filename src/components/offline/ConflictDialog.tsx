@@ -24,6 +24,12 @@ import { VersionCompare } from './VersionCompare';
 import { cn } from '@/utils/cn';
 import type { SyncConflict, ConflictResolutionStrategy } from '@/types/offline';
 
+/**
+ * Props for the `ConflictDialog` component.
+ * `ConflictDialog` renders nothing unless `isOpen` is true and `conflict` holds a conflict. `onClose` runs when the
+ * user selects Cancel, clicks the close button, or clicks the backdrop. `onClose` also runs after the user resolves the
+ * conflict.
+ */
 export interface ConflictDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -41,6 +47,12 @@ interface ResolutionOption {
   recommended?: boolean;
 }
 
+/**
+ * The dialog resolves one sync conflict between the local and cloud versions.
+ * The dialog offers keep local, keep cloud, keep newest, or merge options. The dialog sends the chosen strategy to the
+ * sync engine. The dialog marks the option that `getRecommendedStrategy` returns. The dialog marks none when the result
+ * is manual.
+ */
 export function ConflictDialog({ isOpen, onClose, conflict }: ConflictDialogProps) {
   const [selectedStrategy, setSelectedStrategy] = useState<ConflictResolutionStrategy | null>(null);
   const [isResolving, setIsResolving] = useState(false);

@@ -12,6 +12,9 @@ import { BrowserWindow } from 'electron';
 import { IPC_EVENTS } from '../ipc/channels';
 import type { FileWatcherEvent, FileStats } from '../ipc/types';
 
+/**
+ * Options for one file watch. Unset fields take the service defaults.
+ */
 export interface WatcherOptions {
   debounceMs?: number;
   awaitWriteFinishMs?: number;
@@ -21,6 +24,11 @@ export interface WatcherOptions {
   depth?: number;
 }
 
+/**
+ * Bookkeeping for one path that the watcher service watches.
+ *
+ * Each entry records the chokidar watcher, whether the path is a folder, and the options used.
+ */
 export interface WatchedFileInfo {
   path: string;
   watcher: FSWatcher;
@@ -432,22 +440,44 @@ export class WatcherService {
 // Export convenience functions that use the singleton
 export const watcherService = WatcherService.getInstance();
 
+/**
+ * Start watching a file through the shared watcher service.
+ *
+ * The function resolves to `true` once the service watches the path. The function resolves to `false` if the file does
+ * not exist.
+ */
 export function watchFile(filePath: string, options?: Partial<WatcherOptions>): Promise<boolean> {
   return watcherService.watchFile(filePath, options);
 }
 
+/**
+ * Stop watching a file through the shared watcher service.
+ *
+ * Resolve to true when the service stops a watch. Resolve to false when the service does not watch the path.
+ */
 export function unwatchFile(filePath: string): Promise<boolean> {
   return watcherService.unwatchFile(filePath);
 }
 
+/**
+ * Stop watching all files through the shared watcher service.
+ *
+ * The call clears pending timers and queued events, then closes every watcher.
+ */
 export function unwatchAll(): Promise<void> {
   return watcherService.unwatchAll();
 }
 
+/**
+ * Return the normalized paths that the shared watcher service watches.
+ */
 export function getWatchedFiles(): string[] {
   return watcherService.getWatchedFiles();
 }
 
+/**
+ * Return true when the shared watcher service watches the path.
+ */
 export function isWatching(filePath: string): boolean {
   return watcherService.isWatching(filePath);
 }

@@ -7,6 +7,10 @@ import { forwardRef } from 'react';
 import { Check } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
+/**
+ * Main props for the Checkbox component: checked, change callback, disabled and className.
+ * onCheckedChange receives the opposite of the checked prop, and is not called when disabled.
+ */
 export interface CheckboxProps {
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
@@ -17,6 +21,10 @@ export interface CheckboxProps {
   'aria-label'?: string;
 }
 
+/**
+ * The checkbox control uses a button with the checkbox role. A click, or a Space or Enter key press, calls
+ * `onCheckedChange` unless the control is disabled. The control displays a check mark when checked.
+ */
 export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
   ({ checked = false, onCheckedChange, disabled = false, id, name, className, 'aria-label': ariaLabel }, ref) => {
     const handleClick = () => {

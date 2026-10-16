@@ -5,6 +5,9 @@
 
 import { create } from 'zustand';
 
+/**
+ * Kind of form field that the designer can place.
+ */
 export type FieldType =
   | 'textField'
   | 'textArea'
@@ -15,13 +18,23 @@ export type FieldType =
   | 'signature'
   | 'button';
 
+/**
+ * The action that a button field has: `submit`, `reset` or `print`.
+ * The designer only stores and shows the action. No code runs the action.
+ */
 export type ButtonAction = 'submit' | 'reset' | 'print';
 
+/**
+ * A position on a page, given by x and y values.
+ */
 export interface Point {
   x: number;
   y: number;
 }
 
+/**
+ * Bounds of a form field: an origin and a size.
+ */
 export interface Rect {
   x: number;
   y: number;
@@ -29,6 +42,9 @@ export interface Rect {
   height: number;
 }
 
+/**
+ * Visual style of a form field: border, background, font, and text alignment.
+ */
 export interface FormFieldAppearance {
   borderColor: string;
   borderWidth: number;
@@ -39,6 +55,11 @@ export interface FormFieldAppearance {
   textAlign: 'left' | 'center' | 'right';
 }
 
+/**
+ * One form field that the designer places on a page.
+ *
+ * The type-specific properties are optional.
+ */
 export interface FormFieldDefinition {
   id: string;
   type: FieldType;
