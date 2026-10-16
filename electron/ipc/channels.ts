@@ -292,4 +292,7 @@ export const IPC_EVENTS = {
  * Channel type for TypeScript
  */
 export type IpcChannel = (typeof IPC_CHANNELS)[keyof typeof IPC_CHANNELS];
+/**
+ * Union of the event channel names that the main process sends to the renderer.
+ */
 export type IpcEvent = (typeof IPC_EVENTS)[keyof typeof IPC_EVENTS];

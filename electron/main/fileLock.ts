@@ -11,6 +11,12 @@ import path from 'path';
 import { BrowserWindow } from 'electron';
 import { IPC_EVENTS } from '../ipc/channels';
 
+/**
+ * Lock state of one file that startLockMonitoring tracks.
+ *
+ * The monitor updates `isLocked` and `timestamp` when the lock status changes.
+ * Nothing sets `lockedBy`, and `retryCount` always stays 0.
+ */
 export interface FileLockInfo {
   path: string;
   isLocked: boolean;
@@ -19,6 +25,12 @@ export interface FileLockInfo {
   retryCount: number;
 }
 
+/**
+ * Options for the retry loops in waitForUnlock, acquireLock and writeFileWithLockCheck.
+ *
+ * `maxRetries` sets the attempt count and `retryDelayMs` sets the pause between attempts.
+ * No code reads `timeout`.
+ */
 export interface LockCheckOptions {
   maxRetries?: number;
   retryDelayMs?: number;

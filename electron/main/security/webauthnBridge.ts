@@ -164,6 +164,11 @@ export class WebAuthnBridge {
 // Singleton instance
 let bridgeInstance: WebAuthnBridge | null = null;
 
+/**
+ * Return the WebAuthn bridge singleton, creating it on the first call.
+ *
+ * Later calls return the existing bridge and ignore the config argument.
+ */
 export function getWebAuthnBridge(
   config?: Partial<WebAuthnBridgeConfig>
 ): WebAuthnBridge {
@@ -173,6 +178,12 @@ export function getWebAuthnBridge(
   return bridgeInstance;
 }
 
+/**
+ * Get the WebAuthn bridge singleton and set it up for the main window.
+ *
+ * The setup registers three IPC handlers and adds a request hook that allows every request.
+ * It also sets a permission handler that grants every permission request.
+ */
 export function initializeWebAuthnBridge(
   mainWindow: BrowserWindow,
   config?: Partial<WebAuthnBridgeConfig>

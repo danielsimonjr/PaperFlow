@@ -16,6 +16,9 @@ export interface ThumbnailRequest {
   scale: number;
 }
 
+/**
+ * A successful thumbnail reply for one page, with its image data and size. thumbnailWorkerScript never sends one.
+ */
 export interface ThumbnailResponse {
   type: 'thumbnail';
   pageNumber: number;
@@ -24,12 +27,18 @@ export interface ThumbnailResponse {
   height: number;
 }
 
+/**
+ * An error reply for one page, with the error message. thumbnailWorkerScript sends this reply for every request.
+ */
 export interface ThumbnailError {
   type: 'error';
   pageNumber: number;
   error: string;
 }
 
+/**
+ * Any message that the thumbnail worker sends back to the client.
+ */
 export type ThumbnailWorkerMessage = ThumbnailResponse | ThumbnailError;
 
 /**

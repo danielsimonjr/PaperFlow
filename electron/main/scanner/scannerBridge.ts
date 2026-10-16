@@ -268,6 +268,11 @@ export class ScannerBridge {
 }
 
 // Export singleton instance creator
+/**
+ * Initialize the scanner bridge and return the singleton.
+ *
+ * Repeated calls return the same bridge and register the IPC handlers once, until dispose removes them.
+ */
 export function setupScannerBridge(): ScannerBridge {
   const bridge = ScannerBridge.getInstance();
   bridge.initialize();
