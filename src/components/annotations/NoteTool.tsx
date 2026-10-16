@@ -86,7 +86,7 @@ export function NoteTool({
 
   return (
     <div
-      className="absolute inset-0 cursor-crosshair"
+      className="absolute inset-0 z-20 cursor-crosshair"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       tabIndex={0}

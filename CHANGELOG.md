@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **A sticky note can be placed, opened and deleted, and three dialogs take their clicks.**
+  `.textLayer` has `z-index: 2` (`src/index.css`). Five components had no z-index of their own
+  and sat under it, so it took their pointer events:
+
+  - `NoteTool`'s click overlay. A click on the page with the note tool selected placed no note.
+    It is `z-20` now, as the shape tools and the signature placer are.
+  - `AnnotationLayer`'s SVG, which holds the placed notes. A note that did get placed could not be
+    opened. It is `z-10` now: above the text layer, below the tools. A highlight inside it lets
+    the pointer through (`pointer-events-none` on its rects). Measured in Chromium with the layer
+    raised and the highlight left as it was, the pointer lands on the highlight rect and a drag
+    that starts on highlighted text selects nothing; before the change the text selects.
+  - `ImageExportDialog`, `CompressDialog` and `PrintDialog` set `fixed` but no z-index on the
+    backdrop or the content (the other dialogs use `z-50`), so Cancel never answered. Both are
+    `z-50` now.
+
+  Measured with `npx playwright test --project=chromium`: 86 pass / 11 fail / 43 skip before,
+  92 pass / 6 fail / 43 skip after (one spec was added). The four sticky-note specs in
+  `cross-platform/editing` and "8. Header Actions - Image Export" now pass. The note specs
+  expected a `note-editor` dialog opened by the placing click and a `note-save-btn`; the
+  product places a collapsed note, opens its editor when the note is expanded, and saves as the
+  text changes. They now place the note on the page overlay, expand it, type, and close it.
+  Run against the unfixed `src`, all four
+  fail. A new spec, "should keep the text under a highlight selectable", fails with only the
+  highlight change reverted. `tests/unit/components/layerStacking.test.tsx` reads the text
+  layer's z-index from the stylesheet and checks the stacking class of each element above.
+
 - **A window whose saved state is maximized is shown after its first paint, not before.**
   `createWindow` called `maximize()` right after the `BrowserWindow` was constructed. On Windows,
   `maximize()` of a window that is not shown also shows it, so a maximized-state window was on

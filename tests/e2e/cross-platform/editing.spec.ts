@@ -4,8 +4,28 @@
  * Verifies that editing functionality works identically across all platforms.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import { openSampleDocument } from '../helpers/openSampleDocument';
+
+/**
+ * Place a collapsed sticky note with the note tool. The tool overlays the page and places a
+ * note where it is clicked, so the click goes to the overlay, not to the `pdf-viewer` region
+ * (that region is the scroll area and starts left of the page).
+ */
+async function placeNote(page: Page): Promise<void> {
+  await page.click('[data-testid="tool-note"]');
+  await page
+    .getByRole('button', { name: 'Click to place note' })
+    .first()
+    .click({ position: { x: 200, y: 200 } });
+  await expect(page.locator('[data-testid="sticky-note"]')).toHaveCount(1);
+}
+
+/** Expand the collapsed note: the icon button inside it opens the editor. */
+async function expandNote(page: Page): Promise<void> {
+  await page.locator('[data-testid="sticky-note"] button').first().click();
+  await expect(page.locator('[data-testid="note-editor"]')).toBeVisible();
+}
 
 test.describe('Cross-Platform Editing', () => {
   test.beforeEach(async ({ page }) => {
@@ -32,23 +52,42 @@ test.describe('Cross-Platform Editing', () => {
     });
 
     test('should add sticky note', async ({ page }) => {
-      // Select note tool
-      await page.click('[data-testid="tool-note"]');
+      await placeNote(page);
 
-      // Click to place note
-      const viewer = page.locator('[data-testid="pdf-viewer"]');
-      await viewer.click({ position: { x: 200, y: 200 } });
-
-      // Verify note dialog appears
-      await expect(page.locator('[data-testid="note-editor"]')).toBeVisible();
-
-      // Add note content
+      // The editor opens when the note is expanded. A note saves as its text changes,
+      // so the editor has no save button; closing it keeps the text.
+      await expandNote(page);
       await page.locator('[data-testid="note-content"]').fill('Test note content');
-      await page.click('[data-testid="note-save-btn"]');
+      await page.locator('[data-testid="note-content"]').press('Escape');
+      await expect(page.locator('[data-testid="note-editor"]')).toBeHidden();
 
-      // Verify note was created
-      const notes = await page.locator('[data-testid="sticky-note"]').count();
-      expect(notes).toBeGreaterThan(0);
+      await expandNote(page);
+      await expect(page.locator('[data-testid="note-content"]')).toHaveValue('Test note content');
+    });
+
+    test('should keep the text under a highlight selectable', async ({ page }) => {
+      const line = page.locator('.textLayer span').nth(4);
+      const box = await line.boundingBox();
+      if (!box) throw new Error('the text line has no box');
+      const y = box.y + box.height / 2;
+      const dragAcrossLine = async () => {
+        await page.mouse.move(box.x + 3, y);
+        await page.mouse.down();
+        await page.mouse.move(box.x + box.width - 3, y, { steps: 6 });
+        await page.mouse.up();
+      };
+
+      // Highlight the line with the selection popup.
+      await dragAcrossLine();
+      await page.locator('button[title="Highlight"]').first().click();
+      await expect(page.locator('[data-testid="highlight-annotation"]')).toHaveCount(1);
+
+      // The annotation layer is above the text layer. A drag that starts on the highlighted
+      // text must still select it, so the highlight lets the pointer through.
+      await page.evaluate(() => window.getSelection()?.removeAllRanges());
+      await dragAcrossLine();
+      const selected = await page.evaluate(() => window.getSelection()?.toString() ?? '');
+      expect(selected).toContain('The word test');
     });
 
     test('should draw freehand annotation', async ({ page }) => {
@@ -70,57 +109,34 @@ test.describe('Cross-Platform Editing', () => {
     });
 
     test('should delete annotation', async ({ page }) => {
-      // First create an annotation
-      await page.click('[data-testid="tool-note"]');
-      const viewer = page.locator('[data-testid="pdf-viewer"]');
-      await viewer.click({ position: { x: 200, y: 200 } });
+      await placeNote(page);
+      await expandNote(page);
       await page.locator('[data-testid="note-content"]').fill('Note to delete');
-      await page.click('[data-testid="note-save-btn"]');
 
-      // Select the annotation
-      await page.locator('[data-testid="sticky-note"]').first().click();
+      // The editor's footer deletes the note.
+      await page.getByRole('button', { name: 'Delete Note' }).click();
 
-      // Delete it
-      await page.keyboard.press('Delete');
-
-      // Verify deletion
-      const notes = await page.locator('[data-testid="sticky-note"]').count();
-      expect(notes).toBe(0);
+      await expect(page.locator('[data-testid="sticky-note"]')).toHaveCount(0);
     });
   });
 
   test.describe('Undo/Redo', () => {
     test('should undo annotation', async ({ page }) => {
-      // Create annotation
-      await page.click('[data-testid="tool-note"]');
-      const viewer = page.locator('[data-testid="pdf-viewer"]');
-      await viewer.click({ position: { x: 200, y: 200 } });
-      await page.locator('[data-testid="note-content"]').fill('Test');
-      await page.click('[data-testid="note-save-btn"]');
+      await placeNote(page);
 
-      // Undo
       await page.keyboard.press('Control+z');
 
-      // Verify annotation was removed
-      const notes = await page.locator('[data-testid="sticky-note"]').count();
-      expect(notes).toBe(0);
+      await expect(page.locator('[data-testid="sticky-note"]')).toHaveCount(0);
     });
 
     test('should redo annotation', async ({ page }) => {
-      // Create and undo
-      await page.click('[data-testid="tool-note"]');
-      const viewer = page.locator('[data-testid="pdf-viewer"]');
-      await viewer.click({ position: { x: 200, y: 200 } });
-      await page.locator('[data-testid="note-content"]').fill('Test');
-      await page.click('[data-testid="note-save-btn"]');
+      await placeNote(page);
       await page.keyboard.press('Control+z');
+      await expect(page.locator('[data-testid="sticky-note"]')).toHaveCount(0);
 
-      // Redo
       await page.keyboard.press('Control+Shift+z');
 
-      // Verify annotation was restored
-      const notes = await page.locator('[data-testid="sticky-note"]').count();
-      expect(notes).toBe(1);
+      await expect(page.locator('[data-testid="sticky-note"]')).toHaveCount(1);
     });
   });
 

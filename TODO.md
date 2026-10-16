@@ -5,19 +5,9 @@ Sprint-level planning lives in `docs/planning/sprints/PHASE_X_SPRINT_Y_TODO.json
 
 ## Open
 
-- [ ] **The web E2E suite is not green: 11 of 140 chromium tests fail and 43 skip.**
+- [ ] **The web E2E suite is not green: 6 of 141 chromium tests fail and 43 skip.**
   Measured with `npx playwright test --project=chromium` (`playwright.config.ts`, `tests/e2e`):
-  86 pass. A full run takes about five minutes, because one failing test waits for its 300 s
-  timeout. The 11 failures, by cause:
-  - **Product defect: the note tool places no note** (4 tests in `cross-platform/editing`: add,
-    delete, undo and redo a sticky note). `NoteTool` (`src/components/annotations/NoteTool.tsx`)
-    has no z-index, and `.textLayer` has `z-index: 2` (`src/index.css`), so the click lands on the
-    text layer. The specs also expect a `note-editor` dialog and a `note-save-btn`; the product
-    edits a note inline and has no save button.
-  - **Product defect: three dialogs sit under the text layer** (`full-feature-test`, "8. Header
-    Actions - Image Export"). `ImageExportDialog`, `CompressDialog` and `PrintDialog` set `fixed`
-    but no z-index (the other dialogs use `z-50`), so `.textLayer` intercepts pointer events and
-    the click on Cancel waits until the test times out.
+  92 pass. A full run takes about a minute. The 6 failures, by cause:
   - **Spec geometry** (`cross-platform/editing`, "should add highlight annotation" and "should
     draw freehand annotation"). The specs offset from `pdf-viewer` (the `<main>` region, which
     starts left of the page) and then move the mouse in viewport coordinates, so the drag never

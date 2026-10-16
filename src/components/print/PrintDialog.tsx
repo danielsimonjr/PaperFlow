@@ -69,8 +69,8 @@ export function PrintDialog({ isOpen, onClose }: PrintDialogProps) {
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900" style={{ maxHeight: '90vh' }}>
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50" />
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900" style={{ maxHeight: '90vh' }}>
           <div className="mb-4 flex items-center justify-between">
             <Dialog.Title className="flex items-center gap-2 text-lg font-semibold dark:text-white">
               <Printer className="h-5 w-5" />
