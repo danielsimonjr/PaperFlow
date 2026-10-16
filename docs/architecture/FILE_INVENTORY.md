@@ -8,7 +8,7 @@ This report lists each source file that the map census finds, with a disposition
 
 **Language**: typescript
 
-**Total files**: 746
+**Total files**: 751
 
 ## Disposition counts
 
@@ -18,12 +18,12 @@ This report lists each source file that the map census finds, with a disposition
 | `build-entry` | 0 | A `src`-area file that is an entry root. |
 | `test-only` | 18 | A `src`-area file that only a test reaches. |
 | `orphan` | 528 | A `src`-area file that nothing reaches. Delete it, or wire it to a root. |
-| `test` | 184 | A file in a `tests/` folder, or a `*.test.ts` or `*.spec.ts` file. |
+| `test` | 189 | A file in a `tests/` folder, or a `*.test.ts` or `*.spec.ts` file. |
 | `tool` | 8 | A file in a `tools/` or `scripts/` folder outside `src/`. |
 | `config` | 8 | A `*.config.*` file of TypeScript or JavaScript. |
 | `example` | 0 | A file in `examples/` or `docs/`. |
 | `bench` | 0 | A file in `bench/` or `benchmarks/`, or a `*.bench.*` file. |
-| **Total** | **746** | |
+| **Total** | **751** | |
 
 ## Per-area counts
 
@@ -31,14 +31,14 @@ This report lists each source file that the map census finds, with a disposition
 | --- | --: |
 | `config` | 8 |
 | `src` | 546 |
-| `tests` | 184 |
+| `tests` | 189 |
 | `tools` | 8 |
 
 ## Per-package counts
 
 | Package | Files |
 | --- | --: |
-| `(root)` | 276 |
+| `(root)` | 281 |
 | `paperflow` | 470 |
 
 ## All files
@@ -234,10 +234,10 @@ This report lists each source file that the map census finds, with a disposition
 | `src/components/lazy/index.ts` | paperflow | src | orphan | 46 |
 | `src/components/ocr/BatchOCRProgress.tsx` | paperflow | src | orphan | 250 |
 | `src/components/ocr/LanguageSelector.tsx` | paperflow | src | orphan | 125 |
-| `src/components/ocr/OCRDialog.tsx` | paperflow | src | orphan | 182 |
+| `src/components/ocr/OCRDialog.tsx` | paperflow | src | orphan | 186 |
 | `src/components/ocr/OCRExportDialog.tsx` | paperflow | src | orphan | 245 |
 | `src/components/ocr/OCRProgress.tsx` | paperflow | src | orphan | 100 |
-| `src/components/ocr/OCRResultsPanel.tsx` | paperflow | src | orphan | 233 |
+| `src/components/ocr/OCRResultsPanel.tsx` | paperflow | src | orphan | 237 |
 | `src/components/ocr/PageRangeSelector.tsx` | paperflow | src | orphan | 178 |
 | `src/components/ocr/PreprocessingOptions.tsx` | paperflow | src | orphan | 109 |
 | `src/components/ocr/index.ts` | paperflow | src | orphan | 12 |
@@ -248,7 +248,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/components/offline/SyncStatusPanel.tsx` | paperflow | src | orphan | 287 |
 | `src/components/offline/VersionCompare.tsx` | paperflow | src | orphan | 266 |
 | `src/components/pages/DraggableThumbnail.tsx` | paperflow | src | orphan | 132 |
-| `src/components/pages/InsertPageDialog.tsx` | paperflow | src | orphan | 187 |
+| `src/components/pages/InsertPageDialog.tsx` | paperflow | src | orphan | 193 |
 | `src/components/pages/MergeDialog.tsx` | paperflow | src | orphan | 364 |
 | `src/components/pages/MoveToDialog.tsx` | paperflow | src | orphan | 174 |
 | `src/components/pages/PageContextMenu.tsx` | paperflow | src | orphan | 238 |
@@ -308,7 +308,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/components/signatures/TypeSignature.tsx` | paperflow | src | orphan | 131 |
 | `src/components/signatures/index.ts` | paperflow | src | orphan | 17 |
 | `src/components/toolbar/AnnotationToolbar.tsx` | paperflow | src | orphan | 408 |
-| `src/components/toolbar/SearchBar.tsx` | paperflow | src | orphan | 240 |
+| `src/components/toolbar/SearchBar.tsx` | paperflow | src | orphan | 253 |
 | `src/components/toolbar/ViewModeToggle.tsx` | paperflow | src | orphan | 46 |
 | `src/components/ui/AccessibleComponents.tsx` | paperflow | src | orphan | 96 |
 | `src/components/ui/Button.tsx` | paperflow | src | orphan | 50 |
@@ -364,7 +364,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/hooks/usePageSelection.ts` | paperflow | src | orphan | 140 |
 | `src/hooks/usePlatform.ts` | paperflow | src | orphan | 220 |
 | `src/hooks/usePointerInput.ts` | paperflow | src | orphan | 182 |
-| `src/hooks/useSearch.ts` | paperflow | src | orphan | 210 |
+| `src/hooks/useSearch.ts` | paperflow | src | orphan | 214 |
 | `src/hooks/useSignatureInput.ts` | paperflow | src | orphan | 207 |
 | `src/hooks/useTextSelection.ts` | paperflow | src | orphan | 219 |
 | `src/hooks/useThumbnails.ts` | paperflow | src | orphan | 247 |
@@ -681,10 +681,15 @@ This report lists each source file that the map census finds, with a disposition
 | `tests/unit/components/forms/FormField.test.tsx` | (root) | tests | test | 389 |
 | `tests/unit/components/forms/designer/FieldPalette.test.tsx` | (root) | tests | test | 106 |
 | `tests/unit/components/layerStacking.test.tsx` | (root) | tests | test | 146 |
+| `tests/unit/components/ocr/OCRDialog.test.tsx` | (root) | tests | test | 108 |
+| `tests/unit/components/ocr/OCRResultsPanel.test.tsx` | (root) | tests | test | 88 |
+| `tests/unit/components/ocr/PageRangeSelector.test.tsx` | (root) | tests | test | 39 |
+| `tests/unit/components/pages/InsertPageDialog.test.tsx` | (root) | tests | test | 88 |
 | `tests/unit/components/pages/PageThumbnails.test.tsx` | (root) | tests | test | 261 |
 | `tests/unit/components/print/PageRangeSelector.test.tsx` | (root) | tests | test | 50 |
 | `tests/unit/components/signatures/SignatureCanvas.test.tsx` | (root) | tests | test | 232 |
 | `tests/unit/components/signatures/SignaturePlacer.test.tsx` | (root) | tests | test | 235 |
+| `tests/unit/components/toolbar/SearchBar.test.tsx` | (root) | tests | test | 111 |
 | `tests/unit/components/ui/AccessibleComponents.test.tsx` | (root) | tests | test | 86 |
 | `tests/unit/components/ui/Skeleton.test.tsx` | (root) | tests | test | 46 |
 | `tests/unit/hooks/useAnnotationShortcuts.test.ts` | (root) | tests | test | 106 |
@@ -694,7 +699,7 @@ This report lists each source file that the map census finds, with a disposition
 | `tests/unit/hooks/useKeyboardNavigation.test.ts` | (root) | tests | test | 73 |
 | `tests/unit/hooks/usePageSelection.test.ts` | (root) | tests | test | 210 |
 | `tests/unit/hooks/usePointerInput.test.ts` | (root) | tests | test | 239 |
-| `tests/unit/hooks/useSearch.test.ts` | (root) | tests | test | 233 |
+| `tests/unit/hooks/useSearch.test.ts` | (root) | tests | test | 277 |
 | `tests/unit/hooks/useTouchGestures.test.ts` | (root) | tests | test | 287 |
 | `tests/unit/hooks/useVirtualization.test.ts` | (root) | tests | test | 163 |
 | `tests/unit/hooks/useVisiblePages.test.ts` | (root) | tests | test | 72 |

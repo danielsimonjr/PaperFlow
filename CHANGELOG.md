@@ -69,6 +69,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `tests/unit/components/pages/InsertPageDialog.test.tsx` and two cases in `tests/unit/hooks/useSearch.test.ts`.
   The titles of the two search toggles name the shortcuts Alt+C and Alt+W. No handler for them exists, and this change
   does not add one.
+  `repo-tools map . --out=docs/architecture` ran again with 2.2.3. The generated reports were last written for 746 files
+  and now state 751. The count of the hand-written documents had moved to 749 without a regeneration.
 
 - **The OCR dialog and results panel use the right page, scale and status.** `documentStore.currentPage` is 1-based
   and the OCR run takes 0-based page indices. The "Current page" option sent the 1-based number, so OCR read the
