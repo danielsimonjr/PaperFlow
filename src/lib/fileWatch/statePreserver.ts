@@ -36,14 +36,13 @@ export interface DocumentStateSnapshot {
 
 /**
  * Options for which parts of the document state to capture. By default, `captureDocumentState` includes all parts.
- * `captureDocumentState` does not read `includeUIState`, because the function always captures the UI state.
+ * The function always captures the UI state, so no option controls it.
  */
 export interface StatePreserverOptions {
   includeAnnotations: boolean;
   includeFormValues: boolean;
   includeSignatures: boolean;
   includeTextEdits: boolean;
-  includeUIState: boolean;
 }
 
 const DEFAULT_OPTIONS: StatePreserverOptions = {
@@ -51,7 +50,6 @@ const DEFAULT_OPTIONS: StatePreserverOptions = {
   includeFormValues: true,
   includeSignatures: true,
   includeTextEdits: true,
-  includeUIState: true,
 };
 
 // In-memory state storage

@@ -436,8 +436,8 @@ This report lists each source file that the map census finds, with a disposition
 | `src/lib/fileWatch/documentDiff.ts` | paperflow | src | orphan | 306 |
 | `src/lib/fileWatch/index.ts` | paperflow | src | orphan | 110 |
 | `src/lib/fileWatch/mergeStrategy.ts` | paperflow | src | orphan | 391 |
-| `src/lib/fileWatch/smartReload.ts` | paperflow | src | orphan | 416 |
-| `src/lib/fileWatch/statePreserver.ts` | paperflow | src | orphan | 315 |
+| `src/lib/fileWatch/smartReload.ts` | paperflow | src | orphan | 411 |
+| `src/lib/fileWatch/statePreserver.ts` | paperflow | src | orphan | 313 |
 | `src/lib/fileWatch/watchQueue.ts` | paperflow | src | orphan | 446 |
 | `src/lib/fonts/fontFallback.ts` | paperflow | src | orphan | 272 |
 | `src/lib/fonts/fontMatcher.ts` | paperflow | src | orphan | 227 |
@@ -585,7 +585,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/types/electronTypes.ts` | paperflow | src | orphan | 599 |
 | `src/types/enterpriseConfig.ts` | paperflow | src | orphan | 314 |
 | `src/types/forms.ts` | paperflow | src | orphan | 119 |
-| `src/types/index.ts` | paperflow | src | orphan | 130 |
+| `src/types/index.ts` | paperflow | src | orphan | 118 |
 | `src/types/kioskConfig.ts` | paperflow | src | orphan | 255 |
 | `src/types/license.ts` | paperflow | src | orphan | 282 |
 | `src/types/offline.ts` | paperflow | src | orphan | 266 |

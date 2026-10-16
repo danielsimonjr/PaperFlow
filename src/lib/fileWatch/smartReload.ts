@@ -53,7 +53,6 @@ export interface UnsavedChanges {
 
 /**
  * Options that choose which user state a reload keeps.
- * The reload code reads only the preserve options; mergeAnnotations and promptOnConflict have no reader.
  */
 export interface ReloadOptions {
   preserveScrollPosition: boolean;
@@ -61,8 +60,6 @@ export interface ReloadOptions {
   preserveAnnotations: boolean;
   preserveFormValues: boolean;
   preserveSignatures: boolean;
-  mergeAnnotations: boolean;
-  promptOnConflict: boolean;
 }
 
 /**
@@ -93,8 +90,6 @@ const DEFAULT_RELOAD_OPTIONS: ReloadOptions = {
   preserveAnnotations: true,
   preserveFormValues: true,
   preserveSignatures: true,
-  mergeAnnotations: true,
-  promptOnConflict: true,
 };
 
 /**

@@ -7,8 +7,8 @@
     "`unreferencedAnywhereNotes`'s dynamic-import check (`_dynamic_import_referrers`) only sees `import(...)` calls with a LITERAL string specifier. A dynamic import built from a variable or template literal (e.g. `import(`./cmds/${name}.js`)`, a command-dispatcher pattern) is invisible to it -- 'found none' in a note means no LITERAL match was found, NOT that nothing imports the file."
   ],
   "summary": {
-    "unusedExportCount": 1278,
-    "unreferencedAnywhereCount": 538,
+    "unusedExportCount": 1277,
+    "unreferencedAnywhereCount": 537,
     "referencedInModuleCount": 740,
     "unclassifiedExportCount": 0,
     "noImporterFileCount": 234
@@ -882,7 +882,6 @@
     ],
     "src/types/index.ts": [
       "FormField",
-      "HistoryEntry",
       "PDFDocument",
       "Signature"
     ],
@@ -1816,7 +1815,6 @@
     },
     "src/types/index.ts": {
       "FormField": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/types/index.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'FormField' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.",
-      "HistoryEntry": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/types/index.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'HistoryEntry' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.",
       "PDFDocument": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/types/index.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'PDFDocument' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.",
       "Signature": "Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/types/index.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'Signature' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting."
     },

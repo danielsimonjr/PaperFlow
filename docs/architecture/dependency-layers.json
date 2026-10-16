@@ -22674,8 +22674,7 @@
           "Annotation",
           "PDFDocument",
           "Signature",
-          "FormField",
-          "HistoryEntry"
+          "FormField"
         ]
       },
       "src/types/kioskConfig.ts": {

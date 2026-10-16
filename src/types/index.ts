@@ -116,15 +116,3 @@ export interface FormField {
   required?: boolean;
   readonly?: boolean;
 }
-
-/**
- * A record of one action with the state before it and the state after it.
- * `historyStore` does not use this type: it declares its own `HistoryEntry` with undo and redo functions.
- */
-export interface HistoryEntry {
-  id: string;
-  action: string;
-  timestamp: Date;
-  before: unknown;
-  after: unknown;
-}
