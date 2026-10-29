@@ -60,6 +60,90 @@ describe('VirtualizedViewer layouts', () => {
     expect(pages()).toEqual(['1']);
   });
 
+  it('sizes the cover placeholder from Letter page dimensions', async () => {
+    const sized = {
+      getPageInfo: vi.fn(async (pageNumber: number) => ({
+        pageNumber,
+        width: 612,
+        height: 792,
+        rotation: 0,
+      })),
+    } as unknown as PDFRenderer;
+
+    render(
+      <VirtualizedViewer
+        layout="spread"
+        renderer={sized}
+        pageCount={4}
+        currentPage={1}
+        zoom={100}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('spread-placeholder')).toHaveStyle({
+        width: '612px',
+        height: '792px',
+      });
+    });
+  });
+
+  it('sizes the trailing empty slot from the facing page', async () => {
+    const sized = {
+      getPageInfo: vi.fn(async (pageNumber: number) => ({
+        pageNumber,
+        width: 612,
+        height: pageNumber === 4 ? 1008 : 792,
+        rotation: 0,
+      })),
+    } as unknown as PDFRenderer;
+
+    render(
+      <VirtualizedViewer
+        layout="spread"
+        renderer={sized}
+        pageCount={4}
+        currentPage={4}
+        zoom={100}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('spread-placeholder')).toHaveStyle({
+        width: '612px',
+        height: '1008px',
+      });
+    });
+  });
+
+  it('falls back to page 1 when the facing page size is unknown', async () => {
+    const sized = {
+      getPageInfo: vi.fn(async (pageNumber: number) => {
+        if (pageNumber === 4) {
+          throw new Error('missing page');
+        }
+        return { pageNumber, width: 500, height: 700, rotation: 0 };
+      }),
+    } as unknown as PDFRenderer;
+
+    render(
+      <VirtualizedViewer
+        layout="spread"
+        renderer={sized}
+        pageCount={4}
+        currentPage={4}
+        zoom={100}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('spread-placeholder')).toHaveStyle({
+        width: '500px',
+        height: '700px',
+      });
+    });
+  });
+
   it('draws an even page beside the next page', () => {
     render(
       <VirtualizedViewer
