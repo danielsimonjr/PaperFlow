@@ -10,7 +10,7 @@ All PDF processing happens locally by default - documents never leave the user's
 
 | Metric | Value |
 |--------|-------|
-| Codebase Size | 779 source files (whole repository: `src/`, `electron/`, `tests/`, tools and configuration; see Verification) |
+| Codebase Size | 780 source files (whole repository: `src/`, `electron/`, `tests/`, tools and configuration; see Verification) |
 | Frontend Framework | React 18 + TypeScript |
 | Desktop Framework | Electron 28+ |
 | Cloud Dependencies | Zero (optional integrations available) |
@@ -890,7 +890,7 @@ Check: `repo-tools check . --docs=docs/architecture`
 
 | Claim | Value | Source |
 |---|---|---|
-| totalFiles | 779 | repo-tools map (file-inventory.json, whole repository: TypeScript and JavaScript source files) |
+| totalFiles | 780 | repo-tools map (file-inventory.json, whole repository: TypeScript and JavaScript source files) |
 
 The per-folder file counts in the Directory Structure section come from the same `file-inventory.json`. They are not `repo-tools check` metrics.
 
