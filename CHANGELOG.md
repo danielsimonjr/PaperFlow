@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Spread view sizes an empty slot from the facing page.** The blank side uses that page's width and height. When the facing page has no size yet, the slot uses the first page. Letter and other sizes line up with the page beside them.
+- **Kiosk, batch processing, and scanner open from the editor when the module is on.** The toolbar shows a command for each of those modules only while its setting is enabled. Choosing the command loads that module and opens its screen. A module that is off has no toolbar command and is not imported.
 
 ### Added
 

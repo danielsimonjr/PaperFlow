@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import {
@@ -11,7 +11,9 @@ import {
 import { OptionalModuleHost } from '@/modules/optional/OptionalModuleHost';
 import { loadOptionalModule } from '@/modules/optional/loadOptionalModule';
 import { useSettingsStore } from '@stores/settingsStore';
+import { useKioskStore } from '@/stores/kioskStore';
 import Settings from '@/pages/Settings';
+import { Toolbar } from '@/components/layout/Toolbar';
 
 const shellRoots = [
   'src/App.tsx',
@@ -31,6 +33,11 @@ function sourceFiles(path: string): string[] {
 describe('optional modules', () => {
   beforeEach(() => {
     useSettingsStore.getState().resetToDefaults();
+    const kiosk = useKioskStore.getState();
+    const pin = kiosk.config?.exitAuth.pin;
+    if (kiosk.isActive && pin) {
+      kiosk.exitKioskMode(pin);
+    }
   });
 
   it('starts with every module off', () => {
@@ -60,6 +67,11 @@ describe('optional modules', () => {
     for (const id of OPTIONAL_MODULE_IDS) {
       const bundle = await loadOptionalModule(id);
       expect(typeof bundle.OptionalModulePanel).toBe('function');
+      if (id === 'kiosk' || id === 'batch' || id === 'scanner') {
+        expect(typeof bundle.OptionalModuleScreen).toBe('function');
+      } else {
+        expect(bundle.OptionalModuleScreen).toBeUndefined();
+      }
     }
   });
 
@@ -130,5 +142,101 @@ describe('optional modules', () => {
     expect(handlers).not.toMatch(staticImport);
     expect(handlers).toContain("import('../fileWatcher')");
     expect(main).toContain("import('../fileWatcher')");
+  });
+
+  it('shows no optional toolbar commands when every module is off', () => {
+    render(<Toolbar />);
+    expect(screen.queryByTestId('optional-command-kiosk')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('optional-command-batch')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('optional-command-scanner')).not.toBeInTheDocument();
+  });
+
+  it('shows only the kiosk toolbar command when kiosk is enabled', () => {
+    useSettingsStore.getState().setOptionalModule('kiosk', true);
+    render(<Toolbar />);
+    expect(screen.getByTestId('optional-command-kiosk')).toBeInTheDocument();
+    expect(screen.queryByTestId('optional-command-batch')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('optional-command-scanner')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('optional-screen-kiosk')).not.toBeInTheDocument();
+  });
+
+  it('opens and closes the kiosk screen from the toolbar', async () => {
+    const user = userEvent.setup();
+    useSettingsStore.getState().setOptionalModule('kiosk', true);
+    render(<Toolbar />);
+    await user.click(screen.getByTestId('optional-command-kiosk'));
+    const screenEl = await screen.findByTestId('optional-screen-kiosk');
+    expect(screenEl.querySelector('.kiosk-shell')).toBeTruthy();
+    expect(useKioskStore.getState().isActive).toBe(true);
+    await user.click(screen.getByTestId('optional-screen-close'));
+    await waitFor(() => {
+      expect(screen.queryByTestId('optional-screen-kiosk')).not.toBeInTheDocument();
+    });
+    expect(useKioskStore.getState().isActive).toBe(false);
+  });
+
+  it('opens the batch screen from the toolbar when batch is enabled', async () => {
+    const user = userEvent.setup();
+    useSettingsStore.getState().setOptionalModule('batch', true);
+    render(<Toolbar />);
+    await user.click(screen.getByTestId('optional-command-batch'));
+    const batchScreen = await screen.findByTestId('optional-screen-batch');
+    expect(batchScreen).toHaveTextContent('Batch Processing');
+  });
+
+  it('opens the scanner dialog from the toolbar when scanner is enabled', async () => {
+    const user = userEvent.setup();
+    useSettingsStore.getState().setOptionalModule('scanner', true);
+    render(<Toolbar />);
+    await user.click(screen.getByTestId('optional-command-scanner'));
+    await screen.findByTestId('optional-screen-scanner');
+    expect(await screen.findByRole('heading', { name: 'Select Scanner' })).toBeInTheDocument();
+    cleanup();
+    await new Promise((r) => setTimeout(r, 1100));
+  });
+
+  it('removes a toolbar command when its module flag is turned off', () => {
+    useSettingsStore.getState().setOptionalModule('kiosk', true);
+    const { rerender } = render(<Toolbar />);
+    expect(screen.getByTestId('optional-command-kiosk')).toBeInTheDocument();
+    useSettingsStore.getState().setOptionalModule('kiosk', false);
+    rerender(<Toolbar />);
+    expect(screen.queryByTestId('optional-command-kiosk')).not.toBeInTheDocument();
+  });
+
+  it('keeps optional module screens out of static shell imports', () => {
+    const toolbar = readFileSync(resolve('src/components/layout/Toolbar.tsx'), 'utf8');
+    expect(toolbar).toContain('OptionalModuleCommands');
+    for (const needle of [
+      'entries/kiosk',
+      'entries/batch',
+      'entries/scanner',
+      'KioskShell',
+      'BatchDashboard',
+      'ScannerSelectDialog',
+    ]) {
+      expect(toolbar).not.toContain(needle);
+    }
+
+    const commands = readFileSync(
+      resolve('src/modules/optional/OptionalModuleCommands.tsx'),
+      'utf8'
+    );
+    expect(commands).toContain('loadOptionalModule');
+    for (const needle of [
+      "from '@/components/kiosk'",
+      "from '@/components/batch'",
+      "from '@/components/scanner'",
+      'entries/kiosk',
+      'entries/batch',
+      'entries/scanner',
+    ]) {
+      expect(commands).not.toContain(needle);
+    }
+
+    const editor = readFileSync(resolve('src/pages/Editor.tsx'), 'utf8');
+    for (const needle of ['KioskShell', 'BatchDashboard', 'ScannerSelectDialog']) {
+      expect(editor).not.toContain(needle);
+    }
   });
 });
