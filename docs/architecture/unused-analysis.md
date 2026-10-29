@@ -6,13 +6,13 @@
 
 ## Summary
 
-- **Files with no in-repo importer**: 234
-- **Dormant files**: 546
-  - **Orphaned (reachable from nothing)**: 528
+- **Files with no in-repo importer**: 249
+- **Dormant files**: 562
+  - **Orphaned (reachable from nothing)**: 544
   - **Test-only (only a test reaches them)**: 18
-- **Potentially unused exports**: 1277
-  - **Unreferenced anywhere**: 537
-  - **Referenced in their own module**: 740
+- **Potentially unused exports**: 1308
+  - **Unreferenced anywhere**: 550
+  - **Referenced in their own module**: 758
   - **Not classified**: 0
 
 ## Caveats
@@ -120,6 +120,7 @@ Source files that no root and no test reaches. Verify each one before you delete
 - `src/components/annotations/StickyNote.tsx`
 - `src/components/annotations/Strikethrough.tsx`
 - `src/components/annotations/Underline.tsx`
+- `src/components/annotations/drawingColors.ts`
 - `src/components/annotations/index.ts`
 - `src/components/batch/BatchDashboard.tsx`
 - `src/components/batch/BatchPanel.tsx`
@@ -253,6 +254,7 @@ Source files that no root and no test reaches. Verify each one before you delete
 - `src/components/settings/ShortcutSettings.tsx`
 - `src/components/sidebar/OutlinePanel.tsx`
 - `src/components/sidebar/ThumbnailSidebar.tsx`
+- `src/components/signatures/CameraSignature.tsx`
 - `src/components/signatures/DateStamp.tsx`
 - `src/components/signatures/DrawSignature.tsx`
 - `src/components/signatures/ImageSignature.tsx`
@@ -285,23 +287,22 @@ Source files that no root and no test reaches. Verify each one before you delete
 - `src/components/update/UpdateSettings.tsx`
 - `src/components/update/index.ts`
 - `src/components/updates/UpdateNotification.tsx`
-- `src/components/viewer/ContinuousView.tsx`
 - `src/components/viewer/DropZone.tsx`
 - `src/components/viewer/PDFViewer.tsx`
 - `src/components/viewer/PageCanvas.tsx`
 - `src/components/viewer/PageNavigation.tsx`
 - `src/components/viewer/PageSkeleton.tsx`
-- `src/components/viewer/SinglePageView.tsx`
-- `src/components/viewer/SpreadView.tsx`
 - `src/components/viewer/TextLayer.tsx`
 - `src/components/viewer/VirtualizedViewer.tsx`
 - `src/components/viewer/ZoomControls.tsx`
+- `src/components/viewer/viewLayout.ts`
 - `src/constants/config.ts`
 - `src/constants/shortcuts.ts`
 - `src/constants/stamps.ts`
 - `src/constants/tools.ts`
 - `src/constants/version.ts`
 - `src/contexts/PlatformContext.tsx`
+- `src/core/features.ts`
 - `src/hooks/index.ts`
 - `src/hooks/useAnnotationShortcuts.ts`
 - `src/hooks/useAnnounce.ts`
@@ -332,6 +333,7 @@ Source files that no root and no test reaches. Verify each one before you delete
 - `src/lib/accessibility/checker.ts`
 - `src/lib/accessibility/index.ts`
 - `src/lib/accessibility/types.ts`
+- `src/lib/annotations/drawingGeometry.ts`
 - `src/lib/annotations/drawingSerializer.ts`
 - `src/lib/annotations/serializer.ts`
 - `src/lib/batch/batchProcessor.ts`
@@ -448,6 +450,7 @@ Source files that no root and no test reaches. Verify each one before you delete
 - `src/lib/pages/mergePdf.ts`
 - `src/lib/pages/pageOperations.ts`
 - `src/lib/pages/splitPdf.ts`
+- `src/lib/pdf/contentDarkMode.ts`
 - `src/lib/pdf/renderer.ts`
 - `src/lib/pdf/saver.ts`
 - `src/lib/pdf/signatureEmbed.ts`
@@ -490,6 +493,7 @@ Source files that no root and no test reaches. Verify each one before you delete
 - `src/lib/share/copyLink.ts`
 - `src/lib/share/emailShare.ts`
 - `src/lib/share/index.ts`
+- `src/lib/signatures/cameraCorrection.ts`
 - `src/lib/signatures/dateUtils.ts`
 - `src/lib/signatures/fieldAlignment.ts`
 - `src/lib/signatures/imageProcessor.ts`
@@ -502,6 +506,17 @@ Source files that no root and no test reaches. Verify each one before you delete
 - `src/lib/thumbnails/index.ts`
 - `src/lib/update/updateClient.ts`
 - `src/main.tsx`
+- `src/modules/optional/OptionalModuleCommands.tsx`
+- `src/modules/optional/OptionalModuleHost.tsx`
+- `src/modules/optional/entries/batch.tsx`
+- `src/modules/optional/entries/comparison.tsx`
+- `src/modules/optional/entries/enterprise.tsx`
+- `src/modules/optional/entries/fileWatch.tsx`
+- `src/modules/optional/entries/kiosk.tsx`
+- `src/modules/optional/entries/lan.tsx`
+- `src/modules/optional/entries/license.tsx`
+- `src/modules/optional/entries/scanner.tsx`
+- `src/modules/optional/loadOptionalModule.ts`
 - `src/pages/Editor.tsx`
 - `src/pages/Home.tsx`
 - `src/pages/NotFound.tsx`
@@ -535,6 +550,7 @@ Source files that no root and no test reaches. Verify each one before you delete
 - `src/stores/textStore.ts`
 - `src/stores/uiStore.ts`
 - `src/stores/updateStore.ts`
+- `src/styles/theme.ts`
 - `src/sw.ts`
 - `src/types/annotations.ts`
 - `src/types/batch.ts`
@@ -705,7 +721,7 @@ No file of this repository imports these files. This is not a deletion list.
 - `src/components/viewer/DropZone.tsx`
 - `src/components/viewer/PDFViewer.tsx`
 - `src/components/viewer/PageNavigation.tsx`
-- `src/components/viewer/VirtualizedViewer.tsx`
+- `src/components/viewer/PageSkeleton.tsx`
 - `src/components/viewer/ZoomControls.tsx`
 - `src/constants/config.ts`
 - `src/constants/shortcuts.ts`
@@ -713,8 +729,10 @@ No file of this repository imports these files. This is not a deletion list.
 - `src/constants/tools.ts`
 - `src/constants/version.ts`
 - `src/contexts/PlatformContext.tsx`
+- `src/core/features.ts`
 - `src/hooks/index.ts`
 - `src/lib/accessibility/index.ts`
+- `src/lib/annotations/drawingGeometry.ts`
 - `src/lib/annotations/drawingSerializer.ts`
 - `src/lib/annotations/serializer.ts`
 - `src/lib/batch/errorReporter.ts`
@@ -756,6 +774,7 @@ No file of this repository imports these files. This is not a deletion list.
 - `src/lib/offline/patchGenerator.ts`
 - `src/lib/offline/syncEngine.ts`
 - `src/lib/pages/index.ts`
+- `src/lib/pdf/contentDarkMode.ts`
 - `src/lib/pdf/renderer.ts`
 - `src/lib/pdf/saver.ts`
 - `src/lib/pdf/signatureEmbed.ts`
@@ -785,6 +804,7 @@ No file of this repository imports these files. This is not a deletion list.
 - `src/lib/security/keyWrapping.ts`
 - `src/lib/security/webauthnClient.ts`
 - `src/lib/share/index.ts`
+- `src/lib/signatures/cameraCorrection.ts`
 - `src/lib/signatures/dateUtils.ts`
 - `src/lib/signatures/fieldAlignment.ts`
 - `src/lib/signatures/imageProcessor.ts`
@@ -796,13 +816,24 @@ No file of this repository imports these files. This is not a deletion list.
 - `src/lib/thumbnails/index.ts`
 - `src/lib/update/updateClient.ts`
 - `src/main.tsx`
+- `src/modules/optional/OptionalModuleCommands.tsx`
+- `src/modules/optional/OptionalModuleHost.tsx`
 - `src/pages/Editor.tsx`
 - `src/pages/Home.tsx`
 - `src/pages/NotFound.tsx`
 - `src/pages/Privacy.tsx`
 - `src/pages/Settings.tsx`
 - `src/pages/Terms.tsx`
+- `src/stores/batchStore.ts`
+- `src/stores/comparisonStore.ts`
+- `src/stores/enterprisePolicyStore.ts`
+- `src/stores/fileWatchStore.ts`
 - `src/stores/index.ts`
+- `src/stores/kioskStore.ts`
+- `src/stores/lanStore.ts`
+- `src/stores/licenseStore.ts`
+- `src/stores/nativeBatchStore.ts`
+- `src/stores/scannerStore.ts`
 - `src/sw.ts`
 - `src/types/annotations.ts`
 - `src/types/batch.ts`
@@ -829,7 +860,6 @@ No other file imports these names, and their own module does not use them.
 - `electron/dialogs.ts`: `CertificateTrustDialogOptions`
 - `electron/dock.ts`: `bounceDock`, `clearDockBadge`, `setDockBadge`
 - `electron/fileAssociation.ts`: `getPendingFile`, `getSupportedFileTypes`, `isDefaultPdfHandler`, `registerFileAssociations`, `wasLaunchedWithFile`
-- `electron/fileWatcher.ts`: `getWatchedFiles`, `isWatching`
 - `electron/ipc/channels.ts`: `IpcChannel`, `IpcEvent`
 - `electron/ipc/fileWatchIPC.ts`: `setupFileWatchHandlers`
 - `electron/ipc/menuHandlers.ts`: `MenuActionHandlers`, `notifyFullscreenChange`
@@ -920,8 +950,7 @@ No other file imports these names, and their own module does not use them.
 - `src/components/ui/Skeleton.tsx`: `SkeletonText`
 - `src/components/viewer/PDFViewer.tsx`: `PDFViewer`
 - `src/components/viewer/PageNavigation.tsx`: `PageNavigation`
-- `src/components/viewer/PageSkeleton.tsx`: `ThumbnailSkeleton`
-- `src/components/viewer/VirtualizedViewer.tsx`: `VirtualizedViewer`
+- `src/components/viewer/PageSkeleton.tsx`: `PageSkeleton`, `ThumbnailSkeleton`
 - `src/components/viewer/ZoomControls.tsx`: `ZoomControls`
 - `src/constants/config.ts`: `APP_CONFIG`, `BREAKPOINTS`, `PDF_CONFIG`, `STORAGE_KEYS`, `SUPPORTED_FORMATS`
 - `src/constants/shortcuts.ts`: `KEYBOARD_SHORTCUTS`, `matchShortcut`
@@ -929,12 +958,14 @@ No other file imports these names, and their own module does not use them.
 - `src/constants/tools.ts`: `DRAWING_COLORS`, `HIGHLIGHT_COLORS`, `NOTE_COLORS`, `STAMP_TYPES`, `ToolId`
 - `src/constants/version.ts`: `VERSION_INFO`, `compareVersions`, `getDisplayVersion`, `isPrerelease`
 - `src/contexts/PlatformContext.tsx`: `usePlatformCondition`, `usePlatformValue`
+- `src/core/features.ts`: `defaultOptionalModuleFlags`, `getCoreFeature`, `getOptionalModule`, `isCoreFeatureId`, `isOptionalModuleId`
 - `src/hooks/useKeyboardNavigation.ts`: `useFocusTrap`
 - `src/hooks/useOfflineData.ts`: `useOfflineDocument`, `useOfflineDocuments`
 - `src/hooks/usePlatform.ts`: `useElectronMenuEvents`
 - `src/hooks/useThumbnails.ts`: `useLazyThumbnails`
 - `src/hooks/useUnsavedChanges.ts`: `useDocumentModified`
 - `src/hooks/useVirtualization.ts`: `useDynamicVirtualization`
+- `src/lib/annotations/drawingGeometry.ts`: `screenDeltaToPdf`, `translateDrawingPaths`
 - `src/lib/annotations/drawingSerializer.ts`: `SerializedDrawing`, `calculateDrawingBounds`, `cloneDrawingPaths`, `deserializeDrawingPaths`, `mergeDrawingPaths`, `serializeDrawingPaths`, `validateDrawingPaths`
 - `src/lib/annotations/serializer.ts`: `exportAnnotations`, `importAnnotations`, `mergeAnnotations`, `validateAnnotationData`
 - `src/lib/batch/errorHandler.ts`: `calculateRetryDelay`, `createErrorCollector`, `handleError`
@@ -971,6 +1002,7 @@ No other file imports these names, and their own module does not use them.
 - `src/lib/offline/patchGenerator.ts`: `patchGenerator`
 - `src/lib/offline/serviceWorkerConfig.ts`: `generateCacheKey`, `getCacheEntryMetadata`, `getCacheStorageUsage`
 - `src/lib/offline/syncEngine.ts`: `createMockAdapter`, `syncEngine`
+- `src/lib/pdf/contentDarkMode.ts`: `pdfContentDarkClass`
 - `src/lib/pdf/renderer.ts`: `PDFRenderer`
 - `src/lib/pdf/saver.ts`: `copyPdf`, `getPdfInfo`, `savePdf`
 - `src/lib/pdf/signatureEmbed.ts`: `embedSignaturesInPdf`, `getSignatureFieldPositions`, `hasExistingSignatures`
@@ -987,6 +1019,7 @@ No other file imports these names, and their own module does not use them.
 - `src/lib/security/hardwareEncryption.ts`: `EncryptionOptions`
 - `src/lib/security/keyWrapping.ts`: `MultiKeyWrapping`
 - `src/lib/security/webauthnClient.ts`: `getWebAuthnClient`
+- `src/lib/signatures/cameraCorrection.ts`: `mirrorPixels`
 - `src/lib/signatures/dateUtils.ts`: `DATE_FORMAT_OPTIONS`, `DATE_POSITION_OPTIONS`, `renderDateStampToCanvas`
 - `src/lib/signatures/fieldAlignment.ts`: `alignToField`, `detectSignatureFields`, `findNearestSignatureField`, `isInsideField`
 - `src/lib/signatures/imageProcessor.ts`: `blobToDataUrl`, `canvasToBlob`, `dataUrlToBlob`, `isValidImageFile`, `loadImageFromDataUrl`, `processSignatureImage`
@@ -996,11 +1029,17 @@ No other file imports these names, and their own module does not use them.
 - `src/lib/storage/signatureStorage.ts`: `clearAllSignatures`, `deleteSignature`, `exportSignatures`, `getSignatureCount`, `importSignatures`, `setDefaultSignature`, `updateSignature`
 - `src/lib/storage/stampStorage.ts`: `clearAllCustomStamps`, `deleteCustomStamp`, `getAllCustomStamps`, `getCustomStampCount`, `saveCustomStamp`, `updateCustomStamp`
 - `src/lib/update/updateClient.ts`: `createUpdateClient`
+- `src/modules/optional/OptionalModuleCommands.tsx`: `OptionalModuleCommands`
+- `src/modules/optional/OptionalModuleHost.tsx`: `OptionalModuleHost`
+- `src/modules/optional/loadOptionalModule.ts`: `LOADABLE_OPTIONAL_MODULE_IDS`
+- `src/stores/batchStore.ts`: `useBatchStore`
+- `src/stores/comparisonStore.ts`: `useComparisonStore`
 - `src/stores/enterprisePolicyStore.ts`: `initializeEnterprisePolicies`, `setupPolicyAutoRefresh`, `useAdminContact`, `useFeatureEnabled`, `useIsManaged`, `usePolicyValue`
 - `src/stores/fileWatchStore.ts`: `cleanupFileWatch`, `initializeFileWatch`
 - `src/stores/kioskStore.ts`: `useIsKioskMode`, `useKioskFeature`, `useKioskRestrictions`
 - `src/stores/lanStore.ts`: `useConnectionStatus`, `useDiscoveryStatus`
 - `src/stores/licenseStore.ts`: `initializeLicense`, `useExpiryWarning`, `useFeatureEnabled`, `useLicenseStatus`
+- `src/stores/nativeBatchStore.ts`: `useNativeBatchStore`
 - `src/stores/ocrStore.ts`: `selectHasResults`, `selectResultForPage`
 - `src/stores/offlineStore.ts`: `selectConnectionStatus`, `selectHasConflicts`, `selectIsOnline`, `selectPendingCount`, `selectShowOfflineBanner`, `selectSyncProgress`, `selectSyncStatus`
 - `src/stores/recentFilesStore.ts`: `initializeRecentFiles`, `subscribeToFileOpenedEvents`
@@ -1053,8 +1092,6 @@ No other file imports these names, and their own module does not use them.
 - `electron/fileAssociation.ts` `isDefaultPdfHandler`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'electron/fileAssociation.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'isDefaultPdfHandler' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `electron/fileAssociation.ts` `registerFileAssociations`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'electron/fileAssociation.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'registerFileAssociations' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `electron/fileAssociation.ts` `wasLaunchedWithFile`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'electron/fileAssociation.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'wasLaunchedWithFile' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
-- `electron/fileWatcher.ts` `getWatchedFiles`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'electron/fileWatcher.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'getWatchedFiles' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
-- `electron/fileWatcher.ts` `isWatching`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'electron/fileWatcher.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'isWatching' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `electron/ipc/channels.ts` `IpcChannel`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'electron/ipc/channels.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'IpcChannel' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `electron/ipc/channels.ts` `IpcEvent`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'electron/ipc/channels.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'IpcEvent' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `electron/ipc/fileWatchIPC.ts` `setupFileWatchHandlers`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'electron/ipc/fileWatchIPC.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'setupFileWatchHandlers' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
@@ -1219,8 +1256,8 @@ No other file imports these names, and their own module does not use them.
 - `src/components/ui/Skeleton.tsx` `SkeletonText`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/ui/Skeleton.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'SkeletonText' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/components/viewer/PDFViewer.tsx` `PDFViewer`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/viewer/PDFViewer.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'PDFViewer' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/components/viewer/PageNavigation.tsx` `PageNavigation`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/viewer/PageNavigation.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'PageNavigation' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/components/viewer/PageSkeleton.tsx` `PageSkeleton`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/viewer/PageSkeleton.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'PageSkeleton' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/components/viewer/PageSkeleton.tsx` `ThumbnailSkeleton`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/viewer/PageSkeleton.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'ThumbnailSkeleton' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
-- `src/components/viewer/VirtualizedViewer.tsx` `VirtualizedViewer`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/viewer/VirtualizedViewer.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'VirtualizedViewer' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/components/viewer/ZoomControls.tsx` `ZoomControls`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/components/viewer/ZoomControls.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'ZoomControls' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/constants/config.ts` `APP_CONFIG`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/constants/config.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'APP_CONFIG' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/constants/config.ts` `BREAKPOINTS`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/constants/config.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'BREAKPOINTS' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
@@ -1244,6 +1281,11 @@ No other file imports these names, and their own module does not use them.
 - `src/constants/version.ts` `isPrerelease`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/constants/version.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'isPrerelease' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/contexts/PlatformContext.tsx` `usePlatformCondition`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/contexts/PlatformContext.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'usePlatformCondition' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/contexts/PlatformContext.tsx` `usePlatformValue`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/contexts/PlatformContext.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'usePlatformValue' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/core/features.ts` `defaultOptionalModuleFlags`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/core/features.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'defaultOptionalModuleFlags' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/core/features.ts` `getCoreFeature`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/core/features.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'getCoreFeature' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/core/features.ts` `getOptionalModule`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/core/features.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'getOptionalModule' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/core/features.ts` `isCoreFeatureId`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/core/features.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'isCoreFeatureId' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/core/features.ts` `isOptionalModuleId`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/core/features.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'isOptionalModuleId' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/hooks/useKeyboardNavigation.ts` `useFocusTrap`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/hooks/useKeyboardNavigation.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useFocusTrap' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/hooks/useOfflineData.ts` `useOfflineDocument`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/hooks/useOfflineData.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useOfflineDocument' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/hooks/useOfflineData.ts` `useOfflineDocuments`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/hooks/useOfflineData.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useOfflineDocuments' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
@@ -1251,6 +1293,8 @@ No other file imports these names, and their own module does not use them.
 - `src/hooks/useThumbnails.ts` `useLazyThumbnails`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/hooks/useThumbnails.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useLazyThumbnails' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/hooks/useUnsavedChanges.ts` `useDocumentModified`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/hooks/useUnsavedChanges.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useDocumentModified' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/hooks/useVirtualization.ts` `useDynamicVirtualization`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/hooks/useVirtualization.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useDynamicVirtualization' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/lib/annotations/drawingGeometry.ts` `screenDeltaToPdf`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/annotations/drawingGeometry.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'screenDeltaToPdf' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/lib/annotations/drawingGeometry.ts` `translateDrawingPaths`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/annotations/drawingGeometry.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'translateDrawingPaths' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/annotations/drawingSerializer.ts` `SerializedDrawing`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/annotations/drawingSerializer.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'SerializedDrawing' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/annotations/drawingSerializer.ts` `calculateDrawingBounds`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/annotations/drawingSerializer.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'calculateDrawingBounds' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/annotations/drawingSerializer.ts` `cloneDrawingPaths`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/annotations/drawingSerializer.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'cloneDrawingPaths' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
@@ -1382,6 +1426,7 @@ No other file imports these names, and their own module does not use them.
 - `src/lib/offline/serviceWorkerConfig.ts` `getCacheStorageUsage`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/offline/serviceWorkerConfig.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'getCacheStorageUsage' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/offline/syncEngine.ts` `createMockAdapter`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/offline/syncEngine.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'createMockAdapter' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/offline/syncEngine.ts` `syncEngine`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/offline/syncEngine.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'syncEngine' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/lib/pdf/contentDarkMode.ts` `pdfContentDarkClass`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/pdf/contentDarkMode.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'pdfContentDarkClass' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/pdf/renderer.ts` `PDFRenderer`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/pdf/renderer.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'PDFRenderer' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/pdf/saver.ts` `copyPdf`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/pdf/saver.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'copyPdf' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/pdf/saver.ts` `getPdfInfo`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/pdf/saver.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'getPdfInfo' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
@@ -1405,6 +1450,7 @@ No other file imports these names, and their own module does not use them.
 - `src/lib/security/hardwareEncryption.ts` `EncryptionOptions`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/security/hardwareEncryption.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'EncryptionOptions' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/security/keyWrapping.ts` `MultiKeyWrapping`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/security/keyWrapping.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'MultiKeyWrapping' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/security/webauthnClient.ts` `getWebAuthnClient`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/security/webauthnClient.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'getWebAuthnClient' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/lib/signatures/cameraCorrection.ts` `mirrorPixels`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/signatures/cameraCorrection.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'mirrorPixels' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/signatures/dateUtils.ts` `DATE_FORMAT_OPTIONS`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/signatures/dateUtils.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'DATE_FORMAT_OPTIONS' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/signatures/dateUtils.ts` `DATE_POSITION_OPTIONS`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/signatures/dateUtils.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'DATE_POSITION_OPTIONS' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/signatures/dateUtils.ts` `renderDateStampToCanvas`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/signatures/dateUtils.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'renderDateStampToCanvas' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
@@ -1446,6 +1492,11 @@ No other file imports these names, and their own module does not use them.
 - `src/lib/storage/stampStorage.ts` `saveCustomStamp`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/storage/stampStorage.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'saveCustomStamp' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/storage/stampStorage.ts` `updateCustomStamp`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/storage/stampStorage.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'updateCustomStamp' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/lib/update/updateClient.ts` `createUpdateClient`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/lib/update/updateClient.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'createUpdateClient' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/modules/optional/OptionalModuleCommands.tsx` `OptionalModuleCommands`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/modules/optional/OptionalModuleCommands.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'OptionalModuleCommands' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/modules/optional/OptionalModuleHost.tsx` `OptionalModuleHost`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/modules/optional/OptionalModuleHost.tsx' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'OptionalModuleHost' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/modules/optional/loadOptionalModule.ts` `LOADABLE_OPTIONAL_MODULE_IDS`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/modules/optional/loadOptionalModule.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'LOADABLE_OPTIONAL_MODULE_IDS' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/stores/batchStore.ts` `useBatchStore`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/batchStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useBatchStore' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/stores/comparisonStore.ts` `useComparisonStore`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/comparisonStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useComparisonStore' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/stores/enterprisePolicyStore.ts` `initializeEnterprisePolicies`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/enterprisePolicyStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'initializeEnterprisePolicies' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/stores/enterprisePolicyStore.ts` `setupPolicyAutoRefresh`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/enterprisePolicyStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'setupPolicyAutoRefresh' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/stores/enterprisePolicyStore.ts` `useAdminContact`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/enterprisePolicyStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useAdminContact' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
@@ -1463,6 +1514,7 @@ No other file imports these names, and their own module does not use them.
 - `src/stores/licenseStore.ts` `useExpiryWarning`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/licenseStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useExpiryWarning' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/stores/licenseStore.ts` `useFeatureEnabled`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/licenseStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useFeatureEnabled' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/stores/licenseStore.ts` `useLicenseStatus`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/licenseStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useLicenseStatus' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
+- `src/stores/nativeBatchStore.ts` `useNativeBatchStore`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/nativeBatchStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'useNativeBatchStore' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/stores/ocrStore.ts` `selectHasResults`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/ocrStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'selectHasResults' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/stores/ocrStore.ts` `selectResultForPage`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/ocrStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'selectResultForPage' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
 - `src/stores/offlineStore.ts` `selectConnectionStatus`: Checked for a dynamic import() call with a LITERAL string specifier resolving to 'src/stores/offlineStore.ts' across the whole repo and found none. This scan can only see import() calls with a literal string specifier -- a dynamic import built from a variable or template literal (e.g. import(`./cmds/${name}.js`)) is invisible to it, so 'found none' means no LITERAL match was found, NOT that nothing imports this. 'selectConnectionStatus' may still be consumed via such a call. Also verify against consumption this scan cannot see at all (docs examples, published API surface, a runtime-built path/`new Worker(...)`) before deleting.
@@ -1688,11 +1740,13 @@ No other file imports these names, but their own module uses them.
 - `src/components/update/UpdateSettings.tsx`: `UpdateSettingsProps`
 - `src/components/updates/UpdateNotification.tsx`: `UpdateNotification`
 - `src/components/viewer/DropZone.tsx`: `DropZone`
+- `src/components/viewer/viewLayout.ts`: `SpreadSlots`
 - `src/constants/shortcuts.ts`: `KeyboardShortcut`
 - `src/constants/stamps.ts`: `PRESET_STAMPS`, `PresetStamp`
 - `src/constants/tools.ts`: `TOOL_IDS`
 - `src/constants/version.ts`: `APP_DESCRIPTION`, `APP_NAME`, `APP_VERSION`, `BUILD_DATE`, `COPYRIGHT`, `RELEASE_CHANNEL`, `ReleaseChannel`, `parseVersion`
 - `src/contexts/PlatformContext.tsx`: `PlatformContextValue`, `PlatformProvider`, `ThemeMode`, `usePlatformContext`
+- `src/core/features.ts`: `CORE_FEATURES`, `CORE_FEATURE_IDS`, `CoreFeature`, `CoreFeatureId`, `OPTIONAL_MODULES`, `OPTIONAL_MODULE_IDS`, `OptionalModule`, `OptionalModuleId`
 - `src/hooks/usePageDrag.ts`: `DragState`, `UsePageDragOptions`, `UsePageDragReturn`
 - `src/hooks/usePageSelection.ts`: `UsePageSelectionOptions`, `UsePageSelectionReturn`
 - `src/hooks/usePlatform.ts`: `ElectronMenuEventHandlers`
@@ -1743,6 +1797,7 @@ No other file imports these names, but their own module uses them.
 - `src/lib/offline/queueProcessor.ts`: `OperationHandler`, `QueueProcessorOptions`, `QueueProcessorState`
 - `src/lib/offline/serviceWorkerConfig.ts`: `CACHE_EXPIRATION`, `CachingStrategy`, `MAX_CACHE_ENTRIES`, `RouteConfig`, `URL_PATTERNS`
 - `src/lib/offline/syncEngine.ts`: `RemoteSyncAdapter`, `SyncEngineOptions`, `SyncResult`
+- `src/lib/pdf/contentDarkMode.ts`: `PDF_CONTENT_DARK_CLASS`
 - `src/lib/pdf/renderer.ts`: `RenderResult`
 - `src/lib/pdf/saver.ts`: `SaveOptions`
 - `src/lib/print/accessibility.ts`: `ACCESSIBILITY_PRESETS`, `DEFAULT_ACCESSIBILITY_OPTIONS`, `PrintAccessibility`, `PrintAccessibilityOptions`
@@ -1777,14 +1832,19 @@ No other file imports these names, but their own module uses them.
 - `src/lib/storage/signatureStorage.ts`: `getSignatureCountByType`, `loadSignature`, `loadSignatures`, `saveSignature`
 - `src/lib/storage/stampStorage.ts`: `CustomStamp`
 - `src/lib/update/updateClient.ts`: `DownloadProgress`, `Release`, `ReleaseFile`, `UpdateCheckRequest`, `UpdateCheckResponse`, `UpdateClientOptions`
+- `src/modules/optional/loadOptionalModule.ts`: `OptionalModuleBundle`
 - `src/pages/Privacy.tsx`: `Privacy`
 - `src/pages/Terms.tsx`: `Terms`
 - `src/stores/annotationStore.ts`: `ShapeType`, `StampType`
-- `src/stores/fileWatchStore.ts`: `ExternalChange`, `FileWatchSettings`, `FileWatchStatus`, `ReloadAction`, `WatchedFile`
+- `src/stores/enterprisePolicyStore.ts`: `useEnterprisePolicyStore`
+- `src/stores/fileWatchStore.ts`: `ExternalChange`, `FileWatchSettings`, `FileWatchStatus`, `ReloadAction`, `WatchedFile`, `useFileWatchStore`
 - `src/stores/formDesignerStore.ts`: `ButtonAction`, `FieldType`, `FormFieldAppearance`, `FormFieldDefinition`, `Point`, `Rect`
-- `src/stores/lanStore.ts`: `CollaboratorPresence`, `ConnectedPeer`, `ConnectionStatus`, `Workspace`
+- `src/stores/kioskStore.ts`: `useKioskStore`
+- `src/stores/lanStore.ts`: `CollaboratorPresence`, `ConnectedPeer`, `ConnectionStatus`, `Workspace`, `useLANStore`
+- `src/stores/licenseStore.ts`: `useLicenseStore`
 - `src/stores/printStore.ts`: `DuplexMode`, `PageRange`, `PrintHistoryEntry`, `PrintJob`, `PrintJobStatus`, `PrintMargins`, `PrintPreset`, `PrintQuality`, `PrintSettings`, `PrinterInfo`
-- `src/stores/scannerStore.ts`: `ScanHistoryEntry`
+- `src/stores/scannerStore.ts`: `ScanHistoryEntry`, `useScannerStore`
+- `src/stores/settingsStore.ts`: `OptionalModuleFlags`
 - `src/stores/shortcutsStore.ts`: `ShortcutConflict`, `ShortcutDefinition`
 - `src/stores/signatureStore.ts`: `PlacedSignature`, `StoredSignature`
 - `src/stores/uiStore.ts`: `EditorTool`

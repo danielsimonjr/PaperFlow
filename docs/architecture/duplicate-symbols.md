@@ -12,11 +12,11 @@ Names that are OWN-DEFINED (not merely re-exported) by >= 2 distinct files acros
 
 | Category | Count |
 | --- | --: |
-| **TRUE_DUPLICATE** (actionable) | 74 |
+| **TRUE_DUPLICATE** (actionable) | 77 |
 | DISPATCH_VARIANT | 0 |
 | ALIAS_DELEGATION | 0 |
 | ALLOWLISTED | 0 |
-| _Total flagged names_ | 74 |
+| _Total flagged names_ | 77 |
 
 ## Summary — types (interface/type/enum)
 
@@ -34,6 +34,8 @@ Names that are OWN-DEFINED (not merely re-exported) by >= 2 distinct files acros
 
 | Name | Category | Defining files (package, public?, sub-tag) | Canonical hint |
 | --- | --- | --- | --- |
+| `OptionalModulePanel` | function | `src/modules/optional/entries/batch.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/comparison.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/enterprise.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/fileWatch.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/kiosk.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/lan.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/license.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/scanner.tsx` (unknown, internal, PLAIN) | `internal-only` |
+| `OptionalModuleScreen` | function | `src/modules/optional/entries/batch.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/kiosk.tsx` (unknown, internal, PLAIN)<br>`src/modules/optional/entries/scanner.tsx` (unknown, internal, PLAIN) | `internal-only` |
 | `exportToJSON` | function | `src/lib/comparison/reportGenerator.ts` (unknown, internal, PLAIN)<br>`src/lib/forms/exportImport.ts` (unknown, internal, PLAIN)<br>`src/lib/ocr/exportFormats.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `isFeatureAvailable` | function | `src/lib/electron/platform.ts` (unknown, internal, PLAIN)<br>`src/lib/license/featureGating.ts` (unknown, internal, PLAIN)<br>`src/lib/license/licenseValidator.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `mergeAnnotations` | function | `src/lib/annotations/serializer.ts` (unknown, internal, PLAIN)<br>`src/lib/fileWatch/statePreserver.ts` (unknown, internal, PLAIN)<br>`src/lib/offline/conflictResolver.ts` (unknown, internal, PLAIN) | `internal-only` |
@@ -41,6 +43,7 @@ Names that are OWN-DEFINED (not merely re-exported) by >= 2 distinct files acros
 | `unwatchFile` | function | `electron/fileWatcher.ts` (unknown, internal, PLAIN)<br>`electron/main/watcherService.ts` (unknown, internal, PLAIN)<br>`src/lib/electron/fileSystem.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `watchFile` | function | `electron/fileWatcher.ts` (unknown, internal, PLAIN)<br>`electron/main/watcherService.ts` (unknown, internal, PLAIN)<br>`src/lib/electron/fileSystem.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `Checkbox` | constant+function | `src/components/forms/Checkbox.tsx` (unknown, internal, PLAIN)<br>`src/components/ui/Checkbox.tsx` (unknown, internal, PLAIN) | `internal-only` |
+| `DRAWING_COLORS` | constant | `src/components/annotations/drawingColors.ts` (unknown, internal, PLAIN)<br>`src/constants/tools.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `HIGHLIGHT_COLORS` | constant | `src/components/annotations/SelectionPopup.tsx` (unknown, internal, PLAIN)<br>`src/constants/tools.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `NOTE_COLORS` | constant | `src/components/annotations/StickyNote.tsx` (unknown, internal, PLAIN)<br>`src/constants/tools.ts` (unknown, internal, PLAIN) | `internal-only` |
 | `PageRangeSelector` | function | `src/components/ocr/PageRangeSelector.tsx` (unknown, internal, PLAIN)<br>`src/components/print/PageRangeSelector.tsx` (unknown, internal, PLAIN) | `internal-only` |

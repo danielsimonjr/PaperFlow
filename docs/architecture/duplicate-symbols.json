@@ -2,12 +2,12 @@
   "note": "`duplicates` groups the names OWN-exported by >=2 'src' files, by name only, with no classification. `runtime` and `types` hold depgraph's classified lists of the same kind of names (see classificationNote); only TRUE_DUPLICATE entries there are merge targets.",
   "classificationNote": "This report groups names by OWN definition, not by call graph, then classifies each flagged name (see DupEntryTag): TRUE_DUPLICATE (the actionable merge targets), DISPATCH_VARIANT (>=2 mathTyped(...) registrations of the same public name \u2014 distinct dispatch surfaces, Bucket C delegation candidates, not copy-paste bodies), ALIAS_DELEGATION (a const-alias forward to an imported symbol, not an independent body \u2014 excluded once fewer than 2 real bodies remain), and ALLOWLISTED (matches duplicate-allowlist.json: hot-path is* guards, AssemblyScript mirrors, per-package VERSION strings). NOT detected: same-file typed-dispatch overload polymorphism for different argument shapes within one registration \u2014 a human still triages TRUE_DUPLICATE entries using the defining files + public flags before merging anything.",
   "summary": {
-    "duplicateCount": 194,
-    "totalSymbols": 2350,
-    "runtimeDuplicates": 74,
+    "duplicateCount": 200,
+    "totalSymbols": 2381,
+    "runtimeDuplicates": 77,
     "typeDuplicates": 98,
     "runtimeByTag": {
-      "TRUE_DUPLICATE": 74,
+      "TRUE_DUPLICATE": 77,
       "DISPATCH_VARIANT": 0,
       "ALIAS_DELEGATION": 0,
       "ALLOWLISTED": 0
@@ -80,6 +80,10 @@
       "src/components/forms/Checkbox.tsx",
       "src/components/ui/Checkbox.tsx"
     ],
+    "ComparisonDialog": [
+      "src/components/comparison/ComparisonDialog.tsx",
+      "src/modules/optional/entries/comparison.tsx"
+    ],
     "ComparisonReport": [
       "src/components/comparison/ComparisonReport.tsx",
       "src/lib/comparison/types.ts"
@@ -96,6 +100,10 @@
     "ConnectionStatus": [
       "src/stores/lanStore.ts",
       "src/types/offline.ts"
+    ],
+    "DRAWING_COLORS": [
+      "src/components/annotations/drawingColors.ts",
+      "src/constants/tools.ts"
     ],
     "DialogType": [
       "electron/dialogs.ts",
@@ -210,6 +218,10 @@
       "src/types/enterpriseConfig.ts",
       "src/types/kioskConfig.ts"
     ],
+    "KioskShell": [
+      "src/components/kiosk/KioskShell.tsx",
+      "src/modules/optional/entries/kiosk.tsx"
+    ],
     "Margins": [
       "src/lib/batch/types.ts",
       "src/types/batch.ts"
@@ -295,6 +307,21 @@
     "OpenDialogResult": [
       "electron/dialogs.ts",
       "src/lib/electron/dialogs.ts"
+    ],
+    "OptionalModulePanel": [
+      "src/modules/optional/entries/batch.tsx",
+      "src/modules/optional/entries/comparison.tsx",
+      "src/modules/optional/entries/enterprise.tsx",
+      "src/modules/optional/entries/fileWatch.tsx",
+      "src/modules/optional/entries/kiosk.tsx",
+      "src/modules/optional/entries/lan.tsx",
+      "src/modules/optional/entries/license.tsx",
+      "src/modules/optional/entries/scanner.tsx"
+    ],
+    "OptionalModuleScreen": [
+      "src/modules/optional/entries/batch.tsx",
+      "src/modules/optional/entries/kiosk.tsx",
+      "src/modules/optional/entries/scanner.tsx"
     ],
     "PDFTextItem": [
       "src/lib/fonts/fontMatcher.ts",
@@ -450,6 +477,10 @@
       "electron/ipc/types.ts",
       "src/lib/electron/dialogs.ts",
       "src/types/electronTypes.ts"
+    ],
+    "ScannerSelectDialog": [
+      "src/components/scanner/ScannerSelectDialog.tsx",
+      "src/modules/optional/entries/scanner.tsx"
     ],
     "ShapeAnnotation": [
       "src/components/annotations/ShapeAnnotation.tsx",
@@ -837,6 +868,88 @@
   },
   "runtime": [
     {
+      "name": "OptionalModulePanel",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/modules/optional/entries/batch.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/comparison.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/enterprise.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/fileWatch.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/kiosk.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/lan.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/license.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/scanner.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "OptionalModuleScreen",
+      "category": "function",
+      "definers": [
+        {
+          "file": "src/modules/optional/entries/batch.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/kiosk.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/modules/optional/entries/scanner.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
       "name": "exportToJSON",
       "category": "function",
       "definers": [
@@ -1004,6 +1117,26 @@
         },
         {
           "file": "src/components/ui/Checkbox.tsx",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        }
+      ],
+      "canonicalHint": "internal-only",
+      "tag": "TRUE_DUPLICATE"
+    },
+    {
+      "name": "DRAWING_COLORS",
+      "category": "constant",
+      "definers": [
+        {
+          "file": "src/components/annotations/drawingColors.ts",
+          "package": "unknown",
+          "public": false,
+          "tag": "PLAIN"
+        },
+        {
+          "file": "src/constants/tools.ts",
           "package": "unknown",
           "public": false,
           "tag": "PLAIN"
