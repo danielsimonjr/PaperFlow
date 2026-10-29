@@ -211,6 +211,15 @@ export function isCoreFeatureId(value: string): value is CoreFeatureId {
 }
 
 /**
+ * Return the default flag map. Every optional module is off.
+ */
+export function defaultOptionalModuleFlags(): Record<OptionalModuleId, false> {
+  return Object.fromEntries(
+    OPTIONAL_MODULES.map((module) => [module.id, false])
+  ) as Record<OptionalModuleId, false>;
+}
+
+/**
  * Return the optional module for `id`.
  */
 export function getOptionalModule(id: OptionalModuleId): OptionalModule {
