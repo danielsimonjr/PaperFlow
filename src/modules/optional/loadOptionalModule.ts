@@ -2,10 +2,20 @@ import type { ComponentType } from 'react';
 import { OPTIONAL_MODULE_IDS, type OptionalModuleId } from '@/core/features';
 
 /**
- * The panel a loaded optional module renders.
+ * Props for a full-screen optional module opened from the editor toolbar.
+ */
+export interface OptionalModuleScreenProps {
+  onClose: () => void;
+}
+
+/**
+ * The panel a loaded optional module renders, and optionally a full editor screen
+ * (kiosk, batch, and scanner only).
  */
 export interface OptionalModuleBundle {
   OptionalModulePanel: ComponentType;
+  /** Full editor screen. Only kiosk, batch, and scanner provide one. */
+  OptionalModuleScreen?: ComponentType<OptionalModuleScreenProps>;
 }
 
 const loaders: Record<OptionalModuleId, () => Promise<OptionalModuleBundle>> = {

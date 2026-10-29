@@ -3,7 +3,12 @@ import { PageCanvas } from './PageCanvas';
 import { PDFRenderer } from '@lib/pdf/renderer';
 import { useUIStore } from '@stores/uiStore';
 import { cn } from '@utils/cn';
-import { spreadSlots, type ViewerLayout } from './viewLayout';
+import {
+  spreadPlaceholderSize,
+  spreadSlots,
+  type PagePoints,
+  type ViewerLayout,
+} from './viewLayout';
 
 interface VirtualizedViewerProps {
   layout: ViewerLayout;
@@ -23,6 +28,7 @@ interface MeasuredPages {
   renderer: PDFRenderer;
   pageCount: number;
   heights: number[];
+  widths: number[];
 }
 
 function clampPage(page: number, pageCount: number): number {
@@ -127,17 +133,28 @@ export function VirtualizedViewer({
   }, [layout]);
 
   useEffect(() => {
-    if (layout !== 'continuous' || pageCount < 1 || typeof renderer.getPageInfo !== 'function') return;
+    if (layout !== 'continuous' && layout !== 'spread') return;
+    if (pageCount < 1 || typeof renderer.getPageInfo !== 'function') return;
     let cancelled = false;
     void Promise.all(
       Array.from({ length: pageCount }, (_, index) =>
         renderer
           .getPageInfo(index + 1)
-          .then((info) => info.height)
-          .catch(() => DEFAULT_PAGE_HEIGHT)
+          .then((info) => ({
+            width: info.width > 0 ? info.width : 0,
+            height: info.height > 0 ? info.height : DEFAULT_PAGE_HEIGHT,
+          }))
+          .catch(() => ({ width: 0, height: DEFAULT_PAGE_HEIGHT }))
       )
-    ).then((heights) => {
-      if (!cancelled) setMeasured({ renderer, pageCount, heights });
+    ).then((sizes) => {
+      if (!cancelled) {
+        setMeasured({
+          renderer,
+          pageCount,
+          heights: sizes.map((s) => s.height),
+          widths: sizes.map((s) => s.width),
+        });
+      }
     });
     return () => {
       cancelled = true;
@@ -228,7 +245,20 @@ export function VirtualizedViewer({
   }
 
   if (layout === 'spread') {
-    const { left, right } = spreadSlots(currentPage, pageCount, true);
+    const slots = spreadSlots(currentPage, pageCount, true);
+    const { left, right } = slots;
+    const sameMeasured =
+      measured?.renderer === renderer && measured.pageCount === pageCount ? measured : null;
+    const spreadPages: (PagePoints | null)[] = Array.from({ length: pageCount }, (_, index) => {
+      if (!sameMeasured) return null;
+      const width = sameMeasured.widths[index];
+      const height = sameMeasured.heights[index];
+      if (width != null && height != null && width > 0 && height > 0) {
+        return { width, height };
+      }
+      return null;
+    });
+    const placeholderSize = spreadPlaceholderSize(slots, spreadPages);
     return (
       <div
         ref={scrollRef}
@@ -244,8 +274,18 @@ export function VirtualizedViewer({
         onMouseUp={stopPan}
         onMouseLeave={stopPan}
       >
-        <SpreadSide renderer={renderer} pageNumber={left} zoom={zoom} />
-        <SpreadSide renderer={renderer} pageNumber={right} zoom={zoom} />
+        <SpreadSide
+          renderer={renderer}
+          pageNumber={left}
+          zoom={zoom}
+          placeholderSize={placeholderSize}
+        />
+        <SpreadSide
+          renderer={renderer}
+          pageNumber={right}
+          zoom={zoom}
+          placeholderSize={placeholderSize}
+        />
       </div>
     );
   }
@@ -299,17 +339,27 @@ function SpreadSide({
   renderer,
   pageNumber,
   zoom,
+  placeholderSize,
 }: {
   renderer: PDFRenderer;
   pageNumber: number | null;
   zoom: number;
+  placeholderSize: PagePoints | null;
 }) {
   if (!pageNumber) {
+    const scale = zoom / 100;
+    const style =
+      placeholderSize !== null
+        ? {
+            width: placeholderSize.width * scale,
+            height: placeholderSize.height * scale,
+          }
+        : undefined;
     return (
       <div
         data-testid="spread-placeholder"
         className="bg-gray-300 dark:bg-gray-700"
-        style={{ width: 595 * (zoom / 100), height: 842 * (zoom / 100) }}
+        style={style}
       />
     );
   }
