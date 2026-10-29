@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "name": "PaperFlow",
+    "name": "workspace",
     "schemaVersion": "2.0.0",
     "language": "typescript",
-    "totalFiles": 751,
+    "totalFiles": 779,
     "totalModules": 4,
-    "totalExports": 3405
+    "totalExports": 3433
   },
   "modules": {
     "src": {
@@ -2517,6 +2517,13 @@
             "typeOnly": false
           },
           {
+            "file": "src/components/annotations/drawingColors.ts",
+            "imports": [
+              "DRAWING_COLORS"
+            ],
+            "typeOnly": false
+          },
+          {
             "file": "src/components/annotations/OpacitySlider.tsx",
             "imports": [
               "OpacitySlider"
@@ -2560,6 +2567,8 @@
       },
       "src/components/annotations/DrawingAnnotation.tsx": {
         "externalDependencies": [
+          "@lib/annotations/drawingGeometry",
+          "@stores/historyStore",
           "react"
         ],
         "nodeDependencies": [],
@@ -2587,9 +2596,9 @@
         "nodeDependencies": [],
         "internalDependencies": [
           {
-            "file": "src/components/annotations/SelectionPopup.tsx",
+            "file": "src/components/annotations/drawingColors.ts",
             "imports": [
-              "HIGHLIGHT_COLORS"
+              "DRAWING_COLORS"
             ],
             "typeOnly": false
           }
@@ -2879,6 +2888,22 @@
         "internalDependencies": [],
         "exports": [
           "Underline"
+        ]
+      },
+      "src/components/annotations/drawingColors.ts": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "src/components/annotations/SelectionPopup.tsx",
+            "imports": [
+              "HIGHLIGHT_COLORS"
+            ],
+            "typeOnly": false
+          }
+        ],
+        "exports": [
+          "DRAWING_COLORS"
         ]
       },
       "src/components/annotations/index.ts": {
@@ -4229,11 +4254,13 @@
       "src/components/layout/Toolbar.tsx": {
         "externalDependencies": [
           "@components/annotations/ExportImportDialog",
+          "@components/signatures/SignatureModal",
           "@components/toolbar/ViewModeToggle",
           "@components/viewer/PageNavigation",
           "@components/viewer/ZoomControls",
           "@hooks/useAnnotationShortcuts",
           "@stores/annotationStore",
+          "@stores/signatureStore",
           "@stores/uiStore",
           "@utils/cn",
           "lucide-react",
@@ -5316,6 +5343,19 @@
           "ThumbnailSidebar"
         ]
       },
+      "src/components/signatures/CameraSignature.tsx": {
+        "externalDependencies": [
+          "@components/ui/Button",
+          "@lib/signatures/cameraCorrection",
+          "lucide-react",
+          "react"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "CameraSignature"
+        ]
+      },
       "src/components/signatures/DateStamp.tsx": {
         "externalDependencies": [
           "react"
@@ -5407,6 +5447,13 @@
             "file": "src/components/signatures/ImageSignature.tsx",
             "imports": [
               "ImageSignature"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/components/signatures/CameraSignature.tsx",
+            "imports": [
+              "CameraSignature"
             ],
             "typeOnly": false
           },
@@ -5953,28 +6000,6 @@
           "UpdateNotification"
         ]
       },
-      "src/components/viewer/ContinuousView.tsx": {
-        "externalDependencies": [
-          "@hooks/useVirtualization",
-          "@lib/pdf/renderer",
-          "@stores/uiStore",
-          "@utils/cn",
-          "react"
-        ],
-        "nodeDependencies": [],
-        "internalDependencies": [
-          {
-            "file": "src/components/viewer/PageCanvas.tsx",
-            "imports": [
-              "PageCanvas"
-            ],
-            "typeOnly": false
-          }
-        ],
-        "exports": [
-          "ContinuousView"
-        ]
-      },
       "src/components/viewer/DropZone.tsx": {
         "externalDependencies": [
           "@hooks/useDropZone",
@@ -5996,23 +6021,9 @@
         "nodeDependencies": [],
         "internalDependencies": [
           {
-            "file": "src/components/viewer/SinglePageView.tsx",
+            "file": "src/components/viewer/VirtualizedViewer.tsx",
             "imports": [
-              "SinglePageView"
-            ],
-            "typeOnly": false
-          },
-          {
-            "file": "src/components/viewer/ContinuousView.tsx",
-            "imports": [
-              "ContinuousView"
-            ],
-            "typeOnly": false
-          },
-          {
-            "file": "src/components/viewer/SpreadView.tsx",
-            "imports": [
-              "SpreadView"
+              "VirtualizedViewer"
             ],
             "typeOnly": false
           }
@@ -6032,6 +6043,7 @@
           "@components/annotations/RectangleTool",
           "@components/annotations/SelectionPopup",
           "@components/forms/FormLayer",
+          "@lib/pdf/contentDarkMode",
           "@lib/pdf/renderer",
           "@stores/annotationStore",
           "@stores/formStore",
@@ -6078,46 +6090,6 @@
           "ThumbnailSkeleton"
         ]
       },
-      "src/components/viewer/SinglePageView.tsx": {
-        "externalDependencies": [
-          "@lib/pdf/renderer",
-          "@stores/uiStore",
-          "@utils/cn",
-          "react"
-        ],
-        "nodeDependencies": [],
-        "internalDependencies": [
-          {
-            "file": "src/components/viewer/PageCanvas.tsx",
-            "imports": [
-              "PageCanvas"
-            ],
-            "typeOnly": false
-          }
-        ],
-        "exports": [
-          "SinglePageView"
-        ]
-      },
-      "src/components/viewer/SpreadView.tsx": {
-        "externalDependencies": [
-          "@lib/pdf/renderer",
-          "react"
-        ],
-        "nodeDependencies": [],
-        "internalDependencies": [
-          {
-            "file": "src/components/viewer/PageCanvas.tsx",
-            "imports": [
-              "PageCanvas"
-            ],
-            "typeOnly": false
-          }
-        ],
-        "exports": [
-          "SpreadView"
-        ]
-      },
       "src/components/viewer/TextLayer.tsx": {
         "externalDependencies": [
           "@lib/pdf/renderer",
@@ -6135,6 +6107,8 @@
           "@hooks/useVisiblePages",
           "@lib/pdf/renderer",
           "@lib/performance/memoryManager",
+          "@stores/uiStore",
+          "@utils/cn",
           "react"
         ],
         "nodeDependencies": [],
@@ -6150,6 +6124,14 @@
             "file": "src/components/viewer/PageSkeleton.tsx",
             "imports": [
               "PageSkeleton"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/components/viewer/viewLayout.ts",
+            "imports": [
+              "spreadSlots",
+              "ViewerLayout"
             ],
             "typeOnly": false
           }
@@ -6168,6 +6150,16 @@
         "internalDependencies": [],
         "exports": [
           "ZoomControls"
+        ]
+      },
+      "src/components/viewer/viewLayout.ts": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "ViewerLayout",
+          "SpreadSlots",
+          "spreadSlots"
         ]
       },
       "src/constants/config.ts": {
@@ -6251,6 +6243,26 @@
           "usePlatformContext",
           "usePlatformValue",
           "usePlatformCondition"
+        ]
+      },
+      "src/core/features.ts": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "CORE_FEATURE_IDS",
+          "CoreFeatureId",
+          "CoreFeature",
+          "CORE_FEATURES",
+          "OPTIONAL_MODULE_IDS",
+          "OptionalModuleId",
+          "OptionalModule",
+          "OPTIONAL_MODULES",
+          "getCoreFeature",
+          "isCoreFeatureId",
+          "defaultOptionalModuleFlags",
+          "getOptionalModule",
+          "isOptionalModuleId"
         ]
       },
       "src/hooks/index.ts": {
@@ -6951,6 +6963,15 @@
           "WCAG_CRITERIA",
           "PDFUA_REQUIREMENTS",
           "CATEGORY_CHECKS"
+        ]
+      },
+      "src/lib/annotations/drawingGeometry.ts": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "translateDrawingPaths",
+          "screenDeltaToPdf"
         ]
       },
       "src/lib/annotations/drawingSerializer.ts": {
@@ -11008,6 +11029,15 @@
           "splitIntoSinglePages"
         ]
       },
+      "src/lib/pdf/contentDarkMode.ts": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "PDF_CONTENT_DARK_CLASS",
+          "pdfContentDarkClass"
+        ]
+      },
       "src/lib/pdf/renderer.ts": {
         "externalDependencies": [
           "pdfjs-dist"
@@ -11879,6 +11909,14 @@
           "isDocumentFromUrl"
         ]
       },
+      "src/lib/signatures/cameraCorrection.ts": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "mirrorPixels"
+        ]
+      },
       "src/lib/signatures/dateUtils.ts": {
         "externalDependencies": [],
         "nodeDependencies": [],
@@ -12053,6 +12091,161 @@
           }
         ],
         "exports": []
+      },
+      "src/modules/optional/OptionalModuleHost.tsx": {
+        "externalDependencies": [
+          "@stores/settingsStore",
+          "react"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "src/modules/optional/loadOptionalModule.ts",
+            "imports": [
+              "loadOptionalModule"
+            ],
+            "typeOnly": false
+          }
+        ],
+        "exports": [
+          "OptionalModuleHost"
+        ]
+      },
+      "src/modules/optional/entries/batch.tsx": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/comparison.tsx": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "ComparisonDialog",
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/enterprise.tsx": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/fileWatch.tsx": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/kiosk.tsx": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "KioskShell",
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/lan.tsx": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/license.tsx": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/scanner.tsx": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "ScannerSelectDialog",
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/loadOptionalModule.ts": {
+        "externalDependencies": [
+          "react"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "src/modules/optional/entries/enterprise.tsx",
+            "imports": [
+              "*"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/modules/optional/entries/license.tsx",
+            "imports": [
+              "*"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/modules/optional/entries/kiosk.tsx",
+            "imports": [
+              "*"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/modules/optional/entries/lan.tsx",
+            "imports": [
+              "*"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/modules/optional/entries/scanner.tsx",
+            "imports": [
+              "*"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/modules/optional/entries/batch.tsx",
+            "imports": [
+              "*"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/modules/optional/entries/comparison.tsx",
+            "imports": [
+              "*"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "src/modules/optional/entries/fileWatch.tsx",
+            "imports": [
+              "*"
+            ],
+            "typeOnly": false
+          }
+        ],
+        "exports": [
+          "OptionalModuleBundle",
+          "loadOptionalModule",
+          "LOADABLE_OPTIONAL_MODULE_IDS"
+        ]
       },
       "src/pages/Editor.tsx": {
         "externalDependencies": [
@@ -12344,20 +12537,6 @@
             "typeOnly": false
           },
           {
-            "file": "src/stores/comparisonStore.ts",
-            "imports": [
-              "useComparisonStore"
-            ],
-            "typeOnly": false
-          },
-          {
-            "file": "src/stores/batchStore.ts",
-            "imports": [
-              "useBatchStore"
-            ],
-            "typeOnly": false
-          },
-          {
             "file": "src/stores/recentFilesStore.ts",
             "imports": [
               "useRecentFilesStore"
@@ -12379,24 +12558,10 @@
             "typeOnly": false
           },
           {
-            "file": "src/stores/fileWatchStore.ts",
-            "imports": [
-              "useFileWatchStore"
-            ],
-            "typeOnly": false
-          },
-          {
             "file": "src/stores/offlineStore.ts",
             "imports": [
               "useOfflineStore",
               "initializeOfflineListeners"
-            ],
-            "typeOnly": false
-          },
-          {
-            "file": "src/stores/nativeBatchStore.ts",
-            "imports": [
-              "useNativeBatchStore"
             ],
             "typeOnly": false
           },
@@ -12408,44 +12573,9 @@
             "typeOnly": false
           },
           {
-            "file": "src/stores/scannerStore.ts",
-            "imports": [
-              "useScannerStore"
-            ],
-            "typeOnly": false
-          },
-          {
             "file": "src/stores/securityStore.ts",
             "imports": [
               "useSecurityStore"
-            ],
-            "typeOnly": false
-          },
-          {
-            "file": "src/stores/enterprisePolicyStore.ts",
-            "imports": [
-              "useEnterprisePolicyStore"
-            ],
-            "typeOnly": false
-          },
-          {
-            "file": "src/stores/licenseStore.ts",
-            "imports": [
-              "useLicenseStore"
-            ],
-            "typeOnly": false
-          },
-          {
-            "file": "src/stores/lanStore.ts",
-            "imports": [
-              "useLANStore"
-            ],
-            "typeOnly": false
-          },
-          {
-            "file": "src/stores/kioskStore.ts",
-            "imports": [
-              "useKioskStore"
             ],
             "typeOnly": false
           }
@@ -12462,22 +12592,13 @@
           "useOCRStore",
           "useFormDesignerStore",
           "useRedactionStore",
-          "useComparisonStore",
-          "useBatchStore",
           "useRecentFilesStore",
           "useUpdateStore",
           "useShortcutsStore",
-          "useFileWatchStore",
           "useOfflineStore",
           "initializeOfflineListeners",
-          "useNativeBatchStore",
           "usePrintStore",
-          "useScannerStore",
-          "useSecurityStore",
-          "useEnterprisePolicyStore",
-          "useLicenseStore",
-          "useLANStore",
-          "useKioskStore"
+          "useSecurityStore"
         ]
       },
       "src/stores/kioskStore.ts": {
@@ -12649,6 +12770,7 @@
         "nodeDependencies": [],
         "internalDependencies": [],
         "exports": [
+          "OptionalModuleFlags",
           "useSettingsStore"
         ]
       },
@@ -12732,6 +12854,14 @@
           "useUpdateStore",
           "initializeUpdateStore",
           "formatDownloadProgress"
+        ]
+      },
+      "src/styles/theme.ts": {
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": [
+          "palette"
         ]
       },
       "src/sw.ts": {
@@ -13302,7 +13432,15 @@
       "tailwind.config.js": {
         "externalDependencies": [],
         "nodeDependencies": [],
-        "internalDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "src/styles/theme.ts",
+            "imports": [
+              "palette"
+            ],
+            "typeOnly": false
+          }
+        ],
         "exports": []
       },
       "vite.config.ts": {
@@ -14437,8 +14575,30 @@
         "internalDependencies": [],
         "exports": []
       },
+      "tests/unit/components/annotations/AnnotationProperties.test.tsx": {
+        "externalDependencies": [
+          "@components/annotations/AnnotationProperties",
+          "@stores/annotationStore",
+          "@testing-library/react",
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
       "tests/unit/components/annotations/DrawingCanvas.test.tsx": {
         "externalDependencies": [
+          "@testing-library/react",
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
+      "tests/unit/components/annotations/DrawingMove.test.tsx": {
+        "externalDependencies": [
+          "@components/annotations/DrawingAnnotation",
+          "@stores/historyStore",
           "@testing-library/react",
           "vitest"
         ],
@@ -14655,6 +14815,19 @@
         "internalDependencies": [],
         "exports": []
       },
+      "tests/unit/components/signatures/CameraSignature.test.tsx": {
+        "externalDependencies": [
+          "@components/layout/Toolbar",
+          "@components/signatures/CameraSignature",
+          "@components/signatures/SignatureModal",
+          "@stores/signatureStore",
+          "@testing-library/react",
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
       "tests/unit/components/signatures/SignatureCanvas.test.tsx": {
         "externalDependencies": [
           "@components/signatures/DrawSignature",
@@ -14708,6 +14881,59 @@
           "vitest"
         ],
         "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
+      "tests/unit/components/viewer/PDFViewer.test.tsx": {
+        "externalDependencies": [
+          "@lib/pdf/renderer",
+          "@stores/documentStore",
+          "@testing-library/react",
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
+      "tests/unit/components/viewer/VirtualizedViewer.test.tsx": {
+        "externalDependencies": [
+          "@lib/pdf/renderer",
+          "@stores/uiStore",
+          "@testing-library/react",
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
+      "tests/unit/components/viewer/pdfContentDark.test.tsx": {
+        "externalDependencies": [
+          "@components/viewer/PageCanvas",
+          "@lib/pdf/renderer",
+          "@stores/uiStore",
+          "@testing-library/react",
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
+      "tests/unit/components/viewer/viewLayout.test.ts": {
+        "externalDependencies": [
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
+      "tests/unit/core/features.test.ts": {
+        "externalDependencies": [
+          "vitest"
+        ],
+        "nodeDependencies": [
+          "node:fs",
+          "node:path"
+        ],
         "internalDependencies": [],
         "exports": []
       },
@@ -14824,6 +15050,14 @@
         "exports": []
       },
       "tests/unit/lib/accessibility/checker.test.ts": {
+        "externalDependencies": [
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
+      "tests/unit/lib/annotations/drawingGeometry.test.ts": {
         "externalDependencies": [
           "vitest"
         ],
@@ -15232,6 +15466,17 @@
         "internalDependencies": [],
         "exports": []
       },
+      "tests/unit/lib/pdf/contentDarkMode.test.ts": {
+        "externalDependencies": [
+          "vitest"
+        ],
+        "nodeDependencies": [
+          "node:fs",
+          "node:path"
+        ],
+        "internalDependencies": [],
+        "exports": []
+      },
       "tests/unit/lib/pdf/renderer.test.ts": {
         "externalDependencies": [
           "@lib/pdf/renderer",
@@ -15378,6 +15623,14 @@
         "internalDependencies": [],
         "exports": []
       },
+      "tests/unit/lib/signatures/cameraCorrection.test.ts": {
+        "externalDependencies": [
+          "vitest"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
       "tests/unit/lib/storage/fileHandler.test.ts": {
         "externalDependencies": [
           "@lib/storage/fileHandler",
@@ -15401,6 +15654,21 @@
           "vitest"
         ],
         "nodeDependencies": [],
+        "internalDependencies": [],
+        "exports": []
+      },
+      "tests/unit/modules/optionalModules.test.tsx": {
+        "externalDependencies": [
+          "@stores/settingsStore",
+          "@testing-library/react",
+          "@testing-library/user-event",
+          "react-router",
+          "vitest"
+        ],
+        "nodeDependencies": [
+          "node:fs",
+          "node:path"
+        ],
         "internalDependencies": [],
         "exports": []
       },
@@ -15555,6 +15823,18 @@
         "internalDependencies": [],
         "exports": []
       },
+      "tests/unit/styles/theme.test.tsx": {
+        "externalDependencies": [
+          "@testing-library/react",
+          "vitest"
+        ],
+        "nodeDependencies": [
+          "node:fs",
+          "node:path"
+        ],
+        "internalDependencies": [],
+        "exports": []
+      },
       "tests/unit/utils/cn.test.ts": {
         "externalDependencies": [
           "@utils/cn",
@@ -15576,38 +15856,38 @@
     }
   },
   "statistics": {
-    "totalTypeScriptFiles": 751,
-    "totalSourceFiles": 751,
+    "totalTypeScriptFiles": 779,
+    "totalSourceFiles": 779,
     "totalModules": 4,
-    "totalLinesOfCode": 177428,
-    "totalExports": 3405,
+    "totalLinesOfCode": 178529,
+    "totalExports": 3433,
     "entryRoots": 0,
     "reachableFiles": 0,
-    "dormantFiles": 546,
-    "orphanedFiles": 528,
+    "dormantFiles": 561,
+    "orphanedFiles": 543,
     "testOnlyFiles": 18,
     "runtimeCircularDeps": 0,
     "typeOnlyCircularDeps": 0,
     "totalTypeOnlyImports": 92,
-    "noImporterFileCount": 234,
-    "unusedExportsCount": 1277,
+    "noImporterFileCount": 247,
+    "unusedExportsCount": 1308,
     "circularDepsTruncated": false,
     "runtimeCyclicComponents": 0,
     "typeOnlyCyclicComponents": 0,
     "runtimeFilesInCycles": 0,
     "typeOnlyFilesInCycles": 0,
     "totalClasses": 69,
-    "totalInterfaces": 685,
-    "totalFunctions": 1436,
-    "totalTypeGuards": 59,
+    "totalInterfaces": 689,
+    "totalFunctions": 1454,
+    "totalTypeGuards": 61,
     "totalEnums": 3,
-    "totalConstants": 218,
-    "totalReExports": 812
+    "totalConstants": 226,
+    "totalReExports": 806
   },
   "reachability": {
     "roots": [],
     "reachableCount": 0,
-    "dormantCount": 546,
+    "dormantCount": 561,
     "orphaned": [
       "cli/config-schema-check.ts",
       "cli/validate-config.ts",
@@ -15702,6 +15982,7 @@
       "src/components/annotations/StickyNote.tsx",
       "src/components/annotations/Strikethrough.tsx",
       "src/components/annotations/Underline.tsx",
+      "src/components/annotations/drawingColors.ts",
       "src/components/annotations/index.ts",
       "src/components/batch/BatchDashboard.tsx",
       "src/components/batch/BatchPanel.tsx",
@@ -15835,6 +16116,7 @@
       "src/components/settings/ShortcutSettings.tsx",
       "src/components/sidebar/OutlinePanel.tsx",
       "src/components/sidebar/ThumbnailSidebar.tsx",
+      "src/components/signatures/CameraSignature.tsx",
       "src/components/signatures/DateStamp.tsx",
       "src/components/signatures/DrawSignature.tsx",
       "src/components/signatures/ImageSignature.tsx",
@@ -15867,23 +16149,22 @@
       "src/components/update/UpdateSettings.tsx",
       "src/components/update/index.ts",
       "src/components/updates/UpdateNotification.tsx",
-      "src/components/viewer/ContinuousView.tsx",
       "src/components/viewer/DropZone.tsx",
       "src/components/viewer/PDFViewer.tsx",
       "src/components/viewer/PageCanvas.tsx",
       "src/components/viewer/PageNavigation.tsx",
       "src/components/viewer/PageSkeleton.tsx",
-      "src/components/viewer/SinglePageView.tsx",
-      "src/components/viewer/SpreadView.tsx",
       "src/components/viewer/TextLayer.tsx",
       "src/components/viewer/VirtualizedViewer.tsx",
       "src/components/viewer/ZoomControls.tsx",
+      "src/components/viewer/viewLayout.ts",
       "src/constants/config.ts",
       "src/constants/shortcuts.ts",
       "src/constants/stamps.ts",
       "src/constants/tools.ts",
       "src/constants/version.ts",
       "src/contexts/PlatformContext.tsx",
+      "src/core/features.ts",
       "src/hooks/index.ts",
       "src/hooks/useAnnotationShortcuts.ts",
       "src/hooks/useAnnounce.ts",
@@ -15914,6 +16195,7 @@
       "src/lib/accessibility/checker.ts",
       "src/lib/accessibility/index.ts",
       "src/lib/accessibility/types.ts",
+      "src/lib/annotations/drawingGeometry.ts",
       "src/lib/annotations/drawingSerializer.ts",
       "src/lib/annotations/serializer.ts",
       "src/lib/batch/batchProcessor.ts",
@@ -16030,6 +16312,7 @@
       "src/lib/pages/mergePdf.ts",
       "src/lib/pages/pageOperations.ts",
       "src/lib/pages/splitPdf.ts",
+      "src/lib/pdf/contentDarkMode.ts",
       "src/lib/pdf/renderer.ts",
       "src/lib/pdf/saver.ts",
       "src/lib/pdf/signatureEmbed.ts",
@@ -16072,6 +16355,7 @@
       "src/lib/share/copyLink.ts",
       "src/lib/share/emailShare.ts",
       "src/lib/share/index.ts",
+      "src/lib/signatures/cameraCorrection.ts",
       "src/lib/signatures/dateUtils.ts",
       "src/lib/signatures/fieldAlignment.ts",
       "src/lib/signatures/imageProcessor.ts",
@@ -16084,6 +16368,16 @@
       "src/lib/thumbnails/index.ts",
       "src/lib/update/updateClient.ts",
       "src/main.tsx",
+      "src/modules/optional/OptionalModuleHost.tsx",
+      "src/modules/optional/entries/batch.tsx",
+      "src/modules/optional/entries/comparison.tsx",
+      "src/modules/optional/entries/enterprise.tsx",
+      "src/modules/optional/entries/fileWatch.tsx",
+      "src/modules/optional/entries/kiosk.tsx",
+      "src/modules/optional/entries/lan.tsx",
+      "src/modules/optional/entries/license.tsx",
+      "src/modules/optional/entries/scanner.tsx",
+      "src/modules/optional/loadOptionalModule.ts",
       "src/pages/Editor.tsx",
       "src/pages/Home.tsx",
       "src/pages/NotFound.tsx",
@@ -16117,6 +16411,7 @@
       "src/stores/textStore.ts",
       "src/stores/uiStore.ts",
       "src/stores/updateStore.ts",
+      "src/styles/theme.ts",
       "src/sw.ts",
       "src/types/annotations.ts",
       "src/types/batch.ts",

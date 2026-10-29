@@ -1,25 +1,25 @@
 {
-  "totalFiles": 751,
+  "totalFiles": 779,
   "byDisposition": {
     "reachable": 0,
     "build-entry": 0,
     "test-only": 18,
-    "orphan": 528,
-    "test": 189,
+    "orphan": 543,
+    "test": 202,
     "tool": 8,
     "config": 8,
     "bench": 0,
     "example": 0
   },
   "byArea": {
-    "src": 546,
+    "src": 561,
     "config": 8,
     "tools": 8,
-    "tests": 189
+    "tests": 202
   },
   "byPackage": {
-    "(root)": 281,
-    "paperflow": 470
+    "(root)": 294,
+    "paperflow": 485
   },
   "files": [
     {
@@ -650,14 +650,14 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 185
+      "loc": 186
     },
     {
       "file": "src/components/annotations/AnnotationProperties.tsx",
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 171
+      "loc": 172
     },
     {
       "file": "src/components/annotations/ArrowTool.tsx",
@@ -678,7 +678,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 106
+      "loc": 158
     },
     {
       "file": "src/components/annotations/DrawingCanvas.tsx",
@@ -847,6 +847,13 @@
       "area": "src",
       "disposition": "orphan",
       "loc": 95
+    },
+    {
+      "file": "src/components/annotations/drawingColors.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 9
     },
     {
       "file": "src/components/annotations/index.ts",
@@ -1322,7 +1329,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 180
+      "loc": 198
     },
     {
       "file": "src/components/lazy/index.ts",
@@ -1780,6 +1787,13 @@
       "loc": 609
     },
     {
+      "file": "src/components/signatures/CameraSignature.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 104
+    },
+    {
       "file": "src/components/signatures/DateStamp.tsx",
       "package": "paperflow",
       "area": "src",
@@ -1819,7 +1833,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 179
+      "loc": 185
     },
     {
       "file": "src/components/signatures/SignaturePlacer.tsx",
@@ -2004,13 +2018,6 @@
       "loc": 284
     },
     {
-      "file": "src/components/viewer/ContinuousView.tsx",
-      "package": "paperflow",
-      "area": "src",
-      "disposition": "orphan",
-      "loc": 204
-    },
-    {
       "file": "src/components/viewer/DropZone.tsx",
       "package": "paperflow",
       "area": "src",
@@ -2022,14 +2029,14 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 195
+      "loc": 166
     },
     {
       "file": "src/components/viewer/PageCanvas.tsx",
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 278
+      "loc": 283
     },
     {
       "file": "src/components/viewer/PageNavigation.tsx",
@@ -2046,20 +2053,6 @@
       "loc": 76
     },
     {
-      "file": "src/components/viewer/SinglePageView.tsx",
-      "package": "paperflow",
-      "area": "src",
-      "disposition": "orphan",
-      "loc": 107
-    },
-    {
-      "file": "src/components/viewer/SpreadView.tsx",
-      "package": "paperflow",
-      "area": "src",
-      "disposition": "orphan",
-      "loc": 129
-    },
-    {
       "file": "src/components/viewer/TextLayer.tsx",
       "package": "paperflow",
       "area": "src",
@@ -2071,7 +2064,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 126
+      "loc": 235
     },
     {
       "file": "src/components/viewer/ZoomControls.tsx",
@@ -2079,6 +2072,13 @@
       "area": "src",
       "disposition": "orphan",
       "loc": 102
+    },
+    {
+      "file": "src/components/viewer/viewLayout.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 40
     },
     {
       "file": "src/constants/config.ts",
@@ -2121,6 +2121,13 @@
       "area": "src",
       "disposition": "orphan",
       "loc": 330
+    },
+    {
+      "file": "src/core/features.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 238
     },
     {
       "file": "src/hooks/index.ts",
@@ -2331,6 +2338,13 @@
       "area": "src",
       "disposition": "orphan",
       "loc": 248
+    },
+    {
+      "file": "src/lib/annotations/drawingGeometry.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 31
     },
     {
       "file": "src/lib/annotations/drawingSerializer.ts",
@@ -3152,6 +3166,13 @@
       "loc": 303
     },
     {
+      "file": "src/lib/pdf/contentDarkMode.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 11
+    },
+    {
       "file": "src/lib/pdf/renderer.ts",
       "package": "paperflow",
       "area": "src",
@@ -3446,6 +3467,13 @@
       "loc": 2
     },
     {
+      "file": "src/lib/signatures/cameraCorrection.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 22
+    },
+    {
       "file": "src/lib/signatures/dateUtils.ts",
       "package": "paperflow",
       "area": "src",
@@ -3530,6 +3558,76 @@
       "loc": 20
     },
     {
+      "file": "src/modules/optional/OptionalModuleHost.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 46
+    },
+    {
+      "file": "src/modules/optional/entries/batch.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 11
+    },
+    {
+      "file": "src/modules/optional/entries/comparison.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 10
+    },
+    {
+      "file": "src/modules/optional/entries/enterprise.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 14
+    },
+    {
+      "file": "src/modules/optional/entries/fileWatch.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 14
+    },
+    {
+      "file": "src/modules/optional/entries/kiosk.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 13
+    },
+    {
+      "file": "src/modules/optional/entries/lan.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 9
+    },
+    {
+      "file": "src/modules/optional/entries/license.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 13
+    },
+    {
+      "file": "src/modules/optional/entries/scanner.tsx",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 10
+    },
+    {
+      "file": "src/modules/optional/loadOptionalModule.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 32
+    },
+    {
       "file": "src/pages/Editor.tsx",
       "package": "paperflow",
       "area": "src",
@@ -3562,7 +3660,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 212
+      "loc": 251
     },
     {
       "file": "src/pages/Terms.tsx",
@@ -3639,7 +3737,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 39
+      "loc": 31
     },
     {
       "file": "src/stores/kioskStore.ts",
@@ -3723,7 +3821,7 @@
       "package": "paperflow",
       "area": "src",
       "disposition": "orphan",
-      "loc": 220
+      "loc": 241
     },
     {
       "file": "src/stores/shortcutsStore.ts",
@@ -3759,6 +3857,13 @@
       "area": "src",
       "disposition": "orphan",
       "loc": 308
+    },
+    {
+      "file": "src/styles/theme.ts",
+      "package": "paperflow",
+      "area": "src",
+      "disposition": "orphan",
+      "loc": 31
     },
     {
       "file": "src/sw.ts",
@@ -3905,7 +4010,7 @@
       "package": "(root)",
       "area": "config",
       "disposition": "config",
-      "loc": 39
+      "loc": 43
     },
     {
       "file": "tests/e2e-electron/fileOperations.spec.ts",
@@ -4384,11 +4489,25 @@
       "loc": 216
     },
     {
+      "file": "tests/unit/components/annotations/AnnotationProperties.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 45
+    },
+    {
       "file": "tests/unit/components/annotations/DrawingCanvas.test.tsx",
       "package": "(root)",
       "area": "tests",
       "disposition": "test",
       "loc": 99
+    },
+    {
+      "file": "tests/unit/components/annotations/DrawingMove.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 54
     },
     {
       "file": "tests/unit/components/annotations/HighlightTool.test.tsx",
@@ -4517,6 +4636,13 @@
       "loc": 50
     },
     {
+      "file": "tests/unit/components/signatures/CameraSignature.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 77
+    },
+    {
       "file": "tests/unit/components/signatures/SignatureCanvas.test.tsx",
       "package": "(root)",
       "area": "tests",
@@ -4550,6 +4676,41 @@
       "area": "tests",
       "disposition": "test",
       "loc": 46
+    },
+    {
+      "file": "tests/unit/components/viewer/PDFViewer.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 49
+    },
+    {
+      "file": "tests/unit/components/viewer/VirtualizedViewer.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 108
+    },
+    {
+      "file": "tests/unit/components/viewer/pdfContentDark.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 31
+    },
+    {
+      "file": "tests/unit/components/viewer/viewLayout.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 23
+    },
+    {
+      "file": "tests/unit/core/features.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 79
     },
     {
       "file": "tests/unit/hooks/useAnnotationShortcuts.test.ts",
@@ -4634,6 +4795,13 @@
       "area": "tests",
       "disposition": "test",
       "loc": 563
+    },
+    {
+      "file": "tests/unit/lib/annotations/drawingGeometry.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 17
     },
     {
       "file": "tests/unit/lib/annotations/drawingSerializer.test.ts",
@@ -4965,6 +5133,13 @@
       "loc": 160
     },
     {
+      "file": "tests/unit/lib/pdf/contentDarkMode.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 18
+    },
+    {
       "file": "tests/unit/lib/pdf/renderer.test.ts",
       "package": "(root)",
       "area": "tests",
@@ -5077,6 +5252,13 @@
       "loc": 76
     },
     {
+      "file": "tests/unit/lib/signatures/cameraCorrection.test.ts",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 20
+    },
+    {
       "file": "tests/unit/lib/storage/fileHandler.test.ts",
       "package": "(root)",
       "area": "tests",
@@ -5096,6 +5278,13 @@
       "area": "tests",
       "disposition": "test",
       "loc": 93
+    },
+    {
+      "file": "tests/unit/modules/optionalModules.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 103
     },
     {
       "file": "tests/unit/pages/Privacy.test.tsx",
@@ -5214,7 +5403,14 @@
       "package": "(root)",
       "area": "tests",
       "disposition": "test",
-      "loc": 68
+      "loc": 67
+    },
+    {
+      "file": "tests/unit/styles/theme.test.tsx",
+      "package": "(root)",
+      "area": "tests",
+      "disposition": "test",
+      "loc": 42
     },
     {
       "file": "tests/unit/utils/cn.test.ts",
@@ -5256,7 +5452,7 @@
       "package": "(root)",
       "area": "config",
       "disposition": "config",
-      "loc": 155
+      "loc": 154
     },
     {
       "file": "vite.electron.config.ts",

@@ -2,6 +2,8 @@
 
 This document provides detailed information about all PaperFlow features.
 
+The default app is the core reader. Enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch are optional. Each one is off until Settings turns it on.
+
 ## Document Viewing
 
 ### PDF Rendering
@@ -11,10 +13,14 @@ PaperFlow uses PDF.js to render PDFs with high fidelity directly in your browser
 - **Text layer** for selection and searching
 - **Embedded fonts** rendered correctly
 - **Vector graphics** preserved
+- **PDF dark mode**: the page canvas and the text layer invert. The chrome is not the only thing that goes dark.
 
 ### View Modes
+
+Single page, continuous scroll, and two-page spread are one viewer. A layout setting picks the mode. In cover spread, page 1 sits alone on the right.
+
 - **Single Page**: View one page at a time
-- **Continuous**: Scroll through all pages
+- **Continuous**: Scroll through all pages. Only the pages near the viewport are drawn.
 - **Two-Page Spread**: View two pages side by side
 
 ### Navigation
@@ -40,7 +46,8 @@ Colors available: Yellow, Green, Blue, Pink, Orange
 ### Drawing Tools
 - **Freehand Drawing**: Draw with pen/pencil tool
 - **Line Thickness**: Adjustable from 1-20px
-- **Colors**: Full color palette available
+- **Colors**: Choose a stroke color, including black, and recolor a drawing you already made
+- **Move**: Drag a selected drawing. Undo puts it back.
 - **Eraser**: Remove parts of drawings
 
 ### Shapes
@@ -80,6 +87,7 @@ Colors available: Yellow, Green, Blue, Pink, Orange
 - **Draw**: Sign with mouse or touch
 - **Type**: Generate from typed name
 - **Upload**: Use an image file
+- **Camera**: Hold a signature toward the camera. The capture is mirrored so the ink reads left to right, and it is saved for reuse.
 
 ### Signature Management
 - **Save signatures** for reuse

@@ -4185,6 +4185,12 @@
             ]
           },
           {
+            "file": "./drawingColors",
+            "imports": [
+              "DRAWING_COLORS"
+            ]
+          },
+          {
             "file": "./OpacitySlider",
             "imports": [
               "OpacitySlider"
@@ -4266,7 +4272,21 @@
           {
             "package": "react",
             "imports": [
-              "useMemo"
+              "useMemo",
+              "useRef"
+            ]
+          },
+          {
+            "package": "@lib/annotations/drawingGeometry",
+            "imports": [
+              "screenDeltaToPdf",
+              "translateDrawingPaths"
+            ]
+          },
+          {
+            "package": "@stores/historyStore",
+            "imports": [
+              "useHistoryStore"
             ]
           }
         ],
@@ -4327,9 +4347,9 @@
         "nodeDependencies": [],
         "internalDependencies": [
           {
-            "file": "./SelectionPopup",
+            "file": "./drawingColors",
             "imports": [
-              "HIGHLIGHT_COLORS"
+              "DRAWING_COLORS"
             ]
           }
         ],
@@ -4984,6 +5004,26 @@
         ],
         "functions": [
           "Underline"
+        ]
+      },
+      "src/components/annotations/drawingColors.ts": {
+        "description": "Stroke colors for a new drawing and for recoloring a saved drawing.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "./SelectionPopup",
+            "imports": [
+              "HIGHLIGHT_COLORS"
+            ]
+          }
+        ],
+        "workspaceDependencies": [],
+        "exports": [
+          "DRAWING_COLORS"
+        ],
+        "constants": [
+          "DRAWING_COLORS"
         ]
       },
       "src/components/annotations/index.ts": {
@@ -7659,7 +7699,8 @@
               "Minus",
               "Underline",
               "Strikethrough",
-              "FileDown"
+              "FileDown",
+              "PenLine"
             ]
           },
           {
@@ -7698,6 +7739,18 @@
             "imports": [
               "useUIStore",
               "EditorTool"
+            ]
+          },
+          {
+            "package": "@stores/signatureStore",
+            "imports": [
+              "useSignatureStore"
+            ]
+          },
+          {
+            "package": "@components/signatures/SignatureModal",
+            "imports": [
+              "SignatureModal"
             ]
           },
           {
@@ -10294,6 +10347,47 @@
           "ThumbnailSidebar"
         ]
       },
+      "src/components/signatures/CameraSignature.tsx": {
+        "description": "Capture a signature from the camera and mirror it so the ink reads correctly.",
+        "externalDependencies": [
+          {
+            "package": "react",
+            "imports": [
+              "useCallback",
+              "useEffect",
+              "useRef",
+              "useState"
+            ]
+          },
+          {
+            "package": "lucide-react",
+            "imports": [
+              "Camera"
+            ]
+          },
+          {
+            "package": "@components/ui/Button",
+            "imports": [
+              "Button"
+            ]
+          },
+          {
+            "package": "@lib/signatures/cameraCorrection",
+            "imports": [
+              "mirrorPixels"
+            ]
+          }
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "CameraSignature"
+        ],
+        "functions": [
+          "CameraSignature"
+        ]
+      },
       "src/components/signatures/DateStamp.tsx": {
         "description": "Date stamp component to display alongside signatures.",
         "externalDependencies": [
@@ -10468,6 +10562,7 @@
               "Pencil",
               "Type",
               "Image",
+              "Camera",
               "Star",
               "Check"
             ]
@@ -10504,6 +10599,12 @@
             "file": "./ImageSignature",
             "imports": [
               "ImageSignature"
+            ]
+          },
+          {
+            "file": "./CameraSignature",
+            "imports": [
+              "CameraSignature"
             ]
           },
           {
@@ -11602,60 +11703,6 @@
           "UpdateNotification"
         ]
       },
-      "src/components/viewer/ContinuousView.tsx": {
-        "description": "The view is a continuous vertical view of the document, and renders only the pages near the viewport.",
-        "externalDependencies": [
-          {
-            "package": "react",
-            "imports": [
-              "useRef",
-              "useCallback",
-              "useState",
-              "useEffect"
-            ]
-          },
-          {
-            "package": "@lib/pdf/renderer",
-            "imports": [
-              "PDFRenderer"
-            ]
-          },
-          {
-            "package": "@hooks/useVirtualization",
-            "imports": [
-              "useDynamicVirtualization"
-            ]
-          },
-          {
-            "package": "@stores/uiStore",
-            "imports": [
-              "useUIStore"
-            ]
-          },
-          {
-            "package": "@utils/cn",
-            "imports": [
-              "cn"
-            ]
-          }
-        ],
-        "nodeDependencies": [],
-        "internalDependencies": [
-          {
-            "file": "./PageCanvas",
-            "imports": [
-              "PageCanvas"
-            ]
-          }
-        ],
-        "workspaceDependencies": [],
-        "exports": [
-          "ContinuousView"
-        ],
-        "functions": [
-          "ContinuousView"
-        ]
-      },
       "src/components/viewer/DropZone.tsx": {
         "description": "DropZone module",
         "externalDependencies": [
@@ -11715,21 +11762,9 @@
         "nodeDependencies": [],
         "internalDependencies": [
           {
-            "file": "./SinglePageView",
+            "file": "./VirtualizedViewer",
             "imports": [
-              "SinglePageView"
-            ]
-          },
-          {
-            "file": "./ContinuousView",
-            "imports": [
-              "ContinuousView"
-            ]
-          },
-          {
-            "file": "./SpreadView",
-            "imports": [
-              "SpreadView"
+              "VirtualizedViewer"
             ]
           }
         ],
@@ -11830,6 +11865,12 @@
             "imports": [
               "useFormStore"
             ]
+          },
+          {
+            "package": "@lib/pdf/contentDarkMode",
+            "imports": [
+              "pdfContentDarkClass"
+            ]
           }
         ],
         "nodeDependencies": [],
@@ -11918,89 +11959,6 @@
           "ThumbnailSkeleton"
         ]
       },
-      "src/components/viewer/SinglePageView.tsx": {
-        "description": "Shows the current page only, centered in a scrollable area.",
-        "externalDependencies": [
-          {
-            "package": "react",
-            "imports": [
-              "useRef",
-              "useCallback",
-              "useEffect",
-              "useState"
-            ]
-          },
-          {
-            "package": "@lib/pdf/renderer",
-            "imports": [
-              "PDFRenderer"
-            ]
-          },
-          {
-            "package": "@stores/uiStore",
-            "imports": [
-              "useUIStore"
-            ]
-          },
-          {
-            "package": "@utils/cn",
-            "imports": [
-              "cn"
-            ]
-          }
-        ],
-        "nodeDependencies": [],
-        "internalDependencies": [
-          {
-            "file": "./PageCanvas",
-            "imports": [
-              "PageCanvas"
-            ]
-          }
-        ],
-        "workspaceDependencies": [],
-        "exports": [
-          "SinglePageView"
-        ],
-        "functions": [
-          "SinglePageView"
-        ]
-      },
-      "src/components/viewer/SpreadView.tsx": {
-        "description": "Two pages side by side, with a placeholder where a page is missing.",
-        "externalDependencies": [
-          {
-            "package": "react",
-            "imports": [
-              "useRef",
-              "useCallback",
-              "useEffect"
-            ]
-          },
-          {
-            "package": "@lib/pdf/renderer",
-            "imports": [
-              "PDFRenderer"
-            ]
-          }
-        ],
-        "nodeDependencies": [],
-        "internalDependencies": [
-          {
-            "file": "./PageCanvas",
-            "imports": [
-              "PageCanvas"
-            ]
-          }
-        ],
-        "workspaceDependencies": [],
-        "exports": [
-          "SpreadView"
-        ],
-        "functions": [
-          "SpreadView"
-        ]
-      },
       "src/components/viewer/TextLayer.tsx": {
         "description": "Text selected on one page: the trimmed text, selection rectangles and page index.",
         "externalDependencies": [
@@ -12033,14 +11991,15 @@
         ]
       },
       "src/components/viewer/VirtualizedViewer.tsx": {
-        "description": "Virtualized viewer that only renders visible pages plus a buffer.",
+        "description": "One viewer for single, continuous, and spread layouts.",
         "externalDependencies": [
           {
             "package": "react",
             "imports": [
               "useEffect",
+              "useMemo",
               "useRef",
-              "useMemo"
+              "useState"
             ]
           },
           {
@@ -12060,6 +12019,18 @@
             "imports": [
               "CanvasDisposer"
             ]
+          },
+          {
+            "package": "@stores/uiStore",
+            "imports": [
+              "useUIStore"
+            ]
+          },
+          {
+            "package": "@utils/cn",
+            "imports": [
+              "cn"
+            ]
           }
         ],
         "nodeDependencies": [],
@@ -12074,6 +12045,13 @@
             "file": "./PageSkeleton",
             "imports": [
               "PageSkeleton"
+            ]
+          },
+          {
+            "file": "./viewLayout",
+            "imports": [
+              "spreadSlots",
+              "ViewerLayout"
             ]
           }
         ],
@@ -12118,6 +12096,22 @@
         ],
         "functions": [
           "ZoomControls"
+        ]
+      },
+      "src/components/viewer/viewLayout.ts": {
+        "description": "Page layout for the viewer: one page, a scrolling stack, or a two-page spread.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "spreadSlots"
+        ],
+        "interfaces": [
+          "SpreadSlots"
+        ],
+        "functions": [
+          "spreadSlots"
         ]
       }
     },
@@ -12293,6 +12287,43 @@
           "usePlatformContext",
           "usePlatformValue",
           "usePlatformCondition"
+        ]
+      }
+    },
+    "core": {
+      "src/core/features.ts": {
+        "description": "Stable ids of the core PaperFlow features, in display order.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "CORE_FEATURE_IDS",
+          "CORE_FEATURES",
+          "OPTIONAL_MODULE_IDS",
+          "OPTIONAL_MODULES",
+          "getCoreFeature",
+          "isCoreFeatureId",
+          "defaultOptionalModuleFlags",
+          "getOptionalModule",
+          "isOptionalModuleId"
+        ],
+        "interfaces": [
+          "CoreFeature",
+          "OptionalModule"
+        ],
+        "functions": [
+          "getCoreFeature",
+          "isCoreFeatureId",
+          "defaultOptionalModuleFlags",
+          "getOptionalModule",
+          "isOptionalModuleId"
+        ],
+        "constants": [
+          "CORE_FEATURE_IDS",
+          "CORE_FEATURES",
+          "OPTIONAL_MODULE_IDS",
+          "OPTIONAL_MODULES"
         ]
       }
     },
@@ -13573,6 +13604,21 @@
           "WCAG_CRITERIA",
           "PDFUA_REQUIREMENTS",
           "CATEGORY_CHECKS"
+        ]
+      },
+      "src/lib/annotations/drawingGeometry.ts": {
+        "description": "Move every point of a drawing by a PDF-space delta.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "translateDrawingPaths",
+          "screenDeltaToPdf"
+        ],
+        "functions": [
+          "translateDrawingPaths",
+          "screenDeltaToPdf"
         ]
       },
       "src/lib/annotations/drawingSerializer.ts": {
@@ -19453,6 +19499,23 @@
           "splitIntoSinglePages"
         ]
       },
+      "src/lib/pdf/contentDarkMode.ts": {
+        "description": "Class that inverts the PDF canvas and the text layer while dark mode is on.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "PDF_CONTENT_DARK_CLASS",
+          "pdfContentDarkClass"
+        ],
+        "functions": [
+          "pdfContentDarkClass"
+        ],
+        "constants": [
+          "PDF_CONTENT_DARK_CLASS"
+        ]
+      },
       "src/lib/pdf/renderer.ts": {
         "description": "The size of a rendered page, in CSS pixels.",
         "externalDependencies": [
@@ -20791,6 +20854,19 @@
           "isDocumentFromUrl"
         ]
       },
+      "src/lib/signatures/cameraCorrection.ts": {
+        "description": "Mirror camera pixels left to right so signature ink reads correctly.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "mirrorPixels"
+        ],
+        "functions": [
+          "mirrorPixels"
+        ]
+      },
       "src/lib/signatures/dateUtils.ts": {
         "description": "Date formatting utilities for signature date stamps",
         "externalDependencies": [],
@@ -21077,6 +21153,235 @@
         ],
         "functions": [
           "createUpdateClient"
+        ]
+      }
+    },
+    "modules": {
+      "src/modules/optional/OptionalModuleHost.tsx": {
+        "description": "Render the optional modules whose settings are on.",
+        "externalDependencies": [
+          {
+            "package": "react",
+            "imports": [
+              "useEffect",
+              "useState",
+              "ComponentType"
+            ]
+          },
+          {
+            "package": "@stores/settingsStore",
+            "imports": [
+              "useSettingsStore"
+            ]
+          }
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "./loadOptionalModule",
+            "imports": [
+              "loadOptionalModule"
+            ]
+          }
+        ],
+        "workspaceDependencies": [],
+        "exports": [
+          "OptionalModuleHost"
+        ],
+        "functions": [
+          "OptionalModuleHost"
+        ]
+      },
+      "src/modules/optional/entries/batch.tsx": {
+        "description": "The batch module panel. It mounts both batch stores.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ],
+        "functions": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/comparison.tsx": {
+        "description": "The comparison module panel. It mounts the comparison store.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "ComparisonDialog",
+          "OptionalModulePanel"
+        ],
+        "reExported": [
+          "ComparisonDialog"
+        ],
+        "functions": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/enterprise.tsx": {
+        "description": "The enterprise module panel. It mounts the policy store.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ],
+        "functions": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/fileWatch.tsx": {
+        "description": "The file-watch module panel. It mounts the file-watch store.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ],
+        "functions": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/kiosk.tsx": {
+        "description": "The kiosk module panel. It mounts the kiosk store.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "KioskShell",
+          "OptionalModulePanel"
+        ],
+        "reExported": [
+          "KioskShell"
+        ],
+        "functions": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/lan.tsx": {
+        "description": "The LAN module panel. It mounts the LAN store.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ],
+        "functions": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/license.tsx": {
+        "description": "The license module panel. It mounts the license store.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "OptionalModulePanel"
+        ],
+        "functions": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/entries/scanner.tsx": {
+        "description": "The scanner module panel. It mounts the scanner store.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "ScannerSelectDialog",
+          "OptionalModulePanel"
+        ],
+        "reExported": [
+          "ScannerSelectDialog"
+        ],
+        "functions": [
+          "OptionalModulePanel"
+        ]
+      },
+      "src/modules/optional/loadOptionalModule.ts": {
+        "description": "The panel a loaded optional module renders.",
+        "externalDependencies": [
+          {
+            "package": "react",
+            "imports": [
+              "ComponentType"
+            ]
+          }
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "./entries/enterprise",
+            "imports": [
+              "*"
+            ]
+          },
+          {
+            "file": "./entries/license",
+            "imports": [
+              "*"
+            ]
+          },
+          {
+            "file": "./entries/kiosk",
+            "imports": [
+              "*"
+            ]
+          },
+          {
+            "file": "./entries/lan",
+            "imports": [
+              "*"
+            ]
+          },
+          {
+            "file": "./entries/scanner",
+            "imports": [
+              "*"
+            ]
+          },
+          {
+            "file": "./entries/batch",
+            "imports": [
+              "*"
+            ]
+          },
+          {
+            "file": "./entries/comparison",
+            "imports": [
+              "*"
+            ]
+          },
+          {
+            "file": "./entries/fileWatch",
+            "imports": [
+              "*"
+            ]
+          }
+        ],
+        "workspaceDependencies": [],
+        "exports": [
+          "loadOptionalModule",
+          "LOADABLE_OPTIONAL_MODULE_IDS"
+        ],
+        "interfaces": [
+          "OptionalModuleBundle"
+        ],
+        "functions": [
+          "loadOptionalModule"
+        ],
+        "constants": [
+          "LOADABLE_OPTIONAL_MODULE_IDS"
         ]
       }
     },
@@ -21722,20 +22027,6 @@
             "reExport": true
           },
           {
-            "file": "./comparisonStore",
-            "imports": [
-              "useComparisonStore"
-            ],
-            "reExport": true
-          },
-          {
-            "file": "./batchStore",
-            "imports": [
-              "useBatchStore"
-            ],
-            "reExport": true
-          },
-          {
             "file": "./recentFilesStore",
             "imports": [
               "useRecentFilesStore"
@@ -21757,24 +22048,10 @@
             "reExport": true
           },
           {
-            "file": "./fileWatchStore",
-            "imports": [
-              "useFileWatchStore"
-            ],
-            "reExport": true
-          },
-          {
             "file": "./offlineStore",
             "imports": [
               "useOfflineStore",
               "initializeOfflineListeners"
-            ],
-            "reExport": true
-          },
-          {
-            "file": "./nativeBatchStore",
-            "imports": [
-              "useNativeBatchStore"
             ],
             "reExport": true
           },
@@ -21786,44 +22063,9 @@
             "reExport": true
           },
           {
-            "file": "./scannerStore",
-            "imports": [
-              "useScannerStore"
-            ],
-            "reExport": true
-          },
-          {
             "file": "./securityStore",
             "imports": [
               "useSecurityStore"
-            ],
-            "reExport": true
-          },
-          {
-            "file": "./enterprisePolicyStore",
-            "imports": [
-              "useEnterprisePolicyStore"
-            ],
-            "reExport": true
-          },
-          {
-            "file": "./licenseStore",
-            "imports": [
-              "useLicenseStore"
-            ],
-            "reExport": true
-          },
-          {
-            "file": "./lanStore",
-            "imports": [
-              "useLANStore"
-            ],
-            "reExport": true
-          },
-          {
-            "file": "./kioskStore",
-            "imports": [
-              "useKioskStore"
             ],
             "reExport": true
           }
@@ -21841,22 +22083,13 @@
           "useOCRStore",
           "useFormDesignerStore",
           "useRedactionStore",
-          "useComparisonStore",
-          "useBatchStore",
           "useRecentFilesStore",
           "useUpdateStore",
           "useShortcutsStore",
-          "useFileWatchStore",
           "useOfflineStore",
           "initializeOfflineListeners",
-          "useNativeBatchStore",
           "usePrintStore",
-          "useScannerStore",
-          "useSecurityStore",
-          "useEnterprisePolicyStore",
-          "useLicenseStore",
-          "useLANStore",
-          "useKioskStore"
+          "useSecurityStore"
         ],
         "reExported": [
           "useDocumentStore",
@@ -21870,22 +22103,13 @@
           "useOCRStore",
           "useFormDesignerStore",
           "useRedactionStore",
-          "useComparisonStore",
-          "useBatchStore",
           "useRecentFilesStore",
           "useUpdateStore",
           "useShortcutsStore",
-          "useFileWatchStore",
           "useOfflineStore",
           "initializeOfflineListeners",
-          "useNativeBatchStore",
           "usePrintStore",
-          "useScannerStore",
-          "useSecurityStore",
-          "useEnterprisePolicyStore",
-          "useLicenseStore",
-          "useLANStore",
-          "useKioskStore"
+          "useSecurityStore"
         ]
       },
       "src/stores/kioskStore.ts": {
@@ -22271,7 +22495,7 @@
         ]
       },
       "src/stores/settingsStore.ts": {
-        "description": "Quiet hours configuration for notifications",
+        "description": "On/off flags for optional modules. Every flag starts off.",
         "externalDependencies": [
           {
             "package": "zustand",
@@ -22460,6 +22684,21 @@
         ],
         "constants": [
           "useUpdateStore"
+        ]
+      }
+    },
+    "styles": {
+      "src/styles/theme.ts": {
+        "description": "Color tokens for the warm off-white light theme and the near-black dark theme.",
+        "externalDependencies": [],
+        "nodeDependencies": [],
+        "internalDependencies": [],
+        "workspaceDependencies": [],
+        "exports": [
+          "palette"
+        ],
+        "constants": [
+          "palette"
         ]
       }
     },
@@ -23286,6 +23525,7 @@
         "src/components/annotations/StickyNote.tsx",
         "src/components/annotations/Strikethrough.tsx",
         "src/components/annotations/Underline.tsx",
+        "src/components/annotations/drawingColors.ts",
         "src/components/annotations/index.ts",
         "src/components/batch/BatchDashboard.tsx",
         "src/components/batch/BatchPanel.tsx",
@@ -23419,6 +23659,7 @@
         "src/components/settings/ShortcutSettings.tsx",
         "src/components/sidebar/OutlinePanel.tsx",
         "src/components/sidebar/ThumbnailSidebar.tsx",
+        "src/components/signatures/CameraSignature.tsx",
         "src/components/signatures/DateStamp.tsx",
         "src/components/signatures/DrawSignature.tsx",
         "src/components/signatures/ImageSignature.tsx",
@@ -23451,17 +23692,15 @@
         "src/components/update/UpdateSettings.tsx",
         "src/components/update/index.ts",
         "src/components/updates/UpdateNotification.tsx",
-        "src/components/viewer/ContinuousView.tsx",
         "src/components/viewer/DropZone.tsx",
         "src/components/viewer/PDFViewer.tsx",
         "src/components/viewer/PageCanvas.tsx",
         "src/components/viewer/PageNavigation.tsx",
         "src/components/viewer/PageSkeleton.tsx",
-        "src/components/viewer/SinglePageView.tsx",
-        "src/components/viewer/SpreadView.tsx",
         "src/components/viewer/TextLayer.tsx",
         "src/components/viewer/VirtualizedViewer.tsx",
-        "src/components/viewer/ZoomControls.tsx"
+        "src/components/viewer/ZoomControls.tsx",
+        "src/components/viewer/viewLayout.ts"
       ]
     },
     {
@@ -23478,6 +23717,12 @@
       "name": "Contexts",
       "files": [
         "src/contexts/PlatformContext.tsx"
+      ]
+    },
+    {
+      "name": "Core",
+      "files": [
+        "src/core/features.ts"
       ]
     },
     {
@@ -23518,6 +23763,7 @@
         "src/lib/accessibility/checker.ts",
         "src/lib/accessibility/index.ts",
         "src/lib/accessibility/types.ts",
+        "src/lib/annotations/drawingGeometry.ts",
         "src/lib/annotations/drawingSerializer.ts",
         "src/lib/annotations/serializer.ts",
         "src/lib/batch/batchProcessor.ts",
@@ -23635,6 +23881,7 @@
         "src/lib/pages/mergePdf.ts",
         "src/lib/pages/pageOperations.ts",
         "src/lib/pages/splitPdf.ts",
+        "src/lib/pdf/contentDarkMode.ts",
         "src/lib/pdf/renderer.ts",
         "src/lib/pdf/saver.ts",
         "src/lib/pdf/signatureEmbed.ts",
@@ -23677,6 +23924,7 @@
         "src/lib/share/copyLink.ts",
         "src/lib/share/emailShare.ts",
         "src/lib/share/index.ts",
+        "src/lib/signatures/cameraCorrection.ts",
         "src/lib/signatures/dateUtils.ts",
         "src/lib/signatures/fieldAlignment.ts",
         "src/lib/signatures/imageProcessor.ts",
@@ -23688,6 +23936,21 @@
         "src/lib/thumbnails/cache.ts",
         "src/lib/thumbnails/index.ts",
         "src/lib/update/updateClient.ts"
+      ]
+    },
+    {
+      "name": "Modules",
+      "files": [
+        "src/modules/optional/OptionalModuleHost.tsx",
+        "src/modules/optional/entries/batch.tsx",
+        "src/modules/optional/entries/comparison.tsx",
+        "src/modules/optional/entries/enterprise.tsx",
+        "src/modules/optional/entries/fileWatch.tsx",
+        "src/modules/optional/entries/kiosk.tsx",
+        "src/modules/optional/entries/lan.tsx",
+        "src/modules/optional/entries/license.tsx",
+        "src/modules/optional/entries/scanner.tsx",
+        "src/modules/optional/loadOptionalModule.ts"
       ]
     },
     {
@@ -23731,6 +23994,12 @@
         "src/stores/textStore.ts",
         "src/stores/uiStore.ts",
         "src/stores/updateStore.ts"
+      ]
+    },
+    {
+      "name": "Styles",
+      "files": [
+        "src/styles/theme.ts"
       ]
     },
     {

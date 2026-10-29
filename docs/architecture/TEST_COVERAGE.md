@@ -8,16 +8,16 @@
 
 | Metric | Count |
 |--------|-------|
-| Total Source Files | 545 |
-| Total Test Files | 183 |
+| Total Source Files | 560 |
+| Total Test Files | 196 |
 | Source Files with Tests | 14 |
-| Source Files without Tests | 531 |
-| Coverage (raw, direct-import) | **2.6%** |
+| Source Files without Tests | 546 |
+| Coverage (raw, direct-import) | **2.5%** |
 ---
 
 ## Source Files Without Test Coverage
 
-The following 531 source files are not directly imported by any test file:
+The following 546 source files are not directly imported by any test file:
 
 ### root/
 
@@ -143,6 +143,7 @@ The following 531 source files are not directly imported by any test file:
 - `src/components/annotations/StickyNote.tsx` → Expected test: `tests/unit/components/StickyNote.tsx.test.ts`
 - `src/components/annotations/Strikethrough.tsx` → Expected test: `tests/unit/components/Strikethrough.tsx.test.ts`
 - `src/components/annotations/Underline.tsx` → Expected test: `tests/unit/components/Underline.tsx.test.ts`
+- `src/components/annotations/drawingColors.ts` → Expected test: `tests/unit/components/drawingColors.test.ts`
 - `src/components/annotations/index.ts` → Expected test: `tests/unit/components/index.test.ts`
 - `src/components/batch/BatchDashboard.tsx` → Expected test: `tests/unit/components/BatchDashboard.tsx.test.ts`
 - `src/components/batch/BatchPanel.tsx` → Expected test: `tests/unit/components/BatchPanel.tsx.test.ts`
@@ -276,6 +277,7 @@ The following 531 source files are not directly imported by any test file:
 - `src/components/settings/ShortcutSettings.tsx` → Expected test: `tests/unit/components/ShortcutSettings.tsx.test.ts`
 - `src/components/sidebar/OutlinePanel.tsx` → Expected test: `tests/unit/components/OutlinePanel.tsx.test.ts`
 - `src/components/sidebar/ThumbnailSidebar.tsx` → Expected test: `tests/unit/components/ThumbnailSidebar.tsx.test.ts`
+- `src/components/signatures/CameraSignature.tsx` → Expected test: `tests/unit/components/CameraSignature.tsx.test.ts`
 - `src/components/signatures/DateStamp.tsx` → Expected test: `tests/unit/components/DateStamp.tsx.test.ts`
 - `src/components/signatures/DrawSignature.tsx` → Expected test: `tests/unit/components/DrawSignature.tsx.test.ts`
 - `src/components/signatures/ImageSignature.tsx` → Expected test: `tests/unit/components/ImageSignature.tsx.test.ts`
@@ -308,17 +310,15 @@ The following 531 source files are not directly imported by any test file:
 - `src/components/update/UpdateSettings.tsx` → Expected test: `tests/unit/components/UpdateSettings.tsx.test.ts`
 - `src/components/update/index.ts` → Expected test: `tests/unit/components/index.test.ts`
 - `src/components/updates/UpdateNotification.tsx` → Expected test: `tests/unit/components/UpdateNotification.tsx.test.ts`
-- `src/components/viewer/ContinuousView.tsx` → Expected test: `tests/unit/components/ContinuousView.tsx.test.ts`
 - `src/components/viewer/DropZone.tsx` → Expected test: `tests/unit/components/DropZone.tsx.test.ts`
 - `src/components/viewer/PDFViewer.tsx` → Expected test: `tests/unit/components/PDFViewer.tsx.test.ts`
 - `src/components/viewer/PageCanvas.tsx` → Expected test: `tests/unit/components/PageCanvas.tsx.test.ts`
 - `src/components/viewer/PageNavigation.tsx` → Expected test: `tests/unit/components/PageNavigation.tsx.test.ts`
 - `src/components/viewer/PageSkeleton.tsx` → Expected test: `tests/unit/components/PageSkeleton.tsx.test.ts`
-- `src/components/viewer/SinglePageView.tsx` → Expected test: `tests/unit/components/SinglePageView.tsx.test.ts`
-- `src/components/viewer/SpreadView.tsx` → Expected test: `tests/unit/components/SpreadView.tsx.test.ts`
 - `src/components/viewer/TextLayer.tsx` → Expected test: `tests/unit/components/TextLayer.tsx.test.ts`
 - `src/components/viewer/VirtualizedViewer.tsx` → Expected test: `tests/unit/components/VirtualizedViewer.tsx.test.ts`
 - `src/components/viewer/ZoomControls.tsx` → Expected test: `tests/unit/components/ZoomControls.tsx.test.ts`
+- `src/components/viewer/viewLayout.ts` → Expected test: `tests/unit/components/viewLayout.test.ts`
 
 ### constants/
 
@@ -331,6 +331,10 @@ The following 531 source files are not directly imported by any test file:
 ### contexts/
 
 - `src/contexts/PlatformContext.tsx` → Expected test: `tests/unit/contexts/PlatformContext.tsx.test.ts`
+
+### core/
+
+- `src/core/features.ts` → Expected test: `tests/unit/core/features.test.ts`
 
 ### hooks/
 
@@ -367,6 +371,7 @@ The following 531 source files are not directly imported by any test file:
 - `src/lib/accessibility/checker.ts` → Expected test: `tests/unit/lib/checker.test.ts`
 - `src/lib/accessibility/index.ts` → Expected test: `tests/unit/lib/index.test.ts`
 - `src/lib/accessibility/types.ts` → Expected test: `tests/unit/lib/types.test.ts`
+- `src/lib/annotations/drawingGeometry.ts` → Expected test: `tests/unit/lib/drawingGeometry.test.ts`
 - `src/lib/annotations/drawingSerializer.ts` → Expected test: `tests/unit/lib/drawingSerializer.test.ts`
 - `src/lib/annotations/serializer.ts` → Expected test: `tests/unit/lib/serializer.test.ts`
 - `src/lib/batch/batchProcessor.ts` → Expected test: `tests/unit/lib/batchProcessor.test.ts`
@@ -483,6 +488,7 @@ The following 531 source files are not directly imported by any test file:
 - `src/lib/pages/mergePdf.ts` → Expected test: `tests/unit/lib/mergePdf.test.ts`
 - `src/lib/pages/pageOperations.ts` → Expected test: `tests/unit/lib/pageOperations.test.ts`
 - `src/lib/pages/splitPdf.ts` → Expected test: `tests/unit/lib/splitPdf.test.ts`
+- `src/lib/pdf/contentDarkMode.ts` → Expected test: `tests/unit/lib/contentDarkMode.test.ts`
 - `src/lib/pdf/renderer.ts` → Expected test: `tests/unit/lib/renderer.test.ts`
 - `src/lib/pdf/saver.ts` → Expected test: `tests/unit/lib/saver.test.ts`
 - `src/lib/pdf/signatureEmbed.ts` → Expected test: `tests/unit/lib/signatureEmbed.test.ts`
@@ -525,6 +531,7 @@ The following 531 source files are not directly imported by any test file:
 - `src/lib/share/copyLink.ts` → Expected test: `tests/unit/lib/copyLink.test.ts`
 - `src/lib/share/emailShare.ts` → Expected test: `tests/unit/lib/emailShare.test.ts`
 - `src/lib/share/index.ts` → Expected test: `tests/unit/lib/index.test.ts`
+- `src/lib/signatures/cameraCorrection.ts` → Expected test: `tests/unit/lib/cameraCorrection.test.ts`
 - `src/lib/signatures/dateUtils.ts` → Expected test: `tests/unit/lib/dateUtils.test.ts`
 - `src/lib/signatures/fieldAlignment.ts` → Expected test: `tests/unit/lib/fieldAlignment.test.ts`
 - `src/lib/signatures/imageProcessor.ts` → Expected test: `tests/unit/lib/imageProcessor.test.ts`
@@ -536,6 +543,19 @@ The following 531 source files are not directly imported by any test file:
 - `src/lib/thumbnails/cache.ts` → Expected test: `tests/unit/lib/cache.test.ts`
 - `src/lib/thumbnails/index.ts` → Expected test: `tests/unit/lib/index.test.ts`
 - `src/lib/update/updateClient.ts` → Expected test: `tests/unit/lib/updateClient.test.ts`
+
+### modules/
+
+- `src/modules/optional/OptionalModuleHost.tsx` → Expected test: `tests/unit/modules/OptionalModuleHost.tsx.test.ts`
+- `src/modules/optional/entries/batch.tsx` → Expected test: `tests/unit/modules/batch.tsx.test.ts`
+- `src/modules/optional/entries/comparison.tsx` → Expected test: `tests/unit/modules/comparison.tsx.test.ts`
+- `src/modules/optional/entries/enterprise.tsx` → Expected test: `tests/unit/modules/enterprise.tsx.test.ts`
+- `src/modules/optional/entries/fileWatch.tsx` → Expected test: `tests/unit/modules/fileWatch.tsx.test.ts`
+- `src/modules/optional/entries/kiosk.tsx` → Expected test: `tests/unit/modules/kiosk.tsx.test.ts`
+- `src/modules/optional/entries/lan.tsx` → Expected test: `tests/unit/modules/lan.tsx.test.ts`
+- `src/modules/optional/entries/license.tsx` → Expected test: `tests/unit/modules/license.tsx.test.ts`
+- `src/modules/optional/entries/scanner.tsx` → Expected test: `tests/unit/modules/scanner.tsx.test.ts`
+- `src/modules/optional/loadOptionalModule.ts` → Expected test: `tests/unit/modules/loadOptionalModule.test.ts`
 
 ### pages/
 
@@ -575,6 +595,10 @@ The following 531 source files are not directly imported by any test file:
 - `src/stores/textStore.ts` → Expected test: `tests/unit/stores/textStore.test.ts`
 - `src/stores/uiStore.ts` → Expected test: `tests/unit/stores/uiStore.test.ts`
 - `src/stores/updateStore.ts` → Expected test: `tests/unit/stores/updateStore.test.ts`
+
+### styles/
+
+- `src/styles/theme.ts` → Expected test: `tests/unit/styles/theme.test.ts`
 
 ### types/
 
@@ -687,7 +711,9 @@ The following 531 source files are not directly imported by any test file:
 | `textEditing/textBox.test.tsx` | 0 files |
 | `license/featureGating.test.ts` | 0 files |
 | `license/hardwareFingerprint.test.ts` | 0 files |
+| `annotations/AnnotationProperties.test.tsx` | 0 files |
 | `annotations/DrawingCanvas.test.tsx` | 0 files |
+| `annotations/DrawingMove.test.tsx` | 0 files |
 | `annotations/HighlightTool.test.tsx` | 0 files |
 | `annotations/NoteTool.test.tsx` | 0 files |
 | `annotations/SelectionPopup.test.tsx` | 0 files |
@@ -706,11 +732,17 @@ The following 531 source files are not directly imported by any test file:
 | `pages/InsertPageDialog.test.tsx` | 0 files |
 | `pages/PageThumbnails.test.tsx` | 0 files |
 | `print/PageRangeSelector.test.tsx` | 0 files |
+| `signatures/CameraSignature.test.tsx` | 0 files |
 | `signatures/SignatureCanvas.test.tsx` | 0 files |
 | `signatures/SignaturePlacer.test.tsx` | 0 files |
 | `toolbar/SearchBar.test.tsx` | 0 files |
 | `ui/AccessibleComponents.test.tsx` | 0 files |
 | `ui/Skeleton.test.tsx` | 0 files |
+| `viewer/PDFViewer.test.tsx` | 0 files |
+| `viewer/VirtualizedViewer.test.tsx` | 0 files |
+| `viewer/pdfContentDark.test.tsx` | 0 files |
+| `viewer/viewLayout.test.ts` | 0 files |
+| `core/features.test.ts` | 0 files |
 | `hooks/useAnnotationShortcuts.test.ts` | 0 files |
 | `hooks/useBeforeUnload.test.ts` | 0 files |
 | `hooks/useClipboard.test.ts` | 0 files |
@@ -723,6 +755,7 @@ The following 531 source files are not directly imported by any test file:
 | `hooks/useVirtualization.test.ts` | 0 files |
 | `hooks/useVisiblePages.test.ts` | 0 files |
 | `accessibility/checker.test.ts` | 0 files |
+| `annotations/drawingGeometry.test.ts` | 0 files |
 | `annotations/drawingSerializer.test.ts` | 0 files |
 | `annotations/serializer.test.ts` | 0 files |
 | `batch/batchProcessor.test.ts` | 0 files |
@@ -770,6 +803,7 @@ The following 531 source files are not directly imported by any test file:
 | `pages/mergePdf.test.ts` | 0 files |
 | `pages/pageOperations.test.ts` | 0 files |
 | `pages/splitPdf.test.ts` | 0 files |
+| `pdf/contentDarkMode.test.ts` | 0 files |
 | `pdf/renderer.test.ts` | 0 files |
 | `pdf/signatureEmbed.test.ts` | 0 files |
 | `pdf/textSaver.test.ts` | 0 files |
@@ -786,9 +820,11 @@ The following 531 source files are not directly imported by any test file:
 | `security/webauthn.test.ts` | 0 files |
 | `share/copyLink.test.ts` | 0 files |
 | `share/emailShare.test.ts` | 0 files |
+| `signatures/cameraCorrection.test.ts` | 0 files |
 | `storage/fileHandler.test.ts` | 0 files |
 | `storage/stampStorage.test.ts` | 0 files |
 | `thumbnails/cache.test.ts` | 0 files |
+| `modules/optionalModules.test.tsx` | 0 files |
 | `pages/Privacy.test.tsx` | 0 files |
 | `pages/Terms.test.tsx` | 0 files |
 | `stores/annotationStore.test.ts` | 0 files |
@@ -806,5 +842,6 @@ The following 531 source files are not directly imported by any test file:
 | `stores/textStore.test.ts` | 0 files |
 | `stores/uiStore.test.ts` | 0 files |
 | `styles/indexCss.test.ts` | 0 files |
+| `styles/theme.test.tsx` | 0 files |
 | `utils/cn.test.ts` | 0 files |
 | `utils/coordinates.test.ts` | 0 files |

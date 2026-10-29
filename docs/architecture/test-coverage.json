@@ -1,19 +1,19 @@
 {
   "metadata": {
-    "totalSourceFiles": 545,
-    "totalTestFiles": 183,
+    "totalSourceFiles": 560,
+    "totalTestFiles": 196,
     "testedCount": 14,
-    "untestedCount": 531,
-    "coveragePercent": "2.6",
+    "untestedCount": 546,
+    "coveragePercent": "2.5",
     "effectiveCoverage": {
       "policyLoaded": false,
-      "activeFiles": 545,
+      "activeFiles": 560,
       "testedActive": 14,
-      "activeUntested": 531,
+      "activeUntested": 546,
       "excludedTotal": 0,
-      "percent": "2.6",
+      "percent": "2.5",
       "breakdown": {
-        "active_untested": 531
+        "active_untested": 546
       }
     }
   },
@@ -115,6 +115,7 @@
     "src/components/annotations/StickyNote.tsx",
     "src/components/annotations/Strikethrough.tsx",
     "src/components/annotations/Underline.tsx",
+    "src/components/annotations/drawingColors.ts",
     "src/components/annotations/index.ts",
     "src/components/batch/BatchDashboard.tsx",
     "src/components/batch/BatchPanel.tsx",
@@ -248,6 +249,7 @@
     "src/components/settings/ShortcutSettings.tsx",
     "src/components/sidebar/OutlinePanel.tsx",
     "src/components/sidebar/ThumbnailSidebar.tsx",
+    "src/components/signatures/CameraSignature.tsx",
     "src/components/signatures/DateStamp.tsx",
     "src/components/signatures/DrawSignature.tsx",
     "src/components/signatures/ImageSignature.tsx",
@@ -280,23 +282,22 @@
     "src/components/update/UpdateSettings.tsx",
     "src/components/update/index.ts",
     "src/components/updates/UpdateNotification.tsx",
-    "src/components/viewer/ContinuousView.tsx",
     "src/components/viewer/DropZone.tsx",
     "src/components/viewer/PDFViewer.tsx",
     "src/components/viewer/PageCanvas.tsx",
     "src/components/viewer/PageNavigation.tsx",
     "src/components/viewer/PageSkeleton.tsx",
-    "src/components/viewer/SinglePageView.tsx",
-    "src/components/viewer/SpreadView.tsx",
     "src/components/viewer/TextLayer.tsx",
     "src/components/viewer/VirtualizedViewer.tsx",
     "src/components/viewer/ZoomControls.tsx",
+    "src/components/viewer/viewLayout.ts",
     "src/constants/config.ts",
     "src/constants/shortcuts.ts",
     "src/constants/stamps.ts",
     "src/constants/tools.ts",
     "src/constants/version.ts",
     "src/contexts/PlatformContext.tsx",
+    "src/core/features.ts",
     "src/hooks/index.ts",
     "src/hooks/useAnnotationShortcuts.ts",
     "src/hooks/useAnnounce.ts",
@@ -327,6 +328,7 @@
     "src/lib/accessibility/checker.ts",
     "src/lib/accessibility/index.ts",
     "src/lib/accessibility/types.ts",
+    "src/lib/annotations/drawingGeometry.ts",
     "src/lib/annotations/drawingSerializer.ts",
     "src/lib/annotations/serializer.ts",
     "src/lib/batch/batchProcessor.ts",
@@ -443,6 +445,7 @@
     "src/lib/pages/mergePdf.ts",
     "src/lib/pages/pageOperations.ts",
     "src/lib/pages/splitPdf.ts",
+    "src/lib/pdf/contentDarkMode.ts",
     "src/lib/pdf/renderer.ts",
     "src/lib/pdf/saver.ts",
     "src/lib/pdf/signatureEmbed.ts",
@@ -485,6 +488,7 @@
     "src/lib/share/copyLink.ts",
     "src/lib/share/emailShare.ts",
     "src/lib/share/index.ts",
+    "src/lib/signatures/cameraCorrection.ts",
     "src/lib/signatures/dateUtils.ts",
     "src/lib/signatures/fieldAlignment.ts",
     "src/lib/signatures/imageProcessor.ts",
@@ -497,6 +501,16 @@
     "src/lib/thumbnails/index.ts",
     "src/lib/update/updateClient.ts",
     "src/main.tsx",
+    "src/modules/optional/OptionalModuleHost.tsx",
+    "src/modules/optional/entries/batch.tsx",
+    "src/modules/optional/entries/comparison.tsx",
+    "src/modules/optional/entries/enterprise.tsx",
+    "src/modules/optional/entries/fileWatch.tsx",
+    "src/modules/optional/entries/kiosk.tsx",
+    "src/modules/optional/entries/lan.tsx",
+    "src/modules/optional/entries/license.tsx",
+    "src/modules/optional/entries/scanner.tsx",
+    "src/modules/optional/loadOptionalModule.ts",
     "src/pages/Editor.tsx",
     "src/pages/Home.tsx",
     "src/pages/NotFound.tsx",
@@ -530,6 +544,7 @@
     "src/stores/textStore.ts",
     "src/stores/uiStore.ts",
     "src/stores/updateStore.ts",
+    "src/styles/theme.ts",
     "src/sw.ts",
     "src/types/annotations.ts",
     "src/types/batch.ts",
@@ -705,6 +720,7 @@
     "src/components/annotations/StickyNote.tsx": [],
     "src/components/annotations/Strikethrough.tsx": [],
     "src/components/annotations/Underline.tsx": [],
+    "src/components/annotations/drawingColors.ts": [],
     "src/components/annotations/index.ts": [],
     "src/components/batch/BatchDashboard.tsx": [],
     "src/components/batch/BatchPanel.tsx": [],
@@ -838,6 +854,7 @@
     "src/components/settings/ShortcutSettings.tsx": [],
     "src/components/sidebar/OutlinePanel.tsx": [],
     "src/components/sidebar/ThumbnailSidebar.tsx": [],
+    "src/components/signatures/CameraSignature.tsx": [],
     "src/components/signatures/DateStamp.tsx": [],
     "src/components/signatures/DrawSignature.tsx": [],
     "src/components/signatures/ImageSignature.tsx": [],
@@ -870,23 +887,22 @@
     "src/components/update/UpdateSettings.tsx": [],
     "src/components/update/index.ts": [],
     "src/components/updates/UpdateNotification.tsx": [],
-    "src/components/viewer/ContinuousView.tsx": [],
     "src/components/viewer/DropZone.tsx": [],
     "src/components/viewer/PDFViewer.tsx": [],
     "src/components/viewer/PageCanvas.tsx": [],
     "src/components/viewer/PageNavigation.tsx": [],
     "src/components/viewer/PageSkeleton.tsx": [],
-    "src/components/viewer/SinglePageView.tsx": [],
-    "src/components/viewer/SpreadView.tsx": [],
     "src/components/viewer/TextLayer.tsx": [],
     "src/components/viewer/VirtualizedViewer.tsx": [],
     "src/components/viewer/ZoomControls.tsx": [],
+    "src/components/viewer/viewLayout.ts": [],
     "src/constants/config.ts": [],
     "src/constants/shortcuts.ts": [],
     "src/constants/stamps.ts": [],
     "src/constants/tools.ts": [],
     "src/constants/version.ts": [],
     "src/contexts/PlatformContext.tsx": [],
+    "src/core/features.ts": [],
     "src/hooks/index.ts": [],
     "src/hooks/useAnnotationShortcuts.ts": [],
     "src/hooks/useAnnounce.ts": [],
@@ -917,6 +933,7 @@
     "src/lib/accessibility/checker.ts": [],
     "src/lib/accessibility/index.ts": [],
     "src/lib/accessibility/types.ts": [],
+    "src/lib/annotations/drawingGeometry.ts": [],
     "src/lib/annotations/drawingSerializer.ts": [],
     "src/lib/annotations/serializer.ts": [],
     "src/lib/batch/batchProcessor.ts": [],
@@ -1036,6 +1053,7 @@
     "src/lib/pages/mergePdf.ts": [],
     "src/lib/pages/pageOperations.ts": [],
     "src/lib/pages/splitPdf.ts": [],
+    "src/lib/pdf/contentDarkMode.ts": [],
     "src/lib/pdf/renderer.ts": [],
     "src/lib/pdf/saver.ts": [],
     "src/lib/pdf/signatureEmbed.ts": [],
@@ -1078,6 +1096,7 @@
     "src/lib/share/copyLink.ts": [],
     "src/lib/share/emailShare.ts": [],
     "src/lib/share/index.ts": [],
+    "src/lib/signatures/cameraCorrection.ts": [],
     "src/lib/signatures/dateUtils.ts": [],
     "src/lib/signatures/fieldAlignment.ts": [],
     "src/lib/signatures/imageProcessor.ts": [],
@@ -1090,6 +1109,16 @@
     "src/lib/thumbnails/index.ts": [],
     "src/lib/update/updateClient.ts": [],
     "src/main.tsx": [],
+    "src/modules/optional/OptionalModuleHost.tsx": [],
+    "src/modules/optional/entries/batch.tsx": [],
+    "src/modules/optional/entries/comparison.tsx": [],
+    "src/modules/optional/entries/enterprise.tsx": [],
+    "src/modules/optional/entries/fileWatch.tsx": [],
+    "src/modules/optional/entries/kiosk.tsx": [],
+    "src/modules/optional/entries/lan.tsx": [],
+    "src/modules/optional/entries/license.tsx": [],
+    "src/modules/optional/entries/scanner.tsx": [],
+    "src/modules/optional/loadOptionalModule.ts": [],
     "src/pages/Editor.tsx": [],
     "src/pages/Home.tsx": [],
     "src/pages/NotFound.tsx": [],
@@ -1123,6 +1152,7 @@
     "src/stores/textStore.ts": [],
     "src/stores/uiStore.ts": [],
     "src/stores/updateStore.ts": [],
+    "src/styles/theme.ts": [],
     "src/sw.ts": [],
     "src/types/annotations.ts": [],
     "src/types/batch.ts": [],
@@ -1236,7 +1266,9 @@
     "tests/integration/textEditing/textBox.test.tsx": [],
     "tests/license/featureGating.test.ts": [],
     "tests/license/hardwareFingerprint.test.ts": [],
+    "tests/unit/components/annotations/AnnotationProperties.test.tsx": [],
     "tests/unit/components/annotations/DrawingCanvas.test.tsx": [],
+    "tests/unit/components/annotations/DrawingMove.test.tsx": [],
     "tests/unit/components/annotations/HighlightTool.test.tsx": [],
     "tests/unit/components/annotations/NoteTool.test.tsx": [],
     "tests/unit/components/annotations/SelectionPopup.test.tsx": [],
@@ -1255,11 +1287,17 @@
     "tests/unit/components/pages/InsertPageDialog.test.tsx": [],
     "tests/unit/components/pages/PageThumbnails.test.tsx": [],
     "tests/unit/components/print/PageRangeSelector.test.tsx": [],
+    "tests/unit/components/signatures/CameraSignature.test.tsx": [],
     "tests/unit/components/signatures/SignatureCanvas.test.tsx": [],
     "tests/unit/components/signatures/SignaturePlacer.test.tsx": [],
     "tests/unit/components/toolbar/SearchBar.test.tsx": [],
     "tests/unit/components/ui/AccessibleComponents.test.tsx": [],
     "tests/unit/components/ui/Skeleton.test.tsx": [],
+    "tests/unit/components/viewer/PDFViewer.test.tsx": [],
+    "tests/unit/components/viewer/VirtualizedViewer.test.tsx": [],
+    "tests/unit/components/viewer/pdfContentDark.test.tsx": [],
+    "tests/unit/components/viewer/viewLayout.test.ts": [],
+    "tests/unit/core/features.test.ts": [],
     "tests/unit/hooks/useAnnotationShortcuts.test.ts": [],
     "tests/unit/hooks/useBeforeUnload.test.ts": [],
     "tests/unit/hooks/useClipboard.test.ts": [],
@@ -1272,6 +1310,7 @@
     "tests/unit/hooks/useVirtualization.test.ts": [],
     "tests/unit/hooks/useVisiblePages.test.ts": [],
     "tests/unit/lib/accessibility/checker.test.ts": [],
+    "tests/unit/lib/annotations/drawingGeometry.test.ts": [],
     "tests/unit/lib/annotations/drawingSerializer.test.ts": [],
     "tests/unit/lib/annotations/serializer.test.ts": [],
     "tests/unit/lib/batch/batchProcessor.test.ts": [],
@@ -1319,6 +1358,7 @@
     "tests/unit/lib/pages/mergePdf.test.ts": [],
     "tests/unit/lib/pages/pageOperations.test.ts": [],
     "tests/unit/lib/pages/splitPdf.test.ts": [],
+    "tests/unit/lib/pdf/contentDarkMode.test.ts": [],
     "tests/unit/lib/pdf/renderer.test.ts": [],
     "tests/unit/lib/pdf/signatureEmbed.test.ts": [],
     "tests/unit/lib/pdf/textSaver.test.ts": [],
@@ -1335,9 +1375,11 @@
     "tests/unit/lib/security/webauthn.test.ts": [],
     "tests/unit/lib/share/copyLink.test.ts": [],
     "tests/unit/lib/share/emailShare.test.ts": [],
+    "tests/unit/lib/signatures/cameraCorrection.test.ts": [],
     "tests/unit/lib/storage/fileHandler.test.ts": [],
     "tests/unit/lib/storage/stampStorage.test.ts": [],
     "tests/unit/lib/thumbnails/cache.test.ts": [],
+    "tests/unit/modules/optionalModules.test.tsx": [],
     "tests/unit/pages/Privacy.test.tsx": [],
     "tests/unit/pages/Terms.test.tsx": [],
     "tests/unit/stores/annotationStore.test.ts": [],
@@ -1355,6 +1397,7 @@
     "tests/unit/stores/textStore.test.ts": [],
     "tests/unit/stores/uiStore.test.ts": [],
     "tests/unit/styles/indexCss.test.ts": [],
+    "tests/unit/styles/theme.test.tsx": [],
     "tests/unit/utils/cn.test.ts": [],
     "tests/unit/utils/coordinates.test.ts": []
   },
@@ -1745,6 +1788,10 @@
     },
     {
       "file": "src/components/annotations/Underline.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/annotations/drawingColors.ts",
       "category": null
     },
     {
@@ -2280,6 +2327,10 @@
       "category": null
     },
     {
+      "file": "src/components/signatures/CameraSignature.tsx",
+      "category": null
+    },
+    {
       "file": "src/components/signatures/DateStamp.tsx",
       "category": null
     },
@@ -2408,10 +2459,6 @@
       "category": null
     },
     {
-      "file": "src/components/viewer/ContinuousView.tsx",
-      "category": null
-    },
-    {
       "file": "src/components/viewer/DropZone.tsx",
       "category": null
     },
@@ -2432,14 +2479,6 @@
       "category": null
     },
     {
-      "file": "src/components/viewer/SinglePageView.tsx",
-      "category": null
-    },
-    {
-      "file": "src/components/viewer/SpreadView.tsx",
-      "category": null
-    },
-    {
       "file": "src/components/viewer/TextLayer.tsx",
       "category": null
     },
@@ -2449,6 +2488,10 @@
     },
     {
       "file": "src/components/viewer/ZoomControls.tsx",
+      "category": null
+    },
+    {
+      "file": "src/components/viewer/viewLayout.ts",
       "category": null
     },
     {
@@ -2473,6 +2516,10 @@
     },
     {
       "file": "src/contexts/PlatformContext.tsx",
+      "category": null
+    },
+    {
+      "file": "src/core/features.ts",
       "category": null
     },
     {
@@ -2593,6 +2640,10 @@
     },
     {
       "file": "src/lib/accessibility/types.ts",
+      "category": null
+    },
+    {
+      "file": "src/lib/annotations/drawingGeometry.ts",
       "category": null
     },
     {
@@ -3060,6 +3111,10 @@
       "category": null
     },
     {
+      "file": "src/lib/pdf/contentDarkMode.ts",
+      "category": null
+    },
+    {
       "file": "src/lib/pdf/renderer.ts",
       "category": null
     },
@@ -3228,6 +3283,10 @@
       "category": null
     },
     {
+      "file": "src/lib/signatures/cameraCorrection.ts",
+      "category": null
+    },
+    {
       "file": "src/lib/signatures/dateUtils.ts",
       "category": null
     },
@@ -3273,6 +3332,46 @@
     },
     {
       "file": "src/main.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/OptionalModuleHost.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/entries/batch.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/entries/comparison.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/entries/enterprise.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/entries/fileWatch.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/entries/kiosk.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/entries/lan.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/entries/license.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/entries/scanner.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/loadOptionalModule.ts",
       "category": null
     },
     {
@@ -3405,6 +3504,10 @@
     },
     {
       "file": "src/stores/updateStore.ts",
+      "category": null
+    },
+    {
+      "file": "src/styles/theme.ts",
       "category": null
     },
     {

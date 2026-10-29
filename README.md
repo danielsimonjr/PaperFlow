@@ -1,13 +1,13 @@
 # PaperFlow
 
-**The Modern PDF Editor for Everyone**
+**A focused PDF reader, with everything else optional**
 
 [![Windows](https://img.shields.io/badge/Windows-10%2F11-blue?logo=windows)](https://github.com/yourusername/paperflow/releases)
 [![macOS](https://img.shields.io/badge/macOS-12%2B-black?logo=apple)](https://github.com/yourusername/paperflow/releases)
 [![Linux](https://img.shields.io/badge/Linux-Ubuntu%2FDebian%2FFedora-orange?logo=linux)](https://github.com/yourusername/paperflow/releases)
 [![PWA](https://img.shields.io/badge/PWA-Installable-purple?logo=pwa)](https://paperflow.app)
 
-PaperFlow is a comprehensive PDF editing solution available as both a Progressive Web Application (PWA) and a native desktop application. It brings professional-grade PDF editing to the browser and desktop with offline capabilities and a privacy-first approach (local processing by default).
+PaperFlow is a PDF reader for the browser and the desktop. The default app is a small core: page navigation, a hideable pages and contents sidebar, zoom and fit, rotate, drawing, highlight, notes, signatures, dark mode for the PDF page, save and export, print, and drag-and-drop open. Enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch stay in the repo and stay off until a setting turns one on. Processing stays on the device.
 
 ## Installation
 

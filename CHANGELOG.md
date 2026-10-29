@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- **Unused packages.** `@pdf-lib/fontkit`, `@radix-ui/react-tooltip`, `workbox-window`, `concurrently`,
+  `electron-devtools-installer`, `prettier`, and `wait-on` had no import in `src/`, `electron/`, `tests/`,
+  or `scripts/`, and no CI step called them. `vite.config.ts` no longer names the tooltip package in a chunk.
+
 ### Added
 
 - **Enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch are off until a setting turns them on.**
