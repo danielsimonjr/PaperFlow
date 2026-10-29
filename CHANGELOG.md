@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **The core feature set has one source of truth.** `src/core/features.ts` lists the twelve core
+  capabilities and the eight optional modules. Every optional module has `defaultEnabled: false`.
+  `docs/core-features.md` lists the same ids in the same order. `tests/unit/core/features.test.ts`
+  fails when the code and the page drift.
+
 ### Changed
 
 - **CI runs the two documentation gates.** The `Doc Gates` job in `.github/workflows/ci.yml` installs
