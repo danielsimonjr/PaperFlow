@@ -9,11 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **The architecture overview counts match a fresh parse.** Exports are 3427, functions 1444, and interfaces 689.
+- **The architecture overview counts match a fresh parse.** The repository has 780 source files, 3440 exports, 1459 functions, and 691 interfaces.
 
 - **Spread view sizes an empty slot from the facing page.** The blank side uses that page's width and height. When the facing page has no size yet, the slot uses the first page. Letter and other sizes line up with the page beside them.
+- **Kiosk, batch processing, and scanner open from the editor when the module is on.** The toolbar shows a command for each of those modules only while its setting is enabled. Choosing the command loads that module and opens its screen. A module that is off has no toolbar command and is not imported.
 
 ### Added
+
+- **Enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch are off until a setting turns them on.**
+  `settingsStore.optionalModules` holds the flags, and every flag starts false. The settings page toggles them.
+  `OptionalModuleHost` calls `loadOptionalModule`, which dynamic-imports that module. A module that is off is not
+  imported. The flags persist with the rest of the settings, and a saved map is filled in with the defaults.
+  The Electron main process does not import the file watcher until a watch is requested. The stores stay in the
+  repo, and their existing tests still import them directly. Kiosk styles load with the kiosk module instead of
+  the main stylesheet.
 
 - **Single, continuous, and spread viewing share `VirtualizedViewer`.** The `layout` prop selects the
   mode. Continuous mode mounts the pages near the viewport, plus a two-page buffer, and tracks the

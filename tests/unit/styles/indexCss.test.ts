@@ -51,7 +51,6 @@ describe('src/index.css stylesheet imports', () => {
       './styles/focus.css',
       './styles/mobile.css',
       './styles/high-contrast.css',
-      './styles/kiosk.css',
       './styles/platform.css',
     ]);
   });

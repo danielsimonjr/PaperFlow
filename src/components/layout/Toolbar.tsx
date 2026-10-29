@@ -26,6 +26,7 @@ import { SignatureModal } from '@components/signatures/SignatureModal';
 import { useAnnotationShortcuts } from '@hooks/useAnnotationShortcuts';
 import { cn } from '@utils/cn';
 import type { AnnotationType } from '@/types';
+import { OptionalModuleCommands } from '@/modules/optional/OptionalModuleCommands';
 
 type Tool = EditorTool | AnnotationType;
 
@@ -140,6 +141,8 @@ export function Toolbar() {
           >
             <FileDown className="h-4 w-4" />
           </button>
+
+          <OptionalModuleCommands />
         </div>
 
         {/* View Mode, Navigation & Zoom */}

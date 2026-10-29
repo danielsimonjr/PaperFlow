@@ -23,7 +23,7 @@ The source of truth is `src/core/features.ts`. This page lists the same ids, in 
 
 ## Optional modules
 
-These modules stay in the repository. The default app does not load them. Each one has `defaultEnabled: false`.
+These modules stay in the repository. The default app does not load them. Each one has `defaultEnabled: false`. The settings page stores the flag in `optionalModules`. Turning a flag on dynamic-imports that module.
 
 | Id | Name | Stores |
 | --- | --- | --- |

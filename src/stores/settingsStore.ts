@@ -1,5 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import {
+  defaultOptionalModuleFlags,
+  type OptionalModuleId,
+} from '@/core/features';
+
+/**
+ * On/off flags for optional modules. Every flag starts off.
+ */
+export type OptionalModuleFlags = Record<OptionalModuleId, boolean>;
 
 /**
  * Quiet hours configuration for notifications
@@ -73,6 +82,8 @@ interface SettingsState {
   setNotifyOnBackgroundComplete: (enabled: boolean) => void;
   setLaunchOnStartup: (enabled: boolean) => void;
   setStartMinimized: (enabled: boolean) => void;
+  optionalModules: OptionalModuleFlags;
+  setOptionalModule: (id: OptionalModuleId, enabled: boolean) => void;
   resetToDefaults: () => void;
 }
 
@@ -107,6 +118,7 @@ const defaultSettings = {
   // Startup defaults
   launchOnStartup: false,
   startMinimized: false,
+  optionalModules: defaultOptionalModuleFlags(),
 };
 
 export const useSettingsStore = create<SettingsState>()(
@@ -209,12 +221,35 @@ export const useSettingsStore = create<SettingsState>()(
         set({ startMinimized: enabled });
       },
 
+      setOptionalModule: (id, enabled) => {
+        set((state) => ({
+          optionalModules: {
+            ...(state.optionalModules ?? defaultOptionalModuleFlags()),
+            [id]: enabled,
+          },
+        }));
+      },
+
       resetToDefaults: () => {
-        set(defaultSettings);
+        set({
+          ...defaultSettings,
+          optionalModules: defaultOptionalModuleFlags(),
+        });
       },
     }),
     {
       name: 'paperflow-settings',
+      merge: (persisted, current) => {
+        const saved = (persisted ?? {}) as Partial<typeof current>;
+        return {
+          ...current,
+          ...saved,
+          optionalModules: {
+            ...defaultOptionalModuleFlags(),
+            ...(saved.optionalModules ?? {}),
+          },
+        };
+      },
     }
   )
 );

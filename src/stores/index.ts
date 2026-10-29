@@ -18,22 +18,14 @@ export { useTextStore } from './textStore';
 export { useOCRStore } from './ocrStore';
 export { useFormDesignerStore } from './formDesignerStore';
 export { useRedactionStore } from './redactionStore';
-export { useComparisonStore } from './comparisonStore';
-export { useBatchStore } from './batchStore';
 
 // Desktop Stores (Phase 3)
 export { useRecentFilesStore } from './recentFilesStore';
 export { useUpdateStore } from './updateStore';
 export { useShortcutsStore } from './shortcutsStore';
-export { useFileWatchStore } from './fileWatchStore';
 export { useOfflineStore, initializeOfflineListeners } from './offlineStore';
-export { useNativeBatchStore } from './nativeBatchStore';
 export { usePrintStore } from './printStore';
-export { useScannerStore } from './scannerStore';
 export { useSecurityStore } from './securityStore';
 
-// Enterprise Stores (Phase 3 Q4)
-export { useEnterprisePolicyStore } from './enterprisePolicyStore';
-export { useLicenseStore } from './licenseStore';
-export { useLANStore } from './lanStore';
-export { useKioskStore } from './kioskStore';
+// Optional modules (enterprise, license, kiosk, LAN, scanner, batch,
+// comparison, file watch) load from src/modules/optional when a setting enables them.

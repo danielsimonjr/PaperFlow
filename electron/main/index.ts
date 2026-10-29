@@ -20,7 +20,6 @@ import {
   sendPendingFileToWindow,
 } from '../fileAssociation';
 import { initializeAutoSave, disableAllAutoSave } from '../autoSave';
-import { unwatchAll } from '../fileWatcher';
 import { initializeMenu } from '../menu';
 import { initializeShortcuts } from '../shortcuts';
 import { initializeTray, destroyTray } from '../tray';
@@ -261,6 +260,7 @@ async function initialize(): Promise<void> {
     disableAllAutoSave();
     destroyTray();
     stopAllBlockers();
+    const { unwatchAll } = await import('../fileWatcher');
     await unwatchAll();
   });
 }

@@ -3,6 +3,8 @@ import { ArrowLeft, RotateCcw } from 'lucide-react';
 import { ThemeSelector } from '@components/ui/ThemeToggle';
 import { Button } from '@components/ui/Button';
 import { useSettingsStore } from '@stores/settingsStore';
+import { OPTIONAL_MODULES } from '@/core/features';
+import { OptionalModuleHost } from '@/modules/optional/OptionalModuleHost';
 
 /**
  * Render the settings page for the saved user preferences.
@@ -204,6 +206,43 @@ export default function Settings() {
                 className="w-32"
               />
             </div>
+          </div>
+        </section>
+
+        <section className="rounded-md border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+          <h2 className="mb-1 text-lg font-medium text-gray-900 dark:text-white">
+            Optional modules
+          </h2>
+          <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+            These modules stay off until you enable them. The app loads a module only after it is on.
+          </p>
+          <div className="space-y-3">
+            {OPTIONAL_MODULES.map((module) => {
+              const enabled = settings.optionalModules?.[module.id] ?? false;
+              return (
+                <div key={module.id} className="flex items-center justify-between gap-4">
+                  <span className="text-gray-700 dark:text-gray-300">{module.name}</span>
+                  <button
+                    type="button"
+                    aria-pressed={enabled}
+                    data-testid={`optional-toggle-${module.id}`}
+                    onClick={() => settings.setOptionalModule(module.id, !enabled)}
+                    className={`relative h-5 w-9 rounded-full transition-colors ${
+                      enabled ? 'bg-primary-600' : 'bg-gray-300 dark:bg-gray-600'
+                    }`}
+                  >
+                    <span
+                      className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                        enabled ? 'translate-x-4' : 'translate-x-0.5'
+                      }`}
+                    />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-4">
+            <OptionalModuleHost />
           </div>
         </section>
       </main>
