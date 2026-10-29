@@ -1,19 +1,19 @@
 {
   "metadata": {
-    "totalSourceFiles": 560,
+    "totalSourceFiles": 561,
     "totalTestFiles": 196,
     "testedCount": 14,
-    "untestedCount": 546,
+    "untestedCount": 547,
     "coveragePercent": "2.5",
     "effectiveCoverage": {
       "policyLoaded": false,
-      "activeFiles": 560,
+      "activeFiles": 561,
       "testedActive": 14,
-      "activeUntested": 546,
+      "activeUntested": 547,
       "excludedTotal": 0,
       "percent": "2.5",
       "breakdown": {
-        "active_untested": 546
+        "active_untested": 547
       }
     }
   },
@@ -501,6 +501,7 @@
     "src/lib/thumbnails/index.ts",
     "src/lib/update/updateClient.ts",
     "src/main.tsx",
+    "src/modules/optional/OptionalModuleCommands.tsx",
     "src/modules/optional/OptionalModuleHost.tsx",
     "src/modules/optional/entries/batch.tsx",
     "src/modules/optional/entries/comparison.tsx",
@@ -1109,6 +1110,7 @@
     "src/lib/thumbnails/index.ts": [],
     "src/lib/update/updateClient.ts": [],
     "src/main.tsx": [],
+    "src/modules/optional/OptionalModuleCommands.tsx": [],
     "src/modules/optional/OptionalModuleHost.tsx": [],
     "src/modules/optional/entries/batch.tsx": [],
     "src/modules/optional/entries/comparison.tsx": [],
@@ -3332,6 +3334,10 @@
     },
     {
       "file": "src/main.tsx",
+      "category": null
+    },
+    {
+      "file": "src/modules/optional/OptionalModuleCommands.tsx",
       "category": null
     },
     {

@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Spread view sizes an empty slot from the facing page.** The blank side uses that page's width and height. When the facing page has no size yet, the slot uses the first page. Letter and other sizes line up with the page beside them.
 - **Kiosk, batch processing, and scanner open from the editor when the module is on.** The toolbar shows a command for each of those modules only while its setting is enabled. Choosing the command loads that module and opens its screen. A module that is off has no toolbar command and is not imported.
 
+### Changed
+
+- **Architecture counts include the editor module command and the spread slot helper.** `repo-tools map` ran again. Files went from 779 to 780, exports from 3433 to 3440, functions from 1454 to 1459, and interfaces from 689 to 691.
+
 ### Added
 
 - **Enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch are off until a setting turns them on.**

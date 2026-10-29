@@ -3,9 +3,9 @@
     "name": "workspace",
     "schemaVersion": "2.0.0",
     "language": "typescript",
-    "totalFiles": 779,
+    "totalFiles": 780,
     "totalModules": 4,
-    "totalExports": 3433
+    "totalExports": 3440
   },
   "modules": {
     "src": {
@@ -456,15 +456,6 @@
             "typeOnly": true
           },
           {
-            "file": "electron/fileWatcher.ts",
-            "imports": [
-              "watchFile",
-              "unwatchFile",
-              "unwatchAll"
-            ],
-            "typeOnly": false
-          },
-          {
             "file": "electron/autoSave.ts",
             "imports": [
               "enableAutoSave",
@@ -502,6 +493,13 @@
               "assertPathAllowed",
               "assertExtensionAllowedForWrite",
               "isPathAllowed"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "electron/fileWatcher.ts",
+            "imports": [
+              "*"
             ],
             "typeOnly": false
           }
@@ -1112,13 +1110,6 @@
             "typeOnly": false
           },
           {
-            "file": "electron/fileWatcher.ts",
-            "imports": [
-              "unwatchAll"
-            ],
-            "typeOnly": false
-          },
-          {
             "file": "electron/menu.ts",
             "imports": [
               "initializeMenu"
@@ -1225,6 +1216,13 @@
             "file": "electron/ipc/channels.ts",
             "imports": [
               "IPC_EVENTS"
+            ],
+            "typeOnly": false
+          },
+          {
+            "file": "electron/fileWatcher.ts",
+            "imports": [
+              "*"
             ],
             "typeOnly": false
           }
@@ -2569,6 +2567,7 @@
         "externalDependencies": [
           "@lib/annotations/drawingGeometry",
           "@stores/historyStore",
+          "@stores/uiStore",
           "react"
         ],
         "nodeDependencies": [],
@@ -6104,9 +6103,7 @@
       },
       "src/components/viewer/VirtualizedViewer.tsx": {
         "externalDependencies": [
-          "@hooks/useVisiblePages",
           "@lib/pdf/renderer",
-          "@lib/performance/memoryManager",
           "@stores/uiStore",
           "@utils/cn",
           "react"
@@ -6121,16 +6118,11 @@
             "typeOnly": false
           },
           {
-            "file": "src/components/viewer/PageSkeleton.tsx",
-            "imports": [
-              "PageSkeleton"
-            ],
-            "typeOnly": false
-          },
-          {
             "file": "src/components/viewer/viewLayout.ts",
             "imports": [
+              "spreadPlaceholderSize",
               "spreadSlots",
+              "PagePoints",
               "ViewerLayout"
             ],
             "typeOnly": false
@@ -6159,6 +6151,8 @@
         "exports": [
           "ViewerLayout",
           "SpreadSlots",
+          "PagePoints",
+          "spreadPlaceholderSize",
           "spreadSlots"
         ]
       },
@@ -12092,6 +12086,27 @@
         ],
         "exports": []
       },
+      "src/modules/optional/OptionalModuleCommands.tsx": {
+        "externalDependencies": [
+          "@stores/settingsStore",
+          "lucide-react",
+          "react"
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "src/modules/optional/loadOptionalModule.ts",
+            "imports": [
+              "loadOptionalModule",
+              "OptionalModuleScreenProps"
+            ],
+            "typeOnly": false
+          }
+        ],
+        "exports": [
+          "OptionalModuleCommands"
+        ]
+      },
       "src/modules/optional/OptionalModuleHost.tsx": {
         "externalDependencies": [
           "@stores/settingsStore",
@@ -12114,8 +12129,17 @@
       "src/modules/optional/entries/batch.tsx": {
         "externalDependencies": [],
         "nodeDependencies": [],
-        "internalDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "src/modules/optional/loadOptionalModule.ts",
+            "imports": [
+              "OptionalModuleScreenProps"
+            ],
+            "typeOnly": true
+          }
+        ],
         "exports": [
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ]
       },
@@ -12145,11 +12169,22 @@
         ]
       },
       "src/modules/optional/entries/kiosk.tsx": {
-        "externalDependencies": [],
+        "externalDependencies": [
+          "react"
+        ],
         "nodeDependencies": [],
-        "internalDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "src/modules/optional/loadOptionalModule.ts",
+            "imports": [
+              "OptionalModuleScreenProps"
+            ],
+            "typeOnly": true
+          }
+        ],
         "exports": [
           "KioskShell",
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ]
       },
@@ -12172,9 +12207,18 @@
       "src/modules/optional/entries/scanner.tsx": {
         "externalDependencies": [],
         "nodeDependencies": [],
-        "internalDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "src/modules/optional/loadOptionalModule.ts",
+            "imports": [
+              "OptionalModuleScreenProps"
+            ],
+            "typeOnly": true
+          }
+        ],
         "exports": [
           "ScannerSelectDialog",
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ]
       },
@@ -12242,6 +12286,7 @@
           }
         ],
         "exports": [
+          "OptionalModuleScreenProps",
           "OptionalModuleBundle",
           "loadOptionalModule",
           "LOADABLE_OPTIONAL_MODULE_IDS"
@@ -14579,6 +14624,7 @@
         "externalDependencies": [
           "@components/annotations/AnnotationProperties",
           "@stores/annotationStore",
+          "@stores/historyStore",
           "@testing-library/react",
           "vitest"
         ],
@@ -14599,6 +14645,7 @@
         "externalDependencies": [
           "@components/annotations/DrawingAnnotation",
           "@stores/historyStore",
+          "@stores/uiStore",
           "@testing-library/react",
           "vitest"
         ],
@@ -15856,29 +15903,29 @@
     }
   },
   "statistics": {
-    "totalTypeScriptFiles": 779,
-    "totalSourceFiles": 779,
+    "totalTypeScriptFiles": 780,
+    "totalSourceFiles": 780,
     "totalModules": 4,
-    "totalLinesOfCode": 178529,
-    "totalExports": 3433,
+    "totalLinesOfCode": 179426,
+    "totalExports": 3440,
     "entryRoots": 0,
     "reachableFiles": 0,
-    "dormantFiles": 561,
-    "orphanedFiles": 543,
+    "dormantFiles": 562,
+    "orphanedFiles": 544,
     "testOnlyFiles": 18,
     "runtimeCircularDeps": 0,
-    "typeOnlyCircularDeps": 0,
-    "totalTypeOnlyImports": 92,
-    "noImporterFileCount": 247,
+    "typeOnlyCircularDeps": 3,
+    "totalTypeOnlyImports": 95,
+    "noImporterFileCount": 249,
     "unusedExportsCount": 1308,
     "circularDepsTruncated": false,
     "runtimeCyclicComponents": 0,
-    "typeOnlyCyclicComponents": 0,
+    "typeOnlyCyclicComponents": 1,
     "runtimeFilesInCycles": 0,
-    "typeOnlyFilesInCycles": 0,
+    "typeOnlyFilesInCycles": 4,
     "totalClasses": 69,
-    "totalInterfaces": 689,
-    "totalFunctions": 1454,
+    "totalInterfaces": 691,
+    "totalFunctions": 1459,
     "totalTypeGuards": 61,
     "totalEnums": 3,
     "totalConstants": 226,
@@ -15887,7 +15934,7 @@
   "reachability": {
     "roots": [],
     "reachableCount": 0,
-    "dormantCount": 561,
+    "dormantCount": 562,
     "orphaned": [
       "cli/config-schema-check.ts",
       "cli/validate-config.ts",
@@ -16368,6 +16415,7 @@
       "src/lib/thumbnails/index.ts",
       "src/lib/update/updateClient.ts",
       "src/main.tsx",
+      "src/modules/optional/OptionalModuleCommands.tsx",
       "src/modules/optional/OptionalModuleHost.tsx",
       "src/modules/optional/entries/batch.tsx",
       "src/modules/optional/entries/comparison.tsx",

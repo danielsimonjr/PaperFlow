@@ -8,16 +8,16 @@
 
 | Metric | Count |
 |--------|-------|
-| Total Source Files | 560 |
+| Total Source Files | 561 |
 | Total Test Files | 196 |
 | Source Files with Tests | 14 |
-| Source Files without Tests | 546 |
+| Source Files without Tests | 547 |
 | Coverage (raw, direct-import) | **2.5%** |
 ---
 
 ## Source Files Without Test Coverage
 
-The following 546 source files are not directly imported by any test file:
+The following 547 source files are not directly imported by any test file:
 
 ### root/
 
@@ -546,6 +546,7 @@ The following 546 source files are not directly imported by any test file:
 
 ### modules/
 
+- `src/modules/optional/OptionalModuleCommands.tsx` → Expected test: `tests/unit/modules/OptionalModuleCommands.tsx.test.ts`
 - `src/modules/optional/OptionalModuleHost.tsx` → Expected test: `tests/unit/modules/OptionalModuleHost.tsx.test.ts`
 - `src/modules/optional/entries/batch.tsx` → Expected test: `tests/unit/modules/batch.tsx.test.ts`
 - `src/modules/optional/entries/comparison.tsx` → Expected test: `tests/unit/modules/comparison.tsx.test.ts`

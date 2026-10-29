@@ -1825,14 +1825,6 @@
             "typeOnly": true
           },
           {
-            "file": "../fileWatcher",
-            "imports": [
-              "watchFile",
-              "unwatchFile",
-              "unwatchAll"
-            ]
-          },
-          {
             "file": "../autoSave",
             "imports": [
               "enableAutoSave",
@@ -1867,6 +1859,12 @@
               "assertPathAllowed",
               "assertExtensionAllowedForWrite",
               "isPathAllowed"
+            ]
+          },
+          {
+            "file": "../fileWatcher",
+            "imports": [
+              "*"
             ]
           }
         ],
@@ -2641,12 +2639,6 @@
             ]
           },
           {
-            "file": "../fileWatcher",
-            "imports": [
-              "unwatchAll"
-            ]
-          },
-          {
             "file": "../menu",
             "imports": [
               "initializeMenu"
@@ -2739,6 +2731,12 @@
             "file": "../ipc/channels",
             "imports": [
               "IPC_EVENTS"
+            ]
+          },
+          {
+            "file": "../fileWatcher",
+            "imports": [
+              "*"
             ]
           }
         ],
@@ -4287,6 +4285,12 @@
             "package": "@stores/historyStore",
             "imports": [
               "useHistoryStore"
+            ]
+          },
+          {
+            "package": "@stores/uiStore",
+            "imports": [
+              "useUIStore"
             ]
           }
         ],
@@ -11991,13 +11995,12 @@
         ]
       },
       "src/components/viewer/VirtualizedViewer.tsx": {
-        "description": "One viewer for single, continuous, and spread layouts.",
+        "description": "PDF height in points. Unknown pages use a US Letter estimate until the",
         "externalDependencies": [
           {
             "package": "react",
             "imports": [
               "useEffect",
-              "useMemo",
               "useRef",
               "useState"
             ]
@@ -12006,18 +12009,6 @@
             "package": "@lib/pdf/renderer",
             "imports": [
               "PDFRenderer"
-            ]
-          },
-          {
-            "package": "@hooks/useVisiblePages",
-            "imports": [
-              "useVisiblePages"
-            ]
-          },
-          {
-            "package": "@lib/performance/memoryManager",
-            "imports": [
-              "CanvasDisposer"
             ]
           },
           {
@@ -12042,15 +12033,11 @@
             ]
           },
           {
-            "file": "./PageSkeleton",
-            "imports": [
-              "PageSkeleton"
-            ]
-          },
-          {
             "file": "./viewLayout",
             "imports": [
+              "spreadPlaceholderSize",
               "spreadSlots",
+              "PagePoints",
               "ViewerLayout"
             ]
           }
@@ -12105,12 +12092,15 @@
         "internalDependencies": [],
         "workspaceDependencies": [],
         "exports": [
+          "spreadPlaceholderSize",
           "spreadSlots"
         ],
         "interfaces": [
-          "SpreadSlots"
+          "SpreadSlots",
+          "PagePoints"
         ],
         "functions": [
+          "spreadPlaceholderSize",
           "spreadSlots"
         ]
       }
@@ -19500,7 +19490,7 @@
         ]
       },
       "src/lib/pdf/contentDarkMode.ts": {
-        "description": "Class that inverts the PDF canvas and the text layer while dark mode is on.",
+        "description": "Class for the PDF bitmap canvas while dark mode is on.",
         "externalDependencies": [],
         "nodeDependencies": [],
         "internalDependencies": [],
@@ -21157,6 +21147,50 @@
       }
     },
     "modules": {
+      "src/modules/optional/OptionalModuleCommands.tsx": {
+        "description": "Toolbar commands for optional modules that expose a full editor screen.",
+        "externalDependencies": [
+          {
+            "package": "react",
+            "imports": [
+              "useEffect",
+              "useState",
+              "ComponentType"
+            ]
+          },
+          {
+            "package": "lucide-react",
+            "imports": [
+              "AppWindow",
+              "Layers",
+              "ScanLine"
+            ]
+          },
+          {
+            "package": "@stores/settingsStore",
+            "imports": [
+              "useSettingsStore"
+            ]
+          }
+        ],
+        "nodeDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "./loadOptionalModule",
+            "imports": [
+              "loadOptionalModule",
+              "OptionalModuleScreenProps"
+            ]
+          }
+        ],
+        "workspaceDependencies": [],
+        "exports": [
+          "OptionalModuleCommands"
+        ],
+        "functions": [
+          "OptionalModuleCommands"
+        ]
+      },
       "src/modules/optional/OptionalModuleHost.tsx": {
         "description": "Render the optional modules whose settings are on.",
         "externalDependencies": [
@@ -21193,15 +21227,25 @@
         ]
       },
       "src/modules/optional/entries/batch.tsx": {
-        "description": "The batch module panel. It mounts both batch stores.",
+        "description": "Full-screen batch processing dashboard opened from the editor toolbar.",
         "externalDependencies": [],
         "nodeDependencies": [],
-        "internalDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "../loadOptionalModule",
+            "imports": [
+              "OptionalModuleScreenProps"
+            ],
+            "typeOnly": true
+          }
+        ],
         "workspaceDependencies": [],
         "exports": [
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ],
         "functions": [
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ]
       },
@@ -21249,19 +21293,36 @@
         ]
       },
       "src/modules/optional/entries/kiosk.tsx": {
-        "description": "The kiosk module panel. It mounts the kiosk store.",
-        "externalDependencies": [],
+        "description": "Full-screen kiosk mode opened from the editor toolbar.",
+        "externalDependencies": [
+          {
+            "package": "react",
+            "imports": [
+              "useEffect"
+            ]
+          }
+        ],
         "nodeDependencies": [],
-        "internalDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "../loadOptionalModule",
+            "imports": [
+              "OptionalModuleScreenProps"
+            ],
+            "typeOnly": true
+          }
+        ],
         "workspaceDependencies": [],
         "exports": [
           "KioskShell",
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ],
         "reExported": [
           "KioskShell"
         ],
         "functions": [
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ]
       },
@@ -21292,24 +21353,34 @@
         ]
       },
       "src/modules/optional/entries/scanner.tsx": {
-        "description": "The scanner module panel. It mounts the scanner store.",
+        "description": "Scanner selection opened from the editor toolbar.",
         "externalDependencies": [],
         "nodeDependencies": [],
-        "internalDependencies": [],
+        "internalDependencies": [
+          {
+            "file": "../loadOptionalModule",
+            "imports": [
+              "OptionalModuleScreenProps"
+            ],
+            "typeOnly": true
+          }
+        ],
         "workspaceDependencies": [],
         "exports": [
           "ScannerSelectDialog",
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ],
         "reExported": [
           "ScannerSelectDialog"
         ],
         "functions": [
+          "OptionalModuleScreen",
           "OptionalModulePanel"
         ]
       },
       "src/modules/optional/loadOptionalModule.ts": {
-        "description": "The panel a loaded optional module renders.",
+        "description": "Props for a full-screen optional module opened from the editor toolbar.",
         "externalDependencies": [
           {
             "package": "react",
@@ -21375,6 +21446,7 @@
           "LOADABLE_OPTIONAL_MODULE_IDS"
         ],
         "interfaces": [
+          "OptionalModuleScreenProps",
           "OptionalModuleBundle"
         ],
         "functions": [
@@ -23356,7 +23428,21 @@
   },
   "cyclicComponents": {
     "runtime": [],
-    "typeOnly": []
+    "typeOnly": [
+      {
+        "members": [
+          "src/modules/optional/entries/batch.tsx",
+          "src/modules/optional/entries/kiosk.tsx",
+          "src/modules/optional/entries/scanner.tsx",
+          "src/modules/optional/loadOptionalModule.ts"
+        ],
+        "cycle": [
+          "src/modules/optional/entries/batch.tsx",
+          "src/modules/optional/loadOptionalModule.ts",
+          "src/modules/optional/entries/batch.tsx"
+        ]
+      }
+    ]
   },
   "layers": [
     {
@@ -23941,6 +24027,7 @@
     {
       "name": "Modules",
       "files": [
+        "src/modules/optional/OptionalModuleCommands.tsx",
         "src/modules/optional/OptionalModuleHost.tsx",
         "src/modules/optional/entries/batch.tsx",
         "src/modules/optional/entries/comparison.tsx",

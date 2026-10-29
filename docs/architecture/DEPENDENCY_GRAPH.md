@@ -65,7 +65,7 @@ The codebase is organized into the following modules:
 - **core**: 1 file
 - **hooks**: 27 files
 - **lib**: 176 files
-- **modules**: 10 files
+- **modules**: 11 files
 - **pages**: 6 files
 - **stores**: 27 files
 - **styles**: 1 file
@@ -824,11 +824,11 @@ The codebase is organized into the following modules:
 |------|---------|------|
 | `./channels` | `IPC_CHANNELS` | Import |
 | `./types` | `FileDialogOptions, SaveDialogOptions, FolderDialogOptions, FolderListOptions, FolderEntry, FileStats, AutoSaveOptions, BackupOptions` | Import (type-only) |
-| `../fileWatcher` | `watchFile, unwatchFile, unwatchAll` | Import |
 | `../autoSave` | `enableAutoSave, disableAutoSave, getRecoveryFiles, clearRecoveryFile` | Import |
 | `../backup` | `createBackup, listBackups, restoreBackup, deleteBackup` | Import |
 | `../recentFiles` | `loadRecentFiles, addRecentFile, removeRecentFile, clearRecentFiles` | Import |
 | `./pathSandbox` | `approvePath, approvePaths, assertPathAllowed, assertExtensionAllowedForWrite, isPathAllowed` | Import |
+| `../fileWatcher` | `*` | Import |
 
 **Exports:**
 - Functions: `listFolderRecursive`, `setupFileHandlers`
@@ -1120,7 +1120,6 @@ The codebase is organized into the following modules:
 | `./updater` | `initializeUpdater, cleanupUpdater` | Import |
 | `../fileAssociation` | `setupFileAssociationHandlers, processStartupArgs, sendPendingFileToWindow` | Import |
 | `../autoSave` | `initializeAutoSave, disableAllAutoSave` | Import |
-| `../fileWatcher` | `unwatchAll` | Import |
 | `../menu` | `initializeMenu` | Import |
 | `../shortcuts` | `initializeShortcuts` | Import |
 | `../tray` | `initializeTray, destroyTray` | Import |
@@ -1136,6 +1135,7 @@ The codebase is organized into the following modules:
 | `../startup` | `initializeStartup` | Import |
 | `../powerSave` | `stopAllBlockers` | Import |
 | `../ipc/channels` | `IPC_EVENTS` | Import |
+| `../fileWatcher` | `*` | Import |
 
 **Exports:**
 
@@ -1866,6 +1866,7 @@ The codebase is organized into the following modules:
 | `react` | `useMemo, useRef` |
 | `@lib/annotations/drawingGeometry` | `screenDeltaToPdf, translateDrawingPaths` |
 | `@stores/historyStore` | `useHistoryStore` |
+| `@stores/uiStore` | `useUIStore` |
 
 **Exports:**
 - Functions: `DrawingAnnotation`
@@ -4901,15 +4902,13 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/components/viewer/VirtualizedViewer.tsx` - One viewer for single, continuous, and spread layouts.
+### `src/components/viewer/VirtualizedViewer.tsx` - PDF height in points. Unknown pages use a US Letter estimate until the
 
 **External Dependencies:**
 | Package | Import |
 |---------|--------|
-| `react` | `useEffect, useMemo, useRef, useState` |
+| `react` | `useEffect, useRef, useState` |
 | `@lib/pdf/renderer` | `PDFRenderer` |
-| `@hooks/useVisiblePages` | `useVisiblePages` |
-| `@lib/performance/memoryManager` | `CanvasDisposer` |
 | `@stores/uiStore` | `useUIStore` |
 | `@utils/cn` | `cn` |
 
@@ -4917,8 +4916,7 @@ The codebase is organized into the following modules:
 | File | Imports | Type |
 |------|---------|------|
 | `./PageCanvas` | `PageCanvas` | Import |
-| `./PageSkeleton` | `PageSkeleton` | Import |
-| `./viewLayout` | `spreadSlots, ViewerLayout` | Import |
+| `./viewLayout` | `spreadPlaceholderSize, spreadSlots, PagePoints, ViewerLayout` | Import |
 
 **Exports:**
 - Functions: `VirtualizedViewer`
@@ -4942,9 +4940,9 @@ The codebase is organized into the following modules:
 ### `src/components/viewer/viewLayout.ts` - Page layout for the viewer: one page, a scrolling stack, or a two-page spread.
 
 **Exports:**
-- Interfaces: `SpreadSlots`
+- Interfaces: `SpreadSlots`, `PagePoints`
 - Types: `ViewerLayout`
-- Functions: `spreadSlots`
+- Functions: `spreadPlaceholderSize`, `spreadSlots`
 
 ---
 
@@ -7332,7 +7330,7 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/lib/pdf/contentDarkMode.ts` - Class that inverts the PDF canvas and the text layer while dark mode is on.
+### `src/lib/pdf/contentDarkMode.ts` - Class for the PDF bitmap canvas while dark mode is on.
 
 **Exports:**
 - Functions: `pdfContentDarkClass`
@@ -8044,6 +8042,25 @@ The codebase is organized into the following modules:
 
 ## Modules Dependencies
 
+### `src/modules/optional/OptionalModuleCommands.tsx` - Toolbar commands for optional modules that expose a full editor screen.
+
+**External Dependencies:**
+| Package | Import |
+|---------|--------|
+| `react` | `useEffect, useState, ComponentType` |
+| `lucide-react` | `AppWindow, Layers, ScanLine` |
+| `@stores/settingsStore` | `useSettingsStore` |
+
+**Internal Dependencies:**
+| File | Imports | Type |
+|------|---------|------|
+| `./loadOptionalModule` | `loadOptionalModule, OptionalModuleScreenProps` | Import |
+
+**Exports:**
+- Functions: `OptionalModuleCommands`
+
+---
+
 ### `src/modules/optional/OptionalModuleHost.tsx` - Render the optional modules whose settings are on.
 
 **External Dependencies:**
@@ -8062,10 +8079,15 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/modules/optional/entries/batch.tsx` - The batch module panel. It mounts both batch stores.
+### `src/modules/optional/entries/batch.tsx` - Full-screen batch processing dashboard opened from the editor toolbar.
+
+**Internal Dependencies:**
+| File | Imports | Type |
+|------|---------|------|
+| `../loadOptionalModule` | `OptionalModuleScreenProps` | Import (type-only) |
 
 **Exports:**
-- Functions: `OptionalModulePanel`
+- Functions: `OptionalModuleScreen`, `OptionalModulePanel`
 
 ---
 
@@ -8091,10 +8113,20 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/modules/optional/entries/kiosk.tsx` - The kiosk module panel. It mounts the kiosk store.
+### `src/modules/optional/entries/kiosk.tsx` - Full-screen kiosk mode opened from the editor toolbar.
+
+**External Dependencies:**
+| Package | Import |
+|---------|--------|
+| `react` | `useEffect` |
+
+**Internal Dependencies:**
+| File | Imports | Type |
+|------|---------|------|
+| `../loadOptionalModule` | `OptionalModuleScreenProps` | Import (type-only) |
 
 **Exports:**
-- Functions: `OptionalModulePanel`
+- Functions: `OptionalModuleScreen`, `OptionalModulePanel`
 - Re-exports: `KioskShell`
 
 ---
@@ -8113,15 +8145,20 @@ The codebase is organized into the following modules:
 
 ---
 
-### `src/modules/optional/entries/scanner.tsx` - The scanner module panel. It mounts the scanner store.
+### `src/modules/optional/entries/scanner.tsx` - Scanner selection opened from the editor toolbar.
+
+**Internal Dependencies:**
+| File | Imports | Type |
+|------|---------|------|
+| `../loadOptionalModule` | `OptionalModuleScreenProps` | Import (type-only) |
 
 **Exports:**
-- Functions: `OptionalModulePanel`
+- Functions: `OptionalModuleScreen`, `OptionalModulePanel`
 - Re-exports: `ScannerSelectDialog`
 
 ---
 
-### `src/modules/optional/loadOptionalModule.ts` - The panel a loaded optional module renders.
+### `src/modules/optional/loadOptionalModule.ts` - Props for a full-screen optional module opened from the editor toolbar.
 
 **External Dependencies:**
 | Package | Import |
@@ -8141,7 +8178,7 @@ The codebase is organized into the following modules:
 | `./entries/fileWatch` | `*` | Import |
 
 **Exports:**
-- Interfaces: `OptionalModuleBundle`
+- Interfaces: `OptionalModuleScreenProps`, `OptionalModuleBundle`
 - Functions: `loadOptionalModule`
 - Constants: `LOADABLE_OPTIONAL_MODULE_IDS`
 
@@ -8979,11 +9016,11 @@ The codebase is organized into the following modules:
 | `electron/main/index` | 23 files | 0 files |
 | `src/stores/index` | 17 files | 0 files |
 | `electron/ipc/types` | 0 files | 13 files |
+| `src/modules/optional/loadOptionalModule` | 8 files | 5 files |
 | `src/components/annotations/index` | 12 files | 0 files |
 | `src/components/editor/index` | 11 files | 0 files |
 | `src/lib/forms/index` | 11 files | 0 files |
 | `src/components/signatures/index` | 10 files | 0 files |
-| `src/modules/optional/loadOptionalModule` | 8 files | 1 file |
 | `electron/ipc/fileHandlers` | 7 files | 1 file |
 | `electron/ipc/handlers` | 7 files | 1 file |
 | `src/components/forms/index` | 8 files | 0 files |
@@ -9020,7 +9057,18 @@ The codebase is organized into the following modules:
 <a id="circular-dependency-analysis"></a>
 ## Circular Dependency Analysis
 
-**No circular dependencies detected.**
+**1 cyclic component detected** (strongly connected components of the import graph):
+
+- **Runtime components**: 0 (0 files; require attention)
+- **Type-only components**: 1 (4 files; a type-only import closes each cycle)
+
+### Type-Only Cyclic Components
+
+Each component needs a type-only import to close its cycle. Type imports are erased at runtime. Each line shows the shortest cycle through the first member:
+
+- src/modules/optional/entries/batch.tsx -> src/modules/optional/loadOptionalModule.ts -> src/modules/optional/entries/batch.tsx
+  - Members (4): `src/modules/optional/entries/batch.tsx`, `src/modules/optional/entries/kiosk.tsx`, `src/modules/optional/entries/scanner.tsx`, `src/modules/optional/loadOptionalModule.ts`
+
 ---
 
 <a id="visual-dependency-graph"></a>
@@ -9165,69 +9213,70 @@ graph TD
     end
 
     subgraph Modules
-        N88[OptionalModuleHost]
-        N89[batch]
-        N90[comparison]
-        N91[enterprise]
-        N92[fileWatch]
-        N93[kiosk]
-        N94[lan]
-        N95[license]
-        N96[scanner]
-        N97[loadOptionalModule]
+        N88[OptionalModuleCommands]
+        N89[OptionalModuleHost]
+        N90[batch]
+        N91[comparison]
+        N92[enterprise]
+        N93[fileWatch]
+        N94[kiosk]
+        N95[lan]
+        N96[license]
+        N97[scanner]
+        N98[...1 more]
     end
 
     subgraph Pages
-        N98[Editor]
-        N99[Home]
-        N100[NotFound]
-        N101[Privacy]
-        N102[Settings]
-        N103[Terms]
+        N99[Editor]
+        N100[Home]
+        N101[NotFound]
+        N102[Privacy]
+        N103[Settings]
+        N104[Terms]
     end
 
     subgraph Stores
-        N104[annotationStore]
-        N105[batchStore]
-        N106[comparisonStore]
-        N107[documentStore]
-        N108[enterprisePolicyStore]
-        N109[fileWatchStore]
-        N110[formDesignerStore]
-        N111[formStore]
-        N112[historyStore]
-        N113[index]
-        N114[...17 more]
+        N105[annotationStore]
+        N106[batchStore]
+        N107[comparisonStore]
+        N108[documentStore]
+        N109[enterprisePolicyStore]
+        N110[fileWatchStore]
+        N111[formDesignerStore]
+        N112[formStore]
+        N113[historyStore]
+        N114[index]
+        N115[...17 more]
     end
 
     subgraph Styles
-        N115[theme]
+        N116[theme]
     end
 
     subgraph Types
-        N116[annotations]
-        N117[batch]
-        N118[electronTypes]
-        N119[enterpriseConfig]
-        N120[forms]
-        N121[index]
-        N122[kioskConfig]
-        N123[license]
-        N124[offline]
-        N125[pdf]
-        N126[...2 more]
+        N117[annotations]
+        N118[batch]
+        N119[electronTypes]
+        N120[enterpriseConfig]
+        N121[forms]
+        N122[index]
+        N123[kioskConfig]
+        N124[license]
+        N125[offline]
+        N126[pdf]
+        N127[...2 more]
     end
 
     subgraph Utils
-        N127[cn]
-        N128[coordinates]
-        N129[index]
-        N130[platform]
+        N128[cn]
+        N129[coordinates]
+        N130[index]
+        N131[platform]
     end
 
     subgraph Workers
-        N131[thumbnailWorker]
-        N132[thumbnailWorkerScript]
+        N132[thumbnailWorker]
+        N133[thumbnailWorkerScript]
     end
 
     N3 --> N13
@@ -9237,10 +9286,10 @@ graph TD
     N14 --> N5
     N15 --> N8
     N16 --> N13
-    N16 --> N11
     N16 --> N3
     N16 --> N4
     N16 --> N21
+    N16 --> N11
     N17 --> N13
     N17 --> N25
     N17 --> N24
@@ -9258,17 +9307,17 @@ graph TD
     N26 --> N13
     N26 --> N10
     N26 --> N3
-    N26 --> N11
     N26 --> N20
     N26 --> N22
     N26 --> N15
     N26 --> N14
-    N28 --> N124
+    N26 --> N11
+    N28 --> N125
     N30 --> N32
     N31 --> N32
     N33 --> N32
     N35 --> N13
-    N36 --> N124
+    N36 --> N125
     N37 --> N13
     N40 --> N41
     N51 --> N48
@@ -9289,22 +9338,20 @@ graph TD
     N78 --> N77
     N86 --> N85
     N45 --> N44
-    N88 --> N97
-    N97 --> N91
-    N97 --> N95
-    N97 --> N93
-    N97 --> N94
-    N97 --> N96
-    N97 --> N89
-    N97 --> N90
-    N97 --> N92
-    N104 --> N112
-    N113 --> N107
-    N113 --> N104
-    N113 --> N112
-    N113 --> N111
-    N113 --> N110
-    N46 --> N124
+    N105 --> N113
+    N114 --> N108
+    N114 --> N105
+    N114 --> N113
+    N114 --> N112
+    N114 --> N111
+    N46 --> N125
+    N117 --> N122
+    N121 --> N122
+    N125 --> N122
+    N130 --> N128
+    N130 --> N129
+    N130 --> N131
+    N133 --> N132
 ```
 
 ---
@@ -9314,21 +9361,21 @@ graph TD
 
 | Category | Count |
 |----------|-------|
-| Total Source Files | 779 |
+| Total Source Files | 780 |
 | Subsystems | 23 |
-| Total Lines of Code | 178529 |
-| Total Exports | 3433 |
+| Total Lines of Code | 179426 |
+| Total Exports | 3440 |
 | Total Re-exports | 806 |
 | Total Classes | 69 |
-| Total Interfaces | 689 |
-| Total Functions | 1454 |
+| Total Interfaces | 691 |
+| Total Functions | 1459 |
 | Total Type Guards | 61 |
 | Total Enums | 3 |
-| Type-only Imports | 92 |
+| Type-only Imports | 95 |
 | Runtime Cyclic Components | 0 |
-| Type-only Cyclic Components | 0 |
+| Type-only Cyclic Components | 1 |
 | Files in Runtime Cycles | 0 |
-| Files in Type-only Cycles | 0 |
+| Files in Type-only Cycles | 4 |
 
 ---
 

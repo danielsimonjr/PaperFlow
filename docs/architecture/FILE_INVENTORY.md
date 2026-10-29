@@ -8,7 +8,7 @@ This report lists each source file that the map census finds, with a disposition
 
 **Language**: typescript
 
-**Total files**: 779
+**Total files**: 780
 
 ## Disposition counts
 
@@ -17,20 +17,20 @@ This report lists each source file that the map census finds, with a disposition
 | `reachable` | 0 | A `src`-area file that an entry root reaches. |
 | `build-entry` | 0 | A `src`-area file that is an entry root. |
 | `test-only` | 18 | A `src`-area file that only a test reaches. |
-| `orphan` | 543 | A `src`-area file that nothing reaches. Delete it, or wire it to a root. |
+| `orphan` | 544 | A `src`-area file that nothing reaches. Delete it, or wire it to a root. |
 | `test` | 202 | A file in a `tests/` folder, or a `*.test.ts` or `*.spec.ts` file. |
 | `tool` | 8 | A file in a `tools/` or `scripts/` folder outside `src/`. |
 | `config` | 8 | A `*.config.*` file of TypeScript or JavaScript. |
 | `example` | 0 | A file in `examples/` or `docs/`. |
 | `bench` | 0 | A file in `bench/` or `benchmarks/`, or a `*.bench.*` file. |
-| **Total** | **779** | |
+| **Total** | **780** | |
 
 ## Per-area counts
 
 | Area | Files |
 | --- | --: |
 | `config` | 8 |
-| `src` | 561 |
+| `src` | 562 |
 | `tests` | 202 |
 | `tools` | 8 |
 
@@ -39,7 +39,7 @@ This report lists each source file that the map census finds, with a disposition
 | Package | Files |
 | --- | --: |
 | `(root)` | 294 |
-| `paperflow` | 485 |
+| `paperflow` | 486 |
 
 ## All files
 
@@ -60,7 +60,7 @@ This report lists each source file that the map census finds, with a disposition
 | `electron/ipc/channels.ts` | (root) | src | test-only | 298 |
 | `electron/ipc/clipboardHandlers.ts` | (root) | src | orphan | 219 |
 | `electron/ipc/dialogHandlers.ts` | (root) | src | orphan | 206 |
-| `electron/ipc/fileHandlers.ts` | (root) | src | test-only | 465 |
+| `electron/ipc/fileHandlers.ts` | (root) | src | test-only | 468 |
 | `electron/ipc/fileWatchIPC.ts` | (root) | src | orphan | 244 |
 | `electron/ipc/handlers.ts` | (root) | src | orphan | 154 |
 | `electron/ipc/menuHandlers.ts` | (root) | src | orphan | 134 |
@@ -138,7 +138,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/components/annotations/AnnotationProperties.tsx` | paperflow | src | orphan | 172 |
 | `src/components/annotations/ArrowTool.tsx` | paperflow | src | orphan | 232 |
 | `src/components/annotations/CustomStampDialog.tsx` | paperflow | src | orphan | 209 |
-| `src/components/annotations/DrawingAnnotation.tsx` | paperflow | src | orphan | 158 |
+| `src/components/annotations/DrawingAnnotation.tsx` | paperflow | src | orphan | 187 |
 | `src/components/annotations/DrawingCanvas.tsx` | paperflow | src | orphan | 206 |
 | `src/components/annotations/DrawingToolOptions.tsx` | paperflow | src | orphan | 98 |
 | `src/components/annotations/EllipseTool.tsx` | paperflow | src | orphan | 203 |
@@ -231,7 +231,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/components/layout/MobileToolbar.tsx` | paperflow | src | orphan | 178 |
 | `src/components/layout/Sidebar.tsx` | paperflow | src | orphan | 93 |
 | `src/components/layout/TitleBar.tsx` | paperflow | src | orphan | 188 |
-| `src/components/layout/Toolbar.tsx` | paperflow | src | orphan | 198 |
+| `src/components/layout/Toolbar.tsx` | paperflow | src | orphan | 201 |
 | `src/components/lazy/index.ts` | paperflow | src | orphan | 46 |
 | `src/components/ocr/BatchOCRProgress.tsx` | paperflow | src | orphan | 250 |
 | `src/components/ocr/LanguageSelector.tsx` | paperflow | src | orphan | 125 |
@@ -297,7 +297,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/components/settings/ShortcutSettings.tsx` | paperflow | src | orphan | 385 |
 | `src/components/sidebar/OutlinePanel.tsx` | paperflow | src | orphan | 179 |
 | `src/components/sidebar/ThumbnailSidebar.tsx` | paperflow | src | orphan | 609 |
-| `src/components/signatures/CameraSignature.tsx` | paperflow | src | orphan | 104 |
+| `src/components/signatures/CameraSignature.tsx` | paperflow | src | orphan | 121 |
 | `src/components/signatures/DateStamp.tsx` | paperflow | src | orphan | 36 |
 | `src/components/signatures/DrawSignature.tsx` | paperflow | src | orphan | 275 |
 | `src/components/signatures/ImageSignature.tsx` | paperflow | src | orphan | 323 |
@@ -332,13 +332,13 @@ This report lists each source file that the map census finds, with a disposition
 | `src/components/updates/UpdateNotification.tsx` | paperflow | src | orphan | 284 |
 | `src/components/viewer/DropZone.tsx` | paperflow | src | orphan | 114 |
 | `src/components/viewer/PDFViewer.tsx` | paperflow | src | orphan | 166 |
-| `src/components/viewer/PageCanvas.tsx` | paperflow | src | orphan | 283 |
+| `src/components/viewer/PageCanvas.tsx` | paperflow | src | orphan | 280 |
 | `src/components/viewer/PageNavigation.tsx` | paperflow | src | orphan | 129 |
 | `src/components/viewer/PageSkeleton.tsx` | paperflow | src | orphan | 76 |
 | `src/components/viewer/TextLayer.tsx` | paperflow | src | orphan | 207 |
-| `src/components/viewer/VirtualizedViewer.tsx` | paperflow | src | orphan | 235 |
+| `src/components/viewer/VirtualizedViewer.tsx` | paperflow | src | orphan | 367 |
 | `src/components/viewer/ZoomControls.tsx` | paperflow | src | orphan | 102 |
-| `src/components/viewer/viewLayout.ts` | paperflow | src | orphan | 40 |
+| `src/components/viewer/viewLayout.ts` | paperflow | src | orphan | 76 |
 | `src/constants/config.ts` | paperflow | src | orphan | 47 |
 | `src/constants/shortcuts.ts` | paperflow | src | orphan | 72 |
 | `src/constants/stamps.ts` | paperflow | src | orphan | 78 |
@@ -494,7 +494,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/lib/pages/mergePdf.ts` | paperflow | src | orphan | 198 |
 | `src/lib/pages/pageOperations.ts` | paperflow | src | orphan | 386 |
 | `src/lib/pages/splitPdf.ts` | paperflow | src | orphan | 303 |
-| `src/lib/pdf/contentDarkMode.ts` | paperflow | src | orphan | 11 |
+| `src/lib/pdf/contentDarkMode.ts` | paperflow | src | orphan | 13 |
 | `src/lib/pdf/renderer.ts` | paperflow | src | orphan | 232 |
 | `src/lib/pdf/saver.ts` | paperflow | src | orphan | 75 |
 | `src/lib/pdf/signatureEmbed.ts` | paperflow | src | orphan | 190 |
@@ -550,16 +550,17 @@ This report lists each source file that the map census finds, with a disposition
 | `src/lib/thumbnails/index.ts` | paperflow | src | orphan | 1 |
 | `src/lib/update/updateClient.ts` | paperflow | src | orphan | 388 |
 | `src/main.tsx` | paperflow | src | orphan | 20 |
-| `src/modules/optional/OptionalModuleHost.tsx` | paperflow | src | orphan | 46 |
-| `src/modules/optional/entries/batch.tsx` | paperflow | src | orphan | 11 |
+| `src/modules/optional/OptionalModuleCommands.tsx` | paperflow | src | orphan | 108 |
+| `src/modules/optional/OptionalModuleHost.tsx` | paperflow | src | orphan | 60 |
+| `src/modules/optional/entries/batch.tsx` | paperflow | src | orphan | 35 |
 | `src/modules/optional/entries/comparison.tsx` | paperflow | src | orphan | 10 |
 | `src/modules/optional/entries/enterprise.tsx` | paperflow | src | orphan | 14 |
 | `src/modules/optional/entries/fileWatch.tsx` | paperflow | src | orphan | 14 |
-| `src/modules/optional/entries/kiosk.tsx` | paperflow | src | orphan | 13 |
+| `src/modules/optional/entries/kiosk.tsx` | paperflow | src | orphan | 43 |
 | `src/modules/optional/entries/lan.tsx` | paperflow | src | orphan | 9 |
 | `src/modules/optional/entries/license.tsx` | paperflow | src | orphan | 13 |
-| `src/modules/optional/entries/scanner.tsx` | paperflow | src | orphan | 10 |
-| `src/modules/optional/loadOptionalModule.ts` | paperflow | src | orphan | 32 |
+| `src/modules/optional/entries/scanner.tsx` | paperflow | src | orphan | 25 |
+| `src/modules/optional/loadOptionalModule.ts` | paperflow | src | orphan | 42 |
 | `src/pages/Editor.tsx` | paperflow | src | orphan | 112 |
 | `src/pages/Home.tsx` | paperflow | src | orphan | 141 |
 | `src/pages/NotFound.tsx` | paperflow | src | orphan | 23 |
@@ -587,7 +588,7 @@ This report lists each source file that the map census finds, with a disposition
 | `src/stores/redactionStore.ts` | paperflow | src | orphan | 317 |
 | `src/stores/scannerStore.ts` | paperflow | src | orphan | 334 |
 | `src/stores/securityStore.ts` | paperflow | src | orphan | 246 |
-| `src/stores/settingsStore.ts` | paperflow | src | orphan | 241 |
+| `src/stores/settingsStore.ts` | paperflow | src | orphan | 255 |
 | `src/stores/shortcutsStore.ts` | paperflow | src | orphan | 443 |
 | `src/stores/signatureStore.ts` | paperflow | src | orphan | 283 |
 | `src/stores/textStore.ts` | paperflow | src | orphan | 192 |
@@ -683,9 +684,9 @@ This report lists each source file that the map census finds, with a disposition
 | `tests/mocks/sentry.ts` | (root) | tests | test | 41 |
 | `tests/performance/benchmarks.ts` | (root) | tests | test | 291 |
 | `tests/setup.ts` | (root) | tests | test | 216 |
-| `tests/unit/components/annotations/AnnotationProperties.test.tsx` | (root) | tests | test | 45 |
+| `tests/unit/components/annotations/AnnotationProperties.test.tsx` | (root) | tests | test | 50 |
 | `tests/unit/components/annotations/DrawingCanvas.test.tsx` | (root) | tests | test | 99 |
-| `tests/unit/components/annotations/DrawingMove.test.tsx` | (root) | tests | test | 54 |
+| `tests/unit/components/annotations/DrawingMove.test.tsx` | (root) | tests | test | 84 |
 | `tests/unit/components/annotations/HighlightTool.test.tsx` | (root) | tests | test | 199 |
 | `tests/unit/components/annotations/NoteTool.test.tsx` | (root) | tests | test | 62 |
 | `tests/unit/components/annotations/SelectionPopup.test.tsx` | (root) | tests | test | 79 |
@@ -704,16 +705,16 @@ This report lists each source file that the map census finds, with a disposition
 | `tests/unit/components/pages/InsertPageDialog.test.tsx` | (root) | tests | test | 88 |
 | `tests/unit/components/pages/PageThumbnails.test.tsx` | (root) | tests | test | 261 |
 | `tests/unit/components/print/PageRangeSelector.test.tsx` | (root) | tests | test | 50 |
-| `tests/unit/components/signatures/CameraSignature.test.tsx` | (root) | tests | test | 77 |
+| `tests/unit/components/signatures/CameraSignature.test.tsx` | (root) | tests | test | 102 |
 | `tests/unit/components/signatures/SignatureCanvas.test.tsx` | (root) | tests | test | 232 |
 | `tests/unit/components/signatures/SignaturePlacer.test.tsx` | (root) | tests | test | 235 |
 | `tests/unit/components/toolbar/SearchBar.test.tsx` | (root) | tests | test | 111 |
 | `tests/unit/components/ui/AccessibleComponents.test.tsx` | (root) | tests | test | 86 |
 | `tests/unit/components/ui/Skeleton.test.tsx` | (root) | tests | test | 46 |
-| `tests/unit/components/viewer/PDFViewer.test.tsx` | (root) | tests | test | 49 |
-| `tests/unit/components/viewer/VirtualizedViewer.test.tsx` | (root) | tests | test | 108 |
-| `tests/unit/components/viewer/pdfContentDark.test.tsx` | (root) | tests | test | 31 |
-| `tests/unit/components/viewer/viewLayout.test.ts` | (root) | tests | test | 23 |
+| `tests/unit/components/viewer/PDFViewer.test.tsx` | (root) | tests | test | 78 |
+| `tests/unit/components/viewer/VirtualizedViewer.test.tsx` | (root) | tests | test | 301 |
+| `tests/unit/components/viewer/pdfContentDark.test.tsx` | (root) | tests | test | 40 |
+| `tests/unit/components/viewer/viewLayout.test.ts` | (root) | tests | test | 51 |
 | `tests/unit/core/features.test.ts` | (root) | tests | test | 79 |
 | `tests/unit/hooks/useAnnotationShortcuts.test.ts` | (root) | tests | test | 106 |
 | `tests/unit/hooks/useBeforeUnload.test.ts` | (root) | tests | test | 143 |
@@ -775,7 +776,7 @@ This report lists each source file that the map census finds, with a disposition
 | `tests/unit/lib/pages/mergePdf.test.ts` | (root) | tests | test | 138 |
 | `tests/unit/lib/pages/pageOperations.test.ts` | (root) | tests | test | 254 |
 | `tests/unit/lib/pages/splitPdf.test.ts` | (root) | tests | test | 160 |
-| `tests/unit/lib/pdf/contentDarkMode.test.ts` | (root) | tests | test | 18 |
+| `tests/unit/lib/pdf/contentDarkMode.test.ts` | (root) | tests | test | 23 |
 | `tests/unit/lib/pdf/renderer.test.ts` | (root) | tests | test | 404 |
 | `tests/unit/lib/pdf/signatureEmbed.test.ts` | (root) | tests | test | 307 |
 | `tests/unit/lib/pdf/textSaver.test.ts` | (root) | tests | test | 250 |
@@ -796,7 +797,7 @@ This report lists each source file that the map census finds, with a disposition
 | `tests/unit/lib/storage/fileHandler.test.ts` | (root) | tests | test | 132 |
 | `tests/unit/lib/storage/stampStorage.test.ts` | (root) | tests | test | 145 |
 | `tests/unit/lib/thumbnails/cache.test.ts` | (root) | tests | test | 93 |
-| `tests/unit/modules/optionalModules.test.tsx` | (root) | tests | test | 103 |
+| `tests/unit/modules/optionalModules.test.tsx` | (root) | tests | test | 242 |
 | `tests/unit/pages/Privacy.test.tsx` | (root) | tests | test | 88 |
 | `tests/unit/pages/Terms.test.tsx` | (root) | tests | test | 107 |
 | `tests/unit/stores/annotationStore.test.ts` | (root) | tests | test | 308 |
