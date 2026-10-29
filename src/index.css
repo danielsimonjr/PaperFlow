@@ -15,6 +15,17 @@
   --highlight-blue: #2196F3;
   --highlight-pink: #E91E63;
   --highlight-orange: #FF9800;
+  --paper-bg: #F6F3EE;
+  --paper-surface: #FBFAF7;
+  --paper-ink: #1C1917;
+  --paper-border: #E6E0D6;
+}
+
+.dark {
+  --paper-bg: #0C0C0C;
+  --paper-surface: #141414;
+  --paper-ink: #F4F1EA;
+  --paper-border: #2A2A2A;
 }
 
 * {
@@ -31,6 +42,8 @@ body,
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--paper-bg);
+  color: var(--paper-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

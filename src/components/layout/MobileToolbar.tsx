@@ -79,7 +79,7 @@ export function MobileToolbar() {
       )}
 
       {/* Bottom toolbar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 flex h-14 items-center justify-between border-t border-gray-200 bg-white px-2 safe-area-pb dark:border-gray-800 dark:bg-gray-950 md:hidden">
+      <div className="fixed bottom-0 left-0 right-0 z-30 flex h-11 items-center justify-between border-t border-gray-200 bg-white px-2 safe-area-pb dark:border-gray-800 dark:bg-gray-950 md:hidden">
         {/* Page navigation */}
         <div className="flex items-center gap-1">
           <button

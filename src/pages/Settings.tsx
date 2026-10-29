@@ -30,12 +30,12 @@ export default function Settings() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="border-b border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-gray-950">
+      <header className="border-b border-gray-200 bg-white px-4 py-2.5 dark:border-gray-800 dark:bg-gray-950">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
               to="/"
-              className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+              className="flex h-8 w-8 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
             >
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -55,9 +55,9 @@ export default function Settings() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-2xl space-y-6 p-8">
+      <main className="mx-auto max-w-2xl space-y-4 p-6">
         {/* Appearance */}
-        <section className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800">
+        <section className="rounded-md border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
             Appearance
           </h2>
@@ -70,7 +70,7 @@ export default function Settings() {
         </section>
 
         {/* Viewing */}
-        <section className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800">
+        <section className="rounded-md border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
             Viewing
           </h2>
@@ -126,7 +126,7 @@ export default function Settings() {
         </section>
 
         {/* Editing */}
-        <section className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800">
+        <section className="rounded-md border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
             Editing
           </h2>
@@ -167,7 +167,7 @@ export default function Settings() {
         </section>
 
         {/* Annotations */}
-        <section className="rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800">
+        <section className="rounded-md border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
             Annotations
           </h2>

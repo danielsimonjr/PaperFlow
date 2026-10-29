@@ -147,7 +147,7 @@ export function PageCanvas({
       {/* PDF Canvas */}
       <canvas
         ref={canvasRef}
-        className="block shadow-lg"
+        className="block border border-gray-200 dark:border-gray-800"
         style={{ background: 'white' }}
       />
 

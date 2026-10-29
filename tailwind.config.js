@@ -1,3 +1,5 @@
+import { palette } from './src/styles/theme.ts';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -5,6 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        white: palette.light.surface,
+        gray: palette.gray,
         primary: {
           50: '#eff6ff',
           100: '#dbeafe',
@@ -18,8 +22,8 @@ export default {
           900: '#1E3A5F',
         },
         surface: {
-          light: '#ffffff',
-          dark: '#1e293b',
+          light: palette.light.surface,
+          dark: palette.dark.surface,
         },
         highlight: {
           yellow: '#FFEB3B',

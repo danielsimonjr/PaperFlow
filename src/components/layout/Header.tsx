@@ -44,13 +44,13 @@ export function Header() {
 
   return (
     <>
-      <header className="flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-950">
+      <header className="flex h-11 items-center justify-between border-b border-gray-200 bg-white px-3 dark:border-gray-800 dark:bg-gray-950">
         <div className="flex items-center gap-4">
           <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-900 text-white">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary-900 text-white">
               <FileUp className="h-4 w-4" />
             </div>
-            <span className="text-lg font-semibold text-gray-900 dark:text-white">
+            <span className="text-base font-semibold text-gray-900 dark:text-white">
               PaperFlow
             </span>
           </Link>
