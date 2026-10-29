@@ -64,7 +64,9 @@ Visit [https://paperflow.app](https://paperflow.app) and click "Install" to add 
 
 ## Features
 
-PaperFlow includes a comprehensive set of PDF editing features spanning three major development phases.
+The default app is a focused PDF reader. The core feature list lives in [`src/core/features.ts`](src/core/features.ts) and is described in [docs/core-features.md](docs/core-features.md). Optional modules (enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch) stay in the repo and are off unless a setting turns them on.
+
+PaperFlow also includes a comprehensive set of PDF editing features spanning three major development phases.
 
 ### Core PDF Editing (Phase 1)
 

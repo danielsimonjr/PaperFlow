@@ -23,11 +23,11 @@ PaperFlow is a PDF editor. It runs as a Progressive Web Application (PWA) in a b
 
 | Item | Count |
 |------|-------|
-| TypeScript files (file inventory) | 751 |
-| Exports (dependency graph) | 3405 |
-| Functions (dependency graph) | 1436 |
+| TypeScript files (file inventory) | 753 |
+| Exports (dependency graph) | 3417 |
+| Functions (dependency graph) | 1440 |
 | Classes (dependency graph) | 69 |
-| Interfaces (dependency graph) | 685 |
+| Interfaces (dependency graph) | 687 |
 | Zustand store modules, excluding index.ts | 26 |
 | Files in src/components, including index.ts | 209 |
 | Files in src/lib, including index.ts | 173 |
@@ -39,6 +39,7 @@ PaperFlow is a PDF editor. It runs as a Progressive Web Application (PWA) in a b
 ```
 src/
 ├── components/     # 209 files in 31 folders
+├── core/           # Core feature catalog, the product boundary
 ├── stores/         # 26 Zustand store modules
 ├── lib/            # 173 files in 29 folders
 ├── hooks/          # 26 hook modules
@@ -1315,8 +1316,8 @@ Check: `repo-tools check . --docs=docs/architecture`
 
 | Claim | Value | Source |
 |-------|-------|--------|
-| totalFiles | 751 | file-inventory.json |
-| totalExports | 3405 | dependency-graph.json |
-| totalFunctions | 1436 | dependency-graph.json |
+| totalFiles | 753 | file-inventory.json |
+| totalExports | 3417 | dependency-graph.json |
+| totalFunctions | 1440 | dependency-graph.json |
 | totalClasses | 69 | dependency-graph.json |
-| totalInterfaces | 685 | dependency-graph.json |
+| totalInterfaces | 687 | dependency-graph.json |
