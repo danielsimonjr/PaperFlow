@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Spread view sizes an empty slot from the facing page.** The blank side uses that page's width and height. When the facing page has no size yet, the slot uses the first page. Letter and other sizes line up with the page beside them.
+
 ### Added
 
 - **Enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch are off until a setting turns them on.**
