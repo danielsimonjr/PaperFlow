@@ -57,7 +57,6 @@
   "overrides": {
     "@rollup/plugin-terser": "^1.0.0",
     "serialize-javascript": "^7.0.5",
-    "shell-quote": "^1.8.4",
   },
   "packages": {
     "@acemir/cssom": ["@acemir/cssom@0.9.31", "", {}, "sha512-ZnR3GSaH+/vJ0YlHau21FjfLYjMpYVIzTD8M8vIEQvIGxeOXyXdzCI140rrCY862p/C/BbzWsjc1dgnM9mkoTA=="],

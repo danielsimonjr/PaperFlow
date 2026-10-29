@@ -83,8 +83,7 @@
   },
   "overrides": {
     "serialize-javascript": "^7.0.5",
-    "@rollup/plugin-terser": "^1.0.0",
-    "shell-quote": "^1.8.4"
+    "@rollup/plugin-terser": "^1.0.0"
   },
   "packageManager": "bun@1.4.2",
   "engines": {
