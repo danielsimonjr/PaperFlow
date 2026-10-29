@@ -27,16 +27,30 @@ export function OptionalModuleHost() {
  */
 function OptionalModuleSlot({ id }: { id: OptionalModuleId }) {
   const [Panel, setPanel] = useState<ComponentType | null>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    void loadOptionalModule(id).then((bundle) => {
-      if (!cancelled) setPanel(() => bundle.OptionalModulePanel);
-    });
+    setFailed(false);
+    void loadOptionalModule(id)
+      .then((bundle) => {
+        if (!cancelled) setPanel(() => bundle.OptionalModulePanel);
+      })
+      .catch(() => {
+        if (!cancelled) setFailed(true);
+      });
     return () => {
       cancelled = true;
     };
   }, [id]);
+
+  if (failed) {
+    return (
+      <p role="alert" data-testid={`optional-module-error-${id}`}>
+        Could not load {id}
+      </p>
+    );
+  }
 
   if (!Panel) {
     return <p data-testid={`optional-module-loading-${id}`}>Loading {id}</p>;

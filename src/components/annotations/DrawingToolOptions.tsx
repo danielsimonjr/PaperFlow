@@ -49,7 +49,7 @@ export function DrawingToolOptions({ onClose }: DrawingToolOptionsProps) {
           {DRAWING_COLORS.map((color) => (
             <button
               key={color.value}
-              className={`h-6 w-6 rounded-full transition-transform hover:scale-110 ${
+              className={`h-6 w-6 rounded-full border border-gray-400 transition-transform hover:scale-110 ${
                 activeColor === color.value
                   ? 'ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-800'
                   : ''

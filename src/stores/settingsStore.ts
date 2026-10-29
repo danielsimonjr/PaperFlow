@@ -231,11 +231,25 @@ export const useSettingsStore = create<SettingsState>()(
       },
 
       resetToDefaults: () => {
-        set(defaultSettings);
+        set({
+          ...defaultSettings,
+          optionalModules: defaultOptionalModuleFlags(),
+        });
       },
     }),
     {
       name: 'paperflow-settings',
+      merge: (persisted, current) => {
+        const saved = (persisted ?? {}) as Partial<typeof current>;
+        return {
+          ...current,
+          ...saved,
+          optionalModules: {
+            ...defaultOptionalModuleFlags(),
+            ...(saved.optionalModules ?? {}),
+          },
+        };
+      },
     }
   )
 );

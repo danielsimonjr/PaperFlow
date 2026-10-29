@@ -1,9 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PageCanvas } from './PageCanvas';
-import { PageSkeleton } from './PageSkeleton';
 import { PDFRenderer } from '@lib/pdf/renderer';
-import { useVisiblePages } from '@hooks/useVisiblePages';
-import { CanvasDisposer } from '@lib/performance/memoryManager';
 import { useUIStore } from '@stores/uiStore';
 import { cn } from '@utils/cn';
 import { spreadSlots, type ViewerLayout } from './viewLayout';
@@ -19,12 +16,39 @@ interface VirtualizedViewerProps {
 }
 
 const PAGE_GAP = 16;
-const DEFAULT_PAGE_WIDTH = 612;
+const PAGE_BUFFER = 2;
 const DEFAULT_PAGE_HEIGHT = 792;
+
+function pageStride(zoom: number): number {
+  return DEFAULT_PAGE_HEIGHT * (zoom / 100) + PAGE_GAP;
+}
+
+function clampPage(page: number, pageCount: number): number {
+  if (pageCount < 1) return 1;
+  return Math.min(pageCount, Math.max(1, page));
+}
+
+/**
+ * The page at the middle of the viewport. A zero height falls back to one page,
+ * which is what jsdom reports before layout.
+ */
+function pageAtScroll(
+  scrollTop: number,
+  viewport: number,
+  zoom: number,
+  pageCount: number
+): number {
+  const stride = pageStride(zoom);
+  const view = viewport > 0 ? viewport : stride;
+  const center = scrollTop + view / 2;
+  return clampPage(Math.floor(center / stride) + 1, pageCount);
+}
 
 /**
  * One viewer for single, continuous, and spread layouts.
- * Continuous mode draws the pages near the viewport. The other layouts draw the current page or pair.
+ * Continuous mode mounts the pages near the viewport, plus a two-page buffer.
+ * Scrolling reports the page at the center. A page change from the keyboard or
+ * the thumbnail sidebar scrolls to that page and does not get overwritten.
  * The hand tool pans the scroll area.
  */
 export function VirtualizedViewer({
@@ -37,69 +61,56 @@ export function VirtualizedViewer({
   onWheel,
 }: VirtualizedViewerProps) {
   const activeTool = useUIStore((state) => state.activeTool);
-  const ownRef = useRef<HTMLDivElement>(null);
-  const {
-    visiblePages,
-    currentVisiblePage,
-    registerPageElement,
-    containerRef,
-  } = useVisiblePages({
-    pageCount,
-    bufferSize: 2,
-  });
-  const scrollRef = layout === 'continuous' ? containerRef : ownRef;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollTop, setScrollTop] = useState(() => (currentPage - 1) * pageStride(zoom));
+  const [viewportHeight, setViewportHeight] = useState(0);
   const [isPanning, setIsPanning] = useState(false);
   const panStart = useRef({ x: 0, y: 0 });
   const fromScroll = useRef(false);
-  const canvasDisposerRef = useRef(new CanvasDisposer());
-  const previousVisibleRef = useRef<Set<number>>(new Set());
-  const currentVisibleSet = useMemo(
-    () => new Set(visiblePages.map((page) => page.pageNumber)),
-    [visiblePages]
-  );
 
   useEffect(() => {
-    if (layout !== 'continuous') return;
-    const disposer = canvasDisposerRef.current;
-    for (const pageNumber of previousVisibleRef.current) {
-      if (!currentVisibleSet.has(pageNumber)) {
-        disposer.dispose(`page-${pageNumber}`);
-      }
-    }
-    previousVisibleRef.current = new Set(currentVisibleSet);
-  }, [layout, currentVisibleSet]);
-
-  useEffect(() => {
-    const disposer = canvasDisposerRef.current;
-    return () => {
-      disposer.disposeAll();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (layout !== 'continuous') return;
-    if (currentVisiblePage !== currentPage) {
-      fromScroll.current = true;
-      onPageChange?.(currentVisiblePage);
-    }
-  }, [layout, currentVisiblePage, currentPage, onPageChange]);
+    const container = scrollRef.current;
+    if (!container || layout !== 'continuous' || typeof ResizeObserver === 'undefined') return;
+    const update = () => setViewportHeight(container.clientHeight);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [layout]);
 
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
-    if (layout === 'continuous') {
-      if (fromScroll.current) {
-        fromScroll.current = false;
-        return;
-      }
-      const page = container.querySelector<HTMLElement>(
-        `[data-page-number="${currentPage}"]`
-      );
-      page?.scrollIntoView?.({ block: 'start' });
+    if (layout !== 'continuous') {
+      container.scrollTo?.({ top: 0, left: 0 });
       return;
     }
-    container.scrollTo?.({ top: 0, left: 0 });
-  }, [layout, currentPage, scrollRef]);
+    if (fromScroll.current) {
+      fromScroll.current = false;
+      return;
+    }
+    const top = (clampPage(currentPage, pageCount) - 1) * pageStride(zoom);
+    setScrollTop(top);
+    if (typeof container.scrollTo === 'function') {
+      container.scrollTo({ top, left: 0 });
+    } else {
+      container.scrollTop = top;
+    }
+  }, [layout, currentPage, pageCount, zoom]);
+
+  const noteScroll = (top: number, viewport: number) => {
+    setScrollTop(top);
+    if (layout !== 'continuous') return;
+    const page = pageAtScroll(top, viewport, zoom, pageCount);
+    if (page !== currentPage) {
+      fromScroll.current = true;
+      onPageChange?.(page);
+    }
+  };
+
+  const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    noteScroll(event.currentTarget.scrollTop, event.currentTarget.clientHeight);
+  };
 
   const panClass = cn(
     activeTool === 'hand' && 'cursor-grab',
@@ -118,8 +129,10 @@ export function VirtualizedViewer({
 
   const onMouseMove = (event: React.MouseEvent) => {
     if (!isPanning || !scrollRef.current) return;
-    scrollRef.current.scrollLeft = panStart.current.x - event.clientX;
-    scrollRef.current.scrollTop = panStart.current.y - event.clientY;
+    const container = scrollRef.current;
+    container.scrollLeft = panStart.current.x - event.clientX;
+    container.scrollTop = panStart.current.y - event.clientY;
+    noteScroll(container.scrollTop, container.clientHeight);
   };
 
   const stopPan = () => setIsPanning(false);
@@ -127,7 +140,7 @@ export function VirtualizedViewer({
   if (layout === 'single') {
     return (
       <div
-        ref={ownRef}
+        ref={scrollRef}
         data-testid="view-mode"
         data-mode="single"
         className={cn(
@@ -149,7 +162,7 @@ export function VirtualizedViewer({
     const { left, right } = spreadSlots(currentPage, pageCount, true);
     return (
       <div
-        ref={ownRef}
+        ref={scrollRef}
         data-testid="view-mode"
         data-mode="spread"
         className={cn(
@@ -168,16 +181,21 @@ export function VirtualizedViewer({
     );
   }
 
-  const scaledWidth = DEFAULT_PAGE_WIDTH * (zoom / 100);
-  const scaledHeight = DEFAULT_PAGE_HEIGHT * (zoom / 100);
+  const stride = pageStride(zoom);
+  const anchor = pageAtScroll(scrollTop, viewportHeight, zoom, pageCount);
+  const start = Math.max(1, anchor - PAGE_BUFFER);
+  const end = Math.min(pageCount, anchor + PAGE_BUFFER);
+  const pagesToDraw: number[] = [];
+  for (let page = start; page <= end; page += 1) pagesToDraw.push(page);
 
   return (
     <div
-      ref={containerRef}
+      ref={scrollRef}
       data-testid="view-mode"
       data-mode="continuous"
       className={cn('h-full overflow-auto bg-gray-200 dark:bg-gray-800', panClass)}
       onWheel={onWheel}
+      onScroll={onScroll}
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseUp={stopPan}
@@ -185,26 +203,18 @@ export function VirtualizedViewer({
       role="document"
       aria-label="PDF document"
     >
-      <div className="flex flex-col items-center py-4">
-        {Array.from({ length: pageCount }, (_, index) => {
-          const pageNumber = index + 1;
-          return (
-            <div
-              key={pageNumber}
-              ref={(element) => registerPageElement(pageNumber, element)}
-              className="flex justify-center"
-              style={{ marginBottom: PAGE_GAP }}
-              data-page-number={pageNumber}
-              aria-label={`Page ${pageNumber}`}
-            >
-              {currentVisibleSet.has(pageNumber) ? (
-                <PageCanvas renderer={renderer} pageNumber={pageNumber} scale={zoom} />
-              ) : (
-                <PageSkeleton width={scaledWidth} height={scaledHeight} />
-              )}
-            </div>
-          );
-        })}
+      <div className="relative w-full" style={{ height: Math.max(pageCount, 0) * stride }}>
+        {pagesToDraw.map((pageNumber) => (
+          <div
+            key={pageNumber}
+            className="absolute left-0 right-0 flex justify-center"
+            style={{ top: (pageNumber - 1) * stride, height: stride - PAGE_GAP }}
+            data-page-number={pageNumber}
+            aria-label={`Page ${pageNumber}`}
+          >
+            <PageCanvas renderer={renderer} pageNumber={pageNumber} scale={zoom} />
+          </div>
+        ))}
       </div>
     </div>
   );

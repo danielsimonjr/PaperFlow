@@ -30,6 +30,17 @@ describe('CameraSignature', () => {
     vi.restoreAllMocks();
   });
 
+  function withFrameSize(width: number, height: number) {
+    Object.defineProperty(HTMLVideoElement.prototype, 'videoWidth', {
+      configurable: true,
+      get: () => width,
+    });
+    Object.defineProperty(HTMLVideoElement.prototype, 'videoHeight', {
+      configurable: true,
+      get: () => height,
+    });
+  }
+
   it('asks for the camera and mirrors the live preview', async () => {
     render(<CameraSignature onSignatureChange={() => {}} />);
 
@@ -39,7 +50,21 @@ describe('CameraSignature', () => {
     expect(screen.getByTestId('signature-camera')).toHaveStyle({ transform: 'scaleX(-1)' });
   });
 
+  it('stays disabled until the camera reports a frame size', async () => {
+    withFrameSize(0, 0);
+    const onSignatureChange = vi.fn();
+    render(<CameraSignature onSignatureChange={onSignatureChange} />);
+
+    await waitFor(() => {
+      expect(navigator.mediaDevices.getUserMedia).toHaveBeenCalled();
+    });
+    expect(screen.getByTestId('capture-signature')).toBeDisabled();
+    fireEvent.click(screen.getByTestId('capture-signature'));
+    expect(onSignatureChange).not.toHaveBeenCalled();
+  });
+
   it('saves a horizontally mirrored frame', async () => {
+    withFrameSize(2, 1);
     const putImageData = vi.fn();
     const pixels = new Uint8ClampedArray([9, 0, 0, 255, 3, 0, 0, 255]);
     vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(() => {

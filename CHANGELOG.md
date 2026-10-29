@@ -18,22 +18,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch are off until a setting turns them on.**
   `settingsStore.optionalModules` holds the flags, and every flag starts false. The settings page toggles them.
   `OptionalModuleHost` calls `loadOptionalModule`, which dynamic-imports that module. A module that is off is not
-  imported. The stores stay in the repo, and their existing tests still import them directly. Kiosk styles load with
-  the kiosk module instead of the main stylesheet.
+  imported. The flags persist with the rest of the settings, and a saved map is filled in with the defaults.
+  The Electron main process does not import the file watcher until a watch is requested. The stores stay in the
+  repo, and their existing tests still import them directly. Kiosk styles load with the kiosk module instead of
+  the main stylesheet.
 
 - **Single, continuous, and spread viewing share `VirtualizedViewer`.** The `layout` prop selects the
-  mode. Continuous mode still draws only the pages near the viewport. Spread mode keeps the cover on
-  the right and an empty slot where a page is missing. `SinglePageView`, `ContinuousView`, and
-  `SpreadView` are removed. `tests/unit/components/viewer/VirtualizedViewer.test.tsx` covers the three
-  layouts, and `tests/unit/components/viewer/viewLayout.test.ts` covers the spread pairs.
+  mode. Continuous mode mounts the pages near the viewport, plus a two-page buffer, and tracks the
+  page at the center. Keyboard and thumbnail page changes scroll to that page. Scrolling does not
+  reset the document to page 1. Spread mode keeps the cover on the right and an empty slot where a
+  page is missing. `SinglePageView`, `ContinuousView`, and `SpreadView` are removed.
+  `tests/unit/components/viewer/VirtualizedViewer.test.tsx` covers the three layouts, and
+  `tests/unit/components/viewer/viewLayout.test.ts` covers the spread pairs.
 
 - **Camera signatures, PDF-content dark mode, and drawing edits match the core catalog.**
   A camera capture mirrors each row of pixels so ink held toward the lens reads left to right, and the
   live preview uses the same reverse. The editor toolbar opens that capture, and saved captures reuse
   the existing signature list.
-  Dark mode adds `pdf-page-invert` on the page, and the loaded stylesheet inverts the canvas and the
-  text layer. Annotation colors stay unfiltered. A selected drawing can be recolored, and dragging it
-  moves the strokes in PDF space with undo.
+  Dark mode inverts only the PDF bitmap (`canvas.pdf-content-canvas`). Highlights, drawings,
+  signatures, and the text layer stay unfiltered. Print and print-to-PDF drop the filter.
+  Capture stays off until the camera reports a frame size. A selected drawing can be recolored, and
+  dragging it moves the strokes in PDF space. The hand tool still pans. Undo and redo restore the move.
 
 - **The shell uses a warm off-white light theme and a near-black dark theme.** `src/styles/theme.ts`
   is the palette. Tailwind's `white` and `gray` scales read it, and `src/index.css` sets the same

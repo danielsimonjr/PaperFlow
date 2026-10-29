@@ -145,14 +145,11 @@ export function PageCanvas({
   const scaleValue = scale / 100;
 
   return (
-    <div
-      className={`relative inline-block ${pdfContentDarkClass(darkMode)}`}
-      data-testid="pdf-page"
-    >
-      {/* PDF Canvas */}
+    <div className="relative inline-block" data-testid="pdf-page">
+      {/* PDF bitmap. Dark mode inverts this canvas only. */}
       <canvas
         ref={canvasRef}
-        className="block border border-gray-200 dark:border-gray-800"
+        className={`pdf-content-canvas block border border-gray-200 dark:border-gray-800 ${pdfContentDarkClass(darkMode)}`}
         style={{ background: 'white' }}
       />
 

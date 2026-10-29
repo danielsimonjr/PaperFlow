@@ -100,4 +100,35 @@ describe('optional modules', () => {
       expect(screen.getByTestId('optional-module-kiosk')).toBeInTheDocument();
     });
   });
+
+  it('persists a module flag and fills in flags missing from older settings', async () => {
+    useSettingsStore.getState().setOptionalModule('kiosk', true);
+    const saved = localStorage.getItem('paperflow-settings');
+    expect(saved).toBeTruthy();
+    const parsed = JSON.parse(saved!) as { state: { optionalModules: { kiosk: boolean } } };
+    expect(parsed.state.optionalModules.kiosk).toBe(true);
+
+    parsed.state.optionalModules = { kiosk: true } as { kiosk: boolean };
+    useSettingsStore.setState({ optionalModules: defaultOptionalModuleFlags() });
+    localStorage.setItem('paperflow-settings', JSON.stringify(parsed));
+    await useSettingsStore.persist.rehydrate();
+
+    const flags = useSettingsStore.getState().optionalModules;
+    expect(flags.kiosk).toBe(true);
+    expect(flags.license).toBe(false);
+    expect(flags.fileWatch).toBe(false);
+
+    useSettingsStore.getState().resetToDefaults();
+    expect(useSettingsStore.getState().optionalModules.kiosk).toBe(false);
+  });
+
+  it('does not import the file watcher when the Electron main process starts', () => {
+    const staticImport = /import\s+[\s\S]*?\sfrom\s+['"][^'"]*fileWatcher['"]/;
+    const main = readFileSync(resolve('electron/main/index.ts'), 'utf8');
+    const handlers = readFileSync(resolve('electron/ipc/fileHandlers.ts'), 'utf8');
+    expect(main).not.toMatch(staticImport);
+    expect(handlers).not.toMatch(staticImport);
+    expect(handlers).toContain("import('../fileWatcher')");
+    expect(main).toContain("import('../fileWatcher')");
+  });
 });

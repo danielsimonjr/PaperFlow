@@ -19,7 +19,6 @@ import type {
   AutoSaveOptions,
   BackupOptions,
 } from './types';
-import { watchFile, unwatchFile, unwatchAll } from '../fileWatcher';
 import { enableAutoSave, disableAutoSave, getRecoveryFiles, clearRecoveryFile } from '../autoSave';
 import { createBackup, listBackups, restoreBackup, deleteBackup } from '../backup';
 import {
@@ -402,16 +401,20 @@ export function setupFileHandlers(ipcMain: IpcMain): void {
   });
 
   // === File Watcher ===
+  // Loaded on the first watch request. The main process does not import it at startup.
 
   ipcMain.handle(IPC_CHANNELS.WATCHER_START, async (_event, filePath: string) => {
+    const { watchFile } = await import('../fileWatcher');
     return watchFile(filePath);
   });
 
   ipcMain.handle(IPC_CHANNELS.WATCHER_STOP, async (_event, filePath: string) => {
+    const { unwatchFile } = await import('../fileWatcher');
     return unwatchFile(filePath);
   });
 
   ipcMain.handle(IPC_CHANNELS.WATCHER_STOP_ALL, async () => {
+    const { unwatchAll } = await import('../fileWatcher');
     await unwatchAll();
   });
 
