@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **Three high advisories cleared by bumping `electron`, `vite`, and transitive `undici`.**
+  CI runs `bun audit --audit-level=high`; the lockfile needed `electron` ^41.10.7 → ^42.11.18
+  (GHSA-jr5w-w6x2-84p9, no patched 41.x), `vite` ^7.3.6 → ^7.3.7 (GHSA-587h-7wmj-h5pm), and
+  `undici` 7.30.1 plus `node-gyp/undici` 6.29.1. Parent ranges on `@electron/get` and `node-gyp`
+  already allowed those patches, so `package.json` `overrides` did not add `undici`. `follow-redirects`
+  is not in the tree (`got` 11.8.6 does not pull it). Vite stayed on 7.x so a careless `bun update vite`
+  would not nest Vitest on Vite 8. Electron 42 removed `ELECTRON_SKIP_BINARY_DOWNLOAD`; `ci.yml`,
+  `deploy.yml`, and `staging.yml` dropped the dead env var and document that the binary loads on first
+  `require('electron')`, which these web CI jobs never do. `bun audit --audit-level=high` reports no
+  vulnerabilities (841 packages checked). Lint, typecheck, build, and doc gates exit 0; `test:coverage`
+  reports 174 test files, 2632 passed, 9 skipped, 1 todo (2642 total).
+
 ### Removed
 
 - **Unused packages.** `@pdf-lib/fontkit`, `@radix-ui/react-tooltip`, `workbox-window`, `concurrently`,
