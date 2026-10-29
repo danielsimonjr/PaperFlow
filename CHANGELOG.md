@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Camera signatures, PDF-content dark mode, and drawing edits match the core catalog.**
+  A camera capture mirrors each row of pixels so ink held toward the lens reads left to right, and the
+  live preview uses the same reverse. The editor toolbar opens that capture, and saved captures reuse
+  the existing signature list.
+  Dark mode inverts only the PDF bitmap (`canvas.pdf-content-canvas`). Highlights, drawings,
+  signatures, and the text layer stay unfiltered. Print and print-to-PDF drop the filter.
+  Capture stays off until the camera reports a frame size. A selected drawing can be recolored, and
+  dragging it moves the strokes in PDF space. The hand tool still pans. Undo and redo restore the move.
+
 - **The shell uses a warm off-white light theme and a near-black dark theme.** `src/styles/theme.ts`
   is the palette. Tailwind's `white` and `gray` scales read it, and `src/index.css` sets the same
   values on `--paper-bg`, `--paper-surface`, `--paper-ink` and `--paper-border`. Borders use the

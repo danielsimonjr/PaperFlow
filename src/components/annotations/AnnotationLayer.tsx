@@ -136,6 +136,7 @@ export function AnnotationLayer({
               pageHeight={pageHeight}
               onSelect={() => handleSelect(annotation.id)}
               onDelete={() => handleDelete(annotation.id)}
+              onPathsChange={(paths) => handleUpdate(annotation.id, { paths })}
             />
           );
 

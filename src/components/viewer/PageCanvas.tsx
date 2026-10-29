@@ -13,6 +13,7 @@ import { LineTool } from '@components/annotations/LineTool';
 import { useAnnotationStore } from '@stores/annotationStore';
 import { useUIStore } from '@stores/uiStore';
 import { useFormStore } from '@stores/formStore';
+import { pdfContentDarkClass } from '@lib/pdf/contentDarkMode';
 
 interface PageCanvasProps {
   renderer: PDFRenderer;
@@ -43,6 +44,7 @@ export function PageCanvas({
   const activeTool = useAnnotationStore((state) => state.activeTool);
   const activeShapeType = useAnnotationStore((state) => state.activeShapeType);
   const editorTool = useUIStore((state) => state.activeTool);
+  const darkMode = useUIStore((state) => state.darkMode);
   const formFields = useFormStore((state) => state.getFieldsForPage(pageNumber - 1));
 
   const renderPage = useCallback(async () => {
@@ -143,11 +145,11 @@ export function PageCanvas({
   const scaleValue = scale / 100;
 
   return (
-    <div className="relative inline-block">
-      {/* PDF Canvas */}
+    <div className="relative inline-block" data-testid="pdf-page">
+      {/* PDF bitmap. Dark mode inverts this canvas only. */}
       <canvas
         ref={canvasRef}
-        className="block border border-gray-200 dark:border-gray-800"
+        className={`pdf-content-canvas block border border-gray-200 dark:border-gray-800 ${pdfContentDarkClass(darkMode)}`}
         style={{ background: 'white' }}
       />
 

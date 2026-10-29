@@ -1,13 +1,14 @@
 import { useState, useCallback, useEffect } from 'react';
-import { X, Pencil, Type, Image as ImageIcon, Star, Check } from 'lucide-react';
+import { X, Pencil, Type, Image as ImageIcon, Camera, Star, Check } from 'lucide-react';
 import { Button } from '@components/ui/Button';
 import { DrawSignature } from './DrawSignature';
 import { TypeSignature } from './TypeSignature';
 import { ImageSignature } from './ImageSignature';
+import { CameraSignature } from './CameraSignature';
 import { SignatureList } from './SignatureList';
 import { useSignatureStore, type StoredSignature } from '@stores/signatureStore';
 
-type TabType = 'draw' | 'type' | 'image' | 'saved';
+type TabType = 'draw' | 'type' | 'image' | 'camera' | 'saved';
 
 interface SignatureModalProps {
   isOpen: boolean;
@@ -18,7 +19,8 @@ interface SignatureModalProps {
 
 /**
  * Modal for creating and managing signatures.
- * Supports draw, type, and image upload methods.
+ * The modal offers draw, type, upload, and camera capture.
+ * A camera capture is mirrored, then saved for reuse.
  */
 export function SignatureModal({ isOpen, onClose, isInitials = false, onSelect }: SignatureModalProps) {
   const [activeTab, setActiveTab] = useState<TabType>('draw');
@@ -45,7 +47,8 @@ export function SignatureModal({ isOpen, onClose, isInitials = false, onSelect }
   const handleSave = useCallback(() => {
     if (!signatureData) return;
 
-    const type = activeTab as 'draw' | 'type' | 'image';
+    const type: 'draw' | 'type' | 'image' =
+      activeTab === 'type' ? 'type' : activeTab === 'draw' ? 'draw' : 'image';
     const name = signatureName.trim() || `${isInitials ? 'Initials' : 'Signature'} ${filteredSignatures.length + 1}`;
 
     const id = addSignature({
@@ -93,6 +96,7 @@ export function SignatureModal({ isOpen, onClose, isInitials = false, onSelect }
     { id: 'draw' as TabType, label: 'Draw', icon: Pencil, show: true },
     { id: 'type' as TabType, label: 'Type', icon: Type, show: true },
     { id: 'image' as TabType, label: 'Image', icon: ImageIcon, show: true },
+    { id: 'camera' as TabType, label: 'Camera', icon: Camera, show: true },
   ].filter((t) => t.show);
 
   return (
@@ -143,6 +147,8 @@ export function SignatureModal({ isOpen, onClose, isInitials = false, onSelect }
           {activeTab === 'type' && <TypeSignature onSignatureChange={handleSignatureChange} isInitials={isInitials} />}
 
           {activeTab === 'image' && <ImageSignature onSignatureChange={handleSignatureChange} isInitials={isInitials} />}
+
+          {activeTab === 'camera' && <CameraSignature onSignatureChange={handleSignatureChange} />}
 
           {/* Name input (for new signatures) */}
           {activeTab !== 'saved' && signatureData && (
