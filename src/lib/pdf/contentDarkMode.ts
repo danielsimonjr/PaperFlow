@@ -1,5 +1,7 @@
 /**
- * Class that inverts the PDF canvas and the text layer while dark mode is on.
+ * Class for the PDF bitmap canvas while dark mode is on.
+ * It is applied to that canvas only. Highlights, drawings, signatures,
+ * and the text layer stay outside the filter.
  */
 export const PDF_CONTENT_DARK_CLASS = 'pdf-page-invert';
 
