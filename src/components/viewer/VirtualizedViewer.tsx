@@ -19,8 +19,10 @@ const PAGE_GAP = 16;
 const PAGE_BUFFER = 2;
 const DEFAULT_PAGE_HEIGHT = 792;
 
-function pageStride(zoom: number): number {
-  return DEFAULT_PAGE_HEIGHT * (zoom / 100) + PAGE_GAP;
+interface MeasuredPages {
+  renderer: PDFRenderer;
+  pageCount: number;
+  heights: number[];
 }
 
 function clampPage(page: number, pageCount: number): number {
@@ -29,27 +31,70 @@ function clampPage(page: number, pageCount: number): number {
 }
 
 /**
- * The page at the middle of the viewport. A zero height falls back to one page,
- * which is what jsdom reports before layout.
+ * PDF height in points. Unknown pages use a US Letter estimate until the
+ * renderer reports the real size.
+ */
+function pdfHeight(measured: MeasuredPages | null, pageCount: number, pageNumber: number): number {
+  if (!measured || measured.pageCount !== pageCount) return DEFAULT_PAGE_HEIGHT;
+  const height = measured.heights[pageNumber - 1];
+  return height && height > 0 ? height : DEFAULT_PAGE_HEIGHT;
+}
+
+/** Distance from the top of the scroll content to the top of a 1-based page. */
+function pageOffset(
+  pageNumber: number,
+  zoom: number,
+  measured: MeasuredPages | null,
+  pageCount: number
+): number {
+  const scale = zoom / 100;
+  let top = 0;
+  for (let page = 1; page < pageNumber; page += 1) {
+    top += pdfHeight(measured, pageCount, page) * scale + PAGE_GAP;
+  }
+  return top;
+}
+
+function pageSlot(pageNumber: number, zoom: number, measured: MeasuredPages | null, pageCount: number) {
+  const scale = zoom / 100;
+  return {
+    top: pageOffset(pageNumber, zoom, measured, pageCount),
+    height: pdfHeight(measured, pageCount, pageNumber) * scale,
+  };
+}
+
+/**
+ * The page at the top of the viewport. Keyboard and thumbnail navigation scroll
+ * a page to that edge, so the probe stays on the page they asked for.
+ * A zero height falls back to one page, which is what jsdom reports before layout.
  */
 function pageAtScroll(
   scrollTop: number,
   viewport: number,
   zoom: number,
-  pageCount: number
+  pageCount: number,
+  measured: MeasuredPages | null
 ): number {
-  const stride = pageStride(zoom);
-  const view = viewport > 0 ? viewport : stride;
-  const center = scrollTop + view / 2;
-  return clampPage(Math.floor(center / stride) + 1, pageCount);
+  const scale = zoom / 100;
+  const firstStride = pdfHeight(measured, pageCount, 1) * scale + PAGE_GAP;
+  const view = viewport > 0 ? viewport : firstStride;
+  const probe = scrollTop + Math.min(24, view / 2);
+  let top = 0;
+  for (let page = 1; page <= pageCount; page += 1) {
+    const stride = pdfHeight(measured, pageCount, page) * scale + PAGE_GAP;
+    if (probe < top + stride) return page;
+    top += stride;
+  }
+  return clampPage(pageCount, pageCount);
 }
 
 /**
  * One viewer for single, continuous, and spread layouts.
  * Continuous mode mounts the pages near the viewport, plus a two-page buffer.
- * Scrolling reports the page at the center. A page change from the keyboard or
- * the thumbnail sidebar scrolls to that page and does not get overwritten.
- * The hand tool pans the scroll area.
+ * Each slot uses that page's PDF height, so a page that is not US Letter does
+ * not overlap the next one. Scrolling reports the page at the top of the
+ * viewport. A page change from the keyboard or the thumbnail sidebar scrolls
+ * to that page and does not get overwritten. The hand tool pans the scroll area.
  */
 export function VirtualizedViewer({
   layout,
@@ -62,11 +107,14 @@ export function VirtualizedViewer({
 }: VirtualizedViewerProps) {
   const activeTool = useUIStore((state) => state.activeTool);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [scrollTop, setScrollTop] = useState(() => (currentPage - 1) * pageStride(zoom));
+  const [scrollTop, setScrollTop] = useState(() => (currentPage - 1) * (DEFAULT_PAGE_HEIGHT * (zoom / 100) + PAGE_GAP));
   const [viewportHeight, setViewportHeight] = useState(0);
+  const [measured, setMeasured] = useState<MeasuredPages | null>(null);
   const [isPanning, setIsPanning] = useState(false);
   const panStart = useRef({ x: 0, y: 0 });
   const fromScroll = useRef(false);
+  const positioning = useRef(false);
+  const pageHeights = measured?.renderer === renderer && measured.pageCount === pageCount ? measured : null;
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -79,6 +127,24 @@ export function VirtualizedViewer({
   }, [layout]);
 
   useEffect(() => {
+    if (layout !== 'continuous' || pageCount < 1 || typeof renderer.getPageInfo !== 'function') return;
+    let cancelled = false;
+    void Promise.all(
+      Array.from({ length: pageCount }, (_, index) =>
+        renderer
+          .getPageInfo(index + 1)
+          .then((info) => info.height)
+          .catch(() => DEFAULT_PAGE_HEIGHT)
+      )
+    ).then((heights) => {
+      if (!cancelled) setMeasured({ renderer, pageCount, heights });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [layout, renderer, pageCount]);
+
+  useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
     if (layout !== 'continuous') {
@@ -89,19 +155,22 @@ export function VirtualizedViewer({
       fromScroll.current = false;
       return;
     }
-    const top = (clampPage(currentPage, pageCount) - 1) * pageStride(zoom);
+    const top = pageOffset(clampPage(currentPage, pageCount), zoom, pageHeights, pageCount);
+    positioning.current = true;
     setScrollTop(top);
     if (typeof container.scrollTo === 'function') {
       container.scrollTo({ top, left: 0 });
     } else {
       container.scrollTop = top;
     }
-  }, [layout, currentPage, pageCount, zoom]);
+    positioning.current = false;
+  }, [layout, currentPage, pageCount, zoom, pageHeights]);
 
   const noteScroll = (top: number, viewport: number) => {
+    if (positioning.current) return;
     setScrollTop(top);
     if (layout !== 'continuous') return;
-    const page = pageAtScroll(top, viewport, zoom, pageCount);
+    const page = pageAtScroll(top, viewport, zoom, pageCount, pageHeights);
     if (page !== currentPage) {
       fromScroll.current = true;
       onPageChange?.(page);
@@ -181,12 +250,12 @@ export function VirtualizedViewer({
     );
   }
 
-  const stride = pageStride(zoom);
-  const anchor = pageAtScroll(scrollTop, viewportHeight, zoom, pageCount);
+  const anchor = pageAtScroll(scrollTop, viewportHeight, zoom, pageCount, pageHeights);
   const start = Math.max(1, anchor - PAGE_BUFFER);
   const end = Math.min(pageCount, anchor + PAGE_BUFFER);
   const pagesToDraw: number[] = [];
   for (let page = start; page <= end; page += 1) pagesToDraw.push(page);
+  const contentHeight = pageOffset(pageCount + 1, zoom, pageHeights, pageCount);
 
   return (
     <div
@@ -203,18 +272,21 @@ export function VirtualizedViewer({
       role="document"
       aria-label="PDF document"
     >
-      <div className="relative w-full" style={{ height: Math.max(pageCount, 0) * stride }}>
-        {pagesToDraw.map((pageNumber) => (
-          <div
-            key={pageNumber}
-            className="absolute left-0 right-0 flex justify-center"
-            style={{ top: (pageNumber - 1) * stride, height: stride - PAGE_GAP }}
-            data-page-number={pageNumber}
-            aria-label={`Page ${pageNumber}`}
-          >
-            <PageCanvas renderer={renderer} pageNumber={pageNumber} scale={zoom} />
-          </div>
-        ))}
+      <div className="relative w-full" style={{ height: contentHeight }}>
+        {pagesToDraw.map((pageNumber) => {
+          const slot = pageSlot(pageNumber, zoom, pageHeights, pageCount);
+          return (
+            <div
+              key={pageNumber}
+              className="absolute left-0 right-0 flex justify-center"
+              style={{ top: slot.top, height: slot.height }}
+              data-page-number={pageNumber}
+              aria-label={`Page ${pageNumber}`}
+            >
+              <PageCanvas renderer={renderer} pageNumber={pageNumber} scale={zoom} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
