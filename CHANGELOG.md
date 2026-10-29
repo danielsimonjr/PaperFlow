@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Single, continuous, and spread viewing share `VirtualizedViewer`.** The `layout` prop selects the
-  mode. Continuous mode still draws only the pages near the viewport. Spread mode keeps the cover on
-  the right and an empty slot where a page is missing. `SinglePageView`, `ContinuousView`, and
-  `SpreadView` are removed. `tests/unit/components/viewer/VirtualizedViewer.test.tsx` covers the three
-  layouts, and `tests/unit/components/viewer/viewLayout.test.ts` covers the spread pairs.
+  mode. Continuous mode mounts the pages near the viewport, plus a two-page buffer, and tracks the
+  page at the center. Keyboard and thumbnail page changes scroll to that page. Scrolling does not
+  reset the document to page 1. Spread mode keeps the cover on the right and an empty slot where a
+  page is missing. `SinglePageView`, `ContinuousView`, and `SpreadView` are removed.
+  `tests/unit/components/viewer/VirtualizedViewer.test.tsx` covers the three layouts, and
+  `tests/unit/components/viewer/viewLayout.test.ts` covers the spread pairs.
 
 - **Camera signatures, PDF-content dark mode, and drawing edits match the core catalog.**
   A camera capture mirrors each row of pixels so ink held toward the lens reads left to right, and the

@@ -73,7 +73,7 @@ describe('VirtualizedViewer layouts', () => {
     expect(pages()).toEqual(['2', '3']);
   });
 
-  it('keeps a slot for every page and draws the visible one in continuous layout', () => {
+  it('draws the current page and a two-page buffer in continuous layout', () => {
     render(
       <VirtualizedViewer
         layout="continuous"
@@ -84,8 +84,71 @@ describe('VirtualizedViewer layouts', () => {
       />
     );
     expect(screen.getByTestId('view-mode')).toHaveAttribute('data-mode', 'continuous');
-    expect(screen.getAllByLabelText(/Page /)).toHaveLength(5);
+    expect(screen.getAllByLabelText(/Page /)).toHaveLength(3);
     expect(pages()).toEqual(['1', '2', '3']);
+  });
+
+  it('opens on the current page instead of resetting to page 1', () => {
+    const onPageChange = vi.fn();
+    render(
+      <VirtualizedViewer
+        layout="continuous"
+        renderer={renderer}
+        pageCount={8}
+        currentPage={4}
+        zoom={100}
+        onPageChange={onPageChange}
+      />
+    );
+    expect(onPageChange).not.toHaveBeenCalled();
+    expect(pages()).toEqual(['2', '3', '4', '5', '6']);
+  });
+
+  it('follows a later page change and keeps a scroll report from jumping backward', () => {
+    const onPageChange = vi.fn();
+    const { rerender } = render(
+      <VirtualizedViewer
+        layout="continuous"
+        renderer={renderer}
+        pageCount={8}
+        currentPage={1}
+        zoom={100}
+        onPageChange={onPageChange}
+      />
+    );
+
+    rerender(
+      <VirtualizedViewer
+        layout="continuous"
+        renderer={renderer}
+        pageCount={8}
+        currentPage={4}
+        zoom={100}
+        onPageChange={onPageChange}
+      />
+    );
+    expect(pages()).toEqual(['2', '3', '4', '5', '6']);
+
+    const view = screen.getByTestId('view-mode');
+    Object.defineProperty(view, 'clientHeight', { configurable: true, value: 808 });
+    Object.defineProperty(view, 'scrollTop', { configurable: true, writable: true, value: 5 * 808 });
+    fireEvent.scroll(view);
+    expect(onPageChange).toHaveBeenCalledTimes(1);
+    expect(onPageChange).toHaveBeenCalledWith(6);
+
+    rerender(
+      <VirtualizedViewer
+        layout="continuous"
+        renderer={renderer}
+        pageCount={8}
+        currentPage={6}
+        zoom={100}
+        onPageChange={onPageChange}
+      />
+    );
+    expect(onPageChange).toHaveBeenCalledTimes(1);
+    expect(pages()).toContain('6');
+    expect(pages()).not.toContain('1');
   });
 
   it('pans while the hand tool is down', () => {
