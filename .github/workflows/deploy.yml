@@ -16,16 +16,12 @@ on:
           - production
           - staging
 
-# Electron's postinstall downloads a ~100 MB binary from GitHub releases. NOTHING in this
-# workflow uses it — lint is oxlint, typecheck is `tsc --noEmit`, test is vitest, build is the
-# web vite build, and the e2e job drives Playwright CHROMIUM, not Electron. Downloading it in
-# every job was pure waste AND a permanent transient-failure surface: on 2026-07-14 `bun install --frozen-lockfile
-# died with `TypeError: fetch failed` mid-download and took Type Check red on main with it.
-#
-# Do NOT set this in cross-platform.yml / build-desktop.yml — those genuinely launch Electron
-# and package installers, and need the real binary.
-env:
-  ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+# Electron 42+ does not download its binary during `bun install`. The binary is
+# fetched the first time the `electron` module is loaded. Nothing in this workflow
+# loads it (lint, typecheck, vitest, the web Vite build, Playwright Chromium).
+# Desktop packaging workflows download Electron through electron-builder's
+# `@electron/get`. `ELECTRON_SKIP_BINARY_DOWNLOAD` was removed by Electron 42;
+# do not set it.
 
 concurrency:
   group: deploy-${{ github.ref }}
