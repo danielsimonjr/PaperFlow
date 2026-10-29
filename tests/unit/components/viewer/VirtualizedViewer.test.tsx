@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { VirtualizedViewer } from '@/components/viewer/VirtualizedViewer';
 import { useUIStore } from '@stores/uiStore';
 import type { PDFRenderer } from '@lib/pdf/renderer';
@@ -149,6 +149,52 @@ describe('VirtualizedViewer layouts', () => {
     expect(onPageChange).toHaveBeenCalledTimes(1);
     expect(pages()).toContain('6');
     expect(pages()).not.toContain('1');
+  });
+
+  it('keeps the current page when the viewport is taller than one page', () => {
+    const onPageChange = vi.fn();
+    render(
+      <VirtualizedViewer
+        layout="continuous"
+        renderer={renderer}
+        pageCount={8}
+        currentPage={1}
+        zoom={100}
+        onPageChange={onPageChange}
+      />
+    );
+    const view = screen.getByTestId('view-mode');
+    Object.defineProperty(view, 'clientHeight', { configurable: true, value: 3000 });
+    Object.defineProperty(view, 'scrollTop', { configurable: true, writable: true, value: 0 });
+    fireEvent.scroll(view);
+    expect(onPageChange).not.toHaveBeenCalled();
+  });
+
+  it('spaces continuous pages by their PDF height', async () => {
+    const sized = {
+      getPageInfo: vi.fn(async (pageNumber: number) => ({
+        pageNumber,
+        width: 500,
+        height: pageNumber === 1 ? 100 : 400,
+        rotation: 0,
+      })),
+    } as unknown as PDFRenderer;
+
+    render(
+      <VirtualizedViewer
+        layout="continuous"
+        renderer={sized}
+        pageCount={3}
+        currentPage={1}
+        zoom={100}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Page 2')).toHaveStyle({ top: '116px', height: '400px' });
+    });
+    expect(screen.getByLabelText('Page 1')).toHaveStyle({ top: '0px', height: '100px' });
+    expect(pages()).toEqual(['1', '2', '3']);
   });
 
   it('pans while the hand tool is down', () => {
