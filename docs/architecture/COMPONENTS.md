@@ -32,19 +32,16 @@ No file under `src/` or `electron/` imports `AppLayout`.
 | Component | Props | Store hooks |
 |---|---|---|
 | `PDFViewer` | None | `useDocumentStore` |
-| `SinglePageView` | `renderer`, `currentPage`, `zoom`, `onWheel?` | `useUIStore` |
-| `ContinuousView` | `renderer`, `pageCount`, `currentPage`, `zoom`, `onPageChange?`, `onWheel?` | `useUIStore` |
-| `SpreadView` | `renderer`, `currentPage`, `pageCount`, `zoom`, `coverMode?`, `onWheel?` | None |
+| `VirtualizedViewer` | `layout`, `renderer`, `pageCount`, `currentPage`, `zoom`, `onPageChange?`, `onWheel?` | `useUIStore` |
 | `PageCanvas` | `renderer`, `pageNumber`, `scale`, `onPageRendered?` | `useAnnotationStore`, `useUIStore`, `useFormStore` |
 | `TextLayer` | `renderer`, `pageNumber`, `scale`, `width`, `height`, `onTextSelected?` | None |
-| `VirtualizedViewer` | `renderer`, `pageCount`, `currentPage`, `zoom`, `onPageChange?`, `onWheel?` | None |
 | `PageNavigation` | `className?` | `useDocumentStore` |
 | `ZoomControls` | `className?` | `useDocumentStore` |
 | `DropZone` | `onFileDrop`, `accept?`, `multiple?`, `disabled?`, `className?`, `children?` | None |
 | `PageSkeleton` | `width?`, `height?`, `className?` | None |
 | `ThumbnailSkeleton` | `className?` | None |
 
-No file under `src/` or `electron/` imports `VirtualizedViewer`.
+`PDFViewer` imports `VirtualizedViewer`. The `layout` prop is `single`, `continuous`, or `spread`.
 
 ### Sidebar (`src/components/sidebar/`)
 
@@ -755,8 +752,8 @@ The lists show the import edges that the source files declare.
 - `src/components/layout/Header.tsx` imports `ThemeToggle`, `Button`, `ImageExportDialog`, `CompressDialog` and `PrintDialog`.
 - `src/components/layout/Sidebar.tsx` imports `ThumbnailSidebar` and `OutlinePanel`.
 - `src/components/sidebar/ThumbnailSidebar.tsx` imports `DraggableThumbnail`, `PageContextMenu`, `MoveToDialog`, `InsertPageDialog`, `MergeDialog` and `SplitDialog`.
-- `src/components/viewer/PDFViewer.tsx` imports `SinglePageView`, `ContinuousView` and `SpreadView`.
-- `SinglePageView`, `ContinuousView` and `SpreadView` import `PageCanvas`.
+- `src/components/viewer/PDFViewer.tsx` imports `VirtualizedViewer`.
+- `VirtualizedViewer` imports `PageCanvas` and `PageSkeleton`.
 - `src/components/viewer/PageCanvas.tsx` imports `TextLayer`, `AnnotationLayer`, `FormLayer`, `SelectionPopup`, `NoteTool`, `DrawingCanvas`, `RectangleTool`, `EllipseTool`, `ArrowTool` and `LineTool`.
 - `src/components/lazy/index.ts` loads `SignatureModal`, `DrawingCanvas`, `ImageExportDialog`, `CompressDialog`, `PrintDialog`, `MergeDialog` and `SplitDialog` with dynamic imports.
 

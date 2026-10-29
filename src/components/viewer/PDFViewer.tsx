@@ -1,8 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useDocumentStore } from '@stores/documentStore';
-import { SinglePageView } from './SinglePageView';
-import { ContinuousView } from './ContinuousView';
-import { SpreadView } from './SpreadView';
+import { VirtualizedViewer } from './VirtualizedViewer';
 
 /**
  * The top-level viewer shows the open document in the current view mode.
@@ -154,42 +152,15 @@ export function PDFViewer() {
     );
   }
 
-  // Render based on view mode
-  switch (viewMode) {
-    case 'single':
-      return (
-        <SinglePageView
-          renderer={renderer}
-          currentPage={currentPage}
-          zoom={zoom}
-          onWheel={handleWheel}
-        />
-      );
-
-    case 'continuous':
-      return (
-        <ContinuousView
-          renderer={renderer}
-          pageCount={pageCount}
-          currentPage={currentPage}
-          zoom={zoom}
-          onPageChange={handlePageChange}
-          onWheel={handleWheel}
-        />
-      );
-
-    case 'spread':
-      return (
-        <SpreadView
-          renderer={renderer}
-          currentPage={currentPage}
-          pageCount={pageCount}
-          zoom={zoom}
-          onWheel={handleWheel}
-        />
-      );
-
-    default:
-      return null;
-  }
+  return (
+    <VirtualizedViewer
+      layout={viewMode}
+      renderer={renderer}
+      pageCount={pageCount}
+      currentPage={currentPage}
+      zoom={zoom}
+      onPageChange={handlePageChange}
+      onWheel={handleWheel}
+    />
+  );
 }

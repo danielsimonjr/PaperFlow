@@ -201,7 +201,7 @@ Components in `components/annotations/`: `AnnotationLayer` (SVG overlay), `Highl
 
 - **Annotation tools** (highlight, underline, strikethrough, note): Stored in `annotationStore.activeTool`
 - **Editor tools** (select, hand, text, draw, shape): Stored in `uiStore.activeTool`
-- When adding new tool behavior, ensure view components (SinglePageView, ContinuousView) consume the tool state from the global store
+- When adding new tool behavior, ensure `VirtualizedViewer` consumes the tool state from the global store
 - Auto-annotation: When annotation tool is active, text selection auto-creates annotations (see `PageCanvas.tsx`)
 
 ### Drawing/Annotation Tool Layering

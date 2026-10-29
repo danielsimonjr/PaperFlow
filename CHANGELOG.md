@@ -7,7 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **The architecture overview counts match a fresh parse.** Exports are 3427, functions 1444, and interfaces 689.
+
+- **Spread view sizes an empty slot from the facing page.** The blank side uses that page's width and height. When the facing page has no size yet, the slot uses the first page. Letter and other sizes line up with the page beside them.
+
 ### Added
+
+- **Single, continuous, and spread viewing share `VirtualizedViewer`.** The `layout` prop selects the
+  mode. Continuous mode mounts the pages near the viewport, plus a two-page buffer, and tracks the
+  page at the top of the viewport. Each page uses its own PDF height. Keyboard and thumbnail page
+  changes scroll to that page. Scrolling does not reset the document to page 1. Spread mode keeps
+  the cover on the right and an empty slot where a page is missing. `SinglePageView`,
+  `ContinuousView`, and `SpreadView` are removed.
+  `tests/unit/components/viewer/VirtualizedViewer.test.tsx` covers the three layouts, and
+  `tests/unit/components/viewer/viewLayout.test.ts` covers the spread pairs.
 
 - **Camera signatures, PDF-content dark mode, and drawing edits match the core catalog.**
   A camera capture mirrors each row of pixels so ink held toward the lens reads left to right, and the
