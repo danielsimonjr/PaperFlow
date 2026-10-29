@@ -20,10 +20,10 @@ export function Sidebar() {
       data-testid="sidebar"
       className={cn(
         'flex flex-col border-r border-gray-200 bg-white transition-all dark:border-gray-800 dark:bg-gray-950',
-        isCollapsed ? 'w-12' : 'w-64'
+        isCollapsed ? 'w-10' : 'w-56'
       )}
     >
-      <div className="flex items-center justify-between border-b border-gray-200 p-2 dark:border-gray-800">
+      <div className="flex items-center justify-between border-b border-gray-200 p-1.5 dark:border-gray-800">
         {!isCollapsed && (
           <div className="flex gap-1">
             <button

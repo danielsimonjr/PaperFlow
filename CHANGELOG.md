@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **The shell uses a warm off-white light theme and a near-black dark theme.** `src/styles/theme.ts`
+  is the palette. Tailwind's `white` and `gray` scales read it, and `src/index.css` sets the same
+  values on `--paper-bg`, `--paper-surface`, `--paper-ink` and `--paper-border`. Borders use the
+  low-contrast pair `#E6E0D6` / `#2A2A2A`. Header, toolbar, sidebar, settings and buttons are shorter.
+  The PDF page uses a hairline border in place of a drop shadow. `tests/unit/styles/theme.test.tsx`
+  checks the tokens, the stylesheet, the Tailwind config and the compact button height.
+
 - **The core feature set has one source of truth.** `src/core/features.ts` lists the twelve core
   capabilities and the eight optional modules. Every optional module has `defaultEnabled: false`.
   `docs/core-features.md` lists the same ids in the same order. `tests/unit/core/features.test.ts`

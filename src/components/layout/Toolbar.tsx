@@ -85,7 +85,7 @@ export function Toolbar() {
   return (
     <>
       <div
-        className="flex h-12 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-950"
+        className="flex h-10 items-center justify-between border-b border-gray-200 bg-white px-3 dark:border-gray-800 dark:bg-gray-950"
         data-testid="toolbar"
       >
         {/* Tools */}
@@ -99,7 +99,7 @@ export function Toolbar() {
                 key={id}
                 onClick={() => handleToolClick(id)}
                 className={cn(
-                  'rounded-md p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800',
+                  'rounded-md p-1.5 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800',
                   isActive &&
                     'bg-primary-100 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400'
                 )}
@@ -120,7 +120,7 @@ export function Toolbar() {
           {/* Export/Import Button */}
           <button
             onClick={() => setShowExportImport(true)}
-            className="rounded-md p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="rounded-md p-1.5 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
             title="Export/Import Annotations"
           >
             <FileDown className="h-4 w-4" />
@@ -146,7 +146,7 @@ export function Toolbar() {
 
       {/* Shape Type Selector - shown when shape tool is active */}
       {editorTool === 'shape' && (
-        <div className="flex h-10 items-center gap-1 border-b border-gray-200 bg-gray-50 px-4 dark:border-gray-800 dark:bg-gray-900">
+        <div className="flex h-9 items-center gap-1 border-b border-gray-200 bg-gray-50 px-3 dark:border-gray-800 dark:bg-gray-900">
           <span className="mr-2 text-xs text-gray-500 dark:text-gray-400">Shape:</span>
           {([
             { type: 'rectangle' as ShapeType, icon: Square, label: 'Rectangle' },

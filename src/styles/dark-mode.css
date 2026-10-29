@@ -9,20 +9,20 @@
    CSS Variables
    ======================== */
 
-/* Light mode (default) */
+/* Light mode (default). Warm off-white, matching src/styles/theme.ts. */
 :root {
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f9fafb;
-  --color-bg-tertiary: #f3f4f6;
-  --color-bg-elevated: #ffffff;
+  --color-bg-primary: #F6F3EE;
+  --color-bg-secondary: #FBFAF7;
+  --color-bg-tertiary: #F1ECE4;
+  --color-bg-elevated: #FBFAF7;
 
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-text-tertiary: #9ca3af;
-  --color-text-inverse: #ffffff;
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #5E5952;
+  --color-text-tertiary: #78736C;
+  --color-text-inverse: #FBFAF7;
 
-  --color-border: #e5e7eb;
-  --color-border-light: #f3f4f6;
+  --color-border: #E6E0D6;
+  --color-border-light: #F1ECE4;
   --color-border-focus: #3b82f6;
 
   --color-primary-50: #eff6ff;
@@ -46,21 +46,21 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
-/* Dark mode */
+/* Dark mode. Near-black, matching src/styles/theme.ts. */
 .dark,
 [data-theme="dark"] {
-  --color-bg-primary: #0f172a;
-  --color-bg-secondary: #1e293b;
-  --color-bg-tertiary: #334155;
-  --color-bg-elevated: #1e293b;
+  --color-bg-primary: #0C0C0C;
+  --color-bg-secondary: #141414;
+  --color-bg-tertiary: #1C1C1C;
+  --color-bg-elevated: #141414;
 
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  --color-text-tertiary: #64748b;
-  --color-text-inverse: #0f172a;
+  --color-text-primary: #F4F1EA;
+  --color-text-secondary: #A8A299;
+  --color-text-tertiary: #78736C;
+  --color-text-inverse: #0C0C0C;
 
-  --color-border: #334155;
-  --color-border-light: #1e293b;
+  --color-border: #2A2A2A;
+  --color-border-light: #1C1C1C;
   --color-border-focus: #60a5fa;
 
   --color-primary-50: #1e293b;

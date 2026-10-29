@@ -19,7 +19,7 @@ export default defineConfig({
         short_name: 'PaperFlow',
         description: 'The Modern PDF Editor for Everyone',
         theme_color: '#1E3A5F',
-        background_color: '#ffffff',
+        background_color: '#F6F3EE',
         display: 'standalone',
         scope: '/',
         start_url: '/',

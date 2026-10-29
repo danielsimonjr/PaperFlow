@@ -87,9 +87,9 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
-      <header className="border-b border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-gray-950">
+      <header className="border-b border-gray-200 bg-white px-4 py-2.5 dark:border-gray-800 dark:bg-gray-950">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-900 text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary-900 text-white">
             <FileUp className="h-5 w-5" />
           </div>
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
