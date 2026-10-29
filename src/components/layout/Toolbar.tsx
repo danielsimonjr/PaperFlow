@@ -13,6 +13,7 @@ import {
   Underline,
   Strikethrough,
   FileDown,
+  PenLine,
 } from 'lucide-react';
 import { ViewModeToggle } from '@components/toolbar/ViewModeToggle';
 import { PageNavigation } from '@components/viewer/PageNavigation';
@@ -20,6 +21,8 @@ import { ZoomControls } from '@components/viewer/ZoomControls';
 import { ExportImportDialog } from '@components/annotations/ExportImportDialog';
 import { useAnnotationStore, type ShapeType } from '@stores/annotationStore';
 import { useUIStore, type EditorTool } from '@stores/uiStore';
+import { useSignatureStore } from '@stores/signatureStore';
+import { SignatureModal } from '@components/signatures/SignatureModal';
 import { useAnnotationShortcuts } from '@hooks/useAnnotationShortcuts';
 import { cn } from '@utils/cn';
 import type { AnnotationType } from '@/types';
@@ -52,6 +55,9 @@ export function Toolbar() {
   // Use UI store for editor tools (select, hand, text, draw, shape)
   const editorTool = useUIStore((state) => state.activeTool);
   const setEditorTool = useUIStore((state) => state.setActiveTool);
+  const openSignatureModal = useSignatureStore((state) => state.openModal);
+  const closeSignatureModal = useSignatureStore((state) => state.closeModal);
+  const isSignatureModalOpen = useSignatureStore((state) => state.isModalOpen);
 
   // Set up keyboard shortcuts
   useAnnotationShortcuts({ enabled: true });
@@ -119,6 +125,15 @@ export function Toolbar() {
 
           {/* Export/Import Button */}
           <button
+            onClick={() => openSignatureModal(false)}
+            className="rounded-md p-1.5 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            title="Signature"
+            data-testid="tool-signature"
+          >
+            <PenLine className="h-4 w-4" />
+          </button>
+
+          <button
             onClick={() => setShowExportImport(true)}
             className="rounded-md p-1.5 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
             title="Export/Import Annotations"
@@ -175,6 +190,9 @@ export function Toolbar() {
         isOpen={showExportImport}
         onClose={() => setShowExportImport(false)}
       />
+      {isSignatureModalOpen && (
+        <SignatureModal isOpen onClose={closeSignatureModal} />
+      )}
     </>
   );
 }

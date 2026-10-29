@@ -1,5 +1,7 @@
-import { useMemo } from 'react';
-import type { Annotation } from '@/types';
+import { useMemo, useRef } from 'react';
+import type { Annotation, DrawingPath } from '@/types';
+import { screenDeltaToPdf, translateDrawingPaths } from '@lib/annotations/drawingGeometry';
+import { useHistoryStore } from '@stores/historyStore';
 
 interface DrawingAnnotationProps {
   annotation: Annotation;
@@ -8,6 +10,7 @@ interface DrawingAnnotationProps {
   pageHeight: number;
   onSelect: () => void;
   onDelete: () => void;
+  onPathsChange?: (paths: DrawingPath[]) => void;
 }
 
 /**
@@ -20,7 +23,16 @@ export function DrawingAnnotation({
   pageHeight,
   onSelect,
   onDelete,
+  onPathsChange,
 }: DrawingAnnotationProps) {
+  const pushHistory = useHistoryStore((state) => state.push);
+  const dragRef = useRef<{
+    origin: DrawingPath[];
+    x: number;
+    y: number;
+    moved: boolean;
+    latest: DrawingPath[];
+  } | null>(null);
   // Convert paths to SVG path data
   const pathData = useMemo(() => {
     if (!annotation.paths || annotation.paths.length === 0) return [];
@@ -61,9 +73,49 @@ export function DrawingAnnotation({
     }
   };
 
+  const handlePointerDown = (event: React.PointerEvent<SVGGElement>) => {
+    if (!annotation.paths || !onPathsChange) return;
+    event.stopPropagation();
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+    onSelect();
+    dragRef.current = {
+      origin: annotation.paths,
+      x: event.clientX,
+      y: event.clientY,
+      moved: false,
+      latest: annotation.paths,
+    };
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<SVGGElement>) => {
+    const drag = dragRef.current;
+    if (!drag || !onPathsChange) return;
+    const delta = screenDeltaToPdf(event.clientX - drag.x, event.clientY - drag.y, scale);
+    if (Math.abs(event.clientX - drag.x) < 2 && Math.abs(event.clientY - drag.y) < 2) return;
+    drag.moved = true;
+    drag.latest = translateDrawingPaths(drag.origin, delta.dx, delta.dy);
+    onPathsChange(drag.latest);
+  };
+
+  const handlePointerUp = () => {
+    const drag = dragRef.current;
+    dragRef.current = null;
+    if (!drag?.moved || !onPathsChange) return;
+    const start = drag.origin;
+    const end = drag.latest;
+    pushHistory({
+      action: 'move_drawing',
+      undo: () => onPathsChange(start),
+      redo: () => onPathsChange(end),
+    });
+  };
+
   return (
     <g
       className="cursor-pointer"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
       onClick={(e) => {
         e.stopPropagation();
         onSelect();

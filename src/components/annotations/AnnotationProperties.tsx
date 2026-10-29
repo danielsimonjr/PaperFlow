@@ -3,6 +3,7 @@ import { Trash2, X } from 'lucide-react';
 import { useAnnotationStore } from '@stores/annotationStore';
 import { useHistoryStore } from '@stores/historyStore';
 import { HIGHLIGHT_COLORS } from './SelectionPopup';
+import { DRAWING_COLORS } from './drawingColors';
 import { OpacitySlider } from './OpacitySlider';
 
 interface AnnotationPropertiesProps {
@@ -105,8 +106,8 @@ export function AnnotationProperties({ onClose }: AnnotationPropertiesProps) {
         </button>
       </div>
 
-      {/* Color picker (for highlight, underline, strikethrough) */}
-      {['highlight', 'underline', 'strikethrough'].includes(
+      {/* Color picker for text markup and for recoloring a drawing */}
+      {['highlight', 'underline', 'strikethrough', 'drawing'].includes(
         selectedAnnotation.type
       ) && (
         <div className="mb-4">
@@ -114,7 +115,7 @@ export function AnnotationProperties({ onClose }: AnnotationPropertiesProps) {
             Color
           </label>
           <div className="flex gap-2">
-            {HIGHLIGHT_COLORS.map((color) => (
+            {(selectedAnnotation.type === 'drawing' ? DRAWING_COLORS : HIGHLIGHT_COLORS).map((color) => (
               <button
                 key={color.value}
                 className={`h-6 w-6 rounded-full transition-transform hover:scale-110 ${

@@ -130,3 +130,9 @@ body {
 .textLayer .highlight.selected {
   background-color: rgba(0, 100, 0, 0.2);
 }
+
+/* Dark mode inverts the PDF pixels and the text layer. Annotations stay unfiltered. */
+.dark .pdf-page-invert canvas,
+.dark .pdf-page-invert .textLayer {
+  filter: invert(1) hue-rotate(180deg);
+}
