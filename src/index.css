@@ -130,8 +130,15 @@ body {
   background-color: rgba(0, 100, 0, 0.2);
 }
 
-/* Dark mode inverts the PDF pixels and the text layer. Annotations stay unfiltered. */
-.dark .pdf-page-invert canvas,
-.dark .pdf-page-invert .textLayer {
+/* Dark mode inverts the PDF bitmap only. Highlights, drawings, signatures,
+   and the text layer are not under this filter, so their colors stay put.
+   Print and print-to-PDF use print media and must come out uninverted. */
+.dark canvas.pdf-content-canvas.pdf-page-invert {
   filter: invert(1) hue-rotate(180deg);
+}
+
+@media print {
+  canvas.pdf-content-canvas {
+    filter: none !important;
+  }
 }

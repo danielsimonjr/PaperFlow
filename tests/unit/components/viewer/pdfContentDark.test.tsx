@@ -18,14 +18,23 @@ describe('PageCanvas PDF dark mode', () => {
     useUIStore.setState({ darkMode: false });
   });
 
-  it('adds the invert class only in dark mode', () => {
+  it('adds the invert class only to the PDF bitmap in dark mode', () => {
     const { rerender } = render(
       <PageCanvas renderer={renderer()} pageNumber={1} scale={100} />
     );
-    expect(screen.getByTestId('pdf-page').className).not.toContain(PDF_CONTENT_DARK_CLASS);
+    const page = screen.getByTestId('pdf-page');
+    expect(page.className).not.toContain(PDF_CONTENT_DARK_CLASS);
+    expect(page.querySelector('canvas.pdf-content-canvas')?.className).not.toContain(
+      PDF_CONTENT_DARK_CLASS
+    );
 
     useUIStore.setState({ darkMode: true });
     rerender(<PageCanvas renderer={renderer()} pageNumber={1} scale={100} />);
-    expect(screen.getByTestId('pdf-page').className).toContain(PDF_CONTENT_DARK_CLASS);
+    const darkPage = screen.getByTestId('pdf-page');
+    expect(darkPage.className).not.toContain(PDF_CONTENT_DARK_CLASS);
+    const canvases = darkPage.querySelectorAll('canvas');
+    expect(canvases).toHaveLength(1);
+    expect(canvases[0]?.className).toContain('pdf-content-canvas');
+    expect(canvases[0]?.className).toContain(PDF_CONTENT_DARK_CLASS);
   });
 });

@@ -2,6 +2,13 @@ import { useMemo, useRef } from 'react';
 import type { Annotation, DrawingPath } from '@/types';
 import { screenDeltaToPdf, translateDrawingPaths } from '@lib/annotations/drawingGeometry';
 import { useHistoryStore } from '@stores/historyStore';
+import { useUIStore } from '@stores/uiStore';
+
+function clonePaths(paths: DrawingPath[]): DrawingPath[] {
+  return paths.map((path) => ({
+    points: path.points.map((point) => ({ ...point })),
+  }));
+}
 
 interface DrawingAnnotationProps {
   annotation: Annotation;
@@ -26,6 +33,7 @@ export function DrawingAnnotation({
   onPathsChange,
 }: DrawingAnnotationProps) {
   const pushHistory = useHistoryStore((state) => state.push);
+  const activeTool = useUIStore((state) => state.activeTool);
   const dragRef = useRef<{
     origin: DrawingPath[];
     x: number;
@@ -74,16 +82,17 @@ export function DrawingAnnotation({
   };
 
   const handlePointerDown = (event: React.PointerEvent<SVGGElement>) => {
-    if (!annotation.paths || !onPathsChange) return;
+    if (activeTool === 'hand' || !annotation.paths || !onPathsChange) return;
     event.stopPropagation();
     event.currentTarget.setPointerCapture?.(event.pointerId);
     onSelect();
+    const origin = clonePaths(annotation.paths);
     dragRef.current = {
-      origin: annotation.paths,
+      origin,
       x: event.clientX,
       y: event.clientY,
       moved: false,
-      latest: annotation.paths,
+      latest: origin,
     };
   };
 
@@ -97,10 +106,14 @@ export function DrawingAnnotation({
     onPathsChange(drag.latest);
   };
 
-  const handlePointerUp = () => {
+  const finishDrag = (commit: boolean) => {
     const drag = dragRef.current;
     dragRef.current = null;
     if (!drag?.moved || !onPathsChange) return;
+    if (!commit) {
+      onPathsChange(drag.origin);
+      return;
+    }
     const start = drag.origin;
     const end = drag.latest;
     pushHistory({
@@ -110,12 +123,16 @@ export function DrawingAnnotation({
     });
   };
 
+  const handlePointerUp = () => finishDrag(true);
+  const handlePointerCancel = () => finishDrag(false);
+
   return (
     <g
       className="cursor-pointer"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
       onClick={(e) => {
         e.stopPropagation();
         onSelect();
@@ -126,6 +143,18 @@ export function DrawingAnnotation({
       aria-label="Drawing annotation"
       data-testid="drawing-annotation"
     >
+      {pathData.map((d, i) => (
+        <path
+          key={`hit-${i}`}
+          d={d}
+          fill="none"
+          stroke="transparent"
+          strokeWidth={Math.max(strokeWidth + 10, 16)}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      ))}
+
       {/* Selection highlight */}
       {isSelected && pathData.map((d, i) => (
         <path

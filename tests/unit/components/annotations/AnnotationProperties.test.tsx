@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { AnnotationProperties } from '@components/annotations/AnnotationProperties';
 import { useAnnotationStore } from '@stores/annotationStore';
+import { useHistoryStore } from '@stores/historyStore';
 import type { Annotation } from '@/types';
 
 function drawing(color: string): Annotation {
@@ -21,16 +22,20 @@ function drawing(color: string): Annotation {
 
 describe('AnnotationProperties recolor', () => {
   beforeEach(() => {
+    useHistoryStore.setState({ past: [], future: [] });
     useAnnotationStore.setState({
       annotations: [drawing('#FFEB3B')],
       selectedId: 'draw-1',
     });
   });
 
-  it('recolors a selected drawing', () => {
+  it('recolors a selected drawing and undo restores it', () => {
     render(<AnnotationProperties onClose={() => {}} />);
     fireEvent.click(screen.getByTitle('Black'));
     expect(useAnnotationStore.getState().annotations[0]?.color).toBe('#111111');
+
+    useHistoryStore.getState().undo();
+    expect(useAnnotationStore.getState().annotations[0]?.color).toBe('#FFEB3B');
   });
 
   it('keeps the drawing palette off text markup', () => {
