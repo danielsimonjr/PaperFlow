@@ -12,8 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Enterprise, license, kiosk, LAN, scanner, batch, comparison, and file watch are off until a setting turns them on.**
   `settingsStore.optionalModules` holds the flags, and every flag starts false. The settings page toggles them.
   `OptionalModuleHost` calls `loadOptionalModule`, which dynamic-imports that module. A module that is off is not
-  imported. The stores stay in the repo, and their existing tests still import them directly. Kiosk styles load with
-  the kiosk module instead of the main stylesheet.
+  imported. The flags persist with the rest of the settings, and a saved map is filled in with the defaults.
+  The Electron main process does not import the file watcher until a watch is requested. The stores stay in the
+  repo, and their existing tests still import them directly. Kiosk styles load with the kiosk module instead of
+  the main stylesheet.
 
 - **Single, continuous, and spread viewing share `VirtualizedViewer`.** The `layout` prop selects the
   mode. Continuous mode still draws only the pages near the viewport. Spread mode keeps the cover on
