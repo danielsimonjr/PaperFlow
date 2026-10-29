@@ -253,7 +253,9 @@ export function VirtualizedViewer({
       if (!sameMeasured) return null;
       const width = sameMeasured.widths[index];
       const height = sameMeasured.heights[index];
-      if (width > 0 && height > 0) return { width, height };
+      if (width != null && height != null && width > 0 && height > 0) {
+        return { width, height };
+      }
       return null;
     });
     const placeholderSize = spreadPlaceholderSize(slots, spreadPages);
