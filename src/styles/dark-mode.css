@@ -183,10 +183,8 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* Optional: Invert PDF pages for dark mode */
-.dark .pdf-page-invert canvas {
-  filter: invert(1) hue-rotate(180deg);
-}
+/* PDF bitmap invert is in src/index.css, on canvas.pdf-content-canvas only.
+   A descendant selector here would also invert drawings and signature canvases. */
 
 /* ========================
    Annotation Colors

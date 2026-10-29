@@ -9,10 +9,15 @@ describe('pdf content dark mode', () => {
     expect(pdfContentDarkClass(false)).toBe('');
   });
 
-  it('inverts the canvas and the text layer in the loaded stylesheet', () => {
-    const css = readFileSync(resolve(__dirname, '../../../../src/index.css'), 'utf8');
-    expect(css).toContain(`.dark .${PDF_CONTENT_DARK_CLASS} canvas`);
-    expect(css).toContain(`.dark .${PDF_CONTENT_DARK_CLASS} .textLayer`);
+  it('inverts only the PDF bitmap, and print drops that filter', () => {
+    const indexCss = readFileSync(resolve(__dirname, '../../../../src/index.css'), 'utf8');
+    const darkCss = readFileSync(resolve(__dirname, '../../../../src/styles/dark-mode.css'), 'utf8');
+    const css = `${indexCss}\n${darkCss}`;
+
+    expect(css).toContain(`canvas.pdf-content-canvas.${PDF_CONTENT_DARK_CLASS}`);
     expect(css).toContain('filter: invert(1) hue-rotate(180deg)');
+    expect(css).not.toMatch(/\.pdf-page-invert\s+canvas\b/);
+    expect(css).not.toMatch(/\.pdf-page-invert[^{]*\.textLayer/);
+    expect(css).toMatch(/@media print\s*\{[^}]*canvas\.pdf-content-canvas[^}]*filter:\s*none !important/s);
   });
 });

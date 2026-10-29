@@ -19,6 +19,14 @@ export function CameraSignature({ onSignatureChange }: CameraSignatureProps) {
 
   useEffect(() => {
     let cancelled = false;
+    const video = videoRef.current;
+
+    const markReady = () => {
+      if (cancelled || !video) return;
+      if (video.videoWidth > 0 && video.videoHeight > 0) {
+        setReady(true);
+      }
+    };
 
     async function start() {
       if (!navigator.mediaDevices?.getUserMedia) {
@@ -34,12 +42,19 @@ export function CameraSignature({ onSignatureChange }: CameraSignatureProps) {
           return;
         }
         streamRef.current = stream;
-        const video = videoRef.current;
-        if (video) {
-          video.srcObject = stream;
-          void video.play?.().catch(() => undefined);
+        if (!video) {
+          stream.getTracks().forEach((track) => track.stop());
+          return;
         }
-        if (!cancelled) setReady(true);
+        video.srcObject = stream;
+        video.addEventListener('loadedmetadata', markReady);
+        video.addEventListener('loadeddata', markReady);
+        try {
+          await video.play?.();
+        } catch {
+          // Autoplay can be blocked. A later loadedmetadata event still enables capture.
+        }
+        markReady();
       } catch {
         if (!cancelled) {
           setError('The camera is unavailable.');
@@ -51,6 +66,8 @@ export function CameraSignature({ onSignatureChange }: CameraSignatureProps) {
 
     return () => {
       cancelled = true;
+      video?.removeEventListener('loadedmetadata', markReady);
+      video?.removeEventListener('loadeddata', markReady);
       streamRef.current?.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
     };
@@ -58,10 +75,10 @@ export function CameraSignature({ onSignatureChange }: CameraSignatureProps) {
 
   const handleCapture = useCallback(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || video.videoWidth === 0 || video.videoHeight === 0) return;
 
-    const width = video.videoWidth || 640;
-    const height = video.videoHeight || 480;
+    const width = video.videoWidth;
+    const height = video.videoHeight;
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
